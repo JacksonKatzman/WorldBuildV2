@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4433dc0d5caf3a4f9ef1a9eb077e0ba, type: 3}
+  m_Name: BasicBiomes
+  m_EditorClassIdentifier: 
+  biomes:
+  - biomeType: Mountains
+    landType: 3
+    rainfallThreshold: 0.5
+    fertilityThreshold: 0.5
+    color: {r: 0.38679248, g: 0.38496798, b: 0.38496798, a: 0}
+    availableLand: 0.3
+  - biomeType: Glacier
+    landType: 3
+    rainfallThreshold: 0.834
+    fertilityThreshold: 0.085
+    color: {r: 0.7028302, g: 0.94716984, b: 1, a: 0}
+    availableLand: 0.105
+  - biomeType: Mesa
+    landType: 3
+    rainfallThreshold: 0.11
+    fertilityThreshold: 0.216
+    color: {r: 0.735849, g: 0.379125, b: 0, a: 0}
+    availableLand: 0.553
+  - biomeType: Mountain Jungle
+    landType: 3
+    rainfallThreshold: 0.749
+    fertilityThreshold: 0.859
+    color: {r: 0.022995852, g: 0.3490566, b: 0.021404423, a: 0}
+    availableLand: 0.362
+  - biomeType: Plains
+    landType: 1
+    rainfallThreshold: 0.5
+    fertilityThreshold: 0.5
+    color: {r: 0.7984109, g: 1, b: 0.3066038, a: 0}
+    availableLand: 1
+  - biomeType: Desert
+    landType: 1
+    rainfallThreshold: 0.08
+    fertilityThreshold: 0.05
+    color: {r: 0.8018868, g: 0.7509698, b: 0.5635902, a: 0}
+    availableLand: 1
+  - biomeType: Forest
+    landType: 1
+    rainfallThreshold: 0.487
+    fertilityThreshold: 0.715
+    color: {r: 0.21719463, g: 0.509434, b: 0.1994482, a: 0}
+    availableLand: 0.644
+  - biomeType: Marsh
+    landType: 1
+    rainfallThreshold: 0.809
+    fertilityThreshold: 0.54
+    color: {r: 0, g: 0.4716981, b: 0.2678581, a: 0}
+    availableLand: 0.288
+  - biomeType: Jungle
+    landType: 1
+    rainfallThreshold: 0.851
+    fertilityThreshold: 0.871
+    color: {r: 0.039293967, g: 0.4716981, b: 0, a: 0}
+    availableLand: 0.631
+  - biomeType: Tundra
+    landType: 1
+    rainfallThreshold: 0.904
+    fertilityThreshold: 0.05
+    color: {r: 0.5377358, g: 0.5261948, b: 0.48446953, a: 0}
+    availableLand: 1
+  - biomeType: Water
+    landType: 0
+    rainfallThreshold: 0
+    fertilityThreshold: 0
+    color: {r: 0.043965846, g: 0.29519162, b: 0.7169812, a: 0}
+    availableLand: 0
+  - biomeType: Praire
+    landType: 1
+    rainfallThreshold: 0.147
+    fertilityThreshold: 0.905
+    color: {r: 0.9311225, g: 1, b: 0.504717, a: 0}
+    availableLand: 1
