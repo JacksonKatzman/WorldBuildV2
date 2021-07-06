@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c04b44a4d01e0149ac3bf03231aa479, type: 3}
+  m_Name: Basic
+  m_EditorClassIdentifier: 
+  rules: {fileID: 11400000, guid: cfd31d7e3b4aa224b9baba25978d9199, type: 2}
+  maleNames: {fileID: 4900000, guid: 11760a5dc50fe3d4497aaae80f7d7420, type: 3}
+  femaleNames: {fileID: 4900000, guid: 81394de30e7077f459766a5c99cfaa0a, type: 3}
+  staticMaleNames: {fileID: 4900000, guid: 168c04f9dc132964e8ac65ace45fd59d, type: 3}
+  staticFemaleNames: {fileID: 4900000, guid: b827d0c5103d68d41b88efd1652f8137, type: 3}
+  vowels: {fileID: 4900000, guid: c73de843d8557bc45bff5008a14e2538, type: 3}
+  consonants: {fileID: 4900000, guid: 22154ebb6d28e394f83b807f371f16aa, type: 3}
+  startPairs: {fileID: 4900000, guid: 19b70b984faeca04bb41c200a309e45f, type: 3}
+  endPairs: {fileID: 4900000, guid: 48f721a4cc567df43b7fc4b3c2c34915, type: 3}
