@@ -7,7 +7,7 @@ namespace Game.Factions
 	public class Government
 	{
 		//Person leader;
-		GovernmentType governmentType;
+		public GovernmentType governmentType;
 
 		public Government(GovernmentType type)
 		{

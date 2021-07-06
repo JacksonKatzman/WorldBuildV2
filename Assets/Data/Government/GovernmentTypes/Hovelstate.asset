@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44e48aee13350a94bab94459b61f7f34, type: 3}
-  m_Name: MinorAgriculturalBoost
+  m_Script: {fileID: 11500000, guid: 66876352bd36d52489948df0d667cdca, type: 3}
+  m_Name: Hovelstate
   m_EditorClassIdentifier: 
-  flatFoodProductionPerWorker: 1
-  flatMaxFoodByLand: 0
-  percentFoodProductionPerWorker: 100
-  percentSpoilageRate: 110
-  percentMaxFoodByLand: 110
+  leadershipSlots: 1
+  traits:
+  - {fileID: 11400000, guid: 80c7cfc16f6318c45ad199995b4bc6ed, type: 2}
+  influenceRequirement: 10

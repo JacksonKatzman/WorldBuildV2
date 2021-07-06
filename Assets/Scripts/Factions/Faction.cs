@@ -32,7 +32,7 @@ namespace Game.Factions
 
 		public Faction(Tile startingTile, float food, int population)
 		{
-			name = NameGenerator.GeneratePersonFirstName(WorldHandler.Instance.PrimaryNameContainer, Gender.NEITHER);
+			name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.NEITHER);
 
 			territory = new List<Tile>();
 			world = startingTile.world;
@@ -41,8 +41,9 @@ namespace Game.Factions
 			influence = STARTING_INFLUENCE;
 
 			SetStartingStats();
+			government = new Government(DataManager.Instance.GetGovernmentType(influence));
 
-			OutputLogger.LogFormatAndPause("{0} faction has been created in {1} City.", LogSource.FACTION, name, capitalCity.name);
+			OutputLogger.LogFormatAndPause("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, capitalCity.name, government.governmentType.name);
 		}
 		public void AdvanceTime()
 		{

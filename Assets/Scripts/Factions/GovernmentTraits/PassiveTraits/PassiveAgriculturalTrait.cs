@@ -6,23 +6,23 @@ using Game.Factions;
 [CreateAssetMenu(fileName = nameof(PassiveAgriculturalTrait), menuName = "ScriptableObjects/Government/Traits/Passive/" + nameof(PassiveAgriculturalTrait), order = 1)]
 public class PassiveAgriculturalTrait : PassiveGovernmentTrait
 {
-	public float flatFoodProductionPerWorker = 0;
-	public float flatMaxFoodByLand = 0;
+	public int flatFoodProductionPerWorker = DEFAULT_ADDITIVE_VALUE;
+	public int flatMaxFoodByLand = DEFAULT_ADDITIVE_VALUE;
 
-	public float percentFoodProductionPerWorker = 100.0f;
-	public float percentSpoilageRate = 100.0f;
-	public float percentMaxFoodByLand = 100.0f;
+	public float percentFoodProductionPerWorker = DEFAULT_MULITPLICATIVE_PERCENT;
+	public float percentSpoilageRate = DEFAULT_MULITPLICATIVE_PERCENT;
+	public float percentMaxFoodByLand = DEFAULT_MULITPLICATIVE_PERCENT;
 
 	protected override void UpdateAdditiveValues(Faction faction)
 	{
-		faction.foodProductionPerWorker.modified += flatFoodProductionPerWorker;
+		faction.foodProductionPerWorker.modified += (float)flatFoodProductionPerWorker;
 		faction.maxFoodByLand.modified += flatMaxFoodByLand;
 	}
 
 	protected override void UpdateMultiplicativeValues(Faction faction)
 	{
-		faction.foodProductionPerWorker.modified *= percentFoodProductionPerWorker;
-		faction.maxFoodByLand.modified *= percentMaxFoodByLand;
-		faction.spoilageRate.modified *= percentSpoilageRate;
+		faction.foodProductionPerWorker.modified *= (percentFoodProductionPerWorker/100.0f);
+		faction.maxFoodByLand.modified *= (percentMaxFoodByLand/100.0f);
+		faction.spoilageRate.modified *= (percentSpoilageRate/100.0f);
 	}
 }

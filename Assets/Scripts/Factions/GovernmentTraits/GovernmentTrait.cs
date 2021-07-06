@@ -11,6 +11,8 @@ namespace Game.Factions
 
 	public abstract class PassiveGovernmentTrait : GovernmentTrait
 	{
+		public static int DEFAULT_ADDITIVE_VALUE = 0;
+		public static float DEFAULT_MULITPLICATIVE_PERCENT = 100;
 		protected abstract void UpdateAdditiveValues(Faction faction);
 		protected abstract void UpdateMultiplicativeValues(Faction faction);
 		public override void Invoke(Faction faction)

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66876352bd36d52489948df0d667cdca, type: 3}
   m_Name: Rural Mayoral
   m_EditorClassIdentifier: 
-  typeName: 
-  leadershipSlots: 0
-  traits: []
+  leadershipSlots: 1
+  traits:
+  - {fileID: 11400000, guid: f1808bf88692cce4cb50387a9d95a448, type: 2}
+  influenceRequirement: 10

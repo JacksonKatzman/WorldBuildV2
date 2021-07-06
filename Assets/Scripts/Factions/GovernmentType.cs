@@ -8,4 +8,5 @@ public class GovernmentType : ScriptableObject
 {
 	public int leadershipSlots;
 	public List<GovernmentTrait> traits;
+	public int influenceRequirement = 10;
 }

@@ -11,7 +11,7 @@ public abstract class OutputLogger
 	= new Dictionary<LogSource, bool>
 {
 	{ LogSource.IMPORTANT, true },
-	{ LogSource.CITY, false },
+	{ LogSource.CITY, true },
 	{ LogSource.NAMEGEN, true },
 	{ LogSource.WORLDGEN, true },
 	{ LogSource.FACTION, true },

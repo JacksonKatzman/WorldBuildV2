@@ -14,6 +14,7 @@ public class NameGenerator
 	private static float FIRST_PHONEME_MORPH_PERCENTAGE = 0.4f;
 	private static float VOWEL_PHONEME_MORPH_PERCENTAGE = 0.5f;
 	private static float TRUNCATE_PERCENTAGE = 0.4f;
+
 	public static string GeneratePersonFirstName(NameContainer container, Gender gender)
 	{
 		int combinedRatio = SYLLABALIC_RATIO + MODIFIED_RATIO;

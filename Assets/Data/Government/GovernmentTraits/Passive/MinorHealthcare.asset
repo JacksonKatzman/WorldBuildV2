@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44e48aee13350a94bab94459b61f7f34, type: 3}
-  m_Name: MinorAgriculturalBoost
+  m_Script: {fileID: 11500000, guid: 97f74ced5d7d38040a3dd16d3a373d5a, type: 3}
+  m_Name: MinorHealthcare
   m_EditorClassIdentifier: 
-  flatFoodProductionPerWorker: 1
-  flatMaxFoodByLand: 0
-  percentFoodProductionPerWorker: 100
-  percentSpoilageRate: 110
-  percentMaxFoodByLand: 110
+  flatMaxBurgeoningTension: 0
+  percentBirthRate: 110
+  percentDeathRate: 90
+  percentMaxBurgeoningTension: 100

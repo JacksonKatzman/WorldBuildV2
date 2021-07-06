@@ -228,13 +228,32 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 654336835}
+  - component: {fileID: 654336834}
   m_Layer: 0
-  m_Name: Test
+  m_Name: Data Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &654336834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654336833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2dcc73c623b2274bbc2f39c0a0666a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameFormats:
+  - {fileID: 11400000, guid: 41dc381c7818beb43a721e49c624669b, type: 2}
+  governmentTypes:
+  - {fileID: 11400000, guid: fb002dc9ba21d0e43955aff279025ab0, type: 2}
+  - {fileID: 11400000, guid: f0acdec229d443a45ad831a1f2408df9, type: 2}
+  - {fileID: 11400000, guid: 8a9afa176f4fdf44ba2e416e871dfeb3, type: 2}
 --- !u!4 &654336835
 Transform:
   m_ObjectHideFlags: 0
@@ -1480,13 +1499,12 @@ MonoBehaviour:
     lacunarity: 2
     offset: {x: 0, y: 0}
   biomeSettings: {fileID: 11400000, guid: a8180b4c200677b4f8f039802c7a3072, type: 2}
-  nameFormats:
-  - {fileID: 11400000, guid: 41dc381c7818beb43a721e49c624669b, type: 2}
   coloredMapRenderer: {fileID: 2098346560}
   heightMapRenderer: {fileID: 886816004}
   rainfallMapRenderer: {fileID: 1405389297}
   fertilityMapRenderer: {fileID: 1000925870}
   seed: 0
+  DebugPause: 0
 --- !u!64 &2098346559
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -15,12 +15,6 @@ public class WorldHandler : MonoBehaviour
     public BiomeContainer biomeSettings;
 
     [SerializeField]
-    List<NameFormat> nameFormats;
-
-    List<NameContainer> nameContainers;
-    public NameContainer PrimaryNameContainer => nameContainers[0];
-
-    [SerializeField]
     private Renderer coloredMapRenderer;
 
     [SerializeField]
@@ -56,13 +50,6 @@ public class WorldHandler : MonoBehaviour
 	void Start()
     {
         seededRandom = new System.Random(seed);
-
-        nameContainers = new List<NameContainer>();
-
-        foreach (NameFormat format in nameFormats)
-        {
-            nameContainers.Add(new NameContainer(format));
-        }
 
         DrawNoiseMap();
 
