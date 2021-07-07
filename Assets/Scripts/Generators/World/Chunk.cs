@@ -42,7 +42,6 @@ namespace Game.WorldGeneration
 				var uncontrolled = (world.GetFactionThatControlsTile(chosenTile) == null);
 				if(chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && uncontrolled)
 				{
-					//chosenTile.SpawnCity(food, population);
 					world.CreateNewFaction(chosenTile, food, population);
 					spawned = true;
 					OutputLogger.LogFormatAndPause("Spawned city in chunk ({0},{1}) in tile ({2},{3})).", LogSource.WORLDGEN, coords.x, coords.y, randomXIndex, randomYIndex);

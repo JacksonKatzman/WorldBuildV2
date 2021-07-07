@@ -5,6 +5,8 @@ using Game.Enums;
 
 public class Person : ITimeSensitive
 {
+	public static int STARTING_PRIORITY_POINTS = 5;
+
 	public string name;
 	public int age;
 	public Gender gender;
@@ -17,6 +19,8 @@ public class Person : ITimeSensitive
 	//Priorities Block
 	public Priorities priorities;
 
+	private int naturalDeathAge;
+
 	public Person() : this(SimRandom.RandomRange(16, 69), (Gender)SimRandom.RandomRange(0, 2))
 	{
 	}
@@ -26,14 +30,22 @@ public class Person : ITimeSensitive
 		this.age = age;
 		this.gender = gender;
 
-		name = NameGenerator.GeneratePersonFullName(gender);
+		if (name == null)
+		{
+			name = NameGenerator.GeneratePersonFullName(gender);
+		}
+		if (stats == null)
+		{
+			GenerateStats();
+		}
+		if(priorities == null)
+		{
+			GeneratePriorities();
+		}
 	}
 
-	public Person(int age, Gender gender, Person progenitor)
+	public Person(int age, Gender gender, Person progenitor) : this(age, gender)
 	{
-		this.age = age;
-		this.gender = gender;
-
 		var progenitorName = progenitor.name.Split(' ');
 		var progenitorSurname = progenitorName[progenitorName.Length - 1];
 		name = NameGenerator.GeneratePersonFirstName(gender) + progenitorSurname;
@@ -66,6 +78,29 @@ public class Person : ITimeSensitive
 
 	private void GenerateStats()
 	{
+		stats = new PersonStats(SimRandom.RollXDY(4, 6, 1), SimRandom.RollXDY(4, 6, 1),
+								SimRandom.RollXDY(4, 6, 1), SimRandom.RollXDY(4, 6, 1),
+								SimRandom.RollXDY(4, 6, 1), SimRandom.RollXDY(4, 6, 1),
+								SimRandom.RollXDY(4, 6, 1));
+	}
 
+	private void GeneratePriorities()
+	{
+		int[] pointAllocations = new int[5];
+		for(int index = 0; index < STARTING_PRIORITY_POINTS; index++)
+		{
+			var randomIndex = SimRandom.RandomRange(0, pointAllocations.Length);
+			pointAllocations[randomIndex]++;
+		}
+
+		priorities = new Priorities(pointAllocations[0], pointAllocations[1], pointAllocations[2], pointAllocations[3], pointAllocations[4]);
+	}
+
+	private void DetermineNaturalDeathAge()
+	{
+		var fullCycle = (int)(((5 * SimRandom.RandomFloat01()) + 1) * stats.constitution);
+		var modifiedCycle = (int)(age + ((SimRandom.RandomFloat01() * stats.constitution) + 1));
+
+		naturalDeathAge = Mathf.Max(fullCycle, modifiedCycle);
 	}
 }
