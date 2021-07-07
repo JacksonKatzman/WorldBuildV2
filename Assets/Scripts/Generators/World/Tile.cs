@@ -41,6 +41,13 @@ namespace Game.WorldGeneration
 		public float rainfallValue => chunk.SampleNoiseMap(MapCategory.RAINFALL, coords);
 		public void AdvanceTime()
 		{
+			foreach(Landmark landmark in landmarks)
+			{
+				if(landmark is City)
+				{
+
+				}
+			}
 		}
 
 		public Vector2Int GetWorldPosition()

@@ -7,13 +7,6 @@ using Game.Factions;
 
 public class City : Landmark
 {
-	private static float MAX_BIRTH_RATE = 0.0205f;
-	private static float AVERAGE_DEATH_RATE = 0.0078f;
-	private static float AVERAGE_FOOD_PRODUCTION = 5.0f;
-	private static float AVERAGE_SPOILAGE_RATE = 0.1f;
-	private static float MAX_FOOD_BY_LAND = 10000.0f;
-	private static float MAX_BURGEONING_TENSION = MAX_FOOD_BY_LAND/10;
-
 	public string name;
 	public Tile tile;
 	public Faction faction;
@@ -22,7 +15,7 @@ public class City : Landmark
 	public float burgeoningTension;
 	public int burgeoningFactor = 1;
 
-	private float MaximumFoodProduction => MAX_FOOD_BY_LAND * tile.biome.availableLand;
+	private float MaximumFoodProduction => faction.maxFoodByLand.modified * tile.biome.availableLand;
 
 	public City(Tile tile, Faction faction, float food, int population)
 	{
@@ -30,7 +23,7 @@ public class City : Landmark
 		this.faction = faction;
 		this.food = food;
 		this.population = population;
-		name = NameGenerator.GeneratePersonFirstName(WorldHandler.Instance.PrimaryNameContainer, Gender.NEITHER);
+		name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.NEITHER);
 		OutputLogger.LogFormat("{0} City's tile has a land availabilty coef of: {1}", LogSource.IMPORTANT, name, tile.biome.availableLand);
 	}
 
@@ -54,7 +47,8 @@ public class City : Landmark
 
 	private void HandleFoodGrowth()
 	{
-		float newFood = (AVERAGE_FOOD_PRODUCTION * population * tile.baseFertility) * tile.rainfallValue;
+		//OutputLogger.LogFormat("{0} Faction produces has an average food production per person of: {1}", LogSource.CITY, faction.name, faction.foodProductionPerWorker.modified);
+		float newFood = (faction.foodProductionPerWorker.modified * population * tile.baseFertility) * tile.rainfallValue;
 		newFood = Mathf.Clamp(newFood, 0.0f, MaximumFoodProduction);
 
 		OutputLogger.LogFormat("{0} City with pop {1} has fertility {2} and rainfall {3}.", LogSource.CITY, name, population, tile.baseFertility, tile.rainfallValue);
@@ -66,7 +60,7 @@ public class City : Landmark
 	{
 		OutputLogger.LogFormat("{0} City consumes {1} food, bringing food total to {2}", LogSource.CITY, name, population, food - population);
 		food -= population;
-		var lostFood = food * AVERAGE_SPOILAGE_RATE;
+		var lostFood = food * faction.spoilageRate.modified;
 		food -= lostFood;
 		OutputLogger.LogFormat("{0} City loses {1} food to natural spoilage, bringing food total to {2}", LogSource.CITY, name, lostFood, food);
 	}
@@ -74,7 +68,7 @@ public class City : Landmark
 	private void HandlePopuplationGrowth()
 	{
 		var births = 0;
-		while((births + population < food) && (births < (MAX_BIRTH_RATE * population)))
+		while((births + population < food) && (births < (faction.birthRate.modified * population)))
 		{
 			births++;
 		}
@@ -83,7 +77,7 @@ public class City : Landmark
 
 	private void HandlePopulationDecay()
 	{
-		population = (int)(population * (1.0f - AVERAGE_DEATH_RATE));
+		population = (int)(population * (1.0f - faction.deathRate.modified));
 		while(food < 0)
 		{
 			population--;
@@ -97,9 +91,9 @@ public class City : Landmark
 		if (population >= tensionScore)
 		{
 			burgeoningTension += (population - tensionScore);
-			OutputLogger.LogFormat("{0} City's burgeoning tension increased to {1} out of {2}.", LogSource.IMPORTANT, name, burgeoningTension, MAX_BURGEONING_TENSION * (burgeoningFactor));
+			OutputLogger.LogFormat("{0} City's burgeoning tension increased to {1} out of {2}.", LogSource.IMPORTANT, name, burgeoningTension, faction.maxBurgeoningTension.modified * (burgeoningFactor));
 			OutputLogger.LogFormat("This occured due to a population of {0}, and an available land score of {1}.", LogSource.IMPORTANT, population, tile.biome.availableLand);
-			if (burgeoningTension >= MAX_BURGEONING_TENSION * (burgeoningFactor))
+			if (burgeoningTension >= faction.maxBurgeoningTension.modified * (burgeoningFactor))
 			{
 				var movingPercentage = WorldHandler.Instance.RandomRange(5, 11) / 100.0f;
 				var movingAmount = (int)(population * movingPercentage);

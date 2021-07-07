@@ -15,6 +15,7 @@ public abstract class OutputLogger
 	{ LogSource.NAMEGEN, true },
 	{ LogSource.WORLDGEN, true },
 	{ LogSource.FACTION, true },
+	{ LogSource.FACTIONACTION, true },
 	{ LogSource.MAIN, true }
 };
 

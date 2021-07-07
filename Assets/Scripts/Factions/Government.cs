@@ -6,6 +6,23 @@ namespace Game.Factions
 {
 	public class Government
 	{
+		//Person leader;
+		public GovernmentType governmentType;
 
+		public Government(GovernmentType type)
+		{
+			governmentType = type;
+		}
+
+		public void UpdateFactionUsingPassiveTraits(Faction faction)
+		{
+			foreach(GovernmentTrait trait in governmentType.traits)
+			{
+				if(trait is PassiveGovernmentTrait)
+				{
+					trait.Invoke(faction);
+				}
+			}
+		}
 	}
 }
