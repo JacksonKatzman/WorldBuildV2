@@ -23,6 +23,9 @@ namespace Game.Factions
 		public int influence;
 		public World world;
 
+		public int population => Population();
+		public int militarySize;
+
 		public ModifiedType<float> birthRate;
 		public ModifiedType<float> deathRate;
 		public ModifiedType<float> foodProductionPerWorker;
@@ -49,6 +52,12 @@ namespace Game.Factions
 		{
 			SetStartingStats();
 			government.UpdateFactionUsingPassiveTraits(this);
+
+			if(world.yearsPassed % 10 == 0)
+			{
+				var score = GenerateActionScore();
+				EventManager.Instance.CallActionByScore(score, this);
+			}
 
 			foreach(Tile tile in territory)
 			{
@@ -87,6 +96,73 @@ namespace Game.Factions
 				attempts++;
 			}
 			return spawned;
+		}
+
+		public ActionScore GenerateActionScore()
+		{
+			int militaryScore = 10 - (10 * militarySize) / population;
+
+			float averageFactionTiles = 0;
+			foreach(Faction faction in world.factions)
+			{
+				averageFactionTiles += faction.territory.Count;
+			}
+			averageFactionTiles /= world.factions.Count;
+			averageFactionTiles++;
+
+			int expansionScore = (int)(10.0f - (territory.Count / averageFactionTiles));
+
+			return new ActionScore(militaryScore, 0, 0, 5, expansionScore); 
+		}
+
+		public bool ExpandTerritory()
+		{
+			var possibleTiles = GetBorderTiles();
+
+			if(possibleTiles.Count == 0)
+			{
+				return false;
+			}
+
+			var randomIndex = WorldHandler.Instance.RandomRange(0, possibleTiles.Count);
+			var chosenTile = possibleTiles[randomIndex];
+			territory.Add(chosenTile);
+			OutputLogger.LogFormat("{0} Faction expanded it's borders to include the tile at {1}.", Game.Enums.LogSource.FACTIONACTION, name, chosenTile.GetWorldPosition());
+			return true;
+		}
+
+		private List<Tile> GetBorderTiles()
+		{
+			var possibleTiles = new List<Tile>();
+			foreach(Tile territoryTile in territory)
+			{
+				var adjacentTiles = territoryTile.GetAllTilesInRadius(2);
+				foreach(Tile adjacentTile in adjacentTiles)
+				{
+					var tileController = world.GetFactionThatControlsTile(adjacentTile);
+					if (tileController == null && !possibleTiles.Contains(adjacentTile))
+					{
+						possibleTiles.Add(adjacentTile);
+					}
+				}
+			}
+			return possibleTiles;
+		}
+
+		private int Population()
+		{
+			int count = 0;
+			foreach(Tile tile in territory)
+			{
+				foreach(Landmark landmark in tile.landmarks)
+				{
+					if(landmark is City city)
+					{
+						count += city.population;
+					}
+				}
+			}
+			return count;
 		}
 
 		private void SetStartingStats()

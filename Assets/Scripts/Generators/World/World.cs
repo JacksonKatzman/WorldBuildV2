@@ -16,7 +16,7 @@ namespace Game.WorldGeneration
 		public Texture2D colorMapTexture;
 
 		private List<Biome> biomes;
-		private List<Faction> factions;
+		public List<Faction> factions;
 
 		NoiseSettings noiseSettings;
         private Chunk[,] worldChunks;
