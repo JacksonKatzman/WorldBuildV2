@@ -55,7 +55,7 @@ namespace Game.Factions
 
 			if(world.yearsPassed % 10 == 0)
 			{
-				var score = GenerateActionScore();
+				var score = GeneratePriorities();
 				EventManager.Instance.CallActionByScore(score, this);
 			}
 
@@ -75,7 +75,7 @@ namespace Game.Factions
 			int attempts = 0;
 			while (!spawned && attempts < 10)
 			{
-				var randomIndex = WorldHandler.Instance.RandomRange(0, possibleTiles.Count);
+				var randomIndex = SimRandom.RandomRange(0, possibleTiles.Count);
 				var chosenTile = possibleTiles[randomIndex];
 				var tileController = world.GetFactionThatControlsTile(chosenTile);
 				if (chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && (tileController == this || tileController == null))
@@ -98,7 +98,7 @@ namespace Game.Factions
 			return spawned;
 		}
 
-		public ActionScore GenerateActionScore()
+		public Priorities GeneratePriorities()
 		{
 			int militaryScore = 10 - (10 * militarySize) / population;
 
@@ -112,7 +112,7 @@ namespace Game.Factions
 
 			int expansionScore = (int)(10.0f - (territory.Count / averageFactionTiles));
 
-			return new ActionScore(militaryScore, 0, 0, 5, expansionScore); 
+			return new Priorities(militaryScore, 0, 0, 5, expansionScore); 
 		}
 
 		public bool ExpandTerritory()
@@ -124,7 +124,7 @@ namespace Game.Factions
 				return false;
 			}
 
-			var randomIndex = WorldHandler.Instance.RandomRange(0, possibleTiles.Count);
+			var randomIndex = SimRandom.RandomRange(0, possibleTiles.Count);
 			var chosenTile = possibleTiles[randomIndex];
 			territory.Add(chosenTile);
 			OutputLogger.LogFormat("{0} Faction expanded it's borders to include the tile at {1}.", Game.Enums.LogSource.FACTIONACTION, name, chosenTile.GetWorldPosition());

@@ -27,7 +27,7 @@ public class WorldHandler : MonoBehaviour
     private Renderer fertilityMapRenderer;
 
     public int seed;
-    System.Random seededRandom;
+    public System.Random seededRandom;
 
     World world;
     int chunkSize = 10;
@@ -59,23 +59,6 @@ public class WorldHandler : MonoBehaviour
             //string fullName = NameGenerator.GeneratePersonFullName(nameContainers[0], Gender.NEITHER);
             //Debug.Log(fullName);
         }
-    }
-
-    public int RandomInteger()
-	{
-        return seededRandom.Next(-100000, 100000);
-    }
-
-    public float RandomFloat01()
-	{
-        float percision = 100000.0f;
-        return seededRandom.Next(0, (int)percision) / percision;
-    }
-
-    public int RandomRange(int minValue, int maxValue)
-	{
-        return seededRandom.Next(minValue, maxValue);
-
     }
 
     public void DrawNoiseMap()

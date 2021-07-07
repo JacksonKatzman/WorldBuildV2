@@ -95,7 +95,7 @@ public class City : Landmark
 			OutputLogger.LogFormat("This occured due to a population of {0}, and an available land score of {1}.", LogSource.IMPORTANT, population, tile.biome.availableLand);
 			if (burgeoningTension >= faction.maxBurgeoningTension.modified * (burgeoningFactor))
 			{
-				var movingPercentage = WorldHandler.Instance.RandomRange(5, 11) / 100.0f;
+				var movingPercentage = SimRandom.RandomRange(5, 11) / 100.0f;
 				var movingAmount = (int)(population * movingPercentage);
 				var foodAmount = movingAmount * 1.3f;
 				if (faction.SpawnCityWithinRadius(tile, foodAmount, movingAmount))

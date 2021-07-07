@@ -17,7 +17,7 @@ public class EventManager : MonoBehaviour
 
     private Dictionary<ActionKey, MethodInfo> eventDictionary;
 
-    public void CallActionByScore(ActionScore score, Faction faction)
+    public void CallActionByScore(Priorities score, Faction faction)
 	{
         int currentBestScore = int.MaxValue;
         ActionKey currentBestMethod = null;
@@ -25,7 +25,7 @@ public class EventManager : MonoBehaviour
         foreach (ActionKey key in eventDictionary.Keys)
 		{
             //OutputLogger.LogFormatAndPause("Key Score: {0} {1} {2} {3} {4}", Game.Enums.LogSource.IMPORTANT, key.score.militaryScore, key.score.infrastructureScore, key.score.mercantileScore, key.score.politicalScore, key.score.expansionScore);
-            var testedScore = ActionScore.CompareScores(key.score, score);
+            var testedScore = Priorities.CompareScores(key.score, score);
             //OutputLogger.LogFormatAndPause("{0} Faction had a compared score of {1} for the {2} action.", Game.Enums.LogSource.IMPORTANT, faction.name, testedScore, key.fuctionName);
             if(testedScore < currentBestScore)
 			{
@@ -82,7 +82,7 @@ public class EventManager : MonoBehaviour
                 string[] splitValues = score.Split(',');
                 if (splitValues[0] == methodName)
 				{
-                    var actionScore = new ActionScore(Int32.Parse(splitValues[2]), Int32.Parse(splitValues[3]), Int32.Parse(splitValues[4]), Int32.Parse(splitValues[5]), Int32.Parse(splitValues[6]));
+                    var actionScore = new Priorities(Int32.Parse(splitValues[2]), Int32.Parse(splitValues[3]), Int32.Parse(splitValues[4]), Int32.Parse(splitValues[5]), Int32.Parse(splitValues[6]));
                     var actionKey = new ActionKey(splitValues[0], Int32.Parse(splitValues[1]), actionScore);
                     eventDictionary.Add(actionKey, method);
                     break;

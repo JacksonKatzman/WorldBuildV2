@@ -11,8 +11,8 @@ public static class NoiseGenerator
 		Vector2[] octaveOffsets = new Vector2[octaves];
 		for(int i = 0; i < octaves; i++)
 		{
-			float offsetX = WorldHandler.Instance.RandomInteger() + manualOffset.x;
-			float offsetY = WorldHandler.Instance.RandomInteger() + manualOffset.y;
+			float offsetX = SimRandom.RandomInteger() + manualOffset.x;
+			float offsetY = SimRandom.RandomInteger() + manualOffset.y;
 			octaveOffsets[i] = new Vector2(offsetX, offsetY);
 		}
 

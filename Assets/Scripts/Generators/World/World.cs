@@ -87,8 +87,8 @@ namespace Game.WorldGeneration
 			bool spawned = false;
 			while (!spawned)
 			{
-				var randomXIndex = WorldHandler.Instance.RandomRange(0, worldChunks.GetLength(0));
-				var randomYIndex = WorldHandler.Instance.RandomRange(0, worldChunks.GetLength(1));
+				var randomXIndex = SimRandom.RandomRange(0, worldChunks.GetLength(0));
+				var randomYIndex = SimRandom.RandomRange(0, worldChunks.GetLength(1));
 				spawned = worldChunks[randomXIndex, randomYIndex].SpawnCity(100, 100);
 			}
 			HandleDeferredItems();
