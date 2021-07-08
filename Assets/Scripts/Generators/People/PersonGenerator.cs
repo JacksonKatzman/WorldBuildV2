@@ -4,6 +4,7 @@ using UnityEngine;
 using Game.WorldGeneration;
 using Game.Enums;
 using Game.Factions;
+using Game.Data.EventHandling;
 
 public static class PersonGenerator
 {
@@ -20,7 +21,7 @@ public static class PersonGenerator
 
 	public static void HandleDeath(Person person)
 	{
-		//person.faction?.
-		world.RemovePerson(person);
+		var simEvent = new PersonDiedEvent(person);
+		EventManager.Instance.Dispatch(simEvent);
 	}
 }

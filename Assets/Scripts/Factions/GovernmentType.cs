@@ -15,14 +15,31 @@ public class GovernmentType : ScriptableObject
 [System.Serializable]
 public class LeadershipStructureNode
 {
+	public Person occupant;
 	public Vector2Int ageRange;
 	public Gender requiredGender = Gender.ANY;
+
+	public LeadershipStructureNode(LeadershipStructureNode copyNode)
+	{
+		occupant = copyNode.occupant;
+		ageRange = copyNode.ageRange;
+		requiredGender = copyNode.requiredGender;
+	}
 }
 
 [System.Serializable]
 public class LeadershipTier
 {
 	public List<LeadershipStructureNode> tier;
+
+	public LeadershipTier(LeadershipTier copy)
+	{
+		tier = new List<LeadershipStructureNode>();
+		foreach(LeadershipStructureNode node in copy.tier)
+		{
+			tier.Add(new LeadershipStructureNode(node));
+		}
+	}
 	
 	public LeadershipStructureNode this[int key]
 	{

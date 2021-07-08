@@ -78,6 +78,10 @@ public class Person : ITimeSensitive
 	public void AdvanceTime()
 	{
 		age++;
+		if(age >= naturalDeathAge)
+		{
+			PersonGenerator.HandleDeath(this);
+		}
 	}
 
 	private void GenerateStats()

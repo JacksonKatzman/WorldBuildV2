@@ -5,6 +5,7 @@ using Game.Generators.Noise;
 using Game.Enums;
 using Game.Factions;
 using System;
+using Game.Data.EventHandling;
 
 namespace Game.WorldGeneration
 {
@@ -35,8 +36,7 @@ namespace Game.WorldGeneration
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
 			factions = new List<Faction>();
 			people = new List<Person>();
-			temporaryFactionContainer = new List<Faction>();
-			temporaryPersonContainer = new List<Person>();
+			deferredActions = new List<Action>();
 
 			AlterMap(MapCategory.TERRAIN, noiseMap);
 			heightMapTexture = texture;
@@ -45,8 +45,6 @@ namespace Game.WorldGeneration
 			this.biomes = biomes;
 
 			Setup();
-			BuildChunks();
-			CreateBiomeMap();
 		}
 
 		public float[,] SampleNoiseMap(MapCategory mapCategory, Vector2Int chunkLocation)
@@ -178,6 +176,11 @@ namespace Game.WorldGeneration
 			GenerateNewNoiseMap(MapCategory.RAINFALL);
 			GenerateNewNoiseMap(MapCategory.FERTILITY);
 
+			BuildChunks();
+			CreateBiomeMap();
+
+			SubscribeToEvents();
+
 			yearsPassed = 0;
 		}
 
@@ -232,6 +235,16 @@ namespace Game.WorldGeneration
 				action.Invoke();
 			}
 			deferredActions.Clear();
+		}
+
+		private void OnPersonDeath(PersonDiedEvent simEvent)
+		{
+			RemovePerson(simEvent.person);
+		}
+
+		private void SubscribeToEvents()
+		{
+			EventManager.Instance.AddEventHandler<PersonDiedEvent>(OnPersonDeath);
 		}
 	}
 }

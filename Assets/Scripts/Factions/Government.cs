@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Data.EventHandling;
 
 namespace Game.Factions
 {
 	public class Government
 	{
-		public List<List<Person>> leadershipStructure;
+		public List<LeadershipTier> leadershipStructure;
 		public GovernmentType governmentType;
 		private Faction faction;
 
@@ -16,6 +17,8 @@ namespace Game.Factions
 			governmentType = type;
 
 			BuildLeadershipStructure();
+
+			SubscribeToEvents();
 		}
 
 		public void UpdateFactionUsingPassiveTraits(Faction faction)
@@ -31,15 +34,44 @@ namespace Game.Factions
 
 		private void BuildLeadershipStructure()
 		{
-			leadershipStructure = new List<List<Person>>();
-			for(int tierIndex = 0; tierIndex < governmentType.leadershipStructure.Count; tierIndex++)
+			leadershipStructure = new List<LeadershipTier>();
+
+			foreach(LeadershipTier tier in governmentType.leadershipStructure)
 			{
-				var tier = new List<Person>();
-				foreach(LeadershipStructureNode node in governmentType.leadershipStructure[tierIndex])
+				leadershipStructure.Add(new LeadershipTier(tier));
+			}
+
+			foreach(LeadershipTier tier in leadershipStructure)
+			{
+				foreach(LeadershipStructureNode node in tier)
 				{
-					tier.Add(PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender));
+					DetermineNewLeader(node);
 				}
 			}
+		}
+
+		private void OnPersonDeath(PersonDiedEvent simEvent)
+		{
+			foreach (LeadershipTier tier in leadershipStructure)
+			{
+				foreach (LeadershipStructureNode node in tier)
+				{
+					if(node.occupant == simEvent.person)
+					{
+						DetermineNewLeader(node);
+					}
+				}
+			}
+		}
+
+		private void DetermineNewLeader(LeadershipStructureNode node)
+		{
+			node.occupant = PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender);
+		}
+
+		private void SubscribeToEvents()
+		{
+			EventManager.Instance.AddEventHandler<PersonDiedEvent>(OnPersonDeath);
 		}
 	}
 }
