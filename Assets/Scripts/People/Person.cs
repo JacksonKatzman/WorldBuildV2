@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Enums;
+using Game.Factions;
 
 public class Person : ITimeSensitive
 {
@@ -10,13 +11,12 @@ public class Person : ITimeSensitive
 	public string name;
 	public int age;
 	public Gender gender;
+	public Faction faction;
 
 	public List<Person> children;
 
-	//Stat Block
 	public PersonStats stats;
 
-	//Priorities Block
 	public Priorities priorities;
 
 	private int naturalDeathAge;
@@ -42,6 +42,10 @@ public class Person : ITimeSensitive
 		{
 			GeneratePriorities();
 		}
+
+		DetermineNaturalDeathAge();
+
+		OutputLogger.LogFormat("{0} was spawned at age {1}.", LogSource.PEOPLE, name, age);
 	}
 
 	public Person(int age, Gender gender, Person progenitor) : this(age, gender)
@@ -73,7 +77,7 @@ public class Person : ITimeSensitive
 
 	public void AdvanceTime()
 	{
-
+		age++;
 	}
 
 	private void GenerateStats()

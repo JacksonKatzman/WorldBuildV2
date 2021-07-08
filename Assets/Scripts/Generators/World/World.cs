@@ -4,6 +4,7 @@ using UnityEngine;
 using Game.Generators.Noise;
 using Game.Enums;
 using Game.Factions;
+using System;
 
 namespace Game.WorldGeneration
 {
@@ -23,13 +24,19 @@ namespace Game.WorldGeneration
 		public int chunkSize;
 		public int yearsPassed;
 
+		private List<Person> people;
+
 		private List<Faction> temporaryFactionContainer;
+		private List<Person> temporaryPersonContainer;
+		private List<Action> deferredActions;
 
 		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<Biome> biomes)
 		{
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
 			factions = new List<Faction>();
+			people = new List<Person>();
 			temporaryFactionContainer = new List<Faction>();
+			temporaryPersonContainer = new List<Person>();
 
 			AlterMap(MapCategory.TERRAIN, noiseMap);
 			heightMapTexture = texture;
@@ -72,7 +79,14 @@ namespace Game.WorldGeneration
 				faction.AdvanceTime();
 			}
 
-			HandleDeferredItems();
+			HandleDeferredActions();
+
+			foreach(Person person in people)
+			{
+				person.AdvanceTime();
+			}
+
+			HandleDeferredActions();
 
 			yearsPassed++;
 		}
@@ -91,13 +105,13 @@ namespace Game.WorldGeneration
 				var randomYIndex = SimRandom.RandomRange(0, worldChunks.GetLength(1));
 				spawned = worldChunks[randomXIndex, randomYIndex].SpawnCity(100, 100);
 			}
-			HandleDeferredItems();
+			HandleDeferredActions();
 		}
 
 		public void CreateNewFaction(Tile tile, float food, int population)
 		{
 			var faction = new Faction(tile, food, population);
-			temporaryFactionContainer.Add(faction);
+			deferredActions.Add(() => { factions.Add(faction); });
 		}
 
 		public Tile GetTileAtWorldPosition(Vector2Int worldPosition)
@@ -120,6 +134,23 @@ namespace Game.WorldGeneration
 
 			return controllingFaction;
 		}
+
+		public void AddPerson(Person person)
+		{
+			if(!people.Contains(person))
+			{
+				deferredActions.Add(() => { people.Add(person); });
+			}
+		}
+
+		public void RemovePerson(Person person)
+		{
+			if (people.Contains(person))
+			{
+				deferredActions.Add(() => { people.Remove(person); });
+			}
+		}
+	
 
 		private void BuildChunks()
 		{
@@ -194,13 +225,13 @@ namespace Game.WorldGeneration
 			colorMapTexture.Apply();
 		}
 
-		private void HandleDeferredItems()
+		private void HandleDeferredActions()
 		{
-			foreach(Faction faction in temporaryFactionContainer)
+			foreach(Action action in deferredActions)
 			{
-				factions.Add(faction);
+				action.Invoke();
 			}
-			temporaryFactionContainer.Clear();
+			deferredActions.Clear();
 		}
 	}
 }

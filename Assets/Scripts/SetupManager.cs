@@ -22,7 +22,7 @@ public class SetupManager : MonoBehaviour
 
         for(int a = 0; a < 50; a++)
 		{
-            string fullName = NameGenerator.GeneratePersonFullName(nameContainers[0], Gender.NEITHER);
+            string fullName = NameGenerator.GeneratePersonFullName(nameContainers[0], Gender.ANY);
             Debug.Log(fullName);
 		}
     }

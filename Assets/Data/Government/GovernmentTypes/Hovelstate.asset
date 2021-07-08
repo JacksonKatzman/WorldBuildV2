@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66876352bd36d52489948df0d667cdca, type: 3}
   m_Name: Hovelstate
   m_EditorClassIdentifier: 
-  leadershipSlots: 1
+  leadershipStructure:
+  - tier:
+    - ageRange: {x: 20, y: 45}
+      requiredGender: 2
   traits:
   - {fileID: 11400000, guid: 80c7cfc16f6318c45ad199995b4bc6ed, type: 2}
   influenceRequirement: 10

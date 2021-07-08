@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Factions;
 
-public class EventManager : MonoBehaviour
+public class SimAIManager : MonoBehaviour
 {
-    private static EventManager instance;
-    public static EventManager Instance => instance;
+    private static SimAIManager instance;
+    public static SimAIManager Instance => instance;
 
     [SerializeField]
     private TextAsset factionActionScores;

@@ -10,6 +10,7 @@ public class WorldHandler : MonoBehaviour
 {
     private static WorldHandler instance;
     public static WorldHandler Instance => instance;
+    public World World => world;
 
     public NoiseSettings settings;
     public BiomeContainer biomeSettings;
@@ -29,7 +30,7 @@ public class WorldHandler : MonoBehaviour
     public int seed;
     public System.Random seededRandom;
 
-    World world;
+    private World world;
     int chunkSize = 10;
 
     public bool DebugPause = false;
@@ -56,8 +57,6 @@ public class WorldHandler : MonoBehaviour
         for (int a = 0; a < 1; a++)
         {
             world.SpawnRandomCity();
-            //string fullName = NameGenerator.GeneratePersonFullName(nameContainers[0], Gender.NEITHER);
-            //Debug.Log(fullName);
         }
     }
 

@@ -12,7 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66876352bd36d52489948df0d667cdca, type: 3}
   m_Name: Rural Eldership
   m_EditorClassIdentifier: 
-  leadershipSlots: 3
+  leadershipStructure:
+  - tier:
+    - ageRange: {x: 58, y: 88}
+      requiredGender: 2
+    - ageRange: {x: 58, y: 88}
+      requiredGender: 2
+    - ageRange: {x: 58, y: 88}
+      requiredGender: 2
   traits:
   - {fileID: 11400000, guid: 94b2bf8da7181644085287060cd794a9, type: 2}
   influenceRequirement: 10

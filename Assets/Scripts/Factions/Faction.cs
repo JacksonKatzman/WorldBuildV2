@@ -35,7 +35,7 @@ namespace Game.Factions
 
 		public Faction(Tile startingTile, float food, int population)
 		{
-			name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.NEITHER);
+			name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.ANY);
 
 			territory = new List<Tile>();
 			world = startingTile.world;
@@ -44,7 +44,7 @@ namespace Game.Factions
 			influence = STARTING_INFLUENCE;
 
 			SetStartingStats();
-			government = new Government(DataManager.Instance.GetGovernmentType(influence));
+			government = new Government(this, DataManager.Instance.GetGovernmentType(influence));
 
 			OutputLogger.LogFormatAndPause("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, capitalCity.name, government.governmentType.name);
 		}
@@ -56,7 +56,7 @@ namespace Game.Factions
 			if(world.yearsPassed % 10 == 0)
 			{
 				var score = GeneratePriorities();
-				EventManager.Instance.CallActionByScore(score, this);
+				SimAIManager.Instance.CallActionByScore(score, this);
 			}
 
 			foreach(Tile tile in territory)

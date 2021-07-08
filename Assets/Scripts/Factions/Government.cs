@@ -6,12 +6,16 @@ namespace Game.Factions
 {
 	public class Government
 	{
-		//Person leader;
+		public List<List<Person>> leadershipStructure;
 		public GovernmentType governmentType;
+		private Faction faction;
 
-		public Government(GovernmentType type)
+		public Government(Faction faction, GovernmentType type)
 		{
+			this.faction = faction;
 			governmentType = type;
+
+			BuildLeadershipStructure();
 		}
 
 		public void UpdateFactionUsingPassiveTraits(Faction faction)
@@ -21,6 +25,19 @@ namespace Game.Factions
 				if(trait is PassiveGovernmentTrait)
 				{
 					trait.Invoke(faction);
+				}
+			}
+		}
+
+		private void BuildLeadershipStructure()
+		{
+			leadershipStructure = new List<List<Person>>();
+			for(int tierIndex = 0; tierIndex < governmentType.leadershipStructure.Count; tierIndex++)
+			{
+				var tier = new List<Person>();
+				foreach(LeadershipStructureNode node in governmentType.leadershipStructure[tierIndex])
+				{
+					tier.Add(PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender));
 				}
 			}
 		}
