@@ -18,6 +18,7 @@ public class LeadershipStructureNode
 	public Person occupant;
 	public Vector2Int ageRange;
 	public Gender requiredGender = Gender.ANY;
+	public string title;
 
 	public LeadershipStructureNode(LeadershipStructureNode copyNode)
 	{

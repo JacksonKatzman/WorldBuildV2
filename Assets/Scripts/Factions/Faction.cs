@@ -17,14 +17,13 @@ namespace Game.Factions
 		private static float MAX_BURGEONING_TENSION = MAX_FOOD_BY_LAND / 10;
 
 		public string name;
-		public City capitalCity;
+		public List<City> cities;
 		public Government government;
 		public List<Tile> territory;
 		public int influence;
 		public World world;
 
 		public int population => Population();
-		public int militarySize;
 
 		public ModifiedType<float> birthRate;
 		public ModifiedType<float> deathRate;
@@ -33,6 +32,10 @@ namespace Game.Factions
 		public ModifiedType<float> maxFoodByLand;
 		public ModifiedType<float> maxBurgeoningTension;
 
+		public Military military;
+
+		public ModifiedType<float> recruitmentRate;
+
 		public Faction(Tile startingTile, float food, int population)
 		{
 			name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.ANY);
@@ -40,8 +43,12 @@ namespace Game.Factions
 			territory = new List<Tile>();
 			world = startingTile.world;
 			territory.Add(startingTile);
-			capitalCity = startingTile.SpawnCity(this, food, population);
+
+			cities = new List<City>();
+			cities.Add(startingTile.SpawnCity(this, food, population));
 			influence = STARTING_INFLUENCE;
+
+			military = new Military();
 
 			SetStartingStats();
 			government = new Government(this, DataManager.Instance.GetGovernmentType(influence));
@@ -66,6 +73,8 @@ namespace Game.Factions
 					landmark.AdvanceTime();
 				}
 			}
+
+			UpdateMilitary();
 		}
 		public bool SpawnCityWithinRadius(Tile tile, float foodAmount, int population)
 		{
@@ -82,7 +91,7 @@ namespace Game.Factions
 				{
 					if(tileController == this)
 					{
-						chosenTile.SpawnCity(this, foodAmount, population);
+						cities.Add(chosenTile.SpawnCity(this, foodAmount, population));
 					}
 					else
 					{
@@ -100,7 +109,7 @@ namespace Game.Factions
 
 		public Priorities GeneratePriorities()
 		{
-			int militaryScore = 10 - (10 * militarySize) / population;
+			int militaryScore = 0;
 
 			float averageFactionTiles = 0;
 			foreach(Faction faction in world.factions)
@@ -113,6 +122,13 @@ namespace Game.Factions
 			int expansionScore = (int)(10.0f - (territory.Count / averageFactionTiles));
 
 			return new Priorities(militaryScore, 0, 0, 5, expansionScore); 
+		}
+
+		public void UpdateMilitary()
+		{
+			//Handle Food Consumption
+			var lostTroops = ConsumeFoodAcrossFaction(military.Count);
+			military.ModifyTroopCount((int)lostTroops);
 		}
 
 		public bool ExpandTerritory()
@@ -149,6 +165,54 @@ namespace Game.Factions
 			return possibleTiles;
 		}
 
+		public void AddCity(City city)
+		{
+			cities.Add(city);
+		}
+
+		public bool RemoveCity(City city)
+		{
+			if(cities.Contains(city))
+			{
+				cities.Remove(city);
+				return true;
+			}
+			return false;
+		}
+
+		private float ConsumeFoodAcrossFaction(int amount)
+		{
+			Dictionary<City, float> tracker = new Dictionary<City, float>();
+			foreach(City city in cities)
+			{
+				tracker.Add(city, city.food);
+			}
+
+			float totalfood = 0;
+			foreach(float food in tracker.Values)
+			{
+				totalfood += food;
+			}
+
+			float totalDeficit = 0;
+			foreach(var pair in tracker)
+			{
+				tracker[pair.Key] = pair.Value / totalfood;
+
+				float amountConsumed = (amount * pair.Value);
+				float deficit = (pair.Key.food - amountConsumed);
+				if(deficit < 0)
+				{
+					totalDeficit += deficit;
+					amountConsumed -= deficit;
+				}
+
+				pair.Key.food -= amountConsumed;
+			}
+
+			return Mathf.Clamp(totalDeficit, float.MinValue, 0);
+		}
+
 		private int Population()
 		{
 			int count = 0;
@@ -173,9 +237,10 @@ namespace Game.Factions
 			spoilageRate = new ModifiedType<float>(AVERAGE_SPOILAGE_RATE);
 			maxFoodByLand = new ModifiedType<float>(MAX_FOOD_BY_LAND);
 			maxBurgeoningTension = new ModifiedType<float>(MAX_BURGEONING_TENSION);
+
+			recruitmentRate = new ModifiedType<float>(0);
 		}
 
-		//TODO: Create basic government types and spawn governments with those types
 		//TODO: Define a way that factions/governments generate influence
 		//TODO: Use influence and faction pressure to determine tile aquisition 
 	}
