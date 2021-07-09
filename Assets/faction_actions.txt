@@ -1,3 +1,4 @@
 DoNothing,0,0,0,0,0,0
 ExpandTerritoryToFreeTile,10,0,0,0,3,5
 GenerateInfluence,0,0,0,0,5,0
+RecruitTroops,0,5,0,0,0,0

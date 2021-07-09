@@ -32,6 +32,8 @@ namespace Game.Factions
 		public ModifiedType<float> maxFoodByLand;
 		public ModifiedType<float> maxBurgeoningTension;
 
+		public Priorities currentPriorities;
+
 		public Military military;
 
 		public ModifiedType<float> recruitmentRate;
@@ -53,17 +55,18 @@ namespace Game.Factions
 			SetStartingStats();
 			government = new Government(this, DataManager.Instance.GetGovernmentType(influence));
 
-			OutputLogger.LogFormatAndPause("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, capitalCity.name, government.governmentType.name);
+			OutputLogger.LogFormatAndPause("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, cities[0].name, government.governmentType.name);
 		}
 		public void AdvanceTime()
 		{
 			SetStartingStats();
 			government.UpdateFactionUsingPassiveTraits(this);
 
+			currentPriorities = GeneratePriorities();
+
 			if(world.yearsPassed % 10 == 0)
 			{
-				var score = GeneratePriorities();
-				SimAIManager.Instance.CallActionByScore(score, this);
+				SimAIManager.Instance.CallActionByScore(currentPriorities, this);
 			}
 
 			foreach(Tile tile in territory)
@@ -109,13 +112,17 @@ namespace Game.Factions
 
 		public Priorities GeneratePriorities()
 		{
-			int militaryScore = 0;
-
+			int averageFactionMilitary = 0;
 			float averageFactionTiles = 0;
 			foreach(Faction faction in world.factions)
 			{
 				averageFactionTiles += faction.territory.Count;
+				averageFactionMilitary += faction.military.Count;
 			}
+
+			averageFactionMilitary /= world.factions.Count;
+			int militaryScore = (int)(5.0 * (averageFactionMilitary / (military.Count + 1))) + 2;
+
 			averageFactionTiles /= world.factions.Count;
 			averageFactionTiles++;
 
@@ -129,6 +136,20 @@ namespace Game.Factions
 			//Handle Food Consumption
 			var lostTroops = ConsumeFoodAcrossFaction(military.Count);
 			military.ModifyTroopCount((int)lostTroops);
+		}
+
+		public void ModifyTroopCount(int amount)
+		{
+			amount = Mathf.Clamp(amount, -1 * military.Count, (int)(0.8f * population));
+			RemovePopulationAcrossFaction(amount);
+			military.ModifyTroopCount(amount);
+		}
+
+		public void EventRecruitTroops()
+		{
+			int amount = (int)(population * (currentPriorities.militaryScore / 2));
+			ModifyTroopCount(amount);
+			OutputLogger.LogFormat("{0} Faction has recruited {1} soldiers for it's military.", LogSource.FACTIONACTION, name, amount);
 		}
 
 		public bool ExpandTerritory()
@@ -211,6 +232,27 @@ namespace Game.Factions
 			}
 
 			return Mathf.Clamp(totalDeficit, float.MinValue, 0);
+		}
+
+		private void RemovePopulationAcrossFaction(int amount)
+		{
+			if(amount >= population)
+			{
+				//kill faction
+				return;
+			}
+
+			Dictionary<City, float> tracker = new Dictionary<City, float>();
+
+			foreach(City city in cities)
+			{
+				city.population -= (city.population / population) * amount;
+			}
+		}
+
+		private void RemovePercentOfPopulationAcrossFaction(float percent)
+		{
+			RemovePopulationAcrossFaction((int)(population * percent));
 		}
 
 		private int Population()

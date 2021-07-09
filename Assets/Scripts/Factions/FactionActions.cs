@@ -21,4 +21,9 @@ public abstract class FactionActions
 		faction.influence++;
 		OutputLogger.LogFormat("{0} Faction used political dealings to increase it's influence.", Game.Enums.LogSource.FACTIONACTION, faction.name);
 	}
+
+	public static void RecruitTroops(Faction faction)
+	{
+		faction.EventRecruitTroops();
+	}
 }
