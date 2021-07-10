@@ -18,9 +18,11 @@ namespace Game.Factions
 		private static float MAX_BURGEONING_TENSION = MAX_FOOD_BY_LAND / 10;
 
 		public string name;
+		public Color color;
 		public List<City> cities;
 		public Government government;
 		public List<Tile> territory;
+		public List<Tile> borderTiles;
 		public int influence;
 		public World world;
 
@@ -51,6 +53,10 @@ namespace Game.Factions
 		public Faction(Tile startingTile, float food, int population)
 		{
 			name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.ANY);
+			var r = SimRandom.RandomFloat01();
+			var g = SimRandom.RandomFloat01();
+			var b = SimRandom.RandomFloat01();
+			color = new Color(r, g, b, 0.4f * 255);
 
 			territory = new List<Tile>();
 			world = startingTile.world;
@@ -107,11 +113,12 @@ namespace Game.Factions
 				var randomIndex = SimRandom.RandomRange(0, possibleTiles.Count);
 				var chosenTile = possibleTiles[randomIndex];
 				var tileController = world.GetFactionThatControlsTile(chosenTile);
-				if (chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && (tileController == this || tileController == null))
+				if (chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && (tileController == this || tileController == null) && chosenTile.landType != LandType.OCEAN)
 				{
-					if(tileController == this)
+					if(tileController == this || Tile.GetDistanceBetweenTiles(tile, chosenTile) < radius)
 					{
 						cities.Add(chosenTile.SpawnCity(this, foodAmount, population));
+						deferredActions.Add(() => { territory.Add(chosenTile); });
 					}
 					else
 					{
@@ -223,7 +230,7 @@ namespace Game.Factions
 
 		public bool ExpandTerritory()
 		{
-			var possibleTiles = GetBorderTiles();
+			var possibleTiles = borderTiles;
 
 			if(possibleTiles.Count == 0)
 			{
@@ -243,7 +250,7 @@ namespace Game.Factions
 			var possibleTiles = new List<Tile>();
 			foreach(Tile territoryTile in territory)
 			{
-				var adjacentTiles = territoryTile.GetAllTilesInRadius(2);
+				var adjacentTiles = territoryTile.GetDirectlyAdjacentTiles();
 				foreach(Tile adjacentTile in adjacentTiles)
 				{
 					var tileController = world.GetFactionThatControlsTile(adjacentTile);
@@ -382,6 +389,7 @@ namespace Game.Factions
 		{
 			actionsRemaining = actionsPerTurn.modified;
 			foodProducedThisTurn = 0;
+			borderTiles = GetBorderTiles();
 		}
 
 		//TODO: Define a way that factions/governments generate influence

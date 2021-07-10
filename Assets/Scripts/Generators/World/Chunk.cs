@@ -40,7 +40,7 @@ namespace Game.WorldGeneration
 				var randomYIndex = SimRandom.RandomRange(0, chunkTiles.GetLength(1));
 				var chosenTile = chunkTiles[randomXIndex, randomYIndex];
 				var uncontrolled = (world.GetFactionThatControlsTile(chosenTile) == null);
-				if(chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && uncontrolled)
+				if(chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && uncontrolled && chosenTile.landType != LandType.OCEAN)
 				{
 					world.CreateNewFaction(chosenTile, food, population);
 					spawned = true;
@@ -72,6 +72,26 @@ namespace Game.WorldGeneration
 				for(int x = 0; x < width; x++)
 				{
 					colorMap[x, y] = chunkTiles[x, y].biome.color;
+				}
+			}
+
+			return colorMap;
+		}
+
+		public Color[,] GetVoxelBiomeColorMap()
+		{
+			var width = chunkTiles.GetLength(0) * 2;
+			var height = chunkTiles.GetLength(1) * 2;
+			Color[,] colorMap = new Color[width, height];
+
+			for (int y = 0; y < height; y += 2)
+			{
+				for (int x = 0; x < width; x += 2)
+				{
+					colorMap[x, y] = chunkTiles[x, y].biome.color;
+					colorMap[x + 1, y] = chunkTiles[x, y].biome.color;
+					colorMap[x, y + 1] = chunkTiles[x, y].biome.color;
+					colorMap[x + 1, y + 1] = chunkTiles[x, y].biome.color;
 				}
 			}
 

@@ -17,6 +17,7 @@ namespace Game.WorldGeneration
 
 		public Texture2D heightMapTexture;
 		public Texture2D colorMapTexture;
+		public Texture2D voxelColorMapTexture;
 
 		private List<Biome> biomes;
 		public List<Faction> factions;
@@ -121,6 +122,7 @@ namespace Game.WorldGeneration
 		public Tile GetTileAtWorldPosition(Vector2Int worldPosition)
 		{
 			Vector2Int chunkCoords = new Vector2Int(worldPosition.x / chunkSize, worldPosition.y / chunkSize);
+			//OutputLogger.LogFormat("Chunk: {0} -- World: ({1},{2})", LogSource.IMPORTANT, chunkCoords, worldPosition.x % chunkSize, worldPosition.y % chunkSize);
 			return worldChunks[chunkCoords.x, chunkCoords.y].chunkTiles[worldPosition.x % chunkSize, worldPosition.y % chunkSize];
 		}
 
@@ -184,6 +186,7 @@ namespace Game.WorldGeneration
 
 			BuildChunks();
 			CreateBiomeMap();
+			CreateVoxelBiomeMap();
 
 			SubscribeToEvents();
 
@@ -233,6 +236,78 @@ namespace Game.WorldGeneration
 			colorMapTexture.filterMode = FilterMode.Point;
 			colorMapTexture.SetPixels(colorMap);
 			colorMapTexture.Apply();
+		}
+
+		private void CreateVoxelBiomeMap()
+		{
+			var width = biomeMap.GetLength(0) * 2;
+			var height = biomeMap.GetLength(1) * 2;
+			var voxelBiomeMap = new Color[width, height];
+			for (int y = 0; y < height; y+=2)
+			{
+				for (int x = 0; x < width; x+=2)
+				{
+					voxelBiomeMap[x, y] = biomeMap[x/2, y/2];
+					voxelBiomeMap[x+1, y] = biomeMap[x/2, y/2];
+					voxelBiomeMap[x, y+1] = biomeMap[x/2, y/2];
+					voxelBiomeMap[x+1, y+1] = biomeMap[x/2, y/2];
+				}
+			}
+
+			Color[] colorMap = new Color[width * height];
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					colorMap[y * width + x] = voxelBiomeMap[x, y];
+				}
+			}
+			voxelColorMapTexture = new Texture2D(width, height);
+			voxelColorMapTexture.filterMode = FilterMode.Point;
+			voxelColorMapTexture.SetPixels(colorMap);
+			voxelColorMapTexture.Apply();
+		}
+
+		public Texture2D CreateFactionMap()
+		{
+			OutputLogger.LogFormat("Regenerating faction map!", LogSource.WORLDGEN);
+			var width = worldChunks.GetLength(0) * chunkSize;
+			var height = worldChunks.GetLength(1) * chunkSize;
+			//var width = noiseMaps[MapCategory.TERRAIN].GetLength(0);
+			//var height = noiseMaps[MapCategory.TERRAIN].GetLength(1);
+			var factionMap = new Color[width, height];
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					//factionMap[x, y] = new Color(0, 255, 255, 0.0f);
+				}
+			}
+
+			foreach (Faction faction in factions)
+			{
+				foreach(Tile tile in faction.territory)
+				{
+					var coords = tile.GetWorldPosition();
+					factionMap[coords.x, coords.y] = faction.color;
+				}
+			}
+
+			Color[] colorMap = new Color[width * height];
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					colorMap[y * width + x] = factionMap[x, y];
+				}
+			}
+
+			var factionMapTexture = new Texture2D(width, height);
+			factionMapTexture.filterMode = FilterMode.Point;
+			factionMapTexture.SetPixels(colorMap);
+			factionMapTexture.Apply();
+
+			return factionMapTexture;
 		}
 
 		private void HandleDeferredActions()

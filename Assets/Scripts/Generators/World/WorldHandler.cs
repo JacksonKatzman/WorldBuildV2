@@ -17,25 +17,22 @@ public class WorldHandler : MonoBehaviour
     public BiomeContainer biomeSettings;
 
     [SerializeField]
-    MeshFilter meshFilter;
+    MeshFilter mapMeshFilter;
 
     [SerializeField]
-    MeshRenderer meshRenderer;
+    MeshRenderer mapMeshRenderer;
+
+    [SerializeField]
+    MeshFilter factionMeshFilter;
+
+    [SerializeField]
+    MeshRenderer factionMeshRenderer;
 
     public float heightMulitplier;
     public AnimationCurve heightCurve;
 
     [SerializeField]
     private Renderer coloredMapRenderer;
-
-    [SerializeField]
-    private Renderer heightMapRenderer;
-
-    [SerializeField]
-    private Renderer rainfallMapRenderer;
-
-    [SerializeField]
-    private Renderer fertilityMapRenderer;
 
     public int seed;
     public System.Random seededRandom;
@@ -64,9 +61,9 @@ public class WorldHandler : MonoBehaviour
 
         DrawNoiseMap();
         //DrawMesh(MeshGenerator.GenerateTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.colorMapTexture);
-        DrawMesh(MeshGenerator.GenerateVoxelTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.colorMapTexture);
+        DrawMesh(MeshGenerator.GenerateVoxelTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.voxelColorMapTexture);
 
-        for (int a = 0; a < 2; a++)
+        for (int a = 0; a < 10; a++)
         {
             world.SpawnRandomCity();
         }
@@ -76,7 +73,7 @@ public class WorldHandler : MonoBehaviour
 	{
         Vector2Int noiseSize = new Vector2Int(settings.worldSize.x * chunkSize, settings.worldSize.y * chunkSize);
         world = WorldGenerator.GenerateWorld(settings, chunkSize, biomeSettings.biomes);
-
+        /*
         heightMapRenderer.sharedMaterial.mainTexture = world.heightMapTexture;
         coloredMapRenderer.transform.localScale = new Vector3(world.biomeMap.GetLength(0), 1, world.biomeMap.GetLength(1));
 
@@ -85,21 +82,30 @@ public class WorldHandler : MonoBehaviour
 
         fertilityMapRenderer.sharedMaterial.mainTexture = DebugCreateNoiseTexture(world.noiseMaps[Game.Enums.MapCategory.FERTILITY]);
         coloredMapRenderer.transform.localScale = new Vector3(world.biomeMap.GetLength(0), 1, world.biomeMap.GetLength(1));
-
-        coloredMapRenderer.sharedMaterial.mainTexture = world.colorMapTexture;
-        coloredMapRenderer.transform.localScale = new Vector3(world.biomeMap.GetLength(0), 1, world.biomeMap.GetLength(1));
+        */
+        coloredMapRenderer.sharedMaterial.mainTexture = world.voxelColorMapTexture;
+        coloredMapRenderer.transform.localScale = new Vector3(world.biomeMap.GetLength(0)*2, 1, world.biomeMap.GetLength(1)*2);
     }
 
     public void DrawMesh(MeshData meshData, Texture2D texture)
 	{
-        meshFilter.sharedMesh = meshData.CreateMesh();
-        meshRenderer.sharedMaterial.mainTexture = texture;
+        mapMeshFilter.sharedMesh = meshData.CreateMesh();
+        mapMeshRenderer.sharedMaterial.mainTexture = texture;
 	}
 
     public void DrawMesh(VoxelMeshData meshData, Texture2D texture)
     {
-        meshFilter.sharedMesh = meshData.CreateMesh();
-        meshRenderer.sharedMaterial.mainTexture = texture;
+        var mesh = meshData.CreateMesh();
+        mapMeshFilter.sharedMesh = mesh;
+        mapMeshRenderer.sharedMaterial.mainTexture = texture;
+
+        factionMeshFilter.sharedMesh = mesh;
+        factionMeshRenderer.sharedMaterial.mainTexture = world.CreateFactionMap();
+    }
+
+    private void RedrawFactionMap()
+	{
+        factionMeshRenderer.sharedMaterial.mainTexture = world.CreateFactionMap();
     }
 
     public void DebugAdvanceTime()
@@ -117,7 +123,7 @@ public class WorldHandler : MonoBehaviour
             world.AdvanceTime();
             debugYearsPassed++;
 		}
-
+        RedrawFactionMap();
         OutputLogger.LogFormat("Years passed since world generation: {0}", LogSource.WORLDGEN, world.yearsPassed);
 	}
 

@@ -65,7 +65,7 @@ namespace Game.WorldGeneration
 			{
 				for(int x = worldCoords.x - radius; x < worldCoords.x + radius; x++)
 				{
-					if(x < map.GetLength(0) && y < map.GetLength(1))
+					if(x < map.GetLength(0) && y < map.GetLength(1) && x > 0 && y > 0)
 					{
 						bool isInCircle = Mathf.Pow((x - worldCoords.x), 2) + Mathf.Pow((y - worldCoords.y), 2) < Mathf.Pow(radius, 2);
 						if(isInCircle)
@@ -76,6 +76,39 @@ namespace Game.WorldGeneration
 				}
 			}
 			return tileList;
+		}
+
+		public List<Tile> GetDirectlyAdjacentTiles()
+		{
+			var worldCoords = GetWorldPosition();
+			var map = world.noiseMaps[MapCategory.TERRAIN];
+			var tileList = new List<Tile>();
+
+			if(worldCoords.x - 1 > 0)
+			{
+				tileList.Add(world.GetTileAtWorldPosition(new Vector2Int(worldCoords.x - 1, worldCoords.y)));
+			}
+			if (worldCoords.x + 1 < map.GetLength(0))
+			{
+				tileList.Add(world.GetTileAtWorldPosition(new Vector2Int(worldCoords.x + 1, worldCoords.y)));
+			}
+			if (worldCoords.y - 1 > 0)
+			{
+				tileList.Add(world.GetTileAtWorldPosition(new Vector2Int(worldCoords.x, worldCoords.y - 1)));
+			}
+			if (worldCoords.y + 1 < map.GetLength(1))
+			{
+				tileList.Add(world.GetTileAtWorldPosition(new Vector2Int(worldCoords.x, worldCoords.y + 1)));
+			}
+
+			return tileList;
+		}
+
+		public static int GetDistanceBetweenTiles(Tile tileA, Tile tileB)
+		{
+			var posA = tileA.GetWorldPosition();
+			var posB = tileB.GetWorldPosition();
+			return (int)(posA - posB).magnitude;
 		}
 
 		private void CalculateBiome()

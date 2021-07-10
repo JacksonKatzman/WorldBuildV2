@@ -54,13 +54,13 @@ namespace Game.Generators
 					meshData.uvs[vertexIndex] = new Vector2(x / (float)width, y / (float)height);
 
 					meshData.vertices[vertexIndex + 1] = new Vector3(topLeftX + x + 1, heightCurve.Evaluate(heightMap[x, y]) * heightMultiplier, topLeftZ - y);
-					meshData.uvs[vertexIndex + 1] = new Vector2((x+1) / (float)width, y / (float)height);
+					meshData.uvs[vertexIndex + 1] = new Vector2((x+0) / (float)width, y / (float)height);
 
 					meshData.vertices[vertexIndex + 2] = new Vector3(topLeftX + x, heightCurve.Evaluate(heightMap[x, y]) * heightMultiplier, topLeftZ - y - 1);
-					meshData.uvs[vertexIndex + 2] = new Vector2(x / (float)width, (y+1) / (float)height);
+					meshData.uvs[vertexIndex + 2] = new Vector2(x / (float)width, (y+0) / (float)height);
 
 					meshData.vertices[vertexIndex + 3] = new Vector3(topLeftX + x + 1, heightCurve.Evaluate(heightMap[x, y]) * heightMultiplier, topLeftZ - y - 1);
-					meshData.uvs[vertexIndex + 3] = new Vector2((x+1) / (float)width, (y+1) / (float)height);
+					meshData.uvs[vertexIndex + 3] = new Vector2((x+0) / (float)width, (y+0) / (float)height);
 
 					meshData.AddTriangle(vertexIndex, vertexIndex + 3, vertexIndex + 2);
 					meshData.AddTriangle(vertexIndex + 3, vertexIndex, vertexIndex + 1);
@@ -86,7 +86,7 @@ namespace Game.Generators
 		}
 	}
 
-	public class MeshData
+	public class VoxelMeshData
 	{
 		public Vector3[] vertices;
 		//public int[] triangles;
@@ -96,11 +96,15 @@ namespace Game.Generators
 
 		int triangleIndex;
 
-		public MeshData(int meshWidth, int meshHeight)
+		public VoxelMeshData(int meshWidth, int meshHeight)
 		{
 			vertices = new Vector3[meshWidth * meshHeight];
 			//triangles = new int[(meshWidth - 1) * (meshHeight - 1) * 6];
 			uvs = new Vector2[meshWidth * meshHeight];
+			tempTriangles = new List<int>();
+			var triCountGoal = ((meshWidth - 1) * (meshHeight - 1)) - ((meshWidth / 2 - 1) * (meshHeight / 2 - 1));
+			triCountGoal *= 6;
+			OutputLogger.LogFormat("GOAL TRIS: {0}", Enums.LogSource.IMPORTANT, triCountGoal);
 		}
 
 		public void AddTriangle(int a, int b, int c)
@@ -119,12 +123,12 @@ namespace Game.Generators
 			mesh.triangles = tempTriangles.ToArray();
 			mesh.uv = uvs;
 			mesh.RecalculateNormals();
+			OutputLogger.LogFormat("ACHIEVED TRIS: {0}", Enums.LogSource.IMPORTANT, tempTriangles.Count);
 			return mesh;
-
 		}
 	}
 
-	public class VoxelMeshData
+	public class MeshData
 	{
 		public Vector3[] vertices;
 		public int[] triangles;
@@ -132,7 +136,7 @@ namespace Game.Generators
 
 		int triangleIndex;
 
-		public VoxelMeshData(int meshWidth, int meshHeight)
+		public MeshData(int meshWidth, int meshHeight)
 		{
 			vertices = new Vector3[meshWidth * meshHeight];
 			triangles = new int[(meshWidth - 1) * (meshHeight - 1) * 6];
@@ -155,7 +159,6 @@ namespace Game.Generators
 			mesh.uv = uvs;
 			mesh.RecalculateNormals();
 			return mesh;
-
 		}
 	}
 }
