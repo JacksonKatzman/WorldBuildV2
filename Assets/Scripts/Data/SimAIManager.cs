@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Factions;
+using Game.Enums;
 
 public class SimAIManager : MonoBehaviour
 {
@@ -15,31 +16,48 @@ public class SimAIManager : MonoBehaviour
     private TextAsset factionActionScores;
 
 
-    private Dictionary<ActionKey, MethodInfo> eventDictionary;
+    private Dictionary<PriorityType, List<MethodInfo>> eventDictionary;
 
-    public void CallActionByScore(Priorities score, Faction faction)
+    
+    public void CallActionByScores(Priorities score, Faction faction)
 	{
-        int currentBestScore = int.MaxValue;
-        ActionKey currentBestMethod = null;
-       // OutputLogger.LogFormatAndPause("Faction Score: {0} {1} {2} {3} {4}", Game.Enums.LogSource.IMPORTANT, score.militaryScore, score.infrastructureScore, score.mercantileScore, score.politicalScore, score.expansionScore);
-        foreach (ActionKey key in eventDictionary.Keys)
-		{
-            //OutputLogger.LogFormatAndPause("Key Score: {0} {1} {2} {3} {4}", Game.Enums.LogSource.IMPORTANT, key.score.militaryScore, key.score.infrastructureScore, key.score.mercantileScore, key.score.politicalScore, key.score.expansionScore);
-            var testedScore = Priorities.CompareScores(key.score, score);
-            //OutputLogger.LogFormatAndPause("{0} Faction had a compared score of {1} for the {2} action.", Game.Enums.LogSource.IMPORTANT, faction.name, testedScore, key.fuctionName);
-            if(testedScore < currentBestScore)
-			{
-                currentBestScore = testedScore;
-                currentBestMethod = key;
-			}
-		}
+        int index = 0;
+        int tries = 0;
+        int actionsTaken = 0;
+        var sortedList = score.SortedList();
 
-        if(currentBestMethod != null)
+        while(actionsTaken < faction.actionsRemaining && tries < 10)
 		{
-            eventDictionary[currentBestMethod].Invoke(null, new object[] { faction });
-		}
+            if(CallActionByPriorityType(sortedList[index], faction))
+			{
+                actionsTaken++;
+			}
+
+            index++;
+            tries++;
+
+            if(index >= sortedList.Count)
+			{
+                index = 0;
+			}
+		}            
 	}
 
+    private bool CallActionByPriorityType(PriorityType priorityType, Faction faction)
+	{
+        if (priorityType != PriorityType.MILITARY && eventDictionary[priorityType].Count > 0)
+        {
+            var possibleActions = eventDictionary[priorityType];
+            var randomIndex = SimRandom.RandomRange(0, possibleActions.Count);
+            possibleActions[randomIndex].Invoke(null, new object[] { faction });
+            return true;
+        }
+        else
+		{
+            return false;
+		}
+    }
+    
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -54,7 +72,7 @@ public class SimAIManager : MonoBehaviour
 
 	private void Start()
 	{
-        CompileEventDictionaries();
+        CompileEventDictionary();
         /*
         MethodInfo method = null;
         foreach(ActionKey key in eventDictionary.Keys)
@@ -68,7 +86,7 @@ public class SimAIManager : MonoBehaviour
         method?.Invoke(null, new object[] { null });
         */
 	}
-
+    /*
     private void CompileEventDictionaries()
 	{
         eventDictionary = new Dictionary<ActionKey, MethodInfo>();
@@ -90,4 +108,33 @@ public class SimAIManager : MonoBehaviour
 			}
 		}
     }
+    */
+
+    private void CompileEventDictionary()
+	{
+        eventDictionary = new Dictionary<PriorityType, List<MethodInfo>>();
+
+        eventDictionary.Add(PriorityType.MILITARY, null);
+        eventDictionary.Add(PriorityType.INFRASTRUCTURE, new List<MethodInfo>(typeof(InfrastructureActions).GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name))));
+        eventDictionary.Add(PriorityType.MERCANTILE, new List<MethodInfo>(typeof(MercantileActions).GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name))));
+        eventDictionary.Add(PriorityType.POLITICAL, new List<MethodInfo>(typeof(PoliticalActions).GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name))));
+        eventDictionary.Add(PriorityType.EXPANSION, new List<MethodInfo>(typeof(ExpansionActions).GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name))));
+        eventDictionary.Add(PriorityType.RELIGIOUS, new List<MethodInfo>(typeof(ReligiousActions).GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name))));
+    }
+
 }

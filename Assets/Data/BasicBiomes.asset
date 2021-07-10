@@ -23,25 +23,25 @@ MonoBehaviour:
     landType: 3
     rainfallThreshold: 0.834
     fertilityThreshold: 0.085
-    color: {r: 0.7028302, g: 0.94716984, b: 1, a: 0}
+    color: {r: 0.6839622, g: 1, b: 0.9752928, a: 0}
     availableLand: 0.105
   - biomeType: Mesa
     landType: 3
     rainfallThreshold: 0.11
     fertilityThreshold: 0.216
-    color: {r: 0.735849, g: 0.379125, b: 0, a: 0}
+    color: {r: 0.3679245, g: 0.33348235, b: 0.2967693, a: 0}
     availableLand: 0.553
   - biomeType: Mountain Jungle
     landType: 3
     rainfallThreshold: 0.749
     fertilityThreshold: 0.859
-    color: {r: 0.022995852, g: 0.3490566, b: 0.021404423, a: 0}
+    color: {r: 0.27642336, g: 0.2830189, b: 0.2763439, a: 0}
     availableLand: 0.362
   - biomeType: Plains
     landType: 1
     rainfallThreshold: 0.5
     fertilityThreshold: 0.5
-    color: {r: 0.7984109, g: 1, b: 0.3066038, a: 0}
+    color: {r: 0.29415601, g: 0.6132076, b: 0.08966714, a: 0}
     availableLand: 1
   - biomeType: Desert
     landType: 1
@@ -83,5 +83,5 @@ MonoBehaviour:
     landType: 1
     rainfallThreshold: 0.147
     fertilityThreshold: 0.905
-    color: {r: 0.9311225, g: 1, b: 0.504717, a: 0}
+    color: {r: 0.30013874, g: 0.5849056, b: 0, a: 0}
     availableLand: 1

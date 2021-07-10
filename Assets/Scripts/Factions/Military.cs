@@ -13,7 +13,10 @@ namespace Game.Factions
 		public int armor;
 		public int mounts;
 
-		private Dictionary<TroopType, WeightRatioPair> recruitmentWeights;
+		private Dictionary<TroopType, RandomWeightedPair> recruitmentWeights;
+		private int recruitmentWeight;
+		private int disbandWeight;
+
 
 		public int Count => GetTotalTroops();
 
@@ -22,7 +25,7 @@ namespace Game.Factions
 
 		}
 
-		public Military(int weapons, int armor, int mounts, Dictionary<TroopType, WeightRatioPair> recruitmentWeights = null)
+		public Military(int weapons, int armor, int mounts, Dictionary<TroopType, RandomWeightedPair> recruitmentWeights = null)
 		{
 			this.weapons = weapons;
 			this.armor = armor;
@@ -65,21 +68,17 @@ namespace Game.Factions
 		{
 			for (int index = 0; index < amount; index++)
 			{
-				var currentBestFit = TroopType.LIGHT_INFANTRY;
-				var currentLowestScore = float.MaxValue;
-				var troopCount = Count;
-
-				foreach (var pair in troops)
+				var randomRatio = SimRandom.RandomRange(0, recruitmentWeight);
+				foreach(var pair in recruitmentWeights)
 				{
-					var score = (pair.Value / troopCount) - recruitmentWeights[pair.Key].ratio;
-					if (score < currentLowestScore)
+					if(randomRatio - pair.Value.weight <= 0)
 					{
-						currentBestFit = pair.Key;
-						currentLowestScore = score;
+						troops[pair.Key]++;
+						break;
 					}
-				}
 
-				troops[currentBestFit]++;
+					randomRatio -= pair.Value.weight;
+				}
 			}
 		}
 
@@ -87,40 +86,32 @@ namespace Game.Factions
 		{
 			for (int index = 0; index < amount; index++)
 			{
-				var currentBestFit = TroopType.LIGHT_INFANTRY;
-				var currentHighestScore = float.MinValue;
-				var troopCount = Count;
-
-				foreach (var pair in troops)
+				var randomRatio = SimRandom.RandomRange(0, disbandWeight);
+				foreach (var pair in recruitmentWeights)
 				{
-					var score = (pair.Value / troopCount) - recruitmentWeights[pair.Key].ratio;
-					if (score > currentHighestScore)
+					if (randomRatio - pair.Value.inverse <= 0 && troops[pair.Key] > 0)
 					{
-						currentBestFit = pair.Key;
-						currentHighestScore = score;
+						troops[pair.Key]--;
+						break;
 					}
-				}
 
-				troops[currentBestFit]--;
+					randomRatio -= pair.Value.weight;
+				}
 			}
 		}
 
 		private void GenerateMilitaryStrategy()
 		{
-			recruitmentWeights = new Dictionary<TroopType, WeightRatioPair>();
+			recruitmentWeights = new Dictionary<TroopType, RandomWeightedPair>();
 			foreach (TroopType troopType in (TroopType[])Enum.GetValues(typeof(TroopType)))
 			{
-				recruitmentWeights.Add(troopType, new WeightRatioPair(SimRandom.RandomRange(1,10), 0.0f));
+				recruitmentWeights.Add(troopType, new RandomWeightedPair(1, 10));
 			}
 
-			var totalWeight = 0;
-			foreach(WeightRatioPair pair in recruitmentWeights.Values)
+			foreach(RandomWeightedPair pair in recruitmentWeights.Values)
 			{
-				totalWeight += pair.weight;
-			}
-			foreach (WeightRatioPair pair in recruitmentWeights.Values)
-			{
-				pair.ratio = pair.weight / totalWeight;
+				recruitmentWeight += pair.weight;
+				disbandWeight += pair.inverse;
 			}
 		}
 

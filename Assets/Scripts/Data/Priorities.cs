@@ -1,60 +1,92 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Enums;
+using System;
+using System.Linq;
 
 public class Priorities
 {
-    public int militaryScore;
-    public int infrastructureScore;
-    public int mercantileScore;
-    public int politicalScore;
-    public int expansionScore;
+	public Dictionary<PriorityType, int> priorities;
 
-	public Priorities(int militaryScore, int infrastructureScore, int mercantileScore, int politicalScore, int expansionScore)
+	public Priorities() : this(0, 0, 0, 0, 0, 0) { }
+	public Priorities(int militaryScore, int infrastructureScore, int mercantileScore, int politicalScore, int expansionScore, int religiousScore)
 	{
-		this.militaryScore = Mathf.Clamp(militaryScore, 0, 20);
-		this.infrastructureScore = Mathf.Clamp(infrastructureScore, 0, 20);
-		this.mercantileScore = Mathf.Clamp(mercantileScore, 0, 20);
-		this.politicalScore = Mathf.Clamp(politicalScore, 0, 20);
-		this.expansionScore = Mathf.Clamp(expansionScore, 0, 20);
+		priorities = new Dictionary<PriorityType, int>();
+		priorities.Add(PriorityType.MILITARY, Mathf.Clamp(militaryScore, 0, 10));
+		priorities.Add(PriorityType.INFRASTRUCTURE, Mathf.Clamp(infrastructureScore, 0, 10));
+		priorities.Add(PriorityType.MERCANTILE, Mathf.Clamp(mercantileScore, 0, 10));
+		priorities.Add(PriorityType.POLITICAL, Mathf.Clamp(politicalScore, 0, 10));
+		priorities.Add(PriorityType.EXPANSION, Mathf.Clamp(expansionScore, 0, 10));
+		priorities.Add(PriorityType.RELIGIOUS, Mathf.Clamp(religiousScore, 0, 10));
 	}
 
-	public static int CompareScores(Priorities staticScore, Priorities variableScore)
+	public List<PriorityType> SortedList()
 	{
-		var comparedMilitary = Mathf.Abs(staticScore.militaryScore - variableScore.militaryScore);
-		var comparedInfrastructure = Mathf.Abs(staticScore.infrastructureScore - variableScore.infrastructureScore);
-		var comparedMercantile = Mathf.Abs(staticScore.mercantileScore - variableScore.mercantileScore);
-		var comparedPolitical = Mathf.Abs(staticScore.politicalScore - variableScore.politicalScore);
-		var comparedExpansion = Mathf.Abs(staticScore.expansionScore - variableScore.expansionScore);
+		Dictionary<int, List<PriorityType>> sorter = new Dictionary<int, List<PriorityType>>();
+		foreach(var pair in priorities)
+		{
+			if(!sorter.ContainsKey(pair.Value))
+			{
+				sorter.Add(pair.Value, new List<PriorityType>());
+			}
+			sorter[pair.Value].Add(pair.Key);
+		}
 
-		return comparedMilitary + comparedInfrastructure + comparedMercantile + comparedPolitical + comparedExpansion;
+		var scoreSortedArray = sorter.OrderByDescending(key => key.Key).ToArray();
+		var finalList = new List<PriorityType>();
+
+		for(int index = 0; index < scoreSortedArray.Length; index++)
+		{
+			while(scoreSortedArray[index].Value.Count > 0)
+			{
+				var randomIndex = SimRandom.RandomRange(0, scoreSortedArray[index].Value.Count);
+				var priorityType = scoreSortedArray[index].Value[randomIndex];
+				scoreSortedArray[index].Value.Remove(priorityType);
+				finalList.Add(priorityType);
+			}
+		}
+
+		return finalList;
 	}
-
 	public static Priorities operator +(Priorities a, Priorities b)
 	{
-		var comparedMilitary = a.militaryScore + b.militaryScore;
-		var comparedInfrastructure = a.infrastructureScore + b.infrastructureScore;
-		var comparedMercantile = a.mercantileScore + b.mercantileScore;
-		var comparedPolitical = a.politicalScore + b.politicalScore;
-		var comparedExpansion = a.expansionScore + b.expansionScore;
-
-		return new Priorities(comparedMilitary, comparedInfrastructure, comparedMercantile, comparedPolitical, comparedExpansion);
-	}
+		var operatedPriorities = new Priorities();
+		foreach(PriorityType priorityType in (PriorityType[]) Enum.GetValues(typeof(PriorityType)))
+		{
+			operatedPriorities.priorities[priorityType] = a.priorities[priorityType] + b.priorities[priorityType];
+		}
+		return operatedPriorities;
+ 	}
 
 	public static Priorities operator -(Priorities a, Priorities b)
 	{
-		var comparedMilitary = a.militaryScore - b.militaryScore;
-		var comparedInfrastructure = a.infrastructureScore - b.infrastructureScore;
-		var comparedMercantile = a.mercantileScore - b.mercantileScore;
-		var comparedPolitical = a.politicalScore - b.politicalScore;
-		var comparedExpansion = a.expansionScore - b.expansionScore;
+		var operatedPriorities = new Priorities();
+		foreach (PriorityType priorityType in (PriorityType[])Enum.GetValues(typeof(PriorityType)))
+		{
+			operatedPriorities.priorities[priorityType] = a.priorities[priorityType] - b.priorities[priorityType];
+		}
+		return operatedPriorities;
+	}
 
-		return new Priorities(comparedMilitary, comparedInfrastructure, comparedMercantile, comparedPolitical, comparedExpansion);
+	public static Priorities operator /(Priorities a, int b)
+	{
+		var operatedPriorities = new Priorities();
+		foreach (PriorityType priorityType in (PriorityType[])Enum.GetValues(typeof(PriorityType)))
+		{
+			operatedPriorities.priorities[priorityType] = a.priorities[priorityType] / b;
+		}
+		return operatedPriorities;
 	}
 
 	public override string ToString()
 	{
-		return $"MI: {militaryScore} / IN: {infrastructureScore} / ME: {mercantileScore} / PO: {politicalScore} / EX: {expansionScore}";
+		return $"MI: {priorities[PriorityType.MILITARY]}" +
+			$" / IN: {priorities[PriorityType.INFRASTRUCTURE]}" +
+			$" / ME: {priorities[PriorityType.MERCANTILE]}" +
+			$" / PO: {priorities[PriorityType.POLITICAL]}" +
+			$" / EX: {priorities[PriorityType.EXPANSION]}" +
+			$" / RE: {priorities[PriorityType.RELIGIOUS]}";
 	}
 }
 

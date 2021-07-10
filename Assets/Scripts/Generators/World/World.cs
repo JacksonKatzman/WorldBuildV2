@@ -13,6 +13,7 @@ namespace Game.WorldGeneration
     {
 		public Dictionary<MapCategory, float[,]> noiseMaps;
 		public Color[,] biomeMap;
+		public int Size => biomeMap.GetLength(0) * biomeMap.GetLength(1);
 
 		public Texture2D heightMapTexture;
 		public Texture2D colorMapTexture;
@@ -72,7 +73,12 @@ namespace Game.WorldGeneration
 				chunk.AdvanceTime();
 			}
 
-			foreach(Faction faction in factions)
+			foreach (Faction faction in factions)
+			{
+				faction.currentPriorities = faction.GeneratePriorities();
+			}
+
+			foreach (Faction faction in factions)
 			{
 				faction.AdvanceTime();
 			}
@@ -224,6 +230,7 @@ namespace Game.WorldGeneration
 				}
 			}
 			colorMapTexture = new Texture2D(width, height);
+			colorMapTexture.filterMode = FilterMode.Point;
 			colorMapTexture.SetPixels(colorMap);
 			colorMapTexture.Apply();
 		}

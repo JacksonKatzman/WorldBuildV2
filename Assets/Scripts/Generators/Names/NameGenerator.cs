@@ -84,11 +84,16 @@ public class NameGenerator
 		}
 
 		int randomIndex = SimRandom.RandomRange(0, possibleNames.Count);
-		currentName = ToTitleCase(possibleNames[randomIndex]);
+		currentName = possibleNames[randomIndex];
 
 		if(tweak && currentName.Length > 2)
 		{
 			currentName = TweakName(container, currentName);
+		}
+
+		if (currentName.ToLower() == "null\r")
+		{
+			currentName = "nulloo\r";
 		}
 
 		return ToTitleCase(currentName);
@@ -124,6 +129,11 @@ public class NameGenerator
 			currentName += syllables[randomIndex];
 			vowel = !vowel;
 			syllables.Clear();
+		}
+
+		if (currentName.ToLower() == "null\r")
+		{
+			currentName = "nulloo\r";
 		}
 
 		return ToTitleCase(currentName);

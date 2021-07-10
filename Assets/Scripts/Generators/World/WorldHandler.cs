@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Game.WorldGeneration;
 using Game.Generators.Noise;
 using Game.Enums;
+using Game.Generators;
 
 public class WorldHandler : MonoBehaviour
 {
@@ -14,6 +15,15 @@ public class WorldHandler : MonoBehaviour
 
     public NoiseSettings settings;
     public BiomeContainer biomeSettings;
+
+    [SerializeField]
+    MeshFilter meshFilter;
+
+    [SerializeField]
+    MeshRenderer meshRenderer;
+
+    public float heightMulitplier;
+    public AnimationCurve heightCurve;
 
     [SerializeField]
     private Renderer coloredMapRenderer;
@@ -53,8 +63,10 @@ public class WorldHandler : MonoBehaviour
         seededRandom = new System.Random(seed);
 
         DrawNoiseMap();
+        //DrawMesh(MeshGenerator.GenerateTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.colorMapTexture);
+        DrawMesh(MeshGenerator.GenerateVoxelTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.colorMapTexture);
 
-        for (int a = 0; a < 1; a++)
+        for (int a = 0; a < 2; a++)
         {
             world.SpawnRandomCity();
         }
@@ -76,6 +88,18 @@ public class WorldHandler : MonoBehaviour
 
         coloredMapRenderer.sharedMaterial.mainTexture = world.colorMapTexture;
         coloredMapRenderer.transform.localScale = new Vector3(world.biomeMap.GetLength(0), 1, world.biomeMap.GetLength(1));
+    }
+
+    public void DrawMesh(MeshData meshData, Texture2D texture)
+	{
+        meshFilter.sharedMesh = meshData.CreateMesh();
+        meshRenderer.sharedMaterial.mainTexture = texture;
+	}
+
+    public void DrawMesh(VoxelMeshData meshData, Texture2D texture)
+    {
+        meshFilter.sharedMesh = meshData.CreateMesh();
+        meshRenderer.sharedMaterial.mainTexture = texture;
     }
 
     public void DebugAdvanceTime()
