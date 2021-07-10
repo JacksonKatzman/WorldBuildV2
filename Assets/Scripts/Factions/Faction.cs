@@ -5,18 +5,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Generators;
+using Game.Data.EventHandling;
 
 namespace Game.Factions
 {
 	public class Faction : ITimeSensitive
 	{
 		private static int STARTING_INFLUENCE = 10;
-		private static float AVERAGE_BIRTH_RATE = 0.0205f;
+		private static float AVERAGE_BIRTH_RATE = 0.0165f;
 		private static float AVERAGE_DEATH_RATE = 0.0078f;
-		private static float AVERAGE_FOOD_PRODUCTION = 6.0f;
+		private static float AVERAGE_FOOD_PRODUCTION = 5.0f;
 		private static float AVERAGE_SPOILAGE_RATE = 0.1f;
 		private static float MAX_FOOD_BY_LAND = 10000.0f;
 		private static float MAX_BURGEONING_TENSION = MAX_FOOD_BY_LAND / 10;
+		private static float BASE_REBELLION_CHANCE = 0.05f;
 
 		public string name;
 		public Color color;
@@ -40,6 +42,7 @@ namespace Game.Factions
 		public ModifiedType<float> spoilageRate;
 		public ModifiedType<float> maxFoodByLand;
 		public ModifiedType<float> maxBurgeoningTension;
+		public ModifiedType<float> rebellionChance;
 
 		public Priorities currentPriorities;
 
@@ -61,7 +64,6 @@ namespace Game.Factions
 
 			territory = new List<Tile>();
 			world = startingTile.world;
-			territory.Add(startingTile);
 
 			cities = new List<City>();
 			cities.Add(LandmarkGenerator.SpawnCity(startingTile, this, food, population));
@@ -74,10 +76,14 @@ namespace Game.Factions
 
 			deferredActions = new List<Action>();
 
+			SubscribeToEvents();
+
 			OutputLogger.LogFormatAndPause("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, cities[0].name, government.governmentType.name);
 		}
 		public void AdvanceTime()
 		{
+			OutputLogger.LogFormat("Beginning {0} Faction Advance Time!", LogSource.MAIN, name);
+
 			HandleDeferredActions();
 
 			ResetTurnSpecificValues();
@@ -102,8 +108,9 @@ namespace Game.Factions
 		}
 		public bool SpawnCityWithinRadius(Tile tile, float foodAmount, int population)
 		{
-			int radius = 4 + influence / 100;
-			var possibleTiles = tile.GetAllTilesInRadius(radius);
+			int maxRadius = 5 + influence / 100;
+			int minRadius = 3;
+			var possibleTiles = tile.GetAllTilesInRing(maxRadius, minRadius);
 			bool spawned = false;
 			int attempts = 0;
 			while (!spawned && attempts < 10)
@@ -113,7 +120,8 @@ namespace Game.Factions
 				var tileController = world.GetFactionThatControlsTile(chosenTile);
 				if (LandmarkGenerator.IsSuitableCityLocation(chosenTile, 0.5f, 0.2f, this))
 				{
-					if(tileController == this || Tile.GetDistanceBetweenTiles(tile, chosenTile) < radius)
+					var keep = SimRandom.RandomFloat01();
+					if(keep > rebellionChance.modified)
 					{
 						deferredActions.Add(() => { cities.Add(LandmarkGenerator.SpawnCity(chosenTile, this, foodAmount, population)); });
 					}
@@ -369,6 +377,7 @@ namespace Game.Factions
 			spoilageRate = new ModifiedType<float>(AVERAGE_SPOILAGE_RATE);
 			maxFoodByLand = new ModifiedType<float>(MAX_FOOD_BY_LAND);
 			maxBurgeoningTension = new ModifiedType<float>(MAX_BURGEONING_TENSION);
+			rebellionChance = new ModifiedType<float>(BASE_REBELLION_CHANCE);
 
 			recruitmentRate = new ModifiedType<float>(0);
 		}
@@ -389,6 +398,27 @@ namespace Game.Factions
 			actionsRemaining = actionsPerTurn.modified;
 			foodProducedThisTurn = 0;
 			borderTiles = GetBorderTiles();
+		}
+
+		private void CheckForDestruction()
+		{
+			if(cities.Count <= 0)
+			{
+				FactionGenerator.DestroyFaction(this);
+			}
+		}
+
+		private void OnRecievedCityDestroyed(CityDestroyedEvent simEvent)
+		{
+			if(cities.Contains(simEvent.city))
+			{
+				RemoveLandmark(simEvent.city.tile, simEvent.city);
+			}
+		}
+
+		private void SubscribeToEvents()
+		{
+			EventManager.Instance.AddEventHandler<CityDestroyedEvent>(OnRecievedCityDestroyed);
 		}
 
 		//TODO: Define a way that factions/governments generate influence

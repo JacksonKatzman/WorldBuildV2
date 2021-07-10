@@ -118,7 +118,7 @@ public class SimulationManager : MonoBehaviour
 	{
         DebugPause = false;
         debugYearsPassed = 0;
-        while(DebugPause == false && debugYearsPassed < 100)
+        while(DebugPause == false && debugYearsPassed < 1)
 		{
             world.AdvanceTime();
             debugYearsPassed++;

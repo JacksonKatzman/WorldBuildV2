@@ -44,5 +44,10 @@ namespace Game.Generators
 			OutputLogger.LogFormatAndPause("Spawned faction in chunk ({0},{1}) in tile ({2},{3})).",
 						LogSource.WORLDGEN, tile.chunk.coords.x, tile.chunk.coords.y, tile.coords.x, tile.coords.y);
 		}
+
+		public static void DestroyFaction(Faction faction)
+		{
+			EventManager.Instance.Dispatch(new FactionDestroyedEvent(faction));
+		}
 	}
 }

@@ -65,6 +65,20 @@ namespace Game.WorldGeneration
 			return tileList;
 		}
 
+		public List<Tile> GetAllTilesInRing(int outerRadius, int innerRadius)
+		{
+			var outer = GetAllTilesInRadius(outerRadius);
+			var inner = GetAllTilesInRadius(innerRadius);
+			foreach(Tile tile in inner)
+			{
+				if(outer.Contains(tile))
+				{
+					outer.Remove(tile);
+				}
+			}
+			return outer;
+		}
+
 		public List<Tile> GetDirectlyAdjacentTiles()
 		{
 			var worldCoords = GetWorldPosition();

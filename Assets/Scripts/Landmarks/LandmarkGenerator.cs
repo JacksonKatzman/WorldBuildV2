@@ -27,6 +27,11 @@ namespace Game.Generators
 			return SpawnCity(tile, faction, STARTING_FOOD, STARTING_POPULATION);
 		}
 
+		public static void DestroyCity(City city)
+		{
+			EventManager.Instance.Dispatch(new CityDestroyedEvent(city));
+		}
+
 		public static bool IsSuitableCityLocation(Tile tile, float targetFertility, float targetLandAvailability, Faction faction = null)
 		{
 			var tileController = tile.world.GetFactionThatControlsTile(tile);

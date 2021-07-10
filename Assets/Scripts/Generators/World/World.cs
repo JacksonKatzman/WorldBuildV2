@@ -65,6 +65,8 @@ namespace Game.WorldGeneration
 
 		public void AdvanceTime()
 		{
+			OutputLogger.LogFormat("Beginning World Advance Time!", LogSource.MAIN);
+
 			HandleDeferredActions();
 
 			GenerateNewNoiseMap(MapCategory.RAINFALL);
@@ -312,7 +314,18 @@ namespace Game.WorldGeneration
 
 		private void OnFactionCreated(FactionCreatedEvent simEvent)
 		{
-			deferredActions.Add(() => { factions.Add(simEvent.faction); });
+			if (!factions.Contains(simEvent.faction))
+			{
+				deferredActions.Add(() => { factions.Add(simEvent.faction); });
+			}
+		}
+
+		private void OnFactionDestroyed(FactionDestroyedEvent simEvent)
+		{
+			if (factions.Contains(simEvent.faction))
+			{
+				deferredActions.Add(() => { factions.Remove(simEvent.faction); });
+			}
 		}
 
 		private void SubscribeToEvents()
@@ -320,6 +333,7 @@ namespace Game.WorldGeneration
 			EventManager.Instance.AddEventHandler<PersonCreatedEvent>(OnPersonCreated);
 			EventManager.Instance.AddEventHandler<PersonDiedEvent>(OnPersonDeath);
 			EventManager.Instance.AddEventHandler<FactionCreatedEvent>(OnFactionCreated);
+			EventManager.Instance.AddEventHandler<FactionDestroyedEvent>(OnFactionDestroyed);
 		}
 	}
 }

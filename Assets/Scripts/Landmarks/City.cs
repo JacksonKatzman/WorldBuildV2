@@ -4,6 +4,7 @@ using UnityEngine;
 using Game.WorldGeneration;
 using Game.Enums;
 using Game.Factions;
+using Game.Generators;
 
 public class City : Landmark
 {
@@ -32,6 +33,8 @@ public class City : Landmark
 
 	public override void AdvanceTime()
 	{
+		OutputLogger.LogFormat("Beginning {0} City Advance Time!", LogSource.MAIN, name);
+
 		HandleFoodGrowth();
 		HandleFoodConsumption();
 		HandlePopuplationGrowth();
@@ -116,9 +119,9 @@ public class City : Landmark
 
 	private void HandleDesertion()
 	{
-		if(population <= 0)
+		if (population <= 0)
 		{
-			faction.RemoveLandmark(tile, this);
+			LandmarkGenerator.DestroyCity(this);
 		}
 	}
 }

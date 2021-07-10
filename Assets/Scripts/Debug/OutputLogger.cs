@@ -5,18 +5,18 @@ using Game.Enums;
 
 public abstract class OutputLogger
 {
-	private static LogAllowance allowance = LogAllowance.NONE;
+	private static LogAllowance allowance = LogAllowance.SOME;
 	private static bool ALLOW_PAUSES = false;
 
 	private static readonly Dictionary<LogSource, bool> AllowedLogs
 	= new Dictionary<LogSource, bool>
 {
-	{ LogSource.IMPORTANT, true },
+	{ LogSource.IMPORTANT, false },
 	{ LogSource.CITY, false },
-	{ LogSource.NAMEGEN, true },
-	{ LogSource.WORLDGEN, true },
-	{ LogSource.FACTION, true },
-	{ LogSource.FACTIONACTION, true },
+	{ LogSource.NAMEGEN, false },
+	{ LogSource.WORLDGEN, false },
+	{ LogSource.FACTION, false },
+	{ LogSource.FACTIONACTION, false },
 	{ LogSource.PEOPLE, false },
 	{ LogSource.MAIN, true }
 };
