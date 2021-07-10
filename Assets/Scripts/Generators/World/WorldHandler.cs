@@ -5,14 +5,25 @@ using UnityEngine.UI;
 using Game.WorldGeneration;
 using Game.Generators.Noise;
 using Game.Enums;
+using Game.Generators;
 
 public class WorldHandler : MonoBehaviour
 {
     private static WorldHandler instance;
     public static WorldHandler Instance => instance;
+    public World World => world;
 
     public NoiseSettings settings;
     public BiomeContainer biomeSettings;
+
+    [SerializeField]
+    MeshFilter meshFilter;
+
+    [SerializeField]
+    MeshRenderer meshRenderer;
+
+    public float heightMulitplier;
+    public AnimationCurve heightCurve;
 
     [SerializeField]
     private Renderer coloredMapRenderer;
@@ -27,9 +38,9 @@ public class WorldHandler : MonoBehaviour
     private Renderer fertilityMapRenderer;
 
     public int seed;
-    System.Random seededRandom;
+    public System.Random seededRandom;
 
-    World world;
+    private World world;
     int chunkSize = 10;
 
     public bool DebugPause = false;
@@ -52,30 +63,13 @@ public class WorldHandler : MonoBehaviour
         seededRandom = new System.Random(seed);
 
         DrawNoiseMap();
+        //DrawMesh(MeshGenerator.GenerateTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.colorMapTexture);
+        DrawMesh(MeshGenerator.GenerateVoxelTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.colorMapTexture);
 
-        for (int a = 0; a < 1; a++)
+        for (int a = 0; a < 2; a++)
         {
             world.SpawnRandomCity();
-            //string fullName = NameGenerator.GeneratePersonFullName(nameContainers[0], Gender.NEITHER);
-            //Debug.Log(fullName);
         }
-    }
-
-    public int RandomInteger()
-	{
-        return seededRandom.Next(-100000, 100000);
-    }
-
-    public float RandomFloat01()
-	{
-        float percision = 100000.0f;
-        return seededRandom.Next(0, (int)percision) / percision;
-    }
-
-    public int RandomRange(int minValue, int maxValue)
-	{
-        return seededRandom.Next(minValue, maxValue);
-
     }
 
     public void DrawNoiseMap()
@@ -94,6 +88,18 @@ public class WorldHandler : MonoBehaviour
 
         coloredMapRenderer.sharedMaterial.mainTexture = world.colorMapTexture;
         coloredMapRenderer.transform.localScale = new Vector3(world.biomeMap.GetLength(0), 1, world.biomeMap.GetLength(1));
+    }
+
+    public void DrawMesh(MeshData meshData, Texture2D texture)
+	{
+        meshFilter.sharedMesh = meshData.CreateMesh();
+        meshRenderer.sharedMaterial.mainTexture = texture;
+	}
+
+    public void DrawMesh(VoxelMeshData meshData, Texture2D texture)
+    {
+        meshFilter.sharedMesh = meshData.CreateMesh();
+        meshRenderer.sharedMaterial.mainTexture = texture;
     }
 
     public void DebugAdvanceTime()

@@ -4,6 +4,8 @@ using UnityEngine;
 using Game.Generators.Noise;
 using Game.Enums;
 using Game.Factions;
+using System;
+using Game.Data.EventHandling;
 
 namespace Game.WorldGeneration
 {
@@ -11,6 +13,7 @@ namespace Game.WorldGeneration
     {
 		public Dictionary<MapCategory, float[,]> noiseMaps;
 		public Color[,] biomeMap;
+		public int Size => biomeMap.GetLength(0) * biomeMap.GetLength(1);
 
 		public Texture2D heightMapTexture;
 		public Texture2D colorMapTexture;
@@ -23,13 +26,18 @@ namespace Game.WorldGeneration
 		public int chunkSize;
 		public int yearsPassed;
 
+		private List<Person> people;
+
 		private List<Faction> temporaryFactionContainer;
+		private List<Person> temporaryPersonContainer;
+		private List<Action> deferredActions;
 
 		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<Biome> biomes)
 		{
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
 			factions = new List<Faction>();
-			temporaryFactionContainer = new List<Faction>();
+			people = new List<Person>();
+			deferredActions = new List<Action>();
 
 			AlterMap(MapCategory.TERRAIN, noiseMap);
 			heightMapTexture = texture;
@@ -38,8 +46,6 @@ namespace Game.WorldGeneration
 			this.biomes = biomes;
 
 			Setup();
-			BuildChunks();
-			CreateBiomeMap();
 		}
 
 		public float[,] SampleNoiseMap(MapCategory mapCategory, Vector2Int chunkLocation)
@@ -67,12 +73,24 @@ namespace Game.WorldGeneration
 				chunk.AdvanceTime();
 			}
 
-			foreach(Faction faction in factions)
+			foreach (Faction faction in factions)
+			{
+				faction.currentPriorities = faction.GeneratePriorities();
+			}
+
+			foreach (Faction faction in factions)
 			{
 				faction.AdvanceTime();
 			}
 
-			HandleDeferredItems();
+			HandleDeferredActions();
+
+			foreach(Person person in people)
+			{
+				person.AdvanceTime();
+			}
+
+			HandleDeferredActions();
 
 			yearsPassed++;
 		}
@@ -87,17 +105,17 @@ namespace Game.WorldGeneration
 			bool spawned = false;
 			while (!spawned)
 			{
-				var randomXIndex = WorldHandler.Instance.RandomRange(0, worldChunks.GetLength(0));
-				var randomYIndex = WorldHandler.Instance.RandomRange(0, worldChunks.GetLength(1));
+				var randomXIndex = SimRandom.RandomRange(0, worldChunks.GetLength(0));
+				var randomYIndex = SimRandom.RandomRange(0, worldChunks.GetLength(1));
 				spawned = worldChunks[randomXIndex, randomYIndex].SpawnCity(100, 100);
 			}
-			HandleDeferredItems();
+			HandleDeferredActions();
 		}
 
 		public void CreateNewFaction(Tile tile, float food, int population)
 		{
 			var faction = new Faction(tile, food, population);
-			temporaryFactionContainer.Add(faction);
+			deferredActions.Add(() => { factions.Add(faction); });
 		}
 
 		public Tile GetTileAtWorldPosition(Vector2Int worldPosition)
@@ -120,6 +138,23 @@ namespace Game.WorldGeneration
 
 			return controllingFaction;
 		}
+
+		public void AddPerson(Person person)
+		{
+			if(!people.Contains(person))
+			{
+				deferredActions.Add(() => { people.Add(person); });
+			}
+		}
+
+		public void RemovePerson(Person person)
+		{
+			if (people.Contains(person))
+			{
+				deferredActions.Add(() => { people.Remove(person); });
+			}
+		}
+	
 
 		private void BuildChunks()
 		{
@@ -146,6 +181,11 @@ namespace Game.WorldGeneration
 		{
 			GenerateNewNoiseMap(MapCategory.RAINFALL);
 			GenerateNewNoiseMap(MapCategory.FERTILITY);
+
+			BuildChunks();
+			CreateBiomeMap();
+
+			SubscribeToEvents();
 
 			yearsPassed = 0;
 		}
@@ -190,17 +230,28 @@ namespace Game.WorldGeneration
 				}
 			}
 			colorMapTexture = new Texture2D(width, height);
+			colorMapTexture.filterMode = FilterMode.Point;
 			colorMapTexture.SetPixels(colorMap);
 			colorMapTexture.Apply();
 		}
 
-		private void HandleDeferredItems()
+		private void HandleDeferredActions()
 		{
-			foreach(Faction faction in temporaryFactionContainer)
+			foreach(Action action in deferredActions)
 			{
-				factions.Add(faction);
+				action.Invoke();
 			}
-			temporaryFactionContainer.Clear();
+			deferredActions.Clear();
+		}
+
+		private void OnPersonDeath(PersonDiedEvent simEvent)
+		{
+			RemovePerson(simEvent.person);
+		}
+
+		private void SubscribeToEvents()
+		{
+			EventManager.Instance.AddEventHandler<PersonDiedEvent>(OnPersonDeath);
 		}
 	}
 }

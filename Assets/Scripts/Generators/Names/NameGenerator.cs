@@ -15,10 +15,17 @@ public class NameGenerator
 	private static float VOWEL_PHONEME_MORPH_PERCENTAGE = 0.5f;
 	private static float TRUNCATE_PERCENTAGE = 0.4f;
 
+	private static NameContainer defaultNameContainer => DataManager.Instance.PrimaryNameContainer;
+
+	public static string GeneratePersonFirstName(Gender gender)
+	{
+		return GeneratePersonFirstName(defaultNameContainer, gender);
+	}
+
 	public static string GeneratePersonFirstName(NameContainer container, Gender gender)
 	{
 		int combinedRatio = SYLLABALIC_RATIO + MODIFIED_RATIO;
-		int randomWeight = WorldHandler.Instance.RandomRange(0, combinedRatio);
+		int randomWeight = SimRandom.RandomRange(0, combinedRatio);
 		if((randomWeight -= SYLLABALIC_RATIO) < 0)
 		{
 			return SyllabalicNameGeneration(container, container.rules.FirstNameSyllables.x, container.rules.FirstNameSyllables.y);
@@ -29,15 +36,25 @@ public class NameGenerator
 		}
 	}
 
+	public static string GeneratePersonSurname()
+	{
+		return GeneratePersonSurname(defaultNameContainer);
+	}
+
 	public static string GeneratePersonSurname(NameContainer container)
 	{
 		return SyllabalicNameGeneration(container, container.rules.LastNameSyllables.x, container.rules.LastNameSyllables.y);
 	}
 
+	public static string GeneratePersonFullName(Gender gender)
+	{
+		return GeneratePersonFullName(defaultNameContainer, gender);
+	}
+
 	public static string GeneratePersonFullName(NameContainer container, Gender gender)
 	{
 		int combinedRatio = SYLLABALIC_RATIO + MODIFIED_RATIO + STATIC_RATIO;
-		int randomWeight = WorldHandler.Instance.RandomRange(0, combinedRatio);
+		int randomWeight = SimRandom.RandomRange(0, combinedRatio);
 		if ((randomWeight -= STATIC_RATIO) < 0)
 		{
 			return StaticNameGeneration(container, gender);
@@ -66,12 +83,17 @@ public class NameGenerator
 			possibleNames.AddRange(container.FemaleNames);
 		}
 
-		int randomIndex = WorldHandler.Instance.RandomRange(0, possibleNames.Count);
-		currentName = ToTitleCase(possibleNames[randomIndex]);
+		int randomIndex = SimRandom.RandomRange(0, possibleNames.Count);
+		currentName = possibleNames[randomIndex];
 
 		if(tweak && currentName.Length > 2)
 		{
 			currentName = TweakName(container, currentName);
+		}
+
+		if (currentName.ToLower() == "null\r")
+		{
+			currentName = "nulloo\r";
 		}
 
 		return ToTitleCase(currentName);
@@ -80,8 +102,8 @@ public class NameGenerator
 	private static string SyllabalicNameGeneration(NameContainer container, int minSyllables, int maxSyllables)
 	{
 		string currentName = string.Empty;
-		bool vowel = (WorldHandler.Instance.RandomFloat01() > 0.5f);
-		int targetSyllables = WorldHandler.Instance.RandomRange(minSyllables, maxSyllables + 1);
+		bool vowel = (SimRandom.RandomFloat01() > 0.5f);
+		int targetSyllables = SimRandom.RandomRange(minSyllables, maxSyllables + 1);
 		List<string> syllables = new List<string>();
 
 		for (int index = 0; index < targetSyllables; index++)
@@ -103,10 +125,15 @@ public class NameGenerator
 				}
 			}
 
-			int randomIndex = WorldHandler.Instance.RandomRange(0, syllables.Count);
+			int randomIndex = SimRandom.RandomRange(0, syllables.Count);
 			currentName += syllables[randomIndex];
 			vowel = !vowel;
 			syllables.Clear();
+		}
+
+		if (currentName.ToLower() == "null\r")
+		{
+			currentName = "nulloo\r";
 		}
 
 		return ToTitleCase(currentName);
@@ -129,7 +156,7 @@ public class NameGenerator
 			possibleNames.AddRange(container.StaticFemaleNames);
 		}
 
-		int randomIndex = WorldHandler.Instance.RandomRange(0, possibleNames.Count);
+		int randomIndex = SimRandom.RandomRange(0, possibleNames.Count);
 		return possibleNames[randomIndex];
 	}
 
@@ -142,7 +169,7 @@ public class NameGenerator
 		}
 
 		List<string> returnList = new List<string>();
-		int randomWeight = WorldHandler.Instance.RandomRange(0, ratioTotal);
+		int randomWeight = SimRandom.RandomRange(0, ratioTotal);
 		foreach (int key in dictionary.Keys)
 		{
 			if ((randomWeight -= key) < 0)
@@ -174,7 +201,7 @@ public class NameGenerator
 
 	private static void AttemptFirstPhonemeMorph(NameContainer container, ref string currentName)
 	{
-		bool shouldMorph = (WorldHandler.Instance.RandomFloat01() > FIRST_PHONEME_MORPH_PERCENTAGE);
+		bool shouldMorph = (SimRandom.RandomFloat01() > FIRST_PHONEME_MORPH_PERCENTAGE);
 		if(shouldMorph)
 		{
 			List<string> possibleReplacements = new List<string>();
@@ -183,12 +210,12 @@ public class NameGenerator
 			string start = currentName.Substring(0, 1).ToLower();
 			if (container.Vowels.rawValues.Contains(start))
 			{
-				string newStart = possibleReplacements[WorldHandler.Instance.RandomRange(0, possibleReplacements.Count)];
+				string newStart = possibleReplacements[SimRandom.RandomRange(0, possibleReplacements.Count)];
 				currentName = newStart + currentName;
 			}
 			else if (container.StartConsonants.rawValues.Contains(start))
 			{
-				var replacement = possibleReplacements[WorldHandler.Instance.RandomRange(0, possibleReplacements.Count)];
+				var replacement = possibleReplacements[SimRandom.RandomRange(0, possibleReplacements.Count)];
 				ReplaceCharAtIndexWithString(ref currentName, 0, replacement);
 			}
 		}
@@ -196,7 +223,7 @@ public class NameGenerator
 
 	private static void AttemptTruncateName(NameContainer container, ref string currentName)
 	{
-		bool shouldMorph = (WorldHandler.Instance.RandomFloat01() > TRUNCATE_PERCENTAGE);
+		bool shouldMorph = (SimRandom.RandomFloat01() > TRUNCATE_PERCENTAGE);
 		if (shouldMorph && currentName.Length > 4)
 		{
 			currentName = currentName.Substring(0, currentName.Length - 2);
@@ -204,13 +231,13 @@ public class NameGenerator
 		if (container.StartConsonants.rawValues.Contains(currentName[currentName.Length-1].ToString()))
 		{
 			var vowels = GetWeightedSelectionFromDictionary(container.Vowels.weightedValues);
-			currentName += vowels[WorldHandler.Instance.RandomRange(0, vowels.Count)];
+			currentName += vowels[SimRandom.RandomRange(0, vowels.Count)];
 		}
 	}
 
 	private static void AttemptTweakVowel(NameContainer container, ref string currentName)
 	{
-		bool shouldMorph = (WorldHandler.Instance.RandomFloat01() > VOWEL_PHONEME_MORPH_PERCENTAGE);
+		bool shouldMorph = (SimRandom.RandomFloat01() > VOWEL_PHONEME_MORPH_PERCENTAGE);
 		if (shouldMorph)
 		{
 			List<int> vowelLocations = new List<int>();
@@ -224,9 +251,9 @@ public class NameGenerator
 
 			if (vowelLocations.Count > 0)
 			{
-				int randomIndex = vowelLocations[WorldHandler.Instance.RandomRange(0, vowelLocations.Count)];
+				int randomIndex = vowelLocations[SimRandom.RandomRange(0, vowelLocations.Count)];
 				var possibleReplacements = GetWeightedSelectionFromDictionary(container.Vowels.weightedValues);
-				var replacement = possibleReplacements[WorldHandler.Instance.RandomRange(0, possibleReplacements.Count)];
+				var replacement = possibleReplacements[SimRandom.RandomRange(0, possibleReplacements.Count)];
 				ReplaceCharAtIndexWithString(ref currentName, randomIndex, replacement);
 			}
 		}

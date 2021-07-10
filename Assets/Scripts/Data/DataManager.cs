@@ -27,7 +27,7 @@ public class DataManager : MonoBehaviour
 			}
 		}
 
-        var randomIndex = WorldHandler.Instance.RandomRange(0, possibleTypes.Count);
+        var randomIndex = SimRandom.RandomRange(0, possibleTypes.Count);
         return possibleTypes[randomIndex];
 	}
 

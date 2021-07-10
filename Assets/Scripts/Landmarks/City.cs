@@ -23,7 +23,7 @@ public class City : Landmark
 		this.faction = faction;
 		this.food = food;
 		this.population = population;
-		name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.NEITHER);
+		name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.ANY);
 		OutputLogger.LogFormat("{0} City's tile has a land availabilty coef of: {1}", LogSource.IMPORTANT, name, tile.biome.availableLand);
 	}
 
@@ -35,7 +35,7 @@ public class City : Landmark
 		HandlePopulationDecay();
 		HandlePopulationMoves();
 
-		OutputLogger.LogFormat("{0} City now contains a population of: {1}", LogSource.IMPORTANT, name, population.ToString());
+		OutputLogger.LogFormat("{0} City now contains a population of: {1}", LogSource.CITY, name, population.ToString());
 
 		HandleDesertion();
 	}
@@ -50,6 +50,8 @@ public class City : Landmark
 		//OutputLogger.LogFormat("{0} Faction produces has an average food production per person of: {1}", LogSource.CITY, faction.name, faction.foodProductionPerWorker.modified);
 		float newFood = (faction.foodProductionPerWorker.modified * population * tile.baseFertility) * tile.rainfallValue;
 		newFood = Mathf.Clamp(newFood, 0.0f, MaximumFoodProduction);
+
+		faction.ReportFoodProduced(newFood);
 
 		OutputLogger.LogFormat("{0} City with pop {1} has fertility {2} and rainfall {3}.", LogSource.CITY, name, population, tile.baseFertility, tile.rainfallValue);
 		OutputLogger.LogFormat("{0} City produces {1} new food, bringing food total to {2}", LogSource.CITY, name, newFood, food + newFood);
@@ -95,7 +97,7 @@ public class City : Landmark
 			OutputLogger.LogFormat("This occured due to a population of {0}, and an available land score of {1}.", LogSource.IMPORTANT, population, tile.biome.availableLand);
 			if (burgeoningTension >= faction.maxBurgeoningTension.modified * (burgeoningFactor))
 			{
-				var movingPercentage = WorldHandler.Instance.RandomRange(5, 11) / 100.0f;
+				var movingPercentage = SimRandom.RandomRange(5, 11) / 100.0f;
 				var movingAmount = (int)(population * movingPercentage);
 				var foodAmount = movingAmount * 1.3f;
 				if (faction.SpawnCityWithinRadius(tile, foodAmount, movingAmount))
@@ -113,8 +115,7 @@ public class City : Landmark
 	{
 		if(population <= 0)
 		{
-			tile.landmarks.Remove(this);
-			//should probs destroy it too
+			faction.RemoveLandmark(tile, this);
 		}
 	}
 }

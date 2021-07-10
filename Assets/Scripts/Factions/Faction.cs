@@ -1,5 +1,6 @@
 using Game.Enums;
 using Game.WorldGeneration;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,20 +12,24 @@ namespace Game.Factions
 		private static int STARTING_INFLUENCE = 10;
 		private static float AVERAGE_BIRTH_RATE = 0.0205f;
 		private static float AVERAGE_DEATH_RATE = 0.0078f;
-		private static float AVERAGE_FOOD_PRODUCTION = 5.0f;
+		private static float AVERAGE_FOOD_PRODUCTION = 6.0f;
 		private static float AVERAGE_SPOILAGE_RATE = 0.1f;
 		private static float MAX_FOOD_BY_LAND = 10000.0f;
 		private static float MAX_BURGEONING_TENSION = MAX_FOOD_BY_LAND / 10;
 
 		public string name;
-		public City capitalCity;
+		public List<City> cities;
 		public Government government;
 		public List<Tile> territory;
 		public int influence;
 		public World world;
 
+		public int actionsRemaining;
+		private float foodProducedThisTurn;
+
 		public int population => Population();
-		public int militarySize;
+
+		public ModifiedType<int> actionsPerTurn;
 
 		public ModifiedType<float> birthRate;
 		public ModifiedType<float> deathRate;
@@ -33,39 +38,63 @@ namespace Game.Factions
 		public ModifiedType<float> maxFoodByLand;
 		public ModifiedType<float> maxBurgeoningTension;
 
+		public Priorities currentPriorities;
+
+		public Military military;
+
+		public ModifiedType<float> recruitmentRate;
+
+		private int turnsSinceLastExpansion = 0;
+
+		private List<Action> deferredActions;
+
 		public Faction(Tile startingTile, float food, int population)
 		{
-			name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.NEITHER);
+			name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.ANY);
 
 			territory = new List<Tile>();
 			world = startingTile.world;
 			territory.Add(startingTile);
-			capitalCity = startingTile.SpawnCity(this, food, population);
+
+			cities = new List<City>();
+			cities.Add(startingTile.SpawnCity(this, food, population));
 			influence = STARTING_INFLUENCE;
 
-			SetStartingStats();
-			government = new Government(DataManager.Instance.GetGovernmentType(influence));
+			military = new Military();
 
-			OutputLogger.LogFormatAndPause("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, capitalCity.name, government.governmentType.name);
+			SetStartingStats();
+			government = new Government(this, DataManager.Instance.GetGovernmentType(influence));
+
+			deferredActions = new List<Action>();
+
+			OutputLogger.LogFormatAndPause("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, cities[0].name, government.governmentType.name);
 		}
 		public void AdvanceTime()
 		{
+			ResetTurnSpecificValues();
 			SetStartingStats();
 			government.UpdateFactionUsingPassiveTraits(this);
 
 			if(world.yearsPassed % 10 == 0)
 			{
-				var score = GenerateActionScore();
-				EventManager.Instance.CallActionByScore(score, this);
+				//SimAIManager.Instance.CallActionByScore(currentPriorities, this);
 			}
 
-			foreach(Tile tile in territory)
+			foreach (Tile tile in territory)
 			{
 				foreach(Landmark landmark in tile.landmarks)
 				{
 					landmark.AdvanceTime();
 				}
 			}
+
+			UpdateMilitary();
+
+			SimAIManager.Instance.CallActionByScores(currentPriorities, this);
+
+			HandleDeferredActions();
+
+			turnsSinceLastExpansion++;
 		}
 		public bool SpawnCityWithinRadius(Tile tile, float foodAmount, int population)
 		{
@@ -75,14 +104,14 @@ namespace Game.Factions
 			int attempts = 0;
 			while (!spawned && attempts < 10)
 			{
-				var randomIndex = WorldHandler.Instance.RandomRange(0, possibleTiles.Count);
+				var randomIndex = SimRandom.RandomRange(0, possibleTiles.Count);
 				var chosenTile = possibleTiles[randomIndex];
 				var tileController = world.GetFactionThatControlsTile(chosenTile);
 				if (chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && (tileController == this || tileController == null))
 				{
 					if(tileController == this)
 					{
-						chosenTile.SpawnCity(this, foodAmount, population);
+						cities.Add(chosenTile.SpawnCity(this, foodAmount, population));
 					}
 					else
 					{
@@ -98,21 +127,98 @@ namespace Game.Factions
 			return spawned;
 		}
 
-		public ActionScore GenerateActionScore()
+		public Priorities GeneratePriorities()
 		{
-			int militaryScore = 10 - (10 * militarySize) / population;
-
-			float averageFactionTiles = 0;
+			int totalFactionTiles = 0;
 			foreach(Faction faction in world.factions)
 			{
-				averageFactionTiles += faction.territory.Count;
+				totalFactionTiles += faction.territory.Count;
 			}
-			averageFactionTiles /= world.factions.Count;
+
+			var averageFactionTiles = totalFactionTiles / world.factions.Count;
 			averageFactionTiles++;
 
-			int expansionScore = (int)(10.0f - (territory.Count / averageFactionTiles));
+			var expansionExhaustion = Mathf.Clamp(turnsSinceLastExpansion, 0, 10) / 10.0f;
+			var averageOverTerritoryScore = (10.0f * averageFactionTiles / territory.Count);
+			var citiesOverTerritoryScore = (3.0f * cities.Count / territory.Count);
+			var claimedOverSizeScore = (10.0f * totalFactionTiles / world.Size);
 
-			return new ActionScore(militaryScore, 0, 0, 5, expansionScore); 
+			int expansionScore = (int)((averageOverTerritoryScore * citiesOverTerritoryScore * expansionExhaustion) - claimedOverSizeScore);
+
+			var averageLeaderPriorities = new Priorities();
+			foreach(LeadershipStructureNode node in government.leadershipStructure[0].tier)
+			{
+				averageLeaderPriorities = averageLeaderPriorities + node.occupant.priorities;
+			}
+			averageLeaderPriorities = averageLeaderPriorities / government.leadershipStructure[0].tier.Count;
+
+			var factionPriorities = new Priorities(0, 0, 0, 3, expansionScore, 0);
+			var totalPriorities = factionPriorities + averageLeaderPriorities;
+
+			return totalPriorities; 
+		}
+
+		public void UpdateMilitary()
+		{
+			//Handle Food Consumption
+			var lostTroops = ConsumeFoodAcrossFaction(military.Count);
+			if (lostTroops > 0)
+			{
+				ModifyTroopCount((int)lostTroops);
+			}
+
+			var foodSurplus = (foodProducedThisTurn - population) - military.Count;
+			if(foodSurplus > population * 1.2f)
+			{
+				//can probably sustain more troops safely
+				int averageFactionMilitary = 0;
+				foreach (Faction faction in world.factions)
+				{
+					averageFactionMilitary += faction.military.Count;
+				}
+
+				averageFactionMilitary /= world.factions.Count;
+				averageFactionMilitary++;
+				int militaryScore = (int)(5.0 * ((averageFactionMilitary * 1.1f) / (military.Count + 1.0f)));
+				var maxRecruitablePop = population * 0.2f;
+				//var recruitmentMulitplier = 10 - (10 * (military.Count / maxRecruitablePop));
+				//recruitmentMulitplier = Mathf.Clamp(recruitmentMulitplier, 0.0f, 10.0f);
+
+				var priorityImpact = currentPriorities.priorities[PriorityType.MILITARY] / 20;
+				var securityImpact = Mathf.Clamp(militaryScore, 0.0f, 5.0f) / 10;
+				var combinedImpact = (priorityImpact + securityImpact) / 2.0f;
+				var maxTroopsBySurplus = foodSurplus * combinedImpact;
+				var maxTroopsByPop = (maxRecruitablePop - military.Count) * combinedImpact;
+
+				ModifyTroopCount((int)Mathf.Min(maxTroopsByPop, maxTroopsBySurplus));
+				actionsRemaining--;
+			}
+			else if(foodSurplus > 0)
+			{
+				//we could hypothetically have more troops but probably shouldnt
+
+			}
+			else
+			{
+				//need to swords to plowshares
+				var percentToConvert = 1.0f -((10 - (10 / (currentPriorities.priorities[PriorityType.MILITARY] + 1))) / 10);
+				ModifyTroopCount((int)(foodSurplus * percentToConvert));
+				actionsRemaining--;
+			}
+		}
+
+		public void ModifyTroopCount(int amount)
+		{
+			amount = Mathf.Clamp(amount, -1 * military.Count, (int)(0.8f * population));
+			RemovePopulationAcrossFaction(amount);
+			military.ModifyTroopCount(amount);
+			OutputLogger.LogFormat("{0} Faction's troop count has shifted by {1}.", LogSource.FACTIONACTION, name, amount);
+		}
+
+		public void EventRecruitTroops()
+		{
+			int amount = (int)(population * (currentPriorities.priorities[PriorityType.MILITARY] / 100.0f));
+			ModifyTroopCount(amount);
 		}
 
 		public bool ExpandTerritory()
@@ -124,9 +230,10 @@ namespace Game.Factions
 				return false;
 			}
 
-			var randomIndex = WorldHandler.Instance.RandomRange(0, possibleTiles.Count);
+			var randomIndex = SimRandom.RandomRange(0, possibleTiles.Count);
 			var chosenTile = possibleTiles[randomIndex];
 			territory.Add(chosenTile);
+			turnsSinceLastExpansion = 0;
 			OutputLogger.LogFormat("{0} Faction expanded it's borders to include the tile at {1}.", Game.Enums.LogSource.FACTIONACTION, name, chosenTile.GetWorldPosition());
 			return true;
 		}
@@ -149,6 +256,89 @@ namespace Game.Factions
 			return possibleTiles;
 		}
 
+		public void AddCity(City city)
+		{
+			cities.Add(city);
+		}
+
+		public bool RemoveCity(City city)
+		{
+			if(cities.Contains(city))
+			{
+				cities.Remove(city);
+				return true;
+			}
+			return false;
+		}
+
+		public void RemoveLandmark(Tile tile, Landmark landmark)
+		{
+			deferredActions.Add(() => { tile.landmarks.Remove(landmark); });
+			if(landmark is City city)
+			{
+				deferredActions.Add(() => { RemoveCity(city); });
+			}
+		}
+
+		public void ReportFoodProduced(float food)
+		{
+			foodProducedThisTurn += food;
+		}
+
+		private float ConsumeFoodAcrossFaction(int amount)
+		{
+			Dictionary<City, float> tracker = new Dictionary<City, float>();
+			foreach(City city in cities)
+			{
+				tracker.Add(city, city.food);
+			}
+
+			float totalfood = 0;
+			foreach(float food in tracker.Values)
+			{
+				totalfood += food;
+			}
+
+			float totalDeficit = 0;
+			foreach(var pair in tracker)
+			{
+				var ratio = pair.Value / totalfood;
+
+				float amountConsumed = (amount * ratio);
+				float deficit = (pair.Key.food - amountConsumed);
+				if(deficit < 0)
+				{
+					totalDeficit += deficit;
+					amountConsumed -= deficit;
+				}
+
+				pair.Key.food -= amountConsumed;
+			}
+
+			return Mathf.Clamp(totalDeficit, float.MinValue, 0);
+		}
+
+		private void RemovePopulationAcrossFaction(int amount)
+		{
+			if(amount >= population)
+			{
+				//kill faction
+				return;
+			}
+
+			Dictionary<City, float> tracker = new Dictionary<City, float>();
+
+			foreach(City city in cities)
+			{
+				city.population -= (city.population / population) * amount;
+			}
+		}
+
+		private void RemovePercentOfPopulationAcrossFaction(float percent)
+		{
+			RemovePopulationAcrossFaction((int)(population * percent));
+		}
+
 		private int Population()
 		{
 			int count = 0;
@@ -167,15 +357,33 @@ namespace Game.Factions
 
 		private void SetStartingStats()
 		{
+			actionsPerTurn = new ModifiedType<int>(1);
+
 			birthRate = new ModifiedType<float>(AVERAGE_BIRTH_RATE);
 			deathRate = new ModifiedType<float>(AVERAGE_DEATH_RATE);
 			foodProductionPerWorker = new ModifiedType<float>(AVERAGE_FOOD_PRODUCTION);
 			spoilageRate = new ModifiedType<float>(AVERAGE_SPOILAGE_RATE);
 			maxFoodByLand = new ModifiedType<float>(MAX_FOOD_BY_LAND);
 			maxBurgeoningTension = new ModifiedType<float>(MAX_BURGEONING_TENSION);
+
+			recruitmentRate = new ModifiedType<float>(0);
 		}
 
-		//TODO: Create basic government types and spawn governments with those types
+		private void HandleDeferredActions()
+		{
+			foreach (Action action in deferredActions)
+			{
+				action.Invoke();
+			}
+			deferredActions.Clear();
+		}
+
+		private void ResetTurnSpecificValues()
+		{
+			actionsRemaining = actionsPerTurn.modified;
+			foodProducedThisTurn = 0;
+		}
+
 		//TODO: Define a way that factions/governments generate influence
 		//TODO: Use influence and faction pressure to determine tile aquisition 
 	}

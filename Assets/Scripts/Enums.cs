@@ -4,8 +4,12 @@ using UnityEngine;
 
 namespace Game.Enums
 {
-	public enum Gender { MALE, FEMALE, NEITHER};
-	public enum MapCategory { TERRAIN, RAINFALL, FERTILITY, BIOME};
+	[System.Serializable]
+	public enum Gender { MALE, FEMALE, ANY };
+	public enum MapCategory { TERRAIN, RAINFALL, FERTILITY, BIOME };
 	public enum LandType { OCEAN, FLAT, HILLS, MOUNTAINS };
-	public enum LogSource { CITY, NAMEGEN, WORLDGEN, MAIN, IMPORTANT, FACTION, FACTIONACTION };
+
+	public enum PriorityType { MILITARY, INFRASTRUCTURE, MERCANTILE, POLITICAL, EXPANSION, RELIGIOUS};
+	public enum TroopType { LIGHT_INFANTRY, HEAVY_INFANTRY, LIGHT_CAVALRY, HEAVY_CAVALRY, ARCHER, ARTILLERY};
+	public enum LogSource { CITY, NAMEGEN, WORLDGEN, MAIN, IMPORTANT, FACTION, FACTIONACTION, PEOPLE };
 }

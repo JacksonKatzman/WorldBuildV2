@@ -36,13 +36,12 @@ namespace Game.WorldGeneration
 			int attempts = 0;
 			while (!spawned && attempts < 10)
 			{
-				var randomXIndex = WorldHandler.Instance.RandomRange(0, chunkTiles.GetLength(0));
-				var randomYIndex = WorldHandler.Instance.RandomRange(0, chunkTiles.GetLength(1));
+				var randomXIndex = SimRandom.RandomRange(0, chunkTiles.GetLength(0));
+				var randomYIndex = SimRandom.RandomRange(0, chunkTiles.GetLength(1));
 				var chosenTile = chunkTiles[randomXIndex, randomYIndex];
 				var uncontrolled = (world.GetFactionThatControlsTile(chosenTile) == null);
 				if(chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && uncontrolled)
 				{
-					//chosenTile.SpawnCity(food, population);
 					world.CreateNewFaction(chosenTile, food, population);
 					spawned = true;
 					OutputLogger.LogFormatAndPause("Spawned city in chunk ({0},{1}) in tile ({2},{3})).", LogSource.WORLDGEN, coords.x, coords.y, randomXIndex, randomYIndex);
