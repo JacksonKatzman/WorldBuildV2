@@ -30,24 +30,11 @@ namespace Game.WorldGeneration
 			CalculateBiome();
 		}
 
-		public City SpawnCity(Faction faction, float food, int population)
-		{
-			var city = new City(this, faction, food, population);
-			landmarks.Add(city);
-			return city;
-		}
-
 		private float Value => chunk.noiseMap[coords.x, coords.y];
 		public float rainfallValue => chunk.SampleNoiseMap(MapCategory.RAINFALL, coords);
 		public void AdvanceTime()
 		{
-			foreach(Landmark landmark in landmarks)
-			{
-				if(landmark is City)
-				{
-
-				}
-			}
+			
 		}
 
 		public Vector2Int GetWorldPosition()
@@ -121,6 +108,20 @@ namespace Game.WorldGeneration
 			baseFertility -= (Value / 10.0f);
 
 			biome = world.CalculateTileBiome(landType, baseMoisture, baseFertility);
+		}
+
+		public int GetNumberOfCities()
+		{
+			var count = 0;
+			foreach (Landmark landmark in landmarks)
+			{
+				if (landmark is City)
+				{
+					count++;
+				}
+			}
+
+			return count;
 		}
     }
 }

@@ -23,6 +23,9 @@ public class City : Landmark
 		this.faction = faction;
 		this.food = food;
 		this.population = population;
+
+		faction.territory.Add(tile);
+
 		name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.ANY);
 		OutputLogger.LogFormat("{0} City's tile has a land availabilty coef of: {1}", LogSource.IMPORTANT, name, tile.biome.availableLand);
 	}

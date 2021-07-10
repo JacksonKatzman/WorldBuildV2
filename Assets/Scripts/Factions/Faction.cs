@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Generators;
 
 namespace Game.Factions
 {
@@ -63,7 +64,7 @@ namespace Game.Factions
 			territory.Add(startingTile);
 
 			cities = new List<City>();
-			cities.Add(startingTile.SpawnCity(this, food, population));
+			cities.Add(LandmarkGenerator.SpawnCity(startingTile, this, food, population));
 			influence = STARTING_INFLUENCE;
 
 			military = new Military();
@@ -77,14 +78,11 @@ namespace Game.Factions
 		}
 		public void AdvanceTime()
 		{
-			ResetTurnSpecificValues();
-			SetStartingStats();
-			government.UpdateFactionUsingPassiveTraits(this);
+			HandleDeferredActions();
 
-			if(world.yearsPassed % 10 == 0)
-			{
-				//SimAIManager.Instance.CallActionByScore(currentPriorities, this);
-			}
+			ResetTurnSpecificValues();
+
+			government.UpdateFactionUsingPassiveTraits(this);
 
 			foreach (Tile tile in territory)
 			{
@@ -113,16 +111,15 @@ namespace Game.Factions
 				var randomIndex = SimRandom.RandomRange(0, possibleTiles.Count);
 				var chosenTile = possibleTiles[randomIndex];
 				var tileController = world.GetFactionThatControlsTile(chosenTile);
-				if (chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && (tileController == this || tileController == null) && chosenTile.landType != LandType.OCEAN)
+				if (LandmarkGenerator.IsSuitableCityLocation(chosenTile, 0.5f, 0.2f, this))
 				{
 					if(tileController == this || Tile.GetDistanceBetweenTiles(tile, chosenTile) < radius)
 					{
-						cities.Add(chosenTile.SpawnCity(this, foodAmount, population));
-						deferredActions.Add(() => { territory.Add(chosenTile); });
+						deferredActions.Add(() => { cities.Add(LandmarkGenerator.SpawnCity(chosenTile, this, foodAmount, population)); });
 					}
 					else
 					{
-						world.CreateNewFaction(chosenTile, foodAmount, population);
+						FactionGenerator.SpawnFaction(chosenTile, foodAmount, population);
 					}
 					spawned = true;
 					OutputLogger.LogFormatAndPause("Spawned city in chunk ({0},{1}) in tile ({2},{3})).",
@@ -387,6 +384,8 @@ namespace Game.Factions
 
 		private void ResetTurnSpecificValues()
 		{
+			SetStartingStats();
+
 			actionsRemaining = actionsPerTurn.modified;
 			foodProducedThisTurn = 0;
 			borderTiles = GetBorderTiles();

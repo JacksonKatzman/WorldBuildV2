@@ -29,8 +29,6 @@ namespace Game.WorldGeneration
 
 		private List<Person> people;
 
-		private List<Faction> temporaryFactionContainer;
-		private List<Person> temporaryPersonContainer;
 		private List<Action> deferredActions;
 
 		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<Biome> biomes)
@@ -67,6 +65,8 @@ namespace Game.WorldGeneration
 
 		public void AdvanceTime()
 		{
+			HandleDeferredActions();
+
 			GenerateNewNoiseMap(MapCategory.RAINFALL);
 
 			foreach(Chunk chunk in worldChunks)
@@ -101,28 +101,9 @@ namespace Game.WorldGeneration
 			return Biome.CalculateBiomeType(biomes, landType, rainfall, fertility);
 		}
 
-		public void SpawnRandomCity()
-		{
-			bool spawned = false;
-			while (!spawned)
-			{
-				var randomXIndex = SimRandom.RandomRange(0, worldChunks.GetLength(0));
-				var randomYIndex = SimRandom.RandomRange(0, worldChunks.GetLength(1));
-				spawned = worldChunks[randomXIndex, randomYIndex].SpawnCity(100, 100);
-			}
-			HandleDeferredActions();
-		}
-
-		public void CreateNewFaction(Tile tile, float food, int population)
-		{
-			var faction = new Faction(tile, food, population);
-			deferredActions.Add(() => { factions.Add(faction); });
-		}
-
 		public Tile GetTileAtWorldPosition(Vector2Int worldPosition)
 		{
 			Vector2Int chunkCoords = new Vector2Int(worldPosition.x / chunkSize, worldPosition.y / chunkSize);
-			//OutputLogger.LogFormat("Chunk: {0} -- World: ({1},{2})", LogSource.IMPORTANT, chunkCoords, worldPosition.x % chunkSize, worldPosition.y % chunkSize);
 			return worldChunks[chunkCoords.x, chunkCoords.y].chunkTiles[worldPosition.x % chunkSize, worldPosition.y % chunkSize];
 		}
 
@@ -141,7 +122,7 @@ namespace Game.WorldGeneration
 			return controllingFaction;
 		}
 
-		public void AddPerson(Person person)
+		private void AddPerson(Person person)
 		{
 			if(!people.Contains(person))
 			{
@@ -149,7 +130,7 @@ namespace Game.WorldGeneration
 			}
 		}
 
-		public void RemovePerson(Person person)
+		private void RemovePerson(Person person)
 		{
 			if (people.Contains(person))
 			{
@@ -319,14 +300,26 @@ namespace Game.WorldGeneration
 			deferredActions.Clear();
 		}
 
+		private void OnPersonCreated(PersonCreatedEvent simEvent)
+		{
+			AddPerson(simEvent.person);
+		}
+
 		private void OnPersonDeath(PersonDiedEvent simEvent)
 		{
 			RemovePerson(simEvent.person);
 		}
 
+		private void OnFactionCreated(FactionCreatedEvent simEvent)
+		{
+			deferredActions.Add(() => { factions.Add(simEvent.faction); });
+		}
+
 		private void SubscribeToEvents()
 		{
+			EventManager.Instance.AddEventHandler<PersonCreatedEvent>(OnPersonCreated);
 			EventManager.Instance.AddEventHandler<PersonDiedEvent>(OnPersonDeath);
+			EventManager.Instance.AddEventHandler<FactionCreatedEvent>(OnFactionCreated);
 		}
 	}
 }

@@ -7,10 +7,10 @@ using Game.Generators.Noise;
 using Game.Enums;
 using Game.Generators;
 
-public class WorldHandler : MonoBehaviour
+public class SimulationManager : MonoBehaviour
 {
-    private static WorldHandler instance;
-    public static WorldHandler Instance => instance;
+    private static SimulationManager instance;
+    public static SimulationManager Instance => instance;
     public World World => world;
 
     public NoiseSettings settings;
@@ -60,12 +60,12 @@ public class WorldHandler : MonoBehaviour
         seededRandom = new System.Random(seed);
 
         DrawNoiseMap();
-        //DrawMesh(MeshGenerator.GenerateTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.colorMapTexture);
+
         DrawMesh(MeshGenerator.GenerateVoxelTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.voxelColorMapTexture);
 
         for (int a = 0; a < 10; a++)
         {
-            world.SpawnRandomCity();
+            FactionGenerator.SpawnFaction(world);
         }
     }
 

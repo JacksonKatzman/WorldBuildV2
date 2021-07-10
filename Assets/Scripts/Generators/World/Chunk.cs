@@ -30,31 +30,6 @@ namespace Game.WorldGeneration
 			}
 		}
 
-		public bool SpawnCity(float food, int population)
-		{
-			bool spawned = false;
-			int attempts = 0;
-			while (!spawned && attempts < 10)
-			{
-				var randomXIndex = SimRandom.RandomRange(0, chunkTiles.GetLength(0));
-				var randomYIndex = SimRandom.RandomRange(0, chunkTiles.GetLength(1));
-				var chosenTile = chunkTiles[randomXIndex, randomYIndex];
-				var uncontrolled = (world.GetFactionThatControlsTile(chosenTile) == null);
-				if(chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && uncontrolled && chosenTile.landType != LandType.OCEAN)
-				{
-					world.CreateNewFaction(chosenTile, food, population);
-					spawned = true;
-					OutputLogger.LogFormatAndPause("Spawned city in chunk ({0},{1}) in tile ({2},{3})).", LogSource.WORLDGEN, coords.x, coords.y, randomXIndex, randomYIndex);
-				}
-				attempts++;
-			}
-			if(attempts >= 10)
-			{
-				//Debug.LogFormat("Failed to spawn city in chunk ({0},{1})", coords.x, coords.y);
-			}
-			return spawned;
-		}
-
 		public float SampleNoiseMap(MapCategory mapCategory, Vector2Int tileLocation)
 		{
 			var sampleWorldMap = world.SampleNoiseMap(mapCategory, coords);
@@ -72,26 +47,6 @@ namespace Game.WorldGeneration
 				for(int x = 0; x < width; x++)
 				{
 					colorMap[x, y] = chunkTiles[x, y].biome.color;
-				}
-			}
-
-			return colorMap;
-		}
-
-		public Color[,] GetVoxelBiomeColorMap()
-		{
-			var width = chunkTiles.GetLength(0) * 2;
-			var height = chunkTiles.GetLength(1) * 2;
-			Color[,] colorMap = new Color[width, height];
-
-			for (int y = 0; y < height; y += 2)
-			{
-				for (int x = 0; x < width; x += 2)
-				{
-					colorMap[x, y] = chunkTiles[x, y].biome.color;
-					colorMap[x + 1, y] = chunkTiles[x, y].biome.color;
-					colorMap[x, y + 1] = chunkTiles[x, y].biome.color;
-					colorMap[x + 1, y + 1] = chunkTiles[x, y].biome.color;
 				}
 			}
 
