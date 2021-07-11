@@ -246,7 +246,7 @@ namespace Game.Factions
 			var chosenTile = possibleTiles[randomIndex];
 			territory.Add(chosenTile);
 			turnsSinceLastExpansion = 0;
-			OutputLogger.LogFormat("{0} Faction expanded it's borders to include the tile at {1}.", Game.Enums.LogSource.FACTIONACTION, name, chosenTile.GetWorldPosition());
+			OutputLogger.LogFormatAndPause("{0} Faction expanded it's borders to include the tile at {1}.", Game.Enums.LogSource.FACTIONACTION, name, chosenTile.GetWorldPosition());
 			return true;
 		}
 

@@ -293,7 +293,7 @@ namespace Game.WorldGeneration
 			return factionMapTexture;
 		}
 
-		private void HandleDeferredActions()
+		public void HandleDeferredActions()
 		{
 			foreach(Action action in deferredActions)
 			{
