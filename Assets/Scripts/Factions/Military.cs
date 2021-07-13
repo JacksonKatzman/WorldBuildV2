@@ -17,7 +17,6 @@ namespace Game.Factions
 		private int recruitmentWeight;
 		private int disbandWeight;
 
-
 		public int Count => GetTotalTroops();
 
 		public Military() : this(0,0,0)

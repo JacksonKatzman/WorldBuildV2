@@ -67,7 +67,7 @@ namespace Game.WorldGeneration
 
 		public void AdvanceTime()
 		{
-			//OutputLogger.LogFormat("Beginning World Advance Time!", LogSource.MAIN);
+			OutputLogger.LogFormat("Beginning World Advance Time!", LogSource.MAIN);
 
 			HandleDeferredActions();
 
@@ -78,6 +78,7 @@ namespace Game.WorldGeneration
 				chunk.AdvanceTime();
 			}
 
+			SimulationManager.Instance.timer.Tic();
 			foreach (Faction faction in factions)
 			{
 				faction.currentPriorities = faction.GeneratePriorities();
@@ -87,19 +88,22 @@ namespace Game.WorldGeneration
 			{
 				faction.AdvanceTime();
 			}
+			SimulationManager.Instance.timer.Toc("Faction");
 
-			foreach(War war in wars)
+			SimulationManager.Instance.timer.Tic();
+			foreach (War war in wars)
 			{
 				war.AdvanceTime();
 			}
-
+			SimulationManager.Instance.timer.Toc("WAR");
 			HandleDeferredActions();
 
-			foreach(Person person in people)
+			SimulationManager.Instance.timer.Tic();
+			foreach (Person person in people)
 			{
 				person.AdvanceTime();
 			}
-
+			SimulationManager.Instance.timer.Toc("People");
 			HandleDeferredActions();
 
 			yearsPassed++;
@@ -294,8 +298,6 @@ namespace Game.WorldGeneration
 			OutputLogger.LogFormat("Regenerating faction map!", LogSource.WORLDGEN);
 			var width = worldChunks.GetLength(0) * chunkSize;
 			var height = worldChunks.GetLength(1) * chunkSize;
-			//var width = noiseMaps[MapCategory.TERRAIN].GetLength(0);
-			//var height = noiseMaps[MapCategory.TERRAIN].GetLength(1);
 			var factionMap = new Color[width, height];
 			for (int y = 0; y < height; y++)
 			{
@@ -329,6 +331,26 @@ namespace Game.WorldGeneration
 			factionMapTexture.Apply();
 
 			return factionMapTexture;
+		}
+
+		public void HandleCleanup()
+		{
+			foreach(Chunk chunk in worldChunks)
+			{
+				foreach(Tile tile in chunk.chunkTiles)
+				{
+					var controller = tile.controller;
+					if(controller != null)
+					{
+						var distanceToCity = controller.GetDistanceToNearestCity(tile);
+						if(distanceToCity > controller.territory.Count/5)
+						{
+							controller.territory.Remove(tile);
+							tile.controller = null;
+						}
+					}
+				}
+			}
 		}
 
 		public void HandleDeferredActions()

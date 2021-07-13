@@ -47,6 +47,11 @@ namespace Game.Generators
 
 		public static void DestroyFaction(Faction faction)
 		{
+			for(int i = 0; i < faction.territory.Count; i++)
+			{
+				faction.territory[i].controller = null;
+			}
+			faction.territory.Clear();
 			EventManager.Instance.Dispatch(new FactionDestroyedEvent(faction));
 		}
 	}

@@ -93,7 +93,7 @@ namespace Game.Factions
 		}
 		public void AdvanceTime()
 		{
-			//OutputLogger.LogFormat("Beginning {0} Faction Advance Time!", LogSource.MAIN, name);
+			OutputLogger.LogFormat("Beginning {0} Faction Advance Time!", LogSource.MAIN, name);
 
 			HandleDeferredActions();
 
@@ -101,9 +101,9 @@ namespace Game.Factions
 
 			government.UpdateFactionUsingPassiveTraits(this);
 
-			foreach (Tile tile in territory)
+			for(int i = 0; i < territory.Count; i++)
 			{
-				foreach(Landmark landmark in tile.landmarks)
+				foreach(Landmark landmark in territory[i].landmarks)
 				{
 					landmark.AdvanceTime();
 				}
@@ -138,7 +138,7 @@ namespace Game.Factions
 			{
 				var randomIndex = SimRandom.RandomRange(0, possibleTiles.Count);
 				var chosenTile = possibleTiles[randomIndex];
-				var tileController = world.GetFactionThatControlsTile(chosenTile);
+				var tileController = chosenTile.controller;
 				if (LandmarkGenerator.IsSuitableCityLocation(chosenTile, 0.5f, 0.2f, this))
 				{
 					var keep = SimRandom.RandomFloat01();
@@ -254,8 +254,9 @@ namespace Game.Factions
 			{
 				if (expansionExhaustion * 2 >= 1.0f)
 				{
-					territory.Add(nextExpansions[0]);
+					nextExpansions[0].ChangeControl(this);
 					nextExpansions.Remove(nextExpansions[0]);
+					turnsSinceLastExpansion = 0;
 				}
 			}
 			else
@@ -263,87 +264,10 @@ namespace Game.Factions
 				if(expansionExhaustion >= 1.0f && emptyBorderTiles.Count > 0)
 				{
 					var randomIndex = SimRandom.RandomRange(0, emptyBorderTiles.Count);
-					territory.Add(emptyBorderTiles[randomIndex]);
+					emptyBorderTiles[randomIndex].ChangeControl(this);
 					turnsSinceLastExpansion = 0;
 				}
 			}
-
-			/*
-			if (expansionExhaustion >= 1.0f)
-			{
-				var emptyBorderTiles = GetEmptyBorderTiles();
-				var possibleTiles = new List<Tile>();
-
-				if (cities.Count > 2)
-				{
-					List<Vector2Int> cityLocations = new List<Vector2Int>();
-					foreach (City city in cities)
-					{
-						cityLocations.Add(city.tile.GetWorldPosition());
-					}
-
-					var hull = SpacialMath.ConvexHull(cityLocations);
-
-					foreach (Tile tile in emptyBorderTiles)
-					{
-						if (SpacialMath.PointIsInsideShape(tile.GetWorldPosition(), hull))
-						{
-							possibleTiles.Add(tile);
-						}
-					}
-				}
-
-				Tile chosenTile = null;
-
-				if (possibleTiles.Count == 0)
-				{
-					if (emptyBorderTiles.Count > 0)
-					{
-						var randomIndex = SimRandom.RandomRange(0, emptyBorderTiles.Count);
-						chosenTile = emptyBorderTiles[randomIndex];
-					}
-				}
-				else
-				{
-					var randomIndex = SimRandom.RandomRange(0, possibleTiles.Count);
-					chosenTile = possibleTiles[randomIndex];
-				}
-
-				if (chosenTile != null)
-				{
-					territory.Add(chosenTile);
-					turnsSinceLastExpansion = 0;
-				}
-			}
-
-			int totalFactionTiles = 0;
-			foreach (Faction faction in world.factions)
-			{
-				totalFactionTiles += faction.territory.Count;
-			}
-
-			var averageFactionTiles = totalFactionTiles / world.factions.Count;
-			averageFactionTiles++;
-
-			var expansionExhaustion = Mathf.Clamp(turnsSinceLastExpansion, 0, 10) / 10.0f;
-			var averageOverTerritoryScore = (10.0f * averageFactionTiles / territory.Count);
-			var citiesOverTerritoryScore = (3.0f * cities.Count / territory.Count);
-			var claimedOverSizeScore = (10.0f * totalFactionTiles / world.Size);
-
-			int expansionScore = (int)((averageOverTerritoryScore * citiesOverTerritoryScore * expansionExhaustion) - claimedOverSizeScore);
-
-			if(emptyBorderTiles.Count == 0)
-			{
-				return false;
-			}
-
-			var randomIndex = SimRandom.RandomRange(0, emptyBorderTiles.Count);
-			var chosenTile = emptyBorderTiles[randomIndex];
-			territory.Add(chosenTile);
-			turnsSinceLastExpansion = 0;
-			OutputLogger.LogFormat("{0} Faction expanded it's borders to include the tile at {1}.", Game.Enums.LogSource.FACTIONACTION, name, chosenTile.GetWorldPosition());
-			return true;
-*/
 		}
 
 		private List<Tile> GetEmptyBorderTiles()
@@ -354,7 +278,7 @@ namespace Game.Factions
 				var adjacentTiles = territoryTile.GetDirectlyAdjacentTiles();
 				foreach(Tile adjacentTile in adjacentTiles)
 				{
-					var tileController = world.GetFactionThatControlsTile(adjacentTile);
+					var tileController = adjacentTile.controller;
 					if (tileController == null && !possibleTiles.Contains(adjacentTile))
 					{
 						possibleTiles.Add(adjacentTile);
@@ -372,7 +296,6 @@ namespace Game.Factions
 				var adjacentTiles = territoryTile.GetDirectlyAdjacentTiles();
 				foreach (Tile adjacentTile in adjacentTiles)
 				{
-					var tileController = world.GetFactionThatControlsTile(adjacentTile);
 					if (!possibleTiles.Contains(adjacentTile))
 					{
 						possibleTiles.Add(adjacentTile);
@@ -386,7 +309,7 @@ namespace Game.Factions
 		{
 			foreach(Tile tile in borderTiles)
 			{
-				var owner = world.GetFactionThatControlsTile(tile);
+				var owner = tile.controller;
 				if(owner != null && owner != this)
 				{
 					if (!factionTensions.ContainsKey(owner))
@@ -395,20 +318,6 @@ namespace Game.Factions
 					}
 					factionTensions[owner] += (owner.territory.Count / 10 * owner.factionPressureModifier.modified);
 				}
-				/*
-				foreach(Faction faction in world.factions)
-				{
-					if(faction.territory.Contains(tile))
-					{
-						if(!factionTensions.ContainsKey(faction))
-						{
-							factionTensions.Add(faction, 0);
-						}
-						factionTensions[faction] += (faction.territory.Count / 10 * faction.factionPressureModifier.modified);
-						break;
-					}
-				}
-				*/
 			}
 
 			Faction warableFaction = null;
@@ -506,6 +415,48 @@ namespace Game.Factions
 			foodProducedThisTurn += food;
 		}
 
+		public City GetNearestCityToTile(Tile tile)
+		{
+			if(!territory.Contains(tile))
+			{
+				return null;
+			}
+
+			var closestCity = cities[0];
+			var currentDistance = Tile.GetDistanceBetweenTiles(tile, closestCity.tile);
+			for(int i = 1; i < cities.Count; i++)
+			{
+				var checkDistance = Tile.GetDistanceBetweenTiles(tile, cities[i].tile);
+				if (checkDistance < currentDistance)
+				{
+					closestCity = cities[i];
+					currentDistance = checkDistance;
+				}
+			}
+			return closestCity;
+		}
+
+		public int GetDistanceToNearestCity(Tile tile)
+		{
+			if (!territory.Contains(tile))
+			{
+				return int.MaxValue;
+			}
+
+			var closestCity = cities[0];
+			var currentDistance = Tile.GetDistanceBetweenTiles(tile, closestCity.tile);
+			for (int i = 1; i < cities.Count; i++)
+			{
+				var checkDistance = Tile.GetDistanceBetweenTiles(tile, cities[i].tile);
+				if (checkDistance < currentDistance)
+				{
+					closestCity = cities[i];
+					currentDistance = checkDistance;
+				}
+			}
+			return currentDistance;
+		}
+
 		private float ConsumeFoodAcrossFaction(int amount)
 		{
 			Dictionary<City, float> tracker = new Dictionary<City, float>();
@@ -563,15 +514,9 @@ namespace Game.Factions
 		private int Population()
 		{
 			int count = 0;
-			foreach(Tile tile in territory)
+			for(int i = 0; i < cities.Count; i++)
 			{
-				foreach(Landmark landmark in tile.landmarks)
-				{
-					if(landmark is City city)
-					{
-						count += city.population;
-					}
-				}
+				count += cities[i].population;
 			}
 			return count;
 		}
@@ -636,8 +581,5 @@ namespace Game.Factions
 		{
 			return name;
 		}
-
-		//TODO: Define a way that factions/governments generate influence
-		//TODO: Use influence and faction pressure to determine tile aquisition 
 	}
 }

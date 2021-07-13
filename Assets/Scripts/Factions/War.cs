@@ -111,15 +111,21 @@ namespace Game.Factions
 			else if(defenders.Count == 0)
 			{
 				//aggressor wins
-				var numTilesTaken = Mathf.Min(2 + originalAggressor.military.Count/100, originalDefender.territory.Count);
-				for(int i = 0; i < numTilesTaken; i++)
+				var numTilesTakable = 2 + originalAggressor.military.Count / 100;
+				for (int i = 0; i < numTilesTakable; i++)
 				{
-					var possibleTiles = originalDefender.territory;
+					var possibleTiles = GetAttackableTiles(originalAggressor, originalDefender);
+					if (possibleTiles.Count > 0)
+					{
+						var randomTileIndex = SimRandom.RandomRange(0, possibleTiles.Count);
+						var contestedTile = possibleTiles[randomTileIndex];
 
-					var randomTileIndex = SimRandom.RandomRange(0, possibleTiles.Count);
-					var contestedTile = possibleTiles[randomTileIndex];
-
-					AcquireTileByWar(contestedTile, originalAggressor, originalDefender);
+						AcquireTileByWar(contestedTile, originalAggressor, originalDefender);
+					}
+					else
+					{
+						i = numTilesTakable;
+					}
 				}
 				world.ResolveWar(this);
 				resolved = true;
@@ -127,15 +133,22 @@ namespace Game.Factions
 			else if(aggressors.Count == 0)
 			{
 				//defender wins
-				var numTilesTaken = Mathf.Min(2 + originalAggressor.territory.Count/3, originalAggressor.territory.Count);
-				for (int i = 0; i < numTilesTaken; i++)
+				var numTilesTakable = Mathf.Min(2 + originalAggressor.territory.Count/3, originalAggressor.territory.Count);
+				for (int i = 0; i < numTilesTakable; i++)
 				{
-					var possibleTiles = originalAggressor.territory;
+					var possibleTiles = GetAttackableTiles(originalDefender, originalAggressor);
 
-					var randomTileIndex = SimRandom.RandomRange(0, possibleTiles.Count);
-					var contestedTile = possibleTiles[randomTileIndex];
+					if (possibleTiles.Count > 0)
+					{
+						var randomTileIndex = SimRandom.RandomRange(0, possibleTiles.Count);
+						var contestedTile = possibleTiles[randomTileIndex];
 
-					AcquireTileByWar(contestedTile, originalDefender, originalAggressor);
+						AcquireTileByWar(contestedTile, originalDefender, originalAggressor);
+					}
+					else
+					{
+						i = numTilesTakable;
+					}
 				}
 
 				world.ResolveWar(this);
@@ -183,17 +196,7 @@ namespace Game.Factions
 
 		private void AcquireTileByWar(Tile contestedTile, Faction attacker, Faction defender)
 		{
-			defender.territory.Remove(contestedTile);
-			attacker.territory.Add(contestedTile);
-
-			foreach (Landmark landmark in contestedTile.landmarks)
-			{
-				if (landmark is City city)
-				{
-					defender.RemoveCity(city);
-					attacker.AddCity(city);
-				}
-			}
+			contestedTile.ChangeControl(attacker);
 		}
 
 		private Faction SimulateBattle(Faction attacker, Faction defender)

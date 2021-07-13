@@ -11,6 +11,7 @@ namespace Game.WorldGeneration
         public World world;
         public Chunk chunk;
         public Vector2Int coords;
+		public Faction controller;
 
 		public Biome biome;
 		public LandType landType;
@@ -136,6 +137,25 @@ namespace Game.WorldGeneration
 			}
 
 			return count;
+		}
+
+		public void ChangeControl(Faction newFaction)
+		{
+			if(controller != null)
+			{
+				for(int i = 0; i < landmarks.Count; i++)
+				{
+					if(landmarks[i] is City city)
+					{
+						controller.RemoveCity(city);
+						newFaction.AddCity(city);
+					}
+				}
+				controller.territory.Remove(this);
+			}
+
+			newFaction.territory.Add(this);
+			controller = newFaction;
 		}
     }
 }

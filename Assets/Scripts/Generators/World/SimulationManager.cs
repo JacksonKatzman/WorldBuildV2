@@ -7,6 +7,7 @@ using Game.Generators.Noise;
 using Game.Enums;
 using Game.Factions;
 using Game.Generators;
+using Game.Debug;
 
 public class SimulationManager : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public class SimulationManager : MonoBehaviour
 
     public bool DebugPause = false;
     private int debugYearsPassed = 0;
+    public TimingProfiler timer;
 
 	private void Awake()
 	{
@@ -63,6 +65,8 @@ public class SimulationManager : MonoBehaviour
 
 	void Start()
     {
+        timer = new TimingProfiler();
+
         cityMarkers = new List<GameObject>();
 
         seededRandom = new System.Random(seed);
@@ -71,7 +75,7 @@ public class SimulationManager : MonoBehaviour
 
         //DrawMesh(MeshGenerator.GenerateVoxelTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.voxelColorMapTexture);
 
-        for (int a = 0; a < 1; a++)
+        for (int a = 0; a < 10; a++)
         {
             FactionGenerator.SpawnFaction(world);
         }
@@ -156,11 +160,16 @@ public class SimulationManager : MonoBehaviour
 	{
         DebugPause = false;
         debugYearsPassed = 0;
-        while(DebugPause == false && debugYearsPassed < 100)
+        var startTime = Time.realtimeSinceStartup;
+        while(DebugPause == false && debugYearsPassed < 2000)
 		{
+            //Debug.Log("ADVANCING TIME!");
             world.AdvanceTime();
             debugYearsPassed++;
 		}
+        timer.PrintFindings();
+        OutputLogger.LogFormat("Full generation took {0} seconds.", LogSource.PROFILE, Time.realtimeSinceStartup - startTime);
+        //world.HandleCleanup();
         RedrawFactionMap();
         OutputLogger.LogFormat("Years passed since world generation: {0}", LogSource.MAIN, world.yearsPassed);
 	}

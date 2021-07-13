@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Math;
 
-public class JarvisMarchConvexHull : MonoBehaviour
+public class JarvisMarchConvexHullReference : MonoBehaviour
 {
     public Transform[] points;
     public Transform[] tests;

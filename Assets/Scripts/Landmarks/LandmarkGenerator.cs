@@ -34,7 +34,7 @@ namespace Game.Generators
 
 		public static bool IsSuitableCityLocation(Tile tile, float targetFertility, float targetLandAvailability, Faction faction = null)
 		{
-			var tileController = tile.world.GetFactionThatControlsTile(tile);
+			var tileController = tile.controller;
 			var uncontrolled = (tileController == faction || tileController == null);
 
 			var farAwayEnough = true;
