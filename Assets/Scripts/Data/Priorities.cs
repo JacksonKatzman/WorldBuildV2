@@ -9,15 +9,14 @@ public class Priorities
 {
 	public Dictionary<PriorityType, int> priorities;
 
-	public Priorities() : this(0, 0, 0, 0, 0, 0) { }
-	public Priorities(int militaryScore, int infrastructureScore, int mercantileScore, int politicalScore, int expansionScore, int religiousScore)
+	public Priorities() : this(0, 0, 0, 0, 0) { }
+	public Priorities(int militaryScore, int infrastructureScore, int mercantileScore, int politicalScore, int religiousScore)
 	{
 		priorities = new Dictionary<PriorityType, int>();
 		priorities.Add(PriorityType.MILITARY, Mathf.Clamp(militaryScore, 0, 10));
 		priorities.Add(PriorityType.INFRASTRUCTURE, Mathf.Clamp(infrastructureScore, 0, 10));
 		priorities.Add(PriorityType.MERCANTILE, Mathf.Clamp(mercantileScore, 0, 10));
 		priorities.Add(PriorityType.POLITICAL, Mathf.Clamp(politicalScore, 0, 10));
-		priorities.Add(PriorityType.EXPANSION, Mathf.Clamp(expansionScore, 0, 10));
 		priorities.Add(PriorityType.RELIGIOUS, Mathf.Clamp(religiousScore, 0, 10));
 	}
 
@@ -85,7 +84,6 @@ public class Priorities
 			$" / IN: {priorities[PriorityType.INFRASTRUCTURE]}" +
 			$" / ME: {priorities[PriorityType.MERCANTILE]}" +
 			$" / PO: {priorities[PriorityType.POLITICAL]}" +
-			$" / EX: {priorities[PriorityType.EXPANSION]}" +
 			$" / RE: {priorities[PriorityType.RELIGIOUS]}";
 	}
 }

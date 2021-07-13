@@ -6,7 +6,7 @@ using Game.Enums;
 public abstract class OutputLogger
 {
 	private static LogAllowance allowance = LogAllowance.SOME;
-	private static bool ALLOW_PAUSES = true;
+	private static bool ALLOW_PAUSES = false;
 
 	private static readonly Dictionary<LogSource, bool> AllowedLogs
 	= new Dictionary<LogSource, bool>
@@ -14,9 +14,9 @@ public abstract class OutputLogger
 	{ LogSource.IMPORTANT, false },
 	{ LogSource.CITY, false },
 	{ LogSource.NAMEGEN, false },
-	{ LogSource.WORLDGEN, true },
+	{ LogSource.WORLDGEN, false },
 	{ LogSource.FACTION, false },
-	{ LogSource.FACTIONACTION, true },
+	{ LogSource.FACTIONACTION, false },
 	{ LogSource.PEOPLE, false },
 	{ LogSource.MAIN, true }
 };

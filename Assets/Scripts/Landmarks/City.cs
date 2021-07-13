@@ -33,7 +33,7 @@ public class City : Landmark
 
 	public override void AdvanceTime()
 	{
-		OutputLogger.LogFormat("Beginning {0} City Advance Time!", LogSource.MAIN, name);
+		//OutputLogger.LogFormat("Beginning {0} City Advance Time!", LogSource.MAIN, name);
 
 		HandleFoodGrowth();
 		HandleFoodConsumption();
@@ -101,7 +101,7 @@ public class City : Landmark
 			burgeoningTension += (population - tensionScore);
 			OutputLogger.LogFormat("{0} City's burgeoning tension increased to {1} out of {2}.", LogSource.IMPORTANT, name, burgeoningTension, faction.maxBurgeoningTension.modified * (burgeoningFactor));
 			OutputLogger.LogFormat("This occured due to a population of {0}, and an available land score of {1}.", LogSource.IMPORTANT, population, tile.biome.availableLand);
-			if (burgeoningTension >= faction.maxBurgeoningTension.modified * (burgeoningFactor))
+			if (burgeoningTension >= faction.maxBurgeoningTension.modified * burgeoningFactor && faction.cities.Count < faction.territory.Count / 5)
 			{
 				var movingPercentage = SimRandom.RandomRange(5, 11) / 100.0f;
 				var movingAmount = (int)(population * movingPercentage);

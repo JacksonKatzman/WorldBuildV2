@@ -121,7 +121,7 @@ public class SimulationManager : MonoBehaviour
         
         for(int i = 0; i < cityMarkers.Count; i++)
 		{
-            Destroy(cityMarkers[0]);
+            Destroy(cityMarkers[i]);
 		}
         cityMarkers.Clear();
 
@@ -162,7 +162,7 @@ public class SimulationManager : MonoBehaviour
             debugYearsPassed++;
 		}
         RedrawFactionMap();
-        OutputLogger.LogFormat("Years passed since world generation: {0}", LogSource.WORLDGEN, world.yearsPassed);
+        OutputLogger.LogFormat("Years passed since world generation: {0}", LogSource.MAIN, world.yearsPassed);
 	}
 
     private Texture2D DebugCreateNoiseTexture(float[,] noiseMap)

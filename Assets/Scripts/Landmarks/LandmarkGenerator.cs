@@ -37,7 +37,20 @@ namespace Game.Generators
 			var tileController = tile.world.GetFactionThatControlsTile(tile);
 			var uncontrolled = (tileController == faction || tileController == null);
 
-			return (tile.baseFertility >= targetFertility && tile.GetNumberOfCities() == 0 && uncontrolled && tile.biome.availableLand >= targetLandAvailability);
+			var farAwayEnough = true;
+			if (faction != null)
+			{
+				foreach (City city in faction.cities)
+				{
+					if(Tile.GetDistanceBetweenTiles(tile, city.tile) < 5)
+					{
+						farAwayEnough = false;
+						break;
+					}
+				}
+			}
+
+			return (tile.baseFertility >= targetFertility && tile.GetNumberOfCities() == 0 && uncontrolled && tile.biome.availableLand >= targetLandAvailability && farAwayEnough);
 		}
 	}
 }

@@ -21,6 +21,7 @@ namespace Game.WorldGeneration
 
 		private List<Biome> biomes;
 		public List<Faction> factions;
+		private List<War> wars;
 
 		NoiseSettings noiseSettings;
         private Chunk[,] worldChunks;
@@ -36,6 +37,7 @@ namespace Game.WorldGeneration
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
 			factions = new List<Faction>();
 			people = new List<Person>();
+			wars = new List<War>();
 			deferredActions = new List<Action>();
 
 			AlterMap(MapCategory.TERRAIN, noiseMap);
@@ -65,7 +67,7 @@ namespace Game.WorldGeneration
 
 		public void AdvanceTime()
 		{
-			OutputLogger.LogFormat("Beginning World Advance Time!", LogSource.MAIN);
+			//OutputLogger.LogFormat("Beginning World Advance Time!", LogSource.MAIN);
 
 			HandleDeferredActions();
 
@@ -84,6 +86,11 @@ namespace Game.WorldGeneration
 			foreach (Faction faction in factions)
 			{
 				faction.AdvanceTime();
+			}
+
+			foreach(War war in wars)
+			{
+				war.AdvanceTime();
 			}
 
 			HandleDeferredActions();
@@ -122,6 +129,37 @@ namespace Game.WorldGeneration
 			}
 
 			return controllingFaction;
+		}
+
+		public bool AttemptWar(Faction aggressor, Faction defender)
+		{
+			var exisitingWar = false;
+			foreach(War war in wars)
+			{
+				if(war.originalAggressor == aggressor && war.originalDefender == defender)
+				{
+					exisitingWar = true;
+				}
+				else if (war.originalAggressor == defender && war.originalDefender == aggressor)
+				{
+					exisitingWar = true;
+				}
+			}
+
+			if (!exisitingWar)
+			{
+				wars.Add(new War(this, aggressor, defender));
+				OutputLogger.LogFormatAndPause("A war has begun between {0} Faction and {1} Faction!", LogSource.IMPORTANT, aggressor.name, defender.name);
+			}
+
+			//will add a chance to avoid this with diplomacy later
+			return !exisitingWar;
+		}
+
+		public void ResolveWar(War war)
+		{
+			OutputLogger.LogFormatAndPause("A war between has ended.", LogSource.IMPORTANT);
+			deferredActions.Add(() => { wars.Remove(war); });
 		}
 
 		private void AddPerson(Person person)

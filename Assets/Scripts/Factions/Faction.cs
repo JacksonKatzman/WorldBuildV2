@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Generators;
 using Game.Data.EventHandling;
+using Game.Math;
 
 namespace Game.Factions
 {
@@ -19,13 +20,18 @@ namespace Game.Factions
 		private static float MAX_FOOD_BY_LAND = 10000.0f;
 		private static float MAX_BURGEONING_TENSION = MAX_FOOD_BY_LAND / 10;
 		private static float BASE_REBELLION_CHANCE = 0.05f;
+		private static float BASE_FACTION_PRESSURE_THRESHOLD = 100.0f;
 
 		public string name;
 		public Color color;
 		public List<City> cities;
 		public Government government;
 		public List<Tile> territory;
+		private Polygon maxBorderPolygon;
+		private List<Tile> nextExpansions;
+
 		public List<Tile> borderTiles;
+		public Dictionary<Faction, float> factionTensions;
 		public int influence;
 		public World world;
 
@@ -43,6 +49,8 @@ namespace Game.Factions
 		public ModifiedType<float> maxFoodByLand;
 		public ModifiedType<float> maxBurgeoningTension;
 		public ModifiedType<float> rebellionChance;
+		public ModifiedType<float> factionPressureModifier;
+		public ModifiedType<float> factionPressureThreshold;
 
 		public Priorities currentPriorities;
 
@@ -63,10 +71,11 @@ namespace Game.Factions
 			color = new Color(r, g, b, 0.4f * 255);
 
 			territory = new List<Tile>();
+			nextExpansions = new List<Tile>();
 			world = startingTile.world;
 
 			cities = new List<City>();
-			cities.Add(LandmarkGenerator.SpawnCity(startingTile, this, food, population));
+			AddCity(LandmarkGenerator.SpawnCity(startingTile, this, food, population));
 			influence = STARTING_INFLUENCE;
 
 			military = new Military();
@@ -74,15 +83,17 @@ namespace Game.Factions
 			SetStartingStats();
 			government = new Government(this, DataManager.Instance.GetGovernmentType(influence));
 
+			factionTensions = new Dictionary<Faction, float>();
+
 			deferredActions = new List<Action>();
 
 			SubscribeToEvents();
 
-			OutputLogger.LogFormatAndPause("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, cities[0].name, government.governmentType.name);
+			OutputLogger.LogFormat("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, cities[0].name, government.governmentType.name);
 		}
 		public void AdvanceTime()
 		{
-			OutputLogger.LogFormat("Beginning {0} Faction Advance Time!", LogSource.MAIN, name);
+			//OutputLogger.LogFormat("Beginning {0} Faction Advance Time!", LogSource.MAIN, name);
 
 			HandleDeferredActions();
 
@@ -98,16 +109,26 @@ namespace Game.Factions
 				}
 			}
 
+			ExpandTerritory();
+
 			UpdateMilitary();
+
+			CalculateFactionTension();
 
 			SimAIManager.Instance.CallActionByScores(currentPriorities, this);
 
 			HandleDeferredActions();
 
+			CheckForDestruction();
+
 			turnsSinceLastExpansion++;
 		}
 		public bool SpawnCityWithinRadius(Tile tile, float foodAmount, int population)
 		{
+			if(nextExpansions.Count > 0 || cities.Count >= 5 + territory.Count/40)
+			{
+				return false;
+			}
 			int maxRadius = 5 + influence / 100;
 			int minRadius = 3;
 			var possibleTiles = tile.GetAllTilesInRing(maxRadius, minRadius);
@@ -123,14 +144,14 @@ namespace Game.Factions
 					var keep = SimRandom.RandomFloat01();
 					if(keep > rebellionChance.modified)
 					{
-						deferredActions.Add(() => { cities.Add(LandmarkGenerator.SpawnCity(chosenTile, this, foodAmount, population)); });
+						deferredActions.Add(() => { AddCity(LandmarkGenerator.SpawnCity(chosenTile, this, foodAmount, population)); });
 					}
 					else
 					{
 						FactionGenerator.SpawnFaction(chosenTile, foodAmount, population);
 					}
 					spawned = true;
-					OutputLogger.LogFormatAndPause("Spawned city in chunk ({0},{1}) in tile ({2},{3})).",
+					OutputLogger.LogFormat("Spawned city in chunk ({0},{1}) in tile ({2},{3})).",
 						LogSource.WORLDGEN, chosenTile.chunk.coords.x, chosenTile.chunk.coords.y, chosenTile.coords.x, chosenTile.coords.y);
 					OutputLogger.LogFormat("World Coords are: {0},{1}.", LogSource.WORLDGEN, chosenTile.GetWorldPosition(), tile.GetWorldPosition());
 				}
@@ -141,22 +162,6 @@ namespace Game.Factions
 
 		public Priorities GeneratePriorities()
 		{
-			int totalFactionTiles = 0;
-			foreach(Faction faction in world.factions)
-			{
-				totalFactionTiles += faction.territory.Count;
-			}
-
-			var averageFactionTiles = totalFactionTiles / world.factions.Count;
-			averageFactionTiles++;
-
-			var expansionExhaustion = Mathf.Clamp(turnsSinceLastExpansion, 0, 10) / 10.0f;
-			var averageOverTerritoryScore = (10.0f * averageFactionTiles / territory.Count);
-			var citiesOverTerritoryScore = (3.0f * cities.Count / territory.Count);
-			var claimedOverSizeScore = (10.0f * totalFactionTiles / world.Size);
-
-			int expansionScore = (int)((averageOverTerritoryScore * citiesOverTerritoryScore * expansionExhaustion) - claimedOverSizeScore);
-
 			var averageLeaderPriorities = new Priorities();
 			foreach(LeadershipStructureNode node in government.leadershipStructure[0].tier)
 			{
@@ -164,7 +169,7 @@ namespace Game.Factions
 			}
 			averageLeaderPriorities = averageLeaderPriorities / government.leadershipStructure[0].tier.Count;
 
-			var factionPriorities = new Priorities(0, 0, 0, 3, expansionScore, 0);
+			var factionPriorities = new Priorities(0, 0, 0, 3, 0);
 			var totalPriorities = factionPriorities + averageLeaderPriorities;
 
 			return totalPriorities; 
@@ -233,24 +238,115 @@ namespace Game.Factions
 			ModifyTroopCount(amount);
 		}
 
-		public bool ExpandTerritory()
+		public void RecruitPercentOfPopulation(float percent)
 		{
-			var possibleTiles = borderTiles;
+			percent /= 100.0f;
+			int amount = (int)(population * percent);
+			ModifyTroopCount(amount);
+		}
 
-			if(possibleTiles.Count == 0)
+		private void ExpandTerritory()
+		{
+			var expansionExhaustion = Mathf.Clamp(turnsSinceLastExpansion, 0, 10) / 10.0f;
+			var emptyBorderTiles = GetEmptyBorderTiles();
+
+			if (nextExpansions.Count > 0)
+			{
+				if (expansionExhaustion * 2 >= 1.0f)
+				{
+					territory.Add(nextExpansions[0]);
+					nextExpansions.Remove(nextExpansions[0]);
+				}
+			}
+			else
+			{
+				if(expansionExhaustion >= 1.0f && emptyBorderTiles.Count > 0)
+				{
+					var randomIndex = SimRandom.RandomRange(0, emptyBorderTiles.Count);
+					territory.Add(emptyBorderTiles[randomIndex]);
+					turnsSinceLastExpansion = 0;
+				}
+			}
+
+			/*
+			if (expansionExhaustion >= 1.0f)
+			{
+				var emptyBorderTiles = GetEmptyBorderTiles();
+				var possibleTiles = new List<Tile>();
+
+				if (cities.Count > 2)
+				{
+					List<Vector2Int> cityLocations = new List<Vector2Int>();
+					foreach (City city in cities)
+					{
+						cityLocations.Add(city.tile.GetWorldPosition());
+					}
+
+					var hull = SpacialMath.ConvexHull(cityLocations);
+
+					foreach (Tile tile in emptyBorderTiles)
+					{
+						if (SpacialMath.PointIsInsideShape(tile.GetWorldPosition(), hull))
+						{
+							possibleTiles.Add(tile);
+						}
+					}
+				}
+
+				Tile chosenTile = null;
+
+				if (possibleTiles.Count == 0)
+				{
+					if (emptyBorderTiles.Count > 0)
+					{
+						var randomIndex = SimRandom.RandomRange(0, emptyBorderTiles.Count);
+						chosenTile = emptyBorderTiles[randomIndex];
+					}
+				}
+				else
+				{
+					var randomIndex = SimRandom.RandomRange(0, possibleTiles.Count);
+					chosenTile = possibleTiles[randomIndex];
+				}
+
+				if (chosenTile != null)
+				{
+					territory.Add(chosenTile);
+					turnsSinceLastExpansion = 0;
+				}
+			}
+
+			int totalFactionTiles = 0;
+			foreach (Faction faction in world.factions)
+			{
+				totalFactionTiles += faction.territory.Count;
+			}
+
+			var averageFactionTiles = totalFactionTiles / world.factions.Count;
+			averageFactionTiles++;
+
+			var expansionExhaustion = Mathf.Clamp(turnsSinceLastExpansion, 0, 10) / 10.0f;
+			var averageOverTerritoryScore = (10.0f * averageFactionTiles / territory.Count);
+			var citiesOverTerritoryScore = (3.0f * cities.Count / territory.Count);
+			var claimedOverSizeScore = (10.0f * totalFactionTiles / world.Size);
+
+			int expansionScore = (int)((averageOverTerritoryScore * citiesOverTerritoryScore * expansionExhaustion) - claimedOverSizeScore);
+
+			if(emptyBorderTiles.Count == 0)
 			{
 				return false;
 			}
 
-			var randomIndex = SimRandom.RandomRange(0, possibleTiles.Count);
-			var chosenTile = possibleTiles[randomIndex];
+			var randomIndex = SimRandom.RandomRange(0, emptyBorderTiles.Count);
+			var chosenTile = emptyBorderTiles[randomIndex];
 			territory.Add(chosenTile);
 			turnsSinceLastExpansion = 0;
-			OutputLogger.LogFormatAndPause("{0} Faction expanded it's borders to include the tile at {1}.", Game.Enums.LogSource.FACTIONACTION, name, chosenTile.GetWorldPosition());
+			OutputLogger.LogFormat("{0} Faction expanded it's borders to include the tile at {1}.", Game.Enums.LogSource.FACTIONACTION, name, chosenTile.GetWorldPosition());
 			return true;
+*/
 		}
 
-		private List<Tile> GetBorderTiles()
+		private List<Tile> GetEmptyBorderTiles()
 		{
 			var possibleTiles = new List<Tile>();
 			foreach(Tile territoryTile in territory)
@@ -268,9 +364,122 @@ namespace Game.Factions
 			return possibleTiles;
 		}
 
+		public List<Tile> GetBorderTiles()
+		{
+			var possibleTiles = new List<Tile>();
+			foreach (Tile territoryTile in territory)
+			{
+				var adjacentTiles = territoryTile.GetDirectlyAdjacentTiles();
+				foreach (Tile adjacentTile in adjacentTiles)
+				{
+					var tileController = world.GetFactionThatControlsTile(adjacentTile);
+					if (!possibleTiles.Contains(adjacentTile))
+					{
+						possibleTiles.Add(adjacentTile);
+					}
+				}
+			}
+			return possibleTiles;
+		}
+
+		private void CalculateFactionTension()
+		{
+			foreach(Tile tile in borderTiles)
+			{
+				var owner = world.GetFactionThatControlsTile(tile);
+				if(owner != null && owner != this)
+				{
+					if (!factionTensions.ContainsKey(owner))
+					{
+						factionTensions.Add(owner, 0);
+					}
+					factionTensions[owner] += (owner.territory.Count / 10 * owner.factionPressureModifier.modified);
+				}
+				/*
+				foreach(Faction faction in world.factions)
+				{
+					if(faction.territory.Contains(tile))
+					{
+						if(!factionTensions.ContainsKey(faction))
+						{
+							factionTensions.Add(faction, 0);
+						}
+						factionTensions[faction] += (faction.territory.Count / 10 * faction.factionPressureModifier.modified);
+						break;
+					}
+				}
+				*/
+			}
+
+			Faction warableFaction = null;
+			foreach(var pair in factionTensions)
+			{
+				if(pair.Value > factionPressureThreshold.modified)
+				{
+					//consider war
+					warableFaction = pair.Key;
+					break;
+					//if war probably lower other attentions so we dont get multiple wars from the same factions
+				}
+			}
+
+			if(warableFaction != null)
+			{
+				world.AttemptWar(this, warableFaction);
+			}
+		}
+
+		public void ModifyFactionTension(Faction faction, float amount)
+		{
+			if(factionTensions.ContainsKey(faction))
+			{
+				factionTensions[faction] += amount;
+			}
+		}
+
+		public void ModifyFactionTensionByPercentage(Faction faction, float amount)
+		{
+			if (factionTensions.ContainsKey(faction))
+			{
+				factionTensions[faction] *= (amount/100.0f);
+			}
+		}
+
+		public void SetFactionTension(Faction faction, float amount)
+		{
+			if (factionTensions.ContainsKey(faction))
+			{
+				factionTensions[faction] = amount;
+			}
+		}
+
 		public void AddCity(City city)
 		{
-			cities.Add(city);
+			if (!cities.Contains(city))
+			{
+				cities.Add(city);
+
+				List<Vector2> cityLocations = new List<Vector2>();
+				foreach (City c in cities)
+				{
+					cityLocations.Add(c.tile.GetWorldPosition());
+				}
+
+				maxBorderPolygon = SpacialMath.JarvisMarch(cityLocations);
+				if (maxBorderPolygon != null)
+				{
+					nextExpansions.Clear();
+
+					foreach (Tile tile in GetEmptyBorderTiles())
+					{
+						var tilePos = tile.GetWorldPosition();
+						if (maxBorderPolygon.PointInPolygon(tilePos.x, tilePos.y))
+						{
+							nextExpansions.Add(tile);
+						}
+					}
+				}
+			}
 		}
 
 		public bool RemoveCity(City city)
@@ -378,6 +587,8 @@ namespace Game.Factions
 			maxFoodByLand = new ModifiedType<float>(MAX_FOOD_BY_LAND);
 			maxBurgeoningTension = new ModifiedType<float>(MAX_BURGEONING_TENSION);
 			rebellionChance = new ModifiedType<float>(BASE_REBELLION_CHANCE);
+			factionPressureModifier = new ModifiedType<float>(1.0f);
+			factionPressureThreshold = new ModifiedType<float>(BASE_FACTION_PRESSURE_THRESHOLD);
 
 			recruitmentRate = new ModifiedType<float>(0);
 		}
@@ -400,7 +611,7 @@ namespace Game.Factions
 			borderTiles = GetBorderTiles();
 		}
 
-		private void CheckForDestruction()
+		public void CheckForDestruction()
 		{
 			if(cities.Count <= 0)
 			{
@@ -419,6 +630,11 @@ namespace Game.Factions
 		private void SubscribeToEvents()
 		{
 			EventManager.Instance.AddEventHandler<CityDestroyedEvent>(OnRecievedCityDestroyed);
+		}
+
+		public override string ToString()
+		{
+			return name;
 		}
 
 		//TODO: Define a way that factions/governments generate influence

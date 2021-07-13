@@ -702,7 +702,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1000, z: 0}
+  m_LocalPosition: {x: 0, y: 1186, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -922,9 +922,9 @@ RectTransform:
   m_Father: {fileID: 722444726}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -160}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 39}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163839547
@@ -1597,7 +1597,6 @@ GameObject:
   - component: {fileID: 1975786006}
   - component: {fileID: 1975786005}
   - component: {fileID: 1975786004}
-  - component: {fileID: 1975786003}
   m_Layer: 0
   m_Name: FactionMap
   m_TagString: Untagged
@@ -1619,86 +1618,6 @@ Transform:
   m_Father: {fileID: 2098346562}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1975786003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1975786001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dd8caa7d8dd62d45a30a745380f2171, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settings:
-    worldSize: {x: 10, y: 10}
-    scale: 26
-    octaves: 4
-    persistance: 0.456
-    lacunarity: 2
-    offset: {x: 0, y: 0}
-  biomeSettings: {fileID: 11400000, guid: a8180b4c200677b4f8f039802c7a3072, type: 2}
-  mapMeshFilter: {fileID: 1492926379}
-  mapMeshRenderer: {fileID: 1492926378}
-  factionMeshFilter: {fileID: 999924307}
-  factionMeshRenderer: {fileID: 1975786005}
-  cityMarker: {fileID: 6402618742109441841, guid: 56e82e32bd176b941b3195f20e805b70, type: 3}
-  heightMulitplier: 9.5
-  heightCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.27950934
-      value: 0.003810977
-      inSlope: 0.031455483
-      outSlope: 0.031455483
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.31384993
-      value: 0.051978126
-      inSlope: 0.18577251
-      outSlope: 0.18577251
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.55206615
-      value: 0.063351035
-      inSlope: 0.0841241
-      outSlope: 0.0841241
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.21375322
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  coloredMapRenderer: {fileID: 1975786005}
-  seed: 69
-  DebugPause: 0
 --- !u!64 &1975786004
 MeshCollider:
   m_ObjectHideFlags: 0

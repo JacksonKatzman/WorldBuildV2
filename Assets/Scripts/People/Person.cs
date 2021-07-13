@@ -94,14 +94,14 @@ public class Person : ITimeSensitive
 
 	private void GeneratePriorities()
 	{
-		int[] pointAllocations = new int[6];
+		int[] pointAllocations = new int[5];
 		for(int index = 0; index < STARTING_PRIORITY_POINTS; index++)
 		{
 			var randomIndex = SimRandom.RandomRange(0, pointAllocations.Length);
 			pointAllocations[randomIndex]++;
 		}
 
-		priorities = new Priorities(pointAllocations[0], pointAllocations[1], pointAllocations[2], pointAllocations[3], pointAllocations[4], pointAllocations[5]);
+		priorities = new Priorities(pointAllocations[0], pointAllocations[1], pointAllocations[2], pointAllocations[3], pointAllocations[4]);
 	}
 
 	private void DetermineNaturalDeathAge()

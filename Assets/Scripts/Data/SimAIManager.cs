@@ -70,45 +70,10 @@ public class SimAIManager : MonoBehaviour
         }
     }
 
-	private void Start()
-	{
+    private void Start()
+    {
         CompileEventDictionary();
-        /*
-        MethodInfo method = null;
-        foreach(ActionKey key in eventDictionary.Keys)
-		{
-            if(key.fuctionName == "DoNothing")
-			{
-                method = eventDictionary[key];
-                break;
-			}
-		}
-        method?.Invoke(null, new object[] { null });
-        */
-	}
-    /*
-    private void CompileEventDictionaries()
-	{
-        eventDictionary = new Dictionary<ActionKey, MethodInfo>();
-        string[] actionScores = factionActionScores.text.Split('\n');
-
-        foreach(var method in typeof(FactionActions).GetMethods())
-		{
-            var methodName = method.Name;
-            foreach(string score in actionScores)
-			{
-                string[] splitValues = score.Split(',');
-                if (splitValues[0] == methodName)
-				{
-                    var actionScore = new Priorities(Int32.Parse(splitValues[2]), Int32.Parse(splitValues[3]), Int32.Parse(splitValues[4]), Int32.Parse(splitValues[5]), Int32.Parse(splitValues[6]));
-                    var actionKey = new ActionKey(splitValues[0], Int32.Parse(splitValues[1]), actionScore);
-                    eventDictionary.Add(actionKey, method);
-                    break;
-                }
-			}
-		}
     }
-    */
 
     private void CompileEventDictionary()
 	{
@@ -124,10 +89,6 @@ public class SimAIManager : MonoBehaviour
                                      .Select(me => me.Name)
                                      .Contains(m.Name))));
         eventDictionary.Add(PriorityType.POLITICAL, new List<MethodInfo>(typeof(PoliticalActions).GetMethods().Where(m => !typeof(object)
-                                     .GetMethods()
-                                     .Select(me => me.Name)
-                                     .Contains(m.Name))));
-        eventDictionary.Add(PriorityType.EXPANSION, new List<MethodInfo>(typeof(ExpansionActions).GetMethods().Where(m => !typeof(object)
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name))));
