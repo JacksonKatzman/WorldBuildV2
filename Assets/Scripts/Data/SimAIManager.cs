@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Factions;
 using Game.Enums;
+using Game.People;
 
 public class SimAIManager : MonoBehaviour
 {
@@ -15,11 +16,16 @@ public class SimAIManager : MonoBehaviour
     [SerializeField]
     private TextAsset factionActionScores;
 
+    private List<MethodInfo> personActionList;
+    private Dictionary<PriorityType, List<MethodInfo>> factionActionDictionary;
 
-    private Dictionary<PriorityType, List<MethodInfo>> eventDictionary;
+    public void CallPersonAction(Person person)
+	{
+        var randomIndex = SimRandom.RandomRange(0, personActionList.Count);
+        personActionList[randomIndex].Invoke(null, new object[] { person });
+    }
 
-    
-    public void CallActionByScores(Priorities score, Faction faction)
+    public void CallFactionActionByScores(Priorities score, Faction faction)
 	{
         int index = 0;
         int tries = 0;
@@ -28,7 +34,7 @@ public class SimAIManager : MonoBehaviour
 
         while(actionsTaken < faction.actionsRemaining && tries < 10)
 		{
-            if(CallActionByPriorityType(sortedList[index], faction))
+            if(CallFactionActionByPriorityType(sortedList[index], faction))
 			{
                 actionsTaken++;
 			}
@@ -43,11 +49,11 @@ public class SimAIManager : MonoBehaviour
 		}            
 	}
 
-    private bool CallActionByPriorityType(PriorityType priorityType, Faction faction)
+    private bool CallFactionActionByPriorityType(PriorityType priorityType, Faction faction)
 	{
-        if (priorityType != PriorityType.MILITARY && eventDictionary[priorityType].Count > 0)
+        if (priorityType != PriorityType.MILITARY && factionActionDictionary[priorityType].Count > 0)
         {
-            var possibleActions = eventDictionary[priorityType];
+            var possibleActions = factionActionDictionary[priorityType];
             var randomIndex = SimRandom.RandomRange(0, possibleActions.Count);
             possibleActions[randomIndex].Invoke(null, new object[] { faction });
             return true;
@@ -72,27 +78,37 @@ public class SimAIManager : MonoBehaviour
 
     private void Start()
     {
-        CompileEventDictionary();
+        CompilePersonActionList();
+        CompileFactionActionDictionary();
     }
 
-    private void CompileEventDictionary()
+    private void CompilePersonActionList()
 	{
-        eventDictionary = new Dictionary<PriorityType, List<MethodInfo>>();
+        personActionList = new List<MethodInfo>(typeof(PersonActions).GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name)));
 
-        eventDictionary.Add(PriorityType.MILITARY, null);
-        eventDictionary.Add(PriorityType.INFRASTRUCTURE, new List<MethodInfo>(typeof(InfrastructureActions).GetMethods().Where(m => !typeof(object)
+    }
+
+    private void CompileFactionActionDictionary()
+	{
+        factionActionDictionary = new Dictionary<PriorityType, List<MethodInfo>>();
+
+        factionActionDictionary.Add(PriorityType.MILITARY, null);
+        factionActionDictionary.Add(PriorityType.INFRASTRUCTURE, new List<MethodInfo>(typeof(InfrastructureActions).GetMethods().Where(m => !typeof(object)
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name))));
-        eventDictionary.Add(PriorityType.MERCANTILE, new List<MethodInfo>(typeof(MercantileActions).GetMethods().Where(m => !typeof(object)
+        factionActionDictionary.Add(PriorityType.MERCANTILE, new List<MethodInfo>(typeof(MercantileActions).GetMethods().Where(m => !typeof(object)
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name))));
-        eventDictionary.Add(PriorityType.POLITICAL, new List<MethodInfo>(typeof(PoliticalActions).GetMethods().Where(m => !typeof(object)
+        factionActionDictionary.Add(PriorityType.POLITICAL, new List<MethodInfo>(typeof(PoliticalActions).GetMethods().Where(m => !typeof(object)
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name))));
-        eventDictionary.Add(PriorityType.RELIGIOUS, new List<MethodInfo>(typeof(ReligiousActions).GetMethods().Where(m => !typeof(object)
+        factionActionDictionary.Add(PriorityType.RELIGIOUS, new List<MethodInfo>(typeof(ReligiousActions).GetMethods().Where(m => !typeof(object)
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name))));

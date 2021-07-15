@@ -8,6 +8,7 @@ using Game.Enums;
 using Game.Factions;
 using Game.Generators;
 using Game.Debug;
+using Game.Data.EventHandling.EventRecording;
 
 public class SimulationManager : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class SimulationManager : MonoBehaviour
     GameObject cityMarker;
 
     private List<GameObject> cityMarkers;
+
+    private EventRecorder eventRecorder;
 
     public float heightMulitplier;
     public AnimationCurve heightCurve;
@@ -68,6 +71,8 @@ public class SimulationManager : MonoBehaviour
         timer = new TimingProfiler();
 
         cityMarkers = new List<GameObject>();
+
+        eventRecorder = new EventRecorder();
 
         seededRandom = new System.Random(seed);
 
@@ -161,7 +166,7 @@ public class SimulationManager : MonoBehaviour
         DebugPause = false;
         debugYearsPassed = 0;
         var startTime = Time.realtimeSinceStartup;
-        while(DebugPause == false && debugYearsPassed < 2000)
+        while(DebugPause == false && debugYearsPassed < 200)
 		{
             //Debug.Log("ADVANCING TIME!");
             world.AdvanceTime();

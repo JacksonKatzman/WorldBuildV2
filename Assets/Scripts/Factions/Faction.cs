@@ -115,7 +115,7 @@ namespace Game.Factions
 
 			CalculateFactionTension();
 
-			SimAIManager.Instance.CallActionByScores(currentPriorities, this);
+			SimAIManager.Instance.CallFactionActionByScores(currentPriorities, this);
 
 			HandleDeferredActions();
 

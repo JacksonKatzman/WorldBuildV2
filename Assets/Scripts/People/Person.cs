@@ -12,6 +12,7 @@ public class Person : ITimeSensitive
 	public int age;
 	public Gender gender;
 	public Faction faction;
+	public int influence;
 
 	public List<Person> children;
 
@@ -21,14 +22,15 @@ public class Person : ITimeSensitive
 
 	private int naturalDeathAge;
 
-	public Person() : this(SimRandom.RandomRange(16, 69), (Gender)SimRandom.RandomRange(0, 2))
+	public Person() : this(SimRandom.RandomRange(16, 69), (Gender)SimRandom.RandomRange(0, 2), 0)
 	{
 	}
 
-	public Person(int age, Gender gender)
+	public Person(int age, Gender gender, int startingInfluence)
 	{
 		this.age = age;
 		this.gender = gender;
+		this.influence = startingInfluence;
 
 		if (name == null)
 		{
@@ -48,19 +50,19 @@ public class Person : ITimeSensitive
 		OutputLogger.LogFormat("{0} was spawned at age {1}.", LogSource.PEOPLE, name, age);
 	}
 
-	public Person(int age, Gender gender, Person progenitor) : this(age, gender)
+	public Person(int age, Gender gender, Person progenitor) : this(age, gender, progenitor.influence/2)
 	{
 		var progenitorName = progenitor.name.Split(' ');
 		var progenitorSurname = progenitorName[progenitorName.Length - 1];
 		name = NameGenerator.GeneratePersonFirstName(gender) + progenitorSurname;
 	}
 
-	public Person(int age, Gender gender, PersonStats stats) : this(age, gender)
+	public Person(int age, Gender gender, PersonStats stats) : this(age, gender, 0)
 	{
 		this.stats = stats;
 	}
 
-	public Person(int age, Gender gender, Priorities priorities) : this(age, gender)
+	public Person(int age, Gender gender, Priorities priorities) : this(age, gender, 0)
 	{
 		this.priorities = priorities;
 	}
@@ -77,11 +79,19 @@ public class Person : ITimeSensitive
 
 	public void AdvanceTime()
 	{
+		//TakeActions();
+
 		age++;
 		if(age >= naturalDeathAge)
 		{
+			TakeActions();
 			PersonGenerator.HandleDeath(this);
 		}
+	}
+
+	private void TakeActions()
+	{
+		SimAIManager.Instance.CallPersonAction(this);
 	}
 
 	private void GenerateStats()
@@ -106,8 +116,8 @@ public class Person : ITimeSensitive
 
 	private void DetermineNaturalDeathAge()
 	{
-		var fullCycle = (int)(((5 * SimRandom.RandomFloat01()) + 1) * stats.constitution);
-		var modifiedCycle = (int)(age + ((SimRandom.RandomFloat01() * stats.constitution) + 1));
+		var fullCycle = (int)(SimRandom.RandomRange(4,8) * stats.constitution);
+		var modifiedCycle = (int)(age + (SimRandom.RandomRange(2,6) * stats.constitution));
 
 		naturalDeathAge = Mathf.Max(fullCycle, modifiedCycle);
 	}
