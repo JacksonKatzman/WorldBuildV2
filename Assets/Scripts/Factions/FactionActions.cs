@@ -36,14 +36,6 @@ public abstract class PoliticalActions
 	}
 }
 
-public abstract class ExpansionActions
-{
-	public static void ExpandTerritoryToFreeTile(Faction faction)
-	{
-		faction.ExpandTerritory();
-	}
-}
-
 public abstract class ReligiousActions
 {
 

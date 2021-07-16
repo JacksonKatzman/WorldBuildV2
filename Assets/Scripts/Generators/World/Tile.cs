@@ -11,6 +11,7 @@ namespace Game.WorldGeneration
         public World world;
         public Chunk chunk;
         public Vector2Int coords;
+		public Faction controller;
 
 		public Biome biome;
 		public LandType landType;
@@ -30,24 +31,11 @@ namespace Game.WorldGeneration
 			CalculateBiome();
 		}
 
-		public City SpawnCity(Faction faction, float food, int population)
-		{
-			var city = new City(this, faction, food, population);
-			landmarks.Add(city);
-			return city;
-		}
-
 		private float Value => chunk.noiseMap[coords.x, coords.y];
 		public float rainfallValue => chunk.SampleNoiseMap(MapCategory.RAINFALL, coords);
 		public void AdvanceTime()
 		{
-			foreach(Landmark landmark in landmarks)
-			{
-				if(landmark is City)
-				{
-
-				}
-			}
+			
 		}
 
 		public Vector2Int GetWorldPosition()
@@ -65,7 +53,7 @@ namespace Game.WorldGeneration
 			{
 				for(int x = worldCoords.x - radius; x < worldCoords.x + radius; x++)
 				{
-					if(x < map.GetLength(0) && y < map.GetLength(1))
+					if(x < map.GetLength(0) && y < map.GetLength(1) && x > 0 && y > 0)
 					{
 						bool isInCircle = Mathf.Pow((x - worldCoords.x), 2) + Mathf.Pow((y - worldCoords.y), 2) < Mathf.Pow(radius, 2);
 						if(isInCircle)
@@ -78,6 +66,53 @@ namespace Game.WorldGeneration
 			return tileList;
 		}
 
+		public List<Tile> GetAllTilesInRing(int outerRadius, int innerRadius)
+		{
+			var outer = GetAllTilesInRadius(outerRadius);
+			var inner = GetAllTilesInRadius(innerRadius);
+			foreach(Tile tile in inner)
+			{
+				if(outer.Contains(tile))
+				{
+					outer.Remove(tile);
+				}
+			}
+			return outer;
+		}
+
+		public List<Tile> GetDirectlyAdjacentTiles()
+		{
+			var worldCoords = GetWorldPosition();
+			var map = world.noiseMaps[MapCategory.TERRAIN];
+			var tileList = new List<Tile>();
+
+			if(worldCoords.x - 1 > 0)
+			{
+				tileList.Add(world.GetTileAtWorldPosition(new Vector2Int(worldCoords.x - 1, worldCoords.y)));
+			}
+			if (worldCoords.x + 1 < map.GetLength(0))
+			{
+				tileList.Add(world.GetTileAtWorldPosition(new Vector2Int(worldCoords.x + 1, worldCoords.y)));
+			}
+			if (worldCoords.y - 1 > 0)
+			{
+				tileList.Add(world.GetTileAtWorldPosition(new Vector2Int(worldCoords.x, worldCoords.y - 1)));
+			}
+			if (worldCoords.y + 1 < map.GetLength(1))
+			{
+				tileList.Add(world.GetTileAtWorldPosition(new Vector2Int(worldCoords.x, worldCoords.y + 1)));
+			}
+
+			return tileList;
+		}
+
+		public static int GetDistanceBetweenTiles(Tile tileA, Tile tileB)
+		{
+			var posA = tileA.GetWorldPosition();
+			var posB = tileB.GetWorldPosition();
+			return (int)(posA - posB).magnitude;
+		}
+
 		private void CalculateBiome()
 		{
 			landType = Biome.CalculateLandType(Value);
@@ -88,6 +123,39 @@ namespace Game.WorldGeneration
 			baseFertility -= (Value / 10.0f);
 
 			biome = world.CalculateTileBiome(landType, baseMoisture, baseFertility);
+		}
+
+		public int GetNumberOfCities()
+		{
+			var count = 0;
+			foreach (Landmark landmark in landmarks)
+			{
+				if (landmark is City)
+				{
+					count++;
+				}
+			}
+
+			return count;
+		}
+
+		public void ChangeControl(Faction newFaction)
+		{
+			if(controller != null)
+			{
+				for(int i = 0; i < landmarks.Count; i++)
+				{
+					if(landmarks[i] is City city)
+					{
+						controller.RemoveCity(city);
+						newFaction.AddCity(city);
+					}
+				}
+				controller.territory.Remove(this);
+			}
+
+			newFaction.territory.Add(this);
+			controller = newFaction;
 		}
     }
 }

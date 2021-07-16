@@ -91,7 +91,7 @@ Material:
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
     - _Strength: 0.2
-    - _UVSec: 0
+    - _UVSec: 1
     - _UseUIAlphaClip: 0
     - _ZWrite: 1
     m_Colors:

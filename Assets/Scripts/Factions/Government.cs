@@ -66,7 +66,7 @@ namespace Game.Factions
 
 		private void DetermineNewLeader(LeadershipStructureNode node)
 		{
-			node.occupant = PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender);
+			node.occupant = PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender, 100);
 		}
 
 		private void SubscribeToEvents()

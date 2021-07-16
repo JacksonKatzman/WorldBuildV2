@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public static class NoiseGenerator
 {
@@ -56,6 +57,7 @@ public static class NoiseGenerator
 			for (int x = 0; x < noiseDimensions.x; x++)
 			{
 				noiseMap[x, y] = Mathf.InverseLerp(minNoiseHeight, maxNoiseHeight, noiseMap[x, y]);
+				//noiseMap[x, y] = Mathf.Round(noiseMap[x, y] * 10) / 10;
 			}
 		}
 		return noiseMap;

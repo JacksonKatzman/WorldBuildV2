@@ -30,31 +30,6 @@ namespace Game.WorldGeneration
 			}
 		}
 
-		public bool SpawnCity(float food, int population)
-		{
-			bool spawned = false;
-			int attempts = 0;
-			while (!spawned && attempts < 10)
-			{
-				var randomXIndex = SimRandom.RandomRange(0, chunkTiles.GetLength(0));
-				var randomYIndex = SimRandom.RandomRange(0, chunkTiles.GetLength(1));
-				var chosenTile = chunkTiles[randomXIndex, randomYIndex];
-				var uncontrolled = (world.GetFactionThatControlsTile(chosenTile) == null);
-				if(chosenTile.baseFertility > 0.5f && chosenTile.landmarks.Count == 0 && uncontrolled)
-				{
-					world.CreateNewFaction(chosenTile, food, population);
-					spawned = true;
-					OutputLogger.LogFormatAndPause("Spawned city in chunk ({0},{1}) in tile ({2},{3})).", LogSource.WORLDGEN, coords.x, coords.y, randomXIndex, randomYIndex);
-				}
-				attempts++;
-			}
-			if(attempts >= 10)
-			{
-				//Debug.LogFormat("Failed to spawn city in chunk ({0},{1})", coords.x, coords.y);
-			}
-			return spawned;
-		}
-
 		public float SampleNoiseMap(MapCategory mapCategory, Vector2Int tileLocation)
 		{
 			var sampleWorldMap = world.SampleNoiseMap(mapCategory, coords);

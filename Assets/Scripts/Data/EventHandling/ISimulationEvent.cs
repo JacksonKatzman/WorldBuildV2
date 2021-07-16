@@ -5,6 +5,5 @@ namespace Game.Data.EventHandling
 {
 	public interface ISimulationEvent
 	{
-		
 	}
 }

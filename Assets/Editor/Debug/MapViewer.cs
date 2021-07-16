@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(WorldHandler))]
+[CustomEditor(typeof(SimulationManager))]
 public class MapViewer : Editor
 {
 	public override void OnInspectorGUI()
 	{
-		WorldHandler handler = (WorldHandler)target;
+		SimulationManager handler = (SimulationManager)target;
 
 		if(DrawDefaultInspector())
 		{

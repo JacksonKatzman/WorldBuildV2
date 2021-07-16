@@ -4,6 +4,7 @@ using UnityEngine;
 using Game.WorldGeneration;
 using Game.Enums;
 using Game.Factions;
+using Game.Generators;
 
 public class City : Landmark
 {
@@ -23,12 +24,17 @@ public class City : Landmark
 		this.faction = faction;
 		this.food = food;
 		this.population = population;
+
+		tile.ChangeControl(faction);
+
 		name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.ANY);
 		OutputLogger.LogFormat("{0} City's tile has a land availabilty coef of: {1}", LogSource.IMPORTANT, name, tile.biome.availableLand);
 	}
 
 	public override void AdvanceTime()
 	{
+		//OutputLogger.LogFormat("Beginning {0} City Advance Time!", LogSource.MAIN, name);
+
 		HandleFoodGrowth();
 		HandleFoodConsumption();
 		HandlePopuplationGrowth();
@@ -95,7 +101,7 @@ public class City : Landmark
 			burgeoningTension += (population - tensionScore);
 			OutputLogger.LogFormat("{0} City's burgeoning tension increased to {1} out of {2}.", LogSource.IMPORTANT, name, burgeoningTension, faction.maxBurgeoningTension.modified * (burgeoningFactor));
 			OutputLogger.LogFormat("This occured due to a population of {0}, and an available land score of {1}.", LogSource.IMPORTANT, population, tile.biome.availableLand);
-			if (burgeoningTension >= faction.maxBurgeoningTension.modified * (burgeoningFactor))
+			if (burgeoningTension >= faction.maxBurgeoningTension.modified * burgeoningFactor && faction.cities.Count < faction.territory.Count / 5)
 			{
 				var movingPercentage = SimRandom.RandomRange(5, 11) / 100.0f;
 				var movingAmount = (int)(population * movingPercentage);
@@ -113,9 +119,9 @@ public class City : Landmark
 
 	private void HandleDesertion()
 	{
-		if(population <= 0)
+		if (population <= 0)
 		{
-			faction.RemoveLandmark(tile, this);
+			LandmarkGenerator.DestroyCity(this);
 		}
 	}
 }

@@ -17,9 +17,11 @@ namespace Game.WorldGeneration
 
 		public Texture2D heightMapTexture;
 		public Texture2D colorMapTexture;
+		public Texture2D voxelColorMapTexture;
 
 		private List<Biome> biomes;
 		public List<Faction> factions;
+		private List<War> wars;
 
 		NoiseSettings noiseSettings;
         private Chunk[,] worldChunks;
@@ -28,8 +30,6 @@ namespace Game.WorldGeneration
 
 		private List<Person> people;
 
-		private List<Faction> temporaryFactionContainer;
-		private List<Person> temporaryPersonContainer;
 		private List<Action> deferredActions;
 
 		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<Biome> biomes)
@@ -37,6 +37,7 @@ namespace Game.WorldGeneration
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
 			factions = new List<Faction>();
 			people = new List<Person>();
+			wars = new List<War>();
 			deferredActions = new List<Action>();
 
 			AlterMap(MapCategory.TERRAIN, noiseMap);
@@ -66,6 +67,10 @@ namespace Game.WorldGeneration
 
 		public void AdvanceTime()
 		{
+			OutputLogger.LogFormat("Beginning World Advance Time!", LogSource.MAIN);
+
+			HandleDeferredActions();
+
 			GenerateNewNoiseMap(MapCategory.RAINFALL);
 
 			foreach(Chunk chunk in worldChunks)
@@ -73,6 +78,7 @@ namespace Game.WorldGeneration
 				chunk.AdvanceTime();
 			}
 
+			SimulationManager.Instance.timer.Tic();
 			foreach (Faction faction in factions)
 			{
 				faction.currentPriorities = faction.GeneratePriorities();
@@ -82,14 +88,22 @@ namespace Game.WorldGeneration
 			{
 				faction.AdvanceTime();
 			}
+			SimulationManager.Instance.timer.Toc("Faction");
 
+			SimulationManager.Instance.timer.Tic();
+			foreach (War war in wars)
+			{
+				war.AdvanceTime();
+			}
+			SimulationManager.Instance.timer.Toc("WAR");
 			HandleDeferredActions();
 
-			foreach(Person person in people)
+			SimulationManager.Instance.timer.Tic();
+			foreach (Person person in people)
 			{
 				person.AdvanceTime();
 			}
-
+			SimulationManager.Instance.timer.Toc("People");
 			HandleDeferredActions();
 
 			yearsPassed++;
@@ -98,24 +112,6 @@ namespace Game.WorldGeneration
 		public Biome CalculateTileBiome(LandType landType, float rainfall, float fertility)
 		{
 			return Biome.CalculateBiomeType(biomes, landType, rainfall, fertility);
-		}
-
-		public void SpawnRandomCity()
-		{
-			bool spawned = false;
-			while (!spawned)
-			{
-				var randomXIndex = SimRandom.RandomRange(0, worldChunks.GetLength(0));
-				var randomYIndex = SimRandom.RandomRange(0, worldChunks.GetLength(1));
-				spawned = worldChunks[randomXIndex, randomYIndex].SpawnCity(100, 100);
-			}
-			HandleDeferredActions();
-		}
-
-		public void CreateNewFaction(Tile tile, float food, int population)
-		{
-			var faction = new Faction(tile, food, population);
-			deferredActions.Add(() => { factions.Add(faction); });
 		}
 
 		public Tile GetTileAtWorldPosition(Vector2Int worldPosition)
@@ -139,7 +135,38 @@ namespace Game.WorldGeneration
 			return controllingFaction;
 		}
 
-		public void AddPerson(Person person)
+		public bool AttemptWar(Faction aggressor, Faction defender)
+		{
+			var exisitingWar = false;
+			foreach(War war in wars)
+			{
+				if(war.originalAggressor == aggressor && war.originalDefender == defender)
+				{
+					exisitingWar = true;
+				}
+				else if (war.originalAggressor == defender && war.originalDefender == aggressor)
+				{
+					exisitingWar = true;
+				}
+			}
+
+			if (!exisitingWar)
+			{
+				wars.Add(new War(this, aggressor, defender));
+				OutputLogger.LogFormatAndPause("A war has begun between {0} Faction and {1} Faction!", LogSource.IMPORTANT, aggressor.name, defender.name);
+			}
+
+			//will add a chance to avoid this with diplomacy later
+			return !exisitingWar;
+		}
+
+		public void ResolveWar(War war)
+		{
+			OutputLogger.LogFormatAndPause("A war between has ended.", LogSource.IMPORTANT);
+			deferredActions.Add(() => { wars.Remove(war); });
+		}
+
+		private void AddPerson(Person person)
 		{
 			if(!people.Contains(person))
 			{
@@ -147,7 +174,7 @@ namespace Game.WorldGeneration
 			}
 		}
 
-		public void RemovePerson(Person person)
+		private void RemovePerson(Person person)
 		{
 			if (people.Contains(person))
 			{
@@ -184,6 +211,7 @@ namespace Game.WorldGeneration
 
 			BuildChunks();
 			CreateBiomeMap();
+			CreateVoxelBiomeMap();
 
 			SubscribeToEvents();
 
@@ -235,7 +263,97 @@ namespace Game.WorldGeneration
 			colorMapTexture.Apply();
 		}
 
-		private void HandleDeferredActions()
+		private void CreateVoxelBiomeMap()
+		{
+			var width = biomeMap.GetLength(0) * 2;
+			var height = biomeMap.GetLength(1) * 2;
+			var voxelBiomeMap = new Color[width, height];
+			for (int y = 0; y < height; y+=2)
+			{
+				for (int x = 0; x < width; x+=2)
+				{
+					voxelBiomeMap[x, y] = biomeMap[x/2, y/2];
+					voxelBiomeMap[x+1, y] = biomeMap[x/2, y/2];
+					voxelBiomeMap[x, y+1] = biomeMap[x/2, y/2];
+					voxelBiomeMap[x+1, y+1] = biomeMap[x/2, y/2];
+				}
+			}
+
+			Color[] colorMap = new Color[width * height];
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					colorMap[y * width + x] = voxelBiomeMap[x, y];
+				}
+			}
+			voxelColorMapTexture = new Texture2D(width, height);
+			voxelColorMapTexture.filterMode = FilterMode.Point;
+			voxelColorMapTexture.SetPixels(colorMap);
+			voxelColorMapTexture.Apply();
+		}
+
+		public Texture2D CreateFactionMap()
+		{
+			OutputLogger.LogFormat("Regenerating faction map!", LogSource.WORLDGEN);
+			var width = worldChunks.GetLength(0) * chunkSize;
+			var height = worldChunks.GetLength(1) * chunkSize;
+			var factionMap = new Color[width, height];
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					//factionMap[x, y] = new Color(0, 255, 255, 0.0f);
+				}
+			}
+
+			foreach (Faction faction in factions)
+			{
+				foreach(Tile tile in faction.territory)
+				{
+					var coords = tile.GetWorldPosition();
+					factionMap[coords.x, coords.y] = faction.color;
+				}
+			}
+
+			Color[] colorMap = new Color[width * height];
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					colorMap[y * width + x] = factionMap[x, y];
+				}
+			}
+
+			var factionMapTexture = new Texture2D(width, height);
+			factionMapTexture.filterMode = FilterMode.Point;
+			factionMapTexture.SetPixels(colorMap);
+			factionMapTexture.Apply();
+
+			return factionMapTexture;
+		}
+
+		public void HandleCleanup()
+		{
+			foreach(Chunk chunk in worldChunks)
+			{
+				foreach(Tile tile in chunk.chunkTiles)
+				{
+					var controller = tile.controller;
+					if(controller != null)
+					{
+						var distanceToCity = controller.GetDistanceToNearestCity(tile);
+						if(distanceToCity > controller.territory.Count/5)
+						{
+							controller.territory.Remove(tile);
+							tile.controller = null;
+						}
+					}
+				}
+			}
+		}
+
+		public void HandleDeferredActions()
 		{
 			foreach(Action action in deferredActions)
 			{
@@ -244,14 +362,38 @@ namespace Game.WorldGeneration
 			deferredActions.Clear();
 		}
 
+		private void OnPersonCreated(PersonCreatedEvent simEvent)
+		{
+			AddPerson(simEvent.person);
+		}
+
 		private void OnPersonDeath(PersonDiedEvent simEvent)
 		{
 			RemovePerson(simEvent.person);
 		}
 
+		private void OnFactionCreated(FactionCreatedEvent simEvent)
+		{
+			if (!factions.Contains(simEvent.faction))
+			{
+				deferredActions.Add(() => { factions.Add(simEvent.faction); });
+			}
+		}
+
+		private void OnFactionDestroyed(FactionDestroyedEvent simEvent)
+		{
+			if (factions.Contains(simEvent.faction))
+			{
+				deferredActions.Add(() => { factions.Remove(simEvent.faction); });
+			}
+		}
+
 		private void SubscribeToEvents()
 		{
+			EventManager.Instance.AddEventHandler<PersonCreatedEvent>(OnPersonCreated);
 			EventManager.Instance.AddEventHandler<PersonDiedEvent>(OnPersonDeath);
+			EventManager.Instance.AddEventHandler<FactionCreatedEvent>(OnFactionCreated);
+			EventManager.Instance.AddEventHandler<FactionDestroyedEvent>(OnFactionDestroyed);
 		}
 	}
 }

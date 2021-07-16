@@ -8,13 +8,12 @@ using Game.Data.EventHandling;
 
 public static class PersonGenerator
 {
-    private static World world => WorldHandler.Instance.World;
-
-    public static Person GeneratePerson(Faction faction, Vector2Int ageRange, Gender gender)
+    public static Person GeneratePerson(Faction faction, Vector2Int ageRange, Gender gender, int startingInfluence)
 	{
-		var person = new Person(SimRandom.RandomRange(ageRange.x, ageRange.y), gender);
+		var person = new Person(SimRandom.RandomRange(ageRange.x, ageRange.y), gender, startingInfluence);
 		person.faction = faction;
-		world.AddPerson(person);
+
+		EventManager.Instance.Dispatch(new PersonCreatedEvent(person));
 
 		return person;
 	}
