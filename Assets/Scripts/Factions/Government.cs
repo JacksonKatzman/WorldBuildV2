@@ -9,9 +9,9 @@ namespace Game.Factions
 	{
 		public List<LeadershipTier> leadershipStructure;
 		public GovernmentType governmentType;
-		private Faction faction;
+		private FactionSimulator faction;
 
-		public Government(Faction faction, GovernmentType type)
+		public Government(FactionSimulator faction, GovernmentType type)
 		{
 			this.faction = faction;
 			governmentType = type;
@@ -21,7 +21,12 @@ namespace Game.Factions
 			SubscribeToEvents();
 		}
 
-		public void UpdateFactionUsingPassiveTraits(Faction faction)
+		public Government(FactionSimulator faction) : this (faction, new GovernmentType(faction))
+		{
+
+		}
+
+		public void UpdateFactionUsingPassiveTraits(FactionSimulator faction)
 		{
 			foreach(GovernmentTrait trait in governmentType.traits)
 			{
@@ -30,6 +35,24 @@ namespace Game.Factions
 					trait.Invoke(faction);
 				}
 			}
+		}
+
+		public bool IsLeader(Person person, int atOrAboveLevel)
+		{
+			atOrAboveLevel = Mathf.Min(atOrAboveLevel, leadershipStructure.Count);
+
+			for(int i = 0; i <= atOrAboveLevel; i++)
+			{
+				foreach(LeadershipStructureNode node in leadershipStructure[i])
+				{
+					if(node.occupant == person)
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
 		}
 
 		private void BuildLeadershipStructure()
@@ -59,6 +82,7 @@ namespace Game.Factions
 					if(node.occupant == simEvent.person)
 					{
 						DetermineNewLeader(node);
+						break;
 					}
 				}
 			}
@@ -66,7 +90,7 @@ namespace Game.Factions
 
 		private void DetermineNewLeader(LeadershipStructureNode node)
 		{
-			node.occupant = PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender, 100);
+			node.occupant = PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender, 100, node);
 		}
 
 		private void SubscribeToEvents()

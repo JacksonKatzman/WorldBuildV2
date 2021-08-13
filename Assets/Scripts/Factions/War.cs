@@ -11,21 +11,21 @@ namespace Game.Factions
 	{
 		private World world;
 
-		public Faction originalAggressor;
-		public List<Faction> aggressors;
+		public FactionSimulator originalAggressor;
+		public List<FactionSimulator> aggressors;
 
-		public Faction originalDefender;
-		public List<Faction> defenders;
+		public FactionSimulator originalDefender;
+		public List<FactionSimulator> defenders;
 
 		private List<Action> deferredActions;
 		private bool resolved = false;
 
-		public War(World world, Faction aggressor, Faction defender)
+		public War(World world, FactionSimulator aggressor, FactionSimulator defender)
 		{
 			this.world = world;
 
-			aggressors = new List<Faction>();
-			defenders = new List<Faction>();
+			aggressors = new List<FactionSimulator>();
+			defenders = new List<FactionSimulator>();
 			deferredActions = new List<Action>();
 
 			aggressors.Add(aggressor);
@@ -38,17 +38,17 @@ namespace Game.Factions
 			defender.RecruitPercentOfPopulation(SimRandom.RandomRange(15, 30));
 			//add allies later
 
-			foreach (Faction agg in aggressors)
+			foreach (FactionSimulator agg in aggressors)
 			{
-				foreach(Faction def in defenders)
+				foreach(FactionSimulator def in defenders)
 				{
 					agg.SetFactionTension(def, float.MinValue);
 				}
 			}
 
-			foreach (Faction def in aggressors)
+			foreach (FactionSimulator def in aggressors)
 			{
-				foreach (Faction agg in defenders)
+				foreach (FactionSimulator agg in defenders)
 				{
 					def.SetFactionTension(agg, float.MinValue);
 				}
@@ -78,11 +78,11 @@ namespace Game.Factions
 
 		private void HandleWarResolution()
 		{
-			foreach(Faction faction in defenders)
+			foreach(FactionSimulator faction in defenders)
 			{
 				if(faction.military.Count <= 0)
 				{
-					foreach(Faction aggressor in aggressors)
+					foreach(FactionSimulator aggressor in aggressors)
 					{
 						aggressor.SetFactionTension(faction, SimRandom.RandomRange(-1000,0));
 						deferredActions.Add(() => { defenders.Remove(faction); });
@@ -90,11 +90,11 @@ namespace Game.Factions
 				}
 			}
 
-			foreach (Faction faction in aggressors)
+			foreach (FactionSimulator faction in aggressors)
 			{
 				if (faction.military.Count <= 0)
 				{
-					foreach (Faction defender in defenders)
+					foreach (FactionSimulator defender in defenders)
 					{
 						defender.SetFactionTension(faction, SimRandom.RandomRange(-1000, 0));
 						deferredActions.Add(() => { aggressors.Remove(faction); });
@@ -181,7 +181,7 @@ namespace Game.Factions
 			}
 		}
 
-		private List<Tile> GetAttackableTiles(Faction attacker, Faction defender)
+		private List<Tile> GetAttackableTiles(FactionSimulator attacker, FactionSimulator defender)
 		{
 			var possibleTiles = new List<Tile>();
 			foreach (Tile tile in attacker.GetBorderTiles())
@@ -194,12 +194,12 @@ namespace Game.Factions
 			return possibleTiles;
 		}
 
-		private void AcquireTileByWar(Tile contestedTile, Faction attacker, Faction defender)
+		private void AcquireTileByWar(Tile contestedTile, FactionSimulator attacker, FactionSimulator defender)
 		{
 			contestedTile.ChangeControl(attacker);
 		}
 
-		private Faction SimulateBattle(Faction attacker, Faction defender)
+		private FactionSimulator SimulateBattle(FactionSimulator attacker, FactionSimulator defender)
 		{
 			//Archers fire first, starting with defender
 			SimulateArrowFire(defender, attacker);
@@ -216,7 +216,7 @@ namespace Game.Factions
 			return winner;
 		}
 
-		private void SimulateArrowFire(Faction att, Faction def)
+		private void SimulateArrowFire(FactionSimulator att, FactionSimulator def)
 		{
 			var attacker = att.military;
 			var defender = def.military;
@@ -251,7 +251,7 @@ namespace Game.Factions
 			}
 		}
 
-		private void SimulateCavalryCharge(Faction att, Faction def)
+		private void SimulateCavalryCharge(FactionSimulator att, FactionSimulator def)
 		{
 			var attacker = att.military;
 			var defender = def.military;
@@ -276,7 +276,7 @@ namespace Game.Factions
 			//LIGHT CAV
 		}
 
-		private void SimulateFlanking(Faction att, Faction def)
+		private void SimulateFlanking(FactionSimulator att, FactionSimulator def)
 		{
 			var attacker = att.military;
 			var defender = def.military;
@@ -301,7 +301,7 @@ namespace Game.Factions
 			}
 		}
 
-		private void SimulateInfantryBattle(Faction att, Faction def)
+		private void SimulateInfantryBattle(FactionSimulator att, FactionSimulator def)
 		{
 			var attacker = att.military;
 			var defender = def.military;

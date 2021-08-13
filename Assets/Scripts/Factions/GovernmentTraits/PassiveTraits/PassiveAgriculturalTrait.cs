@@ -13,13 +13,13 @@ public class PassiveAgriculturalTrait : PassiveGovernmentTrait
 	public float percentSpoilageRate = DEFAULT_MULITPLICATIVE_PERCENT;
 	public float percentMaxFoodByLand = DEFAULT_MULITPLICATIVE_PERCENT;
 
-	protected override void UpdateAdditiveValues(Faction faction)
+	protected override void UpdateAdditiveValues(FactionSimulator faction)
 	{
 		faction.foodProductionPerWorker.modified += (float)flatFoodProductionPerWorker;
 		faction.maxFoodByLand.modified += flatMaxFoodByLand;
 	}
 
-	protected override void UpdateMultiplicativeValues(Faction faction)
+	protected override void UpdateMultiplicativeValues(FactionSimulator faction)
 	{
 		faction.foodProductionPerWorker.modified *= (percentFoodProductionPerWorker/100.0f);
 		faction.maxFoodByLand.modified *= (percentMaxFoodByLand/100.0f);

@@ -8,9 +8,9 @@ using Game.Data.EventHandling;
 
 public static class PersonGenerator
 {
-    public static Person GeneratePerson(Faction faction, Vector2Int ageRange, Gender gender, int startingInfluence)
+	public static Person GeneratePerson(FactionSimulator faction, Vector2Int ageRange, Gender gender, int startingInfluence, LeadershipStructureNode office = null)
 	{
-		var person = new Person(SimRandom.RandomRange(ageRange.x, ageRange.y), gender, startingInfluence);
+		var person = new Person(SimRandom.RandomRange(ageRange.x, ageRange.y), gender, startingInfluence, office);
 		person.faction = faction;
 
 		EventManager.Instance.Dispatch(new PersonCreatedEvent(person));
@@ -18,9 +18,9 @@ public static class PersonGenerator
 		return person;
 	}
 
-	public static void HandleDeath(Person person)
+	public static void HandleDeath(Person person, string cause)
 	{
-		var simEvent = new PersonDiedEvent(person);
+		var simEvent = new PersonDiedEvent(person, cause);
 		EventManager.Instance.Dispatch(simEvent);
 	}
 }
