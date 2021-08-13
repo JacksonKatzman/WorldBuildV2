@@ -5,12 +5,12 @@ using Game.Factions;
 
 public abstract class FactionActions
 {
-	public static void DoNothing(Faction faction)
+	public static void DoNothing(FactionSimulator faction)
 	{
 		OutputLogger.LogFormat("{0} Faction did nothing interesting during this cycle.", Game.Enums.LogSource.FACTIONACTION, faction.name);
 	}
 
-	public static void RecruitTroops(Faction faction)
+	public static void RecruitTroops(FactionSimulator faction)
 	{
 		faction.EventRecruitTroops();
 	}
@@ -28,7 +28,7 @@ public abstract class MercantileActions
 
 public abstract class PoliticalActions
 {
-	public static void GenerateInfluence(Faction faction)
+	public static void GenerateInfluence(FactionSimulator faction)
 	{
 		//Replace this with an actual calculation based on faction factors
 		faction.influence++;

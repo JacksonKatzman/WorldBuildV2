@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Game.Data.EventHandling
@@ -7,11 +8,13 @@ namespace Game.Data.EventHandling
 	{
 		public Person person;
 		public string eventDetails;
+		public Action effect;
 
-		public BaseRPEvent(Person person, string eventDetails)
+		public BaseRPEvent(Person person, string eventDetails, Action effect = null)
 		{
 			this.person = person;
 			this.eventDetails = eventDetails;
+			this.effect = effect;
 		}
 	}
 }

@@ -26,7 +26,8 @@ namespace Game.Data.EventHandling.EventRecording
 		private void RecordPerson(Person person)
 		{
 			var localDir = Application.persistentDataPath;
-			var cleanedFactionName = person.faction.name.Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
+			var factionName = person.faction == null ? "Unaffiliated" : person.faction.name;
+			var cleanedFactionName = factionName.Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
 			var targetDir = localDir + @"\Person Logs\" + cleanedFactionName;
 
 			if(!Directory.Exists(targetDir))
@@ -34,7 +35,7 @@ namespace Game.Data.EventHandling.EventRecording
 				Directory.CreateDirectory(targetDir);
 			}
 
-			var cleanedPersonName = person.name.Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
+			var cleanedPersonName = person.Name.Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
 			targetDir += @"\" + cleanedPersonName + ".txt";
 			var log = personLogs[person];
 			var contents = new string[log.Count];
@@ -65,12 +66,12 @@ namespace Game.Data.EventHandling.EventRecording
 		private void OnPersonCreated(PersonCreatedEvent simEvent)
 		{
 			personLogs.Add(simEvent.person, new List<EventLog>());
-			personLogs[simEvent.person].Add(new EventLog(world.yearsPassed, new BaseRPEvent(simEvent.person, string.Format("{0} rose to prominence.", simEvent.person.name.Replace("\r\n", "").Replace("\r", "").Replace("\n", "")))));
+			personLogs[simEvent.person].Add(new EventLog(world.yearsPassed, new BaseRPEvent(simEvent.person, string.Format("{0} rose to prominence.", simEvent.person.Name.Replace("\r\n", "").Replace("\r", "").Replace("\n", "")))));
 		}
 
 		private void OnPersonDied(PersonDiedEvent simEvent)
 		{
-			personLogs[simEvent.person].Add(new EventLog(world.yearsPassed, new BaseRPEvent(simEvent.person, string.Format("{0} died.", simEvent.person.name.Replace("\r\n", "").Replace("\r", "").Replace("\n", "")))));
+			personLogs[simEvent.person].Add(new EventLog(world.yearsPassed, new BaseRPEvent(simEvent.person, string.Format("{0} died of: {1}.", simEvent.person.Name.Replace("\r\n", "").Replace("\r", "").Replace("\n", ""), simEvent.cause))));
 			RecordPerson(simEvent.person);
 		}
 

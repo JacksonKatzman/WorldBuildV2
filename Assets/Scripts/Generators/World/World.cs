@@ -20,7 +20,7 @@ namespace Game.WorldGeneration
 		public Texture2D voxelColorMapTexture;
 
 		private List<Biome> biomes;
-		public List<Faction> factions;
+		public List<FactionSimulator> factions;
 		private List<War> wars;
 
 		NoiseSettings noiseSettings;
@@ -35,7 +35,7 @@ namespace Game.WorldGeneration
 		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<Biome> biomes)
 		{
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
-			factions = new List<Faction>();
+			factions = new List<FactionSimulator>();
 			people = new List<Person>();
 			wars = new List<War>();
 			deferredActions = new List<Action>();
@@ -71,6 +71,8 @@ namespace Game.WorldGeneration
 
 			HandleDeferredActions();
 
+			SimAIManager.Instance.CallWorldEvent(this);
+
 			GenerateNewNoiseMap(MapCategory.RAINFALL);
 
 			foreach(Chunk chunk in worldChunks)
@@ -79,12 +81,12 @@ namespace Game.WorldGeneration
 			}
 
 			SimulationManager.Instance.timer.Tic();
-			foreach (Faction faction in factions)
+			foreach (FactionSimulator faction in factions)
 			{
 				faction.currentPriorities = faction.GeneratePriorities();
 			}
 
-			foreach (Faction faction in factions)
+			foreach (FactionSimulator faction in factions)
 			{
 				faction.AdvanceTime();
 			}
@@ -120,10 +122,10 @@ namespace Game.WorldGeneration
 			return worldChunks[chunkCoords.x, chunkCoords.y].chunkTiles[worldPosition.x % chunkSize, worldPosition.y % chunkSize];
 		}
 
-		public Faction GetFactionThatControlsTile(Tile tile)
+		public FactionSimulator GetFactionThatControlsTile(Tile tile)
 		{
-			Faction controllingFaction = null;
-			foreach(Faction faction in factions)
+			FactionSimulator controllingFaction = null;
+			foreach(FactionSimulator faction in factions)
 			{
 				if(faction.territory.Contains(tile))
 				{
@@ -135,7 +137,7 @@ namespace Game.WorldGeneration
 			return controllingFaction;
 		}
 
-		public bool AttemptWar(Faction aggressor, Faction defender)
+		public bool AttemptWar(FactionSimulator aggressor, FactionSimulator defender)
 		{
 			var exisitingWar = false;
 			foreach(War war in wars)
@@ -307,7 +309,7 @@ namespace Game.WorldGeneration
 				}
 			}
 
-			foreach (Faction faction in factions)
+			foreach (FactionSimulator faction in factions)
 			{
 				foreach(Tile tile in faction.territory)
 				{

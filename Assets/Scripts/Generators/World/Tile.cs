@@ -11,7 +11,7 @@ namespace Game.WorldGeneration
         public World world;
         public Chunk chunk;
         public Vector2Int coords;
-		public Faction controller;
+		public FactionSimulator controller;
 
 		public Biome biome;
 		public LandType landType;
@@ -139,7 +139,7 @@ namespace Game.WorldGeneration
 			return count;
 		}
 
-		public void ChangeControl(Faction newFaction)
+		public void ChangeControl(FactionSimulator newFaction)
 		{
 			if(controller != null)
 			{

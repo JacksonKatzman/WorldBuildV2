@@ -6,9 +6,9 @@ namespace Game.Data.EventHandling
 {
 	public class FactionDestroyedEvent : ISimulationEvent
 	{
-		public Faction faction;
+		public FactionSimulator faction;
 
-		public FactionDestroyedEvent(Faction faction)
+		public FactionDestroyedEvent(FactionSimulator faction)
 		{
 			this.faction = faction;
 		}

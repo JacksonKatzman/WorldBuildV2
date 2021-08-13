@@ -134,7 +134,7 @@ public class SimulationManager : MonoBehaviour
 		}
         cityMarkers.Clear();
 
-        foreach(Faction faction in world.factions)
+        foreach(FactionSimulator faction in world.factions)
 		{
             foreach(City city in faction.cities)
 			{

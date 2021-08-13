@@ -7,6 +7,8 @@ using UnityEngine;
 using Game.Factions;
 using Game.Enums;
 using Game.People;
+using Data.EventHandling;
+using Game.WorldGeneration;
 
 public class SimAIManager : MonoBehaviour
 {
@@ -17,15 +19,28 @@ public class SimAIManager : MonoBehaviour
     private TextAsset factionActionScores;
 
     private List<MethodInfo> personActionList;
+    private List<MethodInfo> leaderActionList;
+    private List<MethodInfo> totalActionList;
+
+    private List<MethodInfo> worldEvents;
+
     private Dictionary<PriorityType, List<MethodInfo>> factionActionDictionary;
 
-    public void CallPersonAction(Person person)
+    public void CallPersonAction(Person person, bool leader)
 	{
-        var randomIndex = SimRandom.RandomRange(0, personActionList.Count);
-        personActionList[randomIndex].Invoke(null, new object[] { person });
+        if(leader)
+		{
+            var randomIndex = SimRandom.RandomRange(0, totalActionList.Count);
+            totalActionList[randomIndex].Invoke(null, new object[] { person });
+        }
+        else
+		{
+            var randomIndex = SimRandom.RandomRange(0, personActionList.Count);
+            personActionList[randomIndex].Invoke(null, new object[] { person });
+        }
     }
 
-    public void CallFactionActionByScores(Priorities score, Faction faction)
+    public void CallFactionActionByScores(Priorities score, FactionSimulator faction)
 	{
         int index = 0;
         int tries = 0;
@@ -49,7 +64,13 @@ public class SimAIManager : MonoBehaviour
 		}            
 	}
 
-    private bool CallFactionActionByPriorityType(PriorityType priorityType, Faction faction)
+    public void CallWorldEvent(World world)
+	{
+        var randomIndex = SimRandom.RandomRange(0, worldEvents.Count);
+        worldEvents[randomIndex].Invoke(null, new object[] { world });
+    }
+
+    private bool CallFactionActionByPriorityType(PriorityType priorityType, FactionSimulator faction)
 	{
         if (priorityType != PriorityType.MILITARY && factionActionDictionary[priorityType].Count > 0)
         {
@@ -80,6 +101,7 @@ public class SimAIManager : MonoBehaviour
     {
         CompilePersonActionList();
         CompileFactionActionDictionary();
+        CompileWorldEvents();
     }
 
     private void CompilePersonActionList()
@@ -88,7 +110,14 @@ public class SimAIManager : MonoBehaviour
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name)));
+        leaderActionList = new List<MethodInfo>(typeof(LeaderActions).GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name)));
 
+        totalActionList = new List<MethodInfo>();
+        totalActionList.AddRange(personActionList);
+        totalActionList.AddRange(leaderActionList);
     }
 
     private void CompileFactionActionDictionary()
@@ -112,6 +141,14 @@ public class SimAIManager : MonoBehaviour
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name))));
+    }
+
+    private void CompileWorldEvents()
+	{
+        worldEvents = new List<MethodInfo>(typeof(WorldEvents).GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name)));
     }
 
 }
