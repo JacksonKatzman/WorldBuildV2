@@ -86,6 +86,7 @@ namespace Game.Factions
 
 			SetStartingStats();
 			government = new Government(this);
+			government.UpdateFactionUsingPassiveTraits(this);
 
 			factionTensions = new Dictionary<FactionSimulator, float>();
 
@@ -102,8 +103,6 @@ namespace Game.Factions
 			HandleDeferredActions();
 
 			ResetTurnSpecificValues();
-
-			//government.UpdateFactionUsingPassiveTraits(this);
 
 			ExpandTerritory();
 
@@ -551,6 +550,8 @@ namespace Game.Factions
 			factionPressureThreshold.AdvanceTime();
 
 			recruitmentRate.AdvanceTime();
+
+			government.UpdateFactionUsingPassiveTraits(this);
 		}
 
 		private void HandleDeferredActions()
