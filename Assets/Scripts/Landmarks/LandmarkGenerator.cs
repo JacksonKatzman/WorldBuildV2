@@ -17,7 +17,7 @@ namespace Game.Generators
 			var city = new City(tile, faction, foodAmount, population);
 			tile.landmarks.Add(city);
 
-			EventManager.Instance.Dispatch(new CityCreatedEvent(city));
+			EventManager.Instance.Dispatch(new LandmarkCreatedEvent(city));
 
 			return city;
 		}
@@ -27,9 +27,21 @@ namespace Game.Generators
 			return SpawnCity(tile, faction, STARTING_FOOD, STARTING_POPULATION);
 		}
 
+		public static void RegisterLandmark(Tile tile, Landmark landmark)
+		{
+			tile.landmarks.Add(landmark);
+
+			EventManager.Instance.Dispatch(new LandmarkCreatedEvent(landmark));
+		}
+
+		public static void DestroyLandmark(Landmark landmark)
+		{
+			EventManager.Instance.Dispatch(new LandmarkDestroyedEvent(landmark));
+		}
+
 		public static void DestroyCity(City city)
 		{
-			EventManager.Instance.Dispatch(new CityDestroyedEvent(city));
+			EventManager.Instance.Dispatch(new LandmarkDestroyedEvent(city));
 		}
 
 		public static bool IsSuitableCityLocation(Tile tile, float targetFertility, float targetLandAvailability, FactionSimulator faction = null)

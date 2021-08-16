@@ -15,14 +15,14 @@ public class PassiveAgriculturalTrait : PassiveGovernmentTrait
 
 	protected override void UpdateAdditiveValues(FactionSimulator faction)
 	{
-		faction.foodProductionPerWorker.modified += (float)flatFoodProductionPerWorker;
-		faction.maxFoodByLand.modified += flatMaxFoodByLand;
+		faction.foodProductionPerWorker.AddModifier(ModificationType.ADDITIVE, flatFoodProductionPerWorker, 1);
+		faction.maxFoodByLand.AddModifier(ModificationType.ADDITIVE, flatMaxFoodByLand, 1);
 	}
 
 	protected override void UpdateMultiplicativeValues(FactionSimulator faction)
 	{
-		faction.foodProductionPerWorker.modified *= (percentFoodProductionPerWorker/100.0f);
-		faction.maxFoodByLand.modified *= (percentMaxFoodByLand/100.0f);
-		faction.spoilageRate.modified *= (percentSpoilageRate/100.0f);
+		faction.foodProductionPerWorker.AddModifier(ModificationType.MULTIPLICATIVE, percentFoodProductionPerWorker /100.0f, 1);
+		faction.maxFoodByLand.AddModifier(ModificationType.MULTIPLICATIVE, percentMaxFoodByLand /100.0f, 1);
+		faction.spoilageRate.AddModifier(ModificationType.MULTIPLICATIVE, percentSpoilageRate /100.0f, 1);
 	}
 }

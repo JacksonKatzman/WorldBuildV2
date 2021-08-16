@@ -4,7 +4,7 @@ using Game.Data.EventHandling;
 
 namespace Game.People
 {
-	public abstract class PersonActions
+	public abstract class PersonEvents
 	{
 		public static void TestPersonAction(Person person)
 		{
@@ -97,11 +97,9 @@ namespace Game.People
 				randomFaction = SimulationManager.Instance.World.factions[randomIndex];
 			}
 
-			var randomTier = randomFaction.government.leadershipStructure[SimRandom.RandomRange(0, randomFaction.government.leadershipStructure.Count)].tier;
+			var randomTarget = randomFaction.People[SimRandom.RandomRange(0, randomFaction.People.Count)];
 
-			var randomTarget = randomTier[SimRandom.RandomRange(0, randomTier.Count)].occupant;
-
-			var result = string.Format("{0} hires an assassin to kill {1}, a governing member of the {2} faction. ", person.Name, randomTarget.Name, randomFaction.name);
+			var result = string.Format("{0} hires an assassin to kill {1}, a governing member of the {2} faction. ", person.Name, randomTarget.Name, randomFaction.Name);
 
 			if (roll > 20)
 			{
@@ -131,7 +129,7 @@ namespace Game.People
 				}
 
 				randomFaction.ModifyFactionTension(alternateFaction, 500);
-				result += string.Format("Assassination fails, but when questioned named a member of {0} as their employer.", alternateFaction.name);
+				result += string.Format("Assassination fails, but when questioned named a member of {0} as their employer.", alternateFaction.Name);
 			}
 			else if (roll > 6)
 			{

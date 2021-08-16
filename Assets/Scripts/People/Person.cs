@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Enums;
 using Game.Factions;
+using Game.Data.EventHandling.EventRecording;
+using Game.Generators.Items;
 
-public class Person : ITimeSensitive
+public class Person : ITimeSensitive, IRecordable
 {
 	public static int STARTING_PRIORITY_POINTS = 5;
 
@@ -12,10 +14,10 @@ public class Person : ITimeSensitive
 
 	private string name;
 	public string personalTitle = "{0}";
-	public LeadershipStructureNode office;
 	public int age;
 	public Gender gender;
 	public FactionSimulator faction;
+	public LeadershipStructureNode governmentOffice;
 	public int influence;
 
 	public List<Person> children;
@@ -23,6 +25,8 @@ public class Person : ITimeSensitive
 	public PersonStats stats;
 
 	public Priorities priorities;
+
+	public List<Item> inventory;
 
 	private int naturalDeathAge;
 
@@ -35,7 +39,7 @@ public class Person : ITimeSensitive
 		this.age = age;
 		this.gender = gender;
 		this.influence = startingInfluence;
-		this.office = office;
+		this.governmentOffice = office;
 
 		if (name == null)
 		{
@@ -51,6 +55,8 @@ public class Person : ITimeSensitive
 		}
 
 		DetermineNaturalDeathAge();
+
+		inventory = new List<Item>();
 
 		OutputLogger.LogFormat("{0} was spawned at age {1}.", LogSource.PEOPLE, Name, age);
 	}
@@ -98,7 +104,7 @@ public class Person : ITimeSensitive
 	{
 		//ADD CHANCE FOR DEFINING EVENT
 
-		SimAIManager.Instance.CallPersonAction(this, (office != null));
+		SimAIManager.Instance.CallPersonAction(this, (governmentOffice != null));
 	}
 
 	private void GenerateStats()
@@ -132,7 +138,7 @@ public class Person : ITimeSensitive
 	private string GetName()
 	{
 		string withPersonal = string.Format(personalTitle, name);
-		string withOffice = (office != null ? office.title : "{0}");
+		string withOffice = (governmentOffice != null ? governmentOffice.title : "{0}");
 		return string.Format(withOffice, withPersonal);
 	}
 }

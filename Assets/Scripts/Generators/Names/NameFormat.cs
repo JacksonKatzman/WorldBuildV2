@@ -25,4 +25,9 @@ public class NameFormat : ScriptableObject
     public TextAsset startPairs;
     [SerializeField]
     public TextAsset endPairs;
+
+    [SerializeField]
+    public TextAsset materialNames;
+    [SerializeField]
+    public TextAsset materialSuffixes;
 }

@@ -26,6 +26,9 @@ public class NameContainer
     public WeightedNameContainer StartConsonants;
     public WeightedNameContainer EndConsonants;
 
+    public List<string> MaterialNames;
+    public WeightedNameContainer MaterialSuffixes;
+
     public NameContainer(NameFormat format)
 	{
         rules = format.rules;
@@ -36,6 +39,9 @@ public class NameContainer
         Vowels = FormatTextAssetsToDictionary(new TextAsset[] { format.vowels });
         StartConsonants = FormatTextAssetsToDictionary(new TextAsset[] { format.consonants, format.startPairs });
         EndConsonants = FormatTextAssetsToDictionary(new TextAsset[] { format.consonants, format.endPairs });
+
+        MaterialNames = FormatTextAssetToList(format.materialNames);
+        MaterialSuffixes = FormatTextAssetsToDictionary(new TextAsset[] { format.materialSuffixes });
 	}
 
     private List<string> FormatTextAssetToList(TextAsset text)

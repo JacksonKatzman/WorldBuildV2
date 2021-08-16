@@ -1,3 +1,4 @@
+using Game.Generators.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,8 +14,13 @@ public class DataManager : MonoBehaviour
     [SerializeField]
     private List<GovernmentType> governmentTypes;
 
+    [SerializeField]
+    public TextAsset materialInfo;
+
     List<NameContainer> nameContainers;
     public NameContainer PrimaryNameContainer => nameContainers[0];
+
+    public MaterialGenerator MaterialGenerator;
 
     public GovernmentType GetGovernmentType(int influence)
 	{
@@ -51,6 +57,8 @@ public class DataManager : MonoBehaviour
         {
             nameContainers.Add(new NameContainer(format));
         }
+
+        MaterialGenerator = new MaterialGenerator();
     }
 
 }

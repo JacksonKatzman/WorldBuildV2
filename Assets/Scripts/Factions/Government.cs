@@ -37,24 +37,6 @@ namespace Game.Factions
 			}
 		}
 
-		public bool IsLeader(Person person, int atOrAboveLevel)
-		{
-			atOrAboveLevel = Mathf.Min(atOrAboveLevel, leadershipStructure.Count);
-
-			for(int i = 0; i <= atOrAboveLevel; i++)
-			{
-				foreach(LeadershipStructureNode node in leadershipStructure[i])
-				{
-					if(node.occupant == person)
-					{
-						return true;
-					}
-				}
-			}
-
-			return false;
-		}
-
 		private void BuildLeadershipStructure()
 		{
 			leadershipStructure = new List<LeadershipTier>();
@@ -75,22 +57,12 @@ namespace Game.Factions
 
 		private void OnPersonDeath(PersonDiedEvent simEvent)
 		{
-			foreach (LeadershipTier tier in leadershipStructure)
-			{
-				foreach (LeadershipStructureNode node in tier)
-				{
-					if(node.occupant == simEvent.person)
-					{
-						DetermineNewLeader(node);
-						break;
-					}
-				}
-			}
+			DetermineNewLeader(simEvent.person.governmentOffice);
 		}
 
 		private void DetermineNewLeader(LeadershipStructureNode node)
 		{
-			node.occupant = PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender, 100, node);
+			PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender, 100, node);
 		}
 
 		private void SubscribeToEvents()

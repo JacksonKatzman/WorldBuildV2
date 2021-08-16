@@ -23,6 +23,7 @@ public class SimAIManager : MonoBehaviour
     private List<MethodInfo> totalActionList;
 
     private List<MethodInfo> worldEvents;
+    private List<MethodInfo> loreEvents;
 
     private Dictionary<PriorityType, List<MethodInfo>> factionActionDictionary;
 
@@ -70,6 +71,12 @@ public class SimAIManager : MonoBehaviour
         worldEvents[randomIndex].Invoke(null, new object[] { world });
     }
 
+    public MethodInfo GetRandomLoreEvent()
+	{
+        var randomIndex = SimRandom.RandomRange(0, loreEvents.Count);
+        return loreEvents[randomIndex];
+    }
+
     private bool CallFactionActionByPriorityType(PriorityType priorityType, FactionSimulator faction)
 	{
         if (priorityType != PriorityType.MILITARY && factionActionDictionary[priorityType].Count > 0)
@@ -106,7 +113,7 @@ public class SimAIManager : MonoBehaviour
 
     private void CompilePersonActionList()
 	{
-        personActionList = new List<MethodInfo>(typeof(PersonActions).GetMethods().Where(m => !typeof(object)
+        personActionList = new List<MethodInfo>(typeof(PersonEvents).GetMethods().Where(m => !typeof(object)
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name)));
@@ -146,6 +153,10 @@ public class SimAIManager : MonoBehaviour
     private void CompileWorldEvents()
 	{
         worldEvents = new List<MethodInfo>(typeof(WorldEvents).GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name)));
+        loreEvents = new List<MethodInfo>(typeof(LoreEvents).GetMethods().Where(m => !typeof(object)
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name)));

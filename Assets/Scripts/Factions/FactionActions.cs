@@ -7,7 +7,7 @@ public abstract class FactionActions
 {
 	public static void DoNothing(FactionSimulator faction)
 	{
-		OutputLogger.LogFormat("{0} Faction did nothing interesting during this cycle.", Game.Enums.LogSource.FACTIONACTION, faction.name);
+		OutputLogger.LogFormat("{0} Faction did nothing interesting during this cycle.", Game.Enums.LogSource.FACTIONACTION, faction.Name);
 	}
 
 	public static void RecruitTroops(FactionSimulator faction)
@@ -32,7 +32,7 @@ public abstract class PoliticalActions
 	{
 		//Replace this with an actual calculation based on faction factors
 		faction.influence++;
-		OutputLogger.LogFormat("{0} Faction used political dealings to increase it's influence.", Game.Enums.LogSource.FACTIONACTION, faction.name);
+		OutputLogger.LogFormat("{0} Faction used political dealings to increase it's influence.", Game.Enums.LogSource.FACTIONACTION, faction.Name);
 	}
 }
 

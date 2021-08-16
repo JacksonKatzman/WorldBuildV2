@@ -18,6 +18,14 @@ public static class PersonGenerator
 		return person;
 	}
 
+	public static Person GeneratePerson()
+	{
+		var person = new Person();
+		EventManager.Instance.Dispatch(new PersonCreatedEvent(person));
+
+		return person;
+	}
+
 	public static void HandleDeath(Person person, string cause)
 	{
 		var simEvent = new PersonDiedEvent(person, cause);

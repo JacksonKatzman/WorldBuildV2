@@ -7,10 +7,11 @@ using UnityEngine;
 using Game.Generators;
 using Game.Data.EventHandling;
 using Game.Math;
+using Game.Data.EventHandling.EventRecording;
 
 namespace Game.Factions
 {
-	public class FactionSimulator : ITimeSensitive
+	public class FactionSimulator : ITimeSensitive, IRecordable
 	{
 		private static int STARTING_INFLUENCE = 10;
 		private static float AVERAGE_BIRTH_RATE = 0.0165f;
@@ -22,13 +23,16 @@ namespace Game.Factions
 		private static float BASE_REBELLION_CHANCE = 0.05f;
 		private static float BASE_FACTION_PRESSURE_THRESHOLD = 100.0f;
 
-		public string name;
+		private string name;
+		public string Name => name;
 		public Color color;
 		public List<City> cities;
 		public Government government;
 		public List<Tile> territory;
 		private Polygon maxBorderPolygon;
 		private List<Tile> nextExpansions;
+
+		public List<Person> People => world.GetPeopleFromFaction(this);
 
 		public List<Tile> borderTiles;
 		public Dictionary<FactionSimulator, float> factionTensions;
@@ -40,23 +44,23 @@ namespace Game.Factions
 
 		public int population => Population();
 
-		public ModifiedType<int> actionsPerTurn;
+		public ModifiedInt actionsPerTurn;
 
-		public ModifiedType<float> birthRate;
-		public ModifiedType<float> deathRate;
-		public ModifiedType<float> foodProductionPerWorker;
-		public ModifiedType<float> spoilageRate;
-		public ModifiedType<float> maxFoodByLand;
-		public ModifiedType<float> maxBurgeoningTension;
-		public ModifiedType<float> rebellionChance;
-		public ModifiedType<float> factionPressureModifier;
-		public ModifiedType<float> factionPressureThreshold;
+		public ModifiedFloat birthRate;
+		public ModifiedFloat deathRate;
+		public ModifiedFloat foodProductionPerWorker;
+		public ModifiedFloat spoilageRate;
+		public ModifiedFloat maxFoodByLand;
+		public ModifiedFloat maxBurgeoningTension;
+		public ModifiedFloat rebellionChance;
+		public ModifiedFloat factionPressureModifier;
+		public ModifiedFloat factionPressureThreshold;
 
 		public Priorities currentPriorities;
 
 		public Military military;
 
-		public ModifiedType<float> recruitmentRate;
+		public ModifiedFloat recruitmentRate;
 
 		private int turnsSinceLastExpansion = 0;
 
@@ -89,7 +93,7 @@ namespace Game.Factions
 
 			SubscribeToEvents();
 
-			OutputLogger.LogFormat("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, cities[0].name, government.governmentType.name);
+			OutputLogger.LogFormat("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, cities[0].Name, government.governmentType.name);
 		}
 		public void AdvanceTime()
 		{
@@ -99,15 +103,7 @@ namespace Game.Factions
 
 			ResetTurnSpecificValues();
 
-			government.UpdateFactionUsingPassiveTraits(this);
-
-			for(int i = 0; i < territory.Count; i++)
-			{
-				foreach(Landmark landmark in territory[i].landmarks)
-				{
-					landmark.AdvanceTime();
-				}
-			}
+			//government.UpdateFactionUsingPassiveTraits(this);
 
 			ExpandTerritory();
 
@@ -116,6 +112,8 @@ namespace Game.Factions
 			CalculateFactionTension();
 
 			SimAIManager.Instance.CallFactionActionByScores(currentPriorities, this);
+
+			UpdateStats();
 
 			HandleDeferredActions();
 
@@ -142,7 +140,7 @@ namespace Game.Factions
 				if (LandmarkGenerator.IsSuitableCityLocation(chosenTile, 0.5f, 0.2f, this))
 				{
 					var keep = SimRandom.RandomFloat01();
-					if(keep > rebellionChance.modified)
+					if(keep > rebellionChance.Modified)
 					{
 						deferredActions.Add(() => { AddCity(LandmarkGenerator.SpawnCity(chosenTile, this, foodAmount, population)); });
 					}
@@ -165,7 +163,7 @@ namespace Game.Factions
 			var averageLeaderPriorities = new Priorities();
 			foreach(LeadershipStructureNode node in government.leadershipStructure[0].tier)
 			{
-				averageLeaderPriorities = averageLeaderPriorities + node.occupant.priorities;
+				//averageLeaderPriorities = averageLeaderPriorities + node.occupant.priorities;
 			}
 			averageLeaderPriorities = averageLeaderPriorities / government.leadershipStructure[0].tier.Count;
 
@@ -316,14 +314,14 @@ namespace Game.Factions
 					{
 						factionTensions.Add(owner, 0);
 					}
-					factionTensions[owner] += (owner.territory.Count / 10 * owner.factionPressureModifier.modified);
+					factionTensions[owner] += (owner.territory.Count / 10 * owner.factionPressureModifier.Modified);
 				}
 			}
 
 			FactionSimulator warableFaction = null;
 			foreach(var pair in factionTensions)
 			{
-				if(pair.Value > factionPressureThreshold.modified)
+				if(pair.Value > factionPressureThreshold.Modified)
 				{
 					//consider war
 					warableFaction = pair.Key;
@@ -523,19 +521,36 @@ namespace Game.Factions
 
 		private void SetStartingStats()
 		{
-			actionsPerTurn = new ModifiedType<int>(1);
+			actionsPerTurn = new ModifiedInt(1);
 
-			birthRate = new ModifiedType<float>(AVERAGE_BIRTH_RATE);
-			deathRate = new ModifiedType<float>(AVERAGE_DEATH_RATE);
-			foodProductionPerWorker = new ModifiedType<float>(AVERAGE_FOOD_PRODUCTION);
-			spoilageRate = new ModifiedType<float>(AVERAGE_SPOILAGE_RATE);
-			maxFoodByLand = new ModifiedType<float>(MAX_FOOD_BY_LAND);
-			maxBurgeoningTension = new ModifiedType<float>(MAX_BURGEONING_TENSION);
-			rebellionChance = new ModifiedType<float>(BASE_REBELLION_CHANCE);
-			factionPressureModifier = new ModifiedType<float>(1.0f);
-			factionPressureThreshold = new ModifiedType<float>(BASE_FACTION_PRESSURE_THRESHOLD);
+			birthRate = new ModifiedFloat(AVERAGE_BIRTH_RATE);
+			deathRate = new ModifiedFloat(AVERAGE_DEATH_RATE);
+			foodProductionPerWorker = new ModifiedFloat(AVERAGE_FOOD_PRODUCTION);
+			spoilageRate = new ModifiedFloat(AVERAGE_SPOILAGE_RATE);
+			maxFoodByLand = new ModifiedFloat(MAX_FOOD_BY_LAND);
+			maxBurgeoningTension = new ModifiedFloat(MAX_BURGEONING_TENSION);
+			rebellionChance = new ModifiedFloat(BASE_REBELLION_CHANCE);
+			factionPressureModifier = new ModifiedFloat(1.0f);
+			factionPressureThreshold = new ModifiedFloat(BASE_FACTION_PRESSURE_THRESHOLD);
 
-			recruitmentRate = new ModifiedType<float>(0);
+			recruitmentRate = new ModifiedFloat(0);
+		}
+
+		private void UpdateStats()
+		{
+			actionsPerTurn.AdvanceTime();
+
+			birthRate.AdvanceTime();
+			deathRate.AdvanceTime();
+			foodProductionPerWorker.AdvanceTime();
+			spoilageRate.AdvanceTime();
+			maxFoodByLand.AdvanceTime();
+			maxBurgeoningTension.AdvanceTime();
+			rebellionChance.AdvanceTime();
+			factionPressureModifier.AdvanceTime();
+			factionPressureThreshold.AdvanceTime();
+
+			recruitmentRate.AdvanceTime();
 		}
 
 		private void HandleDeferredActions()
@@ -549,9 +564,7 @@ namespace Game.Factions
 
 		private void ResetTurnSpecificValues()
 		{
-			SetStartingStats();
-
-			actionsRemaining = actionsPerTurn.modified;
+			actionsRemaining = actionsPerTurn.Modified;
 			foodProducedThisTurn = 0;
 			borderTiles = GetBorderTiles();
 		}
@@ -564,17 +577,20 @@ namespace Game.Factions
 			}
 		}
 
-		private void OnRecievedCityDestroyed(CityDestroyedEvent simEvent)
+		private void OnRecievedCityDestroyed(LandmarkDestroyedEvent simEvent)
 		{
-			if(cities.Contains(simEvent.city))
+			if (simEvent.landmark is City city)
 			{
-				RemoveLandmark(simEvent.city.tile, simEvent.city);
+				if (cities.Contains(city))
+				{
+					RemoveLandmark(city.tile, city);
+				}
 			}
 		}
 
 		private void SubscribeToEvents()
 		{
-			EventManager.Instance.AddEventHandler<CityDestroyedEvent>(OnRecievedCityDestroyed);
+			EventManager.Instance.AddEventHandler<LandmarkDestroyedEvent>(OnRecievedCityDestroyed);
 		}
 
 		public override string ToString()

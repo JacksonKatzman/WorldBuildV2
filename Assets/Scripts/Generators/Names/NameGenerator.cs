@@ -65,6 +65,20 @@ public class NameGenerator
 		}
 	}
 
+	public static string GenerateMaterialName()
+	{
+		//make better later
+		var prefix = SyllabalicNameGeneration(defaultNameContainer, 2, 4);
+		var suffix = GetWeightedSelectionFromDictionary(defaultNameContainer.MaterialSuffixes.weightedValues);
+		return prefix + suffix;
+	}
+
+	public static string GenerateRelicName()
+	{
+		//make better later
+		return "Relic_" + SimRandom.RandomInteger();
+	}
+
 	private static string ModifiedNameGeneration(NameContainer container, Gender gender, bool tweak)
 	{
 		string currentName = string.Empty;

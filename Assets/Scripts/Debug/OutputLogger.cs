@@ -18,8 +18,9 @@ public abstract class OutputLogger
 	{ LogSource.FACTION, false },
 	{ LogSource.FACTIONACTION, false },
 	{ LogSource.PEOPLE, false },
-	{ LogSource.PROFILE, true },
-	{ LogSource.MAIN, true }
+	{ LogSource.EVENT, true },
+	{ LogSource.PROFILE, false },
+	{ LogSource.MAIN, false }
 };
 
 	public static void LogFormat(string format, LogSource source, params object[] args)

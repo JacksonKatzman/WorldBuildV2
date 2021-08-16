@@ -4,6 +4,7 @@ using UnityEngine;
 using Game.Generators.Noise;
 using Game.Enums;
 using Game.Factions;
+using System.Linq;
 using System;
 using Game.Data.EventHandling;
 
@@ -122,6 +123,13 @@ namespace Game.WorldGeneration
 			return worldChunks[chunkCoords.x, chunkCoords.y].chunkTiles[worldPosition.x % chunkSize, worldPosition.y % chunkSize];
 		}
 
+		public Tile GetRandomTile()
+		{
+			var randomXIndex = SimRandom.RandomRange(0, noiseMaps[Enums.MapCategory.TERRAIN].GetLength(0));
+			var randomYIndex = SimRandom.RandomRange(0, noiseMaps[Enums.MapCategory.TERRAIN].GetLength(1));
+			return GetTileAtWorldPosition(new Vector2Int(randomXIndex, randomYIndex));
+		}
+
 		public FactionSimulator GetFactionThatControlsTile(Tile tile)
 		{
 			FactionSimulator controllingFaction = null;
@@ -155,7 +163,7 @@ namespace Game.WorldGeneration
 			if (!exisitingWar)
 			{
 				wars.Add(new War(this, aggressor, defender));
-				OutputLogger.LogFormatAndPause("A war has begun between {0} Faction and {1} Faction!", LogSource.IMPORTANT, aggressor.name, defender.name);
+				OutputLogger.LogFormatAndPause("A war has begun between {0} Faction and {1} Faction!", LogSource.IMPORTANT, aggressor.Name, defender.Name);
 			}
 
 			//will add a chance to avoid this with diplomacy later
@@ -166,6 +174,15 @@ namespace Game.WorldGeneration
 		{
 			OutputLogger.LogFormatAndPause("A war between has ended.", LogSource.IMPORTANT);
 			deferredActions.Add(() => { wars.Remove(war); });
+		}
+
+		public List<Person> GetPeopleFromFaction(FactionSimulator faction)
+		{
+			var query =
+				from person in people
+				where person.faction == faction
+				select person;
+			return query.ToList();
 		}
 
 		private void AddPerson(Person person)

@@ -22,7 +22,7 @@ public class GovernmentType : ScriptableObject
 		//will only generate for the first tier for the entire simulation for now
 		//will make a separate method to fill in the rest of the structure once factions finalize
 		//have titles be the same for now, build score based title generator later
-		var node = new LeadershipStructureNode(null, new Vector2Int(18, 68), Gender.ANY, "Leader {0}");
+		var node = new LeadershipStructureNode(new Vector2Int(18, 68), Gender.ANY, "Leader {0}");
 
 		leadershipStructure = new List<LeadershipTier>();
 		leadershipStructure.Add(new LeadershipTier());
@@ -36,22 +36,19 @@ public class GovernmentType : ScriptableObject
 [System.Serializable]
 public class LeadershipStructureNode
 {
-	public Person occupant;
 	public Vector2Int ageRange;
 	public Gender requiredGender = Gender.ANY;
 	public string title;
 
 	public LeadershipStructureNode(LeadershipStructureNode copyNode)
 	{
-		occupant = copyNode.occupant;
 		ageRange = copyNode.ageRange;
 		requiredGender = copyNode.requiredGender;
 		title = copyNode.title;
 	}
 
-	public LeadershipStructureNode(Person occupant, Vector2Int ageRange, Gender requiredGender, string title)
+	public LeadershipStructureNode(Vector2Int ageRange, Gender requiredGender, string title)
 	{
-		this.occupant = occupant;
 		this.ageRange = ageRange;
 		this.requiredGender = requiredGender;
 		this.title = title;

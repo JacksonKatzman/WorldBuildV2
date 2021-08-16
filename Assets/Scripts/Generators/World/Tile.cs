@@ -35,7 +35,10 @@ namespace Game.WorldGeneration
 		public float rainfallValue => chunk.SampleNoiseMap(MapCategory.RAINFALL, coords);
 		public void AdvanceTime()
 		{
-			
+			foreach (Landmark landmark in landmarks)
+			{
+				landmark.AdvanceTime();
+			}
 		}
 
 		public Vector2Int GetWorldPosition()
@@ -156,6 +159,10 @@ namespace Game.WorldGeneration
 
 			newFaction.territory.Add(this);
 			controller = newFaction;
+			for (int i = 0; i < landmarks.Count; i++)
+			{
+				landmarks[i].faction = newFaction;
+			}
 		}
     }
 }

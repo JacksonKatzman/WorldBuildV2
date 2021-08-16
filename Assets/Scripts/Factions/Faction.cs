@@ -9,7 +9,7 @@ namespace Game.Factions
 	{
 		private FactionSimulator simulator;
 
-		public string Name => simulator.name;
+		public string Name => simulator.Name;
 		public Color Color => simulator.color;
 		public List<City> Cities => simulator.cities;
 		public Government Government => simulator.government;
