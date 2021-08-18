@@ -31,6 +31,7 @@ namespace Game.WorldGeneration
 
 		private List<Person> people;
 
+		public List<OngoingEvent> ongoingEvents;
 		private List<Action> deferredActions;
 
 		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<Biome> biomes)
@@ -39,6 +40,7 @@ namespace Game.WorldGeneration
 			factions = new List<FactionSimulator>();
 			people = new List<Person>();
 			wars = new List<War>();
+			ongoingEvents = new List<OngoingEvent>();
 			deferredActions = new List<Action>();
 
 			AlterMap(MapCategory.TERRAIN, noiseMap);
@@ -71,6 +73,8 @@ namespace Game.WorldGeneration
 			OutputLogger.LogFormat("Beginning World Advance Time!", LogSource.MAIN);
 
 			HandleDeferredActions();
+
+			HandleOngoingEvents();
 
 			SimAIManager.Instance.CallWorldEvent(this);
 
@@ -183,6 +187,17 @@ namespace Game.WorldGeneration
 				where person.faction == faction
 				select person;
 			return query.ToList();
+		}
+
+		private void HandleOngoingEvents()
+		{
+			foreach(var ongoingEvent in ongoingEvents)
+			{
+				ongoingEvent.eventAction.Invoke();
+				ongoingEvent.duration--;
+			}
+
+			ongoingEvents.RemoveAll(oe => oe.duration <= 0);
 		}
 
 		private void AddPerson(Person person)

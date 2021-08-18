@@ -20,6 +20,8 @@ public class Person : ITimeSensitive, IRecordable
 	public LeadershipStructureNode governmentOffice;
 	public int influence;
 
+	public List<RoleType> roles;
+
 	public List<Person> children;
 
 	public PersonStats stats;
@@ -30,16 +32,28 @@ public class Person : ITimeSensitive, IRecordable
 
 	private int naturalDeathAge;
 
-	public Person() : this(SimRandom.RandomRange(16, 69), (Gender)SimRandom.RandomRange(0, 2), 0)
+	public Person() : this(null, SimRandom.RandomRange(16, 69), (Gender)SimRandom.RandomRange(0, 2), 0, new List<RoleType>())
 	{
 	}
 
-	public Person(int age, Gender gender, int startingInfluence, LeadershipStructureNode office = null)
+	public Person(List<RoleType> roles): this(null, SimRandom.RandomRange(16, 69), (Gender) SimRandom.RandomRange(0, 2), 0, roles)
 	{
+
+	}
+
+	public Person(FactionSimulator faction, int age, Gender gender, int startingInfluence, List<RoleType> roles, LeadershipStructureNode office = null)
+	{
+		this.faction = faction;
 		this.age = age;
 		this.gender = gender;
 		this.influence = startingInfluence;
 		this.governmentOffice = office;
+		this.roles = roles;
+
+		if(governmentOffice != null && !roles.Contains(RoleType.GOVERNER))
+		{
+			roles.Add(RoleType.GOVERNER);
+		}
 
 		if (name == null)
 		{
@@ -61,19 +75,19 @@ public class Person : ITimeSensitive, IRecordable
 		OutputLogger.LogFormat("{0} was spawned at age {1}.", LogSource.PEOPLE, Name, age);
 	}
 
-	public Person(int age, Gender gender, Person progenitor) : this(age, gender, progenitor.influence/2)
+	public Person(int age, Gender gender, Person progenitor) : this(null, age, gender, progenitor.influence/2, new List<RoleType>())
 	{
 		var progenitorName = progenitor.Name.Split(' ');
 		var progenitorSurname = progenitorName[progenitorName.Length - 1];
 		name = NameGenerator.GeneratePersonFirstName(gender) + progenitorSurname;
 	}
 
-	public Person(int age, Gender gender, PersonStats stats) : this(age, gender, 0)
+	public Person(int age, Gender gender, PersonStats stats) : this(null, age, gender, 0, new List<RoleType>())
 	{
 		this.stats = stats;
 	}
 
-	public Person(int age, Gender gender, Priorities priorities) : this(age, gender, 0)
+	public Person(int age, Gender gender, Priorities priorities) : this(null, age, gender, 0, new List<RoleType>())
 	{
 		this.priorities = priorities;
 	}
@@ -95,8 +109,7 @@ public class Person : ITimeSensitive, IRecordable
 		age++;
 		if(age >= naturalDeathAge)
 		{
-			//TakeActions();
-			PersonGenerator.HandleDeath(this, "Natural Causes");
+			//PersonGenerator.HandleDeath(this, "Natural Causes");
 		}
 	}
 
@@ -104,7 +117,7 @@ public class Person : ITimeSensitive, IRecordable
 	{
 		//ADD CHANCE FOR DEFINING EVENT
 
-		SimAIManager.Instance.CallPersonAction(this, (governmentOffice != null));
+		SimAIManager.Instance.CallPersonEvent(this);
 	}
 
 	private void GenerateStats()

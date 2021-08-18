@@ -128,18 +128,18 @@ namespace Game.WorldGeneration
 			biome = world.CalculateTileBiome(landType, baseMoisture, baseFertility);
 		}
 
-		public int GetNumberOfCities()
+		public List<City> GetCities()
 		{
-			var count = 0;
+			var cities = new List<City>();
 			foreach (Landmark landmark in landmarks)
 			{
-				if (landmark is City)
+				if (landmark is City city)
 				{
-					count++;
+					cities.Add(city);
 				}
 			}
 
-			return count;
+			return cities;
 		}
 
 		public void ChangeControl(FactionSimulator newFaction)

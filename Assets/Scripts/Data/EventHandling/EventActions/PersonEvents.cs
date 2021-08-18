@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 using Game.Data.EventHandling;
+using Game.Enums;
+using System.Collections.Generic;
 
 namespace Game.People
 {
@@ -48,7 +50,7 @@ namespace Game.People
 		{
 			EventManager.Instance.Dispatch(new BaseRPEvent(person, "Base Leader Event"));
 		}
-
+		
 		public static void HireAssassin_Scam(Person person)
 		{
 			//Assassin's true intentions found out, punished
@@ -70,17 +72,21 @@ namespace Game.People
 			{
 				result += string.Format("disappearing into the night.");
 				person.influence -= 50;
-				var thief = PersonGenerator.GeneratePerson(null, new Vector2Int(16, 40), Enums.Gender.ANY, 150);
+				var thief = new Person(null, SimRandom.RandomRange(16,40), Enums.Gender.ANY, 150, new List<RoleType>{RoleType.ROGUE});
+				
 				thief.stats.agility = SimRandom.RandomRange(15, 20);
+				PersonGenerator.RegisterPerson(thief);
 				EventManager.Instance.Dispatch(new BaseRPEvent(thief, string.Format("Posing as an assassin for hire, {0} stole {1} gold coins from {2} before making a stealthy escape.", thief.Name, SimRandom.RandomRange(1300, 4500), person.Name)));
 			}
 			else
 			{
 				result += string.Format("sure to sell what they know to anyone who will listen.");
 				person.influence -= 100;
-				var thief = PersonGenerator.GeneratePerson(null, new Vector2Int(16, 40), Enums.Gender.ANY, 150);
+				var thief = new Person(null, SimRandom.RandomRange(16, 40), Enums.Gender.ANY, 150, new List<RoleType> { RoleType.ROGUE });
+
 				thief.stats.agility = SimRandom.RandomRange(15, 20);
 				thief.stats.charisma = SimRandom.RandomRange(15, 20);
+				PersonGenerator.RegisterPerson(thief);
 				EventManager.Instance.Dispatch(new BaseRPEvent(thief, string.Format("Posing as an assassin for hire, {0} stole {1} gold coins from {2} before making a stealthy escape, with a further secret to sell.", thief.Name, SimRandom.RandomRange(1300, 4500), person.Name)));
 			}
 
@@ -144,7 +150,7 @@ namespace Game.People
 
 			EventManager.Instance.Dispatch(new BaseRPEvent(person, result));
 		}
-
+		
 		public static void HireAssassin_DoubleCross(Person person)
 		{
 			var roll = SimRandom.RollXDY(1, 20, 0) + person.stats.wisdomMod;
@@ -163,7 +169,7 @@ namespace Game.People
 
 			EventManager.Instance.Dispatch(new BaseRPEvent(person, result));
 		}
-
+		
 		public static void HireAssassin_Catastrophe(Person person)
 		{
 			//trigger a world event based on the outcome of assassinate rival?

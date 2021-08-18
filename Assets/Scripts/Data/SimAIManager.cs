@@ -18,27 +18,26 @@ public class SimAIManager : MonoBehaviour
     [SerializeField]
     private TextAsset factionActionScores;
 
-    private List<MethodInfo> personActionList;
-    private List<MethodInfo> leaderActionList;
-    private List<MethodInfo> totalActionList;
+    private List<MethodInfo> standardPersonEvents;
 
-    private List<MethodInfo> worldEvents;
     private List<MethodInfo> loreEvents;
 
+    private Dictionary<RoleType, List<MethodInfo>> roleBasedPersonEvents;
     private Dictionary<PriorityType, List<MethodInfo>> factionActionDictionary;
 
-    public void CallPersonAction(Person person, bool leader)
+    private Dictionary<int, List<MethodInfo>> weightedWorldEvents;
+
+    public void CallPersonEvent(Person person)
 	{
-        if(leader)
+        var possibleEvents = new List<MethodInfo>();
+        possibleEvents.AddRange(standardPersonEvents);
+
+        foreach(var role in person.roles)
 		{
-            var randomIndex = SimRandom.RandomRange(0, totalActionList.Count);
-            totalActionList[randomIndex].Invoke(null, new object[] { person });
-        }
-        else
-		{
-            var randomIndex = SimRandom.RandomRange(0, personActionList.Count);
-            personActionList[randomIndex].Invoke(null, new object[] { person });
-        }
+            possibleEvents.AddRange(roleBasedPersonEvents[role]);
+		}
+
+        SimRandom.RandomEntryFromList(possibleEvents).Invoke(null, new object[] { person });
     }
 
     public void CallFactionActionByScores(Priorities score, FactionSimulator faction)
@@ -67,8 +66,8 @@ public class SimAIManager : MonoBehaviour
 
     public void CallWorldEvent(World world)
 	{
-        var randomIndex = SimRandom.RandomRange(0, worldEvents.Count);
-        worldEvents[randomIndex].Invoke(null, new object[] { world });
+        var worldEvent = GetRandomSelectionFromWeightedDictionary(weightedWorldEvents);
+        worldEvent.Invoke(null, new object[] { world });
     }
 
     public MethodInfo GetRandomLoreEvent()
@@ -106,25 +105,43 @@ public class SimAIManager : MonoBehaviour
 
     private void Start()
     {
-        CompilePersonActionList();
+        CompilePersonEvents();
         CompileFactionActionDictionary();
         CompileWorldEvents();
     }
 
-    private void CompilePersonActionList()
+    private MethodInfo GetRandomSelectionFromWeightedDictionary(Dictionary<int, List<MethodInfo>> weightedDictionary)
 	{
-        personActionList = new List<MethodInfo>(typeof(PersonEvents).GetMethods().Where(m => !typeof(object)
-                                     .GetMethods()
-                                     .Select(me => me.Name)
-                                     .Contains(m.Name)));
-        leaderActionList = new List<MethodInfo>(typeof(LeaderActions).GetMethods().Where(m => !typeof(object)
-                                     .GetMethods()
-                                     .Select(me => me.Name)
-                                     .Contains(m.Name)));
+        int totalWeight = 0;
+        foreach(var weight in weightedDictionary.Keys)
+		{
+            totalWeight += weight;
+		}
 
-        totalActionList = new List<MethodInfo>();
-        totalActionList.AddRange(personActionList);
-        totalActionList.AddRange(leaderActionList);
+        var randomWeight = SimRandom.RandomRange(1, totalWeight+1);
+        MethodInfo info = null;
+
+        foreach(var entry in weightedDictionary)
+		{
+            if((randomWeight -= entry.Key) <= 0)
+			{
+                info = SimRandom.RandomEntryFromList(entry.Value);
+                break;
+			}
+		}
+
+        return info;
+	}
+
+    private void CompilePersonEvents()
+	{
+        standardPersonEvents = CompileEventListByType(typeof(PersonEvents));
+
+        roleBasedPersonEvents = new Dictionary<RoleType, List<MethodInfo>>();
+
+        roleBasedPersonEvents.Add(RoleType.GOVERNER, CompileEventListByType(typeof(LeaderActions)));
+        roleBasedPersonEvents.Add(RoleType.MAGIC_USER, new List<MethodInfo>());
+        roleBasedPersonEvents.Add(RoleType.ROGUE, new List<MethodInfo>());
     }
 
     private void CompileFactionActionDictionary()
@@ -152,14 +169,44 @@ public class SimAIManager : MonoBehaviour
 
     private void CompileWorldEvents()
 	{
-        worldEvents = new List<MethodInfo>(typeof(WorldEvents).GetMethods().Where(m => !typeof(object)
-                                     .GetMethods()
-                                     .Select(me => me.Name)
-                                     .Contains(m.Name)));
         loreEvents = new List<MethodInfo>(typeof(LoreEvents).GetMethods().Where(m => !typeof(object)
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name)));
+        weightedWorldEvents = CompileWeightedDictionaryByType(typeof(WorldEvents));
     }
 
+    private Dictionary<int, List<MethodInfo>> CompileWeightedDictionaryByType(Type type)
+	{
+        var dict = new Dictionary<int, List<MethodInfo>>();
+        var methods = CompileEventListByType(type);
+
+        foreach(var method in methods)
+		{
+            int weight;
+            if(Int32.TryParse(method.Name.Substring(method.Name.Length-2, 2), out weight))
+			{
+                if(!dict.ContainsKey(weight))
+				{
+                    dict.Add(weight, new List<MethodInfo>());
+				}
+
+                dict[weight].Add(method);
+			}
+            else
+			{
+                Debug.LogErrorFormat("Event Method: {0} could not be compiled into weighted dictionary. It has no parseable weight suffix.", method.Name);
+			}
+		}
+
+        return dict;
+    }
+
+    private List<MethodInfo> CompileEventListByType(Type type)
+	{
+        return new List<MethodInfo>(type.GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name)));
+    }
 }

@@ -10,6 +10,7 @@ namespace Game.Enums
 	public enum LandType { OCEAN, FLAT, HILLS, MOUNTAINS };
 	public enum PriorityType { MILITARY, INFRASTRUCTURE, MERCANTILE, POLITICAL, RELIGIOUS};
 	public enum TroopType { LIGHT_INFANTRY, HEAVY_INFANTRY, LIGHT_CAVALRY, HEAVY_CAVALRY, ARCHER};
+	public enum RoleType { GOVERNER, MAGIC_USER, ROGUE };
 	public enum LogSource { CITY, NAMEGEN, WORLDGEN, MAIN, IMPORTANT, FACTION, FACTIONACTION, PEOPLE, EVENT, PROFILE };
 	public enum LogAllowance { ALL, SOME, NONE };
 }

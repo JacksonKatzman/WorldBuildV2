@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Data.EventHandling;
+using Game.Enums;
 
 namespace Game.Factions
 {
@@ -57,12 +58,16 @@ namespace Game.Factions
 
 		private void OnPersonDeath(PersonDiedEvent simEvent)
 		{
-			DetermineNewLeader(simEvent.person.governmentOffice);
+			if (simEvent.person.governmentOffice != null && simEvent.person.faction.government == this)
+			{
+				DetermineNewLeader(simEvent.person.governmentOffice);
+			}
 		}
 
 		private void DetermineNewLeader(LeadershipStructureNode node)
 		{
-			PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender, 100, node);
+			var person = new Person(faction, SimRandom.RandomRange(node.ageRange.x, node.ageRange.y), node.requiredGender, 100, new List<RoleType>(), node);
+			PersonGenerator.RegisterPerson(person);
 		}
 
 		private void SubscribeToEvents()

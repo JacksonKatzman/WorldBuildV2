@@ -62,7 +62,7 @@ namespace Game.Generators
 				}
 			}
 
-			return (tile.baseFertility >= targetFertility && tile.GetNumberOfCities() == 0 && uncontrolled && tile.biome.availableLand >= targetLandAvailability && farAwayEnough);
+			return (tile.baseFertility >= targetFertility && tile.GetCities().Count == 0 && uncontrolled && tile.biome.availableLand >= targetLandAvailability && farAwayEnough);
 		}
 	}
 }

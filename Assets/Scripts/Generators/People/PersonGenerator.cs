@@ -8,22 +8,9 @@ using Game.Data.EventHandling;
 
 public static class PersonGenerator
 {
-	public static Person GeneratePerson(FactionSimulator faction, Vector2Int ageRange, Gender gender, int startingInfluence, LeadershipStructureNode office = null)
+	public static void RegisterPerson(Person person)
 	{
-		var person = new Person(SimRandom.RandomRange(ageRange.x, ageRange.y), gender, startingInfluence, office);
-		person.faction = faction;
-
 		EventManager.Instance.Dispatch(new PersonCreatedEvent(person));
-
-		return person;
-	}
-
-	public static Person GeneratePerson()
-	{
-		var person = new Person();
-		EventManager.Instance.Dispatch(new PersonCreatedEvent(person));
-
-		return person;
 	}
 
 	public static void HandleDeath(Person person, string cause)

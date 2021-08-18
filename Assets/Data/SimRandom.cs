@@ -40,4 +40,10 @@ public static class SimRandom
 
         return result;
     }
+
+    public static T RandomEntryFromList<T>(List<T> collection)
+	{
+        var randomIndex = RandomRange(0, collection.Count);
+        return collection[randomIndex];
+	}
 }
