@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Factions;
 using Game.Enums;
-using Game.People;
-using Data.EventHandling;
 using Game.WorldGeneration;
+using Game.Data.EventHandling;
 
 public class SimAIManager : MonoBehaviour
 {
@@ -25,6 +24,7 @@ public class SimAIManager : MonoBehaviour
     private Dictionary<RoleType, List<MethodInfo>> roleBasedPersonEvents;
     private Dictionary<PriorityType, List<MethodInfo>> factionActionDictionary;
 
+    private Dictionary<int, List<MethodInfo>> weightedGovernmentUpgrades;
     private Dictionary<int, List<MethodInfo>> weightedWorldEvents;
 
     public void CallPersonEvent(Person person)
@@ -40,7 +40,7 @@ public class SimAIManager : MonoBehaviour
         SimRandom.RandomEntryFromList(possibleEvents).Invoke(null, new object[] { person });
     }
 
-    public void CallFactionActionByScores(Priorities score, FactionSimulator faction)
+    public void CallFactionActionByScores(Priorities score, Faction faction)
 	{
         int index = 0;
         int tries = 0;
@@ -70,13 +70,19 @@ public class SimAIManager : MonoBehaviour
         worldEvent.Invoke(null, new object[] { world });
     }
 
+    public void CallGovernmentUpgrade(Government government)
+	{
+        var upgrade = GetRandomSelectionFromWeightedDictionary(weightedGovernmentUpgrades);
+        upgrade.Invoke(null, new object[] { government });
+    }
+
     public MethodInfo GetRandomLoreEvent()
 	{
         var randomIndex = SimRandom.RandomRange(0, loreEvents.Count);
         return loreEvents[randomIndex];
     }
 
-    private bool CallFactionActionByPriorityType(PriorityType priorityType, FactionSimulator faction)
+    private bool CallFactionActionByPriorityType(PriorityType priorityType, Faction faction)
 	{
         if (priorityType != PriorityType.MILITARY && factionActionDictionary[priorityType].Count > 0)
         {
@@ -108,6 +114,8 @@ public class SimAIManager : MonoBehaviour
         CompilePersonEvents();
         CompileFactionActionDictionary();
         CompileWorldEvents();
+
+        weightedGovernmentUpgrades = CompileWeightedDictionaryByType(typeof(GovernmentEvents));
     }
 
     private MethodInfo GetRandomSelectionFromWeightedDictionary(Dictionary<int, List<MethodInfo>> weightedDictionary)

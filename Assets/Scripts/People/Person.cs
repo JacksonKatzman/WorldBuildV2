@@ -16,7 +16,7 @@ public class Person : ITimeSensitive, IRecordable
 	public string personalTitle = "{0}";
 	public int age;
 	public Gender gender;
-	public FactionSimulator faction;
+	public Faction faction;
 	public LeadershipStructureNode governmentOffice;
 	public int influence;
 
@@ -41,7 +41,7 @@ public class Person : ITimeSensitive, IRecordable
 
 	}
 
-	public Person(FactionSimulator faction, int age, Gender gender, int startingInfluence, List<RoleType> roles, LeadershipStructureNode office = null)
+	public Person(Faction faction, int age, Gender gender, int startingInfluence, List<RoleType> roles, LeadershipStructureNode office = null)
 	{
 		this.faction = faction;
 		this.age = age;

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Enums;
 
-namespace Data.EventHandling
+namespace Game.Data.EventHandling
 {
 	public static class WorldEvents
 	{ 

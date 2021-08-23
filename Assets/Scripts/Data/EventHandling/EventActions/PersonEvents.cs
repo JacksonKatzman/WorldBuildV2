@@ -4,7 +4,7 @@ using Game.Data.EventHandling;
 using Game.Enums;
 using System.Collections.Generic;
 
-namespace Game.People
+namespace Game.Data.EventHandling
 {
 	public abstract class PersonEvents
 	{

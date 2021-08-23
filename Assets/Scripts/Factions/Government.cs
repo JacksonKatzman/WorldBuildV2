@@ -10,9 +10,9 @@ namespace Game.Factions
 	{
 		public List<LeadershipTier> leadershipStructure;
 		public GovernmentType governmentType;
-		private FactionSimulator faction;
+		private Faction faction;
 
-		public Government(FactionSimulator faction, GovernmentType type)
+		public Government(Faction faction, GovernmentType type)
 		{
 			this.faction = faction;
 			governmentType = type;
@@ -22,12 +22,12 @@ namespace Game.Factions
 			SubscribeToEvents();
 		}
 
-		public Government(FactionSimulator faction) : this (faction, new GovernmentType(faction))
+		public Government(Faction faction) : this (faction, new GovernmentType(faction))
 		{
 
 		}
 
-		public void UpdateFactionUsingPassiveTraits(FactionSimulator faction)
+		public void UpdateFactionUsingPassiveTraits(Faction faction)
 		{
 			foreach(GovernmentTrait trait in governmentType.traits)
 			{

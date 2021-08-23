@@ -16,7 +16,7 @@ public class City : Landmark
 
 	private float MaximumFoodProduction => faction.maxFoodByLand.Modified * tile.biome.availableLand;
 
-	public City(Tile tile, FactionSimulator faction, float food, int population)
+	public City(Tile tile, Faction faction, float food, int population)
 	{
 		this.tile = tile;
 		this.faction = faction;
@@ -44,7 +44,7 @@ public class City : Landmark
 		HandleDesertion();
 	}
 
-	public void UpdateFaction(FactionSimulator faction)
+	public void UpdateFaction(Faction faction)
 	{
 		this.faction = faction;
 	}

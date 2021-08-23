@@ -21,7 +21,7 @@ namespace Game.WorldGeneration
 		public Texture2D voxelColorMapTexture;
 
 		private List<Biome> biomes;
-		public List<FactionSimulator> factions;
+		public List<Faction> factions;
 		private List<War> wars;
 
 		NoiseSettings noiseSettings;
@@ -37,7 +37,7 @@ namespace Game.WorldGeneration
 		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<Biome> biomes)
 		{
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
-			factions = new List<FactionSimulator>();
+			factions = new List<Faction>();
 			people = new List<Person>();
 			wars = new List<War>();
 			ongoingEvents = new List<OngoingEvent>();
@@ -86,12 +86,12 @@ namespace Game.WorldGeneration
 			}
 
 			SimulationManager.Instance.timer.Tic();
-			foreach (FactionSimulator faction in factions)
+			foreach (Faction faction in factions)
 			{
 				faction.currentPriorities = faction.GeneratePriorities();
 			}
 
-			foreach (FactionSimulator faction in factions)
+			foreach (Faction faction in factions)
 			{
 				faction.AdvanceTime();
 			}
@@ -134,10 +134,10 @@ namespace Game.WorldGeneration
 			return GetTileAtWorldPosition(new Vector2Int(randomXIndex, randomYIndex));
 		}
 
-		public FactionSimulator GetFactionThatControlsTile(Tile tile)
+		public Faction GetFactionThatControlsTile(Tile tile)
 		{
-			FactionSimulator controllingFaction = null;
-			foreach(FactionSimulator faction in factions)
+			Faction controllingFaction = null;
+			foreach(Faction faction in factions)
 			{
 				if(faction.territory.Contains(tile))
 				{
@@ -149,7 +149,7 @@ namespace Game.WorldGeneration
 			return controllingFaction;
 		}
 
-		public bool AttemptWar(FactionSimulator aggressor, FactionSimulator defender)
+		public bool AttemptWar(Faction aggressor, Faction defender)
 		{
 			var exisitingWar = false;
 			foreach(War war in wars)
@@ -180,7 +180,7 @@ namespace Game.WorldGeneration
 			deferredActions.Add(() => { wars.Remove(war); });
 		}
 
-		public List<Person> GetPeopleFromFaction(FactionSimulator faction)
+		public List<Person> GetPeopleFromFaction(Faction faction)
 		{
 			var query =
 				from person in people
@@ -341,7 +341,7 @@ namespace Game.WorldGeneration
 				}
 			}
 
-			foreach (FactionSimulator faction in factions)
+			foreach (Faction faction in factions)
 			{
 				foreach(Tile tile in faction.territory)
 				{

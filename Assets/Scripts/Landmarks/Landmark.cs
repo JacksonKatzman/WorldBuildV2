@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class Landmark : ITimeSensitive, IRecordable
 {
     public string Name => name;
-    public FactionSimulator faction;
+    public Faction faction;
 
     protected string name;
     public abstract void AdvanceTime();

@@ -11,12 +11,12 @@ public class PassiveAdministrativeTrait : PassiveGovernmentTrait
 	public float percentBirthRate = DEFAULT_MULITPLICATIVE_PERCENT;
 	public float percentDeathRate = DEFAULT_MULITPLICATIVE_PERCENT;
 	public float percentMaxBurgeoningTension = DEFAULT_MULITPLICATIVE_PERCENT;
-	protected override void UpdateAdditiveValues(FactionSimulator faction)
+	protected override void UpdateAdditiveValues(Faction faction)
 	{
 		faction.maxBurgeoningTension.AddModifier(ModificationType.ADDITIVE, flatMaxBurgeoningTension, 1);
 	}
 
-	protected override void UpdateMultiplicativeValues(FactionSimulator faction)
+	protected override void UpdateMultiplicativeValues(Faction faction)
 	{
 		faction.birthRate.AddModifier(ModificationType.MULTIPLICATIVE, percentBirthRate/100.0f, 1);
 		faction.deathRate.AddModifier(ModificationType.MULTIPLICATIVE, percentDeathRate /100.0f, 1);

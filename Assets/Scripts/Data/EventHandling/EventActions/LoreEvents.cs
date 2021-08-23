@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Game.People
+namespace Game.Data.EventHandling
 {
 	public abstract class LoreEvents
 	{
