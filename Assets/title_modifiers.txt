@@ -1,0 +1,5 @@
+High {0}, 3
+Grand {0}, 2
+Exalted {0}, 1
+Supreme {0}, 1
+{0} Prime, 1

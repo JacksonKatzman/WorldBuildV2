@@ -1,0 +1,6 @@
+Warlord {0}, 1
+Battlelord {0}, 1
+Warcheif {0}, 4
+Conqueror {0}, 9
+{0} Death's Arbiter, 16
+Leader {0}, 1

@@ -11,7 +11,7 @@ public abstract class OutputLogger
 	private static readonly Dictionary<LogSource, bool> AllowedLogs
 	= new Dictionary<LogSource, bool>
 {
-	{ LogSource.IMPORTANT, false },
+	{ LogSource.IMPORTANT, true },
 	{ LogSource.CITY, false },
 	{ LogSource.NAMEGEN, false },
 	{ LogSource.WORLDGEN, false },

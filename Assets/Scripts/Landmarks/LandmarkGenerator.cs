@@ -54,7 +54,7 @@ namespace Game.Generators
 			{
 				foreach (City city in faction.cities)
 				{
-					if(Tile.GetDistanceBetweenTiles(tile, city.tile) < 5)
+					if(Tile.GetDistanceBetweenTiles(tile, city.tile) < 6)
 					{
 						farAwayEnough = false;
 						break;

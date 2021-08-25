@@ -45,7 +45,7 @@ public class Person : ITimeSensitive, IRecordable
 	{
 		this.faction = faction;
 		this.age = age;
-		this.gender = gender;
+		this.gender = gender == Gender.ANY ? (Gender)SimRandom.RandomRange(0, 2) : gender;
 		this.influence = startingInfluence;
 		this.governmentOffice = office;
 		this.roles = roles;
@@ -130,6 +130,7 @@ public class Person : ITimeSensitive, IRecordable
 
 	private void GeneratePriorities()
 	{
+		/*
 		int[] pointAllocations = new int[5];
 		for(int index = 0; index < STARTING_PRIORITY_POINTS; index++)
 		{
@@ -138,6 +139,8 @@ public class Person : ITimeSensitive, IRecordable
 		}
 
 		priorities = new Priorities(pointAllocations[0], pointAllocations[1], pointAllocations[2], pointAllocations[3], pointAllocations[4]);
+		*/
+		priorities = new Priorities(SimRandom.RandomRange(7, 14), SimRandom.RandomRange(7, 14), SimRandom.RandomRange(7, 14), SimRandom.RandomRange(7, 14), SimRandom.RandomRange(7, 14));
 	}
 
 	private void DetermineNaturalDeathAge()
@@ -151,7 +154,7 @@ public class Person : ITimeSensitive, IRecordable
 	private string GetName()
 	{
 		string withPersonal = string.Format(personalTitle, name);
-		string withOffice = (governmentOffice != null ? governmentOffice.title : "{0}");
+		string withOffice = (governmentOffice != null ? governmentOffice.genderedTitles[gender] : "{0}");
 		return string.Format(withOffice, withPersonal);
 	}
 }

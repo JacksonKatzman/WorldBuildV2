@@ -14,6 +14,15 @@ public class SimAIManager : MonoBehaviour
     private static SimAIManager instance;
     public static SimAIManager Instance => instance;
 
+    public static Dictionary<PriorityType, Type> PriorityTypeMap = new Dictionary<PriorityType, Type>
+    {
+        { PriorityType.MILITARY, typeof(LeaderActions_Military)},
+        { PriorityType.INFRASTRUCTURE, typeof(LeaderActions_Infrastructure)},
+        { PriorityType.MERCANTILE, typeof(LeaderActions_Mercantile)},
+        { PriorityType.POLITICAL, typeof(LeaderActions_Political)},
+        { PriorityType.RELIGIOUS, typeof(LeaderActions_Religious)}
+    };
+
     [SerializeField]
     private TextAsset factionActionScores;
 
@@ -24,20 +33,48 @@ public class SimAIManager : MonoBehaviour
     private Dictionary<RoleType, List<MethodInfo>> roleBasedPersonEvents;
     private Dictionary<PriorityType, List<MethodInfo>> factionActionDictionary;
 
+    private Dictionary<Type, Dictionary<int, List<MethodInfo>>> weightedLeaderActions;
+
     private Dictionary<int, List<MethodInfo>> weightedGovernmentUpgrades;
     private Dictionary<int, List<MethodInfo>> weightedWorldEvents;
 
     public void CallPersonEvent(Person person)
 	{
-        var possibleEvents = new List<MethodInfo>();
-        possibleEvents.AddRange(standardPersonEvents);
+        var index = person.roles.Contains(RoleType.GOVERNER) ? 0.67f : 0.0f;
+        var randomIndex = SimRandom.RandomFloat01();
 
-        foreach(var role in person.roles)
+        if(randomIndex >= index)
 		{
-            possibleEvents.AddRange(roleBasedPersonEvents[role]);
-		}
+            var possibleEvents = new List<MethodInfo>();
+            possibleEvents.AddRange(standardPersonEvents);
 
-        SimRandom.RandomEntryFromList(possibleEvents).Invoke(null, new object[] { person });
+            foreach (var role in person.roles)
+            {
+                possibleEvents.AddRange(roleBasedPersonEvents[role]);
+            }
+
+            SimRandom.RandomEntryFromList(possibleEvents).Invoke(null, new object[] { person });
+        }
+        else
+		{
+            var totalPriorities = 0;
+            foreach(var pair in person.priorities.priorities)
+			{
+                totalPriorities += pair.Value;
+			}
+
+            var randomPriority = SimRandom.RandomRange(0, totalPriorities);
+
+            foreach (var pair in person.priorities.priorities)
+            {
+                if((randomPriority -= pair.Value) <= 0)
+				{
+                    var chosenSubset = weightedLeaderActions[PriorityTypeMap[pair.Key]];
+                    var chosenAction = GetRandomSelectionFromWeightedDictionary(chosenSubset);
+                    chosenAction.Invoke(null, new object[] { person });
+                }
+            }
+        }
     }
 
     public void CallFactionActionByScores(Priorities score, Faction faction)
@@ -147,9 +184,17 @@ public class SimAIManager : MonoBehaviour
 
         roleBasedPersonEvents = new Dictionary<RoleType, List<MethodInfo>>();
 
-        roleBasedPersonEvents.Add(RoleType.GOVERNER, CompileEventListByType(typeof(LeaderActions)));
+        roleBasedPersonEvents.Add(RoleType.GOVERNER, CompileEventListByType(typeof(LeaderActions_Misc)));
         roleBasedPersonEvents.Add(RoleType.MAGIC_USER, new List<MethodInfo>());
         roleBasedPersonEvents.Add(RoleType.ROGUE, new List<MethodInfo>());
+
+        weightedLeaderActions = new Dictionary<Type, Dictionary<int, List<MethodInfo>>>();
+
+        weightedLeaderActions.Add(typeof(LeaderActions_Military), CompileWeightedDictionaryByType(typeof(LeaderActions_Military)));
+        weightedLeaderActions.Add(typeof(LeaderActions_Infrastructure), CompileWeightedDictionaryByType(typeof(LeaderActions_Infrastructure)));
+        weightedLeaderActions.Add(typeof(LeaderActions_Mercantile), CompileWeightedDictionaryByType(typeof(LeaderActions_Mercantile)));
+        weightedLeaderActions.Add(typeof(LeaderActions_Political), CompileWeightedDictionaryByType(typeof(LeaderActions_Political)));
+        weightedLeaderActions.Add(typeof(LeaderActions_Religious), CompileWeightedDictionaryByType(typeof(LeaderActions_Religious)));
     }
 
     private void CompileFactionActionDictionary()

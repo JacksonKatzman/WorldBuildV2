@@ -9,11 +9,6 @@ public abstract class FactionActions
 	{
 		OutputLogger.LogFormat("{0} Faction did nothing interesting during this cycle.", Game.Enums.LogSource.FACTIONACTION, faction.Name);
 	}
-
-	public static void RecruitTroops(Faction faction)
-	{
-		faction.EventRecruitTroops();
-	}
 }
 
 public abstract class InfrastructureActions

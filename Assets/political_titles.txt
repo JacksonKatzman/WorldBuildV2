@@ -1,0 +1,3 @@
+King {0}/Queen {0}, 9
+Emperor {0}/Empress {0}, 16
+Lord {0}, 2

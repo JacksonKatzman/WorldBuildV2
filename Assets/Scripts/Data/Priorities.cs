@@ -9,15 +9,15 @@ public class Priorities
 {
 	public Dictionary<PriorityType, int> priorities;
 
-	public Priorities() : this(0, 0, 0, 0, 0) { }
+	public Priorities() : this(10, 10, 10, 10, 10) { }
 	public Priorities(int militaryScore, int infrastructureScore, int mercantileScore, int politicalScore, int religiousScore)
 	{
 		priorities = new Dictionary<PriorityType, int>();
-		priorities.Add(PriorityType.MILITARY, Mathf.Clamp(militaryScore, 0, 10));
-		priorities.Add(PriorityType.INFRASTRUCTURE, Mathf.Clamp(infrastructureScore, 0, 10));
-		priorities.Add(PriorityType.MERCANTILE, Mathf.Clamp(mercantileScore, 0, 10));
-		priorities.Add(PriorityType.POLITICAL, Mathf.Clamp(politicalScore, 0, 10));
-		priorities.Add(PriorityType.RELIGIOUS, Mathf.Clamp(religiousScore, 0, 10));
+		priorities.Add(PriorityType.MILITARY, Mathf.Clamp(militaryScore, 0, 20));
+		priorities.Add(PriorityType.INFRASTRUCTURE, Mathf.Clamp(infrastructureScore, 0, 20));
+		priorities.Add(PriorityType.MERCANTILE, Mathf.Clamp(mercantileScore, 0, 20));
+		priorities.Add(PriorityType.POLITICAL, Mathf.Clamp(politicalScore, 0, 20));
+		priorities.Add(PriorityType.RELIGIOUS, Mathf.Clamp(religiousScore, 0, 20));
 	}
 
 	public List<PriorityType> SortedList()

@@ -44,14 +44,98 @@ namespace Game.Data.EventHandling
 		}
 	}
 
-	public abstract class LeaderActions
+	public abstract class LeaderActions_Military
 	{
-		public static void TestLeaderAction(Person person)
+		public static void RideOut_FightInfestation_01(Person person)
 		{
-			EventManager.Instance.Dispatch(new BaseRPEvent(person, "Base Leader Event"));
+
 		}
-		
-		public static void HireAssassin_Scam(Person person)
+
+		public static void RideOut_FightHorde_01(Person person)
+		{
+
+		}
+
+		public static void RideOut_FightMonster_01(Person person)
+		{
+
+		}
+
+		public static void ComissionArt_Weapon_01(Person person)
+		{
+
+		}
+
+		public static void ComissionArt_Armor_01(Person person)
+		{
+
+		}
+	}
+
+	public abstract class LeaderActions_Infrastructure
+	{
+		public static void HireAdventurers_KillQuest_01(Person person)
+		{
+
+		}
+
+		public static void HireAdventurers_Exploration_01(Person person)
+		{
+
+		}
+	}
+
+	public abstract class LeaderActions_Mercantile
+	{
+		public static void HireAdventurers_TreasureHunt_01(Person person)
+		{
+
+		}
+
+		public static void HireAdventurers_CaravanGuards_01(Person person)
+		{
+
+		}
+
+		public static void Mercantile_NegotiateTradeDeal_01(Person person)
+		{
+
+		}
+
+		public static void Mercantile_SurpriseTaxation_01(Person person)
+		{
+
+		}
+
+		public static void Mercantile_DiscoverResource_01(Person person)
+		{
+
+		}
+
+		public static void Mercantile_InstituteTariff_01(Person person)
+		{
+
+		}
+
+		public static void ComissionArt_Trinket_01(Person person)
+		{
+
+		}
+
+		public static void ComissionArt_Statue_01(Person person)
+		{
+
+		}
+
+		public static void ComissionArt_Other_01(Person person)
+		{
+
+		}
+	}
+
+	public abstract class LeaderActions_Political
+	{
+		public static void HireAssassin_Scam_01(Person person)
 		{
 			//Assassin's true intentions found out, punished
 			var optionA = 25 + 2 * person.stats.wisdomMod;
@@ -63,7 +147,7 @@ namespace Game.Data.EventHandling
 			var chance = SimRandom.RandomRange(0, optionA + optionB + optionC);
 			var result = string.Format("{0} hires an assassin for a hefty fee, and charges them to take care of a troubling local lord who's rise to prominence has been far too swift. The assassin takes the money and flees, ", person.Name);
 
-			if((chance -= optionA) <= 0)
+			if ((chance -= optionA) <= 0)
 			{
 				result += string.Format("but {0} saw through their deception, and the theif was quickly apprehended.", person.Name);
 				person.influence += 20;
@@ -72,8 +156,8 @@ namespace Game.Data.EventHandling
 			{
 				result += string.Format("disappearing into the night.");
 				person.influence -= 50;
-				var thief = new Person(null, SimRandom.RandomRange(16,40), Enums.Gender.ANY, 150, new List<RoleType>{RoleType.ROGUE});
-				
+				var thief = new Person(null, SimRandom.RandomRange(16, 40), Enums.Gender.ANY, 150, new List<RoleType> { RoleType.ROGUE });
+
 				thief.stats.agility = SimRandom.RandomRange(15, 20);
 				PersonGenerator.RegisterPerson(thief);
 				EventManager.Instance.Dispatch(new BaseRPEvent(thief, string.Format("Posing as an assassin for hire, {0} stole {1} gold coins from {2} before making a stealthy escape.", thief.Name, SimRandom.RandomRange(1300, 4500), person.Name)));
@@ -93,11 +177,11 @@ namespace Game.Data.EventHandling
 			EventManager.Instance.Dispatch(new BaseRPEvent(person, result));
 		}
 
-		public static void HireAssassin_RandomRival(Person person)
+		public static void HireAssassin_RandomRival_01(Person person)
 		{
 			var roll = SimRandom.RollXDY(1, 20, 0) + person.stats.charismaMod * 2;
 			var randomFaction = person.faction;
-			while(randomFaction == person.faction && SimulationManager.Instance.World.factions.Count > 1)
+			while (randomFaction == person.faction && SimulationManager.Instance.World.factions.Count > 1)
 			{
 				var randomIndex = SimRandom.RandomRange(0, SimulationManager.Instance.World.factions.Count);
 				randomFaction = SimulationManager.Instance.World.factions[randomIndex];
@@ -150,13 +234,13 @@ namespace Game.Data.EventHandling
 
 			EventManager.Instance.Dispatch(new BaseRPEvent(person, result));
 		}
-		
-		public static void HireAssassin_DoubleCross(Person person)
+
+		public static void HireAssassin_DoubleCross_01(Person person)
 		{
 			var roll = SimRandom.RollXDY(1, 20, 0) + person.stats.wisdomMod;
 			var result = string.Format("{0} hires an assassin to kill a rival, but the assassin double crosses them. ", person.Name);
 
-			if(roll > 15)
+			if (roll > 15)
 			{
 				result += string.Format("{0} discovers the double cross just in time, and has the assassin put to death.", person.Name);
 				person.influence += 40;
@@ -169,162 +253,94 @@ namespace Game.Data.EventHandling
 
 			EventManager.Instance.Dispatch(new BaseRPEvent(person, result));
 		}
-		
-		public static void HireAssassin_Catastrophe(Person person)
+
+		public static void HireAssassin_Catastrophe_01(Person person)
 		{
 			//trigger a world event based on the outcome of assassinate rival?
 		}
 
-		public static void HireAssassin_Relative(Person person)
+		public static void HireAssassin_Relative_01(Person person)
 		{
 			//wait to implement until family trees are important
 		}
 
-		public static void HireAssassin_Dignatary(Person person)
+		public static void HireAssassin_Dignatary_01(Person person)
 		{
 			//do later? possibly superfluous would be for lore
 		}
 
-		public static void HireAdventurers_CriminalJustice(Person person)
+		public static void HireAdventurers_CriminalJustice_01(Person person)
 		{
 
 		}
 
-		public static void HireAdventurers_TreasureHunt(Person person)
+		public static void SitInJudgement_CriminalLord_01(Person person)
 		{
 
 		}
 
-		public static void HireAdventurers_KillQuest(Person person)
+		public static void SitInJudgement_HighProfileMurder_01(Person person)
 		{
 
 		}
 
-		public static void HireAdventurers_Exploration(Person person)
+		public static void SitInJudgement_GuildFued_01(Person person)
 		{
 
 		}
 
-		public static void HireAdventurers_CaravanGuards(Person person)
+		public static void Intermediary_VassalTradeDeal_01(Person person)
 		{
 
 		}
 
-		public static void Mercantile_NegotiateTradeDeal(Person person)
+		public static void PoliticalManeuver_ArrangeCoup_01(Person person)
 		{
 
 		}
 
-		public static void Mercantile_SurpriseTaxation(Person person)
+		public static void PoliticalManeuver_DiscreditRival_01(Person person)
 		{
 
 		}
 
-		public static void Mercantile_DiscoverResource(Person person)
+		public static void PoliticalManeuver_CourtAddition_01(Person person)
 		{
 
 		}
 
-		public static void Mercantile_InstituteTariff(Person person)
+		public static void PoliticalManeuver_PeaceTalks_01(Person person)
 		{
 
 		}
 
-		public static void SitInJudgement_CriminalLord(Person person)
+		public static void PoliticalManeuver_CastOutExile_01(Person person)
+		{
+
+		}
+	}
+
+	public abstract class LeaderActions_Religious
+	{
+		public static void TestLeaderAction_01(Person person)
+		{
+			EventManager.Instance.Dispatch(new BaseRPEvent(person, "Base Leader Event"));
+		}
+
+		public static void Lore_DeclareSacred_01(Person person)
+		{
+
+		}
+	}
+
+	public abstract class LeaderActions_Misc
+	{
+		public static void Misc_Infidelity_01(Person person)
 		{
 
 		}
 
-		public static void SitInJudgement_HighProfileMurder(Person person)
-		{
-
-		}
-
-		public static void SitInJudgement_GuildFued(Person person)
-		{
-
-		}
-
-		public static void Intermediary_VassalTradeDeal(Person person)
-		{
-
-		}
-
-		public static void RideOut_FightInfestation(Person person)
-		{
-
-		}
-
-		public static void RideOut_FightHorde(Person person)
-		{
-
-		}
-
-		public static void RideOut_FightMonster(Person person)
-		{
-
-		}
-		public static void PoliticalManeuver_ArrangeCoup(Person person)
-		{
-
-		}
-
-		public static void PoliticalManeuver_DiscreditRival(Person person)
-		{
-
-		}
-
-		public static void PoliticalManeuver_CourtAddition(Person person)
-		{
-
-		}
-
-		public static void PoliticalManeuver_PeaceTalks(Person person)
-		{
-
-		}
-
-		public static void PoliticalManeuver_CastOutExile(Person person)
-		{
-
-		}
-
-		public static void ComissionArt_Weapon(Person person)
-		{
-
-		}
-
-		public static void ComissionArt_Armor(Person person)
-		{
-
-		}
-
-		public static void ComissionArt_Trinket(Person person)
-		{
-
-		}
-
-		public static void ComissionArt_Statue(Person person)
-		{
-
-		}
-
-		public static void ComissionArt_Other(Person person)
-		{
-
-		}
-
-		public static void Misc_ThrowFeast(Person person)
-		{
-
-		}
-
-		public static void Misc_Infidelity(Person person)
-		{
-
-		}
-
-		public static void Lore_DeclareSacred(Person person)
+		public static void Misc_ThrowFeast_01(Person person)
 		{
 
 		}

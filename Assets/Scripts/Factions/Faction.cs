@@ -58,8 +58,6 @@ namespace Game.Factions
 
 		public Priorities currentPriorities;
 
-		public Military military;
-
 		public ModifiedFloat recruitmentRate;
 
 		private int turnsSinceLastExpansion = 0;
@@ -82,8 +80,6 @@ namespace Game.Factions
 			AddCity(LandmarkGenerator.SpawnCity(startingTile, this, food, population));
 			influence = STARTING_INFLUENCE;
 
-			military = new Military();
-
 			SetStartingStats();
 			government = new Government(this);
 			government.UpdateFactionUsingPassiveTraits(this);
@@ -94,7 +90,7 @@ namespace Game.Factions
 
 			SubscribeToEvents();
 
-			OutputLogger.LogFormat("{0} faction has been created in {1} City with government type: {2}", LogSource.FACTION, name, cities[0].Name, government.governmentType.name);
+			OutputLogger.LogFormat("{0} faction has been created in {1} City.", LogSource.FACTION, name, cities[0].Name);
 		}
 		public void AdvanceTime()
 		{
@@ -104,9 +100,11 @@ namespace Game.Factions
 
 			ResetTurnSpecificValues();
 
+			government.HandleUpgrades(population);
+
 			ExpandTerritory();
 
-			UpdateMilitary();
+			//UpdateMilitary();
 
 			CalculateFactionTension();
 
@@ -126,8 +124,8 @@ namespace Game.Factions
 			{
 				return false;
 			}
-			int maxRadius = 5 + influence / 100;
-			int minRadius = 3;
+			int maxRadius = 8 + influence / 100;
+			int minRadius = 6;
 			var possibleTiles = tile.GetAllTilesInRing(maxRadius, minRadius);
 			bool spawned = false;
 			int attempts = 0;
@@ -172,6 +170,7 @@ namespace Game.Factions
 			return totalPriorities; 
 		}
 
+		/*
 		public void UpdateMilitary()
 		{
 			//Handle Food Consumption
@@ -220,7 +219,8 @@ namespace Game.Factions
 				actionsRemaining--;
 			}
 		}
-
+		*/
+		/*
 		public void ModifyTroopCount(int amount)
 		{
 			amount = Mathf.Clamp(amount, -1 * military.Count, (int)(0.8f * population));
@@ -241,6 +241,7 @@ namespace Game.Factions
 			int amount = (int)(population * percent);
 			ModifyTroopCount(amount);
 		}
+		*/
 
 		private void ExpandTerritory()
 		{

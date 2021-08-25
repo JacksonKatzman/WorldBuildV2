@@ -97,8 +97,8 @@ public class City : Landmark
 		if (population >= tensionScore)
 		{
 			burgeoningTension += (population - tensionScore);
-			OutputLogger.LogFormat("{0} City's burgeoning tension increased to {1} out of {2}.", LogSource.IMPORTANT, name, burgeoningTension, faction.maxBurgeoningTension.Modified * (burgeoningFactor));
-			OutputLogger.LogFormat("This occured due to a population of {0}, and an available land score of {1}.", LogSource.IMPORTANT, population, tile.biome.availableLand);
+			OutputLogger.LogFormat("{0} City's burgeoning tension increased to {1} out of {2}.", LogSource.CITY, name, burgeoningTension, faction.maxBurgeoningTension.Modified * (burgeoningFactor));
+			OutputLogger.LogFormat("This occured due to a population of {0}, and an available land score of {1}.", LogSource.CITY, population, tile.biome.availableLand);
 			if (burgeoningTension >= faction.maxBurgeoningTension.Modified * burgeoningFactor && faction.cities.Count < faction.territory.Count / 5)
 			{
 				var movingPercentage = SimRandom.RandomRange(5, 11) / 100.0f;
@@ -108,9 +108,9 @@ public class City : Landmark
 				{
 					population -= movingAmount;
 					food -= foodAmount;
+					burgeoningFactor *= 3;
+					burgeoningTension = 0.0f;
 				}
-				burgeoningFactor *= 2;
-				burgeoningTension = 0.0f;
 			}
 		}
 	}

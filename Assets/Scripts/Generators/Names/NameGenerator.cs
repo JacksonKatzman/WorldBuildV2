@@ -79,6 +79,56 @@ public class NameGenerator
 		return "Relic_" + SimRandom.RandomInteger();
 	}
 
+	public static void GenerateTitleStructure(List<LeadershipTier> leadershipStructure, Priorities priorities)
+	{
+		var numTiers = leadershipStructure.Count;
+		var prioType = priorities.SortedList()[0];
+		var titleDictionary = defaultNameContainer.Titles[prioType].weightedValues;
+
+		for (int i = 0; i < numTiers; i++)
+		{
+			var titlePoints = (numTiers * (numTiers - i)) - leadershipStructure[i].Count + 1;
+			var difference = int.MaxValue;
+			var closest = 0;
+
+			foreach(var weight in titleDictionary.Keys)
+			{
+				var testDif = Mathf.Abs(weight - titlePoints);
+				if (testDif < difference)
+				{
+					difference = testDif;
+					closest = weight;
+				}
+			}
+
+			var baseTitle = SimRandom.RandomEntryFromList(titleDictionary[closest]);
+
+			titlePoints -= closest;
+
+			string titleMod = "{0}";
+			if (titlePoints > 0)
+			{
+				titleMod = SimRandom.RandomEntryFromList(defaultNameContainer.TitleModifiers.rawValues);
+			}
+
+			var genderTitles = new Dictionary<Gender, string>();
+			genderTitles.Add(Gender.MALE, string.Format(titleMod, baseTitle));
+			genderTitles.Add(Gender.FEMALE, string.Format(titleMod, baseTitle));
+
+			if (baseTitle.Contains("/"))
+			{
+				var divided = baseTitle.Split('/');
+				genderTitles[Gender.MALE] = string.Format(titleMod, divided[0]);
+				genderTitles[Gender.FEMALE] = string.Format(titleMod, divided[1]);
+			}
+
+			foreach(var node in leadershipStructure[i])
+			{
+				node.genderedTitles = genderTitles;
+			}	
+		}
+	}
+
 	private static string ModifiedNameGeneration(NameContainer container, Gender gender, bool tweak)
 	{
 		string currentName = string.Empty;

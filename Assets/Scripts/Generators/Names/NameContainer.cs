@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Game.Enums;
 
 public class NameContainer
 {
@@ -29,6 +30,9 @@ public class NameContainer
     public List<string> MaterialNames;
     public WeightedNameContainer MaterialSuffixes;
 
+    public Dictionary<PriorityType, WeightedNameContainer> Titles;
+    public WeightedNameContainer TitleModifiers;
+
     public NameContainer(NameFormat format)
 	{
         rules = format.rules;
@@ -42,6 +46,8 @@ public class NameContainer
 
         MaterialNames = FormatTextAssetToList(format.materialNames);
         MaterialSuffixes = FormatTextAssetsToDictionary(new TextAsset[] { format.materialSuffixes });
+
+        SetupTitleDictionary(format);
 	}
 
     private List<string> FormatTextAssetToList(TextAsset text)
@@ -80,5 +86,18 @@ public class NameContainer
             }
         }
         return new WeightedNameContainer(formattedDictionary, rawList);
+    }
+
+    private void SetupTitleDictionary(NameFormat format)
+	{
+        Titles = new Dictionary<PriorityType, WeightedNameContainer>();
+
+        Titles.Add(PriorityType.MILITARY, FormatTextAssetsToDictionary(new TextAsset[] { format.militaryTitles }));
+        Titles.Add(PriorityType.INFRASTRUCTURE, FormatTextAssetsToDictionary(new TextAsset[] { format.infrastructureTitles }));
+        Titles.Add(PriorityType.MERCANTILE, FormatTextAssetsToDictionary(new TextAsset[] { format.mercantileTitles }));
+        Titles.Add(PriorityType.POLITICAL, FormatTextAssetsToDictionary(new TextAsset[] { format.politicalTitles }));
+        Titles.Add(PriorityType.RELIGIOUS, FormatTextAssetsToDictionary(new TextAsset[] { format.religiousTitles }));
+
+        TitleModifiers = FormatTextAssetsToDictionary(new TextAsset[] { format.titleModifiers });
     }
 }

@@ -76,7 +76,7 @@ namespace Game.WorldGeneration
 
 			HandleOngoingEvents();
 
-			SimAIManager.Instance.CallWorldEvent(this);
+			//SimAIManager.Instance.CallWorldEvent(this);
 
 			GenerateNewNoiseMap(MapCategory.RAINFALL);
 
@@ -419,6 +419,14 @@ namespace Game.WorldGeneration
 			if (factions.Contains(simEvent.faction))
 			{
 				deferredActions.Add(() => { factions.Remove(simEvent.faction); });
+
+				foreach(var war in wars)
+				{
+					if(war.victories.Keys.Contains(simEvent.faction))
+					{
+						ResolveWar(war);
+					}
+				}
 			}
 		}
 

@@ -30,4 +30,17 @@ public class NameFormat : ScriptableObject
     public TextAsset materialNames;
     [SerializeField]
     public TextAsset materialSuffixes;
+
+    [SerializeField]
+    public TextAsset politicalTitles;
+    [SerializeField]
+    public TextAsset infrastructureTitles;
+    [SerializeField]
+    public TextAsset mercantileTitles;
+    [SerializeField]
+    public TextAsset militaryTitles;
+    [SerializeField]
+    public TextAsset religiousTitles;
+    [SerializeField]
+    public TextAsset titleModifiers;
 }
