@@ -11,15 +11,16 @@ public abstract class OutputLogger
 	private static readonly Dictionary<LogSource, bool> AllowedLogs
 	= new Dictionary<LogSource, bool>
 {
-	{ LogSource.IMPORTANT, false },
+	{ LogSource.IMPORTANT, true },
 	{ LogSource.CITY, false },
 	{ LogSource.NAMEGEN, false },
 	{ LogSource.WORLDGEN, false },
 	{ LogSource.FACTION, false },
 	{ LogSource.FACTIONACTION, false },
 	{ LogSource.PEOPLE, false },
-	{ LogSource.PROFILE, true },
-	{ LogSource.MAIN, true }
+	{ LogSource.EVENT, true },
+	{ LogSource.PROFILE, false },
+	{ LogSource.MAIN, false }
 };
 
 	public static void LogFormat(string format, LogSource source, params object[] args)

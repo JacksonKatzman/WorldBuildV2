@@ -1,0 +1,3 @@
+Exarch {0}, 9
+Prophet {0}, 4
+Arbiter {0}, 2

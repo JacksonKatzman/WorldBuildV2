@@ -11,7 +11,7 @@ namespace Game.WorldGeneration
         public World world;
         public Chunk chunk;
         public Vector2Int coords;
-		public FactionSimulator controller;
+		public Faction controller;
 
 		public Biome biome;
 		public LandType landType;
@@ -35,7 +35,10 @@ namespace Game.WorldGeneration
 		public float rainfallValue => chunk.SampleNoiseMap(MapCategory.RAINFALL, coords);
 		public void AdvanceTime()
 		{
-			
+			foreach (Landmark landmark in landmarks)
+			{
+				landmark.AdvanceTime();
+			}
 		}
 
 		public Vector2Int GetWorldPosition()
@@ -125,21 +128,21 @@ namespace Game.WorldGeneration
 			biome = world.CalculateTileBiome(landType, baseMoisture, baseFertility);
 		}
 
-		public int GetNumberOfCities()
+		public List<City> GetCities()
 		{
-			var count = 0;
+			var cities = new List<City>();
 			foreach (Landmark landmark in landmarks)
 			{
-				if (landmark is City)
+				if (landmark is City city)
 				{
-					count++;
+					cities.Add(city);
 				}
 			}
 
-			return count;
+			return cities;
 		}
 
-		public void ChangeControl(FactionSimulator newFaction)
+		public void ChangeControl(Faction newFaction)
 		{
 			if(controller != null)
 			{
@@ -156,6 +159,10 @@ namespace Game.WorldGeneration
 
 			newFaction.territory.Add(this);
 			controller = newFaction;
+			for (int i = 0; i < landmarks.Count; i++)
+			{
+				landmarks[i].faction = newFaction;
+			}
 		}
     }
 }

@@ -2,32 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Data.EventHandling;
+using Game.Enums;
 
 namespace Game.Factions
 {
 	public class Government
 	{
 		public List<LeadershipTier> leadershipStructure;
-		public GovernmentType governmentType;
-		private FactionSimulator faction;
+		private Faction faction;
+		public Priorities priorities;
 
-		public Government(FactionSimulator faction, GovernmentType type)
+		private int numberOfTimesUpgraded = 0;
+		private int turnsSinceLastUpgrade = 0;
+
+		public Government(Faction faction)
 		{
 			this.faction = faction;
-			governmentType = type;
+			priorities = new Priorities(0, 0, 0, 0, 0);
 
-			BuildLeadershipStructure();
+			BuildInitialLeadershipStructure();
 
 			SubscribeToEvents();
 		}
 
-		public Government(FactionSimulator faction) : this (faction, new GovernmentType(faction))
+		public void HandleUpgrades(int population)
 		{
-
+			if(turnsSinceLastUpgrade >= 10 && population > (100 * Mathf.Pow(2, numberOfTimesUpgraded)))
+			{
+				SimAIManager.Instance.CallGovernmentUpgrade(this);
+				turnsSinceLastUpgrade = 0;
+				numberOfTimesUpgraded++;
+			}
+			else
+			{
+				turnsSinceLastUpgrade++;
+			}
 		}
 
-		public void UpdateFactionUsingPassiveTraits(FactionSimulator faction)
+		public void UpdateFactionUsingPassiveTraits(Faction faction)
 		{
+			/*
 			foreach(GovernmentTrait trait in governmentType.traits)
 			{
 				if(trait is PassiveGovernmentTrait)
@@ -35,34 +49,19 @@ namespace Game.Factions
 					trait.Invoke(faction);
 				}
 			}
+			*/
 		}
 
-		public bool IsLeader(Person person, int atOrAboveLevel)
-		{
-			atOrAboveLevel = Mathf.Min(atOrAboveLevel, leadershipStructure.Count);
-
-			for(int i = 0; i <= atOrAboveLevel; i++)
-			{
-				foreach(LeadershipStructureNode node in leadershipStructure[i])
-				{
-					if(node.occupant == person)
-					{
-						return true;
-					}
-				}
-			}
-
-			return false;
-		}
-
-		private void BuildLeadershipStructure()
+		private void BuildInitialLeadershipStructure()
 		{
 			leadershipStructure = new List<LeadershipTier>();
 
-			foreach(LeadershipTier tier in governmentType.leadershipStructure)
-			{
-				leadershipStructure.Add(new LeadershipTier(tier));
-			}
+			var leadershipTier = new LeadershipTier();
+			leadershipTier.tier.Add(new LeadershipStructureNode(new Vector2Int(18, 68), Gender.ANY));
+
+			leadershipStructure.Add(leadershipTier);
+
+			NameGenerator.GenerateTitleStructure(leadershipStructure, priorities);
 
 			foreach(LeadershipTier tier in leadershipStructure)
 			{
@@ -75,22 +74,17 @@ namespace Game.Factions
 
 		private void OnPersonDeath(PersonDiedEvent simEvent)
 		{
-			foreach (LeadershipTier tier in leadershipStructure)
+			if (simEvent.person.governmentOffice != null && simEvent.person.faction.government == this)
 			{
-				foreach (LeadershipStructureNode node in tier)
-				{
-					if(node.occupant == simEvent.person)
-					{
-						DetermineNewLeader(node);
-						break;
-					}
-				}
+				DetermineNewLeader(simEvent.person.governmentOffice);
 			}
 		}
 
 		private void DetermineNewLeader(LeadershipStructureNode node)
 		{
-			node.occupant = PersonGenerator.GeneratePerson(faction, node.ageRange, node.requiredGender, 100, node);
+			var person = new Person(faction, SimRandom.RandomRange(node.ageRange.x, node.ageRange.y), node.requiredGender, 100, new List<RoleType>(), node);
+			person.priorities += priorities;
+			PersonGenerator.RegisterPerson(person);
 		}
 
 		private void SubscribeToEvents()

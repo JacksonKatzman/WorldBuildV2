@@ -8,17 +8,15 @@ using Game.Generators;
 
 public class City : Landmark
 {
-	public string name;
 	public Tile tile;
-	public FactionSimulator faction;
     public float food;
     public int population;
 	public float burgeoningTension;
 	public int burgeoningFactor = 1;
 
-	private float MaximumFoodProduction => faction.maxFoodByLand.modified * tile.biome.availableLand;
+	private float MaximumFoodProduction => faction.maxFoodByLand.Modified * tile.biome.availableLand;
 
-	public City(Tile tile, FactionSimulator faction, float food, int population)
+	public City(Tile tile, Faction faction, float food, int population)
 	{
 		this.tile = tile;
 		this.faction = faction;
@@ -46,7 +44,7 @@ public class City : Landmark
 		HandleDesertion();
 	}
 
-	public void UpdateFaction(FactionSimulator faction)
+	public void UpdateFaction(Faction faction)
 	{
 		this.faction = faction;
 	}
@@ -54,7 +52,7 @@ public class City : Landmark
 	private void HandleFoodGrowth()
 	{
 		//OutputLogger.LogFormat("{0} Faction produces has an average food production per person of: {1}", LogSource.CITY, faction.name, faction.foodProductionPerWorker.modified);
-		float newFood = (faction.foodProductionPerWorker.modified * population * tile.baseFertility) * tile.rainfallValue;
+		float newFood = (faction.foodProductionPerWorker.Modified * population * tile.baseFertility) * tile.rainfallValue;
 		newFood = Mathf.Clamp(newFood, 0.0f, MaximumFoodProduction);
 
 		faction.ReportFoodProduced(newFood);
@@ -68,7 +66,7 @@ public class City : Landmark
 	{
 		OutputLogger.LogFormat("{0} City consumes {1} food, bringing food total to {2}", LogSource.CITY, name, population, food - population);
 		food -= population;
-		var lostFood = food * faction.spoilageRate.modified;
+		var lostFood = food * faction.spoilageRate.Modified;
 		food -= lostFood;
 		OutputLogger.LogFormat("{0} City loses {1} food to natural spoilage, bringing food total to {2}", LogSource.CITY, name, lostFood, food);
 	}
@@ -76,7 +74,7 @@ public class City : Landmark
 	private void HandlePopuplationGrowth()
 	{
 		var births = 0;
-		while((births + population < food) && (births < (faction.birthRate.modified * population)))
+		while((births + population < food) && (births < (faction.birthRate.Modified * population)))
 		{
 			births++;
 		}
@@ -85,7 +83,7 @@ public class City : Landmark
 
 	private void HandlePopulationDecay()
 	{
-		population = (int)(population * (1.0f - faction.deathRate.modified));
+		population = (int)(population * (1.0f - faction.deathRate.Modified));
 		while(food < 0)
 		{
 			population--;
@@ -99,9 +97,9 @@ public class City : Landmark
 		if (population >= tensionScore)
 		{
 			burgeoningTension += (population - tensionScore);
-			OutputLogger.LogFormat("{0} City's burgeoning tension increased to {1} out of {2}.", LogSource.IMPORTANT, name, burgeoningTension, faction.maxBurgeoningTension.modified * (burgeoningFactor));
-			OutputLogger.LogFormat("This occured due to a population of {0}, and an available land score of {1}.", LogSource.IMPORTANT, population, tile.biome.availableLand);
-			if (burgeoningTension >= faction.maxBurgeoningTension.modified * burgeoningFactor && faction.cities.Count < faction.territory.Count / 5)
+			OutputLogger.LogFormat("{0} City's burgeoning tension increased to {1} out of {2}.", LogSource.CITY, name, burgeoningTension, faction.maxBurgeoningTension.Modified * (burgeoningFactor));
+			OutputLogger.LogFormat("This occured due to a population of {0}, and an available land score of {1}.", LogSource.CITY, population, tile.biome.availableLand);
+			if (burgeoningTension >= faction.maxBurgeoningTension.Modified * burgeoningFactor && faction.cities.Count < faction.territory.Count / 5)
 			{
 				var movingPercentage = SimRandom.RandomRange(5, 11) / 100.0f;
 				var movingAmount = (int)(population * movingPercentage);
@@ -110,9 +108,9 @@ public class City : Landmark
 				{
 					population -= movingAmount;
 					food -= foodAmount;
+					burgeoningFactor *= 3;
+					burgeoningTension = 0.0f;
 				}
-				burgeoningFactor *= 2;
-				burgeoningTension = 0.0f;
 			}
 		}
 	}
@@ -121,7 +119,7 @@ public class City : Landmark
 	{
 		if (population <= 0)
 		{
-			LandmarkGenerator.DestroyCity(this);
+			LandmarkGenerator.DestroyLandmark(this);
 		}
 	}
 }

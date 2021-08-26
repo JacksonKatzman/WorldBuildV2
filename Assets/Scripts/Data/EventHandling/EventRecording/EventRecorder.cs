@@ -26,7 +26,7 @@ namespace Game.Data.EventHandling.EventRecording
 		private void RecordPerson(Person person)
 		{
 			var localDir = Application.persistentDataPath;
-			var factionName = person.faction == null ? "Unaffiliated" : person.faction.name;
+			var factionName = person.faction == null ? "Unaffiliated" : person.faction.Name;
 			var cleanedFactionName = factionName.Replace("\r\n", "").Replace("\r", "").Replace("\n", "");
 			var targetDir = localDir + @"\Person Logs\" + cleanedFactionName;
 

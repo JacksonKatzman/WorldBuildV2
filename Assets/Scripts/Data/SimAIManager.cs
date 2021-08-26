@@ -6,41 +6,78 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Factions;
 using Game.Enums;
-using Game.People;
-using Data.EventHandling;
 using Game.WorldGeneration;
+using Game.Data.EventHandling;
 
 public class SimAIManager : MonoBehaviour
 {
     private static SimAIManager instance;
     public static SimAIManager Instance => instance;
 
+    public static Dictionary<PriorityType, Type> PriorityTypeMap = new Dictionary<PriorityType, Type>
+    {
+        { PriorityType.MILITARY, typeof(LeaderActions_Military)},
+        { PriorityType.INFRASTRUCTURE, typeof(LeaderActions_Infrastructure)},
+        { PriorityType.MERCANTILE, typeof(LeaderActions_Mercantile)},
+        { PriorityType.POLITICAL, typeof(LeaderActions_Political)},
+        { PriorityType.RELIGIOUS, typeof(LeaderActions_Religious)}
+    };
+
     [SerializeField]
     private TextAsset factionActionScores;
 
-    private List<MethodInfo> personActionList;
-    private List<MethodInfo> leaderActionList;
-    private List<MethodInfo> totalActionList;
+    private List<MethodInfo> standardPersonEvents;
 
-    private List<MethodInfo> worldEvents;
+    private List<MethodInfo> loreEvents;
 
+    private Dictionary<RoleType, List<MethodInfo>> roleBasedPersonEvents;
     private Dictionary<PriorityType, List<MethodInfo>> factionActionDictionary;
 
-    public void CallPersonAction(Person person, bool leader)
+    private Dictionary<Type, Dictionary<int, List<MethodInfo>>> weightedLeaderActions;
+
+    private Dictionary<int, List<MethodInfo>> weightedGovernmentUpgrades;
+    private Dictionary<int, List<MethodInfo>> weightedWorldEvents;
+
+    public void CallPersonEvent(Person person)
 	{
-        if(leader)
+        var index = person.roles.Contains(RoleType.GOVERNER) ? 0.67f : 0.0f;
+        var randomIndex = SimRandom.RandomFloat01();
+
+        if(randomIndex >= index)
 		{
-            var randomIndex = SimRandom.RandomRange(0, totalActionList.Count);
-            totalActionList[randomIndex].Invoke(null, new object[] { person });
+            var possibleEvents = new List<MethodInfo>();
+            possibleEvents.AddRange(standardPersonEvents);
+
+            foreach (var role in person.roles)
+            {
+                possibleEvents.AddRange(roleBasedPersonEvents[role]);
+            }
+
+            SimRandom.RandomEntryFromList(possibleEvents).Invoke(null, new object[] { person });
         }
         else
 		{
-            var randomIndex = SimRandom.RandomRange(0, personActionList.Count);
-            personActionList[randomIndex].Invoke(null, new object[] { person });
+            var totalPriorities = 0;
+            foreach(var pair in person.priorities.priorities)
+			{
+                totalPriorities += pair.Value;
+			}
+
+            var randomPriority = SimRandom.RandomRange(0, totalPriorities);
+
+            foreach (var pair in person.priorities.priorities)
+            {
+                if((randomPriority -= pair.Value) <= 0)
+				{
+                    var chosenSubset = weightedLeaderActions[PriorityTypeMap[pair.Key]];
+                    var chosenAction = GetRandomSelectionFromWeightedDictionary(chosenSubset);
+                    chosenAction.Invoke(null, new object[] { person });
+                }
+            }
         }
     }
 
-    public void CallFactionActionByScores(Priorities score, FactionSimulator faction)
+    public void CallFactionActionByScores(Priorities score, Faction faction)
 	{
         int index = 0;
         int tries = 0;
@@ -66,11 +103,23 @@ public class SimAIManager : MonoBehaviour
 
     public void CallWorldEvent(World world)
 	{
-        var randomIndex = SimRandom.RandomRange(0, worldEvents.Count);
-        worldEvents[randomIndex].Invoke(null, new object[] { world });
+        var worldEvent = GetRandomSelectionFromWeightedDictionary(weightedWorldEvents);
+        worldEvent.Invoke(null, new object[] { world });
     }
 
-    private bool CallFactionActionByPriorityType(PriorityType priorityType, FactionSimulator faction)
+    public void CallGovernmentUpgrade(Government government)
+	{
+        var upgrade = GetRandomSelectionFromWeightedDictionary(weightedGovernmentUpgrades);
+        upgrade.Invoke(null, new object[] { government });
+    }
+
+    public MethodInfo GetRandomLoreEvent()
+	{
+        var randomIndex = SimRandom.RandomRange(0, loreEvents.Count);
+        return loreEvents[randomIndex];
+    }
+
+    private bool CallFactionActionByPriorityType(PriorityType priorityType, Faction faction)
 	{
         if (priorityType != PriorityType.MILITARY && factionActionDictionary[priorityType].Count > 0)
         {
@@ -99,25 +148,53 @@ public class SimAIManager : MonoBehaviour
 
     private void Start()
     {
-        CompilePersonActionList();
+        CompilePersonEvents();
         CompileFactionActionDictionary();
         CompileWorldEvents();
+
+        weightedGovernmentUpgrades = CompileWeightedDictionaryByType(typeof(GovernmentEvents));
     }
 
-    private void CompilePersonActionList()
+    private MethodInfo GetRandomSelectionFromWeightedDictionary(Dictionary<int, List<MethodInfo>> weightedDictionary)
 	{
-        personActionList = new List<MethodInfo>(typeof(PersonActions).GetMethods().Where(m => !typeof(object)
-                                     .GetMethods()
-                                     .Select(me => me.Name)
-                                     .Contains(m.Name)));
-        leaderActionList = new List<MethodInfo>(typeof(LeaderActions).GetMethods().Where(m => !typeof(object)
-                                     .GetMethods()
-                                     .Select(me => me.Name)
-                                     .Contains(m.Name)));
+        int totalWeight = 0;
+        foreach(var weight in weightedDictionary.Keys)
+		{
+            totalWeight += weight;
+		}
 
-        totalActionList = new List<MethodInfo>();
-        totalActionList.AddRange(personActionList);
-        totalActionList.AddRange(leaderActionList);
+        var randomWeight = SimRandom.RandomRange(1, totalWeight+1);
+        MethodInfo info = null;
+
+        foreach(var entry in weightedDictionary)
+		{
+            if((randomWeight -= entry.Key) <= 0)
+			{
+                info = SimRandom.RandomEntryFromList(entry.Value);
+                break;
+			}
+		}
+
+        return info;
+	}
+
+    private void CompilePersonEvents()
+	{
+        standardPersonEvents = CompileEventListByType(typeof(PersonEvents));
+
+        roleBasedPersonEvents = new Dictionary<RoleType, List<MethodInfo>>();
+
+        roleBasedPersonEvents.Add(RoleType.GOVERNER, CompileEventListByType(typeof(LeaderActions_Misc)));
+        roleBasedPersonEvents.Add(RoleType.MAGIC_USER, new List<MethodInfo>());
+        roleBasedPersonEvents.Add(RoleType.ROGUE, new List<MethodInfo>());
+
+        weightedLeaderActions = new Dictionary<Type, Dictionary<int, List<MethodInfo>>>();
+
+        weightedLeaderActions.Add(typeof(LeaderActions_Military), CompileWeightedDictionaryByType(typeof(LeaderActions_Military)));
+        weightedLeaderActions.Add(typeof(LeaderActions_Infrastructure), CompileWeightedDictionaryByType(typeof(LeaderActions_Infrastructure)));
+        weightedLeaderActions.Add(typeof(LeaderActions_Mercantile), CompileWeightedDictionaryByType(typeof(LeaderActions_Mercantile)));
+        weightedLeaderActions.Add(typeof(LeaderActions_Political), CompileWeightedDictionaryByType(typeof(LeaderActions_Political)));
+        weightedLeaderActions.Add(typeof(LeaderActions_Religious), CompileWeightedDictionaryByType(typeof(LeaderActions_Religious)));
     }
 
     private void CompileFactionActionDictionary()
@@ -145,10 +222,44 @@ public class SimAIManager : MonoBehaviour
 
     private void CompileWorldEvents()
 	{
-        worldEvents = new List<MethodInfo>(typeof(WorldEvents).GetMethods().Where(m => !typeof(object)
+        loreEvents = new List<MethodInfo>(typeof(LoreEvents).GetMethods().Where(m => !typeof(object)
+                                     .GetMethods()
+                                     .Select(me => me.Name)
+                                     .Contains(m.Name)));
+        weightedWorldEvents = CompileWeightedDictionaryByType(typeof(WorldEvents));
+    }
+
+    private Dictionary<int, List<MethodInfo>> CompileWeightedDictionaryByType(Type type)
+	{
+        var dict = new Dictionary<int, List<MethodInfo>>();
+        var methods = CompileEventListByType(type);
+
+        foreach(var method in methods)
+		{
+            int weight;
+            if(Int32.TryParse(method.Name.Substring(method.Name.Length-2, 2), out weight))
+			{
+                if(!dict.ContainsKey(weight))
+				{
+                    dict.Add(weight, new List<MethodInfo>());
+				}
+
+                dict[weight].Add(method);
+			}
+            else
+			{
+                Debug.LogErrorFormat("Event Method: {0} could not be compiled into weighted dictionary. It has no parseable weight suffix.", method.Name);
+			}
+		}
+
+        return dict;
+    }
+
+    private List<MethodInfo> CompileEventListByType(Type type)
+	{
+        return new List<MethodInfo>(type.GetMethods().Where(m => !typeof(object)
                                      .GetMethods()
                                      .Select(me => me.Name)
                                      .Contains(m.Name)));
     }
-
 }

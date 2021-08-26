@@ -21,3 +21,11 @@ MonoBehaviour:
   consonants: {fileID: 4900000, guid: 22154ebb6d28e394f83b807f371f16aa, type: 3}
   startPairs: {fileID: 4900000, guid: 19b70b984faeca04bb41c200a309e45f, type: 3}
   endPairs: {fileID: 4900000, guid: 48f721a4cc567df43b7fc4b3c2c34915, type: 3}
+  materialNames: {fileID: 4900000, guid: e7f7b6f4662a4ae4c955b721a3ef76f9, type: 3}
+  materialSuffixes: {fileID: 4900000, guid: a774f8c8959ffcd48a576815331bff60, type: 3}
+  politicalTitles: {fileID: 4900000, guid: 9fc126df790f2ff49a103a70cb61d9f1, type: 3}
+  infrastructureTitles: {fileID: 4900000, guid: 715c95f5f11223e46814668c546167c3, type: 3}
+  mercantileTitles: {fileID: 4900000, guid: d57a2a06fa8564b4a92a36cb3cb8d565, type: 3}
+  militaryTitles: {fileID: 4900000, guid: 5307348abd0e8f94da14388a0d351881, type: 3}
+  religiousTitles: {fileID: 4900000, guid: befdd17286a0ba04582f2d9b67c34f3c, type: 3}
+  titleModifiers: {fileID: 4900000, guid: 10381dfb70ce03b47936a513631b86a2, type: 3}

@@ -40,4 +40,31 @@ public static class SimRandom
 
         return result;
     }
+
+    public static T RandomEntryFromList<T>(List<T> collection)
+	{
+        var randomIndex = RandomRange(0, collection.Count);
+        return collection[randomIndex];
+	}
+
+    public static T RandomEntryFromWeightedDictionary<T>(Dictionary<int, List<T>> collection)
+	{
+        var totalWeight = 0;
+        foreach(var pair in collection)
+		{
+            totalWeight += pair.Key;
+		}
+
+        T randomItem = default(T);
+
+        foreach (var pair in collection)
+        {
+            if((totalWeight -= pair.Key) <= 0)
+			{
+                randomItem = RandomEntryFromList(pair.Value);
+			}
+        }
+
+        return randomItem;
+    }
 }

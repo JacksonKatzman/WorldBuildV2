@@ -4,6 +4,7 @@ using UnityEngine;
 using Game.Generators.Noise;
 using Game.Enums;
 using Game.Factions;
+using System.Linq;
 using System;
 using Game.Data.EventHandling;
 
@@ -20,7 +21,7 @@ namespace Game.WorldGeneration
 		public Texture2D voxelColorMapTexture;
 
 		private List<Biome> biomes;
-		public List<FactionSimulator> factions;
+		public List<Faction> factions;
 		private List<War> wars;
 
 		NoiseSettings noiseSettings;
@@ -30,14 +31,16 @@ namespace Game.WorldGeneration
 
 		private List<Person> people;
 
+		public List<OngoingEvent> ongoingEvents;
 		private List<Action> deferredActions;
 
 		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<Biome> biomes)
 		{
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
-			factions = new List<FactionSimulator>();
+			factions = new List<Faction>();
 			people = new List<Person>();
 			wars = new List<War>();
+			ongoingEvents = new List<OngoingEvent>();
 			deferredActions = new List<Action>();
 
 			AlterMap(MapCategory.TERRAIN, noiseMap);
@@ -71,7 +74,9 @@ namespace Game.WorldGeneration
 
 			HandleDeferredActions();
 
-			SimAIManager.Instance.CallWorldEvent(this);
+			HandleOngoingEvents();
+
+			//SimAIManager.Instance.CallWorldEvent(this);
 
 			GenerateNewNoiseMap(MapCategory.RAINFALL);
 
@@ -81,12 +86,12 @@ namespace Game.WorldGeneration
 			}
 
 			SimulationManager.Instance.timer.Tic();
-			foreach (FactionSimulator faction in factions)
+			foreach (Faction faction in factions)
 			{
 				faction.currentPriorities = faction.GeneratePriorities();
 			}
 
-			foreach (FactionSimulator faction in factions)
+			foreach (Faction faction in factions)
 			{
 				faction.AdvanceTime();
 			}
@@ -122,10 +127,17 @@ namespace Game.WorldGeneration
 			return worldChunks[chunkCoords.x, chunkCoords.y].chunkTiles[worldPosition.x % chunkSize, worldPosition.y % chunkSize];
 		}
 
-		public FactionSimulator GetFactionThatControlsTile(Tile tile)
+		public Tile GetRandomTile()
 		{
-			FactionSimulator controllingFaction = null;
-			foreach(FactionSimulator faction in factions)
+			var randomXIndex = SimRandom.RandomRange(0, noiseMaps[Enums.MapCategory.TERRAIN].GetLength(0));
+			var randomYIndex = SimRandom.RandomRange(0, noiseMaps[Enums.MapCategory.TERRAIN].GetLength(1));
+			return GetTileAtWorldPosition(new Vector2Int(randomXIndex, randomYIndex));
+		}
+
+		public Faction GetFactionThatControlsTile(Tile tile)
+		{
+			Faction controllingFaction = null;
+			foreach(Faction faction in factions)
 			{
 				if(faction.territory.Contains(tile))
 				{
@@ -137,7 +149,7 @@ namespace Game.WorldGeneration
 			return controllingFaction;
 		}
 
-		public bool AttemptWar(FactionSimulator aggressor, FactionSimulator defender)
+		public bool AttemptWar(Faction aggressor, Faction defender)
 		{
 			var exisitingWar = false;
 			foreach(War war in wars)
@@ -155,7 +167,7 @@ namespace Game.WorldGeneration
 			if (!exisitingWar)
 			{
 				wars.Add(new War(this, aggressor, defender));
-				OutputLogger.LogFormatAndPause("A war has begun between {0} Faction and {1} Faction!", LogSource.IMPORTANT, aggressor.name, defender.name);
+				OutputLogger.LogFormatAndPause("A war has begun between {0} Faction and {1} Faction!", LogSource.IMPORTANT, aggressor.Name, defender.Name);
 			}
 
 			//will add a chance to avoid this with diplomacy later
@@ -166,6 +178,26 @@ namespace Game.WorldGeneration
 		{
 			OutputLogger.LogFormatAndPause("A war between has ended.", LogSource.IMPORTANT);
 			deferredActions.Add(() => { wars.Remove(war); });
+		}
+
+		public List<Person> GetPeopleFromFaction(Faction faction)
+		{
+			var query =
+				from person in people
+				where person.faction == faction
+				select person;
+			return query.ToList();
+		}
+
+		private void HandleOngoingEvents()
+		{
+			foreach(var ongoingEvent in ongoingEvents)
+			{
+				ongoingEvent.eventAction.Invoke();
+				ongoingEvent.duration--;
+			}
+
+			ongoingEvents.RemoveAll(oe => oe.duration <= 0);
 		}
 
 		private void AddPerson(Person person)
@@ -309,7 +341,7 @@ namespace Game.WorldGeneration
 				}
 			}
 
-			foreach (FactionSimulator faction in factions)
+			foreach (Faction faction in factions)
 			{
 				foreach(Tile tile in faction.territory)
 				{
@@ -387,6 +419,14 @@ namespace Game.WorldGeneration
 			if (factions.Contains(simEvent.faction))
 			{
 				deferredActions.Add(() => { factions.Remove(simEvent.faction); });
+
+				foreach(var war in wars)
+				{
+					if(war.victories.Keys.Contains(simEvent.faction))
+					{
+						ResolveWar(war);
+					}
+				}
 			}
 		}
 
