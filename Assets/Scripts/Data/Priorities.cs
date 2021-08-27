@@ -78,6 +78,16 @@ public class Priorities
 		return operatedPriorities;
 	}
 
+	public int GetTotalScore()
+	{
+		var score = 0;
+		foreach(var pair in priorities)
+		{
+			score += pair.Value;
+		}
+		return score;
+	}
+
 	public override string ToString()
 	{
 		return $"MI: {priorities[PriorityType.MILITARY]}" +

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Enums;
+using System.Linq;
 using System;
 
 namespace Game.Factions
@@ -93,22 +94,25 @@ namespace Game.Factions
 			{
 				if(pair.Value >= 5)
 				{
+					var winner = pair.Key == originalAggressor ? originalAggressor : originalDefender;
+					var loser = winner == originalAggressor ? originalDefender : originalAggressor;
+
 					var numTilesTakable = 5;
 					for (int i = 0; i < numTilesTakable; i++)
 					{
-						var possibleTiles = GetAttackableTiles(originalAggressor, originalDefender);
-						if (possibleTiles.Count > 0)
+						var contestedTile = GetBestAttackableTile(winner, loser);
+						if (contestedTile != null)
 						{
-							var randomTileIndex = SimRandom.RandomRange(0, possibleTiles.Count);
-							var contestedTile = possibleTiles[randomTileIndex];
-
-							AcquireTileByWar(contestedTile, originalAggressor, originalDefender);
+							AcquireTileByWar(contestedTile, winner, loser);
 						}
 						else
 						{
-							i = numTilesTakable;
+							break;
 						}
 					}
+
+					originalAggressor.factionTensions[originalDefender] = -1000;
+					originalDefender.factionTensions[originalAggressor] = -1000;
 
 					world.ResolveWar(this);
 					resolved = true;
@@ -123,16 +127,13 @@ namespace Game.Factions
 			var attacker = random < 0.75f ? originalAggressor : originalDefender;
 			var defender = attacker == originalAggressor ? originalDefender : originalAggressor;
 
-			var possibleTiles = GetAttackableTiles(attacker, defender);
+			var contestedTile = GetBestAttackableTile(attacker, defender);
 
-			if(possibleTiles.Count == 0)
+			if(contestedTile == null)
 			{
 				victories[attacker] = 5;
 				return;
 			}
-
-			var randomTileIndex = SimRandom.RandomRange(0, possibleTiles.Count);
-			var contestedTile = possibleTiles[randomTileIndex];
 
 			var winner = SimulateBattle(attacker, defender, contestedTile);
 			victories[winner]++;
@@ -143,17 +144,26 @@ namespace Game.Factions
 			}
 		}
 
-		private List<Tile> GetAttackableTiles(Faction attacker, Faction defender)
+		private Tile GetBestAttackableTile(Faction attacker, Faction defender)
 		{
-			var possibleTiles = new List<Tile>();
-			foreach (Tile tile in attacker.GetBorderTiles())
+			var sharedTiles = attacker.GetBorderTiles().Intersect(defender.territory);
+
+			Tile bestTile = null;
+			var distance = int.MaxValue;
+
+			foreach(var tile in sharedTiles)
 			{
-				if (defender.territory.Contains(tile))
+				var closestCity = Tile.GetClosestCityToTile(attacker.cities, tile);
+				var distanceScore = Tile.GetDistanceBetweenTiles(tile, closestCity.tile);
+
+				if(distanceScore < distance)
 				{
-					possibleTiles.Add(tile);
+					distance = distanceScore;
+					bestTile = tile;
 				}
 			}
-			return possibleTiles;
+
+			return bestTile;
 		}
 
 		private void AcquireTileByWar(Tile contestedTile, Faction attacker, Faction defender)

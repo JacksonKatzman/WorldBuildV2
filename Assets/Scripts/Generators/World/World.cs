@@ -22,6 +22,7 @@ namespace Game.WorldGeneration
 
 		private List<Biome> biomes;
 		public List<Faction> factions;
+		public List<City> Cities => GetAllCities();
 		private List<War> wars;
 
 		NoiseSettings noiseSettings;
@@ -176,8 +177,11 @@ namespace Game.WorldGeneration
 
 		public void ResolveWar(War war)
 		{
-			OutputLogger.LogFormatAndPause("A war between has ended.", LogSource.IMPORTANT);
-			deferredActions.Add(() => { wars.Remove(war); });
+			if (wars.Contains(war))
+			{
+				OutputLogger.LogFormatAndPause("A war between has ended.", LogSource.IMPORTANT);
+				deferredActions.Add(() => { wars.Remove(war); });
+			}
 		}
 
 		public List<Person> GetPeopleFromFaction(Faction faction)
@@ -187,6 +191,17 @@ namespace Game.WorldGeneration
 				where person.faction == faction
 				select person;
 			return query.ToList();
+		}
+
+		private List<City> GetAllCities()
+		{
+			var cities = new List<City>();
+			foreach(var faction in factions)
+			{
+				cities.AddRange(faction.cities);
+			}
+
+			return cities;
 		}
 
 		private void HandleOngoingEvents()

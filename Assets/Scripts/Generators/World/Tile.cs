@@ -109,13 +109,6 @@ namespace Game.WorldGeneration
 			return tileList;
 		}
 
-		public static int GetDistanceBetweenTiles(Tile tileA, Tile tileB)
-		{
-			var posA = tileA.GetWorldPosition();
-			var posB = tileB.GetWorldPosition();
-			return (int)(posA - posB).magnitude;
-		}
-
 		private void CalculateBiome()
 		{
 			landType = Biome.CalculateLandType(Value);
@@ -164,5 +157,30 @@ namespace Game.WorldGeneration
 				landmarks[i].faction = newFaction;
 			}
 		}
-    }
+
+		public static int GetDistanceBetweenTiles(Tile tileA, Tile tileB)
+		{
+			var posA = tileA.GetWorldPosition();
+			var posB = tileB.GetWorldPosition();
+			return (int)(posA - posB).magnitude;
+		}
+
+		public static City GetClosestCityToTile(List<City> cities, Tile tile)
+		{
+			var distance = int.MaxValue;
+			City closestCity = null;
+
+			for(int i = 0; i < cities.Count; i++)
+			{
+				var checkDist = GetDistanceBetweenTiles(cities[i].tile, tile);
+				if (checkDist < distance)
+				{
+					distance = checkDist;
+					closestCity = cities[i];
+				}
+			}
+
+			return closestCity;
+		}
+	}
 }

@@ -80,7 +80,7 @@ public class SimulationManager : MonoBehaviour
 
         //DrawMesh(MeshGenerator.GenerateVoxelTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.voxelColorMapTexture);
 
-        for (int a = 0; a < 3; a++)
+        for (int a = 0; a < 10; a++)
         {
             FactionGenerator.SpawnFaction(world);
         }

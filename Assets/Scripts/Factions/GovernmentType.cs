@@ -8,7 +8,6 @@ using Game.Enums;
 public class GovernmentType : ScriptableObject
 {
 	public List<LeadershipTier> leadershipStructure;
-	public List<GovernmentTrait> traits;
 	public int influenceRequirement = 10;
 
 	public GovernmentType(Faction faction)
@@ -27,9 +26,7 @@ public class GovernmentType : ScriptableObject
 		leadershipStructure = new List<LeadershipTier>();
 		leadershipStructure.Add(new LeadershipTier());
 		leadershipStructure[0].tier.Add(node);
-
-		traits = new List<GovernmentTrait>();
-		
+	
 	}
 }
 

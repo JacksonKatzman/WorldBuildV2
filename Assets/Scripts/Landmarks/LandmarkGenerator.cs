@@ -2,7 +2,7 @@
 using Game.Enums;
 using Game.Factions;
 using Game.WorldGeneration;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Generators
@@ -44,25 +44,31 @@ namespace Game.Generators
 			EventManager.Instance.Dispatch(new LandmarkDestroyedEvent(city));
 		}
 
-		public static bool IsSuitableCityLocation(Tile tile, float targetFertility, float targetLandAvailability, Faction faction = null)
+		public static Tile FindSuitableCityLocation(Tile tile, int innerRadius, int outerRadius, float targetFertility, float targetLandAvailability, int minCityDistance, Faction faction = null)
 		{
-			var tileController = tile.controller;
-			var uncontrolled = (tileController == faction || tileController == null);
+			var possibleTiles = tile.GetAllTilesInRing(outerRadius, innerRadius);
+			var acceptedTiles = new List<Tile>();
 
-			var farAwayEnough = true;
-			if (faction != null)
+			var worldCities = tile.world.Cities;
+
+			foreach(var possibleTile in possibleTiles)
 			{
-				foreach (City city in faction.cities)
+				var closestCity = Tile.GetClosestCityToTile(worldCities, possibleTile);
+				if(closestCity != null && Tile.GetDistanceBetweenTiles(closestCity.tile, possibleTile) < minCityDistance)
 				{
-					if(Tile.GetDistanceBetweenTiles(tile, city.tile) < 6)
-					{
-						farAwayEnough = false;
-						break;
-					}
+					continue;
+				}
+
+				var tileController = tile.controller;
+				var uncontrolled = (tileController == faction || tileController == null);
+
+				if(tile.baseFertility >= targetFertility && possibleTile.GetCities().Count == 0 && uncontrolled && tile.biome.availableLand >= targetLandAvailability)
+				{
+					acceptedTiles.Add(possibleTile);
 				}
 			}
 
-			return (tile.baseFertility >= targetFertility && tile.GetCities().Count == 0 && uncontrolled && tile.biome.availableLand >= targetLandAvailability && farAwayEnough);
+			return acceptedTiles.Count > 0 ? SimRandom.RandomEntryFromList(acceptedTiles) : null;
 		}
 	}
 }

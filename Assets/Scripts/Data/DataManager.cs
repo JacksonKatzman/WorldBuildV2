@@ -1,4 +1,5 @@
 using Game.Generators.Items;
+using Game.Races;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,12 +16,17 @@ public class DataManager : MonoBehaviour
     private List<GovernmentType> governmentTypes;
 
     [SerializeField]
+    private List<Race> races;
+
+    [SerializeField]
     public TextAsset materialInfo;
 
     List<NameContainer> nameContainers;
     public NameContainer PrimaryNameContainer => nameContainers[0];
 
     public MaterialGenerator MaterialGenerator;
+
+    private Dictionary<int, List<Race>> weightedRaceDictionary;
 
     public GovernmentType GetGovernmentType(int influence)
 	{
@@ -35,6 +41,11 @@ public class DataManager : MonoBehaviour
 
         var randomIndex = SimRandom.RandomRange(0, possibleTypes.Count);
         return possibleTypes[randomIndex];
+	}
+
+    public Race GetRandomWeightedRace()
+	{
+        return SimRandom.RandomEntryFromWeightedDictionary(weightedRaceDictionary);
 	}
 
     private void Awake()
@@ -53,6 +64,8 @@ public class DataManager : MonoBehaviour
 	{
         nameContainers = new List<NameContainer>();
 
+        BuildWeightedRaceDictionary();
+
         foreach (NameFormat format in nameFormats)
         {
             nameContainers.Add(new NameContainer(format));
@@ -61,4 +74,18 @@ public class DataManager : MonoBehaviour
         MaterialGenerator = new MaterialGenerator();
     }
 
+    private void BuildWeightedRaceDictionary()
+	{
+        weightedRaceDictionary = new Dictionary<int, List<Race>>();
+
+        foreach(var race in races)
+		{
+            if(!weightedRaceDictionary.ContainsKey(race.appearanceWeight))
+			{
+                weightedRaceDictionary.Add(race.appearanceWeight, new List<Race>());
+			}
+
+            weightedRaceDictionary[race.appearanceWeight].Add(race);
+		}
+	}
 }

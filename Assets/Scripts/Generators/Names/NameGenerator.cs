@@ -79,6 +79,11 @@ public class NameGenerator
 		return "Relic_" + SimRandom.RandomInteger();
 	}
 
+	public static string GenerateHolidayName()
+	{
+		return "Holiday_" + SimRandom.RandomInteger();
+	}
+
 	public static void GenerateTitleStructure(List<LeadershipTier> leadershipStructure, Priorities priorities)
 	{
 		var numTiers = leadershipStructure.Count;
