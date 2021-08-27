@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PersonStats
 {
 	public int strength;
@@ -29,5 +30,10 @@ public class PersonStats
 		this.wisdom = wisdom;
 		this.charisma = charisma;
 		this.luck = luck;
+	}
+
+	public static PersonStats operator +(PersonStats a, PersonStats b)
+	{
+		return new PersonStats(a.strength + b.strength, a.agility + b.agility, a.constitution + b.constitution, a.intelligence + b.intelligence, a.wisdom + b.wisdom, a.charisma + b.charisma, a.luck + b.luck);
 	}
 }

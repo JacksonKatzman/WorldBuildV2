@@ -173,8 +173,8 @@ namespace Game.Factions
 
 		private Faction SimulateBattle(Faction attacker, Faction defender, Tile tile)
 		{
-			var attackerPower = attacker.population * 0.2f * ((100 - Tile.GetDistanceBetweenTiles(tile, attacker.cities[0].tile))/100.0f);
-			var defenderPower = defender.population * 0.2f * ((100 - Tile.GetDistanceBetweenTiles(tile, defender.cities[0].tile)) / 100.0f);
+			var attackerPower = attacker.population * 0.2f * ((100 - Tile.GetDistanceBetweenTiles(tile, attacker.cities[0].tile)) / 100.0f) * attacker.Stats.militaryModifier.Modified;
+			var defenderPower = defender.population * 0.2f * ((100 - Tile.GetDistanceBetweenTiles(tile, defender.cities[0].tile)) / 100.0f) * defender.Stats.militaryModifier.Modified;
 			//ADD more complexity values here based on warlike specialities
 
 			return (attackerPower > defenderPower)? attacker: defender;

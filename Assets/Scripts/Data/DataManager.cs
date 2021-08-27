@@ -10,38 +10,16 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance => instance;
 
     [SerializeField]
-    private List<NameFormat> nameFormats;
-
-    [SerializeField]
-    private List<GovernmentType> governmentTypes;
-
-    [SerializeField]
     private List<Race> races;
 
     [SerializeField]
     public TextAsset materialInfo;
 
-    List<NameContainer> nameContainers;
-    public NameContainer PrimaryNameContainer => nameContainers[0];
+    public Dictionary<Race, NameContainer> nameContainers;
 
     public MaterialGenerator MaterialGenerator;
 
     private Dictionary<int, List<Race>> weightedRaceDictionary;
-
-    public GovernmentType GetGovernmentType(int influence)
-	{
-        List<GovernmentType> possibleTypes = new List<GovernmentType>();
-        foreach(GovernmentType type in governmentTypes)
-		{
-            if(type.influenceRequirement <= influence)
-			{
-                possibleTypes.Add(type);
-			}
-		}
-
-        var randomIndex = SimRandom.RandomRange(0, possibleTypes.Count);
-        return possibleTypes[randomIndex];
-	}
 
     public Race GetRandomWeightedRace()
 	{
@@ -62,13 +40,13 @@ public class DataManager : MonoBehaviour
 
 	private void Start()
 	{
-        nameContainers = new List<NameContainer>();
+        nameContainers = new Dictionary<Race, NameContainer>();
 
         BuildWeightedRaceDictionary();
 
-        foreach (NameFormat format in nameFormats)
+        foreach (var race in races)
         {
-            nameContainers.Add(new NameContainer(format));
+            nameContainers.Add(race, new NameContainer(race.nameFormat));
         }
 
         MaterialGenerator = new MaterialGenerator();

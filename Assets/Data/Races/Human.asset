@@ -12,11 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c444110b1a4127c4db44677f7c62f6db, type: 3}
   m_Name: Human
   m_EditorClassIdentifier: 
+  appearanceWeight: 10
   stats:
+    strength: 1
+    agility: 1
+    constitution: 1
+    intelligence: 1
+    wisdom: 1
+    charisma: 1
+    luck: 1
+  culturalStats:
     actionsPerTurn:
       original: 1
     birthRate:
-      original: 0.0165
+      original: 0.016
     deathRate:
       original: 0.0078
     foodProductionPerWorker:
@@ -33,3 +42,12 @@ MonoBehaviour:
       original: 1
     factionPressureThreshold:
       original: 100
+    militaryModifier:
+      original: 1
+    mercantileModifier:
+      original: 1
+    politicalModifier:
+      original: 1
+    religiousModifier:
+      original: 1
+  nameFormat: {fileID: 11400000, guid: 41dc381c7818beb43a721e49c624669b, type: 2}

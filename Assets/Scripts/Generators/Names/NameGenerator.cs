@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text;
 using UnityEngine;
 using Game.Enums;
+using Game.Races;
 
 public class NameGenerator
 {
@@ -15,17 +16,13 @@ public class NameGenerator
 	private static float VOWEL_PHONEME_MORPH_PERCENTAGE = 0.5f;
 	private static float TRUNCATE_PERCENTAGE = 0.4f;
 
-	private static NameContainer defaultNameContainer => DataManager.Instance.PrimaryNameContainer;
+	//private static NameContainer defaultNameContainer => DataManager.Instance.PrimaryNameContainer;
 
-	public static string GeneratePersonFirstName(Gender gender)
-	{
-		return GeneratePersonFirstName(defaultNameContainer, gender);
-	}
-
-	public static string GeneratePersonFirstName(NameContainer container, Gender gender)
+	public static string GeneratePersonFirstName(Race race, Gender gender)
 	{
 		int combinedRatio = SYLLABALIC_RATIO + MODIFIED_RATIO;
 		int randomWeight = SimRandom.RandomRange(0, combinedRatio);
+		var container = DataManager.Instance.nameContainers[race];
 		if((randomWeight -= SYLLABALIC_RATIO) < 0)
 		{
 			return SyllabalicNameGeneration(container, container.rules.FirstNameSyllables.x, container.rules.FirstNameSyllables.y);
@@ -35,42 +32,36 @@ public class NameGenerator
 			return ModifiedNameGeneration(container, gender, container.rules.TweakFirstNames);
 		}
 	}
-
-	public static string GeneratePersonSurname()
+	public static string GeneratePersonSurname(Race race)
 	{
-		return GeneratePersonSurname(defaultNameContainer);
-	}
-
-	public static string GeneratePersonSurname(NameContainer container)
-	{
+		var container = DataManager.Instance.nameContainers[race];
 		return SyllabalicNameGeneration(container, container.rules.LastNameSyllables.x, container.rules.LastNameSyllables.y);
 	}
 
-	public static string GeneratePersonFullName(Gender gender)
-	{
-		return GeneratePersonFullName(defaultNameContainer, gender);
-	}
-
-	public static string GeneratePersonFullName(NameContainer container, Gender gender)
+	public static string GeneratePersonFullName(Race race, Gender gender)
 	{
 		int combinedRatio = SYLLABALIC_RATIO + MODIFIED_RATIO + STATIC_RATIO;
 		int randomWeight = SimRandom.RandomRange(0, combinedRatio);
+		var container = DataManager.Instance.nameContainers[race];
 		if ((randomWeight -= STATIC_RATIO) < 0)
 		{
 			return StaticNameGeneration(container, gender);
 		}
 		else
 		{
-			return GeneratePersonFirstName(container, gender) + " " + GeneratePersonSurname(container);
+			return GeneratePersonFirstName(race, gender) + " " + GeneratePersonSurname(race);
 		}
 	}
 
 	public static string GenerateMaterialName()
 	{
 		//make better later
+		/*
 		var prefix = SyllabalicNameGeneration(defaultNameContainer, 2, 4);
 		var suffix = GetWeightedSelectionFromDictionary(defaultNameContainer.MaterialSuffixes.weightedValues);
 		return prefix + suffix;
+		*/
+		return "Material_" + SimRandom.RandomInteger();
 	}
 
 	public static string GenerateRelicName()
@@ -84,11 +75,12 @@ public class NameGenerator
 		return "Holiday_" + SimRandom.RandomInteger();
 	}
 
-	public static void GenerateTitleStructure(List<LeadershipTier> leadershipStructure, Priorities priorities)
+	public static void GenerateTitleStructure(List<LeadershipTier> leadershipStructure, Priorities priorities, Race race)
 	{
 		var numTiers = leadershipStructure.Count;
 		var prioType = priorities.SortedList()[0];
-		var titleDictionary = defaultNameContainer.Titles[prioType].weightedValues;
+		var container = DataManager.Instance.nameContainers[race];
+		var titleDictionary = container.Titles[prioType].weightedValues;
 
 		for (int i = 0; i < numTiers; i++)
 		{
@@ -113,7 +105,7 @@ public class NameGenerator
 			string titleMod = "{0}";
 			if (titlePoints > 0)
 			{
-				titleMod = SimRandom.RandomEntryFromList(defaultNameContainer.TitleModifiers.rawValues);
+				titleMod = SimRandom.RandomEntryFromList(container.TitleModifiers.rawValues);
 			}
 
 			var genderTitles = new Dictionary<Gender, string>();

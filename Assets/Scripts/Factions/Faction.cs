@@ -48,7 +48,7 @@ namespace Game.Factions
 		public Priorities currentPriorities;
 
 		public Race race;
-		public FactionStats Stats => race.stats + government.stats;
+		public FactionStats Stats => race.culturalStats + government.stats;
 
 		private int turnsSinceLastExpansion = 0;
 
@@ -56,13 +56,13 @@ namespace Game.Factions
 
 		public Faction(Tile startingTile, float food, int population, Race race)
 		{
-			name = NameGenerator.GeneratePersonFirstName(DataManager.Instance.PrimaryNameContainer, Gender.ANY);
 			var r = SimRandom.RandomFloat01();
 			var g = SimRandom.RandomFloat01();
 			var b = SimRandom.RandomFloat01();
 			color = new Color(r, g, b, 0.4f * 255);
 
 			this.race = race;
+			name = NameGenerator.GeneratePersonFirstName(race, Gender.ANY);
 
 			territory = new List<Tile>();
 			nextExpansions = new List<Tile>();
@@ -226,7 +226,7 @@ namespace Game.Factions
 					{
 						factionTensions.Add(owner, 0);
 					}
-					factionTensions[owner] += (owner.territory.Count / 10 * owner.Stats.factionPressureModifier.Modified);
+					factionTensions[owner] += (owner.territory.Count / 10 * owner.Stats.factionPressureModifier.Modified) * (1/owner.Stats.politicalModifier.Modified);
 				}
 			}
 
@@ -438,7 +438,7 @@ namespace Game.Factions
 
 		private void UpdateStats()
 		{
-
+			government.stats.AdvanceTime();
 		}
 
 		private void HandleDeferredActions()

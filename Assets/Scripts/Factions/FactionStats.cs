@@ -18,6 +18,11 @@ namespace Game.Factions
 		public ModifiedFloat factionPressureModifier;
 		public ModifiedFloat factionPressureThreshold;
 
+		public ModifiedFloat militaryModifier;
+		public ModifiedFloat mercantileModifier;
+		public ModifiedFloat politicalModifier;
+		public ModifiedFloat religiousModifier;
+
 		public FactionStats()
 		{
 			actionsPerTurn = new ModifiedInt(0);
@@ -31,6 +36,11 @@ namespace Game.Factions
 			rebellionChance = new ModifiedFloat(0);
 			factionPressureModifier = new ModifiedFloat(1.0f);
 			factionPressureThreshold = new ModifiedFloat(0);
+
+			militaryModifier = new ModifiedFloat(1);
+			mercantileModifier = new ModifiedFloat(1);
+			politicalModifier = new ModifiedFloat(1);
+			religiousModifier = new ModifiedFloat(1);
 		}
 
 		public void AdvanceTime()
@@ -46,6 +56,12 @@ namespace Game.Factions
 			rebellionChance.AdvanceTime();
 			factionPressureModifier.AdvanceTime();
 			factionPressureThreshold.AdvanceTime();
+
+
+			militaryModifier.AdvanceTime();
+			mercantileModifier.AdvanceTime();
+			politicalModifier.AdvanceTime();
+			religiousModifier.AdvanceTime();
 		}
 
 		public static FactionStats operator +(FactionStats a, FactionStats b)
@@ -63,6 +79,11 @@ namespace Game.Factions
 			c.rebellionChance = a.rebellionChance + b.rebellionChance;
 			c.factionPressureModifier = a.factionPressureModifier + b.factionPressureModifier;
 			c.factionPressureThreshold = a.factionPressureThreshold + b.factionPressureThreshold;
+
+			c.militaryModifier = a.militaryModifier + b.militaryModifier;
+			c.mercantileModifier = a.mercantileModifier + b.mercantileModifier;
+			c.politicalModifier = a.politicalModifier + b.politicalModifier;
+			c.religiousModifier = a.religiousModifier + b.religiousModifier;
 
 			return c;
 		}

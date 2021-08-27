@@ -5,6 +5,7 @@ using Game.Enums;
 using Game.Factions;
 using Game.Data.EventHandling.EventRecording;
 using Game.Generators.Items;
+using Game.Races;
 
 public class Person : ITimeSensitive, IRecordable
 {
@@ -16,6 +17,7 @@ public class Person : ITimeSensitive, IRecordable
 	public string personalTitle = "{0}";
 	public int age;
 	public Gender gender;
+	public Race race;
 	public Faction faction;
 	public LeadershipStructureNode governmentOffice;
 	public int influence;
@@ -50,6 +52,15 @@ public class Person : ITimeSensitive, IRecordable
 		this.governmentOffice = office;
 		this.roles = roles;
 
+		if (faction != null)
+		{
+			race = faction.race;
+		}
+		else
+		{
+			race = DataManager.Instance.GetRandomWeightedRace();
+		}
+
 		if(governmentOffice != null && !roles.Contains(RoleType.GOVERNER))
 		{
 			roles.Add(RoleType.GOVERNER);
@@ -57,7 +68,7 @@ public class Person : ITimeSensitive, IRecordable
 
 		if (name == null)
 		{
-			name = NameGenerator.GeneratePersonFullName(gender);
+			name = NameGenerator.GeneratePersonFullName(race, gender);
 		}
 		if (stats == null)
 		{
@@ -79,7 +90,7 @@ public class Person : ITimeSensitive, IRecordable
 	{
 		var progenitorName = progenitor.Name.Split(' ');
 		var progenitorSurname = progenitorName[progenitorName.Length - 1];
-		name = NameGenerator.GeneratePersonFirstName(gender) + progenitorSurname;
+		name = NameGenerator.GeneratePersonFirstName(race, gender) + progenitorSurname;
 	}
 
 	public Person(int age, Gender gender, PersonStats stats) : this(null, age, gender, 0, new List<RoleType>())
@@ -126,6 +137,8 @@ public class Person : ITimeSensitive, IRecordable
 								SimRandom.RollXDY(4, 6, 1), SimRandom.RollXDY(4, 6, 1),
 								SimRandom.RollXDY(4, 6, 1), SimRandom.RollXDY(4, 6, 1),
 								SimRandom.RollXDY(4, 6, 1));
+
+		stats += race.stats;
 	}
 
 	private void GeneratePriorities()

@@ -72,7 +72,7 @@ namespace Game.Factions
 
 			leadershipStructure.Add(tier);
 
-			NameGenerator.GenerateTitleStructure(leadershipStructure, priorities);
+			NameGenerator.GenerateTitleStructure(leadershipStructure, priorities, faction.race);
 
 			if (initialTierCount <= 3)
 			{
@@ -105,7 +105,7 @@ namespace Game.Factions
 
 			leadershipStructure.Add(leadershipTier);
 
-			NameGenerator.GenerateTitleStructure(leadershipStructure, priorities);
+			NameGenerator.GenerateTitleStructure(leadershipStructure, priorities, faction.race);
 
 			foreach(LeadershipTier tier in leadershipStructure)
 			{
