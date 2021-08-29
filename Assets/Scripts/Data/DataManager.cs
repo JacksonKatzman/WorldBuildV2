@@ -1,3 +1,4 @@
+using Game.Creatures;
 using Game.Generators.Items;
 using Game.Races;
 using System.Collections;
@@ -20,6 +21,8 @@ public class DataManager : MonoBehaviour
     public MaterialGenerator MaterialGenerator;
 
     private Dictionary<int, List<Race>> weightedRaceDictionary;
+
+    private Dictionary<string, CreatureStats> creatures;
 
     public Race GetRandomWeightedRace()
 	{
@@ -44,6 +47,8 @@ public class DataManager : MonoBehaviour
 
         BuildWeightedRaceDictionary();
 
+        BuildCreatureDictionary();
+
         foreach (var race in races)
         {
             nameContainers.Add(race, new NameContainer(race.nameFormat));
@@ -66,4 +71,18 @@ public class DataManager : MonoBehaviour
             weightedRaceDictionary[race.appearanceWeight].Add(race);
 		}
 	}
+
+    private void BuildCreatureDictionary()
+	{
+        var existingCreatures = Resources.LoadAll("Creatures/Creatures");
+        creatures = new Dictionary<string, CreatureStats>();
+
+        if (existingCreatures != null)
+        {
+            foreach (var c in existingCreatures)
+            {
+                creatures.Add(((CreatureStats)c).Name, ((CreatureStats)c));
+            }
+        }
+    }
 }

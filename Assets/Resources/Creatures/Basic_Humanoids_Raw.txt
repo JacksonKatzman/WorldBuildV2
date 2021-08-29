@@ -1,0 +1,2292 @@
+Aarakocra
+Medium humanoid (aarakocra), neutral good
+Armor Class 12
+Hit Points 13 (3d8)
+Speed 20 ft., fly 50 ft.
+STR
+10 (+0)
+DEX
+14 (+2)
+CON
+10 (+0)
+INT
+11 (+0)
+WIS
+12 (+1)
+CHA
+11 (+0)
+Skills Perception +5
+Senses passive Perception 15
+Languages Auran, Aarakocra
+Challenge 1/4 (50 XP)
+
+Dive Attack. If the aarakocra is flying and dives at least 30 feet straight toward a target and then hits it with a melee weapon attack, the attack deals an extra 3 (1d6) damage to the target.
+ACTIONS
+
+Talon. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) slashing damage.
+
+Javelin. Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage.
+@
+Bugbear
+Medium humanoid (goblinoid), chaotic evil
+Armor Class 16 (hide armor, shield)
+Hit Points 27 (5d8 + 5)
+Speed 30 ft.
+STR
+15 (+2)
+DEX
+14 (+2)
+CON
+13 (+1)
+INT
+8 (-1)
+WIS
+11 (+0)
+CHA
+9 (-1)
+Skills Stealth +6, Survival +2
+Senses darkvision 60 ft., passive Perception 10
+Languages Common, Goblin
+Challenge 1 (200 XP)
+
+Brute. A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack).
+
+Surprise Attack. If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 (2d6) damage from the attack.
+ACTIONS
+
+Morningstar. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage.
+
+Javelin. Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 9 (2d6 + 2) piercing damage in melee or 5 (1d6 + 2) piercing damage at range.
+Bugbears are hairy goblinoids born for battle and mayhem. They survive by raiding and hunting, but are fond of setting ambushes and fleeing when outmatched.
+@
+Bugbear Chief
+Medium humanoid (goblinoid), chaotic evil
+Armor Class 17 (chain shirt, shield)
+Hit Points 65 (10d8 + 20)
+Speed 30 ft.
+STR
+17 (+3)
+DEX
+14 (+2)
+CON
+14 (+2)
+INT
+11 (+0)
+WIS
+12 (+1)
+CHA
+11 (+0)
+Skills Intimidation +2, Stealth +6, Survival +3
+Senses darkvision 60 ft., passive Perception 11
+Languages Common, Goblin
+Challenge 3 (700 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Bullywug
+Medium humanoid (bullywug), neutral evil
+Armor Class 15 (hide armor, shield)
+Hit Points 11 (2d8 + 2)
+Speed 20 ft., swim 40 ft.
+STR
+12 (+1)
+DEX
+12 (+1)
+CON
+13 (+1)
+INT
+7 (-2)
+WIS
+10 (+0)
+CHA
+7 (-2)
+Skills Stealth +3
+Senses passive Perception 10
+Languages Bullywug
+Challenge 1/4 (50 XP)
+
+Amphibious. The bullywug can breathe air and water.
+
+Speak with Frogs and Toads. The bullywug can communicate simple concepts to frogs and toads when it speaks in Bullywug.
+
+Swamp Camouflage. The bullywug has advantage on Dexterity (Stealth) checks made to hide in swampy terrain.
+
+Standing Leap. The bullywug's long jump is up to 20 feet and its high jump is up to 10 feet, with or without a running start.
+ACTIONS
+
+Multiattack. The bullywug makes two melee attacks: one with its bite and one with its spear.
+
+Bite. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) bludgeoning damage.
+
+Spear. Melee or Ranged Weapon Attack: +3 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d6 + 1) piercing damage, or 5 (1d8 + 1) piercing damage if used with two hands to make a melee attack.
+@
+Deep Gnome (Svirfneblin)
+Small humanoid (gnome), neutral good
+Armor Class 15 (chain shirt)
+Hit Points 16 (3d6 + 6)
+Speed 20 ft.
+STR
+15 (+2)
+DEX
+14 (+2)
+CON
+14 (+2)
+INT
+12 (+1)
+WIS
+10 (+0)
+CHA
+9 (-1)
+Skills Investigation +3, Perception +2, Stealth +4
+Senses darkvision 120 ft., passive Perception 12
+Languages Gnomish, Terran, Undercommon
+Challenge 1/2 (100 XP)
+
+Stone Camouflage. The gnome has advantage on Dexterity (Stealth) checks made to hide in rocky terrain.
+
+Gnome Cunning. The gnome has advantage on Intelligence, Wisdom, and Charisma saving throws against magic.
+
+Innate Spellcasting. The gnome's innate spellcasting ability is Intelligence (spell save DC 11). It can innately cast the following spells, requiring no material components:
+At will: nondetection (self only)
+1/day each: blindness/deafness, blur, disguise self
+ACTIONS
+
+War Pick. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) piercing damage.
+
+Poisoned Dart. Ranged Weapon Attack: +4 to hit, range 30/120 ft., one creature. Hit: 4 (1d4 + 2) piercing damage, and the target must succeed on a DC 12 Constitution saving throw or be poisoned for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.
+@
+Deep Scion
+Medium humanoid (shapechanger), neutral evil
+Armor Class 11
+Hit Points 67 (9d8 + 27)
+Speed 30 ft. (20 ft. and swim 40 ft. in hybrid form)
+STR
+18 (+4)
+DEX
+13 (+1)
+CON
+16 (+3)
+INT
+10 (+0)
+WIS
+12 (+1)
+CHA
+14 (+2)
+Saving Throws Wis +3, Cha +4
+Skills Deception +6, Insight +3, Sleight of Hand +3, Stealth +3
+Senses darkvision 120 ft., passive Perception 11
+Languages Aquan, Common, thieves' cant
+Challenge 3 (700 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Drow
+Medium humanoid (elf), neutral evil
+Armor Class 15 (chain shirt)
+Hit Points 13 (3d8)
+Speed 30 ft.
+STR
+10 (+0)
+DEX
+14 (+2)
+CON
+10 (+0)
+INT
+11 (+0)
+WIS
+11 (+0)
+CHA
+12 (+1)
+Skills Perception +2, Stealth +4
+Senses darkvision 120 ft., passive Perception 12
+Languages Elvish, Undercommon
+Challenge 1/4 (50 XP)
+
+Fey Ancestry. The drow has advantage on saving throws against being charmed, and magic can't put the drow to sleep.
+
+Innate Spellcasting. The drow's spellcasting ability is Charisma (spell save DC 11). It can innately cast the following spells, requiring no material components:
+At will: dancing lights
+1/day each: darkness, faerie fire
+
+Sunlight Sensitivity. While in sunlight, the drow has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.
+ACTIONS
+
+Shortsword. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.
+
+Hand Crossbow. Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage, and the target must succeed on a DC 13 Constitution saving throw or be poisoned for 1 hour. If the saving throw fails by 5 or more, the target is also unconscious while poisoned in this way. The target wakes up if it takes damage or if another creature takes an action to shake it awake.
+@
+Drow Elite Warrior
+Medium humanoid (elf), neutral evil
+Armor Class 18 (studded leather, shield)
+Hit Points 71 (11d8 + 22)
+Speed 30 ft.
+STR
+13 (+1)
+DEX
+18 (+4)
+CON
+14 (+2)
+INT
+11 (+0)
+WIS
+13 (+1)
+CHA
+12 (+1)
+Saving Throws Dex +7, Con +5, Wis +4
+Skills Perception +4, Stealth +10
+Senses darkvision 120 ft., passive Perception 14
+Languages Elvish, Undercommon
+Challenge 5 (1800 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Drow Mage
+Medium humanoid (elf), neutral evil
+Armor Class 12 (15 with mage armor)
+Hit Points 45 (10d8)
+Speed 30 ft.
+STR
+9 (-1)
+DEX
+14 (+2)
+CON
+10 (+0)
+INT
+17 (+3)
+WIS
+13 (+1)
+CHA
+12 (+1)
+Skills Arcana +6, Deception +5, Perception +4, Stealth +5
+Senses darkvision 120 ft., passive Perception 14
+Languages Elvish, Undercommon
+Challenge 7 (2900 XP)
+
+Fey Ancestry. The drow has advantage on saving throws against being charmed, and magic can't put the drow to sleep.
+
+Innate Spellcasting. The drow's innate spellcasting ability is Charisma (spell save DC 12). It can innately cast the following spells, requiring no material components:
+At will: dancing lights
+1/day each: darkness, faerie fire, levitate (self only)
+
+Spellcasting. The drow is a 10th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). The drow has the following wizard spells prepared:
+Cantrips (at will): mage hand, minor illusion, poison spray, ray of frost
+1st level (4 slots): mage armor, magic missile, shield, witch bolt
+2nd level (3 slots): alter self, misty step, web
+3rd level (3 slots): fly, lightning bolt
+4th level (3 slots): Evard's black tentacles, greater invisibility
+5th level (2 slots): cloudkill
+
+Sunlight Sensitivity. While in sunlight, the drow has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.
+ACTIONS
+
+Staff. Melee Weapon Attack: +2 to hit, reach 5 ft., one target. Hit: 2 (1d6 - 1) bludgeoning damage, or 3 (1d8 - 1) bludgeoning damage if used with two hands, plus 3 (1d 6) poison damage.
+
+Summon Demon (1/Day). The drow magically summons a quasit, or attempts to summon a shadow demon with a 50 percent chance of success. The summoned demon appears in an unoccupied space within 60 feet of its summoner, acts as an ally of its summoner, and can't summon other demons. It remains for 10 minutes, until it or its summoner dies, or until its summoner dismisses it as an action.
+@
+Drow Priestress of Lolth
+Medium humanoid (elf), neutral evil
+Armor Class 16 (scale mail)
+Hit Points 71 (13d8 + 13)
+Speed 30 ft.
+STR
+10 (+0)
+DEX
+14 (+2)
+CON
+12 (+1)
+INT
+13 (+1)
+WIS
+17 (+3)
+CHA
+18 (+4)
+Saving Throws Con +4, Wis +6, Cha +7
+Skills Insight +6, Perception +6, Religion +4, Stealth +5
+Senses darkvision 120 ft., passive Perception 16
+Languages Elvish, Undercommon
+Challenge 8 (3900 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Duergar
+Medium humanoid (dwarf), lawful evil
+Armor Class 16 (scale mail, shield)
+Hit Points 26 (4d8 + 8)
+Speed 25 ft.
+STR
+14 (+2)
+DEX
+11 (+0)
+CON
+14 (+2)
+INT
+11 (+0)
+WIS
+10 (+0)
+CHA
+9 (-1)
+Damage Resistances poison
+Senses darkvision 120 ft., passive Perception 10
+Languages Dwarvish, Undercommon
+Challenge 1 (200 XP)
+
+Duergar Resilience. The duergar has advantage on saving throws against poison, spells, and illusions, as well as to resist being charmed or paralyzed.
+
+Sunlight Sensitivity. While in sunlight, the duergar has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.
+ACTIONS
+
+Enlarge (Recharges after a Short or Long Rest). For 1 minute, the duergar magically increases in size, along with anything it is wearing or carrying. While enlarged, the duergar is Large, doubles its damage dice on Strength-based weapon attacks (included in the attacks), and makes Strength checks and Strength saving throws with advantage. If the duergar lacks the room to become Large, it attains the maximum size possible in the space available.
+
+War Pick. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) piercing damage, or 11 (2d8 + 2) piercing damage while enlarged.
+
+Javelin. Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage, or 9 (2d6 + 2) piercing damage while enlarged.
+
+Invisibility (Recharges after a Short or Long Rest). The duergar magically turns invisible until it attacks, casts a spell, or uses its Enlarge, or until its concentration is broken, up to 1 hour (as if concentrating on a spell). Any equipment the duergar wears or carries is invisible with it.
+The tyrannical duergar, also known as gray dwarves, dwell in fantastic cities deep in the Underdark. Using ancient dwarven knowledge and myriad slaves, they work tirelessly to expand their subterranean kingdoms.
+@
+Firenewt Warlock of Imix
+Medium humanoid (firenewt), neutral evil
+Armor Class 10 (13 with mage armor)
+Hit Points 33 (6d8 + 6)
+Speed 30 ft.
+STR
+13 (+1)
+DEX
+11 (+0)
+CON
+12 (+1)
+INT
+9 (-1)
+WIS
+11 (+0)
+CHA
+14 (+2)
+Damage Immunities fire
+Senses darkvision 120 ft. (penetrates magical darkness), passive Perception 10
+Languages Draconic, Ignan
+Challenge 1 (200 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Firenewt Warrior
+Medium humanoid (firenewt), neutral evil
+Armor Class 16 (chain shirt, shield)
+Hit Points 22 (4d8 + 4)
+Speed 30 ft.
+STR
+10 (+0)
+DEX
+13 (+1)
+CON
+12 (+1)
+INT
+7 (-2)
+WIS
+11 (+0)
+CHA
+8 (-1)
+Damage Immunities fire
+Senses passive Perception 10
+Languages Draconic, Ignan
+Challenge 1/2 (100 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Flind
+Medium humanoid (gnoll), chaotic evil
+Armor Class 16 (chain mail)
+Hit Points 127 (15d8 + 60)
+Speed 30 ft.
+STR
+20 (+5)
+DEX
+10 (+0)
+CON
+19 (+4)
+INT
+11 (+0)
+WIS
+13 (+1)
+CHA
+12 (+1)
+Saving Throws Con +8, Wis +5
+Skills Intimidate +5, Perception +5
+Senses darkvision 60 ft., passive Perception 15
+Languages Gnoll, Abyssal
+Challenge 9 (5000 XP)
+
+Aura of Blood Thirst. If the flind isn't incapacitated, any creature with the Rampage trait can make a bite attack as a bonus action while within 10 feet of the find.
+ACTIONS
+
+Multiattack. The flind makes three attacks: one with each of its different flail attacks or three with its longbow.
+
+Flail of Madness. Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 10 (1d10 + 5) bludgeoning damage, and the target must make a DC 16 Wisdom saving throw. On a failed save, the target must make a melee attack against a random target within its reach on its next turn. If it has no targets within its reach even after moving, it loses its action on that turn.
+
+Flail of Pain. Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 10 (1d10 + 5) bludgeoning damage plus 22 (4d10) psychic damage.
+
+Flail of Paralysis. Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 10 (1d10 + 5) bludgeoning damage, and the target must succeed on a DC 16 Constitution saving throw or be paralyzed until the end of its next turn.
+
+Longbow. Ranged Weapon Attack: +4 to hit, range 150/600 ft., one target. Hit: 4 (1d8) piercing damage.
+@
+Githyanki Knight
+Medium humanoid (gith), lawful evil
+Armor Class 18 (plate)
+Hit Points 91 (14d8 + 28)
+Speed 30 ft.
+STR
+16 (+3)
+DEX
+14 (+2)
+CON
+15 (+2)
+INT
+14 (+2)
+WIS
+14 (+2)
+CHA
+15 (+2)
+Saving Throws Con +5, Int +5, Wis +5
+Senses passive Perception 12
+Languages Gith
+Challenge 8 (3900 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Githyanki Warrior
+Medium humanoid (gith), lawful evil
+Armor Class 17 (half plate)
+Hit Points 49 (9d8 + 9)
+Speed 30 ft.
+STR
+15 (+2)
+DEX
+14 (+2)
+CON
+12 (+1)
+INT
+13 (+1)
+WIS
+13 (+1)
+CHA
+10 (+0)
+Saving Throws Con +3, Int +3, Wis +3
+Senses passive Perception 11
+Languages Gith
+Challenge 3 (700 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Githzerai Monk
+Medium humanoid (gith), lawful neutral
+Armor Class 14
+Hit Points 38 (7d8 + 7)
+Speed 30 ft.
+STR
+12 (+1)
+DEX
+15 (+2)
+CON
+12 (+1)
+INT
+13 (+1)
+WIS
+14 (+2)
+CHA
+10 (+0)
+Saving Throws Str +3, Dex +4, Int +3, Wis +4
+Skills Insight +4, Perception +4
+Senses passive Perception 14
+Languages Gith
+Challenge 2 (450 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Githzerai Zerth
+Medium humanoid (gith), lawful neutral
+Armor Class 17
+Hit Points 84 (13d8 + 26)
+Speed 30 ft.
+STR
+13 (+1)
+DEX
+18 (+4)
+CON
+15 (+2)
+INT
+16 (+3)
+WIS
+17 (+3)
+CHA
+12 (+1)
+Saving Throws Str +4, Dex +7, Int +6, Wis +6
+Ski lls Arcana +6, Insight +6, Perception +6
+Senses passive Perception 16
+Languages Gith
+Challenge 6 (2300 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Gnoll
+Medium humanoid (gnoll), chaotic evil
+Armor Class 15 (hide armor, shield)
+Hit Points 22 (5d8)
+Speed 30 ft.
+STR
+14 (+2)
+DEX
+12 (+1)
+CON
+11 (+0)
+INT
+6 (-2)
+WIS
+10 (+0)
+CHA
+7 (-2)
+Senses darkvision 60 ft., passive Perception 10
+Languages Gnoll
+Challenge 1/2 (100 XP)
+
+Rampage. When the gnoll reduces a creature to 0 hit points with a melee attack on its turn, the gnoll can take a bonus action to move up to half its speed and make a bite attack.
+ACTIONS
+
+Bite. Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 4 (1d4 + 2) piercing damage.
+
+Spear. Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 5 (1d6 + 2) piercing damage, or 6 (1d8 + 2) piercing damage if used with two hands to make a melee attack.
+
+Longbow. Ranged Weapon Attack: +3 to hit, range 150/600 ft., one target. Hit: 5 (1d8 + 1) piercing damage.
+Gnolls are feral, hyena-headed humanoids that attack without warning, slaughtering their victims and devouring their flesh.
+@
+Gnoll Flesh Gnawer
+Medium humanoid (gnoll), chaotic evil
+Armor Class 14 (studded leather)
+Hit Points 22 (4d8 + 4)
+Speed 30 ft.
+STR
+12 (+1)
+DEX
+14 (+2)
+CON
+12 (+1)
+INT
+8 (-1)
+WIS
+10 (+0)
+CHA
+8 (-1)
+Saving Throws Dex +4
+Senses darkvision 60 ft., passive Perception 10
+Languages Gnoll
+Challenge 1 (200 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Gnoll Hunter
+Medium humanoid (gnoll), chaotic evil
+Armor Class 13 (leather armor)
+Hit Points 22 (4d8 + 4)
+Speed 30 ft.
+STR
+14 (+2)
+DEX
+14 (+2)
+CON
+12 (+1)
+INT
+8 (-1)
+WIS
+12 (+1)
+CHA
+8 (-1)
+Skills Perception +3, Stealth +4
+Senses darkvision 60 ft., passive Perception 13
+Languages Gnoll
+Challenge 1/2 (100 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Gnoll Pack Lord
+Medium humanoid (gnoll), chaotic evil
+Armor Class 15 (chain shirt)
+Hit Points 49 (9d8 + 9)
+Speed 30 ft.
+STR
+16 (+3)
+DEX
+14 (+2)
+CON
+13 (+1)
+INT
+8 (-1)
+WIS
+11 (+0)
+CHA
+9 (-1)
+Senses darkvision 60 ft., passive Perception 10
+Languages Gnoll
+Challenge 2 (450 XP)
+
+Rampage. When the gnoll reduces a creature to 0 hit points with a melee attack on its turn, the gnoll can take a bonus action to move up to half its speed and make a bite attack.
+ACTIONS
+
+Multiattack. The gnoll makes two attacks, either with its glaive or its longbow, and uses its Incite Rampage if it can.
+
+Bite. Melee Weapon Attack: +5 to hit, reach 5 ft., one creature. Hit: 5 (1d4 + 3) piercing damage.
+
+Glaive. Melee Weapon Attack: +5 to hit, reach 10 ft., one target. Hit: 8 (1d10 + 3) slashing damage.
+
+Longbow. Ranged Weapon Attack: +4 to hit, range 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage.
+
+Incite Rampage (Recharge 5-6). One creature the gnoll can see within 30 feet of it can use its reaction to make a melee attack if it can hear the gnoll and has the Rampage trait.
+@
+Goblin
+Small humanoid (goblinoid), neutral evil
+Armor Class 15 (leather armor, shield)
+Hit Points 7 (2d6)
+Speed 30 ft.
+STR
+8 (-1)
+DEX
+14 (+2)
+CON
+10 (+0)
+INT
+10 (+0)
+WIS
+8 (-1)
+CHA
+8 (-1)
+Skills Stealth +6
+Senses darkvision 60 ft., passive Perception 9
+Languages Common, Goblin
+Challenge 1/4 (50 XP)
+
+Nimble Escape. The goblin can take the Disengage or Hide action as a bonus action on each of its turns.
+ACTIONS
+
+Scimitar. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.
+
+Shortbow. Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.
+Goblins are small, black-hearted humanoids that lair in despoiled dungeons and other dismal settings. Individually weak, they gather in large numbers to torment other creatures.
+@
+Goblin Boss
+Small humanoid (goblinoid), neutral evil
+Armor Class 17 (chain shirt, shield)
+Hit Points 21 (6d6)
+Speed 30 ft.
+STR
+10 (+0)
+DEX
+14 (+2)
+CON
+10 (+0)
+INT
+10 (+0)
+WIS
+8 (-1)
+CHA
+10 (+0)
+Skills Stealth +6
+Senses darkvision 60 ft., passive Perception 9
+Languages Common, Goblin
+Challenge 1 (200 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Grimlock
+Medium humanoid (grimlock), neutral evil
+Armor Class 11
+Hit Points 11 (2d8 + 2)
+Speed 30 ft.
+STR
+16 (+3)
+DEX
+12 (+1)
+CON
+12 (+1)
+INT
+9 (-1)
+WIS
+8 (-1)
+CHA
+6 (-2)
+Skills Athletics +5, Perception +3, Stealth +3
+Condition Immunities blinded
+Senses blindsight 30 ft. or 10 ft. while deafened (blind beyond this radius), passive Perception 13
+Languages Undercommon
+Challenge 1/4 (50 XP)
+
+Blind Senses. The grimlock can't use its blindsight while deafened and unable to smell.
+
+Keen Hearing and Smell. The grimlock has advantage on Wisdom (Perception) checks that rely on hearing or smell.
+
+Stone Camouflage. The grimlock has advantage on Dexterity (Stealth) checks made to hide in rocky terrain.
+ACTIONS
+
+Spiked Bone Club. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 3) bludgeoning damage plus 2 (1d4) piercing damage.
+@
+Grung
+Small humanoid (grung), lawful evil
+Armor Class 12
+Hit Points 11 (2d6 + 4)
+Speed 25 ft., climb 25 ft.
+STR
+7 (-2)
+DEX
+14 (+2)
+CON
+15 (+2)
+INT
+10 (+0)
+WIS
+11 (+0)
+CHA
+10 (+0)
+Saving Throws Dex +4
+Skills Athletics +2, Perception +2, Stealth +4, Survival +2
+Damage Immunities poison
+Condition Immunities poisoned
+Senses passive Perception 12
+Languages Grung
+Challenge 1/4 (50 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Grung Elite Warrior
+Small humanoid (grung), lawful evil
+Armor Class 13
+Hit Points 49 (9d6 + 18)
+Speed 25 ft., climb 25 ft.
+STR
+7 (-2)
+DEX
+16 (+3)
+CON
+15 (+2)
+INT
+10 (+0)
+WIS
+11 (+0)
+CHA
+12 (+1)
+Saving Throws Dex +5
+Skills Athletics +2, Perception +2, Stealth +5, Survival +2
+Damage Immunities poison
+Condition Immunities poisoned
+Senses passive Perception 12
+Languages Grung
+Challenge 2 (450 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Grung Wildling
+Small humanoid (grung), lawful evil
+Armor Class 13 (16 with barkskin)
+Hit Points 27 (5d6 + 10)
+Speed 25 ft., climb 25 ft.
+STR
+7 (-2)
+DEX
+16 (+3)
+CON
+15 (+2)
+INT
+10 (+0)
+WIS
+15 (+2)
+CHA
+11 (+0)
+Saving Throws Dex +5
+Skills Athletics +2, Perception +4, Stealth +5, Survival +4
+Damage Immunities poison
+Condition Immunities poisoned
+Senses passive Perception 14
+Languages Grung
+Challenge 1 (200 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Half-Red Dragon Veteran
+Medium humanoid (human), any alignment
+Armor Class 18 (plate)
+Hit Points 65 (10d8 + 20)
+Speed 30 ft.
+STR
+16 (+3)
+DEX
+13 (+1)
+CON
+14 (+2)
+INT
+10 (+0)
+WIS
+11 (+0)
+CHA
+10 (+0)
+Skills Athletics +5, Perception +2
+Damage Resistances fire
+Senses blindsight 10 ft., darkvision 60 ft., passive Perception 12
+Languages Common, Draconic
+Challenge 5 (1800 XP)
+ACTIONS
+
+Multiattack. The veteran makes two longsword attacks. If it has a shortsword drawn, it can also make a shortsword attack.
+
+Longsword. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) slashing damage, or 8 (1d10 + 3) slashing damage if used with two hands.
+
+Shortsword. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage.
+
+Heavy Crossbow. Ranged Weapon Attack: +3 to hit, range 100/400 ft., one target. Hit: 6 (1d10 + 1) piercing damage.
+
+Fire. Breath (Recharge. 5-6). The veteran exhales fire in a 15-foot cone. Each creature in that area must make a DC 15 Dexterity saving throw, taking 24 (7d6) fire damage on a failed save, or half as much damage on a successful one.
+@
+Hobgoblin
+Medium humanoid (goblinoid), lawful evil
+Armor Class 18 (chain mail, shield)
+Hit Points 11 (2d8 + 2)
+Speed 30 ft.
+STR
+13 (+1)
+DEX
+12 (+1)
+CON
+12 (+1)
+INT
+10 (+0)
+WIS
+10 (+0)
+CHA
+9 (-1)
+Senses darkvision 60 ft., passive Perception 10
+Languages Common, Goblin
+Challenge 1/2 (100 XP)
+
+Martial Advantage. Once per turn, the hobgoblin can deal an extra 7 (2d6) damage to a creature it hits with a weapon attack if that creature is within 5 feet of an ally of the hobgoblin that isn't incapacitated.
+ACTIONS
+
+Longsword. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 5 (1d8 + 1) slashing damage, or 6 (1d10 + 1) slashing damage if used with two hands.
+
+Longbow. Ranged Weapon Attack: +3 to hit, range 150/600 ft., one target. Hit: 5 (1d8 + 1) piercing damage.
+Hobgoblins are large goblinoids with dark-orange or red-orange skin. A hobgoblin measures virtue by physical strength and martial prowess, caring about nothing except skill and cunning in battle.
+@
+Hobgoblin Captain
+Medium humanoid (goblinoid), lawful evil
+Armor Class 17 (half plate)
+Hit Points 39 (6d8 + 12)
+Speed 30 ft.
+STR
+15 (+2)
+DEX
+14 (+2)
+CON
+14 (+2)
+INT
+12 (+1)
+WIS
+10 (+0)
+CHA
+13 (+1)
+Senses darkvision 60 ft., passive Perception 10
+Languages Common, Goblin
+Challenge 3 (700 XP)
+
+Martial Advantage. Once per turn, the hobgoblin can deal an extra 10 (3d6) damage to a creature it hits with a weapon attack if that creature is within 5 feet of an ally of the hobgoblin that isn't incapacitated.
+ACTIONS
+
+Multiattack. The hobgoblin makes two greatsword attacks.
+
+Greatsword. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 9 (2d6 + 2) piercing damage.
+
+Javelin. Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage.
+
+Leadership (Recharges after a Short or Long Rest). For 1 minute, the hobgoblin can utter a special command or warning whenever a nonhostile creature that it can see within 30 feet of it makes an attack roll or a saving throw. The creature can add a d4 to its roll provided it can hear and understand the hobgoblin. A creature can benefit from only one Leadership die at a time. This effect ends if the hobgoblin is incapacitated.
+@
+Hobgoblin Devastator
+Medium humanoid (goblinoid), lawful evil
+Armor Class 13 (studded leather)
+Hit Points 45 (7d8 + 14)
+Speed 30 ft.
+STR
+13 (+1)
+DEX
+12 (+1)
+CON
+14 (+2)
+INT
+16 (+3)
+WIS
+13 (+1)
+CHA
+11 (+0)
+Skills Arcana +5
+Senses darkvision 60 ft., passive Perception 11
+Languages Common, Goblin
+Challenge 4 (1100 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Hobgoblin Iron Shadow
+Medium humanoid (goblinoid), lawful evil
+Armor Class 15
+Hit Points 32 (5d8 + 10)
+Speed 40 ft.
+STR
+14 (+2)
+DEX
+16 (+3)
+CON
+15 (+2)
+INT
+14 (+2)
+WIS
+15 (+2)
+CHA
+11 (+0)
+Skills Acrobatics +5, Athletics +4. Stealth +5
+Senses darkvision 60 ft., passive Perception 12
+Languages Common, Goblin
+Challenge 2 (450 XP)
+
+Spellcasting. The hobgoblin is a 2nd-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 12, +4 to hit with spell attacks). It has the following wizard spells prepared:
+Cantrips (at will): minor illusion, prestidigitation, true strike
+1st level (3 slots): charm person, disguise self, expeditious retreat, silent image
+
+Unarmored Defense. While the hobgoblin is wearing no armor and wielding no shield, its AC includes its Wisdom modifier.
+ACTIONS
+
+Multiattack. The hobgoblin makes four attacks, each of which can be an unarmed strike or a dart attack. It can also use Shadow Jaunt once, either before or after one of the attacks.
+
+Unarmed Strike. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 3) bludgeoning damage.
+
+Dart. Ranged Weapon Attack. +5 to hit, range 20/60 ft., one target. Hit: 5 (1d4 + 3) piercing damage.
+
+ShadowJaunt. The hobgoblin magically teleports, along with any equipment it is wearing or carrying, up to 30 feet to an unoccupied space it can see. Both the space it is leaving and its destination must be in dim light or darkness.
+@
+Hobgoblin Warlord
+Medium humanoid (goblinoid), lawful evil
+Armor Class 20 (plate, shield)
+Hit Points 97 (13d8 + 39)
+Speed 30 ft.
+STR
+16 (+3)
+DEX
+14 (+2)
+CON
+16 (+3)
+INT
+14 (+2)
+WIS
+11 (+0)
+CHA
+15 (+2)
+Saving Throws Int +5, Wis +3, Cha +5
+Senses darkvision 60 ft., passive Perception 10
+Languages Common, Goblin
+Challenge 6 (2300 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Jackalwere
+Medium humanoid (shapechanger), chaotic evil
+Armor Class 12
+Hit Points 18 (4d8)
+Speed 40 ft.
+STR
+11 (+0)
+DEX
+15 (+2)
+CON
+11 (+0)
+INT
+13 (+1)
+WIS
+11 (+0)
+CHA
+10 (+0)
+Skills Deception +4, Perception +2, Stealth +4
+Damage Immunities bludgeoning, piercing, and slashing damage from nonmagical attacks that aren't silvered
+Senses passive Perception 12
+Languages Common (can't speak in jackal form)
+Challenge 1/2 (100 XP)
+
+Shapechanger. The jackalwere can use its action to polymorph into a specific Medium human or a jackal-humanoid hybrid, or back into its true form (that of a Small jackal). Other than its size, its statistics are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.
+
+Keen Hearing and Smell. The jackalwere has advantage on Wisdom (Perception) checks that rely on hearing or smell.
+
+Pack Tactics. The jackalwere has advantage on an attack roll against a creature if at least one of the jackalwere's allies is within 5 feet of the creature and the ally isn't incapacitated.
+Actions
+
+Bite (Jackal or Hybrid Form Only). Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage.
+
+Scimitar (Human or Hybrid Form Only). Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.
+
+Sleep Gaze. The jackalwere gazes at one creature it can see within 30 feet of it. The target must make a DC 10 Wisdom saving throw. On a failed save, the target succumbs to a magical slumber, falling unconscious for 10 minutes or until someone uses an action to shake the target awake. A creature that successfully saves against the effect is immune to this jackalwere's gaze for the next 24 hours. Undead and creatures immune to being charmed aren't affected by it.
+@
+Kenku
+Medium humanoid (kenku), chaotic neutral
+Armor Class 13
+Hit Points 13 (3d8)
+Speed 30 ft.
+STR
+10 (+0)
+DEX
+16 (+3)
+CON
+10 (+0)
+INT
+11 (+0)
+WIS
+10 (+0)
+CHA
+10 (+0)
+Skills Deception +4, Perception +2, Stealth +5
+Senses passive Perception 12
+Languages understands Auran and Common but speaks only through the use of its Mimicry trait
+Challenge 1/4 (50 XP)
+
+Ambusher. In the first round of a combat, the kenku has advantage on attack rolls against any creature it surprised.
+
+Mimicry. The kenku can mimic any sounds it has heard, including voices. A creature that hears the sounds can tell they are imitations with a successful DC 14 Wisdom (Insight) check.
+ACTIONS
+
+Shortsword. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage.
+
+Shortbow. Ranged Weapon Attack: +5 to hit, range 80/320 ft., one target. Hit: 6 (1d6 + 3) piercing damage.
+@
+Kobold
+Small humanoid (kobold), lawful evil
+Armor Class 12
+Hit Points 5 (2d6 - 2)
+Speed 30 ft.
+STR
+7 (-2)
+DEX
+15 (+2)
+CON
+9 (-1)
+INT
+8 (-1)
+WIS
+7 (-2)
+CHA
+8 (-1)
+Senses darkvision 60 ft., passive Perception 8
+Languages Common, Draconic
+Challenge 1/8 (25 XP)
+
+Sunlight Sensitivity. While in sunlight, the kobold has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.
+
+Pack Tactics. The kobold has advantage on an attack roll against a creature if at least one of the kobold's allies is within 5 feet of the creature and the ally isn't incapacitated.
+ACTIONS
+
+Dagger. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage.
+
+Sling. Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 4 (1d4 + 2) bludgeoning damage.
+Kobolds are craven reptilian humanoids that commonly infest dungeons. They make up for their physical ineptitude with a cleverness for trap making.
+@
+Kobold Dragonshield
+Small humanoid (kobold), lawful evil
+Armor Class 15 (leather armor, shield)
+Hit Points 44 (8d6 + 16)
+Speed 20 ft.
+STR
+12 (+1)
+DEX
+15 (+2)
+CON
+14 (+2)
+INT
+8 (-1)
+WIS
+9 (-1)
+CHA
+10 (+0)
+Skills Perception +1
+Damage Resistances see Dragon's Resistance below
+Senses darkvision 60 ft., passive Perception 11
+Languages Common, Draconic
+Challenge 1 (200 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Kobold Inventor
+Small humanoid (kobold), lawful evil
+Armor Class 12
+Hit Points 13 (3d6 + 3)
+Speed 30 ft.
+STR
+7 (-2)
+DEX
+15 (+2)
+CON
+12 (+1)
+INT
+8 (-1)
+WIS
+7 (-2)
+CHA
+8 (-1)
+Skills Perception +0
+Senses darkvision 60 ft., passive Perception 10
+Languages Common, Draconic
+Challenge 1/4 (50 XP)
+
+Pack Tactics. The kobold has advantage on an attack roll against a creature if at least one of the kobold's allies is within 5 feet of the creature and the ally isn't incapacitated.
+
+Sunlight Sensitivity. While in sunlight, the kobold has disad-vantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.
+ACTIONS
+
+Dagger. Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d4 + 2) piercing damage.
+
+Sling. Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 4 (1d4 + 2) bludgeoning damage.
+
+Weapon Invention. The kobold uses one of the following options (roll a d8 or choose one); the kobold can use each one no more than once per day:
+
+1- Acid. The kobold hurls a flask of acid. Ranged Weapon Attack: +4 to hit, range 5/20 ft., one target. Hit: 7 (2d6) acid damage.
+
+2- Alchemist's Fire. The kobold throws a flask of alchemist's fire. Ranged Weapon Attack: +4 to hit, range 5/20 ft., one target. Hit: 2 (1d4) fire damage at the start of each of the target's turns. A creature can end this damage by using its action to make a DC 10 Dexterity check to extinguish the flames.
+
+3- Basket of Centipedes. The kobold throws a small basket into a 5-foot-square space within 20 feet of it. A swarm of insects (centipedes) with 11 hit points emerges from the basket and rolls initiative. At the end of each of the swarm's turns, there's a 50 percent chance that the swarm disperses.
+
+4- Green Slime Pot. The kobold throws a clay pot full of green slime at the target, and it breaks open on impact. Ranged Weapon Attack: +4 to hit, range 5/20 ft., one target. Hit: The target is covered in a patch of green slime (see chapter 5 of the Dungeon Master's Guide). Miss: A patch of green slime covers a randomly determined 5-foot-square section of wall or floor within 5 feet of the target.
+
+5- Rot Grub Pot. The kobold throws a clay pot into a 5-foot-square space within 20 feet of it, and it breaks open on impact. A swarm of rot grubs (see appendix A) emerges from the shattered pot and remains a hazard in that square.
+
+6- Scorpion on a Stick. The kobold makes a melee attack with a scorpion tied to the end of a 5-foot-long pole. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 1 piercing damage, and the target must make a DC 9 Constitution saving throw, taking 4 (1d8) poison damage on a failed save, or half as much damage on a successful one.
+
+7- Skunk in a Cage. The kobold releases a skunk into an unoccupied space within 5 feet of it. The skunk has a walking speed of 20 feet, AC 10, 1 hit point, and no effective attacks. It rolls initiative and, on its turn, uses its action to spray musk at a random creature within 5 feet of it. The target must make a DC 9 Constitution saving throw. On a failed save, the target retches and can't take actions for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. A creature that doesn't need to breathe or is immune to poison automatically succeeds on the saving throw. Once the skunk has sprayed its musk, it can't do so again until it finishes a short or long rest.
+
+8- Wasp Nest in a Bag. The kobold throws a small bag into a 5-foot-square space within 20 feet of it. A swarm of insects (wasps) with 11 hit points emerges from the bag and rolls initiative. At the end of each of the swarm's turns, there's a 50 percent chance that the swarm disperses.
+@
+Kobold Scale Sorcerer
+Small humanoid (kobold), lawful evil
+Armor Class 15 (natural armor)
+Hit Points 27 (5d6 + 10)
+Speed 30 ft.
+STR
+7 (-2)
+DEX
+15 (+2)
+CON
+14 (+2)
+INT
+10 (+0)
+WIS
+9 (-1)
+CHA
+14 (+2)
+Skills Arcana +2, Medicine +1
+Senses darkvision 60 ft., passive Perception 9
+Languages Common, Draconic
+Challenge 1 (200 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Kuo-toa
+Medium humanoid (kuo-toa), neutral evil
+Armor Class 13 (natural armor, shield)
+Hit Points 18 (4d8)
+Speed 30 ft., swim 30 ft.
+STR
+13 (+1)
+DEX
+10 (+0)
+CON
+11 (+0)
+INT
+11 (+0)
+WIS
+10 (+0)
+CHA
+8 (-1)
+Skills Perception +4
+Senses darkvision 120 ft., passive Perception 14
+Languages Undercommon
+Challenge 1/4 (50 XP)
+
+Amphibious. The kuo-toa can breathe air and water.
+
+Otherworldly Perception. The kuo-toa can sense the presence of any creature within 30 feet of it that is invisible or on the Ethereal Plane. It can pinpoint such a creature that is moving.
+
+Slippery. The kuo-toa has advantage on ability checks and saving throws made to escape a grapple.
+
+Sunlight Sensitivity. While in sunlight, the kuo-toa has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.
+ACTIONS
+
+Bite. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) piercing damage.
+
+Spear. Melee or Ranged Weapon Attack: +3 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d6 + 1) piercing damage, or 5 (1d8 + 1) piercing damage if used with two hands to make a melee attack.
+
+Net. Ranged Weapon Attack: +3 to hit, range 5/15 ft., one Large or smaller creature. Hit: The target is restrained. A creature can use its action to make a DC 10 Strength check to free itself or another creature in a net, ending the effect on a success. Dealing 5 slashing damage to the net (AC 10) frees the target without harming it and destroys the net.
+REACTIONS
+
+Sticky Shield. When a creature misses the kuo-toa with a melee weapon attack, the kuo-toa uses its sticky shield to catch the weapon. The attacker must succeed on a DC 11 Strength saving throw, or the weapon becomes stuck to the kuo-toa's shield. If the weapon's wielder can't or won't let go of the weapon, the wielder is grappled while the weapon is stuck. While stuck, the weapon can't be used. A creature can pull the weapon free by taking an action to make a DC 11 Strength check and succeeding.
+Kuo-toa are sadistic, degenerate fish-like humanoids that once inhabited the shores and islands of the surface world.
+@
+Kuo-toa Archpriest
+Medium humanoid (kuo-toa), neutral evil
+Armor Class 13 (natural armor)
+Hit Points 97 (13d8 + 39)
+Speed 30 ft., swim 30 ft.
+STR
+16 (+3)
+DEX
+14 (+2)
+CON
+16 (+3)
+INT
+13 (+1)
+WIS
+16 (+3)
+CHA
+14 (+2)
+Skills Perception +9, Religion +6
+Senses darkvision 120 ft., passive Perception 19
+Languages Undercommon
+Challenge 6 (2300 XP)
+
+Amphibious. The kuo-toa can breathe air and water.
+
+Otherworldly Perception. The kuo-toa can sense the presence of any creature within 30 feet of it that is invisible or on the Ethereal Plane. It can pinpoint such a creature that is moving.
+
+Slippery. The kuo-toa has advantage on ability checks and saving throws made to escape a grapple.
+
+Sunlight Sensitivity. While in sunlight, the kuo-toa has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.
+
+Spellcasting. The kuo-toa is a 10th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 14, +6 to hit with spell attacks). The kuo-toa has the following cleric spells prepared:
+Cantrips (at will): guidance, sacred flame, thaumaturgy
+1st level (4 slots): detect magic, sanctuary, shield of faith
+2nd level (3 slots): hold person, spiritual weapon
+3rd level (3 slots): spirit guardians, tongues
+4th level (3 slots): control water, divination
+5th level (2 slots): mass cure wounds, scrying
+ACTIONS
+
+Multiattack. The kuo-toa makes two melee attacks.
+
+Scepter. Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) bludgeoning damage plus 14 (4d6) lightning damage.
+
+Unarmed Strike. Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 3) bludgeoning damage.
+@
+Kuo-toa Whip
+Medium humanoid (kuo-toa), neutral evil
+Armor Class 11 (natural armor)
+Hit Points 65 (10d8 + 20)
+Speed 30 ft., swim 30 ft.
+STR
+14 (+2)
+DEX
+10 (+0)
+CON
+14 (+2)
+INT
+12 (+1)
+WIS
+14 (+2)
+CHA
+11 (+0)
+Skills Perception +6, Religion +4
+Senses darkvision 120 ft., passive Perception 16
+Languages Undercommon
+Challenge 1 (200 XP)
+
+Amphibious. The kuo-toa can breathe air and water.
+
+Otherworldly Perception. The kuo-toa can sense the presence of any creature within 30 feet of it that is invisible or on the Ethereal Plane. It can pinpoint such a creature that is moving.
+
+Slippery. The kuo-toa has advantage on ability checks and saving throws made to escape a grapple.
+
+Sunlight Sensitivity. While in sunlight, the kuo-toa has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.
+
+Spellcasting. The kuo-toa is a 2nd-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 12, +4 to hit with spell attacks). The kuo-toa has the following cleric spells prepared:
+Cantrips (at will): sacred flame, thaumaturgy
+1st level (3 slots): bane, shield of faith
+ACTIONS
+
+Multiattack. The kuo-toa makes two attacks: one with its bite and one with its pincer staff.
+
+Bite. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage.
+
+Pincer Staff. Melee Weapon Attack: +4 to hit, reach 10 ft., one target. Hit: 5 (1d6 + 2) piercing damage. If the target is a Medium or smaller creature, it is grappled (escape DC 14). Until this grapple ends, the kuo-toa can't use its pincer staff on another target.
+VARIANTE : KUO-TOA MONITOR
+
+A kuo-toa monitor has a challenge rating of 3 (700 XP). It has the same statistics as a kuo-toa whip except that it adds its Wisdom modifier to its Armor Class (AC 13), loses the Spellcaster trait, and replaces the whip's action options with the following action options.
+
+Multiattack. The kuo-toa makes one bite attack and two unarmed strikes.
+
+Bite. Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage.
+
+Unarmed Strike. Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) bludgeoning damage plus 3 (1d6) lightning damage, and the target can't take reactions until the end of the kuo-toa's next turn.
+
+@
+Lizard King/Queen
+Medium humanoid (lizardfolk), chaotic evil
+Armor Class 15 (natural armor)
+Hit Points 78 (12d8 + 24)
+Speed 30 ft., swim 30 ft.
+STR
+17 (+3)
+DEX
+12 (+1)
+CON
+15 (+2)
+INT
+11 (+0)
+WIS
+11 (+0)
+CHA
+15 (+2)
+Saving Throws Con +4, Wis +2
+Skills Perception +4, Stealth +5, Survival +4
+Condition Immunities frightened
+Senses darkvision 60 ft., passive Perception 14
+Languages Abyssal, Draconic
+Challenge 4 (1100 XP)
+
+Hold Breath. The lizardfolk can hold its breath for 15 minutes.
+
+Skewer. Once per turn, when the lizardfolk makes a melee attack with its trident and hits, the target takes an extra 10 (3d6) damage, and the lizardfolk gains temporary hit points equal to the extra damage dealt.
+ACTIONS
+
+Multiattack. The lizardfolk makes two attacks: one with its bite and one with its claws or trident or two melee attacks with its trident.
+
+Bite. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage.
+
+Claws. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 3) slashing damage.
+
+Trident. Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 6 (1d6 + 3) piercing damage, or 7 (1d8 + 3) piercing damage if used with two hands to make a melee attack.
+@
+Lizardfolk
+Medium humanoid (lizardfolk), neutral
+Armor Class 15 (natural armor, shield)
+Hit Points 22 (4d8 + 4)
+Speed 30 ft., swim 30 ft.
+STR
+15 (+2)
+DEX
+10 (+0)
+CON
+13 (+1)
+INT
+7 (-2)
+WIS
+12 (+1)
+CHA
+7 (-2)
+Skills Perception +3, Stealth +4, Survival +5
+Senses passive Perception 13
+Languages Draconic
+Challenge 1/2 (100 XP)
+
+Hold Breath. The lizardfolk can hold its breath for 15 minutes.
+ACTIONS
+
+Multiattack. The lizardfolk makes two melee attacks, each one with a different weapon.
+
+Bite. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.
+
+Heavy Club. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) bludgeoning damage.
+
+Javelin. Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage.
+
+Spiked Shield. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.
+Lizardfolk are primitive reptilian humanoids that lurk in swamps and jungles. Fiercely territorial, they kill when it is expedient and do whatever it takes to survive.
+@
+Lizardfolk Shaman
+Medium humanoid (lizardfolk), neutral
+Armor Class 13 (natural armor)
+Hit Points 27 (5d8 + 5)
+Speed 30 ft., swim 30 ft.
+STR
+15 (+2)
+DEX
+10 (+0)
+CON
+13 (+1)
+INT
+10 (+0)
+WIS
+15 (+2)
+CHA
+8 (-1)
+Skills Perception +4, Stealth +4, Survival +6
+Senses passive Perception 14
+Languages Draconic
+Challenge 2 (450 XP)
+
+Hold Breath. The lizardfolk can hold its breath for 15 minutes.
+
+Spellcasting (Lizardfolk Form Only). The lizardfolk is a 5th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 12, +4 to hit with spell attacks). The lizardfolk has the following druid spells prepared:
+Cantrips (at will): druidcraft, produce flame, thorn whip
+1st Level (4 slots): entangle, fog cloud
+2nd Level (3 slots): heat metal, spike growth
+3rd Level (2 slots): conjure animals (reptiles only), plant growth
+ACTIONS
+
+Multiattack (Lizardfolk Form Only). The lizardfolk makes two attacks: one with its bite and one with its claws.
+
+Bite. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage, or 7 (1d10 + 2) piercing damage in crocodile form. If the lizardfolk is in crocodile form and the target is a Large or smaller creature, the target is grappled (escape DC 12). Until this grapple ends, the target is restrained, and the lizardfolk can't bite another target. If the lizardfolk reverts to its true form, the grapple ends.
+
+Claws (Lizardfolk Form Only). Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) slashing damage.
+
+Change Shape (Recharges after a Short or Long Rest). The lizardfolk magically polymorphs into a crocodile, remaining in that form for up to 1 hour. It can revert to its true form as a bonus action. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.
+@
+Merfolk
+Medium humanoid (merfolk), neutral
+Armor Class 11
+Hit Points 11 (2d8 + 2)
+Speed 10 ft., swim 40 ft.
+STR
+10 (+0)
+DEX
+13 (+1)
+CON
+12 (+1)
+INT
+11 (+0)
+WIS
+11 (+0)
+CHA
+12 (+1)
+Skills Perception +2
+Senses passive Perception 12
+Languages Aquan, Common
+Challenge 1/8 (25 XP)
+
+Amphibious. The merfolk can breathe air and water.
+ACTIONS
+
+Spear. Melee or Ranged Weapon Attack: +2 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 3 (1d6) piercing damage, or 4 (1d8) piercing damage if used with two hands to make a melee attack.
+Merfolk are aquatic humanoids with the lower body of a fish. They live in small tribes beneath the waves.
+@
+Nilbog
+Small humanoid (goblinoid), chaotic evil
+Armor Class 13 (leather armor)
+Hit Points 7 (2d6)
+Speed 30 ft.
+STR
+8 (-1)
+DEX
+14 (+2)
+CON
+10 (+0)
+INT
+10 (+0)
+WIS
+8 (-1)
+CHA
+15 (+2)
+Skills Stealth +6
+Senses darkvision 60 ft., passive Perception 9
+Languages Common, Goblin
+Challenge 1 (200 XP)
+
+Innate Spellcasting. The nilbog's innate spellcasting ability is Charisma (spell save DC 12). It can innately cast the following spells, requiring no material components:
+At will: mage hand, Tasha's hideous laughter, vicious mockery
+1/day: confusion
+
+Nilbogism. Any creature that attempts to damage the nilbog must first succeed on a DC 12 Charisma saving throw or be charmed until the end of the creature's next turn. A creature charmed in this way must use its action praising the nilbog. The nilbog can't regain hit points, including through magical healing, except through its Reversal of Fortune reaction.
+
+Nimble Escape. The nilbog can take the Disengage or Hide action as a bonus action on each of its turns.
+ACTIONS
+
+Fool's Scepter. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) bludgeoning damage.
+
+Shorthow. Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.
+REACTIONS
+
+Reversal of Fortune. In response to another creature dealing damage to the nilbog, the nilbog reduces the damage to 0 and regains 1d6 hit points.
+@
+Orc
+Medium humanoid (orc), chaotic evil
+Armor Class 13 (hide armor)
+Hit Points 15 (2d8 + 6)
+Speed 30 ft.
+STR
+16 (+3)
+DEX
+12 (+1)
+CON
+16 (+3)
+INT
+7 (-2)
+WIS
+11 (+0)
+CHA
+10 (+0)
+Skills Intimidation +2
+Senses darkvision 60 ft., passive Perception 10
+Languages Common, Orc
+Challenge 1/2 (100 XP)
+
+Aggressive. As a bonus action, the orc can move up to its speed toward a hostile creature that it can see.
+ACTIONS
+
+Greataxe. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 9 (1d12 + 3) slashing damage.
+
+Javelin. Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 6 (1d6 + 3) piercing damage.
+Orcs are savage humanoids with stooped postures, piggish faces, and prominent teeth that resemble tusks. They gather in tribes that satisfy their bloodlust by slaying any humanoids that stand against them.
+@
+Orc Blade of Ilneval
+Medium humanoid (orc), chaotic evil
+Armor Class 18 (chain mail, shield)
+Hit Points 60 (8d8 + 24)
+Speed 30 ft.
+STR
+17 (+3)
+DEX
+11 (+0)
+CON
+17 (+3)
+INT
+10 (+0)
+WIS
+12 (+1)
+CHA
+14 (+2)
+Saving Throws Wis +3
+Skills Perception +3, Insight +3, Intimidation +4
+Senses darkvision 60 ft., passive Perception 13
+Languages Common, Orc
+Challenge 4 (1100 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Orc Claw of Luthic
+Medium humanoid (orc), chaotic evil
+Armor Class 14 (hide armor)
+Hit Points 45 (6d8 + 18)
+Speed 30 ft.
+STR
+14 (+2)
+DEX
+15 (+2)
+CON
+16 (+3)
+INT
+10 (+0)
+WIS
+15 (+2)
+CHA
+11 (+0)
+Skills Intimidation +2, Medicine +4, Survival +4
+Senses darkvision 60 ft., passive Perception 12
+Languages Common, Orc
+Challenge 2 (450 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Orc Eye of Gruumsh
+Medium humanoid (orc), chaotic evil
+Armor Class 16 (ring mail, shield)
+Hit Points 45 (6d8 + 18)
+Speed 30 ft.
+STR
+16 (+3)
+DEX
+12 (+1)
+CON
+16 (+3)
+INT
+9 (-1)
+WIS
+13 (+1)
+CHA
+12 (+1)
+Skills Intimidation +3, Religion +1
+Senses darkvision 60 ft., passive Perception 11
+Languages Common, Orc
+Challenge 2 (450 XP)
+
+Aggressive. As a bonus action, the orc can move up to its speed toward a hostile creature that it can see.
+
+Gruumsh's Fury. The orc deals an extra 4 (1d8) damage when it hits with a weapon attack (included in the attack).
+
+Spellcasting. The orc is a 3rd-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 11, +3 to hit with spell attacks). The orc has the following cleric spells prepared:
+Cantrips (at-will): guidance, resistance, thaumaturgy
+1st level (4 slots): bless, command
+2nd level (2 slots): augury, spiritual weapon (spear)
+ACTIONS
+
+Spear. Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 11 (1d6 + 3 plus 1d8) piercing damage, or 12 (2d8 + 3) piercing damage if used with two hands to make a melee attack.
+@
+Orc Hand of Yurtrus
+Medium humanoid (orc), chaotic evil
+Armor Class 12 (hide armor)
+Hit Points 30 (4d8 + 12)
+Speed 30 ft.
+STR
+12 (+1)
+DEX
+11 (+0)
+CON
+16 (+3)
+INT
+11 (+0)
+WIS
+14 (+2)
+CHA
+9 (-1)
+Skills Arcana +2, Intimidation +1, Medicine +4, Religion +2
+Senses darkvision 60 ft., passive Perception 12
+Languages understands Common and Orc but can't speak
+Challenge 2 (450 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Orc Red Fang of Shargaas
+Medium humanoid (orc), chaotic evil
+Armor Class 15 (studded leather)
+Hit Points 52 (8d8 + 16)
+Speed 30 ft.
+STR
+11 (+0)
+DEX
+16 (+3)
+CON
+15 (+2)
+INT
+9 (-1)
+WIS
+11 (+0)
+CHA
+9 (-1)
+Skills Intimidation +1, Perception +2, Stealth +5
+Senses darkvision 60 ft., passive Perception 12
+Languages Common, Orc
+Challenge 3 (700 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Orc War Chief
+Medium humanoid (orc), chaotic evil
+Armor Class 16 (chain mail)
+Hit Points 93 (11d8 + 44)
+Speed 30 ft.
+STR
+18 (+4)
+DEX
+12 (+1)
+CON
+18 (+4)
+INT
+11 (+0)
+WIS
+11 (+0)
+CHA
+16 (+3)
+Saving Throws Str +6, Con +6, Wis +2
+Skills Intimidation +5
+Senses darkvision 60 ft., passive Perception 10
+Languages Common, Orc
+Challenge 4 (1100 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Orog
+Medium humanoid (orc), chaotic evil
+Armor Class 18 (plate)
+Hit Points 42 (5d8 + 20)
+Speed 30 ft.
+STR
+18 (+4)
+DEX
+12 (+1)
+CON
+18 (+4)
+INT
+12 (+1)
+WIS
+11 (+0)
+CHA
+12 (+1)
+Skills Intimidation +5, Survival +2
+Senses darkvision 60 ft., passive Perception 10
+Languages Common, Orc
+Challenge 2 (450 XP)
+
+Aggressive. As a bonus action, the orog can move up to its speed toward a hostile creature that it can see.
+ACTIONS
+
+Multiattack. The orog makes two greataxe attacks.
+
+Greataxe. Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 10 (1d12 + 4) slashing damage.
+
+Javelin. Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or range 30/120 ft., one target. Hit: 7 (1d6 + 4) piercing damage.
+@
+Quaggoth
+Medium humanoid (quaggoth), chaotic neutral
+Armor Class 13 (natural armor)
+Hit Points 45 (6d8 + 18)
+Speed 30 ft., climb 30 ft.
+STR
+17 (+3)
+DEX
+12 (+1)
+CON
+16 (+3)
+INT
+6 (-2)
+WIS
+12 (+1)
+CHA
+7 (-2)
+Skills Athletics +5
+Damage Immunities poison
+Condition Immunities poisoned
+Senses darkvision 120 ft., passive Perception 10
+Languages Undercommon
+Challenge 2 (450 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Sahuagin
+Medium humanoid (sahuagin), lawful evil
+Armor Class 12 (natural armor)
+Hit Points 22 (4d8 + 4)
+Speed 30 ft., swim 40 ft.
+STR
+13 (+1)
+DEX
+11 (+0)
+CON
+12 (+1)
+INT
+12 (+1)
+WIS
+13 (+1)
+CHA
+9 (-1)
+Skills Perception +5
+Senses darkvision 120 ft., passive Perception 15
+Languages Sahuagin
+Challenge 1/2 (100 XP)
+
+Blood Frenzy. The sahuagin has advantage on melee attack rolls against any creature that doesn't have all its hit points.
+
+Limited Amphibiousness. The sahuagin can breathe air and water, but it needs to be submerged at least once every 4 hours to avoid suffocating.
+
+Shark Telepathy. The sahuagin can magically command any shark within 120 feet of it, using a limited telepathy.
+ACTIONS
+
+Multiattack. The sahuagin makes two melee attacks: one with its bite and one with its claws or spear.
+
+Bite. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) piercing damage.
+
+Claws. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 3 (1d4 + 1) slashing damage.
+
+Spear. Melee or Ranged Weapon Attack: +3 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 4 (1d6 + 1) piercing damage, or 5 (1d8 + 1) piercing damage if used with two hands to make a melee attack.
+@
+Sahuagin Baron
+Large humanoid (sahuagin), lawful evil
+Armor Class 16 (breastplate)
+Hit Points 76 (9d10 + 27)
+Speed 30 ft., swim 50 ft.
+STR
+19 (+4)
+DEX
+15 (+2)
+CON
+16 (+3)
+INT
+14 (+2)
+WIS
+13 (+1)
+CHA
+17 (+3)
+Saving Throws Dex +5, Con +6, Int +5, Wis +4
+Skills Perception +7
+Senses darkvision 120 ft., passive Perception 17
+Languages Sahuagin
+Challenge 5 (1800 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Sahuagin Priestess
+Medium humanoid (sahuagin), lawful evil
+Armor Class 12 (natural armor)
+Hit Points 33 (6d8 + 6)
+Speed 30 ft., swim 40 ft.
+STR
+13 (+1)
+DEX
+11 (+0)
+CON
+12 (+1)
+INT
+12 (+1)
+WIS
+14 (+2)
+CHA
+13 (+1)
+Skills Perception +6, Religion +3
+Senses darkvision 120 ft., passive Perception 16
+Languages Sahuagin
+Challenge 2 (450 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Sea Spawn
+Medium humanoid, neutral evil
+Armor Class 11 (natural armor)
+Hit Points 32 (5d8 + 10)
+Speed 20 ft., swim 30 ft.
+STR
+15 (+2)
+DEX
+8 (-1)
+CON
+15 (+2)
+INT
+6 (-2)
+WIS
+10 (+0)
+CHA
+8 (-1)
+Senses darkvision 120 ft., passive Perception 10
+Languages understands Aquan and Common but can't speak
+Challenge 1 (200 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Thri-kreen
+Medium humanoid (thri-kreen), chaotic neutral
+Armor Class 15 (natural armor)
+Hit Points 33 (6d8 + 6)
+Speed 40 ft.
+STR
+12 (+1)
+DEX
+15 (+2)
+CON
+13 (+1)
+INT
+8 (-1)
+WIS
+12 (+1)
+CHA
+7 (-2)
+Skills Perception +3, Stealth +4, Survival +3
+Senses darkvision 60 ft., passive Perception 13
+Languages Thri-kreen
+Challenge 1 (200 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Troglodyte
+Medium humanoid (troglodyte), chaotic evil
+Armor Class 11 (natural armor)
+Hit Points 13 (2d8 + 4)
+Speed 30 ft.
+STR
+14 (+2)
+DEX
+10 (+0)
+CON
+14 (+2)
+INT
+6 (-2)
+WIS
+10 (+0)
+CHA
+6 (-2)
+Skills Stealth +2
+Senses darkvision 60 ft., passive Perception 10
+Languages Troglodyte
+Challenge 1/4 (50 XP)
+
+Chameleon Skin. The troglodyte has advantage on Dexterity (Stealth) checks made to hide.
+
+Stench. Any creature other than a troglodyte that starts its turn within 5 feet of the troglodyte must succeed on a DC 12 Constitution saving throw or be poisoned until the start of the creature's next turn. On a successful saving throw, the creature is immune to the stench of all troglodytes for 1 hour.
+
+Sunlight Sensitivity. While in sunlight, the troglodyte has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.
+ACTIONS
+
+Multiattack. The troglodyte makes three attacks: one with its bite and two with its claws.
+
+Bite. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage.
+
+Claw. Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) slashing damage.
+@
+Werebear
+Medium humanoid (human, shapechanger), neutral good
+Armor Class 10 in humanoid form, 11 (natural armor) in bear and hybrid form
+Hit Points 135 (18d8 + 54)
+Speed 30 ft. (40 ft., climb 30 ft. in bear or hybrid form)
+STR
+19 (+4)
+DEX
+10 (+0)
+CON
+17 (+3)
+INT
+11 (+0)
+WIS
+12 (+1)
+CHA
+12 (+1)
+Skills Perception +7
+Damage Immunities bludgeoning, piercing, and slashing from nonmagical attacks not made with silvered weapons
+Senses passive Perception 17
+Languages Common (can't speak in bear form)
+Challenge 5 (1800 XP)
+
+Shapechanger. The werebear can use its action to polymorph into a Large bear-humanoid hybrid or into a Large bear, or back into its true form, which is humanoid. Its statistics, other than its size and AC, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.
+
+Keen Smell. The werebear has advantage on Wisdom (Perception) checks that rely on smell.
+ACTIONS
+
+Multiattack. In bear form, the werebear makes two claw attacks. In humanoid form, it makes two greataxe attacks. In hybrid form, it can attack like a bear or a humanoid.
+
+Bite (Bear or Hybrid Form Only). Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 15 (2d10 + 4) piercing damage. If the target is a humanoid, it must succeed on a DC 14 Constitution saving throw or be cursed with werebear lycanthropy.
+
+Claw (Bear or Hybrid Form Only). Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) slashing damage.
+
+Greataxe (Humanoid or Hybrid Form Only). Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 10 (1d12 + 4) slashing damage.
+A remove curse spell can rid an afflicted lycanthrope of the curse, but a natural born lycanthrope can be freed of the curse only with a wish.
+@
+Wereboar
+Medium humanoid (human, shapechanger), neutral evil
+Armor Class 10 in humanoid form, 11 (natural armor) in boar or hybrid form
+Hit Points 78 (12d8 + 24)
+Speed 30 ft. (40 ft. in boar form)
+STR
+17 (+3)
+DEX
+10 (+0)
+CON
+15 (+2)
+INT
+10 (+0)
+WIS
+11 (+0)
+CHA
+8 (-1)
+Skills Perception +2
+Damage Immunities bludgeoning, piercing, and slashing damage from nonmagical attacks that aren't silvered
+Senses passive Perception 12
+Languages Common (can't speak in boar form)
+Challenge 4 (1100 XP)
+
+Shapechanger. The wereboar can use its action to polymorph into a boar-humanoid hybrid or into a boar, or back into its true form, which is humanoid. Its statistics, other than its AC, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.
+
+Charge (Boar or Hybrid Form Only). If the wereboar moves at least 15 feet straight toward a target and then hits it with its tusks on the same turn, the target takes an extra 7 (2d6) slashing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone.
+
+Relentless (Recharges after a Short or Long Rest). If the wereboar takes 14 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead.
+ACTIONS
+
+Multiattack (Humanoid or Hybrid Form Only). The wereboar makes two attacks, only one of which can be with its tusks.
+
+Maul (Humanoid or Hybrid Form Only). Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) bludgeoning damage.
+
+Tusks (Boar or Hybrid Form Only). Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) slashing damage. If the target is a humanoid, it must succeed on a DC 12 Constitution saving throw or be cursed with wereboar lycanthropy.
+A remove curse spell can rid an afflicted lycanthrope of the curse, but a natural born lycanthrope can be freed of the curse only with a wish.
+@
+Wererat
+Medium humanoid (human, shapechanger), lawful evil
+Armor Class 12
+Hit Points 33 (6d8 + 6)
+Speed 30 ft.
+STR
+10 (+0)
+DEX
+15 (+2)
+CON
+12 (+1)
+INT
+11 (+0)
+WIS
+10 (+0)
+CHA
+8 (-1)
+Skills Perception +2, Stealth +4
+Damage Immunities bludgeoning, piercing, and slashing from nonmagical attacks not made with silvered weapons
+Senses darkvision 60 ft. (rat form only), passive Perception 12
+Languages Common (can't speak in rat form)
+Challenge 2 (450 XP)
+
+Shapechanger. The wererat can use its action to polymorph into a rat-humanoid hybrid or into a giant rat, or back into its true form, which is humanoid. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.
+
+Keen Smell. The wererat has advantage on Wisdom (Perception) checks that rely on smell.
+ACTIONS
+
+Multiattack (Humanoid or Hybrid Form Only). The wererat makes two attacks, only one of which can be a bite.
+
+Bite (Rat or Hybrid Form Only). Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 4 (1d4 + 2) piercing damage. If the target is a humanoid, it must succeed on a DC 11 Constitution saving throw or be cursed with wererat lycanthropy.
+
+Shortsword (Humanoid or Hybrid Form Only). Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) piercing damage.
+
+Hand Crossbow (Humanoid or Hybrid Form Only). Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage.
+A remove curse spell can rid an afflicted lycanthrope of the curse, but a natural born lycanthrope can be freed of the curse only with a wish.
+@
+Weretiger
+Medium humanoid (human, shapechanger), neutral
+Armor Class 12
+Hit Points 120 (16d8 + 48)
+Speed 30 ft. (40 ft. in tiger form)
+STR
+17 (+3)
+DEX
+15 (+2)
+CON
+16 (+3)
+INT
+10 (+0)
+WIS
+13 (+1)
+CHA
+11 (+0)
+Skills Perception +5, Stealth +4
+Damage Immunities bludgeoning, piercing, and slashing from nonmagical attacks not made with silvered weapons
+Senses darkvision 60 ft., passive Perception 15
+Languages Common (can't speak in tiger form)
+Challenge 4 (1100 XP)
+
+Shapechanger. The weretiger can use its action to polymorph into a tiger-humanoid hybrid or into a tiger, or back into its true form, which is humanoid. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.
+
+Keen Hearing and Smell. The weretiger has advantage on Wisdom (Perception) checks that rely on hearing or smell.
+
+Pounce (Tiger or Hybrid Form Only). If the weretiger moves at least 15 feet straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the weretiger can make one bite attack against it as a bonus action.
+ACTIONS
+
+Multiattack (Humanoid or Hybrid Form Only). In humanoid form, the weretiger makes two scimitar attacks or two longbow attacks. In hybrid form, it can attack like a humanoid or make two claw attacks.
+
+Bite (Tiger or Hybrid Form Only). Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 8 (1d10 + 3) piercing damage. If the target is a humanoid, it must succeed on a DC 13 Constitution saving throw or be cursed with weretiger lycanthropy.
+
+Claw (Tiger or Hybrid Form Only). Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 7 (1d8 + 3) slashing damage.
+
+Scimitar (Humanoid or Hybrid Form Only). Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) slashing damage.
+
+Longbow (Humanoid or Hybrid Form Only). Ranged Weapon Attack: +4 to hit, range 150/600 ft., one target. Hit: 6 (1d8 + 2) piercing damage.
+A remove curse spell can rid an afflicted lycanthrope of the curse, but a natural born lycanthrope can be freed of the curse only with a wish.
+@
+Werewolf
+Medium humanoid (human, shapechanger), chaotic evil
+Armor Class 11 in humanoid form, 12 (natural armor) in wolf or hybrid form
+Hit Points 58 (9d8 + 18)
+Speed 30 ft. (40 ft. in wolf form)
+STR
+15 (+2)
+DEX
+13 (+1)
+CON
+14 (+2)
+INT
+10 (+0)
+WIS
+11 (+0)
+CHA
+10 (+0)
+Skills Perception +4, Stealth +3
+Damage Immunities bludgeoning, piercing, and slashing damage from nonmagical attacks that aren't silvered
+Senses passive Perception 14
+Languages Common (can't speak in wolf form)
+Challenge 3 (700 XP)
+
+Shapechanger. The werewolf can use its action to polymorph into a wolf-humanoid hybrid or into a wolf, or back into its true form, which is humanoid. Its statistics, other than its AC, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies.
+
+Keen Hearing and Smell. The werewolf has advantage on Wisdom (Perception) checks that rely on hearing or smell.
+ACTIONS
+
+Multiattack (Humanoid or Hybrid Form Only). The werewolf makes two attacks: two with its spear (humanoid form) or one with its bite and one with its claws (hybrid form).
+
+Bite (Wolf or Hybrid Form Only). Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 6 (1d8 + 2) piercing damage. If the target is a humanoid, it must succeed on a DC 12 Constitution saving throw or be cursed with werewolf lycanthropy.
+
+Claws (Hybrid Form Only). Melee Weapon Attack: +4 to hit, reach 5 ft., one creature. Hit: 7 (2d4 + 2) slashing damage.
+
+Spear (Humanoid Form Only). Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or range 20/60 ft., one creature. Hit: 5 (1d6 + 2) piercing damage, or 6 (1d8 + 2) piercing damage if used with two hands to make a melee attack.
+A werewolf is a savage predator that can appear as a humanoid, as a wolf, or in a terrifying hybrid form-a furred and well-muscled humanoid body topped by a ravening wolf's head.
+A remove curse spell can rid an afflicted lycanthrope of the curse, but a natural born lycanthrope can be freed of the curse only with a wish.
+@
+Winged Kobold
+Small humanoid (kobold), lawful evil
+Armor Class 13
+Hit Points 7 (3d6 - 3)
+Speed 30 ft., fly 30 ft.
+STR
+7 (-2)
+DEX
+16 (+3)
+CON
+9 (-1)
+INT
+8 (-1)
+WIS
+7 (-2)
+CHA
+8 (-1)
+Senses darkvision 60 ft., passive Perception 8
+Languages Common, Draconic
+Challenge 1/4 (50 XP)
+
+Sunlight Sensitivity. While in sunlight, the kobold has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight.
+
+Pack Tactics. The kobold has advantage on an attack roll against a creature if at least one of the kobold's allies is within 5 feet of the creature and the ally isn't incapacitated.
+ACTIONS
+
+Dagger. Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 5 (1d4 + 3) piercing damage.
+
+Dropped Rock. Ranged Weapon Attack: +5 to hit, one target directly below the kobold. Hit: 6 (1d6 + 3) bludgeoning damage.
+@
+Xvart
+Small humanoid (xvart), chaotic evil
+Armor Class 13 (leather armor)
+Hit Points 7 (2d6)
+Speed 30 ft.
+STR
+8 (-1)
+DEX
+14 (+2)
+CON
+10 (+0)
+INT
+8 (-1)
+WIS
+7 (-2)
+CHA
+7 (-2)
+Skills Stealth +4
+Senses darkvision 30 ft., passive Perception 8
+Languages Abyssal
+Challenge 1/8 (25 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Xvart Warlock of Raxivort
+Small humanoid (xvart), chaotic evil
+Armor Class 12 (15 with mage armor)
+Hit Points 22 (5d6 + 5)
+Speed 30 ft.
+STR
+8 (-1)
+DEX
+14 (+2)
+CON
+12 (+1)
+INT
+8 (-1)
+WIS
+11 (+0)
+CHA
+12 (+1)
+Skills Stealth +3
+Senses darkvision 30 ft., passive Perception 10
+Languages Abyssal
+Challenge 1 (200 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Yuan-ti Broodguard
+Medium humanoid (yuan-ti), neutral evil
+Armor Class 14 (natural armor)
+Hit Points 45 (7d8 + 14)
+Speed 30 ft.
+STR
+15 (+2)
+DEX
+14 (+2)
+CON
+14 (+2)
+INT
+6 (-2)
+WIS
+11 (+0)
+CHA
+4 (-3)
+Saving Throws Str +4, Dex +4, Wis +2
+Skills Perception +2
+Damage Immunities poison
+Condition Immunities poisoned
+Senses darkvision 60 ft., passive Perception 12
+Languages Abyssal, Common, Draconic
+Challenge 2 (450 XP)
+
+This full creature's stat block is not available (not OGL).
+@
+Yuan-ti Pureblood
+Medium humanoid (yuan-ti), neutral evil
+Armor Class 11
+Hit Points 40 (9d8)
+Speed 30 ft.
+STR
+11 (+0)
+DEX
+12 (+1)
+CON
+11 (+0)
+INT
+13 (+1)
+WIS
+12 (+1)
+CHA
+14 (+2)
+Skills Deception +6, Perception +3, Stealth +3
+Damage Immunities poison
+Condition Immunities poisoned
+Senses darkvision 60 ft., passive Perception 13
+Languages Abyssal, Common, Draconic
+Challenge 1 (200 XP)
+
+Innate Spellcasting. The yuan-ti's spellcasting ability is Charisma (spell save DC 12). The yuan-ti can innately cast the following spells, requiring no material components:
+At will: animal friendship (snakes only)
+3/day each: poison spray, suggestion
+
+Magic Resistance. The yuan-ti has advantage on saving throws against spells and other magical effects.
+ACTIONS
+
+Multiattack. The yuan-ti makes two melee attacks.
+
+Scimitar. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) slashing damage.
+
+Shortbow. Ranged Weapon Attack: +3 to hit, range 80/320 ft., one target. Hit: 4 (1d6 + 1) piercing damage plus 7 (2d6) poison damage.
+Appear mostly human, with minor reptilian features, such as slitted eyes, a forked tongue, or patches of scales on their skin. They serve as diplomats and infiltrators, pretending to be human
+@
+Ancient Black Dragon
+Gargantuan dragon, chaotic evil
+Armor Class 22 (natural armor)
+Hit Points 367 (21d20 + 147)
+Speed 40 ft., fly 80 ft., swim 40 ft.
+STR
+27 (+8)
+DEX
+14 (+2)
+CON
+25 (+7)
+INT
+16 (+3)
+WIS
+15 (+2)
+CHA
+19 (+4)
+Saving Throws Dex +9, Con +14, Wis +9, Cha +11
+Skills Perception +16, Stealth +9
+Damage Immunities acid
+Senses blindsight 60 ft., darkvision 120 ft., passive Perception 26
+Languages Common, Draconic
+Challenge 21 (33000 XP)
+
+Amphibious. The dragon can breathe air and water.
+
+Legendary Resistance (3/Day). If the dragon fails a saving throw, it can choose to succeed instead.
+ACTIONS
+
+Multiattack. The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws.
+
+Bite. Melee Weapon Attack: +15 to hit, reach 15 ft., one target. Hit: 19 (2d10 + 8) piercing damage plus 9 (2d8) acid damage.
+
+Claw. Melee Weapon Attack: +15 to hit, reach 10 ft., one target. Hit: 15 (2d6 + 8) slashing damage.
+
+Tail. Melee Weapon Attack: +15 to hit, reach 20 ft., one target. Hit: 17 (2d8 + 8) bludgeoning damage.
+
+Frightful Presence. Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 19 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours.
+
+Acid Breath (Recharge 5-6). The dragon exhales acid in a 90-foot line that is 10 feet wide. Each creature in that line must make a DC 22 Dexterity saving throw, taking 67 (15d8) acid damage on a failed save, or half as much damage on a successful one.
+LEGENDARY ACTIONS
+
+The dragon can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The dragon regains spent legendary actions at the start of its turn.
+
+Detect. The dragon makes a Wisdom (Perception) check.
+
+Tail Attack. The dragon makes a tail attack.
+
+Wing Attack (Costs 2 Actions). The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a DC 23 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying Speed.

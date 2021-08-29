@@ -32,6 +32,8 @@ public class Person : ITimeSensitive, IRecordable
 
 	public List<Item> inventory;
 
+	private List<int> eventDates;
+
 	private int naturalDeathAge;
 
 	public Person() : this(null, SimRandom.RandomRange(16, 69), (Gender)SimRandom.RandomRange(0, 2), 0, new List<RoleType>())
@@ -81,6 +83,8 @@ public class Person : ITimeSensitive, IRecordable
 
 		DetermineNaturalDeathAge();
 
+		DetermineEventDates();
+
 		inventory = new List<Item>();
 
 		OutputLogger.LogFormat("{0} was spawned at age {1}.", LogSource.PEOPLE, Name, age);
@@ -127,8 +131,10 @@ public class Person : ITimeSensitive, IRecordable
 	private void TakeActions()
 	{
 		//ADD CHANCE FOR DEFINING EVENT
-
-		SimAIManager.Instance.CallPersonEvent(this);
+		if (eventDates.Contains(age))
+		{
+			SimAIManager.Instance.CallPersonEvent(this);
+		}
 	}
 
 	private void GenerateStats()
@@ -154,6 +160,16 @@ public class Person : ITimeSensitive, IRecordable
 		priorities = new Priorities(pointAllocations[0], pointAllocations[1], pointAllocations[2], pointAllocations[3], pointAllocations[4]);
 		*/
 		priorities = new Priorities(SimRandom.RandomRange(7, 14), SimRandom.RandomRange(7, 14), SimRandom.RandomRange(7, 14), SimRandom.RandomRange(7, 14), SimRandom.RandomRange(7, 14));
+	}
+
+	private void DetermineEventDates()
+	{
+		eventDates = new List<int>();
+		var totalEvents = SimRandom.RandomRange(1, Mathf.Clamp(stats.luckMod + 1, 1, 6));
+		for(int i = 0; i < totalEvents; i++)
+		{
+			eventDates.Add(SimRandom.RandomRange(age, naturalDeathAge));
+		}
 	}
 
 	private void DetermineNaturalDeathAge()

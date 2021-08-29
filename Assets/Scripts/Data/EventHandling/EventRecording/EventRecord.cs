@@ -34,7 +34,7 @@ namespace Game.Data.EventHandling.EventRecording
 				context.Replace(toReplace, replaceWith);
 			}
 
-			writtenRecord += context;
+			writtenRecord += (context + " ");
 		}
 	}
 }

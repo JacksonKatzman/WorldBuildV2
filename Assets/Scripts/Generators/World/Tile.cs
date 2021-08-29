@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Enums;
 using Game.Factions;
+using Game.Data.EventHandling.EventRecording;
 
 namespace Game.WorldGeneration
 {
-    public class Tile : ITimeSensitive, IMutableZone
+    public class Tile : ITimeSensitive, IMutableZone, IRecordable
     {
+		public string Name => name;
         public World world;
         public Chunk chunk;
         public Vector2Int coords;
@@ -19,6 +21,8 @@ namespace Game.WorldGeneration
 		public float baseFertility;
 
 		public List<Landmark> landmarks;
+
+		private string name;
 
 		public Tile(World world, Chunk chunk, Vector2Int coords)
 		{

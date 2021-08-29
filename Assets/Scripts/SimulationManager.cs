@@ -36,7 +36,7 @@ public class SimulationManager : MonoBehaviour
 
     private List<GameObject> cityMarkers;
 
-    private EventRecorder eventRecorder;
+    public EventRecorder eventRecorder;
 
     public float heightMulitplier;
     public AnimationCurve heightCurve;

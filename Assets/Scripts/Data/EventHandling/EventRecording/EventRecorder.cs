@@ -14,9 +14,12 @@ namespace Game.Data.EventHandling.EventRecording
 		private EventManager events => EventManager.Instance;
 		private Dictionary<Person, List<EventLog>> personLogs;
 
+		public List<EventRecord> eventRecords;
+
 		public EventRecorder()
 		{
 			personLogs = new Dictionary<Person, List<EventLog>>();
+			eventRecords = new List<EventRecord>();
 
 			Setup();
 
