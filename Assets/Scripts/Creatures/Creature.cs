@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Game.Creatures
 {
-	[CreateAssetMenu(fileName = nameof(CreatureStats), menuName = "ScriptableObjects/Creatures/" + nameof(CreatureStats), order = 1)]
-	public class CreatureStats : ScriptableObject, IRecordable
+	[CreateAssetMenu(fileName = nameof(MonsterStats), menuName = "ScriptableObjects/Creatures/" + nameof(MonsterStats), order = 1)]
+	public class MonsterStats : ScriptableObject, IRecordable
 	{
 		public string name;
 		public string Name => name;
@@ -27,9 +27,9 @@ namespace Game.Creatures
 		//speed
 		public string speed;
 		//stats
-		public PersonStats stats;
+		public SerializableStatBlock stats;
 		//saving throws
-		public PersonStats savingThrows;
+		public SerializableStatBlock savingThrows;
 		//damage resistances
 		public List<DamageType> damageResistances;
 		//damage immunities

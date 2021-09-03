@@ -1,5 +1,6 @@
 ﻿using Game.Creatures;
 using Game.Enums;
+using Game.Generators.Items;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -21,6 +22,10 @@ namespace Assets.Scripts.Editor
 			if(GUILayout.Button("Build Creatures"))
 			{
 				BuildCreatures();
+			}
+			if (GUILayout.Button("Build Weapon Stats"))
+			{
+				BuildWeaponStats();
 			}
 		}
 
@@ -50,15 +55,15 @@ namespace Assets.Scripts.Editor
 
 		private void BuildCreatures()
 		{
-			var rawCreatureData = Resources.LoadAll("Creatures/RawData");
-			var existingCreatures = Resources.LoadAll("Creatures/Creatures");
-			var creatureDictionary = new Dictionary<string, CreatureStats>();
+			var rawCreatureData = Resources.LoadAll("RawData/Creatures");
+			var existingCreatures = Resources.LoadAll("ScriptableObjects/Creatures");
+			var creatureDictionary = new Dictionary<string, Game.Creatures.MonsterStats>();
 
 			if (existingCreatures != null)
 			{
 				foreach (var c in existingCreatures)
 				{
-					creatureDictionary.Add(((CreatureStats)c).Name, ((CreatureStats)c));
+					creatureDictionary.Add(((Game.Creatures.MonsterStats)c).Name, ((Game.Creatures.MonsterStats)c));
 				}
 			}
 			if (rawCreatureData != null)
@@ -85,10 +90,10 @@ namespace Assets.Scripts.Editor
 							continue;
 						}
 
-						var creatureStats = (CreatureStats)ScriptableObject.CreateInstance(typeof(CreatureStats));
+						var creatureStats = (Game.Creatures.MonsterStats)ScriptableObject.CreateInstance(typeof(Game.Creatures.MonsterStats));
 
 						var assetName = dataLines[0].Replace('/', '-');
-						AssetDatabase.CreateAsset(creatureStats, "Assets/Resources/Creatures/Creatures/" + assetName + ".asset");
+						AssetDatabase.CreateAsset(creatureStats, "Assets/Resources/ScriptableObjects/Creatures/" + assetName + ".asset");
 
 						creatureStats.name = dataLines[0];
 
@@ -107,7 +112,7 @@ namespace Assets.Scripts.Editor
 						creatureStats.size = (CreatureSize)Enum.Parse(typeof(CreatureSize), split2[0].ToUpper());
 						creatureStats.type = (CreatureType)Enum.Parse(typeof(CreatureType), split2[1].ToUpper());
 						creatureStats.alignment = (CreatureAlignment)Enum.Parse(typeof(CreatureAlignment), align.ToUpper());
-						creatureStats.stats = new PersonStats(Int32.Parse(dataLines[6].Split(' ')[0]), Int32.Parse(dataLines[8].Split(' ')[0]),
+						creatureStats.stats = new SerializableStatBlock(Int32.Parse(dataLines[6].Split(' ')[0]), Int32.Parse(dataLines[8].Split(' ')[0]),
 							Int32.Parse(dataLines[10].Split(' ')[0]), Int32.Parse(dataLines[12].Split(' ')[0]),
 							Int32.Parse(dataLines[14].Split(' ')[0]), Int32.Parse(dataLines[16].Split(' ')[0]), 10);
 
@@ -223,7 +228,7 @@ namespace Assets.Scripts.Editor
 
 							if(line.StartsWith("Saving Throws"))
 							{
-								creatureStats.savingThrows = new PersonStats(SavingThrowHelper(line, "Str"), SavingThrowHelper(line, "Dex"), SavingThrowHelper(line, "Con"), SavingThrowHelper(line, "Int"), SavingThrowHelper(line, "Wis"), SavingThrowHelper(line, "Cha"), 0);
+								creatureStats.savingThrows = new SerializableStatBlock(SavingThrowHelper(line, "Str"), SavingThrowHelper(line, "Dex"), SavingThrowHelper(line, "Con"), SavingThrowHelper(line, "Int"), SavingThrowHelper(line, "Wis"), SavingThrowHelper(line, "Cha"), 0);
 							}
 						}
 
@@ -273,6 +278,64 @@ namespace Assets.Scripts.Editor
 			}
 			AssetDatabase.SaveAssets();
 			Debug.Log("creatures built");
+		}
+
+		public static void BuildWeaponStats()
+		{
+			var rawWeaponData = Resources.LoadAll("RawData/Items/WeaponTypes");
+			var existingWeapons = Resources.LoadAll("ScriptableObjects/Items/WeaponTypes");
+			var weaponDictionary = new Dictionary<string, WeaponType>();
+
+			if (existingWeapons != null)
+			{
+				foreach (var c in existingWeapons)
+				{
+					weaponDictionary.Add(((WeaponType)c).Name, ((WeaponType)c));
+				}
+			}
+			if (rawWeaponData != null)
+			{
+				foreach(var rwd in rawWeaponData)
+				{
+					var cleaned = ((TextAsset)rwd).text.Trim(' ').Replace("\t", "").Replace(' ', '@');
+					var initialSplit = cleaned.Split('\n');
+					WeaponCategory weaponType = WeaponCategory.SIMPLE_MELEE;
+
+					foreach(var line in initialSplit)
+					{
+						var split = line.Split('@');
+						if(line.Contains("Weapons"))
+						{
+							weaponType = (WeaponCategory)Enum.Parse(typeof(WeaponCategory), (split[0] + "_" + split[1]).ToUpper());
+						}
+						else
+						{
+							var weaponStats = (WeaponType)ScriptableObject.CreateInstance(typeof(WeaponType));
+
+							var assetName = split[0];
+							AssetDatabase.CreateAsset(weaponStats, "Assets/Resources/ScriptableObjects/Items/WeaponTypes/" + assetName + ".asset");
+
+							weaponStats.name = assetName.Replace('-', ' ');
+							weaponStats.value = new ItemValue(Int32.Parse(split[1]), (CoinType)Enum.Parse(typeof(CoinType), split[2].ToUpper()));
+
+							var damageSplit = split[3].Split('d');
+							var numDice = Int32.Parse(damageSplit[0]);
+							var maxRoll = Int32.Parse(damageSplit[1]);
+							var damageType = (DamageType)Enum.Parse(typeof(DamageType), split[4].ToUpper());
+
+							weaponStats.damageValue = new Game.Combat.DamageValue(numDice, maxRoll, 0, damageType);
+							weaponStats.weight = float.Parse(split[5]);
+							var propertiesString = "";
+							for(int i = 7; i < split.Length; i++)
+							{
+								propertiesString += split[i];
+							}
+							weaponStats.properties = propertiesString.Replace(",", ", ");
+						}
+					}
+				}
+			}
+			AssetDatabase.SaveAssets();
 		}
 	}
 }

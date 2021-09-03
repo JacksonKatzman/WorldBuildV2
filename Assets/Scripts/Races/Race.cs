@@ -8,7 +8,7 @@ namespace Game.Races
 	public class Race : ScriptableObject
 	{
 		public int appearanceWeight;
-		public PersonStats stats;
+		public CreatureStats stats;
 		public FactionStats culturalStats;
 
 		public NameFormat nameFormat;

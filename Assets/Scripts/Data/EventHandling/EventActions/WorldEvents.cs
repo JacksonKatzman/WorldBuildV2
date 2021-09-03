@@ -35,11 +35,11 @@ namespace Game.Data.EventHandling
 			var materialUse = SimRandom.RandomFloat01() > 0.5f ? MaterialUse.Construction : MaterialUse.Forging;
 			var material = DataManager.Instance.MaterialGenerator.GetRandomMaterialByUse(materialUse, true);
 
-			Relic relic = null;
+			Item relic = null;
 			var relicChance = SimRandom.RandomRange(0, 10);
 			if ((relicChance -= 2) <= 0)
 			{
-				relic = ItemGenerator.GenerateRelic(new List<MaterialUse> { MaterialUse.Forging }, SimRandom.RandomRange(0,2), SimRandom.RandomRange(0, 2));
+				relic = ItemGenerator.GenerateRelic(new List<MaterialUse> { MaterialUse.Forging }, SimRandom.RandomRange(0,2));
 			}
 
 			record.AddContext("A meteor is spotted streaking through the nightsky.");

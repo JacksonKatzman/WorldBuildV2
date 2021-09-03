@@ -26,7 +26,7 @@ public class Person : ITimeSensitive, IRecordable
 
 	public List<Person> children;
 
-	public PersonStats stats;
+	public CreatureStats stats;
 
 	public Priorities priorities;
 
@@ -97,7 +97,7 @@ public class Person : ITimeSensitive, IRecordable
 		name = NameGenerator.GeneratePersonFirstName(race, gender) + progenitorSurname;
 	}
 
-	public Person(int age, Gender gender, PersonStats stats) : this(null, age, gender, 0, new List<RoleType>())
+	public Person(int age, Gender gender, CreatureStats stats) : this(null, age, gender, 0, new List<RoleType>())
 	{
 		this.stats = stats;
 	}
@@ -107,7 +107,7 @@ public class Person : ITimeSensitive, IRecordable
 		this.priorities = priorities;
 	}
 
-	public Person(string name, int age, Gender gender, List<Person> children, PersonStats stats, Priorities priorities)
+	public Person(string name, int age, Gender gender, List<Person> children, CreatureStats stats, Priorities priorities)
 	{
 		this.name = name;
 		this.age = age;
@@ -124,7 +124,7 @@ public class Person : ITimeSensitive, IRecordable
 		age++;
 		if(age >= naturalDeathAge)
 		{
-			//PersonGenerator.HandleDeath(this, "Natural Causes");
+			PersonGenerator.HandleDeath(this, "Natural Causes");
 		}
 	}
 
@@ -139,7 +139,7 @@ public class Person : ITimeSensitive, IRecordable
 
 	private void GenerateStats()
 	{
-		stats = new PersonStats(SimRandom.RollXDY(4, 6, 1), SimRandom.RollXDY(4, 6, 1),
+		stats = new CreatureStats(SimRandom.RollXDY(4, 6, 1), SimRandom.RollXDY(4, 6, 1),
 								SimRandom.RollXDY(4, 6, 1), SimRandom.RollXDY(4, 6, 1),
 								SimRandom.RollXDY(4, 6, 1), SimRandom.RollXDY(4, 6, 1),
 								SimRandom.RollXDY(4, 6, 1));
@@ -165,7 +165,7 @@ public class Person : ITimeSensitive, IRecordable
 	private void DetermineEventDates()
 	{
 		eventDates = new List<int>();
-		var totalEvents = SimRandom.RandomRange(1, Mathf.Clamp(stats.luckMod + 1, 1, 6));
+		var totalEvents = SimRandom.RandomRange(1, Mathf.Clamp(stats.GetModValue(StatType.LUCK) + 1, 1, 6));
 		for(int i = 0; i < totalEvents; i++)
 		{
 			eventDates.Add(SimRandom.RandomRange(age, naturalDeathAge));
@@ -174,8 +174,8 @@ public class Person : ITimeSensitive, IRecordable
 
 	private void DetermineNaturalDeathAge()
 	{
-		var fullCycle = (int)(SimRandom.RandomRange(4,8) * stats.constitution);
-		var modifiedCycle = (int)(age + (SimRandom.RandomRange(2,6) * stats.constitution));
+		var fullCycle = (int)(SimRandom.RandomRange(4,8) * stats.GetFlatValue(StatType.CONSTITUTION));
+		var modifiedCycle = (int)(age + (SimRandom.RandomRange(2,6) * stats.GetFlatValue(StatType.CONSTITUTION)));
 
 		naturalDeathAge = Mathf.Max(fullCycle, modifiedCycle);
 	}

@@ -20,6 +20,11 @@ public class Priorities
 		priorities.Add(PriorityType.RELIGIOUS, Mathf.Clamp(religiousScore, 0, 20));
 	}
 
+	public PriorityType TopPriority()
+	{
+		return SortedList()[0];
+	}
+
 	public List<PriorityType> SortedList()
 	{
 		Dictionary<int, List<PriorityType>> sorter = new Dictionary<int, List<PriorityType>>();

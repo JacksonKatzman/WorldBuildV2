@@ -1,0 +1,17 @@
+weighted events - completed for WORLD ONLY
+ongoing events
+person roles
+
+GOVT:
+Leadership Nodes generate as pop/cities increase
+Nodes include replacement strategy?
+Prio type STYLE that informs the kinds of leaders that get generated
+Split leader actions up by prio type, warlike events are recruiting/armoring
+Leave war alone, maybe more likely to go to war but dont let government heavily drive this
+Govts update at milestones but the way the upgrade is semi random?
+Could add leaders or add holidays/policies
+The STYLE/prios should start neuatral and be built by these random events
+Traditions
+
+fix city gen to check all cities
+fix tile capture to not be so erratic - maybe capture ALL border tiles?

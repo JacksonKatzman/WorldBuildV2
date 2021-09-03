@@ -1,8 +1,11 @@
 using Game.Creatures;
+using Game.Enums;
 using Game.Generators.Items;
+using Game.ModularEvents;
 using Game.Races;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour
@@ -20,13 +23,22 @@ public class DataManager : MonoBehaviour
 
     public MaterialGenerator MaterialGenerator;
 
+    public List<ModularEventNode> modularEventNodes;
+
     private Dictionary<int, List<Race>> weightedRaceDictionary;
 
-    private Dictionary<string, CreatureStats> creatures;
+    private Dictionary<string, Game.Creatures.MonsterStats> creatures;
 
     public Race GetRandomWeightedRace()
 	{
         return SimRandom.RandomEntryFromWeightedDictionary(weightedRaceDictionary);
+	}
+
+    public Game.Creatures.MonsterStats GetRandomCreature(bool legendary, bool landDwelling, params CreatureType[] typesArray)
+	{
+        var types = typesArray.ToList();
+        var matches = creatures.Values.Where(c => types.Contains(c.type) && c.legendary == legendary && c.landDwelling == landDwelling).ToList();
+        return SimRandom.RandomEntryFromList(matches);
 	}
 
     private void Awake()
@@ -48,6 +60,8 @@ public class DataManager : MonoBehaviour
         BuildWeightedRaceDictionary();
 
         BuildCreatureDictionary();
+
+        BuildModularEventList();
 
         foreach (var race in races)
         {
@@ -74,15 +88,29 @@ public class DataManager : MonoBehaviour
 
     private void BuildCreatureDictionary()
 	{
-        var existingCreatures = Resources.LoadAll("Creatures/Creatures");
-        creatures = new Dictionary<string, CreatureStats>();
+        var existingCreatures = Resources.LoadAll("ScriptableObjects/Creatures");
+		creatures = new Dictionary<string, Game.Creatures.MonsterStats>();
 
         if (existingCreatures != null)
         {
             foreach (var c in existingCreatures)
             {
-                creatures.Add(((CreatureStats)c).Name, ((CreatureStats)c));
+				creatures.Add(((Game.Creatures.MonsterStats)c).Name, ((Game.Creatures.MonsterStats)c));
             }
         }
+    }
+
+    private void BuildModularEventList()
+	{
+        var nodes = Resources.LoadAll("ScriptableObjects/ModularEvents");
+        modularEventNodes = new List<ModularEventNode>();
+
+        if(nodes != null)
+		{
+            foreach(var node in nodes)
+			{
+                modularEventNodes.Add((ModularEventNode)node);
+			}
+		}
     }
 }
