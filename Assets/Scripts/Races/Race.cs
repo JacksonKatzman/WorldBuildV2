@@ -1,4 +1,5 @@
-﻿using Game.Factions;
+﻿using Game.Creatures;
+using Game.Factions;
 using System.Collections;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Game.Races
 	public class Race : ScriptableObject
 	{
 		public int appearanceWeight;
-		public CreatureStats stats;
+		public SerializableStatBlock stats;
 		public FactionStats culturalStats;
 
 		public NameFormat nameFormat;

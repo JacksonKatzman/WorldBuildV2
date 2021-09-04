@@ -133,7 +133,7 @@ public class Person : ITimeSensitive, IRecordable
 		//ADD CHANCE FOR DEFINING EVENT
 		if (eventDates.Contains(age))
 		{
-			SimAIManager.Instance.CallPersonEvent(this);
+			//SimAIManager.Instance.CallPersonEvent(this);
 		}
 	}
 
@@ -144,7 +144,7 @@ public class Person : ITimeSensitive, IRecordable
 								SimRandom.RollXDY(4, 6, 1), SimRandom.RollXDY(4, 6, 1),
 								SimRandom.RollXDY(4, 6, 1));
 
-		stats += race.stats;
+		stats += new CreatureStats(race.stats.BuildDictionary());
 	}
 
 	private void GeneratePriorities()

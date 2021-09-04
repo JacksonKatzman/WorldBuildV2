@@ -9,6 +9,7 @@ using Game.Factions;
 using Game.Generators;
 using Game.Debug;
 using Game.Data.EventHandling.EventRecording;
+using Game.Visuals;
 
 public class SimulationManager : MonoBehaviour
 {
@@ -33,6 +34,9 @@ public class SimulationManager : MonoBehaviour
 
     [SerializeField]
     GameObject cityMarker;
+
+    [SerializeField]
+    WorldVisualBuilder visualBuilder;
 
     private List<GameObject> cityMarkers;
 
@@ -76,19 +80,34 @@ public class SimulationManager : MonoBehaviour
 
         seededRandom = new System.Random(seed);
 
-        DrawNoiseMap();
+        GenerateWorld();
+
+        //DrawNoiseMap();
 
         //DrawMesh(MeshGenerator.GenerateVoxelTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.voxelColorMapTexture);
+
+        world.HandleDeferredActions();
+
+        //RedrawFactionMap();
+    }
+
+    public void GenerateWorld()
+	{
+        world = WorldGenerator.GenerateWorld(settings, chunkSize, biomeSettings.biomes);
 
         for (int a = 0; a < 10; a++)
         {
             FactionGenerator.SpawnFaction(world);
         }
 
-        world.HandleDeferredActions();
-
-        RedrawFactionMap();
+        GenerateWorldVisuals();
     }
+
+    private void GenerateWorldVisuals()
+	{
+        visualBuilder.BuildWorld(world);
+        visualBuilder.UpdateFactionBorders();
+	}
 
     public void DrawNoiseMap()
 	{
@@ -175,7 +194,8 @@ public class SimulationManager : MonoBehaviour
         timer.PrintFindings();
         OutputLogger.LogFormat("Full generation took {0} seconds.", LogSource.PROFILE, Time.realtimeSinceStartup - startTime);
         //world.HandleCleanup();
-        RedrawFactionMap();
+        //RedrawFactionMap();
+        visualBuilder.UpdateFactionBorders();
         OutputLogger.LogFormat("Years passed since world generation: {0}", LogSource.MAIN, world.yearsPassed);
 	}
 

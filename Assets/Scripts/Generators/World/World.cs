@@ -20,13 +20,13 @@ namespace Game.WorldGeneration
 		public Texture2D colorMapTexture;
 		public Texture2D voxelColorMapTexture;
 
-		private List<Biome> biomes;
+		public List<Biome> biomes;
 		public List<Faction> factions;
 		public List<City> Cities => GetAllCities();
 		private List<War> wars;
 
 		NoiseSettings noiseSettings;
-        private Chunk[,] worldChunks;
+        public Chunk[,] worldChunks;
 		public int chunkSize;
 		public int yearsPassed;
 
