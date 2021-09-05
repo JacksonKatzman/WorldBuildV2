@@ -106,7 +106,7 @@ public class SimulationManager : MonoBehaviour
     private void GenerateWorldVisuals()
 	{
         visualBuilder.BuildWorld(world);
-        visualBuilder.UpdateFactionBorders();
+        visualBuilder.UpdateVisuals();
 	}
 
     public void DrawNoiseMap()
@@ -195,7 +195,7 @@ public class SimulationManager : MonoBehaviour
         OutputLogger.LogFormat("Full generation took {0} seconds.", LogSource.PROFILE, Time.realtimeSinceStartup - startTime);
         //world.HandleCleanup();
         //RedrawFactionMap();
-        visualBuilder.UpdateFactionBorders();
+        visualBuilder.UpdateVisuals();
         OutputLogger.LogFormat("Years passed since world generation: {0}", LogSource.MAIN, world.yearsPassed);
 	}
 

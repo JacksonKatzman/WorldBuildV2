@@ -62,7 +62,7 @@ namespace Game.Generators
 				var tileController = tile.controller;
 				var uncontrolled = (tileController == faction || tileController == null);
 
-				if(tile.baseFertility >= targetFertility && possibleTile.GetCities().Count == 0 && uncontrolled && tile.biome.availableLand >= targetLandAvailability)
+				if(tile.baseFertility >= targetFertility && possibleTile.GetCities().Count == 0 && uncontrolled && tile.biome.availableLand >= targetLandAvailability && tile.biome.landType != LandType.OCEAN)
 				{
 					acceptedTiles.Add(possibleTile);
 				}

@@ -4,33 +4,47 @@ using UnityEngine;
 
 namespace Game.Visuals
 {
-	public class PropPlaceholder : MonoBehaviour
+	public class LandmarkPropPlaceholder : MonoBehaviour
 	{
 		[SerializeField]
 		protected Renderer placeholderRenderer;
 
 		[SerializeField]
 		protected GameObject currentProp;
-		public virtual void ReplaceWithProp(Tile tile)
+
+		public Landmark landmark;
+
+		public void ReplaceWithProp(Landmark landmark)
 		{
-			if(currentProp != null)
+			if (currentProp != null)
 			{
 				Destroy(currentProp);
 			}
 
-			if (tile.biome.propDictionary.Count > 0)
+			this.landmark = landmark;
+			var prefab = SimRandom.RandomEntryFromList(DataManager.Instance.landmarkProps[landmark.GetType()]);
+
+			if(prefab != null)
 			{
 				placeholderRenderer.enabled = false;
-
-				var prefab = SimRandom.RandomEntryFromWeightedDictionary(tile.biome.propDictionary);
 				var randomRotation = Quaternion.Euler(0, SimRandom.RandomRange(0, 360), 0);
 				currentProp = Instantiate(prefab, transform.position, randomRotation, transform);
-			}
+			}	
 		}
 
 		public void HidePlaceholder()
 		{
 			placeholderRenderer.enabled = false;
+		}
+
+		public void Reset()
+		{
+			if (currentProp != null)
+			{
+				Destroy(currentProp);
+			}
+
+			landmark = null;
 		}
 	}
 }

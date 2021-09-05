@@ -19,11 +19,11 @@ namespace Game.Visuals
 			BuildTerrain();
 		}
 
-		public void UpdateFactionBorders()
+		public void UpdateVisuals()
 		{
 			foreach(var tile in terrainTiles)
 			{
-				tile.UpdateFactionController();
+				tile.UpdateVisuals();
 			}
 		}
 
@@ -50,6 +50,7 @@ namespace Game.Visuals
 						Quaternion.identity, transform).GetComponent<TileVisual>();
 
 					terrainTile.tile = tile;
+					terrainTile.Initialize();
 				}
 			}
 		}

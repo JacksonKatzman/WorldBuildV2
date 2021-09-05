@@ -15,25 +15,42 @@ namespace Game.Visuals
 		Transform propContainerRoot;
 
 		[SerializeField]
+		Transform landmarkPropContainerRoot;
+
+		[SerializeField]
 		Renderer factionColorRenderer;
 
 		public Tile tile;
 
 		private List<PropPlaceholder> props;
+		private List<LandmarkPropPlaceholder> landmarkProps;
 
 		public Renderer Renderer => terrainObjectRoot.GetComponent<Renderer>();
 
-		private void Start()
+		public void UpdateVisuals()
+		{
+			UpdateFactionController();
+			UpdateProps();
+		}
+
+		public void Initialize()
 		{
 			props = propContainerRoot.GetComponentsInChildren<PropPlaceholder>().ToList();
+			landmarkProps = landmarkPropContainerRoot.GetComponentsInChildren<LandmarkPropPlaceholder>().ToList();
 
-			foreach(var prop in props)
+			foreach (var prop in props)
 			{
 				prop.ReplaceWithProp(tile);
+				prop.HidePlaceholder();
+			}
+
+			foreach(var prop in landmarkProps)
+			{
+				prop.HidePlaceholder();
 			}
 		}
 
-		public void UpdateFactionController()
+		private void UpdateFactionController()
 		{
 			var colorMat = new Material(factionColorRenderer.sharedMaterial);
 
@@ -48,6 +65,27 @@ namespace Game.Visuals
 			}
 
 			factionColorRenderer.sharedMaterial = colorMat;
+		}
+
+		private void UpdateProps()
+		{
+			foreach(var p in landmarkProps)
+			{
+				if(p.landmark != null && !tile.landmarks.Contains(p.landmark))
+				{
+					p.Reset();
+				}
+			}
+
+			foreach(var landmark in tile.landmarks)
+			{
+				var placeholder = landmarkProps.Find(x => x.landmark == landmark);
+				var empties = landmarkProps.Where(x => x.landmark == null).ToList();
+				if (placeholder == null && empties.Count > 0)
+				{
+					SimRandom.RandomEntryFromList(empties).ReplaceWithProp(landmark);
+				}
+			}
 		}
 	}
 }

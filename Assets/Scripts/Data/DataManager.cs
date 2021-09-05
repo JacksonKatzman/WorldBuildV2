@@ -3,6 +3,8 @@ using Game.Enums;
 using Game.Generators.Items;
 using Game.ModularEvents;
 using Game.Races;
+using Game.Visuals;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,11 @@ public class DataManager : MonoBehaviour
 
     [SerializeField]
     public TextAsset materialInfo;
+
+    [SerializeField]
+    LandmarkPropContainer landmarkPropContainer;
+
+    public Dictionary<Type, List<GameObject>> landmarkProps;
 
     public Dictionary<Race, NameContainer> nameContainers;
 
@@ -69,6 +76,8 @@ public class DataManager : MonoBehaviour
         }
 
         MaterialGenerator = new MaterialGenerator();
+
+        landmarkProps = landmarkPropContainer.props;
     }
 
     private void BuildWeightedRaceDictionary()

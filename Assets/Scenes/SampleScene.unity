@@ -249,6 +249,7 @@ MonoBehaviour:
   races:
   - {fileID: 11400000, guid: 06e0ccd5e9a07a84cb17a677ef864a54, type: 2}
   materialInfo: {fileID: 4900000, guid: 26bd3880a7e7a4b4f988b4dd9272b375, type: 3}
+  landmarkPropContainer: {fileID: 11400000, guid: 07b6c461e68658d4c9df448add939842, type: 2}
   modularEventNodes: []
 --- !u!4 &654336835
 Transform:
