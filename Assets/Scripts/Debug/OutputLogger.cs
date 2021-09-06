@@ -19,7 +19,7 @@ public abstract class OutputLogger
 	{ LogSource.FACTIONACTION, false },
 	{ LogSource.PEOPLE, false },
 	{ LogSource.EVENT, true },
-	{ LogSource.PROFILE, false },
+	{ LogSource.PROFILE, true },
 	{ LogSource.MAIN, false }
 };
 

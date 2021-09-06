@@ -20,6 +20,8 @@ namespace Game.WorldGeneration
 		public float baseMoisture;
 		public float baseFertility;
 
+		public readonly List<Direction> riverDirections;
+
 		public List<Landmark> landmarks;
 
 		private string name;
@@ -30,9 +32,19 @@ namespace Game.WorldGeneration
 			this.chunk = chunk;
 			this.coords = coords;
 
+			riverDirections = new List<Direction>();
+
 			landmarks = new List<Landmark>();
 
 			CalculateBiome();
+		}
+
+		public void AddRiverDirection(Direction d)
+		{
+			if(!riverDirections.Contains(d))
+			{
+				riverDirections.Add(d);
+			}
 		}
 
 		private float Value => chunk.noiseMap[coords.x, coords.y];
@@ -112,7 +124,6 @@ namespace Game.WorldGeneration
 
 			return tileList;
 		}
-
 		private void CalculateBiome()
 		{
 			landType = Biome.CalculateLandType(Value);
@@ -185,6 +196,29 @@ namespace Game.WorldGeneration
 			}
 
 			return closestCity;
+		}
+
+		public Direction DetermineAdjacentRelativeDirection(Tile other)
+		{
+			var myWorldPos = GetWorldPosition();
+			var otherWorldPos = other.GetWorldPosition();
+
+			if(otherWorldPos.x > myWorldPos.x)
+			{
+				return Direction.EAST;
+			}
+			else if(otherWorldPos.x < myWorldPos.x)
+			{
+				return Direction.WEST;
+			}
+			else if(otherWorldPos.y > myWorldPos.y)
+			{
+				return Direction.NORTH;
+			}
+			else
+			{
+				return Direction.SOUTH;
+			}
 		}
 	}
 }

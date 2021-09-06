@@ -7,7 +7,8 @@ namespace Game.Enums
 	[System.Serializable]
 	public enum Gender { MALE, FEMALE, ANY };
 	public enum MapCategory { TERRAIN, RAINFALL, FERTILITY, BIOME };
-	public enum LandType { OCEAN, FLAT, HILLS, MOUNTAINS };
+	public enum LandType { OCEAN, FLAT, HILLS, MOUNTAINS, RIVER };
+	public enum Direction { NORTH, SOUTH, EAST, WEST };
 	public enum PriorityType { MILITARY, INFRASTRUCTURE, MERCANTILE, POLITICAL, RELIGIOUS};
 	public enum TroopType { LIGHT_INFANTRY, HEAVY_INFANTRY, LIGHT_CAVALRY, HEAVY_CAVALRY, ARCHER};
 	public enum StatType { STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA, LUCK };
@@ -24,4 +25,5 @@ namespace Game.Enums
 	public enum LogSource { CITY, NAMEGEN, WORLDGEN, MAIN, IMPORTANT, FACTION, FACTIONACTION, PEOPLE, EVENT, PROFILE };
 	public enum LogAllowance { ALL, SOME, NONE };
 	public enum EventBranchStyle { PRIORITY, ROLL };
+	public enum TileBisectType { NONE, STRAIGHT, CURVE, THREEWAY, FOURWAY };
 }

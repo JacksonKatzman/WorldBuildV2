@@ -7,6 +7,7 @@ using Game.Factions;
 using System.Linq;
 using System;
 using Game.Data.EventHandling;
+using Game.Pathfinding;
 
 namespace Game.WorldGeneration
 {
@@ -121,6 +122,7 @@ namespace Game.WorldGeneration
 		{
 			return Biome.CalculateBiomeType(biomes, landType, rainfall, fertility);
 		}
+
 
 		public Tile GetTileAtWorldPosition(Vector2Int worldPosition)
 		{
@@ -244,6 +246,73 @@ namespace Game.WorldGeneration
 			}
 		}
 
+		private void BuildRivers()
+		{
+			SimulationManager.Instance.timer.Tic();
+
+			var unsortedTiles = new List<Tile>();
+			var tileMap = new Tile[worldChunks.GetLength(0) * chunkSize, worldChunks.GetLength(1) * chunkSize];
+			foreach(var chunk in worldChunks)
+			{
+				foreach(var tile in chunk.chunkTiles)
+				{
+					unsortedTiles.Add(tile);
+					var pos = tile.GetWorldPosition();
+					tileMap[pos.x, pos.y] = tile;
+				}
+			}
+
+			var mountainTiles = unsortedTiles.Where(x => x.biome.landType == LandType.MOUNTAINS).ToList();
+			var oceanTiles = unsortedTiles.Where(x => x.biome.landType == LandType.OCEAN).ToList();
+
+			float DetermineAStarCost(Tile from, Tile to)
+			{
+				var toHeight = to.chunk.SampleNoiseMap(Enums.MapCategory.TERRAIN, to.coords);
+				var fromHeight = from.chunk.SampleNoiseMap(Enums.MapCategory.TERRAIN, from.coords);
+				return 1.0f * (1.0f + Mathf.Abs(toHeight - fromHeight));
+			}
+
+			for (int i = 0; i < 12; i++)
+			{
+				if(mountainTiles.Count == 0 || oceanTiles.Count == 0)
+				{
+					break;
+				}
+
+				var randomMountainTile = SimRandom.RandomEntryFromList(mountainTiles);
+				var targetOceanTile = oceanTiles[0];
+				for (int a = 1; a < oceanTiles.Count; a++)
+				{
+					targetOceanTile = Tile.GetDistanceBetweenTiles(randomMountainTile, oceanTiles[a]) < Tile.GetDistanceBetweenTiles(randomMountainTile, targetOceanTile) ? oceanTiles[a] : targetOceanTile;
+				}
+
+				var aStarPath = AStarPathfinder.AStarBestPath(randomMountainTile, targetOceanTile, tileMap, DetermineAStarCost);
+
+				for(int a = 1; a < aStarPath.Count - 1; a++)
+				{
+					var currentTile = aStarPath[a];
+					if (currentTile.biome.landType != LandType.OCEAN)
+					{
+						currentTile.biome = Biome.GetRandomBiomeByLandType(biomes, LandType.RIVER);
+						currentTile.AddRiverDirection(currentTile.DetermineAdjacentRelativeDirection(aStarPath[a - 1]));
+						currentTile.AddRiverDirection(currentTile.DetermineAdjacentRelativeDirection(aStarPath[a + 1]));
+					}
+				}
+
+				var nearbyMountains = mountainTiles.Where(x => Tile.GetDistanceBetweenTiles(x, randomMountainTile) < 3).ToList();
+				foreach(var tile in nearbyMountains)
+				{
+					if(mountainTiles.Contains(tile))
+					{
+						mountainTiles.Remove(tile);
+					}
+				}
+				oceanTiles.Remove(targetOceanTile);
+			}
+
+			SimulationManager.Instance.timer.Toc("Build Rivers");
+		}
+
 		private void AlterMap(MapCategory mapCategory, float[,] noiseMap)
 		{
 			if(!noiseMaps.ContainsKey(mapCategory))
@@ -259,6 +328,7 @@ namespace Game.WorldGeneration
 			GenerateNewNoiseMap(MapCategory.FERTILITY);
 
 			BuildChunks();
+			BuildRivers();
 			CreateBiomeMap();
 			CreateVoxelBiomeMap();
 

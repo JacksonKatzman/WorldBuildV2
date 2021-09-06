@@ -7,6 +7,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System;
 using Games.Visuals;
+using System.Linq;
 
 namespace Game.WorldGeneration
 {
@@ -90,6 +91,12 @@ namespace Game.WorldGeneration
 			}
 
 			return currentBestBiome;
+		}
+
+		public static Biome GetRandomBiomeByLandType(List<Biome> biomes, LandType landType)
+		{
+			var matches = biomes.Where(x => x.landType == landType).ToList();
+			return SimRandom.RandomEntryFromList(matches);
 		}
 
 		private Dictionary<int, List<GameObject>> BuildPropDictionary()

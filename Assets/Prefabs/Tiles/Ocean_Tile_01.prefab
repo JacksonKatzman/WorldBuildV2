@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8210170905649932239
 Transform:
@@ -30,8 +30,6 @@ Transform:
   m_Children:
   - {fileID: 6479478723046977900}
   - {fileID: 5259751260314237156}
-  - {fileID: 739611058931363709}
-  - {fileID: 425713332933149193}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrainObjectRoot: {fileID: 6484154459241294786}
-  propContainerRoot: {fileID: 739611058931363709}
-  landmarkPropContainerRoot: {fileID: 425713332933149193}
+  tileRoot: {fileID: 6479478723046977900}
   factionColorRenderer: {fileID: 2575757464270444303}
+  riverPieces: []
 --- !u!1 &2494861539813640149
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,7 +63,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &425713332933149193
 Transform:
@@ -78,8 +76,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8210170905649932239}
-  m_RootOrder: 3
+  m_Father: {fileID: 6479478723046977900}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7544870785036197376
 GameObject:
@@ -95,7 +93,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &739611058931363709
 Transform:
@@ -104,12 +102,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7544870785036197376}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8210170905649932239}
-  m_RootOrder: 2
+  m_Father: {fileID: 6479478723046977900}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7807293877843627057
 GameObject:
@@ -128,7 +126,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5259751260314237156
 Transform:
@@ -219,9 +217,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Tile_Cube_Flat_Water_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1845410051490476, guid: 6b0531e22ab497d498c2ac86214e6e03, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4642350981808070, guid: 6b0531e22ab497d498c2ac86214e6e03, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4642350981808070, guid: 6b0531e22ab497d498c2ac86214e6e03, type: 3}
       propertyPath: m_LocalPosition.x
@@ -280,6 +282,10 @@ PrefabInstance:
     - target: {fileID: 1925986426459426, guid: 5291cf189e05b7444834429a640c22fe, type: 3}
       propertyPath: m_Name
       value: SM_Tile_Cube_Water_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1925986426459426, guid: 5291cf189e05b7444834429a640c22fe, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4842374903074700, guid: 5291cf189e05b7444834429a640c22fe, type: 3}
       propertyPath: m_RootOrder
@@ -347,6 +353,10 @@ PrefabInstance:
     - target: {fileID: 1806251082521260, guid: 8f6e03115ed50b943980d68d9115f1bd, type: 3}
       propertyPath: m_Name
       value: River_Plane_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806251082521260, guid: 8f6e03115ed50b943980d68d9115f1bd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4353676151864232, guid: 8f6e03115ed50b943980d68d9115f1bd, type: 3}
       propertyPath: m_RootOrder

@@ -1,7 +1,8 @@
 ﻿using Game.WorldGeneration;
-using System.Collections;
+using System.Collections.Generic;
 using Game.Enums;
 using UnityEngine;
+using System.Linq;
 
 namespace Game.Visuals
 {
@@ -9,6 +10,7 @@ namespace Game.Visuals
 	{
 		World world;
 		TileVisual[,] terrainTiles;
+		List<TileVisual> unsortedTiles;
 
 		[SerializeField]
 		AnimationCurve heightCurve;
@@ -21,7 +23,7 @@ namespace Game.Visuals
 
 		public void UpdateVisuals()
 		{
-			foreach(var tile in terrainTiles)
+			foreach (var tile in terrainTiles)
 			{
 				tile.UpdateVisuals();
 			}
@@ -33,6 +35,7 @@ namespace Game.Visuals
 			var terrainMapWidth = terrainNoiseMap.GetLength(0);
 			var terrainMapHeight = terrainNoiseMap.GetLength(1);
 			terrainTiles = new TileVisual[terrainMapWidth, terrainMapHeight];
+			unsortedTiles = new List<TileVisual>();
 
 			foreach(var chunk in world.worldChunks)
 			{
@@ -49,6 +52,7 @@ namespace Game.Visuals
 						new Vector3((worldPos.x - terrainMapWidth/2) * prefabWidth, height * heightMultiplier, (worldPos.y - terrainMapHeight/2) * prefabWidth),
 						Quaternion.identity, transform).GetComponent<TileVisual>();
 
+					unsortedTiles.Add(terrainTile);
 					terrainTile.tile = tile;
 					terrainTile.Initialize();
 				}

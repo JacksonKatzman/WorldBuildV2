@@ -107,7 +107,8 @@ public class SimulationManager : MonoBehaviour
 	{
         visualBuilder.BuildWorld(world);
         visualBuilder.UpdateVisuals();
-	}
+        timer.PrintFindings();
+    }
 
     public void DrawNoiseMap()
 	{
