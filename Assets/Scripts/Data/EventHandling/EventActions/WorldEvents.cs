@@ -77,7 +77,7 @@ namespace Game.Data.EventHandling
 					record.AddContext("The meteor, made of solid {0}, crashes into the earth at {1}, creating the crater: {2}.", material, chosenTile, crater);
 				}
 				//Decide what faction if any claims it or does anything with it
-				crater.faction = chosenTile.controller;
+				crater.Faction = chosenTile.controller;
 
 				//handle destroying other landmarks if they existed
 				for (int i = 0; i < chosenTile.landmarks.Count; i++)

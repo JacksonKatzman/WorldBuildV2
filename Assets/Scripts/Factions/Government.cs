@@ -116,11 +116,14 @@ namespace Game.Factions
 			}
 		}
 
-		private void OnPersonDeath(PersonDiedEvent simEvent)
+		private void OnPersonDeath(CreatureDiedEvent simEvent)
 		{
-			if (simEvent.person.governmentOffice != null && simEvent.person.faction.government == this)
+			if (simEvent.creature is Person person)
 			{
-				DetermineNewLeader(simEvent.person.governmentOffice);
+				if (person.governmentOffice != null && person.faction.government == this)
+				{
+					DetermineNewLeader(person.governmentOffice);
+				}
 			}
 		}
 
@@ -133,7 +136,7 @@ namespace Game.Factions
 
 		private void SubscribeToEvents()
 		{
-			EventManager.Instance.AddEventHandler<PersonDiedEvent>(OnPersonDeath);
+			EventManager.Instance.AddEventHandler<CreatureDiedEvent>(OnPersonDeath);
 		}
 	}
 }
