@@ -25,5 +25,8 @@ namespace Game.Enums
 	public enum LogSource { CITY, NAMEGEN, WORLDGEN, MAIN, IMPORTANT, FACTION, FACTIONACTION, PEOPLE, EVENT, PROFILE };
 	public enum LogAllowance { ALL, SOME, NONE };
 	public enum EventBranchStyle { PRIORITY, ROLL };
-	public enum TileBisectType { NONE, STRAIGHT, CURVE, THREEWAY, FOURWAY };
+	public enum TileBisectType { NONE, STRAIGHT, CURVE, THREEWAY, FOURWAY, DOUBLE };
+	public enum Disposition { PASSIVE, AGGRESSIVE };
+	public enum WorldTagType { DEATH };
+	public enum SpecialCaseTagType { END_OF_TURN };
 }
