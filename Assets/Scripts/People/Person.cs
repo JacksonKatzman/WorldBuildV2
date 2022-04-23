@@ -6,12 +6,15 @@ using Game.Factions;
 using Game.Data.EventHandling.EventRecording;
 using Game.Generators.Items;
 using Game.Races;
+using Game.Incidents;
+using Game.Creatures;
 
-public class Person : ITimeSensitive, IRecordable
+public class Person : ITimeSensitive, IRecordable, IIncidentInstigator, ICreature
 {
 	public static int STARTING_PRIORITY_POINTS = 5;
 
 	public string Name => GetName();
+	public List<Item> Inventory => inventory;
 
 	private string name;
 	public string personalTitle = "{0}";
@@ -34,7 +37,7 @@ public class Person : ITimeSensitive, IRecordable
 
 	private List<int> eventDates;
 
-	private int naturalDeathAge;
+	public int naturalDeathAge;
 
 	public Person() : this(null, SimRandom.RandomRange(16, 69), (Gender)SimRandom.RandomRange(0, 2), 0, new List<RoleType>())
 	{
@@ -122,10 +125,12 @@ public class Person : ITimeSensitive, IRecordable
 		TakeActions();
 
 		age++;
+		/*
 		if(age >= naturalDeathAge)
 		{
 			PersonGenerator.HandleDeath(this, "Natural Causes");
 		}
+		*/
 	}
 
 	private void TakeActions()

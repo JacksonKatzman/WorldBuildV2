@@ -9,10 +9,11 @@ using Game.Data.EventHandling;
 using Game.Math;
 using Game.Data.EventHandling.EventRecording;
 using Game.Races;
+using Game.Incidents;
 
 namespace Game.Factions
 {
-	public class Faction : ITimeSensitive, IRecordable
+	public class Faction : ITimeSensitive, IRecordable, IIncidentInstigator
 	{
 		private static int STARTING_INFLUENCE = 10;
 		private static float AVERAGE_BIRTH_RATE = 0.0165f;
