@@ -26,6 +26,9 @@ namespace Game.Visuals
 		List<TileBisectorContainer> riverPieces;
 
 		[SerializeField]
+		List<TileBisectorContainer> roadPieces;
+
+		[SerializeField]
 		public DebugDirections debugRiverDirections;
 
 		public Tile tile;
@@ -37,6 +40,7 @@ namespace Game.Visuals
 
 		public void UpdateVisuals()
 		{
+			UpdateRoads();
 			UpdateFactionController();
 			UpdateProps();
 		}
@@ -96,6 +100,78 @@ namespace Game.Visuals
 				{
 					SimRandom.RandomEntryFromList(empties).ReplaceWithProp(landmark);
 				}
+			}
+		}
+
+		private void UpdateRoads()
+		{
+			if(roadPieces.Count > 0 && tile.roadDirections.Count > 1)
+			{
+				TileBisectType bisectType = TileBisectType.NONE;
+				int rotationDegrees = 0;
+				if (tile.riverDirections.Count > 0)
+				{
+					bisectType = TileBisectType.DOUBLE;
+					if(tile.roadDirections.Contains(Direction.EAST))
+					{
+						rotationDegrees = 90;
+					}
+				}
+				else if (tile.roadDirections.Count == 2)
+				{
+					//curve or straight
+					if ((tile.roadDirections.Contains(Direction.SOUTH) && tile.roadDirections.Contains(Direction.NORTH)) || (tile.roadDirections.Contains(Direction.WEST) && tile.roadDirections.Contains(Direction.EAST)))
+					{
+						//straight
+						bisectType = TileBisectType.STRAIGHT;
+						if (tile.roadDirections.Contains(Direction.NORTH))
+						{
+							rotationDegrees = 90;
+						}
+					}
+					else
+					{
+						//curve
+						bisectType = TileBisectType.CURVE;
+						if (tile.roadDirections.Contains(Direction.SOUTH) && tile.roadDirections.Contains(Direction.EAST))
+						{
+							rotationDegrees = 270;
+						}
+						else if (tile.roadDirections.Contains(Direction.WEST) && tile.roadDirections.Contains(Direction.NORTH))
+						{
+							rotationDegrees = 90;
+						}
+						else if (tile.roadDirections.Contains(Direction.EAST) && tile.roadDirections.Contains(Direction.NORTH))
+						{
+							rotationDegrees = 180;
+						}
+					}
+				}
+				else if (tile.roadDirections.Count == 3)
+				{
+					bisectType = TileBisectType.THREEWAY;
+					if (!tile.roadDirections.Contains(Direction.EAST))
+					{
+						rotationDegrees = 90;
+					}
+					else if (!tile.roadDirections.Contains(Direction.SOUTH))
+					{
+						rotationDegrees = 180;
+					}
+					else if (!tile.roadDirections.Contains(Direction.WEST))
+					{
+						rotationDegrees = 270;
+					}
+				}
+				else if (tile.roadDirections.Count == 4)
+				{
+					bisectType = TileBisectType.FOURWAY;
+				}
+
+				tileRoot.gameObject.SetActive(false);
+				tileRoot = roadPieces.Find(x => x.type == bisectType).gameObject.transform;
+				tileRoot.gameObject.SetActive(true);
+				tileRoot.Rotate(0, rotationDegrees, 0);
 			}
 		}
 
@@ -169,6 +245,18 @@ namespace Game.Visuals
 					}
 				}
 			}
+		}
+	}
+
+	public class BisectorAnglePair
+	{
+		TileBisectType type;
+		int angle;
+
+		public BisectorAnglePair(TileBisectType type, int angle)
+		{
+			this.type = type;
+			this.angle = angle;
 		}
 	}
 

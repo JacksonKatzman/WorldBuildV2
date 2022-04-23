@@ -4,11 +4,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Landmark : ITimeSensitive, IRecordable
+public interface ILandmark : ITimeSensitive, IRecordable
 {
-    public string Name => name;
-    public Faction faction;
+    public Faction Faction { get; set; }
+}
 
+public abstract class Landmark : ILandmark
+{
     protected string name;
-    public abstract void AdvanceTime();
+    protected Faction faction;
+
+    public string Name => name;
+    public Faction Faction
+	{
+		get { return faction; }
+		set { faction = value; }
+	}
+
+	public virtual void AdvanceTime()
+	{
+	}
 }

@@ -21,6 +21,7 @@ namespace Game.WorldGeneration
 		public float baseFertility;
 
 		public readonly List<Direction> riverDirections;
+		public readonly List<Direction> roadDirections;
 
 		public List<Landmark> landmarks;
 
@@ -33,6 +34,7 @@ namespace Game.WorldGeneration
 			this.coords = coords;
 
 			riverDirections = new List<Direction>();
+			roadDirections = new List<Direction>();
 
 			landmarks = new List<Landmark>();
 
@@ -44,6 +46,14 @@ namespace Game.WorldGeneration
 			if(!riverDirections.Contains(d))
 			{
 				riverDirections.Add(d);
+			}
+		}
+
+		public void AddRoadDirection(Direction d)
+		{
+			if (!roadDirections.Contains(d))
+			{
+				roadDirections.Add(d);
 			}
 		}
 
@@ -169,7 +179,7 @@ namespace Game.WorldGeneration
 			controller = newFaction;
 			for (int i = 0; i < landmarks.Count; i++)
 			{
-				landmarks[i].faction = newFaction;
+				landmarks[i].Faction = newFaction;
 			}
 		}
 

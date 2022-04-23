@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Game.Generators.Noise;
+using Game.Creatures;
+using Game.Data.EventHandling;
 using Game.Enums;
 using Game.Factions;
-using System.Linq;
-using System;
-using Game.Data.EventHandling;
+using Game.Generators.Noise;
+using Game.Incidents;
 using Game.Pathfinding;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Game.WorldGeneration
 {
-    public class World : ITimeSensitive
+	public class World : ITimeSensitive, IIncidentInstigator
     {
 		public Dictionary<MapCategory, float[,]> noiseMaps;
 		public Color[,] biomeMap;
@@ -31,7 +32,8 @@ namespace Game.WorldGeneration
 		public int chunkSize;
 		public int yearsPassed;
 
-		private List<Person> people;
+		public List<ICreature> creatures;
+		public List<Person> People => GetPeople();
 
 		public List<OngoingEvent> ongoingEvents;
 		private List<Action> deferredActions;
@@ -40,7 +42,7 @@ namespace Game.WorldGeneration
 		{
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
 			factions = new List<Faction>();
-			people = new List<Person>();
+			creatures = new List<ICreature>();
 			wars = new List<War>();
 			ongoingEvents = new List<OngoingEvent>();
 			deferredActions = new List<Action>();
@@ -52,6 +54,19 @@ namespace Game.WorldGeneration
 			this.biomes = biomes;
 
 			Setup();
+		}
+
+		private List<Person> GetPeople()
+		{
+			var people = new List<Person>();
+			foreach(var creature in creatures)
+			{
+				if(creature is Person person)
+				{
+					people.Add(person);
+				}
+			}
+			return people;
 		}
 
 		public float[,] SampleNoiseMap(MapCategory mapCategory, Vector2Int chunkLocation)
@@ -108,14 +123,24 @@ namespace Game.WorldGeneration
 			HandleDeferredActions();
 
 			SimulationManager.Instance.timer.Tic();
-			foreach (Person person in people)
+			foreach (Person person in creatures)
 			{
 				person.AdvanceTime();
 			}
 			SimulationManager.Instance.timer.Toc("People");
+
+			DeathEvent();
+
 			HandleDeferredActions();
 
 			yearsPassed++;
+		}
+
+		public void DeathEvent()
+		{
+			var tags = new List<IIncidentTag> { new InstigatorTag(typeof(World)), new WorldTag(new List<WorldTagType> { WorldTagType.DEATH }), new SpecialCaseTag(SpecialCaseTagType.END_OF_TURN) };
+			var context = new IncidentContext(this, tags);
+			IncidentService.Instance.PerformIncident(context);
 		}
 
 		public Biome CalculateTileBiome(LandType landType, float rainfall, float fertility)
@@ -188,11 +213,8 @@ namespace Game.WorldGeneration
 
 		public List<Person> GetPeopleFromFaction(Faction faction)
 		{
-			var query =
-				from person in people
-				where person.faction == faction
-				select person;
-			return query.ToList();
+			var people = creatures.Where(x => x is Person) as List<Person>;
+			return people.Where(x => x.faction == faction).ToList();
 		}
 
 		private List<City> GetAllCities()
@@ -217,19 +239,19 @@ namespace Game.WorldGeneration
 			ongoingEvents.RemoveAll(oe => oe.duration <= 0);
 		}
 
-		private void AddPerson(Person person)
+		private void AddCreature(ICreature creature)
 		{
-			if(!people.Contains(person))
+			if(!creatures.Contains(creature))
 			{
-				deferredActions.Add(() => { people.Add(person); });
+				deferredActions.Add(() => { creatures.Add(creature); });
 			}
 		}
 
-		private void RemovePerson(Person person)
+		private void RemoveCreature(ICreature creature)
 		{
-			if (people.Contains(person))
+			if (creatures.Contains(creature))
 			{
-				deferredActions.Add(() => { people.Remove(person); });
+				deferredActions.Add(() => { creatures.Remove(creature); });
 			}
 		}
 	
@@ -243,6 +265,74 @@ namespace Game.WorldGeneration
 				{
 					worldChunks[x, y] = new Chunk(this, new Vector2Int(x, y));
 				}
+			}
+		}
+
+		public void BuildRoads()
+		{
+			var tileMap = new Tile[worldChunks.GetLength(0) * chunkSize, worldChunks.GetLength(1) * chunkSize];
+			foreach (var chunk in worldChunks)
+			{
+				foreach (var tile in chunk.chunkTiles)
+				{
+					var pos = tile.GetWorldPosition();
+					tileMap[pos.x, pos.y] = tile;
+				}
+			}
+
+			//roads to capital cities
+			if (factions.Count > 1)
+			{
+				float DetermineAStarCost(Tile from, Tile to)
+				{
+					if(to.roadDirections.Count > 0)
+					{
+						return 0;
+					}
+					var toHeight = to.chunk.SampleNoiseMap(Enums.MapCategory.TERRAIN, to.coords);
+					var fromHeight = from.chunk.SampleNoiseMap(Enums.MapCategory.TERRAIN, from.coords);
+					var riverCost = 0;
+					if(to.biome.landType == LandType.RIVER)
+					{
+						if(to.riverDirections.Count == 2 &&
+						((to.riverDirections.Contains(Direction.SOUTH) && to.riverDirections.Contains(Direction.NORTH)) || (to.riverDirections.Contains(Direction.WEST) && to.riverDirections.Contains(Direction.EAST))) &&
+						from.biome.landType != LandType.RIVER)
+						{
+							riverCost = 5;
+						}
+						else
+						{
+							riverCost = 100000;
+						}
+					}
+					var oceanCost = to.biome.landType == LandType.OCEAN ? 100000 : 0;
+					return (1.0f * (1.0f + Mathf.Abs(toHeight - fromHeight))) + riverCost + oceanCost;
+				}
+
+				var remainingFactions = new List<Faction>();
+				remainingFactions.AddRange(factions);
+				var current = SimRandom.RandomEntryFromList(remainingFactions);
+				do
+				{
+					remainingFactions.Remove(current);
+					remainingFactions.OrderBy(x => Tile.GetDistanceBetweenTiles(current.cities[0].tile, x.cities[0].tile));
+					var closest = remainingFactions[0];
+
+					var aStarPath = AStarPathfinder.AStarBestPath(current.cities[0].tile, closest.cities[0].tile, tileMap, DetermineAStarCost);
+
+					for (int a = 1; a < aStarPath.Count - 1; a++)
+					{
+						var currentTile = aStarPath[a];
+						if (currentTile.biome.landType != LandType.OCEAN)
+						{
+							currentTile.AddRoadDirection(currentTile.DetermineAdjacentRelativeDirection(aStarPath[a - 1]));
+							currentTile.AddRoadDirection(currentTile.DetermineAdjacentRelativeDirection(aStarPath[a + 1]));
+						}
+					}
+
+					current = closest;
+				}
+				while (remainingFactions.Count > 1);
 			}
 		}
 
@@ -481,14 +571,14 @@ namespace Game.WorldGeneration
 			deferredActions.Clear();
 		}
 
-		private void OnPersonCreated(PersonCreatedEvent simEvent)
+		private void OnCreatureCreated(CreatureCreatedEvent simEvent)
 		{
-			AddPerson(simEvent.person);
+			AddCreature(simEvent.creature);
 		}
 
-		private void OnPersonDeath(PersonDiedEvent simEvent)
+		private void OnCreatureDeath(CreatureDiedEvent simEvent)
 		{
-			RemovePerson(simEvent.person);
+			RemoveCreature(simEvent.creature);
 		}
 
 		private void OnFactionCreated(FactionCreatedEvent simEvent)
@@ -517,8 +607,8 @@ namespace Game.WorldGeneration
 
 		private void SubscribeToEvents()
 		{
-			EventManager.Instance.AddEventHandler<PersonCreatedEvent>(OnPersonCreated);
-			EventManager.Instance.AddEventHandler<PersonDiedEvent>(OnPersonDeath);
+			EventManager.Instance.AddEventHandler<CreatureCreatedEvent>(OnCreatureCreated);
+			EventManager.Instance.AddEventHandler<CreatureDiedEvent>(OnCreatureDeath);
 			EventManager.Instance.AddEventHandler<FactionCreatedEvent>(OnFactionCreated);
 			EventManager.Instance.AddEventHandler<FactionDestroyedEvent>(OnFactionDestroyed);
 		}

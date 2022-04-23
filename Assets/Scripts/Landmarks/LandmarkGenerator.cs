@@ -27,6 +27,11 @@ namespace Game.Generators
 			return SpawnCity(tile, faction, STARTING_FOOD, STARTING_POPULATION);
 		}
 
+		public static void SpawnMeteorCrater()
+		{
+
+		}
+
 		public static void RegisterLandmark(Tile tile, Landmark landmark)
 		{
 			tile.landmarks.Add(landmark);
