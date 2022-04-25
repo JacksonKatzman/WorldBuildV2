@@ -9,7 +9,7 @@ using Game.Races;
 using Game.Incidents;
 using Game.Creatures;
 
-public class Person : ITimeSensitive, IRecordable, IIncidentInstigator, ICreature
+public class Person : ITimeSensitive, IIncidentInstigator, ICreature
 {
 	public static int STARTING_PRIORITY_POINTS = 5;
 

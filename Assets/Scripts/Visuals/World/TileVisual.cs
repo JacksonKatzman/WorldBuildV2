@@ -36,6 +36,8 @@ namespace Game.Visuals
 		private List<PropPlaceholder> props;
 		private List<LandmarkPropPlaceholder> landmarkProps;
 
+		private int lastRotation;
+
 		public Renderer Renderer => terrainObjectRoot.GetComponent<Renderer>();
 
 		public void UpdateVisuals()
@@ -171,7 +173,11 @@ namespace Game.Visuals
 				tileRoot.gameObject.SetActive(false);
 				tileRoot = roadPieces.Find(x => x.type == bisectType).gameObject.transform;
 				tileRoot.gameObject.SetActive(true);
-				tileRoot.Rotate(0, rotationDegrees, 0);
+				if (lastRotation != rotationDegrees)
+				{
+					tileRoot.Rotate(0, rotationDegrees, 0);
+					lastRotation = rotationDegrees;
+				}
 			}
 		}
 

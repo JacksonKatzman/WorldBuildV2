@@ -1,14 +1,22 @@
 ﻿using Game.Generators.Items;
+using Game.Incidents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Game.Landmarks
 {
-	public class MeteorCrater : Landmark
+	public class MeteorCrater : Landmark, IInventoryContainer
 	{
 		public Material material;
 		public int remainingResource;
-		public List<Item> items;
+		private List<Item> items;
+
+		public List<Item> Inventory => items;
+
+		public MeteorCrater()
+		{
+		}
 
 		public MeteorCrater(Material material, params Item[] items)
 		{

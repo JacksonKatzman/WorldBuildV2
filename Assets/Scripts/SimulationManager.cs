@@ -100,7 +100,7 @@ public class SimulationManager : MonoBehaviour
             FactionGenerator.SpawnFaction(world);
         }
 
-        //GenerateWorldVisuals();
+        GenerateWorldVisuals();
     }
 
     private void GenerateWorldVisuals()

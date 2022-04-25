@@ -54,5 +54,10 @@ namespace Game.Incidents
 				EventManager.Instance.Dispatch(simEvent);
 			}
 		}
+
+		protected override void LogModifier()
+		{
+			targets.ForEach(x => incidentLogs.Add(x.Name + " died."));
+		}
 	}
 }

@@ -17,6 +17,9 @@ namespace Game.Incidents
 
 		public IncidentContext context;
 
+		public string baseDescription;
+		private List<string> incidentLog;
+
 		public List<IncidentModifier> Incidents => GetIncidentModifiers();
 
 		public CoreIncident() { }
@@ -67,6 +70,9 @@ namespace Game.Incidents
 			modifiers.ForEach(x => x.Finish());
 
 			//Log somehow
+			incidentLog = new List<string>();
+			incidentLog.Add(baseDescription);
+			modifiers.ForEach(x => incidentLog.AddRange(x.incidentLogs));
 		}
 
 		public void Modify(Action<IncidentModifier> action)

@@ -22,6 +22,9 @@ namespace Game.Incidents
 
 		public int replaceID;
 
+		[HideInInspector]
+		public List<string> incidentLogs;
+
 		public List<IncidentModifier> Incidents => GetIncidentModifiers();
 
 		protected IncidentModifier(List<IIncidentTag> tags, float probability)
@@ -82,6 +85,14 @@ namespace Game.Incidents
 			modifiers.ForEach(x => x.Run(context));
 
 			modifiers.ForEach(x => x.Finish());
+
+			incidentLogs = new List<string>();
+			LogModifier();
+			modifiers.ForEach(x => incidentLogs.AddRange(x.incidentLogs));
+		}
+
+		protected virtual void LogModifier()
+		{
 		}
 
 		public void Modify(Action<IncidentModifier> action)
