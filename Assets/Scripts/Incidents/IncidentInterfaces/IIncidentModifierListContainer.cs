@@ -10,7 +10,7 @@ namespace Game.Incidents
 			get;
 		}
 		//public List<IncidentModifier> Required
-		public void Modify(Action<IncidentModifier> action);
+		public void Modify(Action<IModifierInfoContainer> action);
 		public void ReplaceModifier(IncidentModifier replaceWith, int replaceID);
 	}
 }

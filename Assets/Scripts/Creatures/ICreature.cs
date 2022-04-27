@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.Creatures
 {
-	public interface ICreature : IRecordable
+	public interface ICreature : IRecordable, IAgeSensitive
 	{
 		public List<Item> Inventory
 		{

@@ -75,7 +75,7 @@ namespace Game.Incidents
 			modifiers.ForEach(x => incidentLog.AddRange(x.incidentLogs));
 		}
 
-		public void Modify(Action<IncidentModifier> action)
+		public void Modify(Action<IModifierInfoContainer> action)
 		{
 			Incidents.ForEach(x => x.Modify(action));
 		}

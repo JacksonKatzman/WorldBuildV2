@@ -16,6 +16,8 @@ public class Person : ITimeSensitive, IIncidentInstigator, ICreature
 	public string Name => GetName();
 	public List<Item> Inventory => inventory;
 
+	public int Age => age;
+
 	private string name;
 	public string personalTitle = "{0}";
 	public int age;

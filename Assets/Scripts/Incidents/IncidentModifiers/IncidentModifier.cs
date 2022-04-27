@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public abstract class IncidentModifier : IIncidentModifierListContainer
+	public abstract class IncidentModifier : IIncidentModifierListContainer, IModifierInfoContainer
 	{
 		[SerializeField]
 		private List<IIncidentTag> tags;
@@ -43,7 +43,7 @@ namespace Game.Incidents
 			this.optional = optional;
 		}
 
-		protected void ProvideModifierInfo(Action<IncidentModifier> action)
+		protected void ProvideModifierInfo(Action<IModifierInfoContainer> action)
 		{
 			parent.Modify(action);
 		}
@@ -95,7 +95,7 @@ namespace Game.Incidents
 		{
 		}
 
-		public void Modify(Action<IncidentModifier> action)
+		public virtual void Modify(Action<IModifierInfoContainer> action)
 		{
 			action.Invoke(this);
 			Incidents.ForEach(x => x.Modify(action));

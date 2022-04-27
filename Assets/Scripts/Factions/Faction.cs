@@ -13,7 +13,7 @@ using Game.Incidents;
 
 namespace Game.Factions
 {
-	public class Faction : ITimeSensitive, IRecordable, IIncidentInstigator
+	public class Faction : ITimeSensitive, IRecordable, IIncidentInstigator, IAgeSensitive
 	{
 		private static int STARTING_INFLUENCE = 10;
 		private static float AVERAGE_BIRTH_RATE = 0.0165f;
@@ -40,6 +40,9 @@ namespace Game.Factions
 		public Dictionary<Faction, float> factionTensions;
 		public int influence;
 		public World world;
+
+		public int age;
+		public int Age => age;
 
 		public int actionsRemaining;
 		private float foodProducedThisTurn;
@@ -108,6 +111,7 @@ namespace Game.Factions
 			CheckForDestruction();
 
 			turnsSinceLastExpansion++;
+			age++;
 		}
 		public bool SpawnCityWithinRadius(Tile tile, float foodAmount, int population)
 		{

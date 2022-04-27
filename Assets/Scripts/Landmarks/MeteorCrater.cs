@@ -10,9 +10,6 @@ namespace Game.Landmarks
 	{
 		public Material material;
 		public int remainingResource;
-		private List<Item> items;
-
-		public List<Item> Inventory => items;
 
 		public MeteorCrater()
 		{
@@ -21,7 +18,7 @@ namespace Game.Landmarks
 		public MeteorCrater(Material material, params Item[] items)
 		{
 			this.material = material;
-			this.items = items.ToList();
+			this.inventory = items.ToList();
 
 			remainingResource = SimRandom.RandomRange(50, 500);
 		}
@@ -35,6 +32,8 @@ namespace Game.Landmarks
 
 				//also add a chance to find any remaining item while they are mining
 			}
+
+			base.AdvanceTime();
 		}
 	}
 }
