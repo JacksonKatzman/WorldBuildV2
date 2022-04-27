@@ -20,10 +20,10 @@ namespace Game.Incidents
 			//var people = SimulationManager.Instance.World.People.Where(x => x.age >= x.naturalDeathAge).ToList();
 			//(coreIncident.core as ICreatureContainer)?.Creatures.AddRange(people);
 			//ProvideModifierInfo((x) => (x as ICreatureContainer)?.Creatures.AddRange(people));
-			ProvideModifierInfo(Foo);
+			ProvideModifierInfo(CreateModifierInfo);
 		}
 
-		public void Foo(IncidentModifier mod)
+		public void CreateModifierInfo(IModifierInfoContainer mod)
 		{
 			var people = SimulationManager.Instance.World.People.Where(x => x.age >= x.naturalDeathAge).ToList();
 			var container = (mod as ICreatureContainer);
