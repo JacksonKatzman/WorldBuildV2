@@ -24,6 +24,7 @@ namespace Game.WorldGeneration
 
 		public List<Biome> biomes;
 		public List<Faction> factions;
+		public List<ILandmark> landmarks;
 		public List<City> Cities => GetAllCities();
 		private List<War> wars;
 
@@ -42,6 +43,7 @@ namespace Game.WorldGeneration
 		{
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
 			factions = new List<Faction>();
+			landmarks = new List<ILandmark>();
 			creatures = new List<ICreature>();
 			wars = new List<War>();
 			ongoingEvents = new List<OngoingEvent>();
@@ -139,6 +141,15 @@ namespace Game.WorldGeneration
 		public void DeathEvent()
 		{
 			var tags = new List<IIncidentTag> { new InstigatorTag(typeof(World)), new WorldTag(new List<WorldTagType> { WorldTagType.DEATH }), new SpecialCaseTag(SpecialCaseTagType.END_OF_TURN) };
+			var context = new IncidentContext(this, tags);
+			IncidentService.Instance.PerformIncident(context);
+
+			TestDeath();
+		}
+
+		public void TestDeath()
+		{
+			var tags = new List<IIncidentTag> { new InstigatorTag(typeof(World)), new WorldTag(new List<WorldTagType> { WorldTagType.DEATH }), new SpecialCaseTag(SpecialCaseTagType.TEST) };
 			var context = new IncidentContext(this, tags);
 			IncidentService.Instance.PerformIncident(context);
 		}
@@ -605,12 +616,30 @@ namespace Game.WorldGeneration
 			}
 		}
 
+		public void OnLandmarkCreated(LandmarkCreatedEvent simEvent)
+		{
+			if (!landmarks.Contains(simEvent.landmark))
+			{
+				deferredActions.Add(() => { landmarks.Add(simEvent.landmark); });
+			}
+		}
+
+		public void OnLandmarkDestroyed(LandmarkDestroyedEvent simEvent)
+		{
+			if(landmarks.Contains(simEvent.landmark))
+			{
+				deferredActions.Add(() => { landmarks.Remove(simEvent.landmark); });
+			}
+		}
+
 		private void SubscribeToEvents()
 		{
 			EventManager.Instance.AddEventHandler<CreatureCreatedEvent>(OnCreatureCreated);
 			EventManager.Instance.AddEventHandler<CreatureDiedEvent>(OnCreatureDeath);
 			EventManager.Instance.AddEventHandler<FactionCreatedEvent>(OnFactionCreated);
 			EventManager.Instance.AddEventHandler<FactionDestroyedEvent>(OnFactionDestroyed);
+			EventManager.Instance.AddEventHandler<LandmarkCreatedEvent>(OnLandmarkCreated);
+			EventManager.Instance.AddEventHandler<LandmarkDestroyedEvent>(OnLandmarkDestroyed);
 		}
 	}
 }
