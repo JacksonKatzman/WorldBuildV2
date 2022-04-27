@@ -42,6 +42,8 @@ public class City : Landmark
 		OutputLogger.LogFormat("{0} City now contains a population of: {1}", LogSource.CITY, name, population.ToString());
 
 		HandleDesertion();
+
+		base.AdvanceTime();
 	}
 
 	public void UpdateFaction(Faction faction)

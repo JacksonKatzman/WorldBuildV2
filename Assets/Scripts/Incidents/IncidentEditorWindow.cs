@@ -12,7 +12,7 @@ namespace Game.Incidents
 {
 	public class IncidentEditorWindow : OdinEditorWindow
 	{
-        public static string INCIDENT_DATA_PATH = "/Resources/IncidentData.json";
+        public static string INCIDENT_DATA_PATH = "/Resources/IncidentData/";
         public static JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings()
         {
             // ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -56,16 +56,9 @@ namespace Game.Incidents
             {
                 incidents.Add(coreIncident);
 
-                var settings = new JsonSerializerSettings()
-                {
-                    // ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                    TypeNameHandling = TypeNameHandling.All
-                };
-
                 string output = JsonConvert.SerializeObject(incidents, Formatting.Indented, SERIALIZER_SETTINGS);
 
-                File.WriteAllText(Application.dataPath + INCIDENT_DATA_PATH, output);
+                File.WriteAllText(Application.dataPath + INCIDENT_DATA_PATH + coreIncident.incidentName + ".json", output);
             }
             else
 			{
@@ -76,13 +69,17 @@ namespace Game.Incidents
         public static List<CoreIncident> ParseIncidents()
 		{
             var list = new List<CoreIncident>();
-            var text = File.ReadAllText(Application.dataPath + INCIDENT_DATA_PATH);
-            if (text.Length > 0)
-            {
-                list = JsonConvert.DeserializeObject<List<CoreIncident>>(text, SERIALIZER_SETTINGS);
+            var files = Directory.GetFiles(Application.dataPath + INCIDENT_DATA_PATH, "*.json");
+            foreach(string file in files)
+			{
+                var text = File.ReadAllText(file);
+                if (text.Length > 0)
+                {
+                    list = JsonConvert.DeserializeObject<List<CoreIncident>>(text, SERIALIZER_SETTINGS);
+                }
             }
             return list;
-		}
+        }
     }
 
     //[CreateAssetMenu(fileName = nameof(EditableCoreIncident), menuName = "ScriptableObjects/Incidents/" + nameof(EditableCoreIncident), order = 1)]

@@ -1,0 +1,183 @@
+{
+  "$type": "System.Collections.Generic.List`1[[Game.Incidents.CoreIncident, Assembly-CSharp]], mscorlib",
+  "$values": [
+    {
+      "$id": "1",
+      "$type": "Game.Incidents.CoreIncident, Assembly-CSharp",
+      "incidentName": "Old Age Death",
+      "tags": {
+        "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentTag, Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$id": "2",
+            "$type": "Game.Incidents.WorldTag, Assembly-CSharp",
+            "tags": {
+              "$type": "System.Collections.Generic.List`1[[Game.Enums.WorldTagType, Assembly-CSharp]], mscorlib",
+              "$values": [
+                0
+              ]
+            }
+          },
+          {
+            "$id": "3",
+            "$type": "Game.Incidents.SpecialCaseTag, Assembly-CSharp",
+            "tagType": 0
+          },
+          {
+            "$id": "4",
+            "$type": "Game.Incidents.InstigatorTag, Assembly-CSharp",
+            "type": "Game.WorldGeneration.World, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+          }
+        ]
+      },
+      "weight": 100,
+      "required": {
+        "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentModifier, Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$id": "5",
+            "$type": "Game.Incidents.DeathModifier, Assembly-CSharp",
+            "parent": {
+              "$ref": "1"
+            },
+            "replaceID": 0,
+            "incidentLogs": null,
+            "Creatures": null,
+            "Incidents": {
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentModifier, Assembly-CSharp]], mscorlib",
+              "$values": []
+            }
+          },
+          {
+            "$id": "6",
+            "$type": "Game.Incidents.OldAgeModifier, Assembly-CSharp",
+            "parent": {
+              "$ref": "1"
+            },
+            "replaceID": 0,
+            "incidentLogs": null,
+            "Incidents": {
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentModifier, Assembly-CSharp]], mscorlib",
+              "$values": []
+            }
+          }
+        ]
+      },
+      "optional": {
+        "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentModifier, Assembly-CSharp]], mscorlib",
+        "$values": []
+      },
+      "context": null,
+      "baseDescription": null,
+      "Incidents": {
+        "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentModifier, Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$ref": "5"
+          },
+          {
+            "$ref": "6"
+          }
+        ]
+      }
+    },
+    {
+      "$id": "7",
+      "$type": "Game.Incidents.CoreIncident, Assembly-CSharp",
+      "incidentName": "Test Death",
+      "tags": {
+        "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentTag, Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$id": "8",
+            "$type": "Game.Incidents.InstigatorTag, Assembly-CSharp",
+            "type": "Game.WorldGeneration.World, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+          },
+          {
+            "$id": "9",
+            "$type": "Game.Incidents.WorldTag, Assembly-CSharp",
+            "tags": {
+              "$type": "System.Collections.Generic.List`1[[Game.Enums.WorldTagType, Assembly-CSharp]], mscorlib",
+              "$values": [
+                0
+              ]
+            }
+          },
+          {
+            "$id": "10",
+            "$type": "Game.Incidents.SpecialCaseTag, Assembly-CSharp",
+            "tagType": 1
+          }
+        ]
+      },
+      "weight": 98,
+      "required": {
+        "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentModifier, Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$id": "11",
+            "$type": "Game.Incidents.GetPersonWithContextModifier, Assembly-CSharp",
+            "criteria": {
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.SearchContext`1[[Person, Assembly-CSharp]], Assembly-CSharp]], mscorlib",
+              "$values": [
+                {
+                  "$id": "12",
+                  "$type": "Game.Incidents.AgeSearchContext, Assembly-CSharp",
+                  "ageRange": {
+                    "$id": "13",
+                    "$type": "System.Numerics.Vector2, System.Numerics",
+                    "X": 20.0,
+                    "Y": 69.0
+                  }
+                }
+              ]
+            },
+            "parent": {
+              "$ref": "7"
+            },
+            "replaceID": 0,
+            "incidentLogs": null,
+            "Incidents": {
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentModifier, Assembly-CSharp]], mscorlib",
+              "$values": []
+            }
+          },
+          {
+            "$id": "14",
+            "$type": "Game.Incidents.DeathModifier, Assembly-CSharp",
+            "parent": {
+              "$ref": "7"
+            },
+            "replaceID": 0,
+            "incidentLogs": null,
+            "Creatures": {
+              "$type": "System.Collections.Generic.List`1[[Game.Creatures.ICreature, Assembly-CSharp]], mscorlib",
+              "$values": []
+            },
+            "Incidents": {
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentModifier, Assembly-CSharp]], mscorlib",
+              "$values": []
+            }
+          }
+        ]
+      },
+      "optional": {
+        "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentModifier, Assembly-CSharp]], mscorlib",
+        "$values": []
+      },
+      "context": null,
+      "baseDescription": null,
+      "Incidents": {
+        "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentModifier, Assembly-CSharp]], mscorlib",
+        "$values": [
+          {
+            "$ref": "11"
+          },
+          {
+            "$ref": "14"
+          }
+        ]
+      }
+    }
+  ]
+}
