@@ -55,7 +55,7 @@ namespace Game.Incidents
 			}
 		}
 
-		protected override void LogModifier()
+		public override void LogModifier()
 		{
 			targets.ForEach(x => incidentLogs.Add(x.Name + " died."));
 		}

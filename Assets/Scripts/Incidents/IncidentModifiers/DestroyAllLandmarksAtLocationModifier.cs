@@ -23,5 +23,12 @@ namespace Game.Incidents
 				location.landmarks.ForEach(x => LandmarkGenerator.DestroyLandmark(x));
 			}
 		}
+		public override void LogModifier()
+		{
+			foreach (var location in locations)
+			{
+				incidentLogs.Add("All landmarks at " + location.Name + " were destroyed.");
+			}
+		}
 	}
 }

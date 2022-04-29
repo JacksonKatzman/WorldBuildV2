@@ -91,7 +91,7 @@ namespace Game.Incidents
 			modifiers.ForEach(x => incidentLogs.AddRange(x.incidentLogs));
 		}
 
-		protected virtual void LogModifier()
+		public virtual void LogModifier()
 		{
 		}
 

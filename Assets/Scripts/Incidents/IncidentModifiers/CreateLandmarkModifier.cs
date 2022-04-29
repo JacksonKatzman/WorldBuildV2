@@ -1,4 +1,5 @@
-﻿using Game.Generators;
+﻿using Game.Data.EventHandling.EventRecording;
+using Game.Generators;
 using Game.Generators.Items;
 using Game.WorldGeneration;
 using Sirenix.OdinInspector;
@@ -45,6 +46,16 @@ namespace Game.Incidents
 					LandmarkGenerator.RegisterLandmark(location, (Landmark)landmark);
 					(landmark as IInventoryContainer)?.Inventory.AddRange(inventory);
 				}
+			}
+		}
+
+		public override void LogModifier()
+		{
+			var landmarkName = (landmarkType as IRecordable).Name;
+
+			foreach(var location in locations)
+			{
+				incidentLogs.Add(landmarkName + " was created within " + location.Name);
 			}
 		}
 	}
