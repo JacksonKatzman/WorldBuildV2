@@ -1,7 +1,6 @@
 using Game.Creatures;
 using Game.Enums;
 using Game.Generators.Items;
-using Game.ModularEvents;
 using Game.Races;
 using Game.Visuals;
 using System;
@@ -29,8 +28,6 @@ public class DataManager : MonoBehaviour
     public Dictionary<Race, NameContainer> nameContainers;
 
     public MaterialGenerator MaterialGenerator;
-
-    public List<ModularEventNode> modularEventNodes;
 
     private Dictionary<int, List<Race>> weightedRaceDictionary;
 
@@ -67,8 +64,6 @@ public class DataManager : MonoBehaviour
         BuildWeightedRaceDictionary();
 
         BuildCreatureDictionary();
-
-        BuildModularEventList();
 
         foreach (var race in races)
         {
@@ -107,19 +102,5 @@ public class DataManager : MonoBehaviour
 				creatures.Add(((Game.Creatures.MonsterStats)c).Name, ((Game.Creatures.MonsterStats)c));
             }
         }
-    }
-
-    private void BuildModularEventList()
-	{
-        var nodes = Resources.LoadAll("ScriptableObjects/ModularEvents");
-        modularEventNodes = new List<ModularEventNode>();
-
-        if(nodes != null)
-		{
-            foreach(var node in nodes)
-			{
-                modularEventNodes.Add((ModularEventNode)node);
-			}
-		}
     }
 }
