@@ -28,5 +28,5 @@ namespace Game.Enums
 	public enum TileBisectType { NONE, STRAIGHT, CURVE, THREEWAY, FOURWAY, DOUBLE };
 	public enum Disposition { PASSIVE, AGGRESSIVE };
 	public enum WorldTagType { DEATH };
-	public enum SpecialCaseTagType { END_OF_TURN };
+	public enum SpecialCaseTagType { END_OF_TURN, TEST };
 }

@@ -66,5 +66,5 @@ crashlytics-build.properties
 # Ignore all unpacked demos.
 /Assets/Plugins/Sirenix/Demos/*
 
-/[Aa]ssets/PolygonAssets/
-/[Aa]ssets/Plugins/
+/[Aa]ssets/PolygonAssets/*
+/[Aa]ssets/Plugins/*

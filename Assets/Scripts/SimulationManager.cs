@@ -100,7 +100,7 @@ public class SimulationManager : MonoBehaviour
             FactionGenerator.SpawnFaction(world);
         }
 
-        GenerateWorldVisuals();
+        //GenerateWorldVisuals();
     }
 
     private void GenerateWorldVisuals()
@@ -196,8 +196,8 @@ public class SimulationManager : MonoBehaviour
         OutputLogger.LogFormat("Full generation took {0} seconds.", LogSource.PROFILE, Time.realtimeSinceStartup - startTime);
         //world.HandleCleanup();
         //RedrawFactionMap();
-        world.BuildRoads();
-        visualBuilder?.UpdateVisuals();
+        //world.BuildRoads();
+        //visualBuilder?.UpdateVisuals();
         OutputLogger.LogFormat("Years passed since world generation: {0}", LogSource.MAIN, world.yearsPassed);
 	}
 
