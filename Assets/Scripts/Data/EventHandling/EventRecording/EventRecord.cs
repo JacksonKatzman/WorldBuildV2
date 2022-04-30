@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using UnityEngine;
+using System.Linq;
 
 namespace Game.Data.EventHandling.EventRecording
 {
@@ -34,7 +35,12 @@ namespace Game.Data.EventHandling.EventRecording
 				context.Replace(toReplace, replaceWith);
 			}
 
-			writtenRecord += context;
+			writtenRecord += (context + " ");
+		}
+
+		public string GetContext()
+		{
+			return string.Format(writtenRecord, records.Select(r => r.Name).ToArray());
 		}
 	}
 }

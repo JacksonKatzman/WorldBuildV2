@@ -9,6 +9,7 @@ using Game.Factions;
 using Game.Generators;
 using Game.Debug;
 using Game.Data.EventHandling.EventRecording;
+using Game.Visuals;
 
 public class SimulationManager : MonoBehaviour
 {
@@ -34,9 +35,12 @@ public class SimulationManager : MonoBehaviour
     [SerializeField]
     GameObject cityMarker;
 
+    [SerializeField]
+    WorldVisualBuilder visualBuilder;
+
     private List<GameObject> cityMarkers;
 
-    private EventRecorder eventRecorder;
+    public EventRecorder eventRecorder;
 
     public float heightMulitplier;
     public AnimationCurve heightCurve;
@@ -76,18 +80,34 @@ public class SimulationManager : MonoBehaviour
 
         seededRandom = new System.Random(seed);
 
-        DrawNoiseMap();
+        GenerateWorld();
+
+        //DrawNoiseMap();
 
         //DrawMesh(MeshGenerator.GenerateVoxelTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.voxelColorMapTexture);
 
-        for (int a = 0; a < 3; a++)
+        world.HandleDeferredActions();
+
+        //RedrawFactionMap();
+    }
+
+    public void GenerateWorld()
+	{
+        world = WorldGenerator.GenerateWorld(settings, chunkSize, biomeSettings.biomes);
+
+        for (int a = 0; a < 10; a++)
         {
             FactionGenerator.SpawnFaction(world);
         }
 
-        world.HandleDeferredActions();
+        GenerateWorldVisuals();
+    }
 
-        RedrawFactionMap();
+    private void GenerateWorldVisuals()
+	{
+        visualBuilder.BuildWorld(world);
+        visualBuilder.UpdateVisuals();
+        timer.PrintFindings();
     }
 
     public void DrawNoiseMap()
@@ -175,7 +195,9 @@ public class SimulationManager : MonoBehaviour
         timer.PrintFindings();
         OutputLogger.LogFormat("Full generation took {0} seconds.", LogSource.PROFILE, Time.realtimeSinceStartup - startTime);
         //world.HandleCleanup();
-        RedrawFactionMap();
+        //RedrawFactionMap();
+        world.BuildRoads();
+        visualBuilder?.UpdateVisuals();
         OutputLogger.LogFormat("Years passed since world generation: {0}", LogSource.MAIN, world.yearsPassed);
 	}
 

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Enums;
 using Game.Factions;
+using Game.Data.EventHandling.EventRecording;
 
 namespace Game.WorldGeneration
 {
-    public class Tile : ITimeSensitive, IMutableZone
+    public class Tile : ITimeSensitive, IMutableZone, IRecordable
     {
+		public string Name => name;
         public World world;
         public Chunk chunk;
         public Vector2Int coords;
@@ -18,7 +20,12 @@ namespace Game.WorldGeneration
 		public float baseMoisture;
 		public float baseFertility;
 
+		public readonly List<Direction> riverDirections;
+		public readonly List<Direction> roadDirections;
+
 		public List<Landmark> landmarks;
+
+		private string name;
 
 		public Tile(World world, Chunk chunk, Vector2Int coords)
 		{
@@ -26,9 +33,28 @@ namespace Game.WorldGeneration
 			this.chunk = chunk;
 			this.coords = coords;
 
+			riverDirections = new List<Direction>();
+			roadDirections = new List<Direction>();
+
 			landmarks = new List<Landmark>();
 
 			CalculateBiome();
+		}
+
+		public void AddRiverDirection(Direction d)
+		{
+			if(!riverDirections.Contains(d))
+			{
+				riverDirections.Add(d);
+			}
+		}
+
+		public void AddRoadDirection(Direction d)
+		{
+			if (!roadDirections.Contains(d))
+			{
+				roadDirections.Add(d);
+			}
 		}
 
 		private float Value => chunk.noiseMap[coords.x, coords.y];
@@ -108,14 +134,6 @@ namespace Game.WorldGeneration
 
 			return tileList;
 		}
-
-		public static int GetDistanceBetweenTiles(Tile tileA, Tile tileB)
-		{
-			var posA = tileA.GetWorldPosition();
-			var posB = tileB.GetWorldPosition();
-			return (int)(posA - posB).magnitude;
-		}
-
 		private void CalculateBiome()
 		{
 			landType = Biome.CalculateLandType(Value);
@@ -161,8 +179,56 @@ namespace Game.WorldGeneration
 			controller = newFaction;
 			for (int i = 0; i < landmarks.Count; i++)
 			{
-				landmarks[i].faction = newFaction;
+				landmarks[i].Faction = newFaction;
 			}
 		}
-    }
+
+		public static int GetDistanceBetweenTiles(Tile tileA, Tile tileB)
+		{
+			var posA = tileA.GetWorldPosition();
+			var posB = tileB.GetWorldPosition();
+			return (int)(posA - posB).magnitude;
+		}
+
+		public static City GetClosestCityToTile(List<City> cities, Tile tile)
+		{
+			var distance = int.MaxValue;
+			City closestCity = null;
+
+			for(int i = 0; i < cities.Count; i++)
+			{
+				var checkDist = GetDistanceBetweenTiles(cities[i].tile, tile);
+				if (checkDist < distance)
+				{
+					distance = checkDist;
+					closestCity = cities[i];
+				}
+			}
+
+			return closestCity;
+		}
+
+		public Direction DetermineAdjacentRelativeDirection(Tile other)
+		{
+			var myWorldPos = GetWorldPosition();
+			var otherWorldPos = other.GetWorldPosition();
+
+			if(otherWorldPos.x > myWorldPos.x)
+			{
+				return Direction.EAST;
+			}
+			else if(otherWorldPos.x < myWorldPos.x)
+			{
+				return Direction.WEST;
+			}
+			else if(otherWorldPos.y > myWorldPos.y)
+			{
+				return Direction.NORTH;
+			}
+			else
+			{
+				return Direction.SOUTH;
+			}
+		}
+	}
 }

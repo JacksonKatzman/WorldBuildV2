@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Data.EventHandling;
 using Game.Enums;
+using Game.Holiday;
 
 namespace Game.Factions
 {
 	public class Government
 	{
 		public List<LeadershipTier> leadershipStructure;
+		public List<Holiday.Holiday> holidays;
 		private Faction faction;
 		public Priorities priorities;
+		public FactionStats stats;
 
 		private int numberOfTimesUpgraded = 0;
 		private int turnsSinceLastUpgrade = 0;
@@ -19,6 +22,9 @@ namespace Game.Factions
 		{
 			this.faction = faction;
 			priorities = new Priorities(0, 0, 0, 0, 0);
+			stats = new FactionStats();
+
+			holidays = new List<Holiday.Holiday>();
 
 			BuildInitialLeadershipStructure();
 
@@ -52,6 +58,44 @@ namespace Game.Factions
 			*/
 		}
 
+		public void BuildNewGovernmentTier()
+		{
+			var initialTierCount = leadershipStructure.Count;
+			var positionsInNewTier = SimRandom.RandomRange(initialTierCount + 1, (initialTierCount + 1) * 2 + 1);
+			var tier = new LeadershipTier();
+			var ageRange = new Vector2Int(SimRandom.RandomRange(16, 56), SimRandom.RandomRange(56, 76));
+
+			for (int i = 0; i < positionsInNewTier; i++)
+			{
+				tier.tier.Add(new LeadershipStructureNode(ageRange, (Gender)SimRandom.RandomRange(0, 3)));
+			}
+
+			leadershipStructure.Add(tier);
+
+			NameGenerator.GenerateTitleStructure(leadershipStructure, priorities, faction.race);
+
+			if (initialTierCount <= 3)
+			{
+				foreach (LeadershipStructureNode node in tier)
+				{
+					DetermineNewLeader(node);
+				}
+			}
+		}
+
+		public void AddLeaderToRandomTierWeighted()
+		{
+			var weighted = new Dictionary<int, List<LeadershipTier>>();
+			for(int i = 0; i < leadershipStructure.Count; i++)
+			{
+				weighted.Add((int)Mathf.Pow((i+1), 2), new List<LeadershipTier>{ leadershipStructure[i] });
+			}
+
+			var chosenTier = SimRandom.RandomEntryFromWeightedDictionary(weighted);
+			var ageRange = new Vector2Int(SimRandom.RandomRange(16, 56), SimRandom.RandomRange(56, 76));
+			chosenTier.tier.Add(new LeadershipStructureNode(ageRange, (Gender)SimRandom.RandomRange(0, 3)));
+		}
+
 		private void BuildInitialLeadershipStructure()
 		{
 			leadershipStructure = new List<LeadershipTier>();
@@ -61,7 +105,7 @@ namespace Game.Factions
 
 			leadershipStructure.Add(leadershipTier);
 
-			NameGenerator.GenerateTitleStructure(leadershipStructure, priorities);
+			NameGenerator.GenerateTitleStructure(leadershipStructure, priorities, faction.race);
 
 			foreach(LeadershipTier tier in leadershipStructure)
 			{
@@ -72,11 +116,14 @@ namespace Game.Factions
 			}
 		}
 
-		private void OnPersonDeath(PersonDiedEvent simEvent)
+		private void OnPersonDeath(CreatureDiedEvent simEvent)
 		{
-			if (simEvent.person.governmentOffice != null && simEvent.person.faction.government == this)
+			if (simEvent.creature is Person person)
 			{
-				DetermineNewLeader(simEvent.person.governmentOffice);
+				if (person.governmentOffice != null && person.faction.government == this)
+				{
+					DetermineNewLeader(person.governmentOffice);
+				}
 			}
 		}
 
@@ -89,7 +136,7 @@ namespace Game.Factions
 
 		private void SubscribeToEvents()
 		{
-			EventManager.Instance.AddEventHandler<PersonDiedEvent>(OnPersonDeath);
+			EventManager.Instance.AddEventHandler<CreatureDiedEvent>(OnPersonDeath);
 		}
 	}
 }

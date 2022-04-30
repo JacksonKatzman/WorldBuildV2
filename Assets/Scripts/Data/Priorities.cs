@@ -20,6 +20,11 @@ public class Priorities
 		priorities.Add(PriorityType.RELIGIOUS, Mathf.Clamp(religiousScore, 0, 20));
 	}
 
+	public PriorityType TopPriority()
+	{
+		return SortedList()[0];
+	}
+
 	public List<PriorityType> SortedList()
 	{
 		Dictionary<int, List<PriorityType>> sorter = new Dictionary<int, List<PriorityType>>();
@@ -76,6 +81,16 @@ public class Priorities
 			operatedPriorities.priorities[priorityType] = a.priorities[priorityType] / b;
 		}
 		return operatedPriorities;
+	}
+
+	public int GetTotalScore()
+	{
+		var score = 0;
+		foreach(var pair in priorities)
+		{
+			score += pair.Value;
+		}
+		return score;
 	}
 
 	public override string ToString()

@@ -7,7 +7,7 @@ namespace Game.Generators.Items
 {
 	public static class ItemGenerator
 	{
-		public static Relic GenerateRelic(List<MaterialUse> uses, int actives, int passives)
+		public static Item GenerateRelic(List<MaterialUse> uses, int actives)
 		{
 			var name = NameGenerator.GenerateRelicName();
 
@@ -20,13 +20,7 @@ namespace Game.Generators.Items
 				activesList.Add(SimAIManager.Instance.GetRandomLoreEvent());
 			}
 
-			var passivesList = new List<MethodInfo>();
-			for (int i = 0; i < actives; i++)
-			{
-
-			}
-
-			var relic = new Relic(name, material, activesList, passivesList);
+			var relic = new Item(name, material, activesList, new List<string>());
 			return relic;
 		}
 	}

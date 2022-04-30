@@ -1,6 +1,7 @@
 ﻿using Game.Data.EventHandling;
 using Game.Enums;
 using Game.Factions;
+using Game.Races;
 using Game.WorldGeneration;
 using System.Collections;
 using UnityEngine;
@@ -15,14 +16,16 @@ namespace Game.Generators
 		public static void SpawnFaction(World world)
 		{
 			bool spawned = false;
+
 			int attempts = 0;
 			while (!spawned && attempts < MAX_SPAWN_ATTEMPTS)
 			{
-				var chosenTile = world.GetRandomTile();
+				var randomTile = world.GetRandomTile();
+				var chosenTile = LandmarkGenerator.FindSuitableCityLocation(randomTile, 1, 10, 0.5f, 0.2f, 7);
 
-				if (LandmarkGenerator.IsSuitableCityLocation(chosenTile, 0.5f, 0.2f))
+				if (chosenTile != null)
 				{
-					SpawnFaction(chosenTile, STARTING_FOOD, STARTING_POPULATION);
+					SpawnFaction(chosenTile, STARTING_FOOD, STARTING_POPULATION, DataManager.Instance.GetRandomWeightedRace());
 					spawned = true;
 				}
 				attempts++;
@@ -34,9 +37,9 @@ namespace Game.Generators
 			}
 		}
 
-		public static void SpawnFaction(Tile tile, float foodAmount, int population)
+		public static void SpawnFaction(Tile tile, float foodAmount, int population, Race race)
 		{
-			var faction = new Faction(tile, foodAmount, population);
+			var faction = new Faction(tile, foodAmount, population, race);
 			EventManager.Instance.Dispatch(new FactionCreatedEvent(faction));
 
 			OutputLogger.LogFormat("Spawned faction in chunk ({0},{1}) in tile ({2},{3})).",

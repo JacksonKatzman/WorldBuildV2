@@ -19,7 +19,7 @@ public abstract class OutputLogger
 	{ LogSource.FACTIONACTION, false },
 	{ LogSource.PEOPLE, false },
 	{ LogSource.EVENT, true },
-	{ LogSource.PROFILE, false },
+	{ LogSource.PROFILE, true },
 	{ LogSource.MAIN, false }
 };
 
@@ -38,5 +38,15 @@ public abstract class OutputLogger
 		{
 			SimulationManager.Instance.DebugPause = true;
 		}
+	}
+
+	public static void Log(string log)
+	{
+		Debug.Log(log);
+	}
+
+	public static void LogError(string log)
+	{
+		Debug.LogError(log);
 	}
 }

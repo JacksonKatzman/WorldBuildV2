@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Enums;
+using Game.Data;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+using System;
+using Games.Visuals;
+using System.Linq;
 
 namespace Game.WorldGeneration
 {
-	[System.Serializable]
-	public class Biome
+	[CreateAssetMenu(fileName = nameof(Biome), menuName = "ScriptableObjects/Biomes/" + nameof(Biome), order = 1)]
+	public class Biome : SerializedScriptableObject
 	{
 		private static float OCEAN_THRESHOLD = 0.2f;
 		private static float FLAT_THRESHOLD = 0.5f;
@@ -25,6 +31,13 @@ namespace Game.WorldGeneration
 
 		[Range(0.0f, 1.0f)]
 		public float availableLand;
+
+		public List<GameObject> tilePrefab;
+
+		[SerializeField]
+		List<PropContainer> propContainers;
+
+		public Dictionary<int, List<GameObject>> propDictionary => BuildPropDictionary();
 
 		public static LandType CalculateLandType(float elevation)
 		{
@@ -78,6 +91,23 @@ namespace Game.WorldGeneration
 			}
 
 			return currentBestBiome;
+		}
+
+		public static Biome GetRandomBiomeByLandType(List<Biome> biomes, LandType landType)
+		{
+			var matches = biomes.Where(x => x.landType == landType).ToList();
+			return SimRandom.RandomEntryFromList(matches);
+		}
+
+		private Dictionary<int, List<GameObject>> BuildPropDictionary()
+		{
+			var dictionary = new Dictionary<int, List<GameObject>>();
+			foreach(var container in propContainers)
+			{
+				dictionary.Add(container.weight, container.props);
+			}
+
+			return dictionary;
 		}
 	}
 }

@@ -35,12 +35,14 @@ namespace Game.Data.EventHandling
 			var materialUse = SimRandom.RandomFloat01() > 0.5f ? MaterialUse.Construction : MaterialUse.Forging;
 			var material = DataManager.Instance.MaterialGenerator.GetRandomMaterialByUse(materialUse, true);
 
-			Relic relic = null;
+			Item relic = null;
 			var relicChance = SimRandom.RandomRange(0, 10);
 			if ((relicChance -= 2) <= 0)
 			{
-				relic = ItemGenerator.GenerateRelic(new List<MaterialUse> { MaterialUse.Forging }, SimRandom.RandomRange(0,2), SimRandom.RandomRange(0, 2));
+				relic = ItemGenerator.GenerateRelic(new List<MaterialUse> { MaterialUse.Forging }, SimRandom.RandomRange(0,2));
 			}
+
+			record.AddContext("A meteor is spotted streaking through the nightsky.");
 
 			//Decide whether it strikes or is averted somehow
 			var aversionChance = SimRandom.RandomRange(0, 10);
@@ -49,9 +51,13 @@ namespace Game.Data.EventHandling
 				//spawn great person who magically prevents meteor and pockets relic if there is one
 				var person = new Person(new List<RoleType> { RoleType.MAGIC_USER });
 				PersonGenerator.RegisterPerson(person);
+
+				record.AddContext("By mere happenstance, the wizard {0} was near enough to the point of collision to slow the meteor, bringing it harmlessly to rest in a nearby meadow.", person);
+
 				if(relic != null)
 				{
 					person.inventory.Add(relic);
+					record.AddContext("From within the meteor, {0} recovered {1}, a magical artifact of unknown origin.", person, relic);
 				}
 			}
 			else
@@ -62,23 +68,28 @@ namespace Game.Data.EventHandling
 				{
 					crater = new MeteorCrater(material, relic);
 					relic.Activate();
+
+					record.AddContext("The meteor, made of solid {0}, crashes into the earth at {1}, creating the crater: {2}. Buried deep within the crater, {3} lies unclaimed.", material, chosenTile, crater, relic);
 				}
 				else
 				{
 					crater = new MeteorCrater(material);
+					record.AddContext("The meteor, made of solid {0}, crashes into the earth at {1}, creating the crater: {2}.", material, chosenTile, crater);
 				}
 				//Decide what faction if any claims it or does anything with it
-				crater.faction = chosenTile.controller;
+				crater.Faction = chosenTile.controller;
 
 				//handle destroying other landmarks if they existed
 				for (int i = 0; i < chosenTile.landmarks.Count; i++)
 				{
 					LandmarkGenerator.DestroyLandmark(chosenTile.landmarks[i]);
+					record.AddContext("The meteor's collision destroyed {0}.", chosenTile.landmarks[i]);
 				}
 
 				chosenTile.landmarks.Clear();
 
 				LandmarkGenerator.RegisterLandmark(chosenTile, crater);
+				SimulationManager.Instance.eventRecorder.eventRecords.Add(record);
 			}
 		}
 

@@ -56,12 +56,13 @@ public static class SimRandom
 		}
 
         T randomItem = default(T);
+        var randomWeight = RandomRange(0, totalWeight);
 
         foreach (var pair in collection)
         {
-            if((totalWeight -= pair.Key) <= 0)
+            if((randomWeight -= pair.Key) <= 0)
 			{
-                randomItem = RandomEntryFromList(pair.Value);
+                return RandomEntryFromList(pair.Value);
 			}
         }
 

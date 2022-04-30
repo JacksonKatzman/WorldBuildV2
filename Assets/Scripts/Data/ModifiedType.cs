@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public abstract class ModifiedType<T> : ITimeSensitive
 {
-	protected T original;
+	public T original;
 	protected List<TimedTypeModifier<T>> addMods;
 	protected List<TimedTypeModifier<T>> multMods;
 
@@ -47,6 +48,7 @@ public abstract class ModifiedType<T> : ITimeSensitive
 	}
 }
 
+[System.Serializable]
 public class ModifiedFloat : ModifiedType<float>
 {
 	public ModifiedFloat(float original)
@@ -54,6 +56,18 @@ public class ModifiedFloat : ModifiedType<float>
 		this.original = original;
 		addMods = new List<TimedTypeModifier<float>>();
 		multMods = new List<TimedTypeModifier<float>>();
+	}
+
+	public static ModifiedFloat operator +(ModifiedFloat a, ModifiedFloat b)
+	{
+		ModifiedFloat c = new ModifiedFloat(a.original);
+		c.multMods.AddRange(a.multMods);
+		c.multMods.AddRange(b.multMods);
+
+		c.addMods.AddRange(a.addMods);
+		c.addMods.AddRange(b.addMods);
+
+		return c;
 	}
 
 	protected override float CalculateModifiedAmount()
@@ -73,6 +87,7 @@ public class ModifiedFloat : ModifiedType<float>
 	}
 }
 
+[System.Serializable]
 public class ModifiedInt : ModifiedType<int>
 {
 	public ModifiedInt(int original)
@@ -80,6 +95,18 @@ public class ModifiedInt : ModifiedType<int>
 		this.original = original;
 		addMods = new List<TimedTypeModifier<int>>();
 		multMods = new List<TimedTypeModifier<int>>();
+	}
+
+	public static ModifiedInt operator +(ModifiedInt a, ModifiedInt b)
+	{
+		ModifiedInt c = new ModifiedInt(a.original);
+		c.multMods.AddRange(a.multMods);
+		c.multMods.AddRange(b.multMods);
+
+		c.addMods.AddRange(a.addMods);
+		c.addMods.AddRange(b.addMods);
+
+		return c;
 	}
 
 	protected override int CalculateModifiedAmount()

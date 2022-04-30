@@ -14,9 +14,12 @@ namespace Game.Data.EventHandling.EventRecording
 		private EventManager events => EventManager.Instance;
 		private Dictionary<Person, List<EventLog>> personLogs;
 
+		public List<EventRecord> eventRecords;
+
 		public EventRecorder()
 		{
 			personLogs = new Dictionary<Person, List<EventLog>>();
+			eventRecords = new List<EventRecord>();
 
 			Setup();
 
@@ -58,21 +61,21 @@ namespace Game.Data.EventHandling.EventRecording
 
 		private void SubscribeToEvents()
 		{
-			events.AddEventHandler<PersonCreatedEvent>(OnPersonCreated);
-			events.AddEventHandler<PersonDiedEvent>(OnPersonDied);
+			events.AddEventHandler<CreatureCreatedEvent>(OnPersonCreated);
+			events.AddEventHandler<CreatureDiedEvent>(OnPersonDied);
 			events.AddEventHandler<BaseRPEvent>(OnRPEvent);
 		}
 
-		private void OnPersonCreated(PersonCreatedEvent simEvent)
+		private void OnPersonCreated(CreatureCreatedEvent simEvent)
 		{
-			personLogs.Add(simEvent.person, new List<EventLog>());
-			personLogs[simEvent.person].Add(new EventLog(world.yearsPassed, new BaseRPEvent(simEvent.person, string.Format("{0} rose to prominence.", simEvent.person.Name.Replace("\r\n", "").Replace("\r", "").Replace("\n", "")))));
+			//personLogs.Add(simEvent.creature, new List<EventLog>());
+			//personLogs[simEvent.creature].Add(new EventLog(world.yearsPassed, new BaseRPEvent(simEvent.creature, string.Format("{0} rose to prominence.", simEvent.creature.Name.Replace("\r\n", "").Replace("\r", "").Replace("\n", "")))));
 		}
 
-		private void OnPersonDied(PersonDiedEvent simEvent)
+		private void OnPersonDied(CreatureDiedEvent simEvent)
 		{
-			personLogs[simEvent.person].Add(new EventLog(world.yearsPassed, new BaseRPEvent(simEvent.person, string.Format("{0} died of: {1}.", simEvent.person.Name.Replace("\r\n", "").Replace("\r", "").Replace("\n", ""), simEvent.cause))));
-			RecordPerson(simEvent.person);
+			//personLogs[simEvent.person].Add(new EventLog(world.yearsPassed, new BaseRPEvent(simEvent.person, string.Format("{0} died of: {1}.", simEvent.person.Name.Replace("\r\n", "").Replace("\r", "").Replace("\n", ""), simEvent.cause))));
+			//RecordPerson(simEvent.person);
 		}
 
 		private void OnRPEvent(BaseRPEvent simEvent)

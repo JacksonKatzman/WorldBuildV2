@@ -3,6 +3,7 @@ using UnityEngine;
 using Game.Data.EventHandling;
 using Game.Enums;
 using System.Collections.Generic;
+using Game.Data.EventHandling.EventRecording;
 
 namespace Game.Data.EventHandling
 {
@@ -48,12 +49,64 @@ namespace Game.Data.EventHandling
 	{
 		public static void RideOut_FightInfestation_01(Person person)
 		{
+			var record = new EventRecord();
 
+			var creature = DataManager.Instance.GetRandomCreature(false, true, CreatureType.BEAST);
+			var numPoints = SimRandom.RandomRange(20, 100);
+			var pointValue = (int)creature.type + 1;
+			var numCreatures = numPoints / pointValue;
+
+			record.AddContext("{0} rides out with their retainers to fight off an infestation of " + numCreatures + " rabid {1}'s.", person, creature);
+
+			var roll = SimRandom.RollXDY(1, 20) + person.stats.GetModValue(StatType.STRENGTH);
+
+			if(roll > 20)
+			{
+				//spawn holiday
+				var holiday = new Holiday.Holiday();
+				person.faction.government.holidays.Add(holiday);
+				record.AddContext("The foe is swept away with ease, and the locals declare the day {0}, in celebration of this great victory.", holiday);
+			}
+			else if(roll > 6)
+			{
+				//normal victory
+				record.AddContext("After an unexpectedly difficult fight, {0} emerges bloodied but victorious.", person);
+			}
+			else
+			{
+				//defeat and death
+				PersonGenerator.HandleDeath(person, "Killed in battle");
+				record.AddContext("{0} waded into the infestation, and was never heard from again.", person);
+			}
+			SimulationManager.Instance.eventRecorder.eventRecords.Add(record);
 		}
 
 		public static void RideOut_FightHorde_01(Person person)
 		{
+			var record = EventCatalyst.MonsterGathering(SimRandom.RandomEntryFromList(person.faction.cities), CreatureType.HUMANOID);
 
+			record.AddContext("{0} rides out with their retainers to defend the realm against the rampaging horde.", person);
+
+			var roll = SimRandom.RollXDY(1, 20) + person.stats.GetModValue(StatType.STRENGTH);
+
+			if (roll > 20)
+			{
+				//spawn holiday
+				var holiday = new Holiday.Holiday();
+				person.faction.government.holidays.Add(holiday);
+				record.AddContext("The foe is swept away with ease, and the locals declare the day {0}, in celebration of this great victory.", holiday);
+			}
+			else if (roll > 9)
+			{
+				//normal victory
+				record.AddContext("After an unexpectedly difficult fight, {0} emerges bloodied but victorious.", person);
+			}
+			else
+			{
+				//defeat and death
+				PersonGenerator.HandleDeath(person, "Killed in battle");
+				record.AddContext("{0} and all of their followers were overrun by the horde.", person);
+			}
 		}
 
 		public static void RideOut_FightMonster_01(Person person)
@@ -138,11 +191,11 @@ namespace Game.Data.EventHandling
 		public static void HireAssassin_Scam_01(Person person)
 		{
 			//Assassin's true intentions found out, punished
-			var optionA = 25 + 2 * person.stats.wisdomMod;
+			var optionA = 25 + 2 * person.stats.GetModValue(StatType.WISDOM);
 			//Assassin gets away
-			var optionB = 25 - person.stats.luckMod * 2;
+			var optionB = 25 - person.stats.GetModValue(StatType.LUCK) * 2;
 			//Assassin gets away and sells your secret to another faction
-			var optionC = 25 - person.stats.luckMod;
+			var optionC = 25 - person.stats.GetModValue(StatType.LUCK);
 
 			var chance = SimRandom.RandomRange(0, optionA + optionB + optionC);
 			var result = string.Format("{0} hires an assassin for a hefty fee, and charges them to take care of a troubling local lord who's rise to prominence has been far too swift. The assassin takes the money and flees, ", person.Name);
@@ -158,7 +211,7 @@ namespace Game.Data.EventHandling
 				person.influence -= 50;
 				var thief = new Person(null, SimRandom.RandomRange(16, 40), Enums.Gender.ANY, 150, new List<RoleType> { RoleType.ROGUE });
 
-				thief.stats.agility = SimRandom.RandomRange(15, 20);
+				thief.stats.stats[StatType.DEXTERITY] = SimRandom.RandomRange(15, 20);
 				PersonGenerator.RegisterPerson(thief);
 				EventManager.Instance.Dispatch(new BaseRPEvent(thief, string.Format("Posing as an assassin for hire, {0} stole {1} gold coins from {2} before making a stealthy escape.", thief.Name, SimRandom.RandomRange(1300, 4500), person.Name)));
 			}
@@ -168,8 +221,8 @@ namespace Game.Data.EventHandling
 				person.influence -= 100;
 				var thief = new Person(null, SimRandom.RandomRange(16, 40), Enums.Gender.ANY, 150, new List<RoleType> { RoleType.ROGUE });
 
-				thief.stats.agility = SimRandom.RandomRange(15, 20);
-				thief.stats.charisma = SimRandom.RandomRange(15, 20);
+				thief.stats.stats[StatType.DEXTERITY] = SimRandom.RandomRange(15, 20);
+				thief.stats.stats[StatType.CHARISMA] = SimRandom.RandomRange(15, 20);
 				PersonGenerator.RegisterPerson(thief);
 				EventManager.Instance.Dispatch(new BaseRPEvent(thief, string.Format("Posing as an assassin for hire, {0} stole {1} gold coins from {2} before making a stealthy escape, with a further secret to sell.", thief.Name, SimRandom.RandomRange(1300, 4500), person.Name)));
 			}
@@ -179,7 +232,7 @@ namespace Game.Data.EventHandling
 
 		public static void HireAssassin_RandomRival_01(Person person)
 		{
-			var roll = SimRandom.RollXDY(1, 20, 0) + person.stats.charismaMod * 2;
+			var roll = SimRandom.RollXDY(1, 20, 0) + person.stats.GetModValue(StatType.CHARISMA) * 2;
 			var randomFaction = person.faction;
 			while (randomFaction == person.faction && SimulationManager.Instance.World.factions.Count > 1)
 			{
@@ -237,7 +290,7 @@ namespace Game.Data.EventHandling
 
 		public static void HireAssassin_DoubleCross_01(Person person)
 		{
-			var roll = SimRandom.RollXDY(1, 20, 0) + person.stats.wisdomMod;
+			var roll = SimRandom.RollXDY(1, 20, 0) + person.stats.GetModValue(StatType.WISDOM);
 			var result = string.Format("{0} hires an assassin to kill a rival, but the assassin double crosses them. ", person.Name);
 
 			if (roll > 15)
