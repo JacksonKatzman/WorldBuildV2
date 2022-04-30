@@ -6,7 +6,7 @@ using Game.Enums;
 
 namespace Game.Incidents
 {
-	public class IncidentService
+	public class IncidentService : ITimeSensitive
 	{
 		private static IncidentService instance;
 		public static IncidentService Instance
@@ -23,12 +23,14 @@ namespace Game.Incidents
 
 		private List<CoreIncident> coreIncidents;
 		private List<CoreIncident> recordedIncidents;
+		private List<DelayedIncidentContext> contextQueue;
 
 		private IncidentService()
 		{
 			//compile all core incidents into data structure for later use
 			coreIncidents = new List<CoreIncident>();
 			recordedIncidents = new List<CoreIncident>();
+			contextQueue = new List<DelayedIncidentContext>();
 
 			coreIncidents.AddRange(IncidentEditorWindow.ParseIncidents());
 
@@ -61,5 +63,49 @@ namespace Game.Incidents
 
 			recordedIncidents.Add(chosenIncident);
 		}
+
+		public void QueueDelayedIncident(IncidentContext context, int timer)
+		{
+			var delayedContext = new DelayedIncidentContext(context, timer);
+			contextQueue.Add(delayedContext);
+		}
+
+		public void AdvanceTime()
+		{
+			var finishedContexts = new List<DelayedIncidentContext>();
+
+			foreach(var context in contextQueue)
+			{
+				if(context.Advance())
+				{
+					finishedContexts.Add(context);
+				}
+			}
+
+			finishedContexts.ForEach(x => contextQueue.Remove(x));
+		}
     }
+
+	public class DelayedIncidentContext
+	{
+		private int timer;
+		private IncidentContext context;
+
+		public DelayedIncidentContext(IncidentContext context, int timer)
+		{
+			this.context = context;
+			this.timer = timer;
+		}
+
+		public bool Advance()
+		{
+			timer--;
+			if(timer <= 0)
+			{
+				IncidentService.Instance.PerformIncident(context);
+				return true;
+			}
+			return false;
+		}
+	}
 }
