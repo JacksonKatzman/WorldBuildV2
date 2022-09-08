@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89308aee5158c14797ac3cf05011bf9, type: 3}
   m_Name: LowPolyTree_00
   m_EditorClassIdentifier: 
-  m_prefab: {fileID: 1905605002707554, guid: c5fa94f9ebb29bd478295e8701712698, type: 3}
-  m_prefabVariants: []
+  m_prefab: {fileID: 1899341337090361240, guid: 324a6b59b731b4645bf5fc814ffb145f, type: 3}
+  m_prefabVariants:
+  - {fileID: 1899341337090361240, guid: d813782debf113b4b82bb5502c2cfb39, type: 3}
   m_navMeshLod: 0
   m_bendFactor: 0
-  m_billboard: {fileID: 0}
+  m_billboard: {fileID: 22600000, guid: caa06c54944faae4f838a1c020b5ee7e, type: 2}
   m_shadowCastingMode: 1
   m_receiveShadow: 1
   m_billboardShadowCastingMode: 0
