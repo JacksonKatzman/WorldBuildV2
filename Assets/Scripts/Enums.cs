@@ -8,6 +8,7 @@ namespace Game.Enums
 	public enum Gender { MALE, FEMALE, ANY };
 	public enum MapCategory { TERRAIN, RAINFALL, FERTILITY, BIOME };
 	public enum LandType { OCEAN, FLAT, HILLS, MOUNTAINS, RIVER };
+	public enum LandTemperature { HOT, TEMPERATE, COLD };
 	public enum Direction { NORTH, SOUTH, EAST, WEST };
 	public enum PriorityType { MILITARY, INFRASTRUCTURE, MERCANTILE, POLITICAL, RELIGIOUS};
 	public enum TroopType { LIGHT_INFANTRY, HEAVY_INFANTRY, LIGHT_CAVALRY, HEAVY_CAVALRY, ARCHER};
@@ -29,4 +30,22 @@ namespace Game.Enums
 	public enum Disposition { PASSIVE, AGGRESSIVE };
 	public enum WorldTagType { DEATH };
 	public enum SpecialCaseTagType { END_OF_TURN, TEST };
+
+	public enum HexDirection { NE, E, SE, SW, W, NW };
+	public static class HexDirectionExtensions
+	{
+		public static HexDirection Opposite(this HexDirection direction)
+		{
+			return (int)direction < 3 ? (direction + 3) : (direction - 3);
+		}
+		public static HexDirection Previous(this HexDirection direction)
+		{
+			return direction == HexDirection.NE ? HexDirection.NW : (direction - 1);
+		}
+
+		public static HexDirection Next(this HexDirection direction)
+		{
+			return direction == HexDirection.NW ? HexDirection.NE : (direction + 1);
+		}
+	}
 }
