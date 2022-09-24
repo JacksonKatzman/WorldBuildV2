@@ -30,6 +30,7 @@ namespace Game.Enums
 	public enum Disposition { PASSIVE, AGGRESSIVE };
 	public enum WorldTagType { DEATH };
 	public enum SpecialCaseTagType { END_OF_TURN, TEST };
+	public enum HexEdgeType { Flat, Slope, Cliff };
 
 	public enum HexDirection { NE, E, SE, SW, W, NW };
 	public static class HexDirectionExtensions
