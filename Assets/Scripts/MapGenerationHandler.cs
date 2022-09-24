@@ -10,31 +10,29 @@ using Game.Math;
 using Edge = System.Tuple<int, int>;
 using System;
 using ConcaveHull;
+using Game.Generators.Noise;
 
 public class MapGenerationHandler : MonoBehaviour
 {
-    private static Dictionary<int, Vector2> WalkDirections = new Dictionary<int, Vector2>
+    private static Dictionary<int, Vector2Int> WalkDirections = new Dictionary<int, Vector2Int>
     {
-        {0, Vector2.up },
-        {1, Vector2.right },
-        {2, Vector2.down},
-        {3, Vector2.left }
+        {0, new Vector2Int(1, 0) },
+        {1, new Vector2Int(0, -1) },
+        {2, new Vector2Int(-1, 0) },
+        {3, new Vector2Int(0, 1) }
     };
 
     public VistaManager vMan;
     public BiomeContainer biomes;
     public AnimationCurve temperatureCurve;
 
-    public Vector2Int noiseVector;
-    public float noiseScale;
-    public int octaves;
-    public float persistence;
-    public float lacunarity;
-    public Vector2 offset;
+    public NoiseSettings noiseSettings;
 
     public int tileSize;
 
     public Renderer mapRenderer;
+
+    private bool done;
 
     void Start()
     {
@@ -43,10 +41,32 @@ public class MapGenerationHandler : MonoBehaviour
 
     public void DrawMap()
 	{
+        /*
         var heightMap = NoiseGenerator.GeneratePerlinNoise(noiseVector, noiseScale,
                                                          octaves, persistence,
                                                           lacunarity, offset);
 
+        var width = heightMap.GetLength(0);
+        var height = heightMap.GetLength(1);
+
+        Texture2D tex = new Texture2D(width, height);
+        Color[] colorMap = new Color[width * height];
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                colorMap[y * width + x] = Color.Lerp(Color.black, Color.white, heightMap[x, y]);
+            }
+        }
+        tex.SetPixels(colorMap);
+        tex.Apply();
+        */
+        mapRenderer.sharedMaterial.mainTexture = NoiseGenerator.GenerateARGBNoiseTexture(noiseSettings);
+        mapRenderer.transform.localScale = new Vector3(noiseSettings.worldSize.x, 1, noiseSettings.worldSize.y);
+    }
+
+    public void DrawMap(float[,] heightMap)
+    {
         var width = heightMap.GetLength(0);
         var height = heightMap.GetLength(1);
 
@@ -66,9 +86,18 @@ public class MapGenerationHandler : MonoBehaviour
         mapRenderer.transform.localScale = new Vector3(width, 1, height);
     }
 
+    private void Update()
+	{
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            done = true;
+        }
+    }
+
     private void GenerateByCluster()
 	{
-        var desiredSize = 5;//noiseVector.x;
+        /*
+        var desiredSize = 10;//noiseVector.x;
         var heightMap = NoiseGenerator.GeneratePerlinNoise(noiseVector, noiseScale,
                                                          octaves, persistence,
                                                           lacunarity, offset);
@@ -78,6 +107,8 @@ public class MapGenerationHandler : MonoBehaviour
         var fertilityMap = NoiseGenerator.GeneratePerlinNoise(noiseVector, noiseScale,
                                                          octaves, persistence,
                                                           lacunarity, offset);
+
+        DrawMap(heightMap);
 
         Biome[,] fullBiomesGrid = new Biome[desiredSize, desiredSize];
         for (int x = 0; x < desiredSize; x++)
@@ -90,6 +121,7 @@ public class MapGenerationHandler : MonoBehaviour
         }
         var clusters = ClusterByBiome(fullBiomesGrid);
         GenerateBiomeClusters(clusters);
+        */
     }
 
     private List<BiomeClusterNode> ClusterByBiome(Biome[,] biomes)
@@ -122,8 +154,26 @@ public class MapGenerationHandler : MonoBehaviour
                     neighborList.Add(new Vector2Int(x, z + 1));
                 }
 
-                var possibleClusters = clusterList.Where(x => x.biome == biome);
+                var possibleClusters = clusterList.Where(x => x.biome == biome && x.tiles.Intersect(neighborList).ToList().Count > 0).ToList();
 
+                if(possibleClusters.Count > 0)
+				{
+                    var chosenCluster = possibleClusters[0];
+                    if (possibleClusters.Count > 1)
+                    {
+                        for (var c = 1; c < possibleClusters.Count; c++)
+                        {
+                            chosenCluster.tiles.AddRange(possibleClusters[c].tiles);
+                            clusterList.Remove(possibleClusters[c]);
+                        }
+                    }
+                    chosenCluster.tiles.Add(new Vector2Int(x, z));
+				}
+				else
+				{
+                    clusterList.Add(new BiomeClusterNode(biome, new Vector2Int(x, z)));
+                }
+                /*
                 var found = false;
 
                 foreach (var cluster in possibleClusters)
@@ -140,6 +190,7 @@ public class MapGenerationHandler : MonoBehaviour
                 {
                     clusterList.Add(new BiomeClusterNode(biome, new Vector2Int(x, z)));
                 }
+                */
 
                 neighborList.Clear();
             }
@@ -148,83 +199,163 @@ public class MapGenerationHandler : MonoBehaviour
         return clusterList;
     }
 
-    private int GetNextDirection(int current)
+    private int GetNextDirection(int current, int mod)
 	{
-        int remainder = (current + 1) % 3;
-        return (remainder < 0) ? (3 + remainder) : remainder;
+        int remainder = (current + mod) % 4;
+        return (remainder < 0) ? (4 + remainder) : remainder;
 	}
 
-    private List<Vector3> WalkBounds(List<Vector2> points)
+    private void AddPointsOnEdges(HashSet<Vector2> points, List<Vector2Int> tiles, Vector2Int currentTile)
 	{
-        var finalPoints = new List<Vector2>();
-        finalPoints.Add(points[0]);
-
-        var current = points[0];
-        var direction = 0;
-        var done = false;
-
-        while(!done)
+        /*
+        if(!tiles.Contains(new Vector2Int(currentTile.x, currentTile.y - 1)))
 		{
-            var adjacentPoints = points.Where(x => Vector2.Distance(current, x) == tileSize);
-            Vector2 pointDefault = new Vector2(-1, -1);
-            Vector2 nextPoint = pointDefault;
-            var tries = 0;
+            points.Add(new Vector2((currentTile.x + 1) * tileSize, currentTile.y * tileSize));
+            points.Add(new Vector2(currentTile.x * tileSize, currentTile.y * tileSize));
+		}
+        if (!tiles.Contains(new Vector2Int(currentTile.x - 1, currentTile.y)))
+        {
+            points.Add(new Vector2(currentTile.x * tileSize, currentTile.y * tileSize));
+            points.Add(new Vector2(currentTile.x * tileSize, (currentTile.y + 1) * tileSize));
+        }
+        if (!tiles.Contains(new Vector2Int(currentTile.x, currentTile.y + 1)))
+        {
+            points.Add(new Vector2((currentTile.x) * tileSize, (currentTile.y + 1) * tileSize));
+            points.Add(new Vector2((currentTile.x + 1) * tileSize, (currentTile.y + 1) * tileSize));
+        }
+        if (!tiles.Contains(new Vector2Int(currentTile.x + 1, currentTile.y)))
+        {
+            points.Add(new Vector2((currentTile.x + 1) * tileSize, (currentTile.y + 1) * tileSize));
+            points.Add(new Vector2((currentTile.x + 1) * tileSize, currentTile.y * tileSize));
+        }
+        */
+        if (!tiles.Contains(currentTile + WalkDirections[0]))
+        {
+            points.Add((currentTile + WalkDirections[0]) * tileSize);
+            points.Add((currentTile + WalkDirections[0] + WalkDirections[3]) * tileSize);
+        }
+        if (!tiles.Contains(currentTile + WalkDirections[3]))
+        {
+            points.Add((currentTile + WalkDirections[0] + WalkDirections[3]) * tileSize);
+            points.Add((currentTile + WalkDirections[3]) * tileSize);
+        }
+        if (!tiles.Contains(currentTile + WalkDirections[2]))
+        {
+            points.Add((currentTile + WalkDirections[3]) * tileSize);
+            points.Add(currentTile * tileSize);
+        }
+        if (!tiles.Contains(currentTile + WalkDirections[1]))
+        {
+            points.Add(currentTile * tileSize);
+            points.Add((currentTile + WalkDirections[0]) * tileSize);
+        }
+    }
 
-            while(tries < 4)
+    private List<Vector2> CullExtraPoints(List<Vector2> points)
+	{
+        var necessaryPoints = new List<Vector2>();
+        if(points[1] - points[0] != points[0] - points[points.Count-1])
+		{
+            necessaryPoints.Add(points[0]);
+		}
+        for(int x = 1; x < points.Count - 1; x++)
+		{
+            if(points[x+1] - points[x] != points[x] - points[x-1])
 			{
-                var currentDirection = WalkDirections[direction];
-                nextPoint = adjacentPoints.Where(x => x == finalPoints[0] && (x - current).normalized == currentDirection).DefaultIfEmpty(pointDefault).First();
-                if(nextPoint != pointDefault)
-				{
-                    break;
-				}
+                necessaryPoints.Add(points[x]);
+			}
+		}
+        if (points[0] - points[points.Count-1] != points[points.Count-1] - points[points.Count - 2])
+        {
+            necessaryPoints.Add(points[0]);
+        }
+        return necessaryPoints;
+    }
 
-                nextPoint = adjacentPoints.Where(x => !finalPoints.Contains(x) && (x - current).normalized == currentDirection).DefaultIfEmpty(pointDefault).First();
-                if (nextPoint == pointDefault)
-                {
-                    direction = GetNextDirection(direction);
-                    tries++;
-                }
+    private List<Vector3> WalkBounds(BiomeClusterNode node)
+	{
+        var tiles = node.tiles;
+        var currentDirection = 0;
+        done = false;
+        var currentTile = tiles[0];
+        var firstTile = tiles[0];
+        var visitedTiles = new List<Vector2Int>();
+
+        var boundaryPoints = new HashSet<Vector2>();
+
+        AddPointsOnEdges(boundaryPoints, tiles, currentTile);
+
+        if (tiles.Count == 1)
+        {
+            done = true;
+        }
+
+        while (!done)
+		{
+            var preferredDirection = GetNextDirection(currentDirection, 1);
+            var preferredTile = currentTile + WalkDirections[preferredDirection];
+            var preferredTileExists = tiles.Contains(preferredTile);
+            var preferredTileVisited = preferredTileExists ? visitedTiles.Contains(currentTile + WalkDirections[preferredDirection]) : true;
+            var directionalTile = currentTile + WalkDirections[currentDirection];
+            var directionalTileExists = tiles.Contains(directionalTile);
+            var turns = 0;
+
+            if(preferredTileExists && !preferredTileVisited)
+			{
+                visitedTiles.Add(currentTile);
+                currentTile = preferredTile;
+                currentDirection = preferredDirection;
+                AddPointsOnEdges(boundaryPoints, tiles, currentTile);
+			}
+            else if(directionalTileExists)
+			{
+                if(currentTile + WalkDirections[currentDirection] == firstTile)
+				{
+                    done = true;
+                    continue;
+				}
                 else
 				{
-                    tries = 4;
-                    break;
-				}
-            }
-            /*
-            nextPoint = adjacentPoints.Where(x => !finalPoints.Contains(x) && (x - current).normalized == Vector2.up).DefaultIfEmpty(pointDefault).First();
-            if (nextPoint == pointDefault)
-            {
-                nextPoint = adjacentPoints.Where(x => !finalPoints.Contains(x) && (x - current).normalized == Vector2.right).DefaultIfEmpty(pointDefault).First();
-            }
-            if (nextPoint == pointDefault)
-            {
-                nextPoint = adjacentPoints.Where(x => !finalPoints.Contains(x) && (x - current).normalized == Vector2.down).DefaultIfEmpty(pointDefault).First();
-            }
-            if (nextPoint == pointDefault)
-            {
-                nextPoint = adjacentPoints.Where(x => !finalPoints.Contains(x) && (x - current).normalized == Vector2.left).DefaultIfEmpty(pointDefault).First();
-             }
-            */
-
-            if(nextPoint == pointDefault || finalPoints.Contains(nextPoint))
-			{
-                done = true;
+                    visitedTiles.Add(currentTile);
+                    currentTile = directionalTile;
+                    AddPointsOnEdges(boundaryPoints, tiles, currentTile);
+                }
 			}
 			else
 			{
-                current = nextPoint;
-                finalPoints.Add(nextPoint);
+                currentDirection = GetNextDirection(currentDirection, -1);
+                turns++;
+                if(turns > 3)
+				{
+                    done = true;
+				}
 			}
+
+            if(visitedTiles.Count > tiles.Count)
+			{
+                done = true;
+			}
+		}
+
+        var finalPoints = boundaryPoints.ToList();
+
+        if (finalPoints.Count > 4)
+        {
+            finalPoints = CullExtraPoints(boundaryPoints.ToList());
         }
 
-        var result = new List<Vector3>();
-        finalPoints.ForEach(point => result.Add(new Vector3(point.x, 0, point.y)));
-        return result;
-	}
+        var bounds = new List<Vector3>();
+        foreach (var point in finalPoints)
+        {
+            bounds.Add(new Vector3(point.x, 0, point.y));
+        }
+
+        return bounds;
+    }
 
     private Vector3[] GetBoundsOfCluster(BiomeClusterNode node)
 	{
+        /*
         var tiles = node.tiles;
         
         var points = new HashSet<Vector2>();
@@ -244,7 +375,7 @@ public class MapGenerationHandler : MonoBehaviour
 		}
 
         Hull.setConvexHull(nodes);
-        var lines = Hull.setConcaveHull(0, 1);
+        var lines = Hull.setConcaveHull(-1, 1);
         var finalPoints = new HashSet<Vector3>();
 
         foreach(var line in lines)
@@ -254,8 +385,8 @@ public class MapGenerationHandler : MonoBehaviour
         }
 
         return finalPoints.ToArray();
-
-        //return WalkBounds(points.ToList()).ToArray();
+        */
+        return WalkBounds(node).ToArray();
 	}
 
     private void GenerateBiomeClusters(List<BiomeClusterNode> clusters)

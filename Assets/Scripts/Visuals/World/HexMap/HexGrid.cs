@@ -1,4 +1,5 @@
 ﻿using Game.Enums;
+using Game.Generators.Noise;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,11 @@ namespace Game.Visuals.Hex
 		[SerializeField]
 		public GameObject cellLabelPrefab;
 
+		[SerializeField]
+		public NoiseSettings noiseSettings;
+
+		public Texture2D noiseSource;
+
 		public Color defaultColor = Color.white;
 
 		public int width = 6;
@@ -27,6 +33,9 @@ namespace Game.Visuals.Hex
 
 		void Awake()
 		{
+			noiseSource = NoiseGenerator.GenerateARGBNoiseTexture(noiseSettings);
+			HexMetrics.noiseSource = noiseSource;
+
 			cells = new HexCell[height * width];
 
 			for (int z = 0, i = 0; z < height; z++)
@@ -39,6 +48,11 @@ namespace Game.Visuals.Hex
 
 			hexMesh.Init();
 			hexMesh.Triangulate(cells);
+		}
+
+		void OnEnable()
+		{
+			HexMetrics.noiseSource = noiseSource;
 		}
 
 		void CreateCell(int x, int z, int i)
@@ -84,6 +98,8 @@ namespace Game.Visuals.Hex
 			label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
 			label.text = cell.coordinates.ToStringOnSeparateLines();
 			cell.uiRect = label.rectTransform;
+
+			cell.Elevation = 0;
 		}
 
 		public HexCell GetCell(Vector3 position)

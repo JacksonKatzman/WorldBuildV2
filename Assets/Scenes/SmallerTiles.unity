@@ -566,7 +566,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.15}
+  m_AnchoredPosition: {x: 0, y: 2.2}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!20 &434939851 stripped
@@ -662,13 +662,14 @@ GameObject:
   - component: {fileID: 633683644}
   - component: {fileID: 633683643}
   - component: {fileID: 633683642}
+  - component: {fileID: 633683646}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &633683642
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -742,11 +743,40 @@ Transform:
   m_GameObject: {fileID: 633683641}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -2.98, y: 13.19, z: 12.096592}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 512, y: 1, z: 512}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &633683646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633683641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c87be4f918ea984babfe767a91114b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vMan: {fileID: 0}
+  biomes: {fileID: 0}
+  temperatureCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  noiseSettings:
+    worldSize: {x: 512, y: 512}
+    scale: 93
+    octaves: 3
+    persistance: 0.2
+    lacunarity: 2
+    offset: {x: 0, y: 0}
+  tileSize: 0
+  mapRenderer: {fileID: 633683643}
 --- !u!1 &648751719
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,6 +2772,14 @@ MonoBehaviour:
   hexMesh: {fileID: 68421024}
   gridCanvas: {fileID: 368373045}
   cellLabelPrefab: {fileID: 7916730196401013933, guid: 6d6154b8b1a38ef4683ae3e1af9b353f, type: 3}
+  noiseSettings:
+    worldSize: {x: 512, y: 512}
+    scale: 90
+    octaves: 3
+    persistance: 0.2
+    lacunarity: 2
+    offset: {x: 0, y: 0}
+  noiseSource: {fileID: 0}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   width: 6
   height: 6
