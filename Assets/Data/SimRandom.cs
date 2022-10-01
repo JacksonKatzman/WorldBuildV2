@@ -4,7 +4,9 @@ using UnityEngine;
 
 public static class SimRandom
 {
-    private static System.Random rand => SimulationManager.Instance.seededRandom;
+    //private static System.Random rand => SimulationManager.Instance.seededRandom;
+    public static int seed = 69;
+    public static System.Random rand = new System.Random(seed);
 
     public static int RandomInteger()
     {
