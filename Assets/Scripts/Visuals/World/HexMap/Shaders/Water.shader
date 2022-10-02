@@ -1,4 +1,4 @@
-Shader "Custom/River"
+Shader "Custom/Water"
 {
     Properties
     {
@@ -19,11 +19,14 @@ Shader "Custom/River"
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
 
+        #include "Water.cginc"
+
         sampler2D _MainTex;
 
         struct Input
         {
             float2 uv_MainTex;
+            float3 worldPos;
         };
 
         half _Glossiness;
@@ -39,17 +42,9 @@ Shader "Custom/River"
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-            float2 uv = IN.uv_MainTex;
-            uv.x = uv.x * 0.0625 + _Time.y * 0.005;
-			uv.y -= _Time.y * 0.25;
-			float4 noise = tex2D(_MainTex, uv);
-			
-			float2 uv2 = IN.uv_MainTex;
-			uv2.x = uv2.x * 0.0625 - _Time.y * 0.0052;
-			uv2.y -= _Time.y * 0.23;
-			float4 noise2 = tex2D(_MainTex, uv2);
-			
-			fixed4 c = saturate(_Color + noise.r * noise2.a);
+            float waves = Waves(IN.worldPos.xz, _MainTex);
+
+			fixed4 c = saturate(_Color + waves);
 			o.Albedo = c.rgb;
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;

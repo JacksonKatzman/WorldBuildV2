@@ -50,18 +50,7 @@ namespace Game.Visuals.Hex
 				uiPosition.z = -position.y;
 				uiRect.localPosition = uiPosition;
 
-				if (
-					hasOutgoingRiver &&
-					elevation < GetNeighbor(outgoingRiver).elevation)
-				{
-					RemoveOutgoingRiver();
-				}
-				if (
-					hasIncomingRiver &&
-					elevation > GetNeighbor(incomingRiver).elevation)
-				{
-					RemoveIncomingRiver();
-				}
+				ValidateRivers();
 
 				for (int i = 0; i < roads.Length; i++)
 				{
@@ -225,6 +214,7 @@ namespace Game.Visuals.Hex
 					return;
 				}
 				waterLevel = value;
+				ValidateRivers();
 				Refresh();
 			}
 		}
@@ -235,6 +225,13 @@ namespace Game.Visuals.Hex
 			{
 				return waterLevel > elevation;
 			}
+		}
+
+		bool IsValidRiverDestination(HexCell neighbor)
+		{
+			return neighbor && (
+				elevation >= neighbor.elevation || waterLevel == neighbor.elevation
+			);
 		}
 
 		public void RemoveOutgoingRiver()
@@ -279,8 +276,7 @@ namespace Game.Visuals.Hex
 			}
 
 			HexCell neighbor = GetNeighbor(direction);
-			if (!neighbor || elevation < neighbor.elevation)
-			{
+			if(!IsValidRiverDestination(neighbor)) {
 				return;
 			}
 
@@ -300,6 +296,24 @@ namespace Game.Visuals.Hex
 			//neighbor.RefreshSelfOnly();
 
 			SetRoad((int)direction, false);
+		}
+
+		void ValidateRivers()
+		{
+			if (
+				hasOutgoingRiver &&
+				!IsValidRiverDestination(GetNeighbor(outgoingRiver))
+			)
+			{
+				RemoveOutgoingRiver();
+			}
+			if (
+				hasIncomingRiver &&
+				!GetNeighbor(incomingRiver).IsValidRiverDestination(this)
+			)
+			{
+				RemoveIncomingRiver();
+			}
 		}
 
 		public bool HasRoadThroughEdge(HexDirection direction)
