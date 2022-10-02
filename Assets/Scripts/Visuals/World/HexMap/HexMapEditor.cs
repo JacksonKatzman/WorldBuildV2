@@ -14,9 +14,13 @@ namespace Game.Visuals.Hex
 		public HexGrid hexGrid;
 
 		private Color activeColor;
+
 		private int activeElevation;
+		private int activeWaterLevel;
+
 		private bool applyColor;
 		private bool applyElevation = true;
+		private bool applyWaterLevel = true;
 
 		private int brushSize;
 
@@ -30,6 +34,7 @@ namespace Game.Visuals.Hex
 		}
 
 		OptionalToggle riverMode;
+		OptionalToggle roadMode;
 
 		void Awake()
 		{
@@ -123,16 +128,31 @@ namespace Game.Visuals.Hex
 				{
 					cell.Elevation = activeElevation;
 				}
+				if (applyWaterLevel)
+				{
+					cell.WaterLevel = activeWaterLevel;
+				}
 				if (riverMode == OptionalToggle.No)
 				{
 					cell.RemoveRiver();
 				}
-				else if (isDrag && riverMode == OptionalToggle.Yes)
+				if (roadMode == OptionalToggle.No)
+				{
+					cell.RemoveRoads();
+				}
+				if (isDrag)
 				{
 					HexCell otherCell = cell.GetNeighbor(dragDirection.Opposite());
 					if (otherCell)
 					{
-						otherCell.SetOutgoingRiver(dragDirection);
+						if (riverMode == OptionalToggle.Yes)
+						{
+							otherCell.SetOutgoingRiver(dragDirection);
+						}
+						if (roadMode == OptionalToggle.Yes)
+						{
+							otherCell.AddRoad(dragDirection);
+						}
 					}
 				}
 			}
@@ -157,6 +177,16 @@ namespace Game.Visuals.Hex
 			applyElevation = toggle;
 		}
 
+		public void SetApplyWaterLevel(bool toggle)
+		{
+			applyWaterLevel = toggle;
+		}
+
+		public void SetWaterLevel(float level)
+		{
+			activeWaterLevel = (int)level;
+		}
+
 		public void SetBrushSize(float size)
 		{
 			brushSize = (int)size;
@@ -170,6 +200,11 @@ namespace Game.Visuals.Hex
 		public void SetRiverMode(int mode)
 		{
 			riverMode = (OptionalToggle)mode;
+		}
+
+		public void SetRoadMode(int mode)
+		{
+			roadMode = (OptionalToggle)mode;
 		}
 	}
 }

@@ -7,6 +7,8 @@ namespace Game.Visuals.Hex
 {
 	public class HexCell : MonoBehaviour
     {
+		private static int MAX_ELEVATION_DIFFERENCE = 1;
+
 		public HexCell[] neighbors = new HexCell[6];
 
 		public HexCoordinates coordinates;
@@ -14,8 +16,13 @@ namespace Game.Visuals.Hex
 		public Color color;
 		public RectTransform uiRect;
 
+		int waterLevel;
+
 		bool hasIncomingRiver, hasOutgoingRiver;
 		HexDirection incomingRiver, outgoingRiver;
+
+		[SerializeField]
+		bool[] roads = new bool[6];
 
 		public HexGridChunk chunk;
 		public int Elevation
@@ -54,6 +61,14 @@ namespace Game.Visuals.Hex
 					elevation > GetNeighbor(incomingRiver).elevation)
 				{
 					RemoveIncomingRiver();
+				}
+
+				for (int i = 0; i < roads.Length; i++)
+				{
+					if (roads[i] && GetElevationDifference((HexDirection)i) > 1)
+					{
+						SetRoad(i, false);
+					}
 				}
 
 				Refresh();
@@ -144,6 +159,14 @@ namespace Game.Visuals.Hex
 				hasIncomingRiver && incomingRiver == direction ||
 				hasOutgoingRiver && outgoingRiver == direction;
 		}
+		public HexDirection RiverBeginOrEndDirection
+		{
+			get
+			{
+				return hasIncomingRiver ? incomingRiver : outgoingRiver;
+			}
+		}
+
 		public float StreamBedY
 		{
 			get
@@ -159,8 +182,58 @@ namespace Game.Visuals.Hex
 			get
 			{
 				return
-					(elevation + HexMetrics.riverSurfaceElevationOffset) *
+					(elevation + HexMetrics.waterElevationOffset) *
 					HexMetrics.elevationStep;
+			}
+		}
+
+		public float WaterSurfaceY
+		{
+			get
+			{
+				return
+					(waterLevel + HexMetrics.waterElevationOffset) *
+					HexMetrics.elevationStep;
+			}
+		}
+
+		public bool HasRoads
+		{
+			get
+			{
+				for (int i = 0; i < roads.Length; i++)
+				{
+					if (roads[i])
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		public int WaterLevel
+		{
+			get
+			{
+				return waterLevel;
+			}
+			set
+			{
+				if (waterLevel == value)
+				{
+					return;
+				}
+				waterLevel = value;
+				Refresh();
+			}
+		}
+
+		public bool IsUnderwater
+		{
+			get
+			{
+				return waterLevel > elevation;
 			}
 		}
 
@@ -219,12 +292,51 @@ namespace Game.Visuals.Hex
 
 			hasOutgoingRiver = true;
 			outgoingRiver = direction;
-			RefreshSelfOnly();
+			//RefreshSelfOnly();
 
 			neighbor.RemoveIncomingRiver();
 			neighbor.hasIncomingRiver = true;
 			neighbor.incomingRiver = direction.Opposite();
-			neighbor.RefreshSelfOnly();
+			//neighbor.RefreshSelfOnly();
+
+			SetRoad((int)direction, false);
+		}
+
+		public bool HasRoadThroughEdge(HexDirection direction)
+		{
+			return roads[(int)direction];
+		}
+		public void AddRoad(HexDirection direction)
+		{
+			if (!roads[(int)direction] && !HasRiverThroughEdge(direction) && GetElevationDifference(direction) <= MAX_ELEVATION_DIFFERENCE)
+			{
+				SetRoad((int)direction, true);
+			}
+		}
+
+		public void RemoveRoads()
+		{
+			for (int i = 0; i < neighbors.Length; i++)
+			{
+				if (roads[i])
+				{
+					SetRoad(i, false);
+				}
+			}
+		}
+
+		void SetRoad(int index, bool state)
+		{
+			roads[index] = state;
+			neighbors[index].roads[(int)((HexDirection)index).Opposite()] = state;
+			neighbors[index].RefreshSelfOnly();
+			RefreshSelfOnly();
+		}
+
+		public int GetElevationDifference(HexDirection direction)
+		{
+			int difference = elevation - GetNeighbor(direction).elevation;
+			return difference >= 0 ? difference : -difference;
 		}
 
 		public void SetNeighbor(HexDirection direction, HexCell cell)
