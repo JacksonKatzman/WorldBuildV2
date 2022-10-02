@@ -26,6 +26,9 @@ namespace Game.Visuals.Hex
 		public HexMesh estuaries;
 
 		[SerializeField]
+		public HexFeatureManager features;
+
+		[SerializeField]
 		private Canvas gridCanvas;
 
 		void Awake()
@@ -39,6 +42,8 @@ namespace Game.Visuals.Hex
 			water.Init();
 			waterShore.Init();
 			estuaries.Init();
+
+			features.Init();
 
 			cells = new HexCell[HexMetrics.chunkSizeX * HexMetrics.chunkSizeZ];
 
@@ -82,6 +87,7 @@ namespace Game.Visuals.Hex
 			water.Clear();
 			waterShore.Clear();
 			estuaries.Clear();
+			features.Clear();
 
 			for (int i = 0; i < cells.Length; i++)
 			{
@@ -94,6 +100,7 @@ namespace Game.Visuals.Hex
 			water.Apply();
 			waterShore.Apply();
 			estuaries.Apply();
+			features.Apply();
 		}
 
 		void Triangulate(HexCell cell)
@@ -101,6 +108,12 @@ namespace Game.Visuals.Hex
 			for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 			{
 				Triangulate(d, cell);
+			}
+
+			//TEMPORARY FEATURE GEN
+			if (!cell.IsUnderwater && !cell.HasRiver && !cell.HasRoads)
+			{
+				features.AddFeature(cell, cell.Position);
 			}
 		}
 
@@ -144,6 +157,12 @@ namespace Game.Visuals.Hex
 			if (cell.IsUnderwater)
 			{
 				TriangulateWater(direction, cell, center);
+			}
+
+			//TEMPORARY FEATURE GEN
+			if (!cell.IsUnderwater && !cell.HasRoadThroughEdge(direction))
+			{
+				features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
 			}
 		}
 
@@ -702,6 +721,11 @@ namespace Game.Visuals.Hex
 
 			TriangulateEdgeStrip(m, cell.Color, e, cell.Color);
 			TriangulateEdgeFan(center, m, cell.Color);
+
+			if (!cell.IsUnderwater && !cell.HasRoadThroughEdge(direction))
+			{
+				features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
+			}
 		}
 
 		void TriangulateRoadAdjacentToRiver(

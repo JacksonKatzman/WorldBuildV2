@@ -23,6 +23,8 @@ namespace Game.Visuals.Hex
 
 		public int chunkCountX = 4, chunkCountZ = 3;
 
+		public int seed;
+
 		//public int cellCountX = 6;
 		//public int cellCountZ = 6;
 
@@ -37,6 +39,7 @@ namespace Game.Visuals.Hex
 		{
 			noiseSource = NoiseGenerator.GenerateARGBNoiseTexture(noiseSettings);
 			HexMetrics.noiseSource = noiseSource;
+			HexMetrics.InitializeHashGrid(seed);
 
 			cellCountX = chunkCountX * HexMetrics.chunkSizeX;
 			cellCountZ = chunkCountZ * HexMetrics.chunkSizeZ;
@@ -47,7 +50,11 @@ namespace Game.Visuals.Hex
 
 		void OnEnable()
 		{
-			HexMetrics.noiseSource = noiseSource;
+			if (!HexMetrics.noiseSource)
+			{
+				HexMetrics.noiseSource = noiseSource;
+				HexMetrics.InitializeHashGrid(seed);
+			}
 		}
 
 		void CreateChunks()
