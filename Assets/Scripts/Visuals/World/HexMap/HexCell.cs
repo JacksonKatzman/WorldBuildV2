@@ -27,6 +27,8 @@ namespace Game.Visuals.Hex
 		//Likely temporary
 		int urbanLevel, farmLevel, plantLevel;
 
+		bool walled;
+
 		public HexGridChunk chunk;
 		public int Elevation
 		{
@@ -275,6 +277,22 @@ namespace Game.Visuals.Hex
 			get
 			{
 				return waterLevel > elevation;
+			}
+		}
+
+		public bool Walled
+		{
+			get
+			{
+				return walled;
+			}
+			set
+			{
+				if (walled != value)
+				{
+					walled = value;
+					Refresh();
+				}
 			}
 		}
 

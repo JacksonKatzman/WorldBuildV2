@@ -37,10 +37,11 @@ namespace Game.Visuals.Hex
 
 		OptionalToggle riverMode;
 		OptionalToggle roadMode;
+		OptionalToggle walledMode;
 
 		void Awake()
 		{
-			SelectColor(0);
+			SelectColor(-1);
 		}
 
 		void Update()
@@ -154,6 +155,10 @@ namespace Game.Visuals.Hex
 				{
 					cell.RemoveRoads();
 				}
+				if (walledMode != OptionalToggle.Ignore)
+				{
+					cell.Walled = walledMode == OptionalToggle.Yes;
+				}
 				if (isDrag)
 				{
 					HexCell otherCell = cell.GetNeighbor(dragDirection.Opposite());
@@ -174,7 +179,7 @@ namespace Game.Visuals.Hex
 
 		public void SelectColor(int index)
 		{
-			applyColor = index >= 0;
+			applyColor = (index >= 0);
 			if (applyColor)
 			{
 				activeColor = colors[index];
@@ -249,6 +254,11 @@ namespace Game.Visuals.Hex
 		public void SetPlantLevel(float level)
 		{
 			activePlantLevel = (int)level;
+		}
+
+		public void SetWalledMode(int mode)
+		{
+			walledMode = (OptionalToggle)mode;
 		}
 	}
 }
