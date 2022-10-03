@@ -17,12 +17,12 @@ namespace Game.Visuals.Hex
 
 		private int activeElevation;
 		private int activeWaterLevel;
-		private int activeUrbanLevel, activeFarmLevel, activePlantLevel;
+		private int activeUrbanLevel, activeFarmLevel, activePlantLevel, activeSpecialIndex;
 
 		private bool applyColor;
 		private bool applyElevation = true;
 		private bool applyWaterLevel = true;
-		private bool applyUrbanLevel, applyFarmLevel, applyPlantLevel;
+		private bool applyUrbanLevel, applyFarmLevel, applyPlantLevel, applySpecialIndex;
 
 		private int brushSize;
 
@@ -134,6 +134,10 @@ namespace Game.Visuals.Hex
 				if (applyWaterLevel)
 				{
 					cell.WaterLevel = activeWaterLevel;
+				}
+				if (applySpecialIndex)
+				{
+					cell.SpecialIndex = activeSpecialIndex;
 				}
 				if (applyUrbanLevel)
 				{
@@ -260,5 +264,16 @@ namespace Game.Visuals.Hex
 		{
 			walledMode = (OptionalToggle)mode;
 		}
+
+		public void SetApplySpecialIndex(bool toggle)
+		{
+			applySpecialIndex = toggle;
+		}
+
+		public void SetSpecialIndex(float index)
+		{
+			activeSpecialIndex = (int)index;
+		}
+
 	}
 }

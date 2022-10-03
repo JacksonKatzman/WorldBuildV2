@@ -111,9 +111,16 @@ namespace Game.Visuals.Hex
 			}
 
 			//TEMPORARY FEATURE GEN
-			if (!cell.IsUnderwater && !cell.HasRiver && !cell.HasRoads)
+			if (!cell.IsUnderwater)
 			{
-				features.AddFeature(cell, cell.Position);
+				if (!cell.HasRiver && !cell.HasRoads)
+				{
+					features.AddFeature(cell, cell.Position);
+				}
+				if (cell.IsSpecial)
+				{
+					features.AddSpecialFeature(cell, cell.Position);
+				}
 			}
 		}
 
@@ -771,6 +778,10 @@ namespace Game.Visuals.Hex
 					corner = HexMetrics.GetFirstSolidCorner(direction);
 				}
 				roadCenter += corner * 0.5f;
+				if (cell.IncomingRiver == direction.Next())
+				{
+					features.AddBridge(roadCenter, center - corner * 0.5f);
+				}
 				center += corner * 0.25f;
 			}
 			else if (cell.IncomingRiver == cell.OutgoingRiver.Previous())
@@ -815,7 +826,12 @@ namespace Game.Visuals.Hex
 				{
 					return;
 				}
-				roadCenter += HexMetrics.GetSolidEdgeMiddle(middle) * 0.25f;
+				Vector3 offset = HexMetrics.GetSolidEdgeMiddle(middle);
+				roadCenter += offset * 0.25f;
+				if (direction == middle && cell.HasRoadThroughEdge(direction.Opposite()))
+				{
+					features.AddBridge(roadCenter, center - offset * (HexMetrics.innerToOuter * 0.7f));
+				}
 			}
 
 			Vector3 mL = Vector3.Lerp(roadCenter, e.v1, interpolators.x);

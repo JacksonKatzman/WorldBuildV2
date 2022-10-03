@@ -29,6 +29,8 @@ namespace Game.Visuals.Hex
 
 		bool walled;
 
+		int specialIndex;
+
 		public HexGridChunk chunk;
 		public int Elevation
 		{
@@ -296,6 +298,31 @@ namespace Game.Visuals.Hex
 			}
 		}
 
+		public int SpecialIndex
+		{
+			get
+			{
+				return specialIndex;
+			}
+			set
+			{
+				if (specialIndex != value &&!HasRiver)
+				{
+					specialIndex = value;
+					RemoveRoads();
+					RefreshSelfOnly();
+				}
+			}
+		}
+
+		public bool IsSpecial
+		{
+			get
+			{
+				return specialIndex > 0;
+			}
+		}
+
 		bool IsValidRiverDestination(HexCell neighbor)
 		{
 			return neighbor && (
@@ -357,11 +384,13 @@ namespace Game.Visuals.Hex
 
 			hasOutgoingRiver = true;
 			outgoingRiver = direction;
+			specialIndex = 0;
 			//RefreshSelfOnly();
 
 			neighbor.RemoveIncomingRiver();
 			neighbor.hasIncomingRiver = true;
 			neighbor.incomingRiver = direction.Opposite();
+			neighbor.specialIndex = 0;
 			//neighbor.RefreshSelfOnly();
 
 			SetRoad((int)direction, false);
@@ -391,7 +420,9 @@ namespace Game.Visuals.Hex
 		}
 		public void AddRoad(HexDirection direction)
 		{
-			if (!roads[(int)direction] && !HasRiverThroughEdge(direction) && GetElevationDifference(direction) <= MAX_ELEVATION_DIFFERENCE)
+			if (!roads[(int)direction] && !HasRiverThroughEdge(direction) &&
+				!IsSpecial && !GetNeighbor(direction).IsSpecial &&
+				GetElevationDifference(direction) <= MAX_ELEVATION_DIFFERENCE)
 			{
 				SetRoad((int)direction, true);
 			}
