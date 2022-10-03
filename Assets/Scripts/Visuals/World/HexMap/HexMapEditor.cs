@@ -1,6 +1,7 @@
 ﻿using Game.Enums;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.IO;
 
 namespace Game.Visuals.Hex
 {
@@ -9,20 +10,17 @@ namespace Game.Visuals.Hex
 		[SerializeField]
 		Camera mainCamera;
 
-		public Color[] colors;
-
 		public HexGrid hexGrid;
-
-		private Color activeColor;
 
 		private int activeElevation;
 		private int activeWaterLevel;
 		private int activeUrbanLevel, activeFarmLevel, activePlantLevel, activeSpecialIndex;
 
-		private bool applyColor;
 		private bool applyElevation = true;
 		private bool applyWaterLevel = true;
 		private bool applyUrbanLevel, applyFarmLevel, applyPlantLevel, applySpecialIndex;
+
+		int activeTerrainTypeIndex;
 
 		private int brushSize;
 
@@ -41,7 +39,6 @@ namespace Game.Visuals.Hex
 
 		void Awake()
 		{
-			SelectColor(-1);
 		}
 
 		void Update()
@@ -53,6 +50,33 @@ namespace Game.Visuals.Hex
 			else
 			{
 				previousCell = null;
+			}
+		}
+
+		public void Save()
+		{
+			string path = Path.Combine(Application.persistentDataPath, "test.map");
+			using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
+			{
+				writer.Write(0);
+				hexGrid.Save(writer);
+			}
+		}
+
+		public void Load()
+		{
+			string path = Path.Combine(Application.persistentDataPath, "test.map");
+			using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
+			{
+				int header = reader.ReadInt32();
+				if (header == 0)
+				{
+					hexGrid.Load(reader);
+				}
+				else
+				{
+					OutputLogger.LogError("Unknown map format " + header + ". For safety, will not Load.");
+				}
 			}
 		}
 
@@ -123,9 +147,9 @@ namespace Game.Visuals.Hex
 		{
 			if (cell)
 			{
-				if (applyColor)
+				if (activeTerrainTypeIndex >= 0)
 				{
-					cell.Color = activeColor;
+					cell.TerrainTypeIndex = activeTerrainTypeIndex;
 				}
 				if (applyElevation)
 				{
@@ -180,14 +204,9 @@ namespace Game.Visuals.Hex
 				}
 			}
 		}
-
-		public void SelectColor(int index)
+		public void SetTerrainTypeIndex(int index)
 		{
-			applyColor = (index >= 0);
-			if (applyColor)
-			{
-				activeColor = colors[index];
-			}
+			activeTerrainTypeIndex = index;
 		}
 
 		public void SetElevation(float elevation)

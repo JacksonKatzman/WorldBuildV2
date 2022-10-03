@@ -3,6 +3,7 @@ using Game.Generators.Noise;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 namespace Game.Visuals.Hex
 {
@@ -19,7 +20,7 @@ namespace Game.Visuals.Hex
 
 		public Texture2D noiseSource;
 
-		public Color defaultColor = Color.white;
+		public Color[] colors;
 
 		public int chunkCountX = 4, chunkCountZ = 3;
 
@@ -40,6 +41,7 @@ namespace Game.Visuals.Hex
 			noiseSource = NoiseGenerator.GenerateARGBNoiseTexture(noiseSettings);
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
+			HexMetrics.colors = colors;
 
 			cellCountX = chunkCountX * HexMetrics.chunkSizeX;
 			cellCountZ = chunkCountZ * HexMetrics.chunkSizeZ;
@@ -54,6 +56,27 @@ namespace Game.Visuals.Hex
 			{
 				HexMetrics.noiseSource = noiseSource;
 				HexMetrics.InitializeHashGrid(seed);
+				HexMetrics.colors = colors;
+			}
+		}
+
+		public void Save(BinaryWriter writer)
+		{
+			for (int i = 0; i < cells.Length; i++)
+			{
+				cells[i].Save(writer);
+			}
+		}
+
+		public void Load(BinaryReader reader)
+		{
+			for (int i = 0; i < cells.Length; i++)
+			{
+				cells[i].Load(reader);
+			}
+			for (int i = 0; i < chunks.Length; i++)
+			{
+				chunks[i].Refresh();
 			}
 		}
 
@@ -95,7 +118,6 @@ namespace Game.Visuals.Hex
 			//cell.transform.SetParent(transform, false);
 			cell.transform.localPosition = position;
 			cell.coordinates = HexCoordinates.FromOffsetCoordinates(x, z);
-			cell.color = defaultColor;
 
 			if (x > 0)
 			{

@@ -450,7 +450,7 @@ namespace Game.Visuals.Hex
 			else
 			{
 				terrain.AddTriangle(bottom, left, right);
-				terrain.AddTriangleColor(bottomCell.color, leftCell.color, rightCell.color);
+				terrain.AddTriangleColor(bottomCell.Color, leftCell.Color, rightCell.Color);
 			}
 
 			features.AddWall(bottom, bottomCell, left, leftCell, right, rightCell);
@@ -462,20 +462,20 @@ namespace Game.Visuals.Hex
 	)
 		{
 			EdgeVertices e2 = EdgeVertices.TerraceLerp(begin, end, 1);
-			Color c2 = HexMetrics.TerraceLerp(beginCell.color, endCell.color, 1);
+			Color c2 = HexMetrics.TerraceLerp(beginCell.Color, endCell.Color, 1);
 
-			TriangulateEdgeStrip(begin, beginCell.color, e2, c2, hasRoad);
+			TriangulateEdgeStrip(begin, beginCell.Color, e2, c2, hasRoad);
 
 			for (int i = 2; i < HexMetrics.terraceSteps; i++)
 			{
 				EdgeVertices e1 = e2;
 				Color c1 = c2;
 				e2 = EdgeVertices.TerraceLerp(begin, end, i);
-				c2 = HexMetrics.TerraceLerp(beginCell.color, endCell.color, i);
+				c2 = HexMetrics.TerraceLerp(beginCell.Color, endCell.Color, i);
 				TriangulateEdgeStrip(e1, c1, e2, c2, hasRoad);
 			}
 
-			TriangulateEdgeStrip(e2, c2, end, endCell.color, hasRoad);
+			TriangulateEdgeStrip(e2, c2, end, endCell.Color, hasRoad);
 		}
 
 		void TriangulateCornerTerraces(
@@ -486,11 +486,11 @@ namespace Game.Visuals.Hex
 		{
 			Vector3 v3 = HexMetrics.TerraceLerp(begin, left, 1);
 			Vector3 v4 = HexMetrics.TerraceLerp(begin, right, 1);
-			Color c3 = HexMetrics.TerraceLerp(beginCell.color, leftCell.color, 1);
-			Color c4 = HexMetrics.TerraceLerp(beginCell.color, rightCell.color, 1);
+			Color c3 = HexMetrics.TerraceLerp(beginCell.Color, leftCell.Color, 1);
+			Color c4 = HexMetrics.TerraceLerp(beginCell.Color, rightCell.Color, 1);
 
 			terrain.AddTriangle(begin, v3, v4);
-			terrain.AddTriangleColor(beginCell.color, c3, c4);
+			terrain.AddTriangleColor(beginCell.Color, c3, c4);
 
 			for (int i = 2; i < HexMetrics.terraceSteps; i++)
 			{
@@ -500,14 +500,14 @@ namespace Game.Visuals.Hex
 				Color c2 = c4;
 				v3 = HexMetrics.TerraceLerp(begin, left, i);
 				v4 = HexMetrics.TerraceLerp(begin, right, i);
-				c3 = HexMetrics.TerraceLerp(beginCell.color, leftCell.color, i);
-				c4 = HexMetrics.TerraceLerp(beginCell.color, rightCell.color, i);
+				c3 = HexMetrics.TerraceLerp(beginCell.Color, leftCell.Color, i);
+				c4 = HexMetrics.TerraceLerp(beginCell.Color, rightCell.Color, i);
 				terrain.AddQuad(v1, v2, v3, v4);
 				terrain.AddQuadColor(c1, c2, c3, c4);
 			}
 
 			terrain.AddQuad(v3, v4, left, right);
-			terrain.AddQuadColor(c3, c4, leftCell.color, rightCell.color);
+			terrain.AddQuadColor(c3, c4, leftCell.Color, rightCell.Color);
 		}
 
 		void TriangulateCornerTerracesCliff(
@@ -522,7 +522,7 @@ namespace Game.Visuals.Hex
 				b = -b;
 			}
 			Vector3 boundary = Vector3.Lerp(HexMetrics.Perturb(begin), HexMetrics.Perturb(right), b);
-			Color boundaryColor = Color.Lerp(beginCell.color, rightCell.color, b);
+			Color boundaryColor = Color.Lerp(beginCell.Color, rightCell.Color, b);
 
 			TriangulateBoundaryTriangle(
 				begin, beginCell, left, leftCell, boundary, boundaryColor
@@ -537,7 +537,7 @@ namespace Game.Visuals.Hex
 			else
 			{
 				terrain.AddTriangleUnperturbed(HexMetrics.Perturb(left), HexMetrics.Perturb(right), boundary);
-				terrain.AddTriangleColor(leftCell.color, rightCell.color, boundaryColor);
+				terrain.AddTriangleColor(leftCell.Color, rightCell.Color, boundaryColor);
 			}
 		}
 
@@ -553,7 +553,7 @@ namespace Game.Visuals.Hex
 				b = -b;
 			}
 			Vector3 boundary = Vector3.Lerp(HexMetrics.Perturb(begin), HexMetrics.Perturb(left), b);
-			Color boundaryColor = Color.Lerp(beginCell.color, leftCell.color, b);
+			Color boundaryColor = Color.Lerp(beginCell.Color, leftCell.Color, b);
 
 			TriangulateBoundaryTriangle(
 				right, rightCell, begin, beginCell, boundary, boundaryColor
@@ -568,7 +568,7 @@ namespace Game.Visuals.Hex
 			else
 			{
 				terrain.AddTriangleUnperturbed(HexMetrics.Perturb(left), HexMetrics.Perturb(right), boundary);
-				terrain.AddTriangleColor(leftCell.color, rightCell.color, boundaryColor);
+				terrain.AddTriangleColor(leftCell.Color, rightCell.Color, boundaryColor);
 			}
 		}
 
@@ -579,23 +579,23 @@ namespace Game.Visuals.Hex
 	)
 		{
 			Vector3 v2 = HexMetrics.Perturb(HexMetrics.TerraceLerp(begin, left, 1));
-			Color c2 = HexMetrics.TerraceLerp(beginCell.color, leftCell.color, 1);
+			Color c2 = HexMetrics.TerraceLerp(beginCell.Color, leftCell.Color, 1);
 
 			terrain.AddTriangleUnperturbed(HexMetrics.Perturb(begin), v2, boundary);
-			terrain.AddTriangleColor(beginCell.color, c2, boundaryColor);
+			terrain.AddTriangleColor(beginCell.Color, c2, boundaryColor);
 
 			for (int i = 2; i < HexMetrics.terraceSteps; i++)
 			{
 				Vector3 v1 = v2;
 				Color c1 = c2;
 				v2 = HexMetrics.Perturb(HexMetrics.TerraceLerp(begin, left, i));
-				c2 = HexMetrics.TerraceLerp(beginCell.color, leftCell.color, i);
+				c2 = HexMetrics.TerraceLerp(beginCell.Color, leftCell.Color, i);
 				terrain.AddTriangleUnperturbed(v1, v2, boundary);
 				terrain.AddTriangleColor(c1, c2, boundaryColor);
 			}
 
 			terrain.AddTriangleUnperturbed(v2, HexMetrics.Perturb(left), boundary);
-			terrain.AddTriangleColor(c2, leftCell.color, boundaryColor);
+			terrain.AddTriangleColor(c2, leftCell.Color, boundaryColor);
 		}
 
 		void TriangulateWithRiver(HexDirection direction, HexCell cell, Vector3 center, EdgeVertices e)
@@ -927,7 +927,7 @@ namespace Game.Visuals.Hex
 			}
 			else
 			{
-				TriangulateEdgeStrip(e1, cell.color, e2, neighbor.color, hasRoad);
+				TriangulateEdgeStrip(e1, cell.Color, e2, neighbor.Color, hasRoad);
 			}
 
 			features.AddWall(e1, cell, e2, neighbor, hasRiver, hasRoad);
