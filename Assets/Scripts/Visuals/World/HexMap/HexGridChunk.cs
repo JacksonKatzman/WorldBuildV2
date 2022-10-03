@@ -147,6 +147,11 @@ namespace Game.Visuals.Hex
 			else
 			{
 				TriangulateWithoutRiver(direction, cell, center, e);
+				//TEMPORARY FEATURE GEN
+				if (!cell.IsUnderwater && !cell.HasRoadThroughEdge(direction))
+				{
+					features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
+				}
 			}
 
 			if (direction <= HexDirection.SE)
@@ -157,12 +162,6 @@ namespace Game.Visuals.Hex
 			if (cell.IsUnderwater)
 			{
 				TriangulateWater(direction, cell, center);
-			}
-
-			//TEMPORARY FEATURE GEN
-			if (!cell.IsUnderwater && !cell.HasRoadThroughEdge(direction))
-			{
-				features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
 			}
 		}
 
