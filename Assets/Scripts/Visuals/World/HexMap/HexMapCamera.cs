@@ -4,6 +4,8 @@ namespace Game.Visuals.Hex
 {
 	public class HexMapCamera : MonoBehaviour
 	{
+		static HexMapCamera instance;
+
 		[SerializeField]
 		Transform swivel;
 
@@ -22,9 +24,21 @@ namespace Game.Visuals.Hex
 
 		float zoom = 1f;
 		float rotationAngle = 0f;
+		public static bool Locked
+		{
+			set
+			{
+				instance.enabled = !value;
+			}
+		}
 
 		void Awake()
 		{
+		}
+
+		void OnEnable()
+		{
+			instance = this;
 		}
 
 		void Update()
@@ -93,16 +107,21 @@ namespace Game.Visuals.Hex
 		Vector3 ClampPosition(Vector3 position)
 		{
 			float xMax =
-				(grid.chunkCountX * HexMetrics.chunkSizeX - 0.5f) *
+				(grid.cellCountX - 0.5f) *
 				(2f * HexMetrics.innerRadius);
 			position.x = Mathf.Clamp(position.x, 0f, xMax);
 
 			float zMax =
-				(grid.chunkCountZ * HexMetrics.chunkSizeZ - 1) *
+				(grid.cellCountZ - 1) *
 				(1.5f * HexMetrics.outerRadius);
 			position.z = Mathf.Clamp(position.z, 0f, zMax);
 
 			return position;
+		}
+
+		public static void ValidatePosition()
+		{
+			instance.AdjustPosition(0f, 0f);
 		}
 	}
 }

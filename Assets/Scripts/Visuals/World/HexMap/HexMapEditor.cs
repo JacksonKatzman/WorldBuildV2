@@ -53,33 +53,6 @@ namespace Game.Visuals.Hex
 			}
 		}
 
-		public void Save()
-		{
-			string path = Path.Combine(Application.persistentDataPath, "test.map");
-			using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
-			{
-				writer.Write(0);
-				hexGrid.Save(writer);
-			}
-		}
-
-		public void Load()
-		{
-			string path = Path.Combine(Application.persistentDataPath, "test.map");
-			using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
-			{
-				int header = reader.ReadInt32();
-				if (header == 0)
-				{
-					hexGrid.Load(reader);
-				}
-				else
-				{
-					OutputLogger.LogError("Unknown map format " + header + ". For safety, will not Load.");
-				}
-			}
-		}
-
 		void HandleInput()
 		{
 			Ray inputRay = mainCamera.ScreenPointToRay(Input.mousePosition);
