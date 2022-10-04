@@ -20,8 +20,6 @@ namespace Game.Visuals.Hex
 
 		public Texture2D noiseSource;
 
-		public Color[] colors;
-
 		//public int chunkCountX = 4, chunkCountZ = 3;
 		public int cellCountX = 20, cellCountZ = 15;
 
@@ -40,7 +38,6 @@ namespace Game.Visuals.Hex
 			noiseSource = NoiseGenerator.GenerateARGBNoiseTexture(noiseSettings);
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
-			HexMetrics.colors = colors;
 
 			CreateMap(cellCountX, cellCountZ);
 		}
@@ -85,7 +82,6 @@ namespace Game.Visuals.Hex
 			{
 				HexMetrics.noiseSource = noiseSource;
 				HexMetrics.InitializeHashGrid(seed);
-				HexMetrics.colors = colors;
 			}
 		}
 
