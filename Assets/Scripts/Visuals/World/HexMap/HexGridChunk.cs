@@ -47,8 +47,6 @@ namespace Game.Visuals.Hex
 			features.Init();
 
 			cells = new HexCell[HexMetrics.chunkSizeX * HexMetrics.chunkSizeZ];
-
-			ShowUI(false);
 		}
 
 		void Start()

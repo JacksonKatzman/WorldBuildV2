@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using TMPro;
 
 namespace Game.Visuals.Hex
 {
@@ -31,6 +32,8 @@ namespace Game.Visuals.Hex
 		bool walled;
 
 		int specialIndex;
+
+		int distance;
 
 		public HexGridChunk chunk;
 
@@ -413,7 +416,18 @@ namespace Game.Visuals.Hex
 				return specialIndex > 0;
 			}
 		}
-
+		public int Distance
+		{
+			get
+			{
+				return distance;
+			}
+			set
+			{
+				distance = value;
+				UpdateDistanceLabel();
+			}
+		}
 		bool IsValidRiverDestination(HexCell neighbor)
 		{
 			return neighbor && (
@@ -583,6 +597,12 @@ namespace Game.Visuals.Hex
 		void RefreshSelfOnly()
 		{
 			chunk.Refresh();
+		}
+
+		void UpdateDistanceLabel()
+		{
+			TMP_Text label = uiRect.GetComponent<TMP_Text>();
+			label.text = distance == int.MaxValue ? "" : distance.ToString();
 		}
 	}
 }

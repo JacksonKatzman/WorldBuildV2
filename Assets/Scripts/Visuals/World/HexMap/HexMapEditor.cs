@@ -10,6 +10,9 @@ namespace Game.Visuals.Hex
 		[SerializeField]
 		Camera mainCamera;
 
+		[SerializeField]
+		Material terrainMaterial;
+
 		public HexGrid hexGrid;
 
 		private int activeElevation;
@@ -37,8 +40,11 @@ namespace Game.Visuals.Hex
 		OptionalToggle roadMode;
 		OptionalToggle walledMode;
 
+		bool editMode;
+
 		void Awake()
 		{
+			terrainMaterial.DisableKeyword("GRID_ON");
 		}
 
 		void Update()
@@ -68,7 +74,14 @@ namespace Game.Visuals.Hex
 				{
 					isDrag = false;
 				}
-				EditCells(currentCell);
+				if (editMode)
+				{
+					EditCells(currentCell);
+				}
+				else
+				{
+					hexGrid.FindDistancesTo(currentCell);
+				}
 				previousCell = currentCell;
 			}
 			else
@@ -207,11 +220,6 @@ namespace Game.Visuals.Hex
 			brushSize = (int)size;
 		}
 
-		public void ShowUI(bool visible)
-		{
-			hexGrid.ShowUI(visible);
-		}
-
 		public void SetRiverMode(int mode)
 		{
 			riverMode = (OptionalToggle)mode;
@@ -267,5 +275,22 @@ namespace Game.Visuals.Hex
 			activeSpecialIndex = (int)index;
 		}
 
+		public void SetEditMode(bool toggle)
+		{
+			editMode = toggle;
+			hexGrid.ShowUI(!toggle);
+		}
+
+		public void ShowGrid(bool visible)
+		{
+			if (visible)
+			{
+				terrainMaterial.EnableKeyword("GRID_ON");
+			}
+			else
+			{
+				terrainMaterial.DisableKeyword("GRID_ON");
+			}
+		}
 	}
 }
