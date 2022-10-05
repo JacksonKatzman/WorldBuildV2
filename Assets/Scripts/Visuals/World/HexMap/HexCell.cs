@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using TMPro;
+using UnityEngine.UI;
 
 namespace Game.Visuals.Hex
 {
@@ -36,6 +37,8 @@ namespace Game.Visuals.Hex
 		int distance;
 
 		public HexGridChunk chunk;
+
+		public HexCell PathFrom { get; set; }
 
 		public void Save(BinaryWriter writer)
 		{
@@ -428,6 +431,18 @@ namespace Game.Visuals.Hex
 				UpdateDistanceLabel();
 			}
 		}
+
+		public int SearchHeuristic { get; set; }
+		public HexCell NextWithSamePriority { get; set; }
+
+		public int SearchPriority
+		{
+			get
+			{
+				return distance + SearchHeuristic;
+			}
+		}
+
 		bool IsValidRiverDestination(HexCell neighbor)
 		{
 			return neighbor && (
@@ -603,6 +618,19 @@ namespace Game.Visuals.Hex
 		{
 			TMP_Text label = uiRect.GetComponent<TMP_Text>();
 			label.text = distance == int.MaxValue ? "" : distance.ToString();
+		}
+
+		public void DisableHighlight()
+		{
+			Image highlight = uiRect.GetChild(0).GetComponent<Image>();
+			highlight.enabled = false;
+		}
+
+		public void EnableHighlight(Color color)
+		{
+			Image highlight = uiRect.GetChild(0).GetComponent<Image>();
+			highlight.color = color;
+			highlight.enabled = true;
 		}
 	}
 }

@@ -30,6 +30,7 @@ namespace Game.Visuals.Hex
 		bool isDrag;
 		HexDirection dragDirection;
 		HexCell previousCell;
+		HexCell searchFromCell, searchToCell;
 
 		enum OptionalToggle
 		{
@@ -78,9 +79,27 @@ namespace Game.Visuals.Hex
 				{
 					EditCells(currentCell);
 				}
+				else if (Input.GetKey(KeyCode.LeftShift) && searchToCell != currentCell)
+				{
+					if (searchFromCell)
+					{
+						searchFromCell.DisableHighlight();
+					}
+					searchFromCell = currentCell;
+					searchFromCell.EnableHighlight(Color.blue);
+					if (searchToCell)
+					{
+						hexGrid.FindPath(searchFromCell, searchToCell);
+					}
+				}
+				else if (searchFromCell && searchFromCell != currentCell)
+				{
+					searchToCell = currentCell;
+					hexGrid.FindPath(searchFromCell, searchToCell);
+				}
 				else
 				{
-					hexGrid.FindDistancesTo(currentCell);
+					//?? hexGrid.FindPath(currentCell);
 				}
 				previousCell = currentCell;
 			}
