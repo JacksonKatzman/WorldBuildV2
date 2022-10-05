@@ -7,6 +7,8 @@ namespace Game.Visuals.Hex
 {
 	public class HexMapEditor : MonoBehaviour
 	{
+		private static int SPEED = 24;
+
 		[SerializeField]
 		Camera mainCamera;
 
@@ -81,21 +83,27 @@ namespace Game.Visuals.Hex
 				}
 				else if (Input.GetKey(KeyCode.LeftShift) && searchToCell != currentCell)
 				{
-					if (searchFromCell)
+					if (searchFromCell != currentCell)
 					{
-						searchFromCell.DisableHighlight();
-					}
-					searchFromCell = currentCell;
-					searchFromCell.EnableHighlight(Color.blue);
-					if (searchToCell)
-					{
-						hexGrid.FindPath(searchFromCell, searchToCell);
+						if (searchFromCell)
+						{
+							searchFromCell.DisableHighlight();
+						}
+						searchFromCell = currentCell;
+						searchFromCell.EnableHighlight(Color.blue);
+						if (searchToCell)
+						{
+							hexGrid.FindPath(searchFromCell, searchToCell, SPEED);
+						}
 					}
 				}
 				else if (searchFromCell && searchFromCell != currentCell)
 				{
-					searchToCell = currentCell;
-					hexGrid.FindPath(searchFromCell, searchToCell);
+					if (searchToCell != currentCell)
+					{
+						searchToCell = currentCell;
+						hexGrid.FindPath(searchFromCell, searchToCell, 24);
+					}
 				}
 				else
 				{

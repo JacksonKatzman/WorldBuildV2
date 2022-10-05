@@ -252,6 +252,16 @@ namespace Game.Visuals.Hex
 				hasIncomingRiver && incomingRiver == direction ||
 				hasOutgoingRiver && outgoingRiver == direction;
 		}
+
+		//Need to write a fn to determine whether we would have to cross a river going a certain direction to use in A* weights
+		/*
+		public bool HasRiverBlockingDirection(HexDirection direction)
+		{
+			bool twoRivers = hasIncomingRiver && hasOutgoingRiver;
+			bool parallel = HasRiverThroughEdge(direction) && HasRiverThroughEdge(direction.Opposite());
+			return twoRivers && !parallel;
+		}
+		*/
 		public HexDirection RiverBeginOrEndDirection
 		{
 			get
@@ -428,12 +438,14 @@ namespace Game.Visuals.Hex
 			set
 			{
 				distance = value;
-				UpdateDistanceLabel();
+				
 			}
 		}
 
 		public int SearchHeuristic { get; set; }
 		public HexCell NextWithSamePriority { get; set; }
+
+		public int SearchPhase { get; set; }
 
 		public int SearchPriority
 		{
@@ -614,12 +626,6 @@ namespace Game.Visuals.Hex
 			chunk.Refresh();
 		}
 
-		void UpdateDistanceLabel()
-		{
-			TMP_Text label = uiRect.GetComponent<TMP_Text>();
-			label.text = distance == int.MaxValue ? "" : distance.ToString();
-		}
-
 		public void DisableHighlight()
 		{
 			Image highlight = uiRect.GetChild(0).GetComponent<Image>();
@@ -631,6 +637,12 @@ namespace Game.Visuals.Hex
 			Image highlight = uiRect.GetChild(0).GetComponent<Image>();
 			highlight.color = color;
 			highlight.enabled = true;
+		}
+
+		public void SetLabel(string text)
+		{
+			TMP_Text label = uiRect.GetComponent<TMP_Text>();
+			label.text = text;
 		}
 	}
 }
