@@ -19,8 +19,8 @@ namespace Game.Visuals.Hex
 		private int activeWaterLevel;
 		private int activeUrbanLevel, activeFarmLevel, activePlantLevel, activeSpecialIndex;
 
-		private bool applyElevation = true;
-		private bool applyWaterLevel = true;
+		private bool applyElevation = false;
+		private bool applyWaterLevel = false;
 		private bool applyUrbanLevel, applyFarmLevel, applyPlantLevel, applySpecialIndex;
 
 		int activeTerrainTypeIndex;
@@ -43,7 +43,7 @@ namespace Game.Visuals.Hex
 		void Awake()
 		{
 			terrainMaterial.DisableKeyword("GRID_ON");
-			//SetEditMode(false);
+			SetEditMode(false);
 		}
 
 		void Update()

@@ -36,10 +36,16 @@ namespace Game.Visuals.Hex
 
 		int distance;
 
+		int visibility;
+
 		public HexGridChunk chunk;
 
 		public HexCell PathFrom { get; set; }
 		public HexUnit Unit { get; set; }
+
+		public HexCellShaderData ShaderData { get; set; }
+
+		public int Index { get; set; }
 
 		public void Save(BinaryWriter writer)
 		{
@@ -86,6 +92,7 @@ namespace Game.Visuals.Hex
 		public void Load(BinaryReader reader)
 		{
 			terrainTypeIndex = reader.ReadByte();
+			ShaderData.RefreshTerrain(this);
 			elevation = reader.ReadByte();
 			RefreshPosition();
 			waterLevel = reader.ReadByte();
@@ -181,7 +188,7 @@ namespace Game.Visuals.Hex
 				if (terrainTypeIndex != value)
 				{
 					terrainTypeIndex = value;
-					Refresh();
+					ShaderData.RefreshTerrain(this);
 				}
 			}
 		}
@@ -443,6 +450,14 @@ namespace Game.Visuals.Hex
 			}
 		}
 
+		public bool IsVisible
+		{
+			get
+			{
+				return visibility > 0;
+			}
+		}
+
 		public int SearchHeuristic { get; set; }
 		public HexCell NextWithSamePriority { get; set; }
 
@@ -653,6 +668,24 @@ namespace Game.Visuals.Hex
 		{
 			TMP_Text label = uiRect.GetComponent<TMP_Text>();
 			label.text = text;
+		}
+
+		public void IncreaseVisibility()
+		{
+			visibility += 1;
+			if (visibility == 1)
+			{
+				ShaderData.RefreshVisibility(this);
+			}
+		}
+
+		public void DecreaseVisibility()
+		{
+			visibility -= 1;
+			if (visibility == 0)
+			{
+				ShaderData.RefreshVisibility(this);
+			}
 		}
 	}
 }

@@ -108,10 +108,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshCollider: {fileID: 2221693837026146053}
   useCollider: 0
-  useColors: 0
+  useCellData: 1
   useUVCoordinates: 1
   useUV2Coordinates: 1
-  useTerrainTypes: 0
 --- !u!33 &3392054916536164593
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -224,10 +223,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshCollider: {fileID: 1369007162339900126}
   useCollider: 0
-  useColors: 0
+  useCellData: 0
   useUVCoordinates: 0
   useUV2Coordinates: 0
-  useTerrainTypes: 0
 --- !u!33 &8901281829146427356
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -256,7 +254,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e9d63c2310567664ab13cce3771f97ae, type: 2}
+  - {fileID: 2100000, guid: 2c0c1eebb506c8c459b2ad071dc6b2a0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -340,10 +338,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshCollider: {fileID: 1659333390920234175}
   useCollider: 0
-  useColors: 0
+  useCellData: 1
   useUVCoordinates: 1
   useUV2Coordinates: 0
-  useTerrainTypes: 0
 --- !u!33 &8289054569766622057
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -609,10 +606,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshCollider: {fileID: 1809170214563297227}
   useCollider: 0
-  useColors: 0
+  useCellData: 1
   useUVCoordinates: 1
   useUV2Coordinates: 0
-  useTerrainTypes: 0
 --- !u!33 &1020673262890926667
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -725,10 +721,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshCollider: {fileID: 2623663512865440360}
   useCollider: 1
-  useColors: 1
+  useCellData: 1
   useUVCoordinates: 0
   useUV2Coordinates: 0
-  useTerrainTypes: 1
 --- !u!33 &8242280509406478863
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -841,10 +836,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshCollider: {fileID: 1893667870732456580}
   useCollider: 0
-  useColors: 0
+  useCellData: 1
   useUVCoordinates: 0
   useUV2Coordinates: 0
-  useTerrainTypes: 0
 --- !u!33 &2342219652258805244
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -957,10 +951,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshCollider: {fileID: 5737501125304151563}
   useCollider: 0
-  useColors: 0
+  useCellData: 1
   useUVCoordinates: 1
   useUV2Coordinates: 0
-  useTerrainTypes: 0
 --- !u!33 &5535323186849863010
 MeshFilter:
   m_ObjectHideFlags: 0
