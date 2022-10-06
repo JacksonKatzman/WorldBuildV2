@@ -39,6 +39,7 @@ namespace Game.Visuals.Hex
 		public HexGridChunk chunk;
 
 		public HexCell PathFrom { get; set; }
+		public HexUnit Unit { get; set; }
 
 		public void Save(BinaryWriter writer)
 		{
@@ -618,12 +619,21 @@ namespace Game.Visuals.Hex
 						neighbor.chunk.Refresh();
 					}
 				}
+
+				if (Unit)
+				{
+					Unit.ValidateLocation();
+				}
 			}
 		}
 
 		void RefreshSelfOnly()
 		{
 			chunk.Refresh();
+			if (Unit)
+			{
+				Unit.ValidateLocation();
+			}
 		}
 
 		public void DisableHighlight()

@@ -20,14 +20,15 @@ namespace Game.Visuals.Hex
 		[SerializeField]
 		public NoiseSettings noiseSettings;
 
+		[SerializeField]
+		public HexUnit unitPrefab;
+
 		public Texture2D noiseSource;
 
-		//public int chunkCountX = 4, chunkCountZ = 3;
 		public int cellCountX = 20, cellCountZ = 15;
 
 		public int seed;
 
-		//int cellCountX, cellCountZ;
 		int chunkCountX, chunkCountZ;
 
 		public HexCell cellPrefab;
@@ -40,11 +41,22 @@ namespace Game.Visuals.Hex
 		HexCell[] cells;
 		HexGridChunk[] chunks;
 
+		List<HexUnit> units = new List<HexUnit>();
+
+		public bool HasPath
+		{
+			get
+			{
+				return currentPathExists;
+			}
+		}
+
 		void Awake()
 		{
 			noiseSource = NoiseGenerator.GenerateARGBNoiseTexture(noiseSettings);
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
+			HexUnit.unitPrefab = unitPrefab;
 
 			CreateMap(cellCountX, cellCountZ);
 		}
@@ -64,6 +76,7 @@ namespace Game.Visuals.Hex
 
 			HexMapCamera.ValidatePosition();
 			ClearPath();
+			ClearUnits();
 
 			if (chunks != null)
 			{
@@ -90,7 +103,18 @@ namespace Game.Visuals.Hex
 			{
 				HexMetrics.noiseSource = noiseSource;
 				HexMetrics.InitializeHashGrid(seed);
+				HexUnit.unitPrefab = unitPrefab;
 			}
+		}
+
+		public HexCell GetCell(Ray ray)
+		{
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit))
+			{
+				return GetCell(hit.point);
+			}
+			return null;
 		}
 
 		public void Save(BinaryWriter writer)
@@ -102,11 +126,18 @@ namespace Game.Visuals.Hex
 			{
 				cells[i].Save(writer);
 			}
+
+			writer.Write(units.Count);
+			for (int i = 0; i < units.Count; i++)
+			{
+				units[i].Save(writer);
+			}
 		}
 
 		public void Load(BinaryReader reader, int header)
 		{
 			ClearPath();
+			ClearUnits();
 
 			int x = 20, z = 15;
 			if (header >= 1)
@@ -131,6 +162,15 @@ namespace Game.Visuals.Hex
 			{
 				chunks[i].Refresh();
 			}
+
+			if (header >= 2)
+			{
+				int unitCount = reader.ReadInt32();
+				for (int i = 0; i < unitCount; i++)
+				{
+					HexUnit.Load(reader, this);
+				}
+			}
 		}
 
 		public void FindPath(HexCell fromCell, HexCell toCell, int speed)
@@ -150,7 +190,7 @@ namespace Game.Visuals.Hex
 				HexCell current = currentPathTo;
 				while (current != currentPathFrom)
 				{
-					int turn = current.Distance / speed;
+					int turn = (current.Distance - 1) / speed;
 					current.SetLabel(turn.ToString());
 					current.EnableHighlight(Color.white);
 					current = current.PathFrom;
@@ -160,7 +200,24 @@ namespace Game.Visuals.Hex
 			currentPathTo.EnableHighlight(Color.red);
 		}
 
-		void ClearPath()
+		public List<HexCell> GetPath()
+		{
+			if (!currentPathExists)
+			{
+				return null;
+			}
+			List<HexCell> path = ListPool<HexCell>.Get();
+			for (HexCell c = currentPathTo; c != currentPathFrom; c = c.PathFrom)
+			{
+				path.Add(c);
+			}
+
+			path.Add(currentPathFrom);
+			path.Reverse();
+			return path;
+		}
+
+		public void ClearPath()
 		{
 			if (currentPathExists)
 			{
@@ -211,7 +268,7 @@ namespace Game.Visuals.Hex
 					return true;
 				}
 
-				int currentTurn = current.Distance / speed;
+				int currentTurn = (current.Distance - 1) / speed;
 
 				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 				{
@@ -220,7 +277,7 @@ namespace Game.Visuals.Hex
 					{
 						continue;
 					}
-					if (neighbor.IsUnderwater)
+					if (neighbor.IsUnderwater || neighbor.Unit)
 					{
 						continue;
 					}
@@ -248,7 +305,7 @@ namespace Game.Visuals.Hex
 					}
 
 					int distance = current.Distance + moveCost;
-					int turn = distance / speed;
+					int turn = (distance - 1) / speed;
 					if (turn > currentTurn)
 					{
 						distance = turn * speed + moveCost;
@@ -369,6 +426,7 @@ namespace Game.Visuals.Hex
 			position = transform.InverseTransformPoint(position);
 			HexCoordinates coordinates = HexCoordinates.FromPosition(position);
 			int index = coordinates.X + coordinates.Z * cellCountX + coordinates.Z / 2;
+			Mathf.Clamp(index, 0, cells.Length);
 			return cells[index];
 		}
 
@@ -393,6 +451,29 @@ namespace Game.Visuals.Hex
 			{
 				chunks[i].ShowUI(visible);
 			}
+		}
+
+		public void AddUnit(HexUnit unit, HexCell location, float orientation)
+		{
+			units.Add(unit);
+			unit.transform.SetParent(transform, false);
+			unit.Location = location;
+			unit.Orientation = orientation;
+		}
+
+		public void RemoveUnit(HexUnit unit)
+		{
+			units.Remove(unit);
+			unit.Die();
+		}
+
+		void ClearUnits()
+		{
+			for (int i = 0; i < units.Count; i++)
+			{
+				units[i].Die();
+			}
+			units.Clear();
 		}
 	}
 }

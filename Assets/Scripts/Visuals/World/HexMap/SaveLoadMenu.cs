@@ -7,6 +7,8 @@ namespace Game.Visuals.Hex
 {
 	public class SaveLoadMenu : MonoBehaviour
 	{
+		public const int SAVE_VERSION = 2;
+
 		public HexGrid hexGrid;
 
 		public TMP_Text menuLabel, actionButtonLabel;
@@ -99,7 +101,7 @@ namespace Game.Visuals.Hex
 		{
 			using (BinaryWriter writer = new BinaryWriter(File.Open(path, FileMode.Create)))
 			{
-				writer.Write(1);
+				writer.Write(SAVE_VERSION);
 				hexGrid.Save(writer);
 			}
 		}
@@ -114,7 +116,7 @@ namespace Game.Visuals.Hex
 			using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
 			{
 				int header = reader.ReadInt32();
-				if (header <= 1)
+				if (header <= SAVE_VERSION)
 				{
 					hexGrid.Load(reader, header);
 					HexMapCamera.ValidatePosition();
