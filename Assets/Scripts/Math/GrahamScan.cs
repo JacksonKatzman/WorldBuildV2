@@ -7,6 +7,7 @@ namespace ConcaveHull {
         const int TURN_RIGHT = -1;
         const int TURN_NONE = 0;
         public static int turn(Node p, Node q, Node r) {
+            //((p.x == 0 && p.y == 0) || (q.x == 0 && q.y == 0))? 0: 
             return ((q.x - p.x) * (r.y - p.y) - (r.x - p.x) * (q.y - p.y)).CompareTo(0);
         }
 

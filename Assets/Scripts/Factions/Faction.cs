@@ -96,13 +96,11 @@ namespace Game.Factions
 
 			ResetTurnSpecificValues();
 
-			government.HandleUpgrades(population);
+			//government.HandleUpgrades(population);
 
 			ExpandTerritory();
 
 			CalculateFactionTension();
-
-			SimAIManager.Instance.CallFactionActionByScores(currentPriorities, this);
 
 			UpdateStats();
 

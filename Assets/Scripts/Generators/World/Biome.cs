@@ -8,7 +8,6 @@ using Sirenix.Serialization;
 using System;
 using Games.Visuals;
 using System.Linq;
-using Pinwheel.Vista.Graph;
 
 namespace Game.WorldGeneration
 {
@@ -18,7 +17,6 @@ namespace Game.WorldGeneration
 		public string biomeType;
 		public LandType landType;
 		public LandTemperature temperature;
-		public TerrainGraph biomeGraph;
 
 		[Range(0.0f, 1.0f)]
 		public float rainfallThreshold;

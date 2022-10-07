@@ -32,7 +32,7 @@ namespace Game.Incidents
 			recordedIncidents = new List<CoreIncident>();
 			contextQueue = new List<DelayedIncidentContext>();
 
-			coreIncidents.AddRange(IncidentEditorWindow.ParseIncidents());
+			//coreIncidents.AddRange(IncidentEditorWindow.ParseIncidents());
 
 			//coreIncidents.Add(new CoreIncident(new List<IncidentTag>(), 1, new NullIncidentModifier(), new List<IncidentModifier> { new NullIncidentModifier() }, new List<IncidentModifier> { new NullIncidentModifier() }));
 

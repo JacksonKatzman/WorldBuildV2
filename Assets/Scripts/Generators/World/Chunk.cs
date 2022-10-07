@@ -46,7 +46,7 @@ namespace Game.WorldGeneration
 			{
 				for(int x = 0; x < width; x++)
 				{
-					colorMap[x, y] = chunkTiles[x, y].biome.color;
+					colorMap[x, y] = Color.red;
 				}
 			}
 

@@ -35,18 +35,16 @@ public class SimulationManager : MonoBehaviour
     [SerializeField]
     GameObject cityMarker;
 
-    [SerializeField]
-    WorldVisualBuilder visualBuilder;
-
     private List<GameObject> cityMarkers;
-
-    public EventRecorder eventRecorder;
 
     public float heightMulitplier;
     public AnimationCurve heightCurve;
 
     [SerializeField]
     private Renderer coloredMapRenderer;
+
+    [SerializeField]
+    private Renderer heightMapRenderer;
 
     public int seed;
     public System.Random seededRandom;
@@ -67,16 +65,16 @@ public class SimulationManager : MonoBehaviour
         else
 		{
             instance = this;
-		}
+            seededRandom = new System.Random(seed);
+        }
 	}
 
 	void Start()
     {
+        /*
         timer = new TimingProfiler();
 
         cityMarkers = new List<GameObject>();
-
-        eventRecorder = new EventRecorder();
 
         seededRandom = new System.Random(seed);
 
@@ -85,10 +83,12 @@ public class SimulationManager : MonoBehaviour
         //DrawNoiseMap();
 
         //DrawMesh(MeshGenerator.GenerateVoxelTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.voxelColorMapTexture);
+       DrawMesh(MeshGenerator.GenerateTerrainMesh(world.noiseMaps[Game.Enums.MapCategory.TERRAIN], heightMulitplier, heightCurve), world.colorMapTexture);
 
         world.HandleDeferredActions();
 
         //RedrawFactionMap();
+        */
     }
 
     public void GenerateWorld()
@@ -105,8 +105,6 @@ public class SimulationManager : MonoBehaviour
 
     private void GenerateWorldVisuals()
 	{
-        visualBuilder.BuildWorld(world);
-        visualBuilder.UpdateVisuals();
         timer.PrintFindings();
     }
 
@@ -114,10 +112,10 @@ public class SimulationManager : MonoBehaviour
 	{
         Vector2Int noiseSize = new Vector2Int(settings.worldSize.x * chunkSize, settings.worldSize.y * chunkSize);
         world = WorldGenerator.GenerateWorld(settings, chunkSize, biomeSettings.biomes);
-        /*
+        
         heightMapRenderer.sharedMaterial.mainTexture = world.heightMapTexture;
-        coloredMapRenderer.transform.localScale = new Vector3(world.biomeMap.GetLength(0), 1, world.biomeMap.GetLength(1));
-
+        heightMapRenderer.transform.localScale = new Vector3(world.biomeMap.GetLength(0), 1, world.biomeMap.GetLength(1));
+        /*
         rainfallMapRenderer.sharedMaterial.mainTexture = DebugCreateNoiseTexture(world.noiseMaps[Game.Enums.MapCategory.RAINFALL]);
         coloredMapRenderer.transform.localScale = new Vector3(world.biomeMap.GetLength(0), 1, world.biomeMap.GetLength(1));
 
