@@ -136,7 +136,7 @@ namespace Game.WorldGeneration
 		}
 		private void CalculateBiome()
 		{
-			landType = Biome.CalculateLandType(Value);
+			//landType = Biome.CalculateLandType(Value);
 			baseMoisture = chunk.SampleNoiseMap(MapCategory.RAINFALL, coords);
 			baseFertility = chunk.SampleNoiseMap(MapCategory.FERTILITY, coords);
 

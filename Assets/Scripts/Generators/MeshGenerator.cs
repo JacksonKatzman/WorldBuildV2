@@ -8,12 +8,12 @@ namespace Game.Generators
 	{
 		public static MeshData GenerateTerrainMesh(float[,] heightMap, float heightMultiplier, AnimationCurve heightCurve)
 		{
-			int width = heightMap.GetLength(0) * 2;
-			int height = heightMap.GetLength(1) * 2;
+			int width = heightMap.GetLength(0);
+			int height = heightMap.GetLength(1);
 			float topLeftX = (width - 1) / -2f;
 			float topLeftZ = (height - 1) / 2f;
 
-			MeshData meshData = new MeshData(width, height);
+			MeshData meshData = new MeshData(width*2, height*2);
 			int vertexIndex = 0;
 
 			for(int y = 0; y < height; y++)

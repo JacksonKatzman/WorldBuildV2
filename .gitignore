@@ -68,3 +68,9 @@ crashlytics-build.properties
 
 /[Aa]ssets/PolygonAssets/*
 /[Aa]ssets/Plugins/*
+/[Aa]ssets/PinwheelStudio/*
+/[Aa]ssets/_TerrainData/*
+/[Pp]ackages/*
+/[Aa]ssets/_MicroSplatShaders/*
+/[Aa]ssets/VistaScreenshots/*
+/[Aa]ssets/MapMagic/*

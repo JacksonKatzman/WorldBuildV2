@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Game.Generators.Noise;
 
 public static class NoiseGenerator
 {
@@ -61,6 +62,90 @@ public static class NoiseGenerator
 			}
 		}
 		return noiseMap;
+	}
+
+	public static Texture2D GenerateARGBNoiseTexture(NoiseSettings noiseSettings)
+	{
+		Texture2D worldNoiseTexture = new Texture2D(noiseSettings.worldSize.x, noiseSettings.worldSize.y, TextureFormat.RGBAFloat, true);
+
+		/*
+		Color[] colors = new Color[3];
+		colors[0] = Color.red;
+		colors[1] = Color.green;
+		colors[2] = Color.blue;
+
+		for (int mip = 0; mip < 3; mip++)
+		{
+			worldNoiseTexture.SetPixels(GenerateColorMap(noiseSettings, colors[mip]), mip);
+		}
+		*/
+
+		worldNoiseTexture.SetPixels(Generate3DColorMap(noiseSettings));
+
+		worldNoiseTexture.Apply();
+
+/*
+		for (int mip = 0; mip < 3; ++mip)
+		{
+			Color[] cols = GenerateColorMap(noiseSettings);
+			for (int i = 0; i < cols.Length; ++i)
+			{
+				cols[i] = Color.Lerp(cols[i], colors[mip], 0.33f);
+			}
+			worldNoiseTexture.SetPixels(cols, mip);
+		}
+
+		worldNoiseTexture.Apply();
+*/
+		return worldNoiseTexture;
+	}
+
+	public static Color[] GenerateColorMap(NoiseSettings noiseSettings, Color color)
+	{
+		var noiseMap = GeneratePerlinNoise(noiseSettings.worldSize, noiseSettings.scale,
+														  noiseSettings.octaves, noiseSettings.persistance,
+														  noiseSettings.lacunarity, noiseSettings.offset);
+		var width = noiseMap.GetLength(0);
+		var height = noiseMap.GetLength(1);
+		Color[] colorMap = new Color[width * height];
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				var c = Color.Lerp(color, Color.white, noiseMap[x, y]);
+				colorMap[y * width + x] = c;
+			}
+		}
+
+		return colorMap;
+	}
+
+	public static Color[] Generate3DColorMap(NoiseSettings noiseSettings)
+	{
+		var noiseMaps = new List<float[,]>();
+		for(int i = 0; i < 5; i++)
+		{
+			noiseMaps.Add(GeneratePerlinNoise(noiseSettings.worldSize, noiseSettings.scale,
+														  noiseSettings.octaves, noiseSettings.persistance,
+														  noiseSettings.lacunarity, noiseSettings.offset));
+		}
+
+		var width = noiseSettings.worldSize.x;
+		var height = noiseSettings.worldSize.y;
+
+		Color[] colorMap = new Color[width * height];
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				//var c = Color.Lerp(color, Color.white, noiseMap[x, y]);
+				var c = new Color(noiseMaps[0][x, y], noiseMaps[1][x, y], noiseMaps[2][x, y], noiseMaps[3][x, y]);
+				c = Color.Lerp(c, Color.white, noiseMaps[4][x, y] * 0.66f);
+				colorMap[y * width + x] = c;
+			}
+		}
+
+		return colorMap;
 	}
 
 }
