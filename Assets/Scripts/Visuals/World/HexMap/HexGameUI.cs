@@ -15,11 +15,25 @@ namespace Game.Visuals.Hex
 		HexCell currentCell;
 		HexUnit selectedUnit;
 
+		private void Start()
+		{
+			SetEditMode(false);
+		}
+
 		public void SetEditMode(bool toggle)
 		{
 			enabled = !toggle;
 			grid.ShowUI(!toggle);
 			grid.ClearPath();
+
+			if (toggle)
+			{
+				Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+			}
+			else
+			{
+				Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
+			}
 		}
 
 		bool UpdateCurrentCell()
@@ -72,7 +86,7 @@ namespace Game.Visuals.Hex
 			{
 				if (currentCell && selectedUnit.IsValidDestination(currentCell))
 				{
-					grid.FindPath(selectedUnit.Location, currentCell, 24);
+					grid.FindPath(selectedUnit.Location, currentCell, selectedUnit);
 				}
 				else
 				{

@@ -40,7 +40,7 @@ namespace Game.Visuals.Hex
 		OptionalToggle roadMode;
 		OptionalToggle walledMode;
 
-		void Awake()
+		void Start()
 		{
 			terrainMaterial.DisableKeyword("GRID_ON");
 			SetEditMode(false);

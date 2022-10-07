@@ -45,6 +45,20 @@ namespace Game.Visuals.Hex
 
 		public HexCellShaderData ShaderData { get; set; }
 
+		public bool Explorable { get; set; }
+		bool explored;
+		public bool IsExplored
+		{
+			get
+			{
+				return explored && Explorable;
+			}
+			private set
+			{
+				explored = value;
+			}
+		}
+
 		public int Index { get; set; }
 
 		public void Save(BinaryWriter writer)
@@ -87,9 +101,10 @@ namespace Game.Visuals.Hex
 				}
 			}
 			writer.Write((byte)roadFlags);
+			writer.Write(IsExplored);
 		}
 
-		public void Load(BinaryReader reader)
+		public void Load(BinaryReader reader, int header)
 		{
 			terrainTypeIndex = reader.ReadByte();
 			ShaderData.RefreshTerrain(this);
@@ -131,6 +146,10 @@ namespace Game.Visuals.Hex
 			{
 				roads[i] = (roadFlags & (1 << i)) != 0;
 			}
+
+
+			IsExplored = header >= 3 ? reader.ReadBoolean() : false;
+			ShaderData.RefreshVisibility(this);
 		}
 
 		void RefreshPosition()
@@ -160,7 +179,12 @@ namespace Game.Visuals.Hex
 					return;
 				}
 
+				int originalViewElevation = ViewElevation;
 				elevation = value;
+				if (ViewElevation != originalViewElevation)
+				{
+					ShaderData.ViewElevationChanged();
+				}
 				RefreshPosition();
 
 				ValidateRivers();
@@ -174,6 +198,14 @@ namespace Game.Visuals.Hex
 				}
 
 				Refresh();
+			}
+		}
+
+		public int ViewElevation
+		{
+			get
+			{
+				return elevation >= waterLevel ? elevation : waterLevel;
 			}
 		}
 
@@ -335,7 +367,12 @@ namespace Game.Visuals.Hex
 				{
 					return;
 				}
+				int originalViewElevation = ViewElevation;
 				waterLevel = value;
+				if (ViewElevation != originalViewElevation)
+				{
+					ShaderData.ViewElevationChanged();
+				}
 				ValidateRivers();
 				Refresh();
 			}
@@ -454,7 +491,7 @@ namespace Game.Visuals.Hex
 		{
 			get
 			{
-				return visibility > 0;
+				return visibility > 0 && Explorable;
 			}
 		}
 
@@ -675,6 +712,7 @@ namespace Game.Visuals.Hex
 			visibility += 1;
 			if (visibility == 1)
 			{
+				IsExplored = true;
 				ShaderData.RefreshVisibility(this);
 			}
 		}
@@ -684,6 +722,15 @@ namespace Game.Visuals.Hex
 			visibility -= 1;
 			if (visibility == 0)
 			{
+				ShaderData.RefreshVisibility(this);
+			}
+		}
+
+		public void ResetVisibility()
+		{
+			if (visibility > 0)
+			{
+				visibility = 0;
 				ShaderData.RefreshVisibility(this);
 			}
 		}

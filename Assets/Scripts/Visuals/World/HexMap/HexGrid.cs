@@ -60,8 +60,22 @@ namespace Game.Visuals.Hex
 			HexMetrics.InitializeHashGrid(seed);
 			HexUnit.unitPrefab = unitPrefab;
 			cellShaderData = gameObject.AddComponent<HexCellShaderData>();
+			cellShaderData.Grid = this;
 
 			CreateMap(cellCountX, cellCountZ);
+		}
+
+		public void ResetVisibility()
+		{
+			for (int i = 0; i < cells.Length; i++)
+			{
+				cells[i].ResetVisibility();
+			}
+			for (int i = 0; i < units.Count; i++)
+			{
+				HexUnit unit = units[i];
+				IncreaseVisibility(unit.Location, unit.VisionRange);
+			}
 		}
 
 		public bool CreateMap()
@@ -109,6 +123,7 @@ namespace Game.Visuals.Hex
 				HexMetrics.noiseSource = noiseSource;
 				HexMetrics.InitializeHashGrid(seed);
 				HexUnit.unitPrefab = unitPrefab;
+				ResetVisibility();
 			}
 		}
 
@@ -159,9 +174,12 @@ namespace Game.Visuals.Hex
 				}
 			}
 
+			bool originalImmediateMode = cellShaderData.ImmediateMode;
+			cellShaderData.ImmediateMode = true;
+
 			for (int i = 0; i < cells.Length; i++)
 			{
-				cells[i].Load(reader);
+				cells[i].Load(reader, header);
 			}
 			for (int i = 0; i < chunks.Length; i++)
 			{
@@ -176,16 +194,17 @@ namespace Game.Visuals.Hex
 					HexUnit.Load(reader, this);
 				}
 			}
+
+			cellShaderData.ImmediateMode = originalImmediateMode;
 		}
 
-		public void FindPath(HexCell fromCell, HexCell toCell, int speed)
+		public void FindPath(HexCell fromCell, HexCell toCell, HexUnit unit)
 		{
 			ClearPath();
-
 			currentPathFrom = fromCell;
 			currentPathTo = toCell;
-			currentPathExists = Search(fromCell, toCell, speed);
-			ShowPath(speed);
+			currentPathExists = Search(fromCell, toCell, unit);
+			ShowPath(unit.Speed);
 		}
 
 		void ShowPath(int speed)
@@ -264,11 +283,12 @@ namespace Game.Visuals.Hex
 			ListPool<HexCell>.Add(cells);
 		}
 
-		bool Search(HexCell fromCell, HexCell toCell, int speed)
+		bool Search(HexCell fromCell, HexCell toCell, HexUnit unit)
 		{
 			//https://catlikecoding.com/unity/tutorials/hex-map/part-15/
 			//https://catlikecoding.com/unity/tutorials/hex-map/part-16/
 
+			int speed = unit.Speed;
 			searchFrontierPhase += 2;
 
 			if (searchFrontier == null)
@@ -302,31 +322,14 @@ namespace Game.Visuals.Hex
 					{
 						continue;
 					}
-					if (neighbor.IsUnderwater || neighbor.Unit)
+					if (!unit.IsValidDestination(neighbor))
 					{
 						continue;
 					}
-
-					HexEdgeType edgeType = current.GetEdgeType(neighbor);
-					if (edgeType == HexEdgeType.Cliff)
+					int moveCost = unit.GetMoveCost(current, neighbor, d);
+					if (moveCost < 0)
 					{
 						continue;
-					}
-
-					int moveCost;
-					if (current.HasRoadThroughEdge(d))
-					{
-						moveCost = 1;
-					}
-					else if (current.Walled != neighbor.Walled)
-					{
-						continue;
-					}
-					else
-					{
-						moveCost = edgeType == HexEdgeType.Flat ? 5 : 10;
-						moveCost += neighbor.UrbanLevel + neighbor.FarmLevel +
-						neighbor.PlantLevel;
 					}
 
 					int distance = current.Distance + moveCost;
@@ -372,9 +375,13 @@ namespace Game.Visuals.Hex
 				searchFrontier.Clear();
 			}
 
+			range += fromCell.ViewElevation;
 			fromCell.SearchPhase = searchFrontierPhase;
 			fromCell.Distance = 0;
 			searchFrontier.Enqueue(fromCell);
+
+			HexCoordinates fromCoordinates = fromCell.coordinates;
+
 			while (searchFrontier.Count > 0)
 			{
 				HexCell current = searchFrontier.Dequeue();
@@ -386,14 +393,15 @@ namespace Game.Visuals.Hex
 					HexCell neighbor = current.GetNeighbor(d);
 					if (
 						neighbor == null ||
-						neighbor.SearchPhase > searchFrontierPhase
+						neighbor.SearchPhase > searchFrontierPhase ||
+						!neighbor.Explorable
 					)
 					{
 						continue;
 					}
 
 					int distance = current.Distance + 1;
-					if (distance > range)
+					if (distance + neighbor.ViewElevation > range || distance > fromCoordinates.DistanceTo(neighbor.coordinates))
 					{
 						continue;
 					}
@@ -457,6 +465,8 @@ namespace Game.Visuals.Hex
 			cell.Index = i;
 			cell.ShaderData = cellShaderData;
 
+			cell.Explorable = x > 0 && z > 0 && x < cellCountX - 1 && z < cellCountZ - 1;
+
 			if (x > 0)
 			{
 				cell.SetNeighbor(HexDirection.W, cells[i - 1]);
@@ -511,8 +521,12 @@ namespace Game.Visuals.Hex
 			position = transform.InverseTransformPoint(position);
 			HexCoordinates coordinates = HexCoordinates.FromPosition(position);
 			int index = coordinates.X + coordinates.Z * cellCountX + coordinates.Z / 2;
-			Mathf.Clamp(index, 0, cells.Length);
-			return cells[index];
+			if (index < cells.Length && index >= 0)
+			{
+				return cells[index];
+			}
+
+			return null;
 		}
 
 		public HexCell GetCell(HexCoordinates coordinates)

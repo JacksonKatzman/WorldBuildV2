@@ -2,13 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Game.Enums;
 
 namespace Game.Visuals.Hex
 {
 	public class HexUnit : MonoBehaviour
 	{
-		const int visionRange = 3;
-
 		public static HexUnit unitPrefab;
 
 		const float travelSpeed = 4f;
@@ -20,6 +19,22 @@ namespace Game.Visuals.Hex
 
 		public HexGrid Grid { get; set; }
 
+		public int Speed
+		{
+			get
+			{
+				return 24;
+			}
+		}
+
+		public int VisionRange
+		{
+			get
+			{
+				return 3;
+			}
+		}
+
 		public HexCell Location
 		{
 			get
@@ -30,12 +45,12 @@ namespace Game.Visuals.Hex
 			{
 				if (location)
 				{
-					Grid.DecreaseVisibility(location, visionRange);
+					Grid.DecreaseVisibility(location, VisionRange);
 					location.Unit = null;
 				}
 				location = value;
 				value.Unit = this;
-				Grid.IncreaseVisibility(value, visionRange);
+				Grid.IncreaseVisibility(value, VisionRange);
 				transform.localPosition = value.Position;
 			}
 		}
@@ -62,8 +77,8 @@ namespace Game.Visuals.Hex
 				transform.localPosition = location.Position;
 				if (currentTravelLocation)
 				{
-					Grid.IncreaseVisibility(location, visionRange);
-					Grid.DecreaseVisibility(currentTravelLocation, visionRange);
+					Grid.IncreaseVisibility(location, VisionRange);
+					Grid.DecreaseVisibility(currentTravelLocation, VisionRange);
 					currentTravelLocation = null;
 				}
 			}
@@ -88,7 +103,7 @@ namespace Game.Visuals.Hex
 		{
 			if (location)
 			{
-				Grid.DecreaseVisibility(location, visionRange);
+				Grid.DecreaseVisibility(location, VisionRange);
 			}
 			location.Unit = null;
 			Destroy(gameObject);
@@ -111,7 +126,33 @@ namespace Game.Visuals.Hex
 
 		public bool IsValidDestination(HexCell cell)
 		{
-			return !cell.IsUnderwater && !cell.Unit;
+			return cell.IsExplored && !cell.IsUnderwater && !cell.Unit;
+		}
+
+		public int GetMoveCost(
+		HexCell fromCell, HexCell toCell, HexDirection direction)
+		{
+			HexEdgeType edgeType = fromCell.GetEdgeType(toCell);
+			if (edgeType == HexEdgeType.Cliff)
+			{
+				return -1;
+			}
+			int moveCost;
+			if (fromCell.HasRoadThroughEdge(direction))
+			{
+				moveCost = 1;
+			}
+			else if (fromCell.Walled != toCell.Walled)
+			{
+				return -1;
+			}
+			else
+			{
+				moveCost = edgeType == HexEdgeType.Flat ? 5 : 10;
+				moveCost +=
+					toCell.UrbanLevel + toCell.FarmLevel + toCell.PlantLevel;
+			}
+			return moveCost;
 		}
 
 		IEnumerator LookAt(Vector3 point)
@@ -143,8 +184,7 @@ namespace Game.Visuals.Hex
 			yield return LookAt(pathToTravel[1].Position);
 			Grid.DecreaseVisibility(
 			currentTravelLocation ? currentTravelLocation : pathToTravel[0],
-			visionRange
-		);
+			VisionRange);
 
 			float t = Time.deltaTime * travelSpeed;
 			for (int i = 1; i < pathToTravel.Count; i++)
@@ -153,7 +193,7 @@ namespace Game.Visuals.Hex
 				a = c;
 				b = pathToTravel[i - 1].Position;
 				c = (b + currentTravelLocation.Position) * 0.5f;
-				Grid.IncreaseVisibility(pathToTravel[i], visionRange);
+				Grid.IncreaseVisibility(pathToTravel[i], VisionRange);
 
 				for (; t < 1f; t += Time.deltaTime * travelSpeed)
 				{
@@ -163,7 +203,7 @@ namespace Game.Visuals.Hex
 					transform.localRotation = Quaternion.LookRotation(d);
 					yield return null;
 				}
-				Grid.DecreaseVisibility(pathToTravel[i], visionRange);
+				Grid.DecreaseVisibility(pathToTravel[i], VisionRange);
 				t -= 1f;
 			}
 
@@ -172,7 +212,7 @@ namespace Game.Visuals.Hex
 			a = c;
 			b = location.Position; // We can simply use the destination here.
 			c = b;
-			Grid.IncreaseVisibility(location, visionRange);
+			Grid.IncreaseVisibility(location, VisionRange);
 
 			for (; t < 1f; t += Time.deltaTime * travelSpeed)
 			{
