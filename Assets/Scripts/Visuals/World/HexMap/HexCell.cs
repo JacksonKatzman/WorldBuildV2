@@ -738,5 +738,10 @@ namespace Game.Visuals.Hex
 				ShaderData.RefreshVisibility(this);
 			}
 		}
+
+		public void SetMapData(float data)
+		{
+			ShaderData.SetMapData(this, data);
+		}
 	}
 }
