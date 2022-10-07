@@ -7,7 +7,7 @@ namespace Game.Visuals.Hex
 {
 	public class SaveLoadMenu : MonoBehaviour
 	{
-		public const int SAVE_VERSION = 3;
+		public const int SAVE_VERSION = 4;
 
 		public HexGrid hexGrid;
 

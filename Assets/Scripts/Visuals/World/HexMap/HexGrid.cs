@@ -78,9 +78,9 @@ namespace Game.Visuals.Hex
 			}
 		}
 
-		public bool CreateMap()
+		public void CreateMap()
 		{
-			return CreateMap(cellCountX, cellCountZ);
+			CreateMap(cellCountX, cellCountZ);
 		}
 
 		public bool CreateMap(int x, int z)
@@ -135,6 +135,16 @@ namespace Game.Visuals.Hex
 				return GetCell(hit.point);
 			}
 			return null;
+		}
+
+		public HexCell GetCell(int xOffset, int zOffset)
+		{
+			return cells[xOffset + zOffset * cellCountX];
+		}
+
+		public HexCell GetCell(int cellIndex)
+		{
+			return cells[cellIndex];
 		}
 
 		public void Save(BinaryWriter writer)
