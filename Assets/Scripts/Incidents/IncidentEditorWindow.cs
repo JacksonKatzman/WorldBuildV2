@@ -1,85 +1,176 @@
-﻿#if UNITY_EDITOR
-using System.Collections;
-using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
+﻿using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
-using Newtonsoft.Json;
-using System.IO;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace Game.Incidents
 {
 	public class IncidentEditorWindow : OdinEditorWindow
 	{
-        public static string INCIDENT_DATA_PATH = "/Resources/IncidentData/";
-        public static JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings()
-        {
-            // ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            TypeNameHandling = TypeNameHandling.All
-        };
-
-        public EditableCoreIncident container;
-        //private Editor editor;
-        private OdinEditor editor;
-        
-        [MenuItem("Window/Incident Editor")]
-        public static void ShowWindow()
-        {
-            GetWindow<IncidentEditorWindow>("Incident Editor");
-        }
-
-        void OnGUI()
-        {
-            if (GUILayout.Button("New Incident"))
-            {
-                container = CreateInstance<EditableCoreIncident>();
-                editor = OdinEditor.CreateEditor(container, typeof(OdinEditor)) as OdinEditor;
-            }
-            //container = EditorGUILayout.ObjectField(container, typeof(EditableCoreIncident)) as EditableCoreIncident;
-            editor?.DrawDefaultInspector();
-
-            if(GUILayout.Button("Save Incident"))
-            {
-                SerializeIncident(container);
-            }
-        }
-
-        private void SerializeIncident(EditableCoreIncident incidentData)
+		[MenuItem("World Builder/Incident Editor")]
+		private static void OpenWindow()
 		{
-            var incidents = ParseIncidents();
+			GetWindow<IncidentEditorWindow>("Incident Editor");
+		}
 
-            var coreIncident = new CoreIncident(incidentData);
+		protected override void OnGUI()
+		{
+			base.OnGUI();
+		}
 
-            if (!incidents.Any(x => x.incidentName == coreIncident.incidentName))
+        private static Type contextType;
+        private static Dictionary<string, Type> properties;
+
+        public static Type ContextType
+		{
+            get { return contextType; }
+            set {
+                    contextType = value;
+                    GetPropertyList();
+                }
+		}
+
+        public static Dictionary<string, Type> Properties => properties;
+
+		[TypeFilter("GetFilteredTypeList"), OnValueChanged("SetContextType")]
+        public IIncidentContext A;
+
+        [ShowIfGroup("ContextTypeChosen")]
+        public List<IncidentCriteria> criteria;
+
+        public IEnumerable<Type> GetFilteredTypeList()
+        {
+            var q = typeof(IIncidentContext).Assembly.GetTypes()
+                .Where(x => !x.IsAbstract)                                          // Excludes BaseClass
+                .Where(x => !x.IsGenericTypeDefinition)                             // Excludes C1<>
+                .Where(x => typeof(IIncidentContext).IsAssignableFrom(x));                 // Excludes classes not inheriting from BaseClass
+
+            return q;
+        }
+
+        void SetContextType()
+		{
+            ContextType = A.ContextType;
+		}
+
+        private static void GetPropertyList()
+        {
+            if (ContextType != null)
             {
-                incidents.Add(coreIncident);
+                var propertyInfo = ContextType.GetProperties();
+                var interfacePropertyInfo = typeof(IIncidentContext).GetProperties();
 
-                string output = JsonConvert.SerializeObject(incidents, Formatting.Indented, SERIALIZER_SETTINGS);
+                var validProperties = propertyInfo.Where(x => !interfacePropertyInfo.Any(y => x.Name == y.Name)).ToList();
 
-                File.WriteAllText(Application.dataPath + INCIDENT_DATA_PATH + coreIncident.incidentName + ".json", output);
+                if (properties == null)
+                {
+                    properties = new Dictionary<string, Type>();
+                }
+                properties.Clear();
+
+                validProperties.ForEach(x => properties.Add(x.Name, x.PropertyType));
             }
-            else
+        }
+
+        public bool ContextTypeChosen => A != null;
+    }
+
+    public class IncidentCriteria : IIncidentCriteria
+	{
+        private Type type;
+
+        public Type Type => type;
+
+        [ValueDropdown("GetPropertyNames"), OnValueChanged("SetPrimitiveType")]
+        public string propertyName;
+
+        [ShowIfGroup("PropertyChosen")]
+        public ICriteriaEvaluator evaluator;
+
+        public IncidentCriteria(string propertyName, Type type, ICriteriaEvaluator evaluator)
+		{
+            this.propertyName = propertyName;
+            this.type = type;
+            this.evaluator = evaluator;
+		}
+
+        public bool Evaluate(IIncidentContext context)
+		{
+            return evaluator.Evaluate(context, propertyName);
+		}
+
+        private IEnumerable<string> GetPropertyNames()
+		{
+            return IncidentEditorWindow.Properties.Keys.ToList();
+		}
+
+        private void SetPrimitiveType()
+		{
+            type = IncidentEditorWindow.Properties[propertyName];
+
+            if(type == typeof(int))
 			{
-                OutputLogger.LogError("Incident with that name already exists!");
+                evaluator = new IntegerEvaluator();
 			}
 		}
 
-        public static List<CoreIncident> ParseIncidents()
-		{
-            var list = new List<CoreIncident>();
-            var files = Directory.GetFiles(Application.dataPath + INCIDENT_DATA_PATH, "*.json");
-            foreach(string file in files)
-			{
-                var text = File.ReadAllText(file);
-                if (text.Length > 0)
-                {
-                    list = JsonConvert.DeserializeObject<List<CoreIncident>>(text, SERIALIZER_SETTINGS);
-                }
-            }
-            return list;
-        }
+        bool PropertyChosen => type != null;
     }
+
+    public interface ICriteriaEvaluator
+	{
+        Type Type { get; }
+        bool Evaluate(IIncidentContext context, string propertyName);
+	}
+
+    public class IntegerEvaluator : ICriteriaEvaluator
+	{
+        private static Dictionary<string, Func<int, int, bool>> comparators = new Dictionary<string, Func<int, int, bool>>
+        {
+            {">", (a, b) => a > b },
+            {">=", (a, b) => a >= b },
+            {"<", (a, b) => a < b },
+            {"<=", (a, b) => a <= b },
+            {"==", (a, b) => a == b },
+            {"!=", (a, b) => a != b },
+        };
+
+        [HideInInspector]
+        public Type Type => typeof(int);
+
+        private string comparator;
+
+        [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType")]
+        public string Comparator;
+
+        public int value;
+
+        public IntegerEvaluator() { }
+
+        public IntegerEvaluator(string operation, int value)
+		{
+            comparator = operation;
+            this.value = value;
+		}
+
+		public bool Evaluate(IIncidentContext context, string propertyName)
+		{
+            var propertyValue = (int)context.GetType().GetProperty(propertyName).GetValue(context);
+            return comparators[comparator].Invoke(propertyValue, value);
+		}
+
+        private List<string> GetComparatorNames()
+		{
+            return comparators.Keys.ToList();
+		}
+
+        private void SetComparatorType()
+		{
+            comparator = Comparator;
+		}
+	}
 }
-#endif
