@@ -18,6 +18,8 @@ namespace Game.Incidents
 		public int NumIncidents { get; set; }
 		public int Population { get; set; }
 		//public int NumCities { get; set; }
+		public float GooPercentage { get; set; }
+		public bool IsFun { get; set; }
 	}
 
 	public interface IIncidentAction
@@ -109,8 +111,21 @@ namespace Game.Incidents
 			incidents = new List<IIncident>();
 
 			var criteria = new List<IIncidentCriteria>();
-			var evaluator = new IntegerEvaluator(">", 10);
+
+			ICriteriaEvaluator evaluator = new IntegerEvaluator(">", 10);
 			var criterium = new IncidentCriteria("Population", typeof(FactionContext), evaluator);
+			criteria.Add(criterium);
+
+			evaluator = new IntegerEvaluator("<", 20);
+			criterium = new IncidentCriteria("Population", typeof(FactionContext), evaluator);
+			criteria.Add(criterium);
+
+			evaluator = new FloatEvaluator(">", 20);
+			criterium = new IncidentCriteria("GooPercentage", typeof(FactionContext), evaluator);
+			criteria.Add(criterium);
+
+			evaluator = new BoolEvaluator("==", false);
+			criterium = new IncidentCriteria("IsFun", typeof(FactionContext), evaluator);
 			criteria.Add(criterium);
 
 			var debugIncident = new Incident(typeof(FactionContext), criteria);
@@ -148,35 +163,6 @@ namespace Game.Incidents
 		{
 			var items = incidents.Where(x => x.Criteria.Evaluate(context) == true).ToList();
 			return items;
-		}
-	}
-
-	public interface IIncidentCriteria
-	{
-		Type Type { get; }
-		bool Evaluate(IIncidentContext context);
-	}
-
-	public class IncidentCriteriaContainer
-	{
-		public List<IIncidentCriteria> criteria;
-
-		public IncidentCriteriaContainer(List<IIncidentCriteria> c)
-		{
-			criteria = c;
-		}
-
-		public bool Evaluate(IIncidentContext context)
-		{
-			foreach(var criterium in criteria)
-			{
-				if(!criterium.Evaluate(context))
-				{
-					return false;
-				}
-			}
-
-			return true;
 		}
 	}
 

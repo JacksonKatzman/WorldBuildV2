@@ -55,6 +55,7 @@ namespace Game.Incidents
         void SetContextType()
 		{
             ContextType = A.ContextType;
+            criteria = new List<IncidentCriteria>();
 		}
 
         private static void GetPropertyList()
@@ -78,99 +79,4 @@ namespace Game.Incidents
 
         public bool ContextTypeChosen => A != null;
     }
-
-    public class IncidentCriteria : IIncidentCriteria
-	{
-        private Type type;
-
-        public Type Type => type;
-
-        [ValueDropdown("GetPropertyNames"), OnValueChanged("SetPrimitiveType")]
-        public string propertyName;
-
-        [ShowIfGroup("PropertyChosen")]
-        public ICriteriaEvaluator evaluator;
-
-        public IncidentCriteria(string propertyName, Type type, ICriteriaEvaluator evaluator)
-		{
-            this.propertyName = propertyName;
-            this.type = type;
-            this.evaluator = evaluator;
-		}
-
-        public bool Evaluate(IIncidentContext context)
-		{
-            return evaluator.Evaluate(context, propertyName);
-		}
-
-        private IEnumerable<string> GetPropertyNames()
-		{
-            return IncidentEditorWindow.Properties.Keys.ToList();
-		}
-
-        private void SetPrimitiveType()
-		{
-            type = IncidentEditorWindow.Properties[propertyName];
-
-            if(type == typeof(int))
-			{
-                evaluator = new IntegerEvaluator();
-			}
-		}
-
-        bool PropertyChosen => type != null;
-    }
-
-    public interface ICriteriaEvaluator
-	{
-        Type Type { get; }
-        bool Evaluate(IIncidentContext context, string propertyName);
-	}
-
-    public class IntegerEvaluator : ICriteriaEvaluator
-	{
-        private static Dictionary<string, Func<int, int, bool>> comparators = new Dictionary<string, Func<int, int, bool>>
-        {
-            {">", (a, b) => a > b },
-            {">=", (a, b) => a >= b },
-            {"<", (a, b) => a < b },
-            {"<=", (a, b) => a <= b },
-            {"==", (a, b) => a == b },
-            {"!=", (a, b) => a != b },
-        };
-
-        [HideInInspector]
-        public Type Type => typeof(int);
-
-        private string comparator;
-
-        [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType")]
-        public string Comparator;
-
-        public int value;
-
-        public IntegerEvaluator() { }
-
-        public IntegerEvaluator(string operation, int value)
-		{
-            comparator = operation;
-            this.value = value;
-		}
-
-		public bool Evaluate(IIncidentContext context, string propertyName)
-		{
-            var propertyValue = (int)context.GetType().GetProperty(propertyName).GetValue(context);
-            return comparators[comparator].Invoke(propertyValue, value);
-		}
-
-        private List<string> GetComparatorNames()
-		{
-            return comparators.Keys.ToList();
-		}
-
-        private void SetComparatorType()
-		{
-            comparator = Comparator;
-		}
-	}
 }
