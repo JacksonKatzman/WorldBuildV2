@@ -42,6 +42,9 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen")]
         public List<IncidentCriteria> criteria;
 
+        [ShowIfGroup("ContextTypeChosen")]
+        public List<ActionChoiceContainer> actions;
+
         public IEnumerable<Type> GetFilteredTypeList()
         {
             var q = typeof(IIncidentContext).Assembly.GetTypes()
@@ -56,6 +59,7 @@ namespace Game.Incidents
 		{
             ContextType = A.ContextType;
             criteria = new List<IncidentCriteria>();
+            actions = new List<ActionChoiceContainer>();
 		}
 
         private static void GetPropertyList()
@@ -78,5 +82,37 @@ namespace Game.Incidents
         }
 
         public bool ContextTypeChosen => A != null;
+    }
+
+    public class ActionChoiceContainer
+	{
+        [TypeFilter("GetFilteredTypeList"), OnValueChanged("SetAction")]
+        public IIncidentAction B;
+
+
+        public IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
+        {
+            return from x in assembly.GetTypes()
+                   from z in x.GetInterfaces()
+                   let y = x.BaseType
+                   where
+                   (y != null && y.IsGenericType &&
+                   openGenericType.IsAssignableFrom(y.GetGenericTypeDefinition())) ||
+                   (z.IsGenericType &&
+                   openGenericType.IsAssignableFrom(z.GetGenericTypeDefinition()))
+                   select x;
+        }
+
+        public IEnumerable<Type> GetFilteredTypeList()
+		{
+            var allActions = GetAllTypesImplementingOpenGenericType(typeof(IIncidentAction), Assembly.GetExecutingAssembly());
+            var matches = allActions.Where(x => x.BaseType.IsGenericType == true && x.BaseType.GetGenericArguments()[0] == IncidentEditorWindow.ContextType).ToList();
+            return matches;
+		}
+
+        public void SetAction()
+		{
+
+		}
     }
 }

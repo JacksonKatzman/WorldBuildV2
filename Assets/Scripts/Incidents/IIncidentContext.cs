@@ -22,40 +22,14 @@ namespace Game.Incidents
 		public bool IsFun { get; set; }
 	}
 
-	public interface IIncidentAction
+	public class IncidentActionContainer
 	{
-		Type ContextType { get; }
-		IIncidentContext Context { get; }
-	}
 
-	abstract public class IncidentAction<T> : IIncidentAction
-	{
-		private IIncidentContext context;
-		public Type ContextType => typeof(T);
-		public IIncidentContext Context
-		{
-			get { return context; }
-			set
-			{
-				if(value.ContextType == ContextType)
-				{
-					context = value;
-				}
-			}
-		}
-
-		public void PerformDebugAction()
-		{
-			OutputLogger.Log("Debug Action Performed!");
-		}
 	}
 
 	/// <summary>
 	/// inherit from and then make abstract
 	/// </summary>
-	public class FactionIncidentAction : IncidentAction<FactionContext>
-	{
-	}
 	
 
 	public interface IIncident
@@ -63,7 +37,7 @@ namespace Game.Incidents
 		Type ContextType { get; }
 		int Weight { get; }
 		IncidentCriteriaContainer Criteria { get; }
-		List<IIncidentAction> Actions { get; }
+		//List<IIncidentAction> Actions { get; }
 
 		void PerformDebugAction();
 
@@ -74,7 +48,7 @@ namespace Game.Incidents
 		public Type ContextType  { get; set; }
 		public int Weight { get; set; }
 		public IncidentCriteriaContainer Criteria { get; set; }
-		public List<IIncidentAction> Actions { get; set; }
+		//public List<IIncidentAction> Actions { get; set; }
 
 		public Incident(Type contextType, List<IIncidentCriteria> criteria)
 		{
