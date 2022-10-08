@@ -24,23 +24,29 @@ namespace Game.Incidents
 
 	public class IncidentActionContainer
 	{
+		public List<IIncidentAction> Actions { get; set; }
 
+		public IncidentActionContainer(List<IIncidentAction> actions)
+		{
+			Actions = actions;
+		}
+
+		public void PerformActions(IIncidentContext context)
+		{
+			foreach(var action in Actions)
+			{
+				action.PerformAction(context);
+			}
+		}
 	}
 
-	/// <summary>
-	/// inherit from and then make abstract
-	/// </summary>
-	
 
 	public interface IIncident
 	{
 		Type ContextType { get; }
 		int Weight { get; }
 		IncidentCriteriaContainer Criteria { get; }
-		//List<IIncidentAction> Actions { get; }
-
-		void PerformDebugAction();
-
+		public IncidentActionContainer Actions { get; }
 	}
 
 	public class Incident : IIncident
@@ -48,17 +54,15 @@ namespace Game.Incidents
 		public Type ContextType  { get; set; }
 		public int Weight { get; set; }
 		public IncidentCriteriaContainer Criteria { get; set; }
-		//public List<IIncidentAction> Actions { get; set; }
+		
+		public IncidentActionContainer Actions { get; set; }
 
-		public Incident(Type contextType, List<IIncidentCriteria> criteria)
+		public Incident(Type contextType, List<IIncidentCriteria> criteria, List<IIncidentAction> actions, int weight = 5)
 		{
 			ContextType = contextType;
 			Criteria = new IncidentCriteriaContainer(criteria);
-		}
-
-		public void PerformDebugAction()
-		{
-			OutputLogger.Log("Debug Action Performed!");
+			Actions = new IncidentActionContainer(actions);
+			Weight = weight;
 		}
 	}
 
@@ -98,11 +102,14 @@ namespace Game.Incidents
 			criterium = new IncidentCriteria("GooPercentage", typeof(FactionContext), evaluator);
 			criteria.Add(criterium);
 
-			evaluator = new BoolEvaluator("==", false);
+			evaluator = new BoolEvaluator("==", true);
 			criterium = new IncidentCriteria("IsFun", typeof(FactionContext), evaluator);
 			criteria.Add(criterium);
 
-			var debugIncident = new Incident(typeof(FactionContext), criteria);
+			var actions = new List<IIncidentAction>();
+			actions.Add(new TestFactionIncidentAction());
+
+			var debugIncident = new Incident(typeof(FactionContext), criteria, actions);
 			incidents.Add(debugIncident);
 		}
 
@@ -125,7 +132,7 @@ namespace Game.Incidents
 				return;
 			}
 
-			possibleIncidents.FirstOrDefault().PerformDebugAction();
+			possibleIncidents.FirstOrDefault().Actions.PerformActions(incidentContext);
 		}
 
 		private List<IIncident> GetIncidentsOfType<T>() where T : IIncidentContext

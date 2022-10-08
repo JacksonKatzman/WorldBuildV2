@@ -29,12 +29,19 @@ namespace Game.Incidents
 
         private string comparator;
 
-        [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType")]
+        [HorizontalGroup("Group 1", 150), HideLabel, ReadOnly]
+        public readonly string propertyName;
+
+        [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType"), HorizontalGroup("Group 1", 50), HideLabel]
         public string Comparator;
 
+        [HorizontalGroup("Group 1", 50), HideLabel]
         public int value;
 
-        public IntegerEvaluator() { }
+        public IntegerEvaluator(string propertyName)
+        {
+            this.propertyName = propertyName;
+        }
 
         public IntegerEvaluator(string operation, int value)
         {

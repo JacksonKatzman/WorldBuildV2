@@ -1,7 +1,9 @@
-﻿using Sirenix.OdinInspector;
+﻿using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
@@ -11,10 +13,21 @@ namespace Game.Incidents
 {
 	public class IncidentEditorWindow : OdinEditorWindow
 	{
-		[MenuItem("World Builder/Incident Editor")]
+        [HideInInspector]
+        public static string INCIDENT_DATA_PATH = "/Resources/IncidentData/";
+        public static JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings()
+        {
+            // ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            TypeNameHandling = TypeNameHandling.All
+        };
+
+        [MenuItem("World Builder/Incident Editor")]
 		private static void OpenWindow()
 		{
-			GetWindow<IncidentEditorWindow>("Incident Editor");
+			var window = GetWindow<IncidentEditorWindow>("Incident Editor");
+            window.minSize = new Vector2(400, 650);
+            window.maxSize = new Vector2(600, 900);
 		}
 
 		protected override void OnGUI()
@@ -36,16 +49,39 @@ namespace Game.Incidents
 
         public static Dictionary<string, Type> Properties => properties;
 
-		[TypeFilter("GetFilteredTypeList"), OnValueChanged("SetContextType")]
-        public IIncidentContext A;
+		[TypeFilter("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type")]
+        public IIncidentContext incidentContext;
 
         [ShowIfGroup("ContextTypeChosen")]
-        public List<IncidentCriteria> criteria;
+        public string incidentName;
 
-        [ShowIfGroup("ContextTypeChosen")]
+        [Range(0, 10), ShowIfGroup("ContextTypeChosen")]
+        public int weight;
+
+        [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
+        public List<IIncidentCriteria> criteria;
+
+        [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewActionItem"), HideReferenceObjectPicker]
         public List<ActionChoiceContainer> actions;
 
-        public IEnumerable<Type> GetFilteredTypeList()
+        [Button("Save"), ShowIfGroup("ContextTypeChosen")]
+        public void OnSaveButtonPressed()
+		{
+            if (ContextTypeChosen && actions.Count > 0)
+            {
+                var incidentActions = new List<IIncidentAction>();
+                actions.ForEach(x => incidentActions.Add(x.incidentAction));
+
+                var incident = new Incident(ContextType, criteria, incidentActions, weight);
+
+                //Save this data somewhere T.T
+                var path = Path.Combine(Application.dataPath + INCIDENT_DATA_PATH + incidentName + ".json");
+                string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SERIALIZER_SETTINGS);
+                File.WriteAllText(path, output);
+            }
+		}
+
+        private IEnumerable<Type> GetFilteredTypeList()
         {
             var q = typeof(IIncidentContext).Assembly.GetTypes()
                 .Where(x => !x.IsAbstract)                                          // Excludes BaseClass
@@ -57,9 +93,19 @@ namespace Game.Incidents
 
         void SetContextType()
 		{
-            ContextType = A.ContextType;
-            criteria = new List<IncidentCriteria>();
+            ContextType = incidentContext.ContextType;
+            criteria = new List<IIncidentCriteria>();
             actions = new List<ActionChoiceContainer>();
+		}
+
+        private void AddNewCriteriaItem()
+        {
+            criteria.Add(new IncidentCriteria());
+        }
+
+        private void AddNewActionItem()
+		{
+            actions.Add(new ActionChoiceContainer());
 		}
 
         private static void GetPropertyList()
@@ -81,13 +127,13 @@ namespace Game.Incidents
             }
         }
 
-        public bool ContextTypeChosen => A != null;
+        public bool ContextTypeChosen => incidentContext != null;
     }
 
     public class ActionChoiceContainer
 	{
-        [TypeFilter("GetFilteredTypeList"), OnValueChanged("SetAction")]
-        public IIncidentAction B;
+        [TypeFilter("GetFilteredTypeList"), OnValueChanged("SetAction"), HideLabel]
+        public IIncidentAction incidentAction;
 
 
         public IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)

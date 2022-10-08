@@ -17,11 +17,16 @@ namespace Game.Incidents
 
         public Type Type => type;
 
-        [ValueDropdown("GetPropertyNames"), OnValueChanged("SetPrimitiveType")]
+        [ValueDropdown("GetPropertyNames"), OnValueChanged("SetPrimitiveType"), HorizontalGroup("Group 1")]
         public string propertyName;
 
-        [ShowIfGroup("PropertyChosen")]
+        [ShowIfGroup("PropertyChosen"), HideReferenceObjectPicker]
         public ICriteriaEvaluator evaluator;
+
+        public IncidentCriteria()
+		{
+
+		}
 
         public IncidentCriteria(string propertyName, Type type, ICriteriaEvaluator evaluator)
         {
@@ -46,7 +51,7 @@ namespace Game.Incidents
 
             if (type == typeof(int))
             {
-                evaluator = new IntegerEvaluator();
+                evaluator = new IntegerEvaluator(propertyName);
             }
             else if(type == typeof(float))
 			{
