@@ -91,7 +91,7 @@ namespace Game.Incidents
 
         private void AddNewCriteriaItem()
         {
-            criteria.Add(new IncidentCriteria());
+            criteria.Add(new IncidentCriteria(ContextType));
         }
 
         private void AddNewActionItem()
@@ -149,7 +149,7 @@ namespace Game.Incidents
 
         public void SetAction()
 		{
-
+            incidentAction.UpdateEditor();
 		}
     }
 }
