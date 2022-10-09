@@ -8,12 +8,14 @@ namespace Game.Incidents
 {
 	public interface IIncidentContext
 	{
+		IIncidentContextProvider Provider { get; }
 		Type ContextType { get; }
 		int NumIncidents { get; }
 	}
 
 	public class FactionContext : IIncidentContext
 	{
+		public IIncidentContextProvider Provider { get; set; }
 		public Type ContextType => typeof(FactionContext);
 		public int NumIncidents { get; set; }
 		public int Population { get; set; }

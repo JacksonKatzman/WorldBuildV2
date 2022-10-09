@@ -35,6 +35,7 @@ namespace Game.Incidents
 
 		private IncidentService()
 		{
+			OutputLogger.Log("Calling Setup!");
 			Setup();
 		}
 
@@ -44,6 +45,7 @@ namespace Game.Incidents
 			var incidentsOfType = GetIncidentsOfType(contextType);
 			if(incidentsOfType == null || incidentsOfType.Count == 0)
 			{
+				OutputLogger.Log("No incidents of that type!");
 				return;
 			}
 

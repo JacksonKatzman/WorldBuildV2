@@ -78,11 +78,11 @@ namespace Game.Incidents
             }
             else if(type == typeof(float))
 			{
-                evaluator = new FloatEvaluator();
+                evaluator = new FloatEvaluator(propertyName);
 			}
             else if(type == typeof(bool))
 			{
-                evaluator = new BoolEvaluator();
+                evaluator = new BoolEvaluator(propertyName);
 			}
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.Factions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -53,8 +54,8 @@ namespace Game.Incidents
 	[Serializable]
 	public class TestFactionIncidentAction : IncidentAction<FactionContext>
 	{
-		[ActionField, HideReferenceObjectPicker]
-		public IncidentActionField<FactionContext> factionCriteria;
+		[HideReferenceObjectPicker]
+		public IncidentContextActionField<FactionContext> factionCriteria;
 
 		override public void PerformAction(IIncidentContext context)
 		{
@@ -69,74 +70,8 @@ namespace Game.Incidents
 
 		public override void UpdateEditor()
 		{
-			factionCriteria = new IncidentActionField<FactionContext>(ContextType);
+			factionCriteria = new IncidentContextActionField<FactionContext>(ContextType);
 			factionCriteria.criteria = new List<IIncidentCriteria>();
 		}
 	}
-
-
-	// -------------------------------------
-
-	[AttributeUsage(AttributeTargets.Field)]
-	public class ActionField : Attribute { }
-
-	public enum ActionFieldRetrievalMethod { Criteria, From_Previous, Random };
-
-	public interface IIncidentActionField { }
-
-	[Serializable]
-	public class IncidentActionField<T> : IIncidentActionField
-	{
-		[HideInInspector]
-		public Type parentType;
-
-		[OnValueChanged("RetrievalTypeChanged")]
-		public ActionFieldRetrievalMethod Method;
-
-		[ShowIf("@this.Method == ActionFieldRetrievalMethod.Criteria && this.ParentTypeMatches")]
-		public bool AllowSelf;
-
-		[ShowIf("Method", ActionFieldRetrievalMethod.Criteria), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
-		public List<IIncidentCriteria> criteria;
-
-		private T value;
-
-		public T Value
-		{
-			get 
-			{ 
-				value = RetrieveField();
-				return value;
-			}
-			private set { this.value = value; }
-		}
-
-		private bool ParentTypeMatches => parentType == typeof(T);
-
-		public IncidentActionField() { }
-		public IncidentActionField(Type parentType)
-		{
-			this.parentType = parentType;
-		}
-
-		private T RetrieveField()
-		{
-			OutputLogger.Log("Retrieved Field!");
-			return default(T);
-		}
-
-		private void AddNewCriteriaItem()
-		{
-			criteria.Add(new IncidentCriteria(typeof(T)));
-		}
-
-		private void RetrievalTypeChanged()
-		{
-			if(criteria == null)
-			{
-				criteria = new List<IIncidentCriteria>();
-			}
-		}
-	}
-
 }
