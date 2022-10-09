@@ -38,6 +38,8 @@ namespace Game.Incidents
         [HorizontalGroup("Group 1", 50), HideLabel]
         public int value;
 
+        public IntegerEvaluator() { }
+
         public IntegerEvaluator(string propertyName)
         {
             this.propertyName = propertyName;
@@ -52,7 +54,7 @@ namespace Game.Incidents
         public bool Evaluate(IIncidentContext context, string propertyName)
         {
             var propertyValue = (int)context.GetType().GetProperty(propertyName).GetValue(context);
-            return comparators[comparator].Invoke(propertyValue, value);
+            return comparators[Comparator].Invoke(propertyValue, value);
         }
 
         private List<string> GetComparatorNames()
@@ -99,7 +101,7 @@ namespace Game.Incidents
         public bool Evaluate(IIncidentContext context, string propertyName)
         {
             var propertyValue = (float)context.GetType().GetProperty(propertyName).GetValue(context);
-            return comparators[comparator].Invoke(propertyValue, value);
+            return comparators[Comparator].Invoke(propertyValue, value);
         }
 
         private List<string> GetComparatorNames()

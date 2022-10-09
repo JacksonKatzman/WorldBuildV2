@@ -14,6 +14,7 @@ namespace Game.Incidents
     public class IncidentCriteria : IIncidentCriteria
     {
         private Type type;
+        private static Dictionary<string, Type> properties;
 
         public Type Type => type;
 
@@ -23,9 +24,12 @@ namespace Game.Incidents
         [ShowIfGroup("PropertyChosen"), HideReferenceObjectPicker]
         public ICriteriaEvaluator evaluator;
 
-        public IncidentCriteria()
-		{
+        public IncidentCriteria() { }
 
+        public IncidentCriteria(Type contextType)
+		{
+            this.type = contextType;
+            GetPropertyList();
 		}
 
         public IncidentCriteria(string propertyName, Type type, ICriteriaEvaluator evaluator)
@@ -40,14 +44,33 @@ namespace Game.Incidents
             return evaluator.Evaluate(context, propertyName);
         }
 
+        private void GetPropertyList()
+        {
+            if (type != null)
+            {
+                var propertyInfo = type.GetProperties();
+                var interfacePropertyInfo = typeof(IIncidentContext).GetProperties();
+
+                var validProperties = propertyInfo.Where(x => !interfacePropertyInfo.Any(y => x.Name == y.Name)).ToList();
+
+                if (properties == null)
+                {
+                    properties = new Dictionary<string, Type>();
+                }
+                properties.Clear();
+
+                validProperties.ForEach(x => properties.Add(x.Name, x.PropertyType));
+            }
+        }
+
         private IEnumerable<string> GetPropertyNames()
         {
-            return IncidentEditorWindow.Properties.Keys.ToList();
+            return properties.Keys.ToList();
         }
 
         private void SetPrimitiveType()
         {
-            type = IncidentEditorWindow.Properties[propertyName];
+            type = properties[propertyName];
 
             if (type == typeof(int))
             {
@@ -63,7 +86,7 @@ namespace Game.Incidents
 			}
         }
 
-        bool PropertyChosen => type != null;
+        bool PropertyChosen => propertyName != null;
     }
 
     [System.Serializable]
