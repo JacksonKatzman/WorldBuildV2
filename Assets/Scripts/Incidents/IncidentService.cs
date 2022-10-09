@@ -1,19 +1,30 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
-using Game.WorldGeneration;
-using Game.Enums;
+using System.IO;
+using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class IncidentService : ITimeSensitive
+	public class IncidentService
 	{
+		public static string INCIDENT_DATA_PATH = "/Resources/IncidentData/";
+		public static JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings()
+		{
+			// ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+			TypeNameHandling = TypeNameHandling.All
+		};
+
 		private static IncidentService instance;
+
+		private List<IIncident> incidents;
+
 		public static IncidentService Instance
 		{
 			get
 			{
-				if(instance == null)
+				if (instance == null)
 				{
 					instance = new IncidentService();
 				}
@@ -21,91 +32,84 @@ namespace Game.Incidents
 			}
 		}
 
-		private List<CoreIncident> coreIncidents;
-		private List<CoreIncident> recordedIncidents;
-		private List<DelayedIncidentContext> contextQueue;
-
 		private IncidentService()
 		{
-			//compile all core incidents into data structure for later use
-			coreIncidents = new List<CoreIncident>();
-			recordedIncidents = new List<CoreIncident>();
-			contextQueue = new List<DelayedIncidentContext>();
-
-			//coreIncidents.AddRange(IncidentEditorWindow.ParseIncidents());
-
-			//coreIncidents.Add(new CoreIncident(new List<IncidentTag>(), 1, new NullIncidentModifier(), new List<IncidentModifier> { new NullIncidentModifier() }, new List<IncidentModifier> { new NullIncidentModifier() }));
-
-			//coreIncidents.Add(new CoreIncident(new List<IIncidentTag> { new InstigatorTag(typeof(World)), new WorldTag(new List<WorldTagType> { WorldTagType.DEATH})},
-				//100, new List<IncidentModifier> { new DeathModifier(), new OldAgeModifier() }, new List<IncidentModifier> { new NullIncidentModifier() }));
-
+			Setup();
 		}
 
-		public void PerformIncident(IncidentContext incidentContext)
+		public void PerformIncidents<T>(IIncidentContextProvider<T> incidentContextProvider) where T : IIncidentContext
 		{
-			//Get all possible Core Incidents
-			var possibleIncidents = new List<CoreIncident>();
-			//Prune based on Tags
-			possibleIncidents.AddRange(coreIncidents.Where(x => x.MatchesCriteria(incidentContext)));
-			//Roll for Final Incident
-			var incidentDictionary = new Dictionary<int, List<CoreIncident>>();
-			foreach(var incident in possibleIncidents)
+			var incidentsOfType = GetIncidentsOfType<T>();
+			if(incidentsOfType == null || incidentsOfType.Count == 0)
 			{
-				if(!incidentDictionary.Keys.Contains(incident.weight))
-				{
-					incidentDictionary.Add(incident.weight, new List<CoreIncident>());
-				}
-				incidentDictionary[incident.weight].Add(incident);
+				return;
 			}
-			//Spawn and Run Incident
-			var chosenIncident = new CoreIncident(SimRandom.RandomEntryFromWeightedDictionary(incidentDictionary), incidentContext);
-			chosenIncident.Run();
 
-			recordedIncidents.Add(chosenIncident);
-		}
+			var incidentContext = incidentContextProvider.GetContext();
 
-		public void QueueDelayedIncident(IncidentContext context, int timer)
-		{
-			var delayedContext = new DelayedIncidentContext(context, timer);
-			contextQueue.Add(delayedContext);
-		}
+			var possibleIncidents = GetIncidentsWithMatchingCriteria(incidentsOfType, incidentContext);
 
-		public void AdvanceTime()
-		{
-			var finishedContexts = new List<DelayedIncidentContext>();
 
-			foreach(var context in contextQueue)
+			if(possibleIncidents == null || possibleIncidents.Count == 0)
 			{
-				if(context.Advance())
+				OutputLogger.Log("No matching incidents!");
+				return;
+			}
+
+			possibleIncidents.FirstOrDefault().Actions.PerformActions(incidentContext);
+		}
+
+		private List<IIncident> GetIncidentsOfType<T>() where T : IIncidentContext
+		{
+			var items = incidents.Where(x => x.ContextType == typeof(T)).ToList();
+			return items;
+		}
+		private List<IIncident> GetIncidentsWithMatchingCriteria(List<IIncident> incidents, IIncidentContext context)
+		{
+			var items = incidents.Where(x => x.Criteria.Evaluate(context) == true).ToList();
+			return items;
+		}
+
+		private void Setup()
+		{
+			incidents = new List<IIncident>();
+			var files = Directory.GetFiles(Application.dataPath + INCIDENT_DATA_PATH, "*.json");
+			foreach (string file in files)
+			{
+				var text = File.ReadAllText(file);
+				if (text.Length > 0)
 				{
-					finishedContexts.Add(context);
+					var item = JsonConvert.DeserializeObject<Incident>(text, SERIALIZER_SETTINGS);
+					incidents.Add(item);
 				}
 			}
-
-			finishedContexts.ForEach(x => contextQueue.Remove(x));
-		}
-    }
-
-	public class DelayedIncidentContext
-	{
-		private int timer;
-		private IncidentContext context;
-
-		public DelayedIncidentContext(IncidentContext context, int timer)
-		{
-			this.context = context;
-			this.timer = timer;
 		}
 
-		public bool Advance()
+		private void DebugSetup()
 		{
-			timer--;
-			if(timer <= 0)
-			{
-				IncidentService.Instance.PerformIncident(context);
-				return true;
-			}
-			return false;
+			var criteria = new List<IIncidentCriteria>();
+
+			ICriteriaEvaluator evaluator = new IntegerEvaluator(">", 10);
+			var criterium = new IncidentCriteria("Population", typeof(FactionContext), evaluator);
+			criteria.Add(criterium);
+
+			evaluator = new IntegerEvaluator("<", 20);
+			criterium = new IncidentCriteria("Population", typeof(FactionContext), evaluator);
+			criteria.Add(criterium);
+
+			evaluator = new FloatEvaluator(">", 20);
+			criterium = new IncidentCriteria("GooPercentage", typeof(FactionContext), evaluator);
+			criteria.Add(criterium);
+
+			evaluator = new BoolEvaluator("==", true);
+			criterium = new IncidentCriteria("IsFun", typeof(FactionContext), evaluator);
+			criteria.Add(criterium);
+
+			var actions = new List<IIncidentAction>();
+			actions.Add(new TestFactionIncidentAction());
+
+			var debugIncident = new Incident(typeof(FactionContext), criteria, actions);
+			incidents.Add(debugIncident);
 		}
 	}
 }

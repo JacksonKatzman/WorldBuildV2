@@ -18,13 +18,16 @@ namespace Game.Incidents
 			get { return context; }
 			set
 			{
-				if (value.ContextType == ContextType)
+				if (value != null)
 				{
-					context = value;
-				}
-				else
-				{
-					OutputLogger.LogError(string.Format("Cannot assign context of type {0} to action with context type {1}", value.GetType().ToString(), ContextType.ToString()));
+					if (value.ContextType == ContextType)
+					{
+						context = value;
+					}
+					else
+					{
+						OutputLogger.LogError(string.Format("Cannot assign context of type {0} to action with context type {1}", value.GetType().ToString(), ContextType.ToString()));
+					}
 				}
 			}
 		}

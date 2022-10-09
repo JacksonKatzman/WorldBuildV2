@@ -124,7 +124,7 @@ namespace Game.Incidents
         [HideInInspector]
         public Type Type => typeof(bool);
 
-        private string comparator;
+       // private string comparator;
 
         [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType")]
         public string Comparator;
@@ -135,14 +135,14 @@ namespace Game.Incidents
 
         public BoolEvaluator(string operation, bool value)
         {
-            comparator = operation;
+            Comparator = operation;
             this.value = value;
         }
 
         public bool Evaluate(IIncidentContext context, string propertyName)
         {
             var propertyValue = (bool)context.GetType().GetProperty(propertyName).GetValue(context);
-            return comparators[comparator].Invoke(propertyValue, value);
+            return comparators[Comparator].Invoke(propertyValue, value);
         }
 
         private List<string> GetComparatorNames()
@@ -152,7 +152,7 @@ namespace Game.Incidents
 
         private void SetComparatorType()
         {
-            comparator = Comparator;
+            //comparator = Comparator;
         }
     }
 }

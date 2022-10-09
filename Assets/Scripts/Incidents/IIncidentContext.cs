@@ -1,8 +1,8 @@
 ﻿using Game.Factions;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Incidents
 {
@@ -46,9 +46,10 @@ namespace Game.Incidents
 		Type ContextType { get; }
 		int Weight { get; }
 		IncidentCriteriaContainer Criteria { get; }
-		public IncidentActionContainer Actions { get; }
+		IncidentActionContainer Actions { get; }
 	}
 
+	[System.Serializable]
 	public class Incident : IIncident
 	{
 		public Type ContextType  { get; set; }
@@ -57,6 +58,15 @@ namespace Game.Incidents
 		
 		public IncidentActionContainer Actions { get; set; }
 
+		[JsonConstructor]
+		public Incident(Type contextType, IncidentCriteriaContainer criteria, IncidentActionContainer actions, int weight)
+		{
+			ContextType = contextType;
+			Criteria = criteria;
+			Actions = actions;
+			Weight = weight;
+		}
+
 		public Incident(Type contextType, List<IIncidentCriteria> criteria, List<IIncidentAction> actions, int weight = 5)
 		{
 			ContextType = contextType;
@@ -64,92 +74,5 @@ namespace Game.Incidents
 			Actions = new IncidentActionContainer(actions);
 			Weight = weight;
 		}
-	}
-
-	public class IncidentService
-	{
-		private static IncidentService instance;
-
-		private List<IIncident> incidents;
-
-		public static IncidentService Instance
-		{
-			get
-			{
-				if (instance == null)
-				{
-					instance = new IncidentService();
-				}
-				return instance;
-			}
-		}
-
-		private IncidentService()
-		{
-			incidents = new List<IIncident>();
-
-			var criteria = new List<IIncidentCriteria>();
-
-			ICriteriaEvaluator evaluator = new IntegerEvaluator(">", 10);
-			var criterium = new IncidentCriteria("Population", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			evaluator = new IntegerEvaluator("<", 20);
-			criterium = new IncidentCriteria("Population", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			evaluator = new FloatEvaluator(">", 20);
-			criterium = new IncidentCriteria("GooPercentage", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			evaluator = new BoolEvaluator("==", true);
-			criterium = new IncidentCriteria("IsFun", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			var actions = new List<IIncidentAction>();
-			actions.Add(new TestFactionIncidentAction());
-
-			var debugIncident = new Incident(typeof(FactionContext), criteria, actions);
-			incidents.Add(debugIncident);
-		}
-
-		public void PerformIncidents<T>(IIncidentContextProvider<T> incidentContextProvider) where T : IIncidentContext
-		{
-			var incidentsOfType = GetIncidentsOfType<T>();
-			if(incidentsOfType == null || incidentsOfType.Count == 0)
-			{
-				return;
-			}
-
-			var incidentContext = incidentContextProvider.GetContext();
-
-			var possibleIncidents = GetIncidentsWithMatchingCriteria(incidentsOfType, incidentContext);
-
-
-			if(possibleIncidents == null || possibleIncidents.Count == 0)
-			{
-				OutputLogger.Log("No matching incidents!");
-				return;
-			}
-
-			possibleIncidents.FirstOrDefault().Actions.PerformActions(incidentContext);
-		}
-
-		private List<IIncident> GetIncidentsOfType<T>() where T : IIncidentContext
-		{
-			var items = incidents.Where(x => x.ContextType == typeof(T)).ToList();
-			return items;
-		}
-		private List<IIncident> GetIncidentsWithMatchingCriteria(List<IIncident> incidents, IIncidentContext context)
-		{
-			var items = incidents.Where(x => x.Criteria.Evaluate(context) == true).ToList();
-			return items;
-		}
-	}
-
-	public class EditableIncident : SerializedScriptableObject
-	{
-		public string incidentName;
-		public int weight;
 	}
 }

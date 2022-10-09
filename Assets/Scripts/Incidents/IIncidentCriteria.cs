@@ -66,6 +66,7 @@ namespace Game.Incidents
         bool PropertyChosen => type != null;
     }
 
+    [System.Serializable]
     public class IncidentCriteriaContainer
     {
         public List<IIncidentCriteria> criteria;
