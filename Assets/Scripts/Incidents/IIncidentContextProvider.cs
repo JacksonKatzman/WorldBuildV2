@@ -1,8 +1,10 @@
-﻿namespace Game.Incidents
+﻿using System;
+
+namespace Game.Incidents
 {
-	public interface IIncidentContextProvider<T> where T : IIncidentContext
+	public interface IIncidentContextProvider
 	{
-		T GetContext();
+		IIncidentContext GetContext();
 		void UpdateContext();
 		void DeployContext();
 	}

@@ -2,7 +2,7 @@
 
 namespace Game.Factions
 {
-	public class Faction : IIncidentContextProvider<FactionContext>
+	public class Faction : IIncidentContextProvider
 	{
 		public FactionContext context;
 
@@ -16,7 +16,7 @@ namespace Game.Factions
 			IncidentService.Instance.PerformIncidents(this);
 		}
 
-		public FactionContext GetContext()
+		public IIncidentContext GetContext()
 		{
 			return context;
 		}

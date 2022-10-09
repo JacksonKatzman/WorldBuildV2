@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using UnityEngine;
+using System;
 
 namespace Game.Incidents
 {
@@ -37,9 +38,10 @@ namespace Game.Incidents
 			Setup();
 		}
 
-		public void PerformIncidents<T>(IIncidentContextProvider<T> incidentContextProvider) where T : IIncidentContext
+		public void PerformIncidents(IIncidentContextProvider incidentContextProvider)
 		{
-			var incidentsOfType = GetIncidentsOfType<T>();
+			var contextType = incidentContextProvider.GetContext().GetType();
+			var incidentsOfType = GetIncidentsOfType(contextType);
 			if(incidentsOfType == null || incidentsOfType.Count == 0)
 			{
 				return;
@@ -59,9 +61,9 @@ namespace Game.Incidents
 			possibleIncidents.FirstOrDefault().Actions.PerformActions(incidentContext);
 		}
 
-		private List<IIncident> GetIncidentsOfType<T>() where T : IIncidentContext
+		private List<IIncident> GetIncidentsOfType(Type type)
 		{
-			var items = incidents.Where(x => x.ContextType == typeof(T)).ToList();
+			var items = incidents.Where(x => x.ContextType == type).ToList();
 			return items;
 		}
 		private List<IIncident> GetIncidentsWithMatchingCriteria(List<IIncident> incidents, IIncidentContext context)
