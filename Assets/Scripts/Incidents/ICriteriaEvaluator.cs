@@ -85,12 +85,21 @@ namespace Game.Incidents
 
         private string comparator;
 
-        [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType")]
+        [HorizontalGroup("Group 1", 150), HideLabel, ReadOnly]
+        public readonly string propertyName;
+
+        [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType"), HorizontalGroup("Group 1", 50), HideLabel]
         public string Comparator;
 
+        [HorizontalGroup("Group 1", 50), HideLabel]
         public float value;
 
         public FloatEvaluator() { }
+
+        public FloatEvaluator(string propertyName)
+		{
+            this.propertyName = propertyName;
+		}
 
         public FloatEvaluator(string operation, float value)
         {
@@ -126,14 +135,21 @@ namespace Game.Incidents
         [HideInInspector]
         public Type Type => typeof(bool);
 
-       // private string comparator;
+        [HorizontalGroup("Group 1", 150), HideLabel, ReadOnly]
+        public readonly string propertyName;
 
-        [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType")]
+        [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType"), HorizontalGroup("Group 1", 50), HideLabel]
         public string Comparator;
 
+        [HorizontalGroup("Group 1", 50), HideLabel]
         public bool value;
 
         public BoolEvaluator() { }
+
+        public BoolEvaluator(string propertyName)
+		{
+            this.propertyName = propertyName;
+		}
 
         public BoolEvaluator(string operation, bool value)
         {
@@ -157,4 +173,8 @@ namespace Game.Incidents
             //comparator = Comparator;
         }
     }
+
+    //then go back and make it so actionfieldgetters can grab contextproviders not just the contexts
+    //THEN: try to make it so you can give the user a choice between a static value and
+    //using a function to determine the value to check against. Even better if you can pass params to that fn.
 }
