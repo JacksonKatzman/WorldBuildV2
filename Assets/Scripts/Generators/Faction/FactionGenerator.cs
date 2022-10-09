@@ -39,14 +39,14 @@ namespace Game.Generators
 
 		public static void SpawnFaction(Tile tile, float foodAmount, int population, Race race)
 		{
-			var faction = new Faction(tile, foodAmount, population, race);
+			var faction = new OldFaction(tile, foodAmount, population, race);
 			EventManager.Instance.Dispatch(new FactionCreatedEvent(faction));
 
 			OutputLogger.LogFormat("Spawned faction in chunk ({0},{1}) in tile ({2},{3})).",
 						LogSource.WORLDGEN, tile.chunk.coords.x, tile.chunk.coords.y, tile.coords.x, tile.coords.y);
 		}
 
-		public static void DestroyFaction(Faction faction)
+		public static void DestroyFaction(OldFaction faction)
 		{
 			for(int i = 0; i < faction.territory.Count; i++)
 			{

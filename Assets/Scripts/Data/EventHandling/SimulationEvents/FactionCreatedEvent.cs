@@ -6,8 +6,8 @@ namespace Game.Data.EventHandling
 {
 	public class FactionCreatedEvent : ISimulationEvent
 	{
-		public Faction faction;
-		public FactionCreatedEvent(Faction faction)
+		public OldFaction faction;
+		public FactionCreatedEvent(OldFaction faction)
 		{
 			this.faction = faction;
 		}

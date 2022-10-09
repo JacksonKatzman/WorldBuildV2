@@ -35,7 +35,7 @@ namespace Game.Incidents
 			return IncidentHelpers.GetInterfaceTypes(typeof(ILandmark));
 		}
 
-		public override void Run(IncidentContext context)
+		public override void Run(OldIncidentContext context)
 		{
 			base.Run(context);
 			foreach (var location in locations)

@@ -14,7 +14,7 @@ namespace Game.Incidents
 		{
 		}
 
-		public override void Run(IncidentContext context)
+		public override void Run(OldIncidentContext context)
 		{
 			base.Run(context);
 

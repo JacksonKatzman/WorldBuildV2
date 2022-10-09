@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class IncidentContext
+	public class OldIncidentContext
 	{
 		public IIncidentInstigator instigator;
 		public List<IIncidentTag> tags;
-		public IncidentContext(IIncidentInstigator instigator, List<IIncidentTag> tags)
+		public OldIncidentContext(IIncidentInstigator instigator, List<IIncidentTag> tags)
 		{
 			this.instigator = instigator;
 			this.tags = tags;

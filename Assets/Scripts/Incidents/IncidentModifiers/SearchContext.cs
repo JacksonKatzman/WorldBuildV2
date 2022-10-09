@@ -14,7 +14,7 @@ namespace Game.Incidents
 
 	public enum NumberComparisonOperator { MORE, LESS, SAME }
 
-	public class AgeSearchContext : SearchContext<Person>, SearchContext<ILandmark>, SearchContext<Faction>
+	public class AgeSearchContext : SearchContext<Person>, SearchContext<ILandmark>, SearchContext<OldFaction>
 	{
 		public System.Numerics.Vector2 ageRange;
 		public List<Person> EvaluateSearch(List<Person> searchables)
@@ -27,7 +27,7 @@ namespace Game.Incidents
 			return searchables.Where(x => x.Age >= ageRange.X && x.Age <= ageRange.Y).ToList();
 		}
 
-		public List<Faction> EvaluateSearch(List<Faction> searchables)
+		public List<OldFaction> EvaluateSearch(List<OldFaction> searchables)
 		{
 			return searchables.Where(x => x.Age >= ageRange.X && x.Age <= ageRange.Y).ToList();
 		}
@@ -35,10 +35,10 @@ namespace Game.Incidents
 
 	public class FactionSearchContext : SearchContext<Person>, SearchContext<ILandmark>, IFactionContainer
 	{
-		private List<Faction> factions = new List<Faction>();
+		private List<OldFaction> factions = new List<OldFaction>();
 
 		[HideInInspector]
-		public List<Faction> Factions => factions;
+		public List<OldFaction> Factions => factions;
 		public List<Person> EvaluateSearch(List<Person> searchables)
 		{
 			return searchables.Where(x => x.faction == factions.FirstOrDefault()).ToList();
@@ -87,7 +87,7 @@ namespace Game.Incidents
 			return searchables.Where(x => x.governmentOffice != null).ToList();
 		}
 	}
-	public class HasInfluenceSearchContext : SearchContext<Person>, SearchContext<Faction>
+	public class HasInfluenceSearchContext : SearchContext<Person>, SearchContext<OldFaction>
 	{
 		int numInfluence;
 		NumberComparisonOperator comparisonOperator;
@@ -107,7 +107,7 @@ namespace Game.Incidents
 			}
 		}
 
-		public List<Faction> EvaluateSearch(List<Faction> searchables)
+		public List<OldFaction> EvaluateSearch(List<OldFaction> searchables)
 		{
 			if (comparisonOperator == NumberComparisonOperator.MORE)
 			{
@@ -137,7 +137,7 @@ namespace Game.Incidents
 		}
 	}
 
-	public class PopulationSearchContext : SearchContext<City>, SearchContext<Faction>
+	public class PopulationSearchContext : SearchContext<City>, SearchContext<OldFaction>
 	{
 		int popRequirement;
 		NumberComparisonOperator comparisonOperator;
@@ -157,7 +157,7 @@ namespace Game.Incidents
 			}
 		}
 
-		public List<Faction> EvaluateSearch(List<Faction> searchables)
+		public List<OldFaction> EvaluateSearch(List<OldFaction> searchables)
 		{
 			if (comparisonOperator == NumberComparisonOperator.MORE)
 			{
@@ -174,11 +174,11 @@ namespace Game.Incidents
 		}
 	}
 
-	public class HaveNumCitiesSearchContext : SearchContext<Faction>
+	public class HaveNumCitiesSearchContext : SearchContext<OldFaction>
 	{
 		int numCities;
 		NumberComparisonOperator comparisonOperator;
-		public List<Faction> EvaluateSearch(List<Faction> searchables)
+		public List<OldFaction> EvaluateSearch(List<OldFaction> searchables)
 		{
 			if (comparisonOperator == NumberComparisonOperator.MORE)
 			{
@@ -195,11 +195,11 @@ namespace Game.Incidents
 		}
 	}
 
-	public class HaveNumTilesSearchContext : SearchContext<Faction>
+	public class HaveNumTilesSearchContext : SearchContext<OldFaction>
 	{
 		int numTiles;
 		NumberComparisonOperator comparisonOperator;
-		public List<Faction> EvaluateSearch(List<Faction> searchables)
+		public List<OldFaction> EvaluateSearch(List<OldFaction> searchables)
 		{
 			if (comparisonOperator == NumberComparisonOperator.MORE)
 			{

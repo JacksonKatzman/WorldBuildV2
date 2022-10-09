@@ -4,7 +4,7 @@ namespace Game.Incidents
 {
 	public class QueueIncidentContextModifier : IncidentModifier
 	{
-		public IncidentContext context;
+		public OldIncidentContext context;
 		public int turnDelay;
 		public QueueIncidentContextModifier(List<IIncidentTag> tags, float probability) : base(tags, probability) { }
 
@@ -12,11 +12,11 @@ namespace Game.Incidents
 		{
 			if(turnDelay > 0)
 			{
-				IncidentService.Instance.QueueDelayedIncident(context, turnDelay);
+				OldIncidentService.Instance.QueueDelayedIncident(context, turnDelay);
 			}
 			else
 			{
-				IncidentService.Instance.PerformIncident(context);
+				OldIncidentService.Instance.PerformIncident(context);
 			}
 		}
 	}

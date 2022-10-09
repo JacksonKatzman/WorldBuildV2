@@ -41,7 +41,7 @@ public class SimAIManager : MonoBehaviour
         return loreEvents[randomIndex];
     }
 
-    private bool CallFactionActionByPriorityType(PriorityType priorityType, Faction faction)
+    private bool CallFactionActionByPriorityType(PriorityType priorityType, OldFaction faction)
 	{
         if (priorityType != PriorityType.MILITARY && factionActionDictionary[priorityType].Count > 0)
         {

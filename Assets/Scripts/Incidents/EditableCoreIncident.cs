@@ -9,6 +9,7 @@ namespace Game.Incidents
         public string incidentName;
         public List<IIncidentTag> tags;
         public int weight;
+        public IIncidentTag tag;
 
         public List<IncidentModifier> required;
         public List<IncidentModifier> optional;

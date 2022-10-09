@@ -7,7 +7,7 @@ namespace Game.Incidents
 {
 	public class GetFactionWithContextModifier : IncidentModifier
 	{
-		public List<SearchContext<Faction>> criteria;
+		public List<SearchContext<OldFaction>> criteria;
 
 		public GetFactionWithContextModifier(List<IIncidentTag> tags, float probability) : base(tags, probability) { }
 
@@ -16,7 +16,7 @@ namespace Game.Incidents
 			base.Setup();
 
 			var possibleFactions = SimulationManager.Instance.World.factions;
-			var matches = new HashSet<Faction>();
+			var matches = new HashSet<OldFaction>();
 			//var preAdd = criteria.ForEach(x => x.EvaluateSearch(possiblePeople));
 			foreach (var c in criteria)
 			{

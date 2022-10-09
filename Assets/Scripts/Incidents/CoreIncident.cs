@@ -15,7 +15,7 @@ namespace Game.Incidents
 		public List<IncidentModifier> required;
 		public List<IncidentModifier> optional;
 
-		public IncidentContext context;
+		public OldIncidentContext context;
 
 		public string baseDescription;
 		private List<string> incidentLog;
@@ -37,7 +37,7 @@ namespace Game.Incidents
 			optional?.ForEach(x => this.optional.Add(x.ShallowCopy(this)));
 		}
 
-		public CoreIncident(CoreIncident coreIncident, IncidentContext context) : this(coreIncident.incidentName, coreIncident.tags, coreIncident.weight, coreIncident.required, coreIncident.optional)
+		public CoreIncident(CoreIncident coreIncident, OldIncidentContext context) : this(coreIncident.incidentName, coreIncident.tags, coreIncident.weight, coreIncident.required, coreIncident.optional)
 		{
 			this.context = context;
 		}
@@ -46,7 +46,7 @@ namespace Game.Incidents
 		{
 		}
 
-		public bool MatchesCriteria(IncidentContext context)
+		public bool MatchesCriteria(OldIncidentContext context)
 		{
 			return tags.All(x => x.CompareTag(context));
 		}
