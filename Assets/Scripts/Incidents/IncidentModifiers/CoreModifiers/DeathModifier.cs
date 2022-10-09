@@ -41,7 +41,7 @@ namespace Game.Incidents
 		{
 		}
 
-		public override void Run(IncidentContext context)
+		public override void Run(OldIncidentContext context)
 		{
 			base.Run(context);
 			//for each target call a death event for them

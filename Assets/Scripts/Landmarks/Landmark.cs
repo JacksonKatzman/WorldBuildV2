@@ -8,19 +8,19 @@ using UnityEngine;
 
 public interface ILandmark : ITimeSensitive, IRecordable, IAgeSensitive, IInventoryContainer
 {
-    public Faction Faction { get; set; }
+    public OldFaction Faction { get; set; }
 }
 
 public abstract class Landmark : ILandmark
 {
     protected string name;
 	protected int age;
-    protected Faction faction;
+    protected OldFaction faction;
 	protected List<Item> inventory;
 
     public string Name => name;
 	public int Age => age;
-    public Faction Faction
+    public OldFaction Faction
 	{
 		get { return faction; }
 		set { faction = value; }

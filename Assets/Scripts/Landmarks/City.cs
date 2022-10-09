@@ -16,7 +16,7 @@ public class City : Landmark
 
 	private float MaximumFoodProduction => faction.Stats.maxFoodByLand.Modified * tile.biome.availableLand;
 
-	public City(Tile tile, Faction faction, float food, int population)
+	public City(Tile tile, OldFaction faction, float food, int population)
 	{
 		this.tile = tile;
 		this.faction = faction;
@@ -46,7 +46,7 @@ public class City : Landmark
 		base.AdvanceTime();
 	}
 
-	public void UpdateFaction(Faction faction)
+	public void UpdateFaction(OldFaction faction)
 	{
 		this.faction = faction;
 	}

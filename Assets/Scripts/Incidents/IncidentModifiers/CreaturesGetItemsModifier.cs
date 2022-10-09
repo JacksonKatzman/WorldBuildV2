@@ -18,7 +18,7 @@ namespace Game.Incidents
 			items = new List<Item>();
 		}
 
-		public override void Run(IncidentContext context)
+		public override void Run(OldIncidentContext context)
 		{
 			base.Run(context);
 			creatures.ForEach(x => x.Inventory.AddRange(items));

@@ -10,12 +10,12 @@ public class GovernmentType : ScriptableObject
 	public List<LeadershipTier> leadershipStructure;
 	public int influenceRequirement = 10;
 
-	public GovernmentType(Faction faction)
+	public GovernmentType(OldFaction faction)
 	{
 		GenerateRandomGovernment(faction);
 	}
 
-	private void GenerateRandomGovernment(Faction faction)
+	private void GenerateRandomGovernment(OldFaction faction)
 	{
 		//need a way to handle deciding on number of leaders and their titles
 		//will only generate for the first tier for the entire simulation for now

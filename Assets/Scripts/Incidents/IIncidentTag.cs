@@ -8,7 +8,7 @@ namespace Game.Incidents
 {
 	public interface IIncidentTag
 	{
-		public bool CompareTag(IncidentContext context);
+		public bool CompareTag(OldIncidentContext context);
 	}
 
 	[System.Serializable]
@@ -21,7 +21,7 @@ namespace Game.Incidents
 			this.priorityType = priorityType;
 		}
 
-		public bool CompareTag(IncidentContext context)
+		public bool CompareTag(OldIncidentContext context)
 		{
 			//return priorityType == context.priorities.TopPriority();
 			foreach(var tag in context.tags)
@@ -45,7 +45,7 @@ namespace Game.Incidents
 			this.tagType = tagType;
 		}
 
-		public bool CompareTag(IncidentContext context)
+		public bool CompareTag(OldIncidentContext context)
 		{
 			foreach (var tag in context.tags)
 			{
@@ -71,7 +71,7 @@ namespace Game.Incidents
 			this.tags = tags;
 		}
 
-		public bool CompareTag(IncidentContext context)
+		public bool CompareTag(OldIncidentContext context)
 		{
 			//return tags.All(x => context.worldTags.Contains(x));
 			foreach (var tag in context.tags)
@@ -100,7 +100,7 @@ namespace Game.Incidents
 			this.type = type;
 		}
 
-		public bool CompareTag(IncidentContext context)
+		public bool CompareTag(OldIncidentContext context)
 		{
 			//return context.instigator.GetType() == type;
 			foreach (var tag in context.tags)

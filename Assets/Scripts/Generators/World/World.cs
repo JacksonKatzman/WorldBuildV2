@@ -23,7 +23,7 @@ namespace Game.WorldGeneration
 		public Texture2D voxelColorMapTexture;
 
 		public List<Biome> biomes;
-		public List<Faction> factions;
+		public List<OldFaction> factions;
 		public List<ILandmark> landmarks;
 		public List<City> Cities => GetAllCities();
 		private List<War> wars;
@@ -42,7 +42,7 @@ namespace Game.WorldGeneration
 		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<Biome> biomes)
 		{
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
-			factions = new List<Faction>();
+			factions = new List<OldFaction>();
 			landmarks = new List<ILandmark>();
 			creatures = new List<ICreature>();
 			wars = new List<War>();
@@ -105,12 +105,12 @@ namespace Game.WorldGeneration
 			}
 
 			SimulationManager.Instance.timer.Tic();
-			foreach (Faction faction in factions)
+			foreach (OldFaction faction in factions)
 			{
 				faction.currentPriorities = faction.GeneratePriorities();
 			}
 
-			foreach (Faction faction in factions)
+			foreach (OldFaction faction in factions)
 			{
 				faction.AdvanceTime();
 			}
@@ -141,8 +141,8 @@ namespace Game.WorldGeneration
 		public void DeathEvent()
 		{
 			var tags = new List<IIncidentTag> { new InstigatorTag(typeof(World)), new WorldTag(new List<WorldTagType> { WorldTagType.DEATH }), new SpecialCaseTag(SpecialCaseTagType.END_OF_TURN) };
-			var context = new IncidentContext(this, tags);
-			IncidentService.Instance.PerformIncident(context);
+			var context = new OldIncidentContext(this, tags);
+			OldIncidentService.Instance.PerformIncident(context);
 
 			TestDeath();
 		}
@@ -150,8 +150,8 @@ namespace Game.WorldGeneration
 		public void TestDeath()
 		{
 			var tags = new List<IIncidentTag> { new InstigatorTag(typeof(World)), new WorldTag(new List<WorldTagType> { WorldTagType.DEATH }), new SpecialCaseTag(SpecialCaseTagType.TEST) };
-			var context = new IncidentContext(this, tags);
-			IncidentService.Instance.PerformIncident(context);
+			var context = new OldIncidentContext(this, tags);
+			OldIncidentService.Instance.PerformIncident(context);
 		}
 
 		public Biome CalculateTileBiome(LandType landType, float rainfall, float fertility)
@@ -173,10 +173,10 @@ namespace Game.WorldGeneration
 			return GetTileAtWorldPosition(new Vector2Int(randomXIndex, randomYIndex));
 		}
 
-		public Faction GetFactionThatControlsTile(Tile tile)
+		public OldFaction GetFactionThatControlsTile(Tile tile)
 		{
-			Faction controllingFaction = null;
-			foreach(Faction faction in factions)
+			OldFaction controllingFaction = null;
+			foreach(OldFaction faction in factions)
 			{
 				if(faction.territory.Contains(tile))
 				{
@@ -188,7 +188,7 @@ namespace Game.WorldGeneration
 			return controllingFaction;
 		}
 
-		public bool AttemptWar(Faction aggressor, Faction defender)
+		public bool AttemptWar(OldFaction aggressor, OldFaction defender)
 		{
 			var exisitingWar = false;
 			foreach(War war in wars)
@@ -222,7 +222,7 @@ namespace Game.WorldGeneration
 			}
 		}
 
-		public List<Person> GetPeopleFromFaction(Faction faction)
+		public List<Person> GetPeopleFromFaction(OldFaction faction)
 		{
 			var people = creatures.Where(x => x is Person) as List<Person>;
 			return people.Where(x => x.faction == faction).ToList();
@@ -320,7 +320,7 @@ namespace Game.WorldGeneration
 					return (1.0f * (1.0f + Mathf.Abs(toHeight - fromHeight))) + riverCost + oceanCost;
 				}
 
-				var remainingFactions = new List<Faction>();
+				var remainingFactions = new List<OldFaction>();
 				remainingFactions.AddRange(factions);
 				var current = SimRandom.RandomEntryFromList(remainingFactions);
 				do
@@ -527,7 +527,7 @@ namespace Game.WorldGeneration
 				}
 			}
 
-			foreach (Faction faction in factions)
+			foreach (OldFaction faction in factions)
 			{
 				foreach(Tile tile in faction.territory)
 				{

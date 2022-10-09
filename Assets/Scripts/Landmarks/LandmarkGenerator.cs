@@ -12,7 +12,7 @@ namespace Game.Generators
 		private static float STARTING_FOOD = 100.0f;
 		private static int STARTING_POPULATION = 100;
 
-		public static City SpawnCity(Tile tile, Faction faction, float foodAmount, int population)
+		public static City SpawnCity(Tile tile, OldFaction faction, float foodAmount, int population)
 		{
 			var city = new City(tile, faction, foodAmount, population);
 			tile.landmarks.Add(city);
@@ -22,7 +22,7 @@ namespace Game.Generators
 			return city;
 		}
 
-		public static City SpawnCity(Tile tile, Faction faction)
+		public static City SpawnCity(Tile tile, OldFaction faction)
 		{
 			return SpawnCity(tile, faction, STARTING_FOOD, STARTING_POPULATION);
 		}
@@ -49,7 +49,7 @@ namespace Game.Generators
 			EventManager.Instance.Dispatch(new LandmarkDestroyedEvent(city));
 		}
 
-		public static Tile FindSuitableCityLocation(Tile tile, int innerRadius, int outerRadius, float targetFertility, float targetLandAvailability, int minCityDistance, Faction faction = null)
+		public static Tile FindSuitableCityLocation(Tile tile, int innerRadius, int outerRadius, float targetFertility, float targetLandAvailability, int minCityDistance, OldFaction faction = null)
 		{
 			var possibleTiles = tile.GetAllTilesInRing(outerRadius, innerRadius);
 			var acceptedTiles = new List<Tile>();

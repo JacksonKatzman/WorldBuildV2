@@ -13,15 +13,6 @@ namespace Game.Incidents
 {
 	public class IncidentEditorWindow : OdinEditorWindow
 	{
-        [HideInInspector]
-        public static string INCIDENT_DATA_PATH = "/Resources/IncidentData/";
-        public static JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings()
-        {
-            // ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-            TypeNameHandling = TypeNameHandling.All
-        };
-
         [MenuItem("World Builder/Incident Editor")]
 		private static void OpenWindow()
 		{
@@ -75,8 +66,8 @@ namespace Game.Incidents
                 var incident = new Incident(ContextType, criteria, incidentActions, weight);
 
                 //Save this data somewhere T.T
-                var path = Path.Combine(Application.dataPath + INCIDENT_DATA_PATH + incidentName + ".json");
-                string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SERIALIZER_SETTINGS);
+                var path = Path.Combine(Application.dataPath + IncidentService.INCIDENT_DATA_PATH + incidentName + ".json");
+                string output = JsonConvert.SerializeObject(incident, Formatting.Indented, IncidentService.SERIALIZER_SETTINGS);
                 File.WriteAllText(path, output);
             }
 		}
@@ -86,7 +77,7 @@ namespace Game.Incidents
             var q = typeof(IIncidentContext).Assembly.GetTypes()
                 .Where(x => !x.IsAbstract)                                          // Excludes BaseClass
                 .Where(x => !x.IsGenericTypeDefinition)                             // Excludes C1<>
-                .Where(x => typeof(IIncidentContext).IsAssignableFrom(x));                 // Excludes classes not inheriting from BaseClass
+                .Where(x => typeof(IIncidentContext).IsAssignableFrom(x));          // Excludes classes not inheriting from BaseClass
 
             return q;
         }

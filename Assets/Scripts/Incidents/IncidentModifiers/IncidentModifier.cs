@@ -61,14 +61,14 @@ namespace Game.Incidents
 
 		}
 
-		public bool MatchesCriteria(IncidentContext context)
+		public bool MatchesCriteria(OldIncidentContext context)
 		{
 			return SimRandom.RandomFloat01() <= probability && tags.All(x => x.CompareTag(context));
 		}
 
 		public virtual void Setup() { }
 		public virtual void Finish() { }
-		public virtual void Run(IncidentContext context)
+		public virtual void Run(OldIncidentContext context)
 		{
 			var modifiers = new List<IncidentModifier>();
 			required.ForEach(x => modifiers.Add(x.ShallowCopy(this)));

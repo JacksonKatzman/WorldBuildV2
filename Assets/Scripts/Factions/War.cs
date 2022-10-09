@@ -12,18 +12,18 @@ namespace Game.Factions
 	{
 		private World world;
 
-		public Faction originalAggressor;
+		public OldFaction originalAggressor;
 		//public List<Faction> aggressors;
 
-		public Faction originalDefender;
+		public OldFaction originalDefender;
 		//public List<Faction> defenders;
 
-		public Dictionary<Faction, int> victories;
+		public Dictionary<OldFaction, int> victories;
 
 		private List<Action> deferredActions;
 		private bool resolved = false;
 
-		public War(World world, Faction aggressor, Faction defender)
+		public War(World world, OldFaction aggressor, OldFaction defender)
 		{
 			this.world = world;
 
@@ -41,7 +41,7 @@ namespace Game.Factions
 
 			//add allies later
 
-			victories = new Dictionary<Faction, int>();
+			victories = new Dictionary<OldFaction, int>();
 			victories.Add(originalAggressor, 0);
 			victories.Add(originalDefender, 0);
 			/*
@@ -144,7 +144,7 @@ namespace Game.Factions
 			}
 		}
 
-		private Tile GetBestAttackableTile(Faction attacker, Faction defender)
+		private Tile GetBestAttackableTile(OldFaction attacker, OldFaction defender)
 		{
 			var sharedTiles = attacker.GetBorderTiles().Intersect(defender.territory);
 
@@ -166,12 +166,12 @@ namespace Game.Factions
 			return bestTile;
 		}
 
-		private void AcquireTileByWar(Tile contestedTile, Faction attacker, Faction defender)
+		private void AcquireTileByWar(Tile contestedTile, OldFaction attacker, OldFaction defender)
 		{
 			contestedTile.ChangeControl(attacker);
 		}
 
-		private Faction SimulateBattle(Faction attacker, Faction defender, Tile tile)
+		private OldFaction SimulateBattle(OldFaction attacker, OldFaction defender, Tile tile)
 		{
 			var attackerPower = attacker.population * 0.2f * ((100 - Tile.GetDistanceBetweenTiles(tile, attacker.cities[0].tile)) / 100.0f) * attacker.Stats.militaryModifier.Modified;
 			var defenderPower = defender.population * 0.2f * ((100 - Tile.GetDistanceBetweenTiles(tile, defender.cities[0].tile)) / 100.0f) * defender.Stats.militaryModifier.Modified;

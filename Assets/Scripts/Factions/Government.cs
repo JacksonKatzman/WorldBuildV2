@@ -11,14 +11,14 @@ namespace Game.Factions
 	{
 		public List<LeadershipTier> leadershipStructure;
 		public List<Holiday.Holiday> holidays;
-		private Faction faction;
+		private OldFaction faction;
 		public Priorities priorities;
 		public FactionStats stats;
 
 		private int numberOfTimesUpgraded = 0;
 		private int turnsSinceLastUpgrade = 0;
 
-		public Government(Faction faction)
+		public Government(OldFaction faction)
 		{
 			this.faction = faction;
 			priorities = new Priorities(0, 0, 0, 0, 0);
@@ -45,7 +45,7 @@ namespace Game.Factions
 			}
 		}
 
-		public void UpdateFactionUsingPassiveTraits(Faction faction)
+		public void UpdateFactionUsingPassiveTraits(OldFaction faction)
 		{
 			/*
 			foreach(GovernmentTrait trait in governmentType.traits)

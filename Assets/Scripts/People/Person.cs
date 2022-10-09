@@ -23,7 +23,7 @@ public class Person : ITimeSensitive, IIncidentInstigator, ICreature
 	public int age;
 	public Gender gender;
 	public Race race;
-	public Faction faction;
+	public OldFaction faction;
 	public LeadershipStructureNode governmentOffice;
 	public int influence;
 
@@ -50,7 +50,7 @@ public class Person : ITimeSensitive, IIncidentInstigator, ICreature
 
 	}
 
-	public Person(Faction faction, int age, Gender gender, int startingInfluence, List<RoleType> roles, LeadershipStructureNode office = null)
+	public Person(OldFaction faction, int age, Gender gender, int startingInfluence, List<RoleType> roles, LeadershipStructureNode office = null)
 	{
 		this.faction = faction;
 		this.age = age;

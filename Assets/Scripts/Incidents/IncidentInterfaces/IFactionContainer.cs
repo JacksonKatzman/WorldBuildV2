@@ -5,7 +5,7 @@ namespace Game.Incidents
 {
 	public interface IFactionContainer
 	{
-		public List<Faction> Factions
+		public List<OldFaction> Factions
 		{
 			get;
 		}
