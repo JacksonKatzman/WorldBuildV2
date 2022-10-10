@@ -35,26 +35,27 @@ namespace Game.Incidents
         [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType"), HorizontalGroup("Group 1", 50), HideLabel]
         public string Comparator;
 
-        [HorizontalGroup("Group 1", 50), HideLabel]
-        public int value;
+        [HorizontalGroup("Group 1", 50), HideLabel, HideReferenceObjectPicker]
+        public Expression<int> value;
 
         public IntegerEvaluator() { }
 
         public IntegerEvaluator(string propertyName)
         {
             this.propertyName = propertyName;
+            value = new Expression<int>();
         }
 
         public IntegerEvaluator(string operation, int value)
         {
             comparator = operation;
-            this.value = value;
+            this.value.constValue = value;
         }
 
         public bool Evaluate(IIncidentContext context, string propertyName)
         {
             var propertyValue = (int)context.GetType().GetProperty(propertyName).GetValue(context);
-            return comparators[Comparator].Invoke(propertyValue, value);
+            return comparators[Comparator].Invoke(propertyValue, value.constValue);
         }
 
         private List<string> GetComparatorNames()
@@ -92,7 +93,7 @@ namespace Game.Incidents
         public string Comparator;
 
         [HorizontalGroup("Group 1", 50), HideLabel]
-        public float value;
+        public Expression<float> value;
 
         public FloatEvaluator() { }
 
@@ -104,13 +105,13 @@ namespace Game.Incidents
         public FloatEvaluator(string operation, float value)
         {
             comparator = operation;
-            this.value = value;
+            this.value.constValue = value;
         }
 
         public bool Evaluate(IIncidentContext context, string propertyName)
         {
             var propertyValue = (float)context.GetType().GetProperty(propertyName).GetValue(context);
-            return comparators[Comparator].Invoke(propertyValue, value);
+            return comparators[Comparator].Invoke(propertyValue, value.constValue);
         }
 
         private List<string> GetComparatorNames()
@@ -142,7 +143,7 @@ namespace Game.Incidents
         public string Comparator;
 
         [HorizontalGroup("Group 1", 50), HideLabel]
-        public bool value;
+        public Expression<bool> value;
 
         public BoolEvaluator() { }
 
@@ -154,13 +155,13 @@ namespace Game.Incidents
         public BoolEvaluator(string operation, bool value)
         {
             Comparator = operation;
-            this.value = value;
+            this.value.constValue = value;
         }
 
         public bool Evaluate(IIncidentContext context, string propertyName)
         {
             var propertyValue = (bool)context.GetType().GetProperty(propertyName).GetValue(context);
-            return comparators[Comparator].Invoke(propertyValue, value);
+            return comparators[Comparator].Invoke(propertyValue, value.constValue);
         }
 
         private List<string> GetComparatorNames()
@@ -173,8 +174,4 @@ namespace Game.Incidents
             //comparator = Comparator;
         }
     }
-
-    //then go back and make it so actionfieldgetters can grab contextproviders not just the contexts
-    //THEN: try to make it so you can give the user a choice between a static value and
-    //using a function to determine the value to check against. Even better if you can pass params to that fn.
 }

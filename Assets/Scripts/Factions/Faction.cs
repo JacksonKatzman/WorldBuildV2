@@ -1,10 +1,12 @@
 ﻿using Game.Incidents;
+using System;
 
 namespace Game.Factions
 {
 	public class Faction : IIncidentContextProvider
 	{
 		public FactionContext context;
+		public Type ContextType => typeof(FactionContext);
 
 		public Faction()
 		{

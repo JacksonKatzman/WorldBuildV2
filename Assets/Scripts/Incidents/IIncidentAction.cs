@@ -55,11 +55,11 @@ namespace Game.Incidents
 	public class TestFactionIncidentAction : IncidentAction<FactionContext>
 	{
 		[HideReferenceObjectPicker]
-		public IncidentContextActionField<FactionContext> factionCriteria;
+		public IncidentContextActionField<FactionContext> requiredFaction;
 
 		override public void PerformAction(IIncidentContext context)
 		{
-			var faction = factionCriteria.Value;
+			var faction = requiredFaction.Value;
 			PerformDebugAction();
 		}
 
@@ -70,8 +70,8 @@ namespace Game.Incidents
 
 		public override void UpdateEditor()
 		{
-			factionCriteria = new IncidentContextActionField<FactionContext>(ContextType);
-			factionCriteria.criteria = new List<IIncidentCriteria>();
+			requiredFaction = new IncidentContextActionField<FactionContext>(ContextType);
+			requiredFaction.criteria = new List<IIncidentCriteria>();
 		}
 	}
 }

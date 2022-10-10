@@ -17,8 +17,8 @@ namespace Game.Incidents
 		private static void OpenWindow()
 		{
 			var window = GetWindow<IncidentEditorWindow>("Incident Editor");
-            window.minSize = new Vector2(400, 650);
-            window.maxSize = new Vector2(600, 900);
+            window.minSize = new Vector2(900, 650);
+            window.maxSize = new Vector2(1200, 900);
 		}
 
 		protected override void OnGUI()
