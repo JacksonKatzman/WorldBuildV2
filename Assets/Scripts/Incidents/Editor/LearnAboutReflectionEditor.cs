@@ -40,7 +40,7 @@ namespace Game.Incidents
 			if (GUILayout.Button("Test Faction"))
 			{
 				var faction = new Faction();
-				faction.context.Population = 12;
+				faction.context.Population = 14;
 				faction.context.GooPercentage = 40f;
 				faction.context.IsFun = true;
 				faction.DeployContext();

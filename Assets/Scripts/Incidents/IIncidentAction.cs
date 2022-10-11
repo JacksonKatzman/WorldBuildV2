@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using Game.Factions;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Game.Incidents
 {
@@ -7,6 +11,8 @@ namespace Game.Incidents
 		Type ContextType { get; }
 		IIncidentContext Context { get; }
 		void PerformAction(IIncidentContext context);
+
+		void UpdateEditor();
 	}
 
 	abstract public class IncidentAction<T> : IIncidentAction where T : IIncidentContext
@@ -41,14 +47,19 @@ namespace Game.Incidents
 		{
 			OutputLogger.Log("Debug Action Performed!");
 		}
+
+		abstract public void UpdateEditor();
 	}
 
+	[Serializable]
 	public class TestFactionIncidentAction : IncidentAction<FactionContext>
 	{
-		//public override Type ContextType => typeof(FactionContext);
+		[HideReferenceObjectPicker]
+		public IncidentContextActionField<FactionContext> requiredFaction;
 
 		override public void PerformAction(IIncidentContext context)
 		{
+			var faction = requiredFaction.Value;
 			PerformDebugAction();
 		}
 
@@ -56,6 +67,11 @@ namespace Game.Incidents
 		{
 			OutputLogger.Log("Faction Debug Action Performed!");
 		}
-	}
 
+		public override void UpdateEditor()
+		{
+			requiredFaction = new IncidentContextActionField<FactionContext>(ContextType);
+			requiredFaction.criteria = new List<IIncidentCriteria>();
+		}
+	}
 }

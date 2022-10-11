@@ -12,22 +12,15 @@ namespace Game.Incidents
         bool Evaluate(IIncidentContext context, string propertyName);
 	}
 
-    public class IntegerEvaluator : ICriteriaEvaluator
-    {
-        private static Dictionary<string, Func<int, int, bool>> comparators = new Dictionary<string, Func<int, int, bool>>
-        {
-            {">", (a, b) => a > b },
-            {">=", (a, b) => a >= b },
-            {"<", (a, b) => a < b },
-            {"<=", (a, b) => a <= b },
-            {"==", (a, b) => a == b },
-            {"!=", (a, b) => a != b }
-        };
-
+    abstract public class CriteriaEvaluator<T> : ICriteriaEvaluator
+	{
         [HideInInspector]
-        public Type Type => typeof(int);
+        public Type Type => typeof(T);
 
         private string comparator;
+
+        protected Dictionary<string, Func<T, T, bool>> Comparators { get; set; }
+        protected Dictionary<string, Func<T, T, T>> Operators { get; set; }
 
         [HorizontalGroup("Group 1", 150), HideLabel, ReadOnly]
         public readonly string propertyName;
@@ -35,29 +28,57 @@ namespace Game.Incidents
         [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType"), HorizontalGroup("Group 1", 50), HideLabel]
         public string Comparator;
 
-        [HorizontalGroup("Group 1", 50), HideLabel]
-        public int value;
+        [ListDrawerSettings(CustomAddFunction = "AddNewExpression"), HorizontalGroup("Group 1"), HideReferenceObjectPicker]
+        public List<Expression<T>> expressions;
 
-        public IntegerEvaluator(string propertyName)
+        public bool Evaluate(IIncidentContext context, string propertyName)
         {
+            var propertyValue = (T)context.GetType().GetProperty(propertyName).GetValue(context);
+            return Comparators[Comparator].Invoke(propertyValue, CombineExpressions());
+        }
+
+        public CriteriaEvaluator()
+        {
+            Setup();
+        }
+
+        public CriteriaEvaluator(string propertyName) : this()
+		{
             this.propertyName = propertyName;
+            expressions = new List<Expression<T>>();
+            expressions.Add(new Expression<T>());
         }
 
-        public IntegerEvaluator(string operation, int value)
-        {
-            comparator = operation;
-            this.value = value;
+        public CriteriaEvaluator(string propertyName, T value) : this(propertyName)
+		{
+            expressions[0].constValue = value;
         }
 
-        public bool Evaluate(IIncidentContext context, string propertyName)
+        abstract protected void Setup();
+
+        private T CombineExpressions()
         {
-            var propertyValue = (int)context.GetType().GetProperty(propertyName).GetValue(context);
-            return comparators[comparator].Invoke(propertyValue, value);
+            var currentValue = expressions[0].Value;
+            for (int i = 0; i < expressions.Count - 1; i++)
+            {
+                currentValue = Operators[expressions[i].nextOperator].Invoke(currentValue, expressions[i + 1].Value);
+            }
+            return currentValue;
+        }
+
+        private void AddNewExpression()
+        {
+            expressions.Add(new Expression<T>());
+            for (int i = 0; i < expressions.Count - 1; i++)
+            {
+                expressions[i].hasNextOperator = true;
+            }
+            expressions[expressions.Count - 1].hasNextOperator = false;
         }
 
         private List<string> GetComparatorNames()
         {
-            return comparators.Keys.ToList();
+            return Comparators.Keys.ToList();
         }
 
         private void SetComparatorType()
@@ -66,93 +87,42 @@ namespace Game.Incidents
         }
     }
 
-    public class FloatEvaluator : ICriteriaEvaluator
+    public class IntegerEvaluator : CriteriaEvaluator<int>
+	{
+        public IntegerEvaluator() : base() { }
+        public IntegerEvaluator(string propertyName) : base(propertyName) { }
+        public IntegerEvaluator(string propertyName, int value) : base(propertyName, value) { }
+
+        override protected void Setup()
+		{
+            Comparators = ExpressionHelpers.IntegerComparators;
+            Operators = ExpressionHelpers.IntegerOperators;
+		}
+	}
+
+    public class FloatEvaluator : CriteriaEvaluator<float>
     {
-        private static Dictionary<string, Func<float, float, bool>> comparators = new Dictionary<string, Func<float, float, bool>>
+        public FloatEvaluator() : base() { }
+        public FloatEvaluator(string propertyName) : base(propertyName) { }
+        public FloatEvaluator(string propertyName, float value) : base(propertyName, value) { }
+
+        override protected void Setup()
         {
-            {">", (a, b) => a > b },
-            {">=", (a, b) => a >= b },
-            {"<", (a, b) => a < b },
-            {"<=", (a, b) => a <= b },
-            {"==", (a, b) => a == b },
-            {"!=", (a, b) => a != b }
-        };
-
-        [HideInInspector]
-        public Type Type => typeof(float);
-
-        private string comparator;
-
-        [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType")]
-        public string Comparator;
-
-        public float value;
-
-        public FloatEvaluator() { }
-
-        public FloatEvaluator(string operation, float value)
-        {
-            comparator = operation;
-            this.value = value;
-        }
-
-        public bool Evaluate(IIncidentContext context, string propertyName)
-        {
-            var propertyValue = (float)context.GetType().GetProperty(propertyName).GetValue(context);
-            return comparators[comparator].Invoke(propertyValue, value);
-        }
-
-        private List<string> GetComparatorNames()
-        {
-            return comparators.Keys.ToList();
-        }
-
-        private void SetComparatorType()
-        {
-            comparator = Comparator;
+            Comparators = ExpressionHelpers.FloatComparators;
+            Operators = ExpressionHelpers.FloatOperators;
         }
     }
 
-    public class BoolEvaluator : ICriteriaEvaluator
+    public class BoolEvaluator : CriteriaEvaluator<bool>
     {
-        private static Dictionary<string, Func<bool, bool, bool>> comparators = new Dictionary<string, Func<bool, bool, bool>>
+        public BoolEvaluator() : base() { }
+        public BoolEvaluator(string propertyName) : base(propertyName) { }
+        public BoolEvaluator(string propertyName, bool value) : base(propertyName, value) { }
+
+        override protected void Setup()
         {
-            {"==", (a, b) => a == b },
-            {"!=", (a, b) => a != b }
-        };
-
-        [HideInInspector]
-        public Type Type => typeof(bool);
-
-       // private string comparator;
-
-        [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType")]
-        public string Comparator;
-
-        public bool value;
-
-        public BoolEvaluator() { }
-
-        public BoolEvaluator(string operation, bool value)
-        {
-            Comparator = operation;
-            this.value = value;
-        }
-
-        public bool Evaluate(IIncidentContext context, string propertyName)
-        {
-            var propertyValue = (bool)context.GetType().GetProperty(propertyName).GetValue(context);
-            return comparators[Comparator].Invoke(propertyValue, value);
-        }
-
-        private List<string> GetComparatorNames()
-        {
-            return comparators.Keys.ToList();
-        }
-
-        private void SetComparatorType()
-        {
-            //comparator = Comparator;
+            Comparators = ExpressionHelpers.BoolComparators;
+            Operators = ExpressionHelpers.BoolOperators;
         }
     }
 }
