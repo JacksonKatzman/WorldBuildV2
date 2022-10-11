@@ -89,8 +89,14 @@ namespace Game.Incidents
 			{
                 return IntegerOperators.Keys.ToList();
 			}
-
-            return IntegerOperators.Keys.ToList();
+            else if(type == typeof(float))
+			{
+                return FloatOperators.Keys.ToList();
+			}
+			else
+            {
+                return BoolOperators.Keys.ToList();
+            }
         }
 
         public static Dictionary<string, Func<int,int,int>> IntegerOperators = new Dictionary<string, Func<int, int, int>>
