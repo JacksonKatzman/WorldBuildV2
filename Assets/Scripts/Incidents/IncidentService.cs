@@ -53,7 +53,6 @@ namespace Game.Incidents
 
 			var possibleIncidents = GetIncidentsWithMatchingCriteria(incidentsOfType, incidentContext);
 
-
 			if(possibleIncidents == null || possibleIncidents.Count == 0)
 			{
 				OutputLogger.Log("No matching incidents!");
