@@ -1,3 +1,7 @@
-﻿public enum HexEdgeType {
-	Flat, Slope, Cliff
+﻿namespace Game.Terrain
+{
+	public enum HexEdgeType
+	{
+		Flat, Slope, Cliff
+	}
 }

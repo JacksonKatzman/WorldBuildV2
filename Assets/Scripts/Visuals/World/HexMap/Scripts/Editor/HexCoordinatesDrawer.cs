@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using Game.Terrain;
 
 [CustomPropertyDrawer(typeof(HexCoordinates))]
 public class HexCoordinatesDrawer : PropertyDrawer {
