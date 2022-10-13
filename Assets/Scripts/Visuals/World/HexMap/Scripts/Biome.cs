@@ -37,21 +37,21 @@ namespace Game.Terrain
 		};
 
 		public BiomeTerrainType TerrainType { get; private set; }
-		public int TerrainTypeTextureValue => values[TerrainType].x;
-		public int VegetationLevel => values[TerrainType].y;
+		public int TerrainTypeTextureValue { get; private set; }
+		public int VegetationLevel { get; private set; }
 
 		public float Temperature { get; private set; }
 		public float MoistureLevel { get; private set; }
 
-		public Biome(HexCell cell, float temperature, float moistureLevel, int elevationMaximum)
+		public Biome(HexCell cell, float temperature, float moistureLevel, int elevationMaximum, int waterLevel)
 		{
 			Temperature = temperature;
 			MoistureLevel = moistureLevel;
 
-			CalculateTerrainType(cell, elevationMaximum);
+			CalculateTerrainType(cell, elevationMaximum, waterLevel);
 		}
 
-		private BiomeTerrainType CalculateTerrainType(HexCell cell, int elevationMaximum)
+		private void CalculateTerrainType(HexCell cell, int elevationMaximum, int waterLevel)
 		{
 			if (!cell.IsUnderwater)
 			{
@@ -63,6 +63,7 @@ namespace Game.Terrain
 						break;
 					}
 				}
+
 				int m = 0;
 				for (; m < moistureBands.Length; m++)
 				{
@@ -75,36 +76,100 @@ namespace Game.Terrain
 				//calculate special cases for terrain type changes based on elevation and prox to rivers
 				//then calculate for ocean biomes
 
+				int rockDesertElevation =
+				elevationMaximum - (elevationMaximum - waterLevel) / 2;
 
-				//HexBiome cellBiome = biomes[t * 4 + m];
-				/*
-				if (cellBiome.terrain == 0)
+				var terrainType = terrainTypes[t * 4 + m];
+
+				if (terrainType == BiomeTerrainType.Desert || terrainType == BiomeTerrainType.Shrubland)
 				{
 					if (cell.Elevation >= rockDesertElevation)
 					{
-						cellBiome.terrain = 3;
+						terrainType = BiomeTerrainType.Badlands;
 					}
 				}
 				else if (cell.Elevation == elevationMaximum)
 				{
-					cellBiome.terrain = 4;
+					terrainType = BiomeTerrainType.Polar;
 				}
 
-				if (cellBiome.terrain == 4)
+				var plantMod = 0;
+
+				if (values[terrainType].y < 3 && cell.HasRiver)
 				{
-					cellBiome.plant = 0;
-				}
-				else if (cellBiome.plant < 3 && cell.HasRiver)
-				{
-					cellBiome.plant += 1;
+					plantMod = 1;
 				}
 
-				cell.TerrainTypeIndex = cellBiome.terrain;
-				cell.PlantLevel = cellBiome.plant;
-				*/
+				TerrainType = terrainType;
+				TerrainTypeTextureValue = values[terrainType].x;
+				VegetationLevel = values[terrainType].y + plantMod;
 			}
+			else
+			{
+				var terrainType = BiomeTerrainType.Ocean;
 
-			return BiomeTerrainType.Swamp;
+				if (cell.Elevation == waterLevel - 1)
+				{
+					int cliffs = 0, slopes = 0;
+					for (
+						HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++
+					)
+					{
+						HexCell neighbor = cell.GetNeighbor(d);
+						if (!neighbor)
+						{
+							continue;
+						}
+						int delta = neighbor.Elevation - cell.WaterLevel;
+						if (delta == 0)
+						{
+							slopes += 1;
+						}
+						else if (delta > 0)
+						{
+							cliffs += 1;
+						}
+					}
+
+					if (cliffs + slopes > 3)
+					{
+						terrainType = BiomeTerrainType.Reef;
+					}
+					else if (cliffs > 0)
+					{
+						terrainType = BiomeTerrainType.Deep_Ocean;
+					}
+					else if (slopes > 0)
+					{
+						terrainType = BiomeTerrainType.Ocean;
+					}
+					else
+					{
+						terrainType = BiomeTerrainType.Ocean;
+					}
+				}
+				else if (cell.Elevation >= waterLevel)
+				{
+					terrainType = BiomeTerrainType.Reef;
+				}
+				else if (cell.Elevation < 0)
+				{
+					terrainType = BiomeTerrainType.Deep_Ocean;
+				}
+				else
+				{
+					terrainType = BiomeTerrainType.Ocean;
+				}
+
+				if (terrainType == BiomeTerrainType.Ocean && Temperature < temperatureBands[0])
+				{
+					terrainType = BiomeTerrainType.Deep_Ocean;
+				}
+
+				TerrainType = terrainType;
+				TerrainTypeTextureValue = values[terrainType].x;
+				VegetationLevel = values[terrainType].y;
+			}
 		}
 	}
 }

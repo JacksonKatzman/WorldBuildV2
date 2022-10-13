@@ -15,12 +15,12 @@ public class BiomeContainer : ScriptableObject
 	private static float HOT_THRESHOLD = 0.8f;
 	private static float TEMPERATE_THRESHOLD = 0.21f;
 
-	public List<Biome> biomes;
+	public List<OldBiome> biomes;
 
-	public Biome DetermineBiome(float height, float rainfall, float fertility, float temperature)
+	public OldBiome DetermineBiome(float height, float rainfall, float fertility, float temperature)
 	{
 		var bestScore = float.MaxValue;
-		Biome bestFit = biomes[0];
+		OldBiome bestFit = biomes[0];
 
 		LandType landType = LandType.FLAT;
 		LandTemperature landTemperature = LandTemperature.COLD;
@@ -49,7 +49,7 @@ public class BiomeContainer : ScriptableObject
 
 		var possibleBiomes = biomes.Where(x => x.landType == landType && x.temperature == landTemperature);
 
-		foreach(Biome biome in possibleBiomes)
+		foreach(OldBiome biome in possibleBiomes)
 		{
 			var rainfallScore = Mathf.Abs(biome.rainfallThreshold - rainfall);
 			var fertilityScore = Mathf.Abs(biome.fertilityThreshold - fertility);

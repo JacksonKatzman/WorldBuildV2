@@ -15,7 +15,7 @@ namespace Game.WorldGeneration
         public Vector2Int coords;
 		public OldFaction controller;
 
-		public Biome biome;
+		public OldBiome biome;
 		public LandType landType;
 		public float baseMoisture;
 		public float baseFertility;

@@ -746,6 +746,12 @@ namespace Game.Terrain
 				HexCell cell = grid.GetCell(i);
 				float temperature = DetermineTemperature(cell);
 				float moisture = climate[i].moisture;
+
+				var biome = new Biome(cell, temperature, moisture, elevationMaximum, waterLevel);
+				cell.TerrainTypeIndex = biome.TerrainTypeTextureValue;
+				cell.PlantLevel = biome.VegetationLevel;
+
+				/*
 				if (!cell.IsUnderwater)
 				{
 					int t = 0;
@@ -852,6 +858,7 @@ namespace Game.Terrain
 					}
 					cell.TerrainTypeIndex = terrain;
 				}
+				*/
 			}
 		}
 

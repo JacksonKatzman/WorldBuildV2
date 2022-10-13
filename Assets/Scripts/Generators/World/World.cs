@@ -22,7 +22,7 @@ namespace Game.WorldGeneration
 		public Texture2D colorMapTexture;
 		public Texture2D voxelColorMapTexture;
 
-		public List<Biome> biomes;
+		public List<OldBiome> biomes;
 		public List<OldFaction> factions;
 		public List<ILandmark> landmarks;
 		public List<City> Cities => GetAllCities();
@@ -39,7 +39,7 @@ namespace Game.WorldGeneration
 		public List<OngoingEvent> ongoingEvents;
 		private List<Action> deferredActions;
 
-		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<Biome> biomes)
+		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<OldBiome> biomes)
 		{
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
 			factions = new List<OldFaction>();
@@ -154,9 +154,9 @@ namespace Game.WorldGeneration
 			OldIncidentService.Instance.PerformIncident(context);
 		}
 
-		public Biome CalculateTileBiome(LandType landType, float rainfall, float fertility)
+		public OldBiome CalculateTileBiome(LandType landType, float rainfall, float fertility)
 		{
-			return Biome.CalculateBiomeType(biomes, landType, rainfall, fertility);
+			return OldBiome.CalculateBiomeType(biomes, landType, rainfall, fertility);
 		}
 
 
@@ -394,7 +394,7 @@ namespace Game.WorldGeneration
 					var currentTile = aStarPath[a];
 					if (currentTile.biome.landType != LandType.OCEAN)
 					{
-						currentTile.biome = Biome.GetRandomBiomeByLandType(biomes, LandType.RIVER);
+						currentTile.biome = OldBiome.GetRandomBiomeByLandType(biomes, LandType.RIVER);
 						currentTile.AddRiverDirection(currentTile.DetermineAdjacentRelativeDirection(aStarPath[a - 1]));
 						currentTile.AddRiverDirection(currentTile.DetermineAdjacentRelativeDirection(aStarPath[a + 1]));
 					}
