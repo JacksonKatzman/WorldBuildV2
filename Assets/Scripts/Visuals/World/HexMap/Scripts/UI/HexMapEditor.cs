@@ -16,7 +16,7 @@ namespace Game.Terrain
 
 		int activeUrbanLevel, activeFarmLevel, activePlantLevel, activeSpecialIndex;
 
-		int activeTerrainTypeIndex;
+		BiomeTerrainType activeTerrainTypeIndex;
 
 		int brushSize;
 
@@ -38,7 +38,7 @@ namespace Game.Terrain
 
 		public void SetTerrainTypeIndex(int index)
 		{
-			activeTerrainTypeIndex = index;
+			activeTerrainTypeIndex = (BiomeTerrainType)index;
 		}
 
 		public void SetApplyElevation(bool toggle)
@@ -262,7 +262,7 @@ namespace Game.Terrain
 			{
 				if (activeTerrainTypeIndex >= 0)
 				{
-					cell.TerrainTypeIndex = activeTerrainTypeIndex;
+					cell.TerrainType = activeTerrainTypeIndex;
 				}
 				if (applyElevation)
 				{
@@ -283,10 +283,6 @@ namespace Game.Terrain
 				if (applyFarmLevel)
 				{
 					cell.FarmLevel = activeFarmLevel;
-				}
-				if (applyPlantLevel)
-				{
-					cell.PlantLevel = activePlantLevel;
 				}
 				if (riverMode == OptionalToggle.No)
 				{

@@ -235,7 +235,7 @@ namespace Game.Terrain
 			{
 				return plantLevel;
 			}
-			set
+			private set
 			{
 				if (plantLevel != value)
 				{
@@ -292,7 +292,7 @@ namespace Game.Terrain
 			{
 				return terrainTypeIndex;
 			}
-			set
+			private set
 			{
 				if (terrainTypeIndex != value)
 				{
@@ -350,11 +350,28 @@ namespace Game.Terrain
 			}
 		}
 
+		public BiomeTerrainType TerrainType
+		{
+			get
+			{
+				return terrainType;
+			}
+			set
+			{
+				terrainType = value;
+				TerrainTypeIndex = Biome.BiomeInfo[terrainType].x;
+				var level = Biome.BiomeInfo[terrainType].y;
+				PlantLevel = HasRiver && level < 3 ? level + 1 : level;
+			}
+		}
+
 		public int SearchPhase { get; set; }
 
 		public HexCell NextWithSamePriority { get; set; }
 
 		public HexCellShaderData ShaderData { get; set; }
+
+		BiomeTerrainType terrainType;
 
 		int terrainTypeIndex;
 
@@ -618,12 +635,13 @@ namespace Game.Terrain
 
 		public void Save(BinaryWriter writer)
 		{
-			writer.Write((byte)terrainTypeIndex);
+			writer.Write((byte)((int)terrainType));
+			//writer.Write((byte)terrainTypeIndex);
 			writer.Write((byte)(elevation + 127));
 			writer.Write((byte)waterLevel);
 			writer.Write((byte)urbanLevel);
 			writer.Write((byte)farmLevel);
-			writer.Write((byte)plantLevel);
+			//writer.Write((byte)plantLevel);
 			writer.Write((byte)specialIndex);
 			writer.Write(walled);
 
@@ -659,7 +677,8 @@ namespace Game.Terrain
 
 		public void Load(BinaryReader reader, int header)
 		{
-			terrainTypeIndex = reader.ReadByte();
+			TerrainType = (BiomeTerrainType)reader.ReadByte();
+			//terrainTypeIndex = reader.ReadByte();
 			ShaderData.RefreshTerrain(this);
 			elevation = reader.ReadByte();
 			if (header >= 4)
@@ -670,7 +689,7 @@ namespace Game.Terrain
 			waterLevel = reader.ReadByte();
 			urbanLevel = reader.ReadByte();
 			farmLevel = reader.ReadByte();
-			plantLevel = reader.ReadByte();
+			//plantLevel = reader.ReadByte();
 			specialIndex = reader.ReadByte();
 			walled = reader.ReadBoolean();
 

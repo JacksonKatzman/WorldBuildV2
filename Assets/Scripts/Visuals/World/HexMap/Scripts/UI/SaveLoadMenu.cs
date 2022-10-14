@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System;
 using System.IO;
+using Game.Simulation;
 
 namespace Game.Terrain
 {
@@ -18,7 +19,9 @@ namespace Game.Terrain
 
 		public SaveLoadItem itemPrefab;
 
-		public HexGrid hexGrid;
+		//public HexGrid hexGrid;
+
+		public SimulationManager simulationManager;
 
 		bool saveMode;
 
@@ -48,18 +51,19 @@ namespace Game.Terrain
 
 		public void Action()
 		{
-			string path = GetSelectedPath();
-			if (path == null)
+			var mapName = nameInput.text;
+
+			if (mapName.Length == 0)
 			{
 				return;
 			}
 			if (saveMode)
 			{
-				Save(path);
+				Save(mapName);
 			}
 			else
 			{
-				Load(path);
+				Load(mapName);
 			}
 			Close();
 		}
@@ -71,14 +75,15 @@ namespace Game.Terrain
 
 		public void Delete()
 		{
-			string path = GetSelectedPath();
+			string path = WorldSaveDirectories.GetMapRootPath(nameInput.text);
+
 			if (path == null)
 			{
 				return;
 			}
-			if (File.Exists(path))
+			if (Directory.Exists(path))
 			{
-				File.Delete(path);
+				Directory.Delete(path, true);
 			}
 			nameInput.text = "";
 			FillList();
@@ -90,8 +95,13 @@ namespace Game.Terrain
 			{
 				Destroy(listContent.GetChild(i).gameObject);
 			}
+			string[] directoriesAtRoot = Directory.GetDirectories(Application.persistentDataPath, "GameData");
+			if(directoriesAtRoot == null || directoriesAtRoot.Length == 0)
+			{
+				Directory.CreateDirectory(WorldSaveDirectories.ROOT);
+			}
 			string[] paths =
-				Directory.GetFiles(Application.persistentDataPath, "*.map");
+				Directory.GetDirectories(WorldSaveDirectories.ROOT);
 			Array.Sort(paths);
 			for (int i = 0; i < paths.Length; i++)
 			{
@@ -102,17 +112,27 @@ namespace Game.Terrain
 			}
 		}
 
-		string GetSelectedPath()
+		private void CreateMapDirectories(string mapName)
 		{
-			string mapName = nameInput.text;
-			if (mapName.Length == 0)
-			{
-				return null;
-			}
-			return Path.Combine(Application.persistentDataPath, mapName + ".map");
+			Directory.CreateDirectory(WorldSaveDirectories.GetHexMapDataPath(mapName));
 		}
 
-		void Save(string path)
+		void Save(string mapName)
+		{
+			string[] directoriesAtRoot = Directory.GetDirectories(WorldSaveDirectories.ROOT, mapName);
+			if (directoriesAtRoot == null || directoriesAtRoot.Length == 0)
+			{
+				CreateMapDirectories(mapName);
+			}
+			SaveHexMapData(WorldSaveDirectories.GetHexMapData(mapName));
+		}
+
+		void Load(string mapName)
+		{
+			LoadHexMapData(WorldSaveDirectories.GetHexMapData(mapName));
+		}
+
+		void SaveHexMapData(string path)
 		{
 			using (
 				BinaryWriter writer =
@@ -120,11 +140,11 @@ namespace Game.Terrain
 			)
 			{
 				writer.Write(mapFileVersion);
-				hexGrid.Save(writer);
+				simulationManager.hexGrid.Save(writer);
 			}
 		}
 
-		void Load(string path)
+		void LoadHexMapData(string path)
 		{
 			if (!File.Exists(path))
 			{
@@ -136,7 +156,7 @@ namespace Game.Terrain
 				int header = reader.ReadInt32();
 				if (header <= mapFileVersion)
 				{
-					hexGrid.Load(reader, header);
+					simulationManager.hexGrid.Load(reader, header);
 					HexMapCamera.ValidatePosition();
 				}
 				else
@@ -144,6 +164,26 @@ namespace Game.Terrain
 					OutputLogger.LogWarning("Unknown map format " + header);
 				}
 			}
+		}
+	}
+
+	public static class WorldSaveDirectories
+	{
+		public static string ROOT = Path.Combine(Application.persistentDataPath, "GameData");
+
+		public static string GetMapRootPath(string mapName)
+		{
+			return Path.Combine(ROOT, mapName);
+		}
+
+		public static string GetHexMapDataPath(string mapName)
+		{
+			return Path.Combine(ROOT, mapName, "HexMapData");
+		}
+
+		public static string GetHexMapData(string mapName)
+		{
+			return Path.Combine(ROOT, mapName, "HexMapData", mapName + ".map");
 		}
 	}
 }

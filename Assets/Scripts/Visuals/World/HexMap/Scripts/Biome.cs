@@ -19,7 +19,7 @@ namespace Game.Terrain
 			BiomeTerrainType.Desert, BiomeTerrainType.Grassland, BiomeTerrainType.Rainforest, BiomeTerrainType.Swamp
 		};
 
-		static Dictionary<BiomeTerrainType, Vector2Int> values = new Dictionary<BiomeTerrainType, Vector2Int>
+		public static Dictionary<BiomeTerrainType, Vector2Int> BiomeInfo = new Dictionary<BiomeTerrainType, Vector2Int>
 		{
 			{BiomeTerrainType.Swamp, new Vector2Int(0,2)},
 			{BiomeTerrainType.Grassland, new Vector2Int(1,1)},
@@ -36,29 +36,14 @@ namespace Game.Terrain
 			{BiomeTerrainType.Deep_Ocean, new Vector2Int(1,0)}
 		};
 
-		public BiomeTerrainType TerrainType { get; private set; }
-		public int TerrainTypeTextureValue { get; private set; }
-		public int VegetationLevel { get; private set; }
-
-		public float Temperature { get; private set; }
-		public float MoistureLevel { get; private set; }
-
-		public Biome(HexCell cell, float temperature, float moistureLevel, int elevationMaximum, int waterLevel)
-		{
-			Temperature = temperature;
-			MoistureLevel = moistureLevel;
-
-			CalculateTerrainType(cell, elevationMaximum, waterLevel);
-		}
-
-		private void CalculateTerrainType(HexCell cell, int elevationMaximum, int waterLevel)
+		public static BiomeTerrainType CalculateTerrainType(HexCell cell, float temperature, float moistureLevel, int elevationMaximum, int waterLevel)
 		{
 			if (!cell.IsUnderwater)
 			{
 				int t = 0;
 				for (; t < temperatureBands.Length; t++)
 				{
-					if (Temperature < temperatureBands[t])
+					if (temperature < temperatureBands[t])
 					{
 						break;
 					}
@@ -67,7 +52,7 @@ namespace Game.Terrain
 				int m = 0;
 				for (; m < moistureBands.Length; m++)
 				{
-					if (MoistureLevel < moistureBands[m])
+					if (moistureLevel < moistureBands[m])
 					{
 						break;
 					}
@@ -95,14 +80,12 @@ namespace Game.Terrain
 
 				var plantMod = 0;
 
-				if (values[terrainType].y < 3 && cell.HasRiver)
+				if (BiomeInfo[terrainType].y < 3 && cell.HasRiver)
 				{
 					plantMod = 1;
 				}
 
-				TerrainType = terrainType;
-				TerrainTypeTextureValue = values[terrainType].x;
-				VegetationLevel = values[terrainType].y + plantMod;
+				return terrainType;
 			}
 			else
 			{
@@ -161,14 +144,12 @@ namespace Game.Terrain
 					terrainType = BiomeTerrainType.Ocean;
 				}
 
-				if (terrainType == BiomeTerrainType.Ocean && Temperature < temperatureBands[0])
+				if (terrainType == BiomeTerrainType.Ocean && temperature < temperatureBands[0])
 				{
 					terrainType = BiomeTerrainType.Deep_Ocean;
 				}
 
-				TerrainType = terrainType;
-				TerrainTypeTextureValue = values[terrainType].x;
-				VegetationLevel = values[terrainType].y;
+				return terrainType;
 			}
 		}
 	}

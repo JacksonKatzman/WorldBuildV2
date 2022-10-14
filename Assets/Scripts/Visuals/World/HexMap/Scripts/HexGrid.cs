@@ -47,12 +47,17 @@ namespace Game.Terrain
 
 		void Awake()
 		{
+
+		}
+
+		public void Initalize()
+		{
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
 			HexUnit.unitPrefab = unitPrefab;
 			cellShaderData = gameObject.AddComponent<HexCellShaderData>();
 			cellShaderData.Grid = this;
-			CreateMap(cellCountX, cellCountZ);
+			//CreateMap(cellCountX, cellCountZ);
 		}
 
 		public void AddUnit(HexUnit unit, HexCell location, float orientation)
@@ -246,6 +251,7 @@ namespace Game.Terrain
 			cell.uiRect = label.rectTransform;
 
 			cell.Elevation = 0;
+			//cell.TerrainType = BiomeTerrainType.Rainforest;
 
 			AddCellToChunk(x, z, cell);
 		}

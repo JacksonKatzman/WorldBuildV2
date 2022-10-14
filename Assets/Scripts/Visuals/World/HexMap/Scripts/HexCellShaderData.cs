@@ -14,6 +14,7 @@ namespace Game.Terrain
 		List<HexCell> transitioningCells = new List<HexCell>();
 
 		bool needsVisibilityReset;
+		bool initialized;
 
 		public HexGrid Grid { get; set; }
 
@@ -52,6 +53,7 @@ namespace Game.Terrain
 			}
 
 			transitioningCells.Clear();
+			initialized = true;
 			enabled = true;
 		}
 
@@ -92,30 +94,33 @@ namespace Game.Terrain
 
 		void LateUpdate()
 		{
-			if (needsVisibilityReset)
+			if (initialized)
 			{
-				needsVisibilityReset = false;
-				Grid.ResetVisibility();
-			}
-
-			int delta = (int)(Time.deltaTime * transitionSpeed);
-			if (delta == 0)
-			{
-				delta = 1;
-			}
-			for (int i = 0; i < transitioningCells.Count; i++)
-			{
-				if (!UpdateCellData(transitioningCells[i], delta))
+				if (needsVisibilityReset)
 				{
-					transitioningCells[i--] =
-						transitioningCells[transitioningCells.Count - 1];
-					transitioningCells.RemoveAt(transitioningCells.Count - 1);
+					needsVisibilityReset = false;
+					Grid.ResetVisibility();
 				}
-			}
 
-			cellTexture.SetPixels32(cellTextureData);
-			cellTexture.Apply();
-			enabled = transitioningCells.Count > 0;
+				int delta = (int)(Time.deltaTime * transitionSpeed);
+				if (delta == 0)
+				{
+					delta = 1;
+				}
+				for (int i = 0; i < transitioningCells.Count; i++)
+				{
+					if (!UpdateCellData(transitioningCells[i], delta))
+					{
+						transitioningCells[i--] =
+							transitioningCells[transitioningCells.Count - 1];
+						transitioningCells.RemoveAt(transitioningCells.Count - 1);
+					}
+				}
+
+				cellTexture.SetPixels32(cellTextureData);
+				cellTexture.Apply();
+				enabled = transitioningCells.Count > 0;
+			}
 		}
 
 		bool UpdateCellData(HexCell cell, int delta)

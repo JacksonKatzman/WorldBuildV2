@@ -6,7 +6,6 @@ namespace Game.Terrain
 {
 	public class HexMapGenerator : MonoBehaviour
 	{
-
 		public HexGrid grid;
 
 		public bool useFixedSeed;
@@ -166,12 +165,14 @@ namespace Game.Terrain
 			{
 				grid.GetCell(i).WaterLevel = waterLevel;
 			}
+
 			CreateRegions();
 			CreateLand();
 			ErodeLand();
 			CreateClimate();
 			CreateRivers();
 			SetTerrainType();
+
 			for (int i = 0; i < cellCount; i++)
 			{
 				grid.GetCell(i).SearchPhase = 0;
@@ -747,9 +748,8 @@ namespace Game.Terrain
 				float temperature = DetermineTemperature(cell);
 				float moisture = climate[i].moisture;
 
-				var biome = new Biome(cell, temperature, moisture, elevationMaximum, waterLevel);
-				cell.TerrainTypeIndex = biome.TerrainTypeTextureValue;
-				cell.PlantLevel = biome.VegetationLevel;
+				var biome = Biome.CalculateTerrainType(cell, temperature, moisture, elevationMaximum, waterLevel);
+				cell.TerrainType = biome;
 
 				/*
 				if (!cell.IsUnderwater)
