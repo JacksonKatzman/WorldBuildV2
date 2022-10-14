@@ -15,7 +15,7 @@ namespace Game.Incidents
 		{
 			base.Setup();
 
-			var possiblePeople = SimulationManager.Instance.World.People;
+			var possiblePeople = OldSimulationManager.Instance.World.People;
 			var matches = new HashSet<Person>();
 			//var preAdd = criteria.ForEach(x => x.EvaluateSearch(possiblePeople));
 			foreach(var c in criteria)

@@ -7,12 +7,12 @@ namespace Game.WorldGeneration
 {
 	public class Chunk : ITimeSensitive, IMutableZone
 	{
-		private World world;
+		private OldWorld world;
 		public Vector2Int coords;
 		public Tile[,] chunkTiles;
 		public float[,] noiseMap;
 
-		public Chunk(World world, Vector2Int coords)
+		public Chunk(OldWorld world, Vector2Int coords)
 		{
 			this.world = world;
 			this.coords = coords;

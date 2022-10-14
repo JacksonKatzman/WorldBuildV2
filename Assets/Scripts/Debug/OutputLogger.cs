@@ -36,7 +36,7 @@ public abstract class OutputLogger
 		LogFormat(format, source, args);
 		if (ALLOW_PAUSES)
 		{
-			SimulationManager.Instance.DebugPause = true;
+			OldSimulationManager.Instance.DebugPause = true;
 		}
 	}
 

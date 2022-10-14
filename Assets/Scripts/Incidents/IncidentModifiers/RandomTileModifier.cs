@@ -10,7 +10,7 @@ namespace Game.Incidents
 		{
 			base.Setup();
 
-			var tile = SimulationManager.Instance.World.GetRandomTile();
+			var tile = OldSimulationManager.Instance.World.GetRandomTile();
 			ProvideModifierInfo(x => (x as ITileLocationContainer)?.Locations.Add(tile));
 		}
 	}

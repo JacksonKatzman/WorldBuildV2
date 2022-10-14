@@ -10,7 +10,7 @@ namespace Game.WorldGeneration
     public class Tile : ITimeSensitive, IMutableZone, IRecordable
     {
 		public string Name => name;
-        public World world;
+        public OldWorld world;
         public Chunk chunk;
         public Vector2Int coords;
 		public OldFaction controller;
@@ -27,7 +27,7 @@ namespace Game.WorldGeneration
 
 		private string name;
 
-		public Tile(World world, Chunk chunk, Vector2Int coords)
+		public Tile(OldWorld world, Chunk chunk, Vector2Int coords)
 		{
 			this.world = world;
 			this.chunk = chunk;

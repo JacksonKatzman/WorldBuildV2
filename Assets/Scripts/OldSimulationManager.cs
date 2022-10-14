@@ -11,11 +11,11 @@ using Game.Debug;
 using Game.Data.EventHandling.EventRecording;
 using Game.Visuals;
 
-public class SimulationManager : MonoBehaviour
+public class OldSimulationManager : MonoBehaviour
 {
-    private static SimulationManager instance;
-    public static SimulationManager Instance => instance;
-    public World World => world;
+    private static OldSimulationManager instance;
+    public static OldSimulationManager Instance => instance;
+    public OldWorld World => world;
 
     public NoiseSettings settings;
     public BiomeContainer biomeSettings;
@@ -49,7 +49,7 @@ public class SimulationManager : MonoBehaviour
     public int seed;
     public System.Random seededRandom;
 
-    private World world;
+    private OldWorld world;
     int chunkSize = 10;
 
     public bool DebugPause = false;

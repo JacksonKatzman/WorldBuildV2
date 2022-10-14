@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Game.WorldGeneration
 {
-	public class World : ITimeSensitive, IIncidentInstigator
+	public class OldWorld : ITimeSensitive, IIncidentInstigator
     {
 		public Dictionary<MapCategory, float[,]> noiseMaps;
 		public Color[,] biomeMap;
@@ -39,7 +39,7 @@ namespace Game.WorldGeneration
 		public List<OngoingEvent> ongoingEvents;
 		private List<Action> deferredActions;
 
-		public World(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<OldBiome> biomes)
+		public OldWorld(float[,] noiseMap, Texture2D texture, NoiseSettings settings, int chunkSize, List<OldBiome> biomes)
 		{
 			noiseMaps = new Dictionary<MapCategory, float[,]>();
 			factions = new List<OldFaction>();
@@ -104,7 +104,7 @@ namespace Game.WorldGeneration
 				chunk.AdvanceTime();
 			}
 
-			SimulationManager.Instance.timer.Tic();
+			OldSimulationManager.Instance.timer.Tic();
 			foreach (OldFaction faction in factions)
 			{
 				faction.currentPriorities = faction.GeneratePriorities();
@@ -114,22 +114,22 @@ namespace Game.WorldGeneration
 			{
 				faction.AdvanceTime();
 			}
-			SimulationManager.Instance.timer.Toc("Faction");
+			OldSimulationManager.Instance.timer.Toc("Faction");
 
-			SimulationManager.Instance.timer.Tic();
+			OldSimulationManager.Instance.timer.Tic();
 			foreach (War war in wars)
 			{
 				war.AdvanceTime();
 			}
-			SimulationManager.Instance.timer.Toc("WAR");
+			OldSimulationManager.Instance.timer.Toc("WAR");
 			HandleDeferredActions();
 
-			SimulationManager.Instance.timer.Tic();
+			OldSimulationManager.Instance.timer.Tic();
 			foreach (Person person in creatures)
 			{
 				person.AdvanceTime();
 			}
-			SimulationManager.Instance.timer.Toc("People");
+			OldSimulationManager.Instance.timer.Toc("People");
 
 			DeathEvent();
 
@@ -140,7 +140,7 @@ namespace Game.WorldGeneration
 
 		public void DeathEvent()
 		{
-			var tags = new List<IIncidentTag> { new InstigatorTag(typeof(World)), new WorldTag(new List<WorldTagType> { WorldTagType.DEATH }), new SpecialCaseTag(SpecialCaseTagType.END_OF_TURN) };
+			var tags = new List<IIncidentTag> { new InstigatorTag(typeof(OldWorld)), new WorldTag(new List<WorldTagType> { WorldTagType.DEATH }), new SpecialCaseTag(SpecialCaseTagType.END_OF_TURN) };
 			var context = new OldIncidentContext(this, tags);
 			OldIncidentService.Instance.PerformIncident(context);
 
@@ -149,7 +149,7 @@ namespace Game.WorldGeneration
 
 		public void TestDeath()
 		{
-			var tags = new List<IIncidentTag> { new InstigatorTag(typeof(World)), new WorldTag(new List<WorldTagType> { WorldTagType.DEATH }), new SpecialCaseTag(SpecialCaseTagType.TEST) };
+			var tags = new List<IIncidentTag> { new InstigatorTag(typeof(OldWorld)), new WorldTag(new List<WorldTagType> { WorldTagType.DEATH }), new SpecialCaseTag(SpecialCaseTagType.TEST) };
 			var context = new OldIncidentContext(this, tags);
 			OldIncidentService.Instance.PerformIncident(context);
 		}
@@ -349,7 +349,7 @@ namespace Game.WorldGeneration
 
 		private void BuildRivers()
 		{
-			SimulationManager.Instance.timer.Tic();
+			OldSimulationManager.Instance.timer.Tic();
 
 			var unsortedTiles = new List<Tile>();
 			var tileMap = new Tile[worldChunks.GetLength(0) * chunkSize, worldChunks.GetLength(1) * chunkSize];
@@ -411,7 +411,7 @@ namespace Game.WorldGeneration
 				oceanTiles.Remove(targetOceanTile);
 			}
 
-			SimulationManager.Instance.timer.Toc("Build Rivers");
+			OldSimulationManager.Instance.timer.Toc("Build Rivers");
 		}
 
 		private void AlterMap(MapCategory mapCategory, float[,] noiseMap)

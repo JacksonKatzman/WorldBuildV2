@@ -25,7 +25,7 @@ namespace Game.Incidents
 
 		public void CreateModifierInfo(IModifierInfoContainer mod)
 		{
-			var people = SimulationManager.Instance.World.People.Where(x => x.age >= x.naturalDeathAge).ToList();
+			var people = OldSimulationManager.Instance.World.People.Where(x => x.age >= x.naturalDeathAge).ToList();
 			var container = (mod as ICreatureContainer);
 			var creatures = container?.Creatures;
 			creatures?.AddRange(people);
