@@ -14,7 +14,7 @@ namespace Game.Incidents
 		{
 			base.Setup();
 
-			var possibleLandmarks = SimulationManager.Instance.World.landmarks;
+			var possibleLandmarks = OldSimulationManager.Instance.World.landmarks;
 			var matches = new HashSet<ILandmark>();
 			//var preAdd = criteria.ForEach(x => x.EvaluateSearch(possiblePeople));
 			foreach (var c in criteria)

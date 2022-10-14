@@ -56,7 +56,7 @@ namespace Game.Incidents
 
         abstract protected void Setup();
 
-        private T CombineExpressions()
+        public T CombineExpressions()
         {
             var currentValue = expressions[0].Value;
             for (int i = 0; i < expressions.Count - 1; i++)

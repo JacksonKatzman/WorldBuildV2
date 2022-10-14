@@ -6,7 +6,7 @@ using Game.Generators.Noise;
 
 public class WorldGenerator
 {
-    public static World GenerateWorld(NoiseSettings noiseSettings, int chunkSize, List<Biome> biomes)
+    public static OldWorld GenerateWorld(NoiseSettings noiseSettings, int chunkSize, List<OldBiome> biomes)
 	{
 		Vector2Int noiseSize = new Vector2Int(noiseSettings.worldSize.x * chunkSize, noiseSettings.worldSize.y * chunkSize);
 		var noiseMap = NoiseGenerator.GeneratePerlinNoise(noiseSize, noiseSettings.scale,
@@ -28,7 +28,7 @@ public class WorldGenerator
 		worldNoiseTexture.SetPixels(colorMap);
 		worldNoiseTexture.Apply();
 
-		return new World(noiseMap, worldNoiseTexture, noiseSettings, chunkSize, biomes);
+		return new OldWorld(noiseMap, worldNoiseTexture, noiseSettings, chunkSize, biomes);
 	}
 
 	public static Texture2D GenerateWorldTexture()

@@ -39,7 +39,7 @@ namespace Game.Factions
 		public List<Tile> borderTiles;
 		public Dictionary<OldFaction, float> factionTensions;
 		public int influence;
-		public World world;
+		public OldWorld world;
 
 		public int age;
 		public int Age => age;

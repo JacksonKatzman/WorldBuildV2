@@ -36,13 +36,18 @@ public abstract class OutputLogger
 		LogFormat(format, source, args);
 		if (ALLOW_PAUSES)
 		{
-			SimulationManager.Instance.DebugPause = true;
+			OldSimulationManager.Instance.DebugPause = true;
 		}
 	}
 
 	public static void Log(string log)
 	{
 		Debug.Log(log);
+	}
+
+	public static void LogWarning(string log)
+	{
+		Debug.LogWarning(log);
 	}
 
 	public static void LogError(string log)

@@ -15,7 +15,7 @@ namespace Game.Incidents
 		{
 			base.Setup();
 
-			var possibleFactions = SimulationManager.Instance.World.factions;
+			var possibleFactions = OldSimulationManager.Instance.World.factions;
 			var matches = new HashSet<OldFaction>();
 			//var preAdd = criteria.ForEach(x => x.EvaluateSearch(possiblePeople));
 			foreach (var c in criteria)

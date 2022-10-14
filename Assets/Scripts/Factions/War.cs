@@ -10,7 +10,7 @@ namespace Game.Factions
 {
 	public class War: ITimeSensitive
 	{
-		private World world;
+		private OldWorld world;
 
 		public OldFaction originalAggressor;
 		//public List<Faction> aggressors;
@@ -23,7 +23,7 @@ namespace Game.Factions
 		private List<Action> deferredActions;
 		private bool resolved = false;
 
-		public War(World world, OldFaction aggressor, OldFaction defender)
+		public War(OldWorld world, OldFaction aggressor, OldFaction defender)
 		{
 			this.world = world;
 

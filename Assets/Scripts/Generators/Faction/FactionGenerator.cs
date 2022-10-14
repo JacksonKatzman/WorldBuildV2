@@ -13,7 +13,7 @@ namespace Game.Generators
 		private static float STARTING_FOOD = 100.0f;
 		private static int STARTING_POPULATION = 100;
 		private static int MAX_SPAWN_ATTEMPTS = 100;
-		public static void SpawnFaction(World world)
+		public static void SpawnFaction(OldWorld world)
 		{
 			bool spawned = false;
 
