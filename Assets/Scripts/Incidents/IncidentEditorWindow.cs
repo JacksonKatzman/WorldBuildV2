@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Game.IO;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using System;
@@ -66,8 +67,8 @@ namespace Game.Incidents
                 var incident = new Incident(ContextType, criteria, incidentActions, weight);
 
                 //Save this data somewhere T.T
-                var path = Path.Combine(Application.dataPath + IncidentService.INCIDENT_DATA_PATH + incidentName + ".json");
-                string output = JsonConvert.SerializeObject(incident, Formatting.Indented, IncidentService.SERIALIZER_SETTINGS);
+                var path = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + incidentName + ".json");
+                string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);
                 File.WriteAllText(path, output);
             }
 		}

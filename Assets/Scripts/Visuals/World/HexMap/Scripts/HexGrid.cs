@@ -29,8 +29,8 @@ namespace Game.Terrain
 			}
 		}
 
-		HexGridChunk[] chunks;
-		HexCell[] cells;
+		public HexGridChunk[] chunks;
+		public HexCell[] cells;
 
 		int chunkCountX, chunkCountZ;
 

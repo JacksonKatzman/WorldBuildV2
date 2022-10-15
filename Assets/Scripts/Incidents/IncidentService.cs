@@ -4,19 +4,12 @@ using System.Linq;
 using System.IO;
 using UnityEngine;
 using System;
+using Game.IO;
 
 namespace Game.Incidents
 {
 	public class IncidentService
 	{
-		public static string INCIDENT_DATA_PATH = "/Resources/IncidentData/";
-		public static JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings()
-		{
-			// ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-			TypeNameHandling = TypeNameHandling.All
-		};
-
 		private static IncidentService instance;
 
 		private List<IIncident> incidents;
@@ -76,13 +69,13 @@ namespace Game.Incidents
 		private void Setup()
 		{
 			incidents = new List<IIncident>();
-			var files = Directory.GetFiles(Application.dataPath + INCIDENT_DATA_PATH, "*.json");
+			var files = Directory.GetFiles(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH, "*.json");
 			foreach (string file in files)
 			{
 				var text = File.ReadAllText(file);
 				if (text.Length > 0)
 				{
-					var item = JsonConvert.DeserializeObject<Incident>(text, SERIALIZER_SETTINGS);
+					var item = JsonConvert.DeserializeObject<Incident>(text, SaveUtilities.SERIALIZER_SETTINGS);
 					incidents.Add(item);
 				}
 			}

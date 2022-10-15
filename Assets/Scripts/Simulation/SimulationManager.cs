@@ -1,4 +1,6 @@
-﻿using Game.Terrain;
+﻿using Game.IO;
+using Game.Terrain;
+using System.IO;
 using UnityEngine;
 
 namespace Game.Simulation
@@ -19,8 +21,31 @@ namespace Game.Simulation
 		private void Awake()
 		{
 			hexGrid.Initalize();
+			CreateWorld();
+		}
+
+		public void CreateWorld()
+		{
 			mapGenerator.GenerateMap(worldChunksX * HexMetrics.chunkSizeX, worldChunksZ * HexMetrics.chunkSizeZ);
 			world = new World(hexGrid);
+		}
+
+		public void SaveWorld(string mapName)
+		{
+			string[] directoriesAtRoot = Directory.GetDirectories(SaveUtilities.ROOT, mapName);
+			if (directoriesAtRoot == null || directoriesAtRoot.Length == 0)
+			{
+				SaveUtilities.CreateMapDirectories(mapName);
+			}
+			SaveUtilities.SaveHexMapData(hexGrid, SaveUtilities.GetHexMapData(mapName));
+
+			world.Save(mapName);
+		}
+
+		public void LoadWorld(string mapName)
+		{
+			SaveUtilities.LoadHexMapData(hexGrid, SaveUtilities.GetHexMapData(mapName));
+			world = World.Load(hexGrid, mapName);
 		}
 	}
 }
