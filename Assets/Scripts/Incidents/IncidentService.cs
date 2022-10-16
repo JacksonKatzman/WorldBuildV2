@@ -13,6 +13,7 @@ namespace Game.Incidents
 		private static IncidentService instance;
 
 		private List<IIncident> incidents;
+		private int nextIncidentID;
 
 		public static IncidentService Instance
 		{
@@ -79,6 +80,8 @@ namespace Game.Incidents
 					incidents.Add(item);
 				}
 			}
+
+			nextIncidentID = 0;
 		}
 
 		private void DebugSetup()
@@ -107,5 +110,14 @@ namespace Game.Incidents
 			var debugIncident = new Incident(typeof(FactionContext), criteria, actions);
 			incidents.Add(debugIncident);
 		}
+	}
+
+	public class IncidentReport
+	{
+		public int IncidentID { get; set; }
+		public int ParentID { get; set; }
+		public Dictionary<string, IIncidentContext> Contexts { get; set; }
+
+		public string ReportLog { get; set; }
 	}
 }

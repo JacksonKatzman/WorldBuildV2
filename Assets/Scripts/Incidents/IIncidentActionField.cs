@@ -5,7 +5,10 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public interface IIncidentActionField { }
+	public interface IIncidentActionField 
+	{
+		int ActionFieldID { get; set; }
+	}
 
 	public enum ActionFieldRetrievalMethod { Criteria, From_Previous, Random };
 
@@ -23,6 +26,14 @@ namespace Game.Incidents
 
 		[ShowIf("Method", ActionFieldRetrievalMethod.Criteria), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
 		public List<IIncidentCriteria> criteria;
+
+		//Action Field ID
+		//When an action is created, all actions have each of their Actionfields reassigned with an ID
+		//This is then used to fill in the corresponding values in a report if needed.
+		public int ActionFieldID { get; set; }
+
+		[ShowInInspector]
+		public string ActionFieldIDString => "{" + ActionFieldID + "}";
 
 		private IIncidentContextProvider value;
 

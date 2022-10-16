@@ -39,6 +39,8 @@ namespace Game.Incidents
                 }
 		}
 
+        private int numActionFields;
+
         public static Dictionary<string, Type> Properties => properties;
 
 		[TypeFilter("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type")]
@@ -97,8 +99,28 @@ namespace Game.Incidents
 
         private void AddNewActionItem()
 		{
-            actions.Add(new ActionChoiceContainer());
+            actions.Add(new ActionChoiceContainer(UpdateActionFieldIDs));
 		}
+
+        public void UpdateActionFieldIDs()
+		{
+            var fieldCount = 0;
+
+            foreach (var a in actions)
+			{
+                var incidentAction = a.incidentAction;
+                var actionType = incidentAction.GetType();
+                var fields = actionType.GetFields();
+                var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>));
+
+                foreach(var f in matchingFields)
+				{
+                    var fa = f.GetValue(incidentAction) as IIncidentActionField;
+                    fa.ActionFieldID = fieldCount;
+                    fieldCount++;
+				}
+			}
+        }
 
         private static void GetPropertyList()
         {
@@ -127,6 +149,13 @@ namespace Game.Incidents
         [TypeFilter("GetFilteredTypeList"), OnValueChanged("SetAction"), HideLabel]
         public IIncidentAction incidentAction;
 
+        private Action onSetCallback;
+
+        public ActionChoiceContainer() { }
+        public ActionChoiceContainer(Action onSetCallback)
+		{
+            this.onSetCallback = onSetCallback;
+		}
 
         public IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
         {
@@ -151,6 +180,7 @@ namespace Game.Incidents
         public void SetAction()
 		{
             incidentAction.UpdateEditor();
-		}
+            onSetCallback?.Invoke();
+        }
     }
 }
