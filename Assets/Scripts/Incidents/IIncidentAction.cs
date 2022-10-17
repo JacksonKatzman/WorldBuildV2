@@ -10,6 +10,7 @@ namespace Game.Incidents
 	{
 		Type ContextType { get; }
 		IIncidentContext Context { get; }
+		bool VerifyAction(IIncidentContext context);
 		void PerformAction(IIncidentContext context);
 
 		void UpdateEditor();
@@ -38,6 +39,11 @@ namespace Game.Incidents
 			}
 		}
 
+		public bool VerifyAction(IIncidentContext context)
+		{
+			return VerifyContextActionFields(context);
+		}
+
 		virtual public void PerformAction(IIncidentContext context)
 		{
 			PerformDebugAction();
@@ -49,6 +55,7 @@ namespace Game.Incidents
 		}
 
 		abstract public void UpdateEditor();
+		abstract protected bool VerifyContextActionFields(IIncidentContext context);
 	}
 
 	[Serializable]
@@ -59,8 +66,13 @@ namespace Game.Incidents
 
 		override public void PerformAction(IIncidentContext context)
 		{
-			var faction = requiredFaction.Value;
 			PerformDebugAction();
+		}
+
+		protected override bool VerifyContextActionFields(IIncidentContext context)
+		{
+			var faction = requiredFaction.Value;
+			return faction != null;
 		}
 
 		private void PerformDebugAction()

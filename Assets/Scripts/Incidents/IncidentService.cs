@@ -14,6 +14,7 @@ namespace Game.Incidents
 
 		private List<IIncident> incidents;
 		private int nextIncidentID;
+		private List<IncidentReport> reports;
 
 		public static IncidentService Instance
 		{
@@ -53,7 +54,16 @@ namespace Game.Incidents
 				return;
 			}
 
-			possibleIncidents.FirstOrDefault().Actions.PerformActions(incidentContext);
+			//instead of having this grab first or default and possibly fail, have it try a few of the possible
+			//incidents to see if it can complete one
+			var report = new IncidentReport();
+			var completed = possibleIncidents.FirstOrDefault().PerformIncident(incidentContext, ref report);
+
+			if(completed)
+			{
+				nextIncidentID++;
+				reports.Add(report);
+			}
 		}
 
 		private List<IIncident> GetIncidentsOfType(Type type)
@@ -82,6 +92,7 @@ namespace Game.Incidents
 			}
 
 			nextIncidentID = 0;
+			reports = new List<IncidentReport>();
 		}
 
 		private void DebugSetup()
@@ -106,8 +117,9 @@ namespace Game.Incidents
 
 			var actions = new List<IIncidentAction>();
 			actions.Add(new TestFactionIncidentAction());
+			var container = new IncidentActionContainer(actions);
 
-			var debugIncident = new Incident(typeof(FactionContext), criteria, actions);
+			var debugIncident = new Incident(typeof(FactionContext), criteria, container);
 			incidents.Add(debugIncident);
 		}
 	}
@@ -116,8 +128,15 @@ namespace Game.Incidents
 	{
 		public int IncidentID { get; set; }
 		public int ParentID { get; set; }
-		public Dictionary<string, IIncidentContext> Contexts { get; set; }
+		public Dictionary<string, IIncidentContextProvider> Providers { get; set; }
 
 		public string ReportLog { get; set; }
+
+		public IncidentReport() { }
+		public IncidentReport(int incidentID, int parentID)
+		{
+			IncidentID = incidentID;
+			ParentID = parentID;
+		}
 	}
 }

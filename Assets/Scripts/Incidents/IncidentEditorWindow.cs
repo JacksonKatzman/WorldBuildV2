@@ -55,6 +55,9 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
         public List<IIncidentCriteria> criteria;
 
+        [ShowIfGroup("ContextTypeChosen")]
+        public string incidentLog;
+
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewActionItem"), HideReferenceObjectPicker]
         public List<ActionChoiceContainer> actions;
 
@@ -65,8 +68,10 @@ namespace Game.Incidents
             {
                 var incidentActions = new List<IIncidentAction>();
                 actions.ForEach(x => incidentActions.Add(x.incidentAction));
+                var container = new IncidentActionContainer(incidentActions);
+                container.incidentLog = incidentLog;
 
-                var incident = new Incident(ContextType, criteria, incidentActions, weight);
+                var incident = new Incident(ContextType, criteria, container, weight);
 
                 //Save this data somewhere T.T
                 var path = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + incidentName + ".json");
@@ -154,10 +159,10 @@ namespace Game.Incidents
         public ActionChoiceContainer() { }
         public ActionChoiceContainer(Action onSetCallback)
 		{
-            this.onSetCallback = onSetCallback;
+			this.onSetCallback = onSetCallback;
 		}
 
-        public IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
+		public IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
         {
             return from x in assembly.GetTypes()
                    from z in x.GetInterfaces()

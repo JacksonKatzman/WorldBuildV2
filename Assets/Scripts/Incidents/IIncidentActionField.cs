@@ -8,6 +8,7 @@ namespace Game.Incidents
 	public interface IIncidentActionField 
 	{
 		int ActionFieldID { get; set; }
+		string ActionFieldIDString { get; }
 	}
 
 	public enum ActionFieldRetrievalMethod { Criteria, From_Previous, Random };
@@ -30,6 +31,8 @@ namespace Game.Incidents
 		//Action Field ID
 		//When an action is created, all actions have each of their Actionfields reassigned with an ID
 		//This is then used to fill in the corresponding values in a report if needed.
+		//NEXT STEPS: Pass along each IDString/Value pair to the IncidentReport dictionary along with
+		//a string that uses them and the IDs for the spawner and the report itself
 		public int ActionFieldID { get; set; }
 
 		[ShowInInspector]
@@ -57,7 +60,6 @@ namespace Game.Incidents
 
 		private IIncidentContextProvider RetrieveField()
 		{
-			OutputLogger.Log("Retrieved Field!");
 			return default(T)?.Provider;
 		}
 

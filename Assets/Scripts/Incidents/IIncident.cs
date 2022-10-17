@@ -10,7 +10,7 @@ namespace Game.Incidents
 		int Weight { get; }
 		IncidentCriteriaContainer Criteria { get; }
 		IncidentActionContainer Actions { get; }
-		void PerformIncident(int incidentID, IIncidentContext context);
+		bool PerformIncident(IIncidentContext context, ref IncidentReport report);
 	}
 
 	[System.Serializable]
@@ -31,17 +31,17 @@ namespace Game.Incidents
 			Weight = weight;
 		}
 
-		public Incident(Type contextType, List<IIncidentCriteria> criteria, List<IIncidentAction> actions, int weight = 5)
+		public Incident(Type contextType, List<IIncidentCriteria> criteria, IncidentActionContainer container, int weight = 5)
 		{
 			ContextType = contextType;
 			Criteria = new IncidentCriteriaContainer(criteria);
-			Actions = new IncidentActionContainer(actions);
+			Actions = container;
 			Weight = weight;
 		}
 
-		public void PerformIncident(int incidentID, IIncidentContext context)
+		public bool PerformIncident(IIncidentContext context, ref IncidentReport report )
 		{
-			Actions.PerformActions(context);
+			return Actions.PerformActions(context, ref report);
 		}
 	}
 }
