@@ -9192,7 +9192,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1269840644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa82311d3d06eb14b8e879551dff7a62, type: 3}
+  m_Script: {fileID: 11500000, guid: bd41cc7aa82fe914d9329301c2aebc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hexGrid: {fileID: 1571186511}
@@ -11160,6 +11160,8 @@ MonoBehaviour:
   unitPrefab: {fileID: 114701888605048992, guid: 5661a1efcb9464721b4db3f694ded559, type: 3}
   noiseSource: {fileID: 2800000, guid: 38701cdeb1fb9427cbb585f917aa59cb, type: 3}
   seed: 1234
+  chunks: []
+  cells: []
 --- !u!4 &1571186512
 Transform:
   m_ObjectHideFlags: 0
@@ -11506,7 +11508,6 @@ MonoBehaviour:
   nameInput: {fileID: 89474001}
   listContent: {fileID: 218360314}
   itemPrefab: {fileID: 114778907200386024, guid: 3ba1efbe9386b435da480e11c9fcb2df, type: 3}
-  simulationManager: {fileID: 1269840645}
 --- !u!1 &1646147695
 GameObject:
   m_ObjectHideFlags: 0

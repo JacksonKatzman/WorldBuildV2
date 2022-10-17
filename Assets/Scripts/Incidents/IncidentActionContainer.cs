@@ -29,13 +29,13 @@ namespace Game.Incidents
 				action.PerformAction(context);
 			}
 
-			report.Providers = GetContextProviderDictionary();
+			report.Providers = GetContextProviderDictionary(context);
 			report.ReportLog = incidentLog;
 
 			return true;
 		}
 
-		public Dictionary<string, IIncidentContextProvider> GetContextProviderDictionary()
+		public Dictionary<string, IIncidentContextProvider> GetContextProviderDictionary(IIncidentContext context)
 		{
 			var providerDictionary = new Dictionary<string, IIncidentContextProvider>();
 
@@ -43,12 +43,12 @@ namespace Game.Incidents
 			{
 				var actionType = action.GetType();
 				var fields = actionType.GetFields();
-				var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>));
+				var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>)).ToList();
 
 				foreach (var field in matchingFields)
 				{
-					var actionField = field.GetValue(action) as IncidentContextActionField<IIncidentContext>;
-					providerDictionary.Add(actionField.ActionFieldIDString, actionField.Value);
+					var actionField = field.GetValue(action) as IIncidentActionField;
+					providerDictionary.Add(actionField.ActionFieldIDString, actionField.RetrieveField(context));
 				}
 			}
 

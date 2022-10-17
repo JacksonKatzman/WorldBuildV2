@@ -1,33 +1,50 @@
-﻿using Game.IO;
+﻿using Game.Incidents;
+using Game.IO;
 using Game.Terrain;
 using System.IO;
-using UnityEngine;
 
 namespace Game.Simulation
 {
-	public class SimulationManager : MonoBehaviour
+	public class SimulationManager
 	{
-		[SerializeField]
-		public HexGrid hexGrid;
+		public HexGrid HexGrid { get; set; }
 
-		[SerializeField]
-		public HexMapGenerator mapGenerator;
+		public HexMapGenerator MapGenerator { get; set; }
 
-		[SerializeField]
-		private int worldChunksX = 16, worldChunksZ = 12;
+		public int WorldChunksX { get; set; }
+		public int WorldChunksZ { get; set; }
+
+		private static SimulationManager instance;
+		public static SimulationManager Instance
+		{
+			get
+			{
+				if (instance == null)
+				{
+					instance = new SimulationManager();
+				}
+				return instance;
+			}
+		}
+
+		private SimulationManager()
+		{
+			OutputLogger.Log("Sim Manager Made!");
+		}
 
 		public World world;
 
-		private void Awake()
-		{
-			hexGrid.Initalize();
-			CreateWorld();
-		}
+		public ContextTypeListDictionary<IIncidentContextProvider> Providers => world.Providers;
 
 		public void CreateWorld()
 		{
-			mapGenerator.GenerateMap(worldChunksX * HexMetrics.chunkSizeX, worldChunksZ * HexMetrics.chunkSizeZ);
-			world = new World(hexGrid);
+			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
+			world = new World(HexGrid);
+		}
+
+		public void CreateDebugWorld()
+		{
+			world = new World();
 		}
 
 		public void SaveWorld(string mapName)
@@ -37,15 +54,15 @@ namespace Game.Simulation
 			{
 				SaveUtilities.CreateMapDirectories(mapName);
 			}
-			SaveUtilities.SaveHexMapData(hexGrid, SaveUtilities.GetHexMapData(mapName));
+			SaveUtilities.SaveHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
 
 			world.Save(mapName);
 		}
 
 		public void LoadWorld(string mapName)
 		{
-			SaveUtilities.LoadHexMapData(hexGrid, SaveUtilities.GetHexMapData(mapName));
-			world = World.Load(hexGrid, mapName);
+			SaveUtilities.LoadHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
+			world = World.Load(HexGrid, mapName);
 		}
 	}
 }

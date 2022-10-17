@@ -94,6 +94,7 @@ namespace Game.Incidents
     {
         public List<IIncidentCriteria> criteria;
 
+        public IncidentCriteriaContainer() { }
         public IncidentCriteriaContainer(List<IIncidentCriteria> c)
         {
             criteria = c;

@@ -71,7 +71,7 @@ namespace Game.Incidents
 
 		protected override bool VerifyContextActionFields(IIncidentContext context)
 		{
-			var faction = requiredFaction.Value;
+			var faction = requiredFaction.RetrieveField(context);
 			return faction != null;
 		}
 

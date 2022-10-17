@@ -14,14 +14,17 @@ namespace Game.Simulation
 		[NonSerialized]
 		private HexGrid hexGrid;
 
-		public static TypeListDictionary<IIncidentContextProvider> Providers { get; private set; }
+		public ContextTypeListDictionary<IIncidentContextProvider> Providers { get; private set; }
 
-		public World() { }
+		public World()
+		{
+			Providers = new ContextTypeListDictionary<IIncidentContextProvider>();
+		}
 
 		public World(HexGrid hexGrid)
 		{
 			this.hexGrid = hexGrid;
-			Providers = new TypeListDictionary<IIncidentContextProvider>();
+			Providers = new ContextTypeListDictionary<IIncidentContextProvider>();
 
 			CreateFactions(1);
 		}
@@ -43,12 +46,12 @@ namespace Game.Simulation
 		{
 			for(int i = 0; i < numFactions; i++)
 			{
-				Providers[typeof(Faction)].Add(new Faction());
+				Providers[typeof(FactionContext)].Add(new Faction());
 			}
 		}
 	}
 
-	public class TypeListDictionary<T> : Dictionary<Type, List<T>>
+	public class ContextTypeListDictionary<T> : Dictionary<Type, List<T>>
 	{
 		public new List<T> this[Type key]
 		{
