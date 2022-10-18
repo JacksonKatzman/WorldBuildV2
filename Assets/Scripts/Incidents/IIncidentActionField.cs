@@ -15,7 +15,8 @@ namespace Game.Incidents
 
 		Type ContextType { get; }
 
-		IIncidentContextProvider RetrieveField(IIncidentContext context);
+		bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction);
+		IIncidentContextProvider GetFieldValue();
 	}
 
 	public class ActionFieldInfo
@@ -42,7 +43,8 @@ namespace Game.Incidents
 		[ShowIf("Method", ActionFieldRetrievalMethod.From_Previous), ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID")]
 		public string previousField;
 
-		private int previousFieldID = -1;
+		[HideInInspector]
+		public int previousFieldID = -1;
 
 		//Action Field ID
 		//When an action is created, all actions have each of their Actionfields reassigned with an ID
@@ -59,6 +61,9 @@ namespace Game.Incidents
 		public Type ContextType => typeof(T);
 		private bool ParentTypeMatches => parentType == typeof(T);
 
+		private IIncidentContextProvider value;
+		private IIncidentActionField delayedValue;
+
 		public IncidentContextActionField() { }
 		public IncidentContextActionField(Type parentType)
 		{
@@ -66,27 +71,41 @@ namespace Game.Incidents
 			RetrievalTypeChanged();
 		}
 
-		public IIncidentContextProvider RetrieveField(IIncidentContext context)
+		public IIncidentContextProvider GetFieldValue()
+		{
+			if (Method == ActionFieldRetrievalMethod.From_Previous)
+			{
+				return delayedValue.GetFieldValue();
+			}
+			else
+			{
+				return value;
+			}
+		}
+
+		public bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
 			if(Method == ActionFieldRetrievalMethod.Criteria)
 			{
-				return RetrieveFieldByCriteria(context);
+				value = RetrieveFieldByCriteria(context);
 			}
 			else if(Method == ActionFieldRetrievalMethod.From_Previous)
 			{
-				return RetrieveFieldFromPrevious(context);
+				delayedValue = RetrieveFieldFromPrevious(context, delayedCalculateAction);
 			}
 			else
 			{
 				if (AllowSelf)
 				{
-					return SimulationManager.Instance.Providers[typeof(T)].First();
+					value = SimulationManager.Instance.Providers[typeof(T)].First();
 				}
 				else
 				{
-					return SimulationManager.Instance.Providers[typeof(T)].Where(x => x.GetContext() != context).ToList().First();
+					value = SimulationManager.Instance.Providers[typeof(T)].Where(x => x.GetContext() != context).ToList().First();
 				}
 			}
+
+			return (value != null) || (delayedValue != null);
 		}
 
 		private IIncidentContextProvider RetrieveFieldByCriteria(IIncidentContext context)
@@ -105,9 +124,9 @@ namespace Game.Incidents
 			return possibleMatches.Count > 0 ? possibleMatches.First() : null;
 		}
 
-		private IIncidentContextProvider RetrieveFieldFromPrevious(IIncidentContext context)
+		private IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
-			return default(T)?.Provider;
+			return delayedCalculateAction.Invoke(previousFieldID);
 		}
 
 		private void RetrievalTypeChanged()

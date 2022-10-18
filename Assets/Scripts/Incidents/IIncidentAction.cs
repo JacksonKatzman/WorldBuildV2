@@ -10,7 +10,7 @@ namespace Game.Incidents
 	{
 		Type ContextType { get; }
 		IIncidentContext Context { get; }
-		bool VerifyAction(IIncidentContext context);
+		bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedAction);
 		void PerformAction(IIncidentContext context);
 
 		void UpdateEditor();
@@ -39,9 +39,9 @@ namespace Game.Incidents
 			}
 		}
 
-		public bool VerifyAction(IIncidentContext context)
+		public bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
-			return VerifyContextActionFields(context);
+			return VerifyContextActionFields(context, delayedCalculateAction);
 		}
 
 		virtual public void PerformAction(IIncidentContext context)
@@ -55,7 +55,7 @@ namespace Game.Incidents
 		}
 
 		abstract public void UpdateEditor();
-		abstract protected bool VerifyContextActionFields(IIncidentContext context);
+		abstract protected bool VerifyContextActionFields(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction);
 	}
 
 	[Serializable]
@@ -69,10 +69,10 @@ namespace Game.Incidents
 			PerformDebugAction();
 		}
 
-		protected override bool VerifyContextActionFields(IIncidentContext context)
+		protected override bool VerifyContextActionFields(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
-			var faction = requiredFaction.RetrieveField(context);
-			return faction != null;
+			var succeeded = requiredFaction.CalculateField(context, delayedCalculateAction);
+			return succeeded;
 		}
 
 		private void PerformDebugAction()

@@ -17,7 +17,7 @@ namespace Game.Incidents
 		{
 			foreach(var action in Actions)
 			{
-				if(!action.VerifyAction(context))
+				if(!action.VerifyAction(context, GetProviderFromActionFields))
 				{
 					OutputLogger.LogWarning("ActionContainer failed to verify action context!");
 					return false;
@@ -48,11 +48,32 @@ namespace Game.Incidents
 				foreach (var field in matchingFields)
 				{
 					var actionField = field.GetValue(action) as IIncidentActionField;
-					providerDictionary.Add(actionField.ActionFieldIDString, actionField.RetrieveField(context));
+					providerDictionary.Add(actionField.ActionFieldIDString, actionField.GetFieldValue());
 				}
 			}
 
 			return providerDictionary;
+		}
+
+		public IIncidentActionField GetProviderFromActionFields(int actionFieldID)
+		{
+			foreach (var action in Actions)
+			{
+				var actionType = action.GetType();
+				var fields = actionType.GetFields();
+				var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>)).ToList();
+
+				foreach (var field in matchingFields)
+				{
+					var actionField = field.GetValue(action) as IIncidentActionField;
+					if(actionField.ActionFieldID == actionFieldID)
+					{
+						return actionField;
+					}
+				}
+			}
+
+			return null;
 		}
 	}
 }
