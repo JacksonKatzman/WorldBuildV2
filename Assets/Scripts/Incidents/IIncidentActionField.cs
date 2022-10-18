@@ -11,8 +11,15 @@ namespace Game.Incidents
 	{
 		int ActionFieldID { get; set; }
 		string ActionFieldIDString { get; }
+		string NameID { get; set; }
+
+		Type ContextType { get; }
 
 		IIncidentContextProvider RetrieveField(IIncidentContext context);
+	}
+
+	public class ActionFieldInfo
+	{
 	}
 
 	public enum ActionFieldRetrievalMethod { Criteria, From_Previous, Random };
@@ -32,6 +39,11 @@ namespace Game.Incidents
 		[ShowIf("Method", ActionFieldRetrievalMethod.Criteria), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
 		public List<IIncidentCriteria> criteria;
 
+		[ShowIf("Method", ActionFieldRetrievalMethod.From_Previous), ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID")]
+		public string previousField;
+
+		private int previousFieldID = -1;
+
 		//Action Field ID
 		//When an action is created, all actions have each of their Actionfields reassigned with an ID
 		//This is then used to fill in the corresponding values in a report if needed.
@@ -39,10 +51,12 @@ namespace Game.Incidents
 		//a string that uses them and the IDs for the spawner and the report itself
 		public int ActionFieldID { get; set; }
 
+		public string NameID { get; set; }
+
 		[ShowInInspector]
 		public string ActionFieldIDString => "{" + ActionFieldID + "}";
 
-		private Type ContextType => typeof(T);
+		public Type ContextType => typeof(T);
 		private bool ParentTypeMatches => parentType == typeof(T);
 
 		public IncidentContextActionField() { }
@@ -107,6 +121,19 @@ namespace Game.Incidents
 		private void AddNewCriteriaItem()
 		{
 			criteria.Add(new IncidentCriteria(typeof(T)));
+		}
+
+		private List<string> GetActionFieldIdentifiers()
+		{
+			var ids = new List<string>();
+			var matches = IncidentEditorWindow.actionFields.Where(x => x.ContextType == ContextType && x != this).ToList();
+			matches.ForEach(x => ids.Add(x.NameID));
+			return ids;
+		}
+
+		private void SetPreviousFieldID()
+		{
+			previousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == previousField).ActionFieldID;
 		}
 	}
 }

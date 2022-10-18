@@ -42,6 +42,7 @@ namespace Game.Incidents
         private int numActionFields;
 
         public static Dictionary<string, Type> Properties => properties;
+        public static List<IIncidentActionField> actionFields = new List<IIncidentActionField>();
 
 		[TypeFilter("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type")]
         public IIncidentContext incidentContext;
@@ -110,6 +111,7 @@ namespace Game.Incidents
         public void UpdateActionFieldIDs()
 		{
             var fieldCount = 0;
+            actionFields.Clear();
 
             foreach (var a in actions)
 			{
@@ -122,6 +124,8 @@ namespace Game.Incidents
 				{
                     var fa = f.GetValue(incidentAction) as IIncidentActionField;
                     fa.ActionFieldID = fieldCount;
+                    fa.NameID = string.Format("{0}:{1}:{2}", fa.ActionFieldIDString, actionType.Name, f.Name);
+                    actionFields.Add(fa);
                     fieldCount++;
 				}
 			}
