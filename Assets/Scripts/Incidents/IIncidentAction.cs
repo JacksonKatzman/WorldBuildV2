@@ -8,11 +8,8 @@ namespace Game.Incidents
 {
 	public interface IIncidentAction
 	{
-		Type ContextType { get; }
-		IIncidentContext Context { get; }
 		bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedAction);
 		void PerformAction(IIncidentContext context);
-
 		void UpdateEditor();
 	}
 

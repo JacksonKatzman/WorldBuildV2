@@ -33,10 +33,14 @@ namespace Game.Incidents
 			OutputLogger.Log("Calling Setup!");
 			Setup();
 		}
-
 		public void PerformIncidents(IIncidentContextProvider incidentContextProvider)
 		{
-			var contextType = incidentContextProvider.GetContext().GetType();
+			PerformIncidents(incidentContextProvider.GetContext());
+		}
+
+		public void PerformIncidents(IIncidentContext context)
+		{
+			var contextType = context.GetType();
 			var incidentsOfType = GetIncidentsOfType(contextType);
 			if(incidentsOfType == null || incidentsOfType.Count == 0)
 			{
@@ -44,7 +48,7 @@ namespace Game.Incidents
 				return;
 			}
 
-			var incidentContext = incidentContextProvider.GetContext();
+			var incidentContext = context;
 
 			var possibleIncidents = GetIncidentsWithMatchingCriteria(incidentsOfType, incidentContext);
 
@@ -93,34 +97,6 @@ namespace Game.Incidents
 
 			nextIncidentID = 0;
 			reports = new List<IncidentReport>();
-		}
-
-		private void DebugSetup()
-		{
-			var criteria = new List<IIncidentCriteria>();
-
-			ICriteriaEvaluator evaluator = new IntegerEvaluator(">", 10);
-			var criterium = new IncidentCriteria("Population", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			evaluator = new IntegerEvaluator("<", 20);
-			criterium = new IncidentCriteria("Population", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			evaluator = new FloatEvaluator(">", 20);
-			criterium = new IncidentCriteria("GooPercentage", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			evaluator = new BoolEvaluator("==", true);
-			criterium = new IncidentCriteria("IsFun", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			var actions = new List<IIncidentAction>();
-			actions.Add(new TestFactionIncidentAction());
-			var container = new IncidentActionContainer(actions);
-
-			var debugIncident = new Incident(typeof(FactionContext), criteria, container);
-			incidents.Add(debugIncident);
 		}
 	}
 

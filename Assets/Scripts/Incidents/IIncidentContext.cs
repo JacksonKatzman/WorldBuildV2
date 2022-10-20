@@ -13,6 +13,7 @@ namespace Game.Incidents
 		int ParentID { get; }
 	}
 
+	[Serializable]
 	public class FactionContext : IIncidentContext
 	{
 		public IIncidentContextProvider Provider { get; set; }
@@ -20,7 +21,6 @@ namespace Game.Incidents
 		public int NumIncidents { get; set; }
 		public int ParentID => -1;
 		public int Population { get; set; }
-		//public int NumCities { get; set; }
 		public float GooPercentage { get; set; }
 		public bool IsFun { get; set; }
 	}

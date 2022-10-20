@@ -7,10 +7,13 @@ namespace Game.Incidents
 	{
 		public string incidentLog;
 		public List<IIncidentAction> Actions { get; set; }
+		public List<IContextDeployer> Deployers { get; set; }
 
-		public IncidentActionContainer(List<IIncidentAction> actions)
+		public IncidentActionContainer(List<IIncidentAction> actions, List<IContextDeployer> deployers, string log)
 		{
 			Actions = actions;
+			Deployers = deployers;
+			incidentLog = log;
 		}
 
 		public bool PerformActions(IIncidentContext context, ref IncidentReport report)
@@ -31,6 +34,11 @@ namespace Game.Incidents
 
 			report.Providers = GetContextProviderDictionary(context);
 			report.ReportLog = incidentLog;
+
+			foreach(var deployer in Deployers)
+			{
+				deployer.Deploy();
+			}
 
 			return true;
 		}

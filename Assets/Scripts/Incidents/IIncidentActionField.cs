@@ -19,10 +19,6 @@ namespace Game.Incidents
 		IIncidentContextProvider GetFieldValue();
 	}
 
-	public class ActionFieldInfo
-	{
-	}
-
 	public enum ActionFieldRetrievalMethod { Criteria, From_Previous, Random };
 
 	[Serializable]
@@ -46,11 +42,6 @@ namespace Game.Incidents
 		[HideInInspector]
 		public int previousFieldID = -1;
 
-		//Action Field ID
-		//When an action is created, all actions have each of their Actionfields reassigned with an ID
-		//This is then used to fill in the corresponding values in a report if needed.
-		//NEXT STEPS: Pass along each IDString/Value pair to the IncidentReport dictionary along with
-		//a string that uses them and the IDs for the spawner and the report itself
 		public int ActionFieldID { get; set; }
 
 		public string NameID { get; set; }
@@ -97,11 +88,13 @@ namespace Game.Incidents
 			{
 				if (AllowSelf)
 				{
-					value = SimulationManager.Instance.Providers[typeof(T)].First();
+					var possibleValues = SimulationManager.Instance.Providers[typeof(T)];
+					value = SimRandom.RandomEntryFromList(possibleValues);
 				}
 				else
 				{
-					value = SimulationManager.Instance.Providers[typeof(T)].Where(x => x.GetContext() != context).ToList().First();
+					var possibleValues = SimulationManager.Instance.Providers[typeof(T)].Where(x => x.GetContext() != context).ToList();
+					value = SimRandom.RandomEntryFromList(possibleValues);
 				}
 			}
 
@@ -120,8 +113,8 @@ namespace Game.Incidents
 			{
 				possibleMatches = SimulationManager.Instance.Providers[typeof(T)].Where(x => x.GetContext() != context && criteriaContainer.Evaluate(x.GetContext()) == true).ToList();
 			}
-			//change this to get at random using some static utility fn
-			return possibleMatches.Count > 0 ? possibleMatches.First() : null;
+
+			return possibleMatches.Count > 0 ? SimRandom.RandomEntryFromList(possibleMatches) : null;
 		}
 
 		private IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)

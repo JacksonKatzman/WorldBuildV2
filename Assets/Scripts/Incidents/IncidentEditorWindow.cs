@@ -44,8 +44,8 @@ namespace Game.Incidents
         public static Dictionary<string, Type> Properties => properties;
         public static List<IIncidentActionField> actionFields = new List<IIncidentActionField>();
 
-		[TypeFilter("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type")]
-        public IIncidentContext incidentContext;
+		[ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type")]
+        public Type incidentContextType;
 
         [ShowIfGroup("ContextTypeChosen")]
         public string incidentName;
@@ -62,6 +62,9 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewActionItem"), HideReferenceObjectPicker]
         public List<ActionChoiceContainer> actions;
 
+        [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewContextDeployer"), HideReferenceObjectPicker]
+        public List<IContextDeployer> contextDeployers;
+
         [Button("Save"), ShowIfGroup("ContextTypeChosen")]
         public void OnSaveButtonPressed()
 		{
@@ -69,12 +72,10 @@ namespace Game.Incidents
             {
                 var incidentActions = new List<IIncidentAction>();
                 actions.ForEach(x => incidentActions.Add(x.incidentAction));
-                var container = new IncidentActionContainer(incidentActions);
-                container.incidentLog = incidentLog;
+                var container = new IncidentActionContainer(incidentActions, contextDeployers, incidentLog);
 
                 var incident = new Incident(ContextType, criteria, container, weight);
 
-                //Save this data somewhere T.T
                 var path = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + incidentName + ".json");
                 string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);
                 File.WriteAllText(path, output);
@@ -93,9 +94,10 @@ namespace Game.Incidents
 
         void SetContextType()
 		{
-            ContextType = incidentContext.ContextType;
+            ContextType = incidentContextType;
             criteria = new List<IIncidentCriteria>();
             actions = new List<ActionChoiceContainer>();
+            contextDeployers = new List<IContextDeployer>();
 		}
 
         private void AddNewCriteriaItem()
@@ -106,6 +108,11 @@ namespace Game.Incidents
         private void AddNewActionItem()
 		{
             actions.Add(new ActionChoiceContainer(UpdateActionFieldIDs));
+		}
+
+        private void AddNewContextDeployer()
+		{
+            contextDeployers.Add(new ContextDeployer());
 		}
 
         public void UpdateActionFieldIDs()
@@ -150,7 +157,7 @@ namespace Game.Incidents
             }
         }
 
-        public bool ContextTypeChosen => incidentContext != null;
+        public bool ContextTypeChosen => incidentContextType != null;
     }
 
     public class ActionChoiceContainer
