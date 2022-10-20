@@ -119,32 +119,4 @@ namespace Game.Incidents
 			reports = new List<IncidentReport>();
 		}
 	}
-
-	public class IncidentReport
-	{
-		public int IncidentID { get; set; }
-		public int ParentID { get; set; }
-		public Dictionary<string, IIncidentContextProvider> Providers { get; set; }
-
-		public string ReportLog { get; set; }
-
-		public IncidentReport() { }
-		public IncidentReport(int incidentID, int parentID)
-		{
-			IncidentID = incidentID;
-			ParentID = parentID;
-		}
-	}
-
-	public class DelayedIncidentContext
-	{
-		public IIncidentContext incidentContext;
-		public int delayCounter;
-
-		public DelayedIncidentContext(IIncidentContext context, int delay)
-		{
-			incidentContext = context;
-			delayCounter = delay;
-		}
-	}
 }
