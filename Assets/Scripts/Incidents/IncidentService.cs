@@ -13,6 +13,7 @@ namespace Game.Incidents
 		private static IncidentService instance;
 
 		private List<IIncident> incidents;
+		private List<DelayedIncidentContext> delayedContexts;
 		private int nextIncidentID;
 		private List<IncidentReport> reports;
 
@@ -70,6 +71,24 @@ namespace Game.Incidents
 			}
 		}
 
+		public void PerformDelatedContexts()
+		{
+			foreach(var context in delayedContexts)
+			{
+				if(--context.delayCounter <= 0)
+				{
+					PerformIncidents(context.incidentContext);
+				}
+			}
+
+			delayedContexts = delayedContexts.Where(x => x.delayCounter > 0).ToList();
+		}
+
+		public void AddDelayedContext(IIncidentContext context, int delay)
+		{
+			delayedContexts.Add(new DelayedIncidentContext(context, delay));
+		}
+
 		private List<IIncident> GetIncidentsOfType(Type type)
 		{
 			var items = incidents.Where(x => x.ContextType == type).ToList();
@@ -96,6 +115,7 @@ namespace Game.Incidents
 			}
 
 			nextIncidentID = 0;
+			delayedContexts = new List<DelayedIncidentContext>();
 			reports = new List<IncidentReport>();
 		}
 	}
@@ -113,6 +133,18 @@ namespace Game.Incidents
 		{
 			IncidentID = incidentID;
 			ParentID = parentID;
+		}
+	}
+
+	public class DelayedIncidentContext
+	{
+		public IIncidentContext incidentContext;
+		public int delayCounter;
+
+		public DelayedIncidentContext(IIncidentContext context, int delay)
+		{
+			incidentContext = context;
+			delayCounter = delay;
 		}
 	}
 }
