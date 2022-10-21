@@ -7,10 +7,9 @@ namespace Game.Incidents
 {
 	public class IncidentCriteria : IIncidentCriteria
     {
-        private Type type;
+        public Type ContextType { get; set; }
+        public Type PrimitiveType { get; set; }
         private static Dictionary<string, Type> properties;
-
-        public Type Type => type;
 
         [ValueDropdown("GetPropertyNames"), OnValueChanged("SetPrimitiveType"), HorizontalGroup("Group 1")]
         public string propertyName;
@@ -18,18 +17,21 @@ namespace Game.Incidents
         [ShowIfGroup("PropertyChosen"), HideReferenceObjectPicker]
         public ICriteriaEvaluator evaluator;
 
-        public IncidentCriteria() { }
+        public IncidentCriteria() 
+        {
+            GetPropertyList();
+        }
 
         public IncidentCriteria(Type contextType)
 		{
-            this.type = contextType;
+            ContextType = contextType;
             GetPropertyList();
 		}
 
         public IncidentCriteria(string propertyName, Type type, ICriteriaEvaluator evaluator)
         {
             this.propertyName = propertyName;
-            this.type = type;
+            ContextType = type;
             this.evaluator = evaluator;
         }
 
@@ -40,17 +42,17 @@ namespace Game.Incidents
 
         private void GetPropertyList()
         {
-            if (type != null)
+            if (properties == null)
             {
-                var propertyInfo = type.GetProperties();
+                properties = new Dictionary<string, Type>();
+            }
+            if (ContextType != null)
+            {
+                var propertyInfo = ContextType.GetProperties();
                 var interfacePropertyInfo = typeof(IIncidentContext).GetProperties();
 
                 var validProperties = propertyInfo.Where(x => !interfacePropertyInfo.Any(y => x.Name == y.Name)).ToList();
 
-                if (properties == null)
-                {
-                    properties = new Dictionary<string, Type>();
-                }
                 properties.Clear();
 
                 validProperties.ForEach(x => properties.Add(x.Name, x.PropertyType));
@@ -59,22 +61,26 @@ namespace Game.Incidents
 
         private IEnumerable<string> GetPropertyNames()
         {
+            if(properties == null || properties.Count == 0)
+			{
+                GetPropertyList();
+			}
             return properties.Keys.ToList();
         }
 
         private void SetPrimitiveType()
         {
-            type = properties[propertyName];
+            PrimitiveType = properties[propertyName];
 
-            if (type == typeof(int))
+            if (PrimitiveType == typeof(int))
             {
                 evaluator = new IntegerEvaluator(propertyName);
             }
-            else if(type == typeof(float))
+            else if(PrimitiveType == typeof(float))
 			{
                 evaluator = new FloatEvaluator(propertyName);
 			}
-            else if(type == typeof(bool))
+            else if(PrimitiveType == typeof(bool))
 			{
                 evaluator = new BoolEvaluator(propertyName);
 			}

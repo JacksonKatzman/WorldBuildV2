@@ -23,7 +23,7 @@ namespace Game.Incidents
         protected Dictionary<string, Func<T, T, T>> Operators { get; set; }
 
         [HorizontalGroup("Group 1", 150), HideLabel, ReadOnly]
-        public readonly string propertyName;
+        public string propertyName;
 
         [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType"), HorizontalGroup("Group 1", 50), HideLabel]
         public string Comparator;
