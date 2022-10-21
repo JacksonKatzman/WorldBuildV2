@@ -23,14 +23,14 @@ namespace Game.Incidents
 
 		private List<CoreIncident> coreIncidents;
 		private List<CoreIncident> recordedIncidents;
-		private List<DelayedIncidentContext> contextQueue;
+		private List<OldDelayedIncidentContext> contextQueue;
 
 		private OldIncidentService()
 		{
 			//compile all core incidents into data structure for later use
 			coreIncidents = new List<CoreIncident>();
 			recordedIncidents = new List<CoreIncident>();
-			contextQueue = new List<DelayedIncidentContext>();
+			contextQueue = new List<OldDelayedIncidentContext>();
 
 			//coreIncidents.AddRange(IncidentEditorWindow.ParseIncidents());
 
@@ -66,13 +66,13 @@ namespace Game.Incidents
 
 		public void QueueDelayedIncident(OldIncidentContext context, int timer)
 		{
-			var delayedContext = new DelayedIncidentContext(context, timer);
+			var delayedContext = new OldDelayedIncidentContext(context, timer);
 			contextQueue.Add(delayedContext);
 		}
 
 		public void AdvanceTime()
 		{
-			var finishedContexts = new List<DelayedIncidentContext>();
+			var finishedContexts = new List<OldDelayedIncidentContext>();
 
 			foreach(var context in contextQueue)
 			{
@@ -86,12 +86,12 @@ namespace Game.Incidents
 		}
     }
 
-	public class DelayedIncidentContext
+	public class OldDelayedIncidentContext
 	{
 		private int timer;
 		private OldIncidentContext context;
 
-		public DelayedIncidentContext(OldIncidentContext context, int timer)
+		public OldDelayedIncidentContext(OldIncidentContext context, int timer)
 		{
 			this.context = context;
 			this.timer = timer;

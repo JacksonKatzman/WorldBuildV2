@@ -1,26 +1,68 @@
-﻿using Game.Terrain;
-using UnityEngine;
+﻿using Game.Incidents;
+using Game.IO;
+using Game.Terrain;
+using System.IO;
 
 namespace Game.Simulation
 {
-	public class SimulationManager : MonoBehaviour
+	public class SimulationManager
 	{
-		[SerializeField]
-		public HexGrid hexGrid;
+		public HexGrid HexGrid { get; set; }
 
-		[SerializeField]
-		public HexMapGenerator mapGenerator;
+		public HexMapGenerator MapGenerator { get; set; }
 
-		[SerializeField]
-		private int worldChunksX = 16, worldChunksZ = 12;
+		public int WorldChunksX { get; set; }
+		public int WorldChunksZ { get; set; }
+
+		private static SimulationManager instance;
+		public static SimulationManager Instance
+		{
+			get
+			{
+				if (instance == null)
+				{
+					instance = new SimulationManager();
+				}
+				return instance;
+			}
+		}
+
+		private SimulationManager()
+		{
+			OutputLogger.Log("Sim Manager Made!");
+		}
 
 		public World world;
 
-		private void Awake()
+		public ContextTypeListDictionary<IIncidentContextProvider> Providers => world.Providers;
+
+		public void CreateWorld()
 		{
-			hexGrid.Initalize();
-			mapGenerator.GenerateMap(worldChunksX * HexMetrics.chunkSizeX, worldChunksZ * HexMetrics.chunkSizeZ);
-			world = new World(hexGrid);
+			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
+			world = new World(HexGrid);
+		}
+
+		public void CreateDebugWorld()
+		{
+			world = new World();
+		}
+
+		public void SaveWorld(string mapName)
+		{
+			string[] directoriesAtRoot = Directory.GetDirectories(SaveUtilities.ROOT, mapName);
+			if (directoriesAtRoot == null || directoriesAtRoot.Length == 0)
+			{
+				SaveUtilities.CreateMapDirectories(mapName);
+			}
+			SaveUtilities.SaveHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
+
+			world.Save(mapName);
+		}
+
+		public void LoadWorld(string mapName)
+		{
+			SaveUtilities.LoadHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
+			world = World.Load(HexGrid, mapName);
 		}
 	}
 }

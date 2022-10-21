@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.IO;
 using Game.Simulation;
+using Game.IO;
 
 namespace Game.Terrain
 {
@@ -75,7 +76,7 @@ namespace Game.Terrain
 
 		public void Delete()
 		{
-			string path = WorldSaveDirectories.GetMapRootPath(nameInput.text);
+			string path = SaveUtilities.GetMapRootPath(nameInput.text);
 
 			if (path == null)
 			{
@@ -98,10 +99,10 @@ namespace Game.Terrain
 			string[] directoriesAtRoot = Directory.GetDirectories(Application.persistentDataPath, "GameData");
 			if(directoriesAtRoot == null || directoriesAtRoot.Length == 0)
 			{
-				Directory.CreateDirectory(WorldSaveDirectories.ROOT);
+				Directory.CreateDirectory(SaveUtilities.ROOT);
 			}
 			string[] paths =
-				Directory.GetDirectories(WorldSaveDirectories.ROOT);
+				Directory.GetDirectories(SaveUtilities.ROOT);
 			Array.Sort(paths);
 			for (int i = 0; i < paths.Length; i++)
 			{
@@ -112,78 +113,14 @@ namespace Game.Terrain
 			}
 		}
 
-		private void CreateMapDirectories(string mapName)
-		{
-			Directory.CreateDirectory(WorldSaveDirectories.GetHexMapDataPath(mapName));
-		}
-
 		void Save(string mapName)
 		{
-			string[] directoriesAtRoot = Directory.GetDirectories(WorldSaveDirectories.ROOT, mapName);
-			if (directoriesAtRoot == null || directoriesAtRoot.Length == 0)
-			{
-				CreateMapDirectories(mapName);
-			}
-			SaveHexMapData(WorldSaveDirectories.GetHexMapData(mapName));
+			simulationManager.SaveWorld(mapName);
 		}
 
 		void Load(string mapName)
 		{
-			LoadHexMapData(WorldSaveDirectories.GetHexMapData(mapName));
-		}
-
-		void SaveHexMapData(string path)
-		{
-			using (
-				BinaryWriter writer =
-				new BinaryWriter(File.Open(path, FileMode.Create))
-			)
-			{
-				writer.Write(mapFileVersion);
-				simulationManager.hexGrid.Save(writer);
-			}
-		}
-
-		void LoadHexMapData(string path)
-		{
-			if (!File.Exists(path))
-			{
-				OutputLogger.LogError("File does not exist " + path);
-				return;
-			}
-			using (BinaryReader reader = new BinaryReader(File.OpenRead(path)))
-			{
-				int header = reader.ReadInt32();
-				if (header <= mapFileVersion)
-				{
-					simulationManager.hexGrid.Load(reader, header);
-					HexMapCamera.ValidatePosition();
-				}
-				else
-				{
-					OutputLogger.LogWarning("Unknown map format " + header);
-				}
-			}
-		}
-	}
-
-	public static class WorldSaveDirectories
-	{
-		public static string ROOT = Path.Combine(Application.persistentDataPath, "GameData");
-
-		public static string GetMapRootPath(string mapName)
-		{
-			return Path.Combine(ROOT, mapName);
-		}
-
-		public static string GetHexMapDataPath(string mapName)
-		{
-			return Path.Combine(ROOT, mapName, "HexMapData");
-		}
-
-		public static string GetHexMapData(string mapName)
-		{
-			return Path.Combine(ROOT, mapName, "HexMapData", mapName + ".map");
+			simulationManager.LoadWorld(mapName);
 		}
 	}
 }

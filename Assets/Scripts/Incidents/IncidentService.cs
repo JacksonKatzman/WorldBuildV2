@@ -4,22 +4,18 @@ using System.Linq;
 using System.IO;
 using UnityEngine;
 using System;
+using Game.IO;
 
 namespace Game.Incidents
 {
 	public class IncidentService
 	{
-		public static string INCIDENT_DATA_PATH = "/Resources/IncidentData/";
-		public static JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings()
-		{
-			// ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-			TypeNameHandling = TypeNameHandling.All
-		};
-
 		private static IncidentService instance;
 
 		private List<IIncident> incidents;
+		private List<DelayedIncidentContext> delayedContexts;
+		private int nextIncidentID;
+		private List<IncidentReport> reports;
 
 		public static IncidentService Instance
 		{
@@ -38,10 +34,14 @@ namespace Game.Incidents
 			OutputLogger.Log("Calling Setup!");
 			Setup();
 		}
-
 		public void PerformIncidents(IIncidentContextProvider incidentContextProvider)
 		{
-			var contextType = incidentContextProvider.GetContext().GetType();
+			PerformIncidents(incidentContextProvider.GetContext());
+		}
+
+		public void PerformIncidents(IIncidentContext context)
+		{
+			var contextType = context.GetType();
 			var incidentsOfType = GetIncidentsOfType(contextType);
 			if(incidentsOfType == null || incidentsOfType.Count == 0)
 			{
@@ -49,7 +49,7 @@ namespace Game.Incidents
 				return;
 			}
 
-			var incidentContext = incidentContextProvider.GetContext();
+			var incidentContext = context;
 
 			var possibleIncidents = GetIncidentsWithMatchingCriteria(incidentsOfType, incidentContext);
 
@@ -59,7 +59,37 @@ namespace Game.Incidents
 				return;
 			}
 
-			possibleIncidents.FirstOrDefault().Actions.PerformActions(incidentContext);
+			var report = new IncidentReport();
+
+			var completed = false;
+			for(int i = 0; i < 5 && i < possibleIncidents.Count && !completed; i++)
+			{
+				completed = SimRandom.RandomEntryFromList(possibleIncidents).PerformIncident(incidentContext, ref report);
+			}
+
+			if(completed)
+			{
+				nextIncidentID++;
+				reports.Add(report);
+			}
+		}
+
+		public void PerformDelatedContexts()
+		{
+			foreach(var context in delayedContexts)
+			{
+				if(--context.delayCounter <= 0)
+				{
+					PerformIncidents(context.incidentContext);
+				}
+			}
+
+			delayedContexts = delayedContexts.Where(x => x.delayCounter > 0).ToList();
+		}
+
+		public void AddDelayedContext(IIncidentContext context, int delay)
+		{
+			delayedContexts.Add(new DelayedIncidentContext(context, delay));
 		}
 
 		private List<IIncident> GetIncidentsOfType(Type type)
@@ -76,43 +106,20 @@ namespace Game.Incidents
 		private void Setup()
 		{
 			incidents = new List<IIncident>();
-			var files = Directory.GetFiles(Application.dataPath + INCIDENT_DATA_PATH, "*.json");
+			var files = Directory.GetFiles(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH, "*.json");
 			foreach (string file in files)
 			{
 				var text = File.ReadAllText(file);
 				if (text.Length > 0)
 				{
-					var item = JsonConvert.DeserializeObject<Incident>(text, SERIALIZER_SETTINGS);
+					var item = JsonConvert.DeserializeObject<Incident>(text, SaveUtilities.SERIALIZER_SETTINGS);
 					incidents.Add(item);
 				}
 			}
-		}
 
-		private void DebugSetup()
-		{
-			var criteria = new List<IIncidentCriteria>();
-
-			ICriteriaEvaluator evaluator = new IntegerEvaluator(">", 10);
-			var criterium = new IncidentCriteria("Population", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			evaluator = new IntegerEvaluator("<", 20);
-			criterium = new IncidentCriteria("Population", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			evaluator = new FloatEvaluator(">", 20);
-			criterium = new IncidentCriteria("GooPercentage", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			evaluator = new BoolEvaluator("==", true);
-			criterium = new IncidentCriteria("IsFun", typeof(FactionContext), evaluator);
-			criteria.Add(criterium);
-
-			var actions = new List<IIncidentAction>();
-			actions.Add(new TestFactionIncidentAction());
-
-			var debugIncident = new Incident(typeof(FactionContext), criteria, actions);
-			incidents.Add(debugIncident);
+			nextIncidentID = 0;
+			delayedContexts = new List<DelayedIncidentContext>();
+			reports = new List<IncidentReport>();
 		}
 	}
 }

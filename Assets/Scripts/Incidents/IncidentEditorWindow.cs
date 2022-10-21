@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Game.IO;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using System;
@@ -38,10 +39,13 @@ namespace Game.Incidents
                 }
 		}
 
-        public static Dictionary<string, Type> Properties => properties;
+        private int numActionFields;
 
-		[TypeFilter("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type")]
-        public IIncidentContext incidentContext;
+        public static Dictionary<string, Type> Properties => properties;
+        public static List<IIncidentActionField> actionFields = new List<IIncidentActionField>();
+
+		[ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type")]
+        public Type incidentContextType;
 
         [ShowIfGroup("ContextTypeChosen")]
         public string incidentName;
@@ -52,8 +56,14 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
         public List<IIncidentCriteria> criteria;
 
+        [ShowIfGroup("ContextTypeChosen")]
+        public string incidentLog;
+
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewActionItem"), HideReferenceObjectPicker]
         public List<ActionChoiceContainer> actions;
+
+        [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewContextDeployer"), HideReferenceObjectPicker]
+        public List<IContextDeployer> contextDeployers;
 
         [Button("Save"), ShowIfGroup("ContextTypeChosen")]
         public void OnSaveButtonPressed()
@@ -62,12 +72,12 @@ namespace Game.Incidents
             {
                 var incidentActions = new List<IIncidentAction>();
                 actions.ForEach(x => incidentActions.Add(x.incidentAction));
+                var container = new IncidentActionContainer(incidentActions, contextDeployers, incidentLog);
 
-                var incident = new Incident(ContextType, criteria, incidentActions, weight);
+                var incident = new Incident(ContextType, criteria, container, weight);
 
-                //Save this data somewhere T.T
-                var path = Path.Combine(Application.dataPath + IncidentService.INCIDENT_DATA_PATH + incidentName + ".json");
-                string output = JsonConvert.SerializeObject(incident, Formatting.Indented, IncidentService.SERIALIZER_SETTINGS);
+                var path = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + incidentName + ".json");
+                string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);
                 File.WriteAllText(path, output);
             }
 		}
@@ -84,9 +94,10 @@ namespace Game.Incidents
 
         void SetContextType()
 		{
-            ContextType = incidentContext.ContextType;
+            ContextType = incidentContextType;
             criteria = new List<IIncidentCriteria>();
             actions = new List<ActionChoiceContainer>();
+            contextDeployers = new List<IContextDeployer>();
 		}
 
         private void AddNewCriteriaItem()
@@ -96,8 +107,36 @@ namespace Game.Incidents
 
         private void AddNewActionItem()
 		{
-            actions.Add(new ActionChoiceContainer());
+            actions.Add(new ActionChoiceContainer(UpdateActionFieldIDs));
 		}
+
+        private void AddNewContextDeployer()
+		{
+            contextDeployers.Add(new ContextDeployer());
+		}
+
+        public void UpdateActionFieldIDs()
+		{
+            var fieldCount = 0;
+            actionFields.Clear();
+
+            foreach (var a in actions)
+			{
+                var incidentAction = a.incidentAction;
+                var actionType = incidentAction.GetType();
+                var fields = actionType.GetFields();
+                var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>));
+
+                foreach(var f in matchingFields)
+				{
+                    var fa = f.GetValue(incidentAction) as IIncidentActionField;
+                    fa.ActionFieldID = fieldCount;
+                    fa.NameID = string.Format("{0}:{1}:{2}", fa.ActionFieldIDString, actionType.Name, f.Name);
+                    actionFields.Add(fa);
+                    fieldCount++;
+				}
+			}
+        }
 
         private static void GetPropertyList()
         {
@@ -118,7 +157,7 @@ namespace Game.Incidents
             }
         }
 
-        public bool ContextTypeChosen => incidentContext != null;
+        public bool ContextTypeChosen => incidentContextType != null;
     }
 
     public class ActionChoiceContainer
@@ -126,8 +165,15 @@ namespace Game.Incidents
         [TypeFilter("GetFilteredTypeList"), OnValueChanged("SetAction"), HideLabel]
         public IIncidentAction incidentAction;
 
+        private Action onSetCallback;
 
-        public IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
+        public ActionChoiceContainer() { }
+        public ActionChoiceContainer(Action onSetCallback)
+		{
+			this.onSetCallback = onSetCallback;
+		}
+
+		public IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
         {
             return from x in assembly.GetTypes()
                    from z in x.GetInterfaces()
@@ -150,6 +196,7 @@ namespace Game.Incidents
         public void SetAction()
 		{
             incidentAction.UpdateEditor();
-		}
+            onSetCallback?.Invoke();
+        }
     }
 }

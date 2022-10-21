@@ -5,6 +5,7 @@ using System.Linq;
 using Game.Factions;
 using System.Reflection;
 using System.Collections.Generic;
+using Game.Simulation;
 
 namespace Game.Incidents
 {
@@ -43,6 +44,15 @@ namespace Game.Incidents
 				faction.context.Population = 14;
 				faction.context.GooPercentage = 40f;
 				faction.context.IsFun = true;
+				var faction2 = new Faction();
+				faction2.context.Population = 5;
+
+				var simMan = SimulationManager.Instance;
+
+				simMan.CreateDebugWorld();
+				simMan.Providers[typeof(FactionContext)].Add(faction);
+				simMan.Providers[typeof(FactionContext)].Add(faction2);
+
 				faction.DeployContext();
 			}
 		}
