@@ -59,10 +59,13 @@ namespace Game.Incidents
 				return;
 			}
 
-			//instead of having this grab first or default and possibly fail, have it try a few of the possible
-			//incidents to see if it can complete one
 			var report = new IncidentReport();
-			var completed = possibleIncidents.FirstOrDefault().PerformIncident(incidentContext, ref report);
+
+			var completed = false;
+			for(int i = 0; i < 5 && i < possibleIncidents.Count && !completed; i++)
+			{
+				completed = SimRandom.RandomEntryFromList(possibleIncidents).PerformIncident(incidentContext, ref report);
+			}
 
 			if(completed)
 			{
