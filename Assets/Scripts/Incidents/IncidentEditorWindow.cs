@@ -40,11 +40,12 @@ namespace Game.Incidents
 		}
 
         private int numActionFields;
+        private bool modeChosen;
 
         public static Dictionary<string, Type> Properties => properties;
         public static List<IIncidentActionField> actionFields = new List<IIncidentActionField>();
 
-		[ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type")]
+		[ShowIf("@this.modeChosen == true"), ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type"), PropertySpace(SpaceBefore = 30, SpaceAfter = 20)]
         public Type incidentContextType;
 
         [ShowIfGroup("ContextTypeChosen")]
@@ -65,7 +66,40 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewContextDeployer"), HideReferenceObjectPicker]
         public List<IContextDeployer> contextDeployers;
 
-        [Button("Save"), ShowIfGroup("ContextTypeChosen")]
+        [Button("New Incident"), HorizontalGroup("B1"), PropertyOrder(-1)]
+        public void OnNewButtonPressed()
+        {
+            incidentContextType = null;
+            incidentName = string.Empty;
+            weight = 0;
+            incidentLog = string.Empty;
+            modeChosen = true;
+        }
+
+        [Button("Load Incident"), HorizontalGroup("B1"), PropertyOrder(-1)]
+        public void OnLoadButtonPressed()
+        {
+            var dataPath = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + savedIncidentName + ".json");
+            var file = File.ReadAllText(dataPath);
+
+            var loadedIncident = JsonConvert.DeserializeObject<Incident>(file, SaveUtilities.SERIALIZER_SETTINGS);
+            incidentContextType = loadedIncident.ContextType;
+            incidentName = savedIncidentName;
+            weight = loadedIncident.Weight;
+            incidentLog = loadedIncident.Actions.incidentLog;
+            criteria = loadedIncident.Criteria.criteria;
+            actions = new List<ActionChoiceContainer>();
+            loadedIncident.Actions.Actions.ForEach(x => actions.Add(new ActionChoiceContainer(x, UpdateActionFieldIDs)));
+            contextDeployers = loadedIncident.Actions.Deployers;
+            modeChosen = true;
+
+            OutputLogger.Log("Incident Loaded!");
+        }
+
+        [ValueDropdown("GetSavedIncidents"), HorizontalGroup("B1")]
+        public string savedIncidentName;
+
+        [Button("Save"), ShowIfGroup("ContextTypeChosen"), PropertyOrder(10)]
         public void OnSaveButtonPressed()
 		{
             if (ContextTypeChosen && actions.Count > 0)
@@ -79,6 +113,8 @@ namespace Game.Incidents
                 var path = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + incidentName + ".json");
                 string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);
                 File.WriteAllText(path, output);
+
+                OutputLogger.Log("Incident Saved!");
             }
 		}
 
@@ -91,6 +127,12 @@ namespace Game.Incidents
 
             return q;
         }
+
+        private List<string> GetSavedIncidents()
+		{
+            var files = Directory.GetFiles(Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH), "*.json").Select(Path.GetFileNameWithoutExtension).ToList();
+            return files;
+		}
 
         void SetContextType()
 		{
@@ -171,6 +213,11 @@ namespace Game.Incidents
         public ActionChoiceContainer(Action onSetCallback)
 		{
 			this.onSetCallback = onSetCallback;
+		}
+
+        public ActionChoiceContainer(IIncidentAction action, Action onSetCallback) : this(onSetCallback)
+		{
+            this.incidentAction = action;
 		}
 
 		public IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
