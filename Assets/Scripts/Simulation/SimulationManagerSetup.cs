@@ -18,6 +18,7 @@ namespace Game.Simulation
 		{
 			var simMan = SimulationManager.Instance;
 			simMan.HexGrid = hexGrid;
+			hexGrid.Initalize();
 			simMan.MapGenerator = mapGenerator;
 			simMan.WorldChunksX = worldChunksX;
 			simMan.WorldChunksZ = worldChunksZ;
