@@ -1,18 +1,14 @@
 ﻿//Credit to Rod Stephens @ http://csharphelper.com/blog/2014/07/determine-whether-a-point-is-inside-a-polygon-in-c/
 
-using System.Collections;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using System.Drawing;
-using System.Diagnostics;
 
 namespace Game.Math
 {
-    public class Polygon
+	public class Polygon
     {
         public Polygon()
         {

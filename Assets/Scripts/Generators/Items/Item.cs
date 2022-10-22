@@ -1,13 +1,10 @@
-﻿using Game.Data.EventHandling.EventRecording;
-using Game.Enums;
-using System;
+﻿using Game.Enums;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
 
 namespace Game.Generators.Items
 {
-	public class Item : IRecordable
+	public class Item
 	{
 		public virtual string Name => name;
 

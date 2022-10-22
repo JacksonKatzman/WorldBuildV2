@@ -1,6 +1,4 @@
 ﻿using System;
-using Game.Factions;
-using UnityEngine;
 
 namespace Game.Incidents
 {

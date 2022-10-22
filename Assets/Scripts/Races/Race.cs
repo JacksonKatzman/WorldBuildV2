@@ -1,6 +1,4 @@
 ﻿using Game.Creatures;
-using Game.Factions;
-using System.Collections;
 using UnityEngine;
 
 namespace Game.Races
@@ -10,8 +8,5 @@ namespace Game.Races
 	{
 		public int appearanceWeight;
 		public SerializableStatBlock stats;
-		public FactionStats culturalStats;
-
-		public NameFormat nameFormat;
 	}
 }

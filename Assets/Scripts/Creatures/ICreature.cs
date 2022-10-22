@@ -1,12 +1,9 @@
 ﻿using Game.Generators.Items;
-using System.Collections;
 using System.Collections.Generic;
-using Game.Data.EventHandling.EventRecording;
-using UnityEngine;
 
 namespace Game.Creatures
 {
-	public interface ICreature : IRecordable, IAgeSensitive
+	public interface ICreature
 	{
 		public List<Item> Inventory
 		{

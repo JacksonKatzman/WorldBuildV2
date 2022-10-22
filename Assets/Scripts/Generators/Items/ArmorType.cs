@@ -1,5 +1,4 @@
 ﻿using Game.Enums;
-using System.Collections;
 using UnityEngine;
 
 namespace Game.Generators.Items

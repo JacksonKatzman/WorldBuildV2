@@ -1,10 +1,8 @@
-﻿using Game.Data.EventHandling.EventRecording;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 namespace Game.Generators.Items
 {
-	public class Material : IRecordable
+	public class Material
 	{
 		public string Name => name;
 		public List<MaterialUse> uses;

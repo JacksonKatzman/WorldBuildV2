@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Game.Generators.Noise;
 
 public static class NoiseGenerator
