@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Generators.Noise
 {
-    [System.Serializable]
+	[System.Serializable]
     public class NoiseSettings
     {
         public Vector2Int worldSize;

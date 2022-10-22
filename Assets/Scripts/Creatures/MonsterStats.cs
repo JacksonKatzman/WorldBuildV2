@@ -1,12 +1,11 @@
-﻿using Game.Data.EventHandling.EventRecording;
-using Game.Enums;
+﻿using Game.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Creatures
 {
 	[CreateAssetMenu(fileName = nameof(MonsterStats), menuName = "ScriptableObjects/Creatures/" + nameof(MonsterStats), order = 1)]
-	public class MonsterStats : ScriptableObject, IRecordable
+	public class MonsterStats : ScriptableObject
 	{
 		public string name;
 		public string Name => name;

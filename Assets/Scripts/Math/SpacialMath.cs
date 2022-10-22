@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Math
 {
-    public static class SpacialMath
+	public static class SpacialMath
     {
         public static Polygon JarvisMarch(List<Vector2> points)
         {

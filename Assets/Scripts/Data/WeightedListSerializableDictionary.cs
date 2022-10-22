@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-using Sirenix.Serialization;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
 

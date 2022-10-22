@@ -1,7 +1,4 @@
-﻿using Game.Factions;
-using Newtonsoft.Json;
-using Sirenix.OdinInspector;
-using System;
+﻿using System;
 
 namespace Game.Incidents
 {

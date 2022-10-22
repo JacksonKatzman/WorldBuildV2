@@ -1,8 +1,6 @@
-﻿using Game.Data.EventHandling.EventRecording;
-using Game.Enums;
+﻿using Game.Enums;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
 
 namespace Game.Generators.Items
 {

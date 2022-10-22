@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Enums;
@@ -28,15 +27,6 @@ public abstract class OutputLogger
 		if((allowance == LogAllowance.ALL) || (allowance == LogAllowance.SOME && AllowedLogs[source]))
 		{
 			Debug.LogFormat(format, args);
-		}
-	}
-
-	public static void LogFormatAndPause(string format, LogSource source, params object[] args)
-	{
-		LogFormat(format, source, args);
-		if (ALLOW_PAUSES)
-		{
-			OldSimulationManager.Instance.DebugPause = true;
 		}
 	}
 
