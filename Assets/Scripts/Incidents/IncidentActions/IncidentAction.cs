@@ -30,15 +30,7 @@ namespace Game.Incidents
 			return VerifyContextActionFields(context, delayedCalculateAction);
 		}
 
-		virtual public void PerformAction(IIncidentContext context)
-		{
-			PerformDebugAction();
-		}
-
-		private void PerformDebugAction()
-		{
-			OutputLogger.Log("Debug Action Performed!");
-		}
+		abstract public void PerformAction(IIncidentContext context);
 
 		abstract public void UpdateEditor();
 		abstract protected bool VerifyContextActionFields(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction);

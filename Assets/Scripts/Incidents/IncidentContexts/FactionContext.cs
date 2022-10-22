@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Game.Factions;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Incidents
 {
@@ -10,7 +13,10 @@ namespace Game.Incidents
 		public int NumIncidents { get; set; }
 		public int ParentID => -1;
 		public int Population { get; set; }
-		public float GooPercentage { get; set; }
-		public bool IsFun { get; set; }
+		public int Influence { get; set; }
+		public int ControlledTiles => controlledTileIndices.Count;
+
+		[HideInInspector]
+		public List<int> controlledTileIndices;
 	}
 }

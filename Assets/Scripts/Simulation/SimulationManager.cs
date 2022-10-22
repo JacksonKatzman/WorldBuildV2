@@ -14,6 +14,8 @@ namespace Game.Simulation
 		public int WorldChunksX { get; set; }
 		public int WorldChunksZ { get; set; }
 
+		public World world;
+
 		private static SimulationManager instance;
 		public static SimulationManager Instance
 		{
@@ -32,7 +34,6 @@ namespace Game.Simulation
 			OutputLogger.Log("Sim Manager Made!");
 		}
 
-		public World world;
 
 		public ContextTypeListDictionary<IIncidentContextProvider> Providers => world.Providers;
 
@@ -40,6 +41,7 @@ namespace Game.Simulation
 		{
 			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
 			world = new World(HexGrid);
+			world.Initialize();
 		}
 
 		public void CreateDebugWorld()

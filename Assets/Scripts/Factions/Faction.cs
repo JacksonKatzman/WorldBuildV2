@@ -1,5 +1,8 @@
 ﻿using Game.Incidents;
+using Game.Simulation;
+using Game.Terrain;
 using System;
+using System.Collections.Generic;
 
 namespace Game.Factions
 {
@@ -11,6 +14,14 @@ namespace Game.Factions
 		public Faction()
 		{
 			context = new FactionContext();
+			context.Provider = this;
+		}
+
+		public Faction(int startingTiles)
+		{
+			context = new FactionContext();
+			context.Provider = this;
+			AttemptExpandBorder(startingTiles);
 		}
 
 		public void DeployContext()
@@ -26,6 +37,62 @@ namespace Game.Factions
 		public void UpdateContext()
 		{
 			throw new System.NotImplementedException();
+		}
+
+		public void AttemptExpandBorder(int numTimes)
+		{
+			HexCellPriorityQueue searchFrontier = new HexCellPriorityQueue();
+			int searchFrontierPhase = 1;
+			int size = 0;
+
+			if (context.controlledTileIndices == null)
+			{
+				context.controlledTileIndices = new List<int>();
+			}
+			if(context.controlledTileIndices.Count == 0)
+			{
+				if (SimulationUtilities.GetRandomUnclaimedCellIndex(out var index))
+				{
+					context.controlledTileIndices.Add(index);
+					size++;
+				}
+				else
+				{
+					OutputLogger.LogError("Couldn't find free tile to create faction on!");
+					return;
+				}
+			}
+
+			HexCell firstCell = SimulationManager.Instance.HexGrid.GetCell(context.controlledTileIndices[0]);
+			firstCell.SearchPhase = searchFrontierPhase;
+			firstCell.Distance = 0;
+			firstCell.SearchHeuristic = 0;
+			searchFrontier.Enqueue(firstCell);
+			var center = firstCell.coordinates;
+
+			while (size < numTimes && searchFrontier.Count > 0)
+			{
+				HexCell current = searchFrontier.Dequeue();
+				if(SimulationUtilities.IsCellIndexUnclaimed(current.Index))
+				{
+					context.controlledTileIndices.Add(current.Index);
+					size++;
+				}
+
+				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+				{
+					HexCell neighbor = current.GetNeighbor(d);
+					if (neighbor && neighbor.SearchPhase < searchFrontierPhase)
+					{
+						neighbor.SearchPhase = searchFrontierPhase;
+						neighbor.Distance = neighbor.coordinates.DistanceTo(center);
+						neighbor.SearchHeuristic = SimRandom.RandomFloat01() < 0.25f ? 1 : 0;
+						searchFrontier.Enqueue(neighbor);
+					}
+				}
+			}
+
+			SimulationManager.Instance.HexGrid.ResetSearchPhases();
 		}
 	}
 }
