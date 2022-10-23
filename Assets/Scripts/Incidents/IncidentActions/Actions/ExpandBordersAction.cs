@@ -25,6 +25,8 @@ namespace Game.Incidents
 				{
 					factionContext.Influence = 0;
 				}
+
+				OutputLogger.Log("Borders expanded!");
 			}
 		}
 /*

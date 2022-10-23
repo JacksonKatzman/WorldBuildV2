@@ -23,6 +23,15 @@ namespace Game.Incidents
 
 		public void Deploy(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
+			foreach(var criterium in deploymentCriteria)
+			{
+				if(!criterium.Evaluate(context, delayedCalculateAction))
+				{
+					OutputLogger.Log("Failed deployment criteria!");
+					return;
+				}
+			}
+
 			incidentContext.CalculateFields(context, delayedCalculateAction);
 
 			if(delayTime == 0)
@@ -33,6 +42,8 @@ namespace Game.Incidents
 			{
 				IncidentService.Instance.AddDelayedContext(incidentContext, delayTime);
 			}
+
+			OutputLogger.Log("Deployed Criteria!");
 		}
 
 		private IEnumerable<Type> GetFilteredTypeList()
@@ -72,6 +83,25 @@ namespace Game.Incidents
 
 		[ShowIf("@this.previousFieldID != -1"), HideReferenceObjectPicker]
 		public IncidentCriteria criteria;
+
+		public bool Evaluate(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		{
+			var fieldAction = delayedCalculateAction.Invoke(previousFieldID);
+			if (fieldAction.GetFieldValue() == null)
+			{
+				if (fieldAction.CalculateField(context, delayedCalculateAction))
+				{
+					var contextProvider = fieldAction.GetFieldValue();
+					return criteria.Evaluate(contextProvider.GetContext());
+				}
+			}
+			else
+			{
+				var contextProvider = fieldAction.GetFieldValue();
+				return criteria.Evaluate(contextProvider.GetContext());
+			}
+			return false;
+		}
 
 		private List<string> GetActionFieldIdentifiers()
 		{
