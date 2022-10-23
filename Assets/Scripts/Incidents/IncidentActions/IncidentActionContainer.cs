@@ -37,7 +37,7 @@ namespace Game.Incidents
 
 			foreach(var deployer in Deployers)
 			{
-				deployer.Deploy();
+				deployer.Deploy(context, GetProviderFromActionFields);
 			}
 
 			return true;

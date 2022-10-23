@@ -27,14 +27,16 @@ namespace Game.Incidents
 				}
 			}
 		}
-
+/*
 		public override void UpdateEditor()
 		{
 		}
-
+*/
+/*
 		protected override bool VerifyContextActionFields(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
 			return true;
 		}
+*/
 	}
 }
