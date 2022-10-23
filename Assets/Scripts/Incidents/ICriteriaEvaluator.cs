@@ -16,6 +16,7 @@ namespace Game.Incidents
 	{
         [HideInInspector]
         public Type Type => typeof(T);
+        public Type ContextType { get; set; }
 
         private string comparator;
 
@@ -34,7 +35,7 @@ namespace Game.Incidents
         public bool Evaluate(IIncidentContext context, string propertyName)
         {
             var propertyValue = (T)context.GetType().GetProperty(propertyName).GetValue(context);
-            return Comparators[Comparator].Invoke(propertyValue, CombineExpressions());
+            return Comparators[Comparator].Invoke(propertyValue, CombineExpressions(context));
         }
 
         public CriteriaEvaluator()
@@ -45,8 +46,6 @@ namespace Game.Incidents
         public CriteriaEvaluator(string propertyName) : this()
 		{
             this.propertyName = propertyName;
-            expressions = new List<Expression<T>>();
-            expressions.Add(new Expression<T>());
         }
 
         public CriteriaEvaluator(string propertyName, T value) : this(propertyName)
@@ -54,21 +53,28 @@ namespace Game.Incidents
             expressions[0].constValue = value;
         }
 
+        public CriteriaEvaluator(string propertyName, Type contextType) : this(propertyName)
+		{
+            ContextType = contextType;
+            expressions = new List<Expression<T>>();
+            expressions.Add(new Expression<T>(ContextType));
+        }
+
         abstract protected void Setup();
 
-        public T CombineExpressions()
+        public T CombineExpressions(IIncidentContext context)
         {
-            var currentValue = expressions[0].Value;
+            var currentValue = expressions[0].GetValue(context);
             for (int i = 0; i < expressions.Count - 1; i++)
             {
-                currentValue = Operators[expressions[i].nextOperator].Invoke(currentValue, expressions[i + 1].Value);
+                currentValue = Operators[expressions[i].nextOperator].Invoke(currentValue, expressions[i + 1].GetValue(context));
             }
             return currentValue;
         }
 
         private void AddNewExpression()
         {
-            expressions.Add(new Expression<T>());
+            expressions.Add(new Expression<T>(ContextType));
             for (int i = 0; i < expressions.Count - 1; i++)
             {
                 expressions[i].hasNextOperator = true;
@@ -92,6 +98,7 @@ namespace Game.Incidents
         public IntegerEvaluator() : base() { }
         public IntegerEvaluator(string propertyName) : base(propertyName) { }
         public IntegerEvaluator(string propertyName, int value) : base(propertyName, value) { }
+        public IntegerEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 
         override protected void Setup()
 		{
@@ -105,6 +112,7 @@ namespace Game.Incidents
         public FloatEvaluator() : base() { }
         public FloatEvaluator(string propertyName) : base(propertyName) { }
         public FloatEvaluator(string propertyName, float value) : base(propertyName, value) { }
+        public FloatEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 
         override protected void Setup()
         {
@@ -118,6 +126,7 @@ namespace Game.Incidents
         public BoolEvaluator() : base() { }
         public BoolEvaluator(string propertyName) : base(propertyName) { }
         public BoolEvaluator(string propertyName, bool value) : base(propertyName, value) { }
+        public BoolEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 
         override protected void Setup()
         {

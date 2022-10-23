@@ -9,7 +9,7 @@ namespace Game.Incidents
     {
         public Type ContextType { get; set; }
         public Type PrimitiveType { get; set; }
-        private static Dictionary<string, Type> properties;
+        private Dictionary<string, Type> properties;
 
         [ValueDropdown("GetPropertyNames"), OnValueChanged("SetPrimitiveType"), HorizontalGroup("Group 1")]
         public string propertyName;
@@ -74,15 +74,15 @@ namespace Game.Incidents
 
             if (PrimitiveType == typeof(int))
             {
-                evaluator = new IntegerEvaluator(propertyName);
+                evaluator = new IntegerEvaluator(propertyName, ContextType);
             }
             else if(PrimitiveType == typeof(float))
 			{
-                evaluator = new FloatEvaluator(propertyName);
+                evaluator = new FloatEvaluator(propertyName, ContextType);
 			}
             else if(PrimitiveType == typeof(bool))
 			{
-                evaluator = new BoolEvaluator(propertyName);
+                evaluator = new BoolEvaluator(propertyName, ContextType);
 			}
         }
 
