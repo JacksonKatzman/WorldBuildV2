@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Game.Math;
+using Game.GameMath;
 
 public class JarvisMarchConvexHullReference : MonoBehaviour
 {

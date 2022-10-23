@@ -36,10 +36,10 @@ namespace Game.Factions
 
 		public void UpdateContext()
 		{
-			throw new System.NotImplementedException();
+			context.Influence += 1;
 		}
 
-		public void AttemptExpandBorder(int numTimes)
+		public bool AttemptExpandBorder(int numTimes)
 		{
 			HexCellPriorityQueue searchFrontier = new HexCellPriorityQueue();
 			int searchFrontierPhase = 1;
@@ -59,7 +59,7 @@ namespace Game.Factions
 				else
 				{
 					OutputLogger.LogError("Couldn't find free tile to create faction on!");
-					return;
+					return false;
 				}
 			}
 
@@ -93,6 +93,8 @@ namespace Game.Factions
 			}
 
 			SimulationManager.Instance.HexGrid.ResetSearchPhases();
+
+			return size != 0;
 		}
 	}
 }

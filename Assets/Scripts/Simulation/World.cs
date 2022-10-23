@@ -29,6 +29,18 @@ namespace Game.Simulation
 			CreateFactions(1);
 		}
 
+		public void AdvanceTime()
+		{
+			foreach(var providerList in Providers.Values)
+			{
+				foreach(var provider in providerList)
+				{
+					provider.UpdateContext();
+					provider.DeployContext();
+				}
+			}
+		}
+
 		public void Save(string mapName)
 		{
 

@@ -66,5 +66,13 @@ namespace Game.Simulation
 			SaveUtilities.LoadHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
 			world = World.Load(HexGrid, mapName);
 		}
+
+		public void DebugRun()
+		{
+			for(int i = 0; i < 100; i++)
+			{
+				world.AdvanceTime();
+			}
+		}
 	}
 }

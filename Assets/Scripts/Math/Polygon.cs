@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 using System.Drawing;
 
-namespace Game.Math
+namespace Game.GameMath
 {
 	public class Polygon
     {

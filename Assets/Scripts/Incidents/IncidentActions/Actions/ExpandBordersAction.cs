@@ -15,8 +15,17 @@ namespace Game.Incidents
 			//Once chosen, add those cell coordinates to faction's list of controlled tiles
 			//Perhaps perform some confirmation action
 			//Send out a TileClaimed context? I guess this is part of the actual incident not this action.
-			var faction = context.Provider as Faction;
-			faction.AttemptExpandBorder(1);
+			var factionContext = context as FactionContext;
+			var faction = factionContext.Provider as Faction;
+			var completed = faction.AttemptExpandBorder(1);
+			if(completed)
+			{
+				factionContext.Influence -= (int)Math.Pow(factionContext.ControlledTiles, 2);
+				if (factionContext.Influence < 0)
+				{
+					factionContext.Influence = 0;
+				}
+			}
 		}
 
 		public override void UpdateEditor()

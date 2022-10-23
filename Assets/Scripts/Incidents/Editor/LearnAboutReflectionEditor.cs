@@ -54,6 +54,11 @@ namespace Game.Incidents
 
 				faction.DeployContext();
 			}
+
+			if(GUILayout.Button("In game test!"))
+			{
+				SimulationManager.Instance.DebugRun();
+			}
 		}
 		public static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
 		{
