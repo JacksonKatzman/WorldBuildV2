@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Game.Incidents
 {
@@ -9,8 +10,16 @@ namespace Game.Incidents
 	{
 		public int delayTime = 0;
 
+		[ListDrawerSettings(CustomAddFunction = "AddNewCriterium"), HideReferenceObjectPicker]
+		public List<DeploymentCriterium> deploymentCriteria;
+
 		[TypeFilter("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type")]
 		public IDeployableContext incidentContext;
+
+		public ContextDeployer()
+		{
+			deploymentCriteria = new List<DeploymentCriterium>();
+		}
 
 		public void Deploy(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
@@ -36,7 +45,7 @@ namespace Game.Incidents
 			return q;
 		}
 
-		void SetContextType()
+		private void SetContextType()
 		{
 			var fields = incidentContext.GetType().GetFields();
 			var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(DeployedContextActionField<>)).ToList();
@@ -45,6 +54,38 @@ namespace Game.Incidents
 			{
 				field.SetValue(incidentContext, Activator.CreateInstance(field.FieldType, this.GetType()));
 			}
+		}
+
+		private void AddNewCriterium()
+		{
+			deploymentCriteria.Add(new DeploymentCriterium());
+		}
+	}
+
+	public class DeploymentCriterium
+	{
+		[HideInInspector]
+		public int previousFieldID = -1;
+
+		[ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID")]
+		public string contextField;
+
+		[ShowIf("@this.previousFieldID != -1"), HideReferenceObjectPicker]
+		public IncidentCriteria criteria;
+
+		private List<string> GetActionFieldIdentifiers()
+		{
+			var ids = new List<string>();
+			var matches = IncidentEditorWindow.actionFields;
+			matches.ForEach(x => ids.Add(x.NameID));
+			return ids;
+		}
+
+		private void SetPreviousFieldID()
+		{
+			var actionField = IncidentEditorWindow.actionFields.Find(x => x.NameID == contextField);
+			criteria = new IncidentCriteria(actionField.ContextType);
+			previousFieldID = actionField.ActionFieldID;
 		}
 	}
 

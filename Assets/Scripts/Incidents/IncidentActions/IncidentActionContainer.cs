@@ -9,6 +9,8 @@ namespace Game.Incidents
 		public List<IIncidentAction> Actions { get; set; }
 		public List<IContextDeployer> Deployers { get; set; }
 
+		private IIncidentContext providedContext;
+
 		public IncidentActionContainer(List<IIncidentAction> actions, List<IContextDeployer> deployers, string log)
 		{
 			Actions = actions;
@@ -18,6 +20,8 @@ namespace Game.Incidents
 
 		public bool PerformActions(IIncidentContext context, ref IncidentReport report)
 		{
+			providedContext = context;
+
 			foreach(var action in Actions)
 			{
 				if(!action.VerifyAction(context, GetProviderFromActionFields))
@@ -46,6 +50,7 @@ namespace Game.Incidents
 		public Dictionary<string, IIncidentContextProvider> GetContextProviderDictionary(IIncidentContext context)
 		{
 			var providerDictionary = new Dictionary<string, IIncidentContextProvider>();
+			providerDictionary.Add("{0}", context.Provider);
 
 			foreach (var action in Actions)
 			{
@@ -65,6 +70,11 @@ namespace Game.Incidents
 
 		public IIncidentActionField GetProviderFromActionFields(int actionFieldID)
 		{
+			if(actionFieldID == 0)
+			{
+				return new ConstantActionField(providedContext.ContextType);
+			}
+
 			foreach (var action in Actions)
 			{
 				var actionType = action.GetType();

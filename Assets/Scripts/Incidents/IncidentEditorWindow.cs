@@ -159,8 +159,9 @@ namespace Game.Incidents
 
         public void UpdateActionFieldIDs()
 		{
-            var fieldCount = 0;
+            var fieldCount = 1;
             actionFields.Clear();
+            actionFields.Add(new ConstantActionField(ContextType));
 
             foreach (var a in actions)
 			{
