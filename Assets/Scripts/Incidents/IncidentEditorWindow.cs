@@ -84,6 +84,7 @@ namespace Game.Incidents
 
             var loadedIncident = JsonConvert.DeserializeObject<Incident>(file, SaveUtilities.SERIALIZER_SETTINGS);
             incidentContextType = loadedIncident.ContextType;
+            ContextType = incidentContextType;
             incidentName = savedIncidentName;
             weight = loadedIncident.Weight;
             incidentLog = loadedIncident.Actions.incidentLog;
@@ -91,6 +92,7 @@ namespace Game.Incidents
             actions = new List<ActionChoiceContainer>();
             loadedIncident.Actions.Actions.ForEach(x => actions.Add(new ActionChoiceContainer(x, UpdateActionFieldIDs)));
             contextDeployers = loadedIncident.Actions.Deployers;
+            UpdateActionFieldIDs();
             modeChosen = true;
 
             OutputLogger.Log("Incident Loaded!");
