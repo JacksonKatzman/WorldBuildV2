@@ -9,12 +9,14 @@ namespace Game.Incidents
 {
 	//THEN: try to make it so you can give the user a choice between a static value and
 	//using a function to determine the value to check against. Even better if you can pass params to that fn.
-    public enum ExpressionType { Const, Method };
+    public enum ExpressionType { Const, Method, Property };
 
 
 	public class Expression<T>
 	{
         private Dictionary<string, MethodInfo> methods;
+        private Dictionary<string, Type> properties;
+        public Type ContextType { get; set; }
 
         [HideInInspector]
         public bool hasNextOperator;
@@ -27,6 +29,9 @@ namespace Game.Incidents
         [ValueDropdown("GetMethodNames"), ShowIf("ExpressionType", ExpressionType.Method), HideLabel]
         public string chosenMethod;
 
+        [ValueDropdown("GetPropertyNames"), ShowIf("ExpressionType", ExpressionType.Property), HideLabel]
+        public string chosenProperty;
+
         [ShowIf("@this.hasNextOperator"), ValueDropdown("GetOperators"), HideLabel, HideReferenceObjectPicker]
         public string nextOperator;
 
@@ -35,18 +40,24 @@ namespace Game.Incidents
             GetMethodInfo();
 		}
 
-        public T Value
+        public Expression(Type contextType) : this()
 		{
-            get
+            ContextType = contextType;
+		}
+
+        public T GetValue(IIncidentContext context)
+		{
+            if(ExpressionType == ExpressionType.Const)
 			{
-                if(ExpressionType == ExpressionType.Const)
-				{
-                    return constValue;
-				}
-                else
-				{
-                    return (T)methods[chosenMethod].Invoke(null, null);
-				}
+                return constValue;
+			}
+            else if(ExpressionType == ExpressionType.Property)
+			{
+                return (T)context.GetType().GetProperty(chosenProperty).GetValue(context);
+            }
+            else
+			{
+                return (T)methods[chosenMethod].Invoke(null, null);
 			}
 		}
 
@@ -60,6 +71,34 @@ namespace Game.Incidents
 
                 methodInfos.ForEach(x => methods.Add(x.Name, x));
             }
+        }
+
+        private void GetPropertyList()
+        {
+            if (properties == null)
+            {
+                properties = new Dictionary<string, Type>();
+            }
+            if (ContextType != null)
+            {
+                var propertyInfo = ContextType.GetProperties();
+                var interfacePropertyInfo = typeof(IIncidentContext).GetProperties();
+
+                var validProperties = propertyInfo.Where(x => !interfacePropertyInfo.Any(y => x.Name == y.Name)).ToList();
+
+                properties.Clear();
+
+                validProperties.ForEach(x => properties.Add(x.Name, x.PropertyType));
+            }
+        }
+
+        private IEnumerable<string> GetPropertyNames()
+        {
+            if (properties == null || properties.Count == 0)
+            {
+                GetPropertyList();
+            }
+            return properties.Keys.ToList();
         }
 
         private IEnumerable<string> GetMethodNames()

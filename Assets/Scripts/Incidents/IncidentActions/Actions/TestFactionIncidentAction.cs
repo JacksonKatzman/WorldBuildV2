@@ -14,22 +14,23 @@ namespace Game.Incidents
 		{
 			PerformDebugAction();
 		}
-
+/*
 		protected override bool VerifyContextActionFields(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
 			var succeeded = requiredFaction.CalculateField(context, delayedCalculateAction);
 			return succeeded;
 		}
-
+*/
 		private void PerformDebugAction()
 		{
 			OutputLogger.Log("Faction Debug Action Performed!");
 		}
-
+/*
 		public override void UpdateEditor()
 		{
 			requiredFaction = new IncidentContextActionField<FactionContext>(ContextType);
 			requiredFaction.criteria = new List<IIncidentCriteria>();
 		}
+*/
 	}
 }

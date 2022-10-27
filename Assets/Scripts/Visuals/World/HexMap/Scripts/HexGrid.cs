@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Collections.Generic;
 using Game.Collections;
+using System.Linq;
 
 namespace Game.Terrain
 {
@@ -57,6 +58,14 @@ namespace Game.Terrain
 			cellShaderData = gameObject.AddComponent<HexCellShaderData>();
 			cellShaderData.Grid = this;
 			//CreateMap(cellCountX, cellCountZ);
+		}
+
+		public void ResetSearchPhases()
+		{
+			foreach(var cell in cells)
+			{
+				cell.SearchPhase = 0;
+			}
 		}
 
 		public void AddUnit(HexUnit unit, HexCell location, float orientation)

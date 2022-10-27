@@ -42,8 +42,7 @@ namespace Game.Incidents
 			{
 				var faction = new Faction();
 				faction.context.Population = 14;
-				faction.context.GooPercentage = 40f;
-				faction.context.IsFun = true;
+
 				var faction2 = new Faction();
 				faction2.context.Population = 5;
 
@@ -54,6 +53,11 @@ namespace Game.Incidents
 				simMan.Providers[typeof(FactionContext)].Add(faction2);
 
 				faction.DeployContext();
+			}
+
+			if(GUILayout.Button("In game test!"))
+			{
+				SimulationManager.Instance.DebugRun();
 			}
 		}
 		public static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)

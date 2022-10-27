@@ -15,8 +15,8 @@ namespace Game.Incidents
 		[HideInInspector]
 		public Type parentType;
 
-		[OnValueChanged("RetrievalTypeChanged")]
-		public ActionFieldRetrievalMethod Method;
+		[OnValueChanged("RetrievalTypeChanged"), ShowInInspector, PropertyOrder(-1)]
+		virtual public ActionFieldRetrievalMethod Method { get; set; }
 
 		[ShowIf("@this.ParentTypeMatches"), HideIf("@this.Method == ActionFieldRetrievalMethod.From_Previous")]
 		public bool AllowSelf;
@@ -35,7 +35,7 @@ namespace Game.Incidents
 		public string NameID { get; set; }
 
 		[ShowInInspector]
-		public string ActionFieldIDString => "{" + ActionFieldID + "}";
+		virtual public string ActionFieldIDString => "{" + ActionFieldID + "}";
 
 		public Type ContextType => typeof(T);
 		private bool ParentTypeMatches => parentType == typeof(T);
@@ -47,6 +47,7 @@ namespace Game.Incidents
 		public IncidentContextActionField(Type parentType)
 		{
 			this.parentType = parentType;
+
 			RetrievalTypeChanged();
 		}
 
@@ -134,6 +135,16 @@ namespace Game.Incidents
 		private void SetPreviousFieldID()
 		{
 			previousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == previousField).ActionFieldID;
+		}
+	}
+
+	public class DeployedContextActionField<T> : IncidentContextActionField<T> where T : IIncidentContext
+	{
+		[ShowInInspector]
+		override public string ActionFieldIDString => "None";
+
+		public DeployedContextActionField(Type parentType) : base(parentType)
+		{
 		}
 	}
 }

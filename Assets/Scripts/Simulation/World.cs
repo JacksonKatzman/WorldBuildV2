@@ -22,8 +22,23 @@ namespace Game.Simulation
 		{
 			this.hexGrid = hexGrid;
 			Providers = new ContextTypeListDictionary<IIncidentContextProvider>();
+		}
 
+		public void Initialize()
+		{
 			CreateFactions(1);
+		}
+
+		public void AdvanceTime()
+		{
+			foreach(var providerList in Providers.Values)
+			{
+				foreach(var provider in providerList)
+				{
+					provider.UpdateContext();
+					provider.DeployContext();
+				}
+			}
 		}
 
 		public void Save(string mapName)
@@ -43,7 +58,9 @@ namespace Game.Simulation
 		{
 			for(int i = 0; i < numFactions; i++)
 			{
-				Providers[typeof(FactionContext)].Add(new Faction());
+				var faction = new Faction();
+				Providers[typeof(FactionContext)].Add(faction);
+				faction.AttemptExpandBorder(1);
 			}
 		}
 	}

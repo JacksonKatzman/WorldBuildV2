@@ -4,6 +4,5 @@ namespace Game.Incidents
 {
 	public class LearnAboutReflection : MonoBehaviour
 	{
-
 	}
 }

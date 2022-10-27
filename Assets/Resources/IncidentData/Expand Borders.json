@@ -1,0 +1,167 @@
+{
+  "$id": "1",
+  "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Weight": 5,
+  "Criteria": {
+    "$id": "2",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Assembly-CSharp",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$id": "3",
+          "$type": "Game.Incidents.IncidentCriteria, Assembly-CSharp",
+          "propertyName": "Influence",
+          "evaluator": {
+            "$id": "4",
+            "$type": "Game.Incidents.IntegerEvaluator, Assembly-CSharp",
+            "propertyName": "Influence",
+            "Comparator": ">=",
+            "expressions": {
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+              "$values": [
+                {
+                  "$id": "5",
+                  "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
+                  "hasNextOperator": true,
+                  "ExpressionType": 2,
+                  "constValue": 0,
+                  "chosenMethod": null,
+                  "chosenProperty": "ControlledTiles",
+                  "nextOperator": "^",
+                  "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                },
+                {
+                  "$id": "6",
+                  "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
+                  "hasNextOperator": false,
+                  "ExpressionType": 0,
+                  "constValue": 2,
+                  "chosenMethod": null,
+                  "chosenProperty": null,
+                  "nextOperator": null,
+                  "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                }
+              ]
+            },
+            "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+            "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+          },
+          "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+        }
+      ]
+    }
+  },
+  "Actions": {
+    "$id": "7",
+    "$type": "Game.Incidents.IncidentActionContainer, Assembly-CSharp",
+    "incidentLog": "some log",
+    "Actions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentAction, Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$id": "8",
+          "$type": "Game.Incidents.ExpandBordersAction, Assembly-CSharp",
+          "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "Context": null
+        }
+      ]
+    },
+    "Deployers": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$id": "9",
+          "$type": "Game.Incidents.ContextDeployer, Assembly-CSharp",
+          "delayTime": 0,
+          "deploymentCriteria": {
+            "$type": "System.Collections.Generic.List`1[[Game.Incidents.DeploymentCriterium, Assembly-CSharp]], mscorlib",
+            "$values": [
+              {
+                "$id": "10",
+                "$type": "Game.Incidents.DeploymentCriterium, Assembly-CSharp",
+                "previousFieldID": 0,
+                "contextField": "{0} - Original Context",
+                "criteria": {
+                  "$id": "11",
+                  "$type": "Game.Incidents.IncidentCriteria, Assembly-CSharp",
+                  "propertyName": "Influence",
+                  "evaluator": {
+                    "$id": "12",
+                    "$type": "Game.Incidents.IntegerEvaluator, Assembly-CSharp",
+                    "propertyName": "Influence",
+                    "Comparator": ">",
+                    "expressions": {
+                      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+                      "$values": [
+                        {
+                          "$id": "13",
+                          "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
+                          "hasNextOperator": false,
+                          "ExpressionType": 0,
+                          "constValue": 0,
+                          "chosenMethod": null,
+                          "chosenProperty": null,
+                          "nextOperator": null,
+                          "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                        }
+                      ]
+                    },
+                    "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                    "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  },
+                  "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                }
+              }
+            ]
+          },
+          "incidentContext": {
+            "$id": "14",
+            "$type": "Game.Incidents.WarDeclaredContext, Assembly-CSharp",
+            "faction1": {
+              "$id": "15",
+              "$type": "Game.Incidents.DeployedContextActionField`1[[Game.Incidents.FactionContext, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.ContextDeployer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": "{0} - Original Context",
+              "previousFieldID": 0,
+              "ActionFieldIDString": "None",
+              "Method": 1,
+              "ActionFieldID": 0,
+              "NameID": null,
+              "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "faction2": {
+              "$id": "16",
+              "$type": "Game.Incidents.DeployedContextActionField`1[[Game.Incidents.FactionContext, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.ContextDeployer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": "{0} - Original Context",
+              "previousFieldID": 0,
+              "ActionFieldIDString": "None",
+              "Method": 1,
+              "ActionFieldID": 0,
+              "NameID": null,
+              "ContextType": "Game.Incidents.FactionContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "Provider": null,
+            "ContextType": "Game.Incidents.WarDeclaredContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "NumIncidents": 0,
+            "ParentID": 0
+          }
+        }
+      ]
+    }
+  }
+}

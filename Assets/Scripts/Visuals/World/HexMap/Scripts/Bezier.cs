@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Math
+namespace Game.GameMath
 {
 	public static class Bezier
 	{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Game.Incidents
 {
@@ -30,17 +31,33 @@ namespace Game.Incidents
 			return VerifyContextActionFields(context, delayedCalculateAction);
 		}
 
-		virtual public void PerformAction(IIncidentContext context)
-		{
-			PerformDebugAction();
-		}
+		abstract public void PerformAction(IIncidentContext context);
 
-		private void PerformDebugAction()
+		public void UpdateEditor()
 		{
-			OutputLogger.Log("Debug Action Performed!");
-		}
+			var fields = this.GetType().GetFields();
+			var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>)).ToList();
 
-		abstract public void UpdateEditor();
-		abstract protected bool VerifyContextActionFields(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction);
+			foreach (var field in matchingFields)
+			{
+				field.SetValue(this, Activator.CreateInstance(field.FieldType, ContextType));
+			}
+		}
+		protected bool VerifyContextActionFields(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		{
+			var fields = this.GetType().GetFields();
+			var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>)).ToList();
+
+			foreach (var field in matchingFields)
+			{
+				var actionField = field.GetValue(this) as IIncidentActionField;
+				if(!actionField.CalculateField(context, delayedCalculateAction))
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
 	}
 }
