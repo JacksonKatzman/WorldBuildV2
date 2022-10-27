@@ -32,7 +32,7 @@ namespace Game.Incidents
         [ListDrawerSettings(CustomAddFunction = "AddNewExpression"), HorizontalGroup("Group 1"), HideReferenceObjectPicker]
         public List<Expression<T>> expressions;
 
-        public bool Evaluate(IIncidentContext context, string propertyName)
+        virtual public bool Evaluate(IIncidentContext context, string propertyName)
         {
             var propertyValue = (T)context.GetType().GetProperty(propertyName).GetValue(context);
             return Comparators[Comparator].Invoke(propertyValue, CombineExpressions(context));
@@ -132,6 +132,75 @@ namespace Game.Incidents
         {
             Comparators = ExpressionHelpers.BoolComparators;
             Operators = ExpressionHelpers.BoolOperators;
+        }
+    }
+
+    abstract public class DictionaryEvaluator<T> : CriteriaEvaluator<T>
+	{
+        public DictionaryEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
+        override public bool Evaluate(IIncidentContext context, string propertyName)
+        {
+            var propertyValue = (Dictionary<IIncidentContext, T>)context.GetType().GetProperty(propertyName).GetValue(context);
+
+            return EvaluateByContains(propertyValue, context);
+        }
+
+        protected bool EvaluateByContains(Dictionary<IIncidentContext, T> dictionary, IIncidentContext context)
+		{
+            foreach (var value in dictionary.Values)
+            {
+                if (Comparators[Comparator].Invoke(value, CombineExpressions(context)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public class IntegerValueDictionaryEvaluator : DictionaryEvaluator<int>
+	{
+        public IntegerValueDictionaryEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
+        protected override void Setup()
+		{
+            Comparators = ExpressionHelpers.IntegerComparators;
+            Operators = ExpressionHelpers.IntegerOperators;
+        }
+	}
+
+    public class FloatValueDictionaryEvaluator : DictionaryEvaluator<float>
+    {
+        public FloatValueDictionaryEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
+        protected override void Setup()
+        {
+            Comparators = ExpressionHelpers.FloatComparators;
+            Operators = ExpressionHelpers.FloatOperators;
+        }
+    }
+
+    public class BoolValueDictionaryEvaluator : DictionaryEvaluator<bool>
+    {
+        public BoolValueDictionaryEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
+        protected override void Setup()
+        {
+            Comparators = ExpressionHelpers.BoolComparators;
+            Operators = ExpressionHelpers.BoolOperators;
+        }
+    }
+
+    public class ListEvaluator : CriteriaEvaluator<int>
+	{
+        public ListEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
+        override public bool Evaluate(IIncidentContext context, string propertyName)
+        {
+            var propertyValue = (List<IIncidentContext>)context.GetType().GetProperty(propertyName).GetValue(context);
+
+            return Comparators[Comparator].Invoke(propertyValue.Count, CombineExpressions(context));
+        }
+        protected override void Setup()
+        {
+            Comparators = ExpressionHelpers.IntegerComparators;
+            Operators = ExpressionHelpers.IntegerOperators;
         }
     }
 }

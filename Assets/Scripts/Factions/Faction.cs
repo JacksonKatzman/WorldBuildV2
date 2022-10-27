@@ -37,6 +37,11 @@ namespace Game.Factions
 		public void UpdateContext()
 		{
 			context.Influence += 1;
+			if(context.TestInts == null)
+			{
+				context.TestInts = new Dictionary<IIncidentContext, int>();
+				context.TestInts.Add(this.context, 5);
+			}
 		}
 
 		public bool AttemptExpandBorder(int numTimes)

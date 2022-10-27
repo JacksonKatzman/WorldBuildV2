@@ -14,6 +14,7 @@ namespace Game.Incidents
 		public int ParentID => -1;
 		public int Population { get; set; }
 		public int Influence { get; set; }
+		public Dictionary<IIncidentContext, int> TestInts { get; set; }
 		public int ControlledTiles => controlledTileIndices.Count;
 
 		[HideInInspector]
