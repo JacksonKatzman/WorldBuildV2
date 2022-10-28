@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
+	/*
 	[Serializable]
 	public class FactionContext
 	{
@@ -20,4 +21,5 @@ namespace Game.Incidents
 		[HideInInspector]
 		public List<int> controlledTileIndices;
 	}
+	*/
 }
