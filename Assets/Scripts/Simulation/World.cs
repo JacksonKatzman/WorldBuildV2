@@ -32,12 +32,12 @@ namespace Game.Simulation
 
 		public void AdvanceTime()
 		{
-			foreach(var providerList in Contexts.Values)
+			foreach(var contextList in Contexts.Values)
 			{
-				foreach(var provider in providerList)
+				foreach(var context in contextList)
 				{
-					provider.UpdateContext();
-					provider.DeployContext();
+					context.UpdateContext();
+					context.DeployContext();
 				}
 			}
 		}
