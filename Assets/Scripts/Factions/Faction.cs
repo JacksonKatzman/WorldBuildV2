@@ -12,9 +12,9 @@ namespace Game.Factions
 	{
 		public Type ContextType => typeof(Faction);
 
-		public int NumIncidents => throw new NotImplementedException();
+		public int NumIncidents { get; set; }
 
-		public int ParentID => throw new NotImplementedException();
+		public int ParentID => -1;
 		public int Population { get; set; }
 		public int Influence { get; set; }
 		public Dictionary<IIncidentContext, int> TestInts { get; set; }
@@ -38,6 +38,7 @@ namespace Game.Factions
 		}
 		public void UpdateContext()
 		{
+			NumIncidents = 1;
 			Influence += 1;
 		}
 

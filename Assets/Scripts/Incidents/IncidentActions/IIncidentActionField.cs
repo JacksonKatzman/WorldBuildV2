@@ -36,9 +36,9 @@ namespace Game.Incidents
 			return true;
 		}
 
-		public IIncidentContextProvider GetFieldValue()
+		public IIncidentContext GetFieldValue()
 		{
-			return context?.Provider;
+			return context;
 		}
 	}
 }

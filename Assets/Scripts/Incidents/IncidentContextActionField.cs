@@ -82,7 +82,7 @@ namespace Game.Incidents
 				}
 				else
 				{
-					var possibleValues = SimulationManager.Instance.Contexts[typeof(T)].Where(x => x.GetContext() != context).ToList();
+					var possibleValues = SimulationManager.Instance.Contexts[typeof(T)].Where(x => x != context).ToList();
 					value = SimRandom.RandomEntryFromList(possibleValues);
 				}
 			}
@@ -96,11 +96,11 @@ namespace Game.Incidents
 			List<IIncidentContext> possibleMatches;
 			if (AllowSelf)
 			{
-				possibleMatches = SimulationManager.Instance.Contexts[typeof(T)].Where(x => criteriaContainer.Evaluate(x.GetContext()) == true).ToList();
+				possibleMatches = SimulationManager.Instance.Contexts[typeof(T)].Where(x => criteriaContainer.Evaluate(x) == true).ToList();
 			}
 			else
 			{
-				possibleMatches = SimulationManager.Instance.Contexts[typeof(T)].Where(x => x.GetContext() != context && criteriaContainer.Evaluate(x.GetContext()) == true).ToList();
+				possibleMatches = SimulationManager.Instance.Contexts[typeof(T)].Where(x => x != context && criteriaContainer.Evaluate(x) == true).ToList();
 			}
 
 			return possibleMatches.Count > 0 ? SimRandom.RandomEntryFromList(possibleMatches) : null;

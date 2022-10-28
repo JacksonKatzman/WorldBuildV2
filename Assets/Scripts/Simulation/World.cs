@@ -21,12 +21,9 @@ namespace Game.Simulation
 		public World(HexGrid hexGrid)
 		{
 			this.hexGrid = hexGrid;
-<<<<<<< Updated upstream
-			Providers = new ContextTypeListDictionary<IIncidentContextProvider>();
-		}
-=======
+
 			Contexts = new ContextTypeListDictionary<IIncidentContext>();
->>>>>>> Stashed changes
+		}
 
 		public void Initialize()
 		{
@@ -35,7 +32,7 @@ namespace Game.Simulation
 
 		public void AdvanceTime()
 		{
-			foreach(var providerList in Providers.Values)
+			foreach(var providerList in Contexts.Values)
 			{
 				foreach(var provider in providerList)
 				{
@@ -63,7 +60,7 @@ namespace Game.Simulation
 			for(int i = 0; i < numFactions; i++)
 			{
 				var faction = new Faction();
-				Contexts[typeof(FactionContext)].Add(new Faction());
+				Contexts[typeof(Faction)].Add(faction);
 				faction.AttemptExpandBorder(1);
 			}
 		}
