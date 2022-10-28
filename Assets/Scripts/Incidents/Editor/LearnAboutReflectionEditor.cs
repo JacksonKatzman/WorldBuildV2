@@ -49,8 +49,8 @@ namespace Game.Incidents
 				var simMan = SimulationManager.Instance;
 
 				simMan.CreateDebugWorld();
-				simMan.Providers[typeof(FactionContext)].Add(faction);
-				simMan.Providers[typeof(FactionContext)].Add(faction2);
+				simMan.Contexts[typeof(FactionContext)].Add(faction);
+				simMan.Contexts[typeof(FactionContext)].Add(faction2);
 
 				faction.DeployContext();
 			}

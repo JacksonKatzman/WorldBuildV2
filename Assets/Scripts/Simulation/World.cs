@@ -11,18 +11,22 @@ namespace Game.Simulation
 		[NonSerialized]
 		private HexGrid hexGrid;
 
-		public ContextTypeListDictionary<IIncidentContextProvider> Providers { get; private set; }
+		public ContextTypeListDictionary<IIncidentContext> Contexts { get; private set; }
 
 		public World()
 		{
-			Providers = new ContextTypeListDictionary<IIncidentContextProvider>();
+			Contexts = new ContextTypeListDictionary<IIncidentContext>();
 		}
 
 		public World(HexGrid hexGrid)
 		{
 			this.hexGrid = hexGrid;
+<<<<<<< Updated upstream
 			Providers = new ContextTypeListDictionary<IIncidentContextProvider>();
 		}
+=======
+			Contexts = new ContextTypeListDictionary<IIncidentContext>();
+>>>>>>> Stashed changes
 
 		public void Initialize()
 		{
@@ -59,7 +63,7 @@ namespace Game.Simulation
 			for(int i = 0; i < numFactions; i++)
 			{
 				var faction = new Faction();
-				Providers[typeof(FactionContext)].Add(faction);
+				Contexts[typeof(FactionContext)].Add(new Faction());
 				faction.AttemptExpandBorder(1);
 			}
 		}

@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Game.Incidents
 {
 	[Serializable]
-	public class FactionContext : IIncidentContext
+	public class FactionContext
 	{
-		public IIncidentContextProvider Provider { get; set; }
+		//public IIncidentContextProvider Provider { get; set; }
 		public Type ContextType => typeof(FactionContext);
 		public int NumIncidents { get; set; }
 		public int ParentID => -1;

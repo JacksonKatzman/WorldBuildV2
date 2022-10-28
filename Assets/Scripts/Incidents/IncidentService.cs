@@ -34,10 +34,6 @@ namespace Game.Incidents
 			OutputLogger.Log("Calling Setup!");
 			Setup();
 		}
-		public void PerformIncidents(IIncidentContextProvider incidentContextProvider)
-		{
-			PerformIncidents(incidentContextProvider.GetContext());
-		}
 
 		public void PerformIncidents(IIncidentContext context)
 		{

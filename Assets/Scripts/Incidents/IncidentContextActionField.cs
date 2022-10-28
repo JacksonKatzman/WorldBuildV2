@@ -40,7 +40,7 @@ namespace Game.Incidents
 		public Type ContextType => typeof(T);
 		private bool ParentTypeMatches => parentType == typeof(T);
 
-		private IIncidentContextProvider value;
+		private IIncidentContext value;
 		private IIncidentActionField delayedValue;
 
 		public IncidentContextActionField() { }
@@ -51,7 +51,7 @@ namespace Game.Incidents
 			RetrievalTypeChanged();
 		}
 
-		public IIncidentContextProvider GetFieldValue()
+		public IIncidentContext GetFieldValue()
 		{
 			if (Method == ActionFieldRetrievalMethod.From_Previous)
 			{
@@ -77,12 +77,12 @@ namespace Game.Incidents
 			{
 				if (AllowSelf)
 				{
-					var possibleValues = SimulationManager.Instance.Providers[typeof(T)];
+					var possibleValues = SimulationManager.Instance.Contexts[typeof(T)];
 					value = SimRandom.RandomEntryFromList(possibleValues);
 				}
 				else
 				{
-					var possibleValues = SimulationManager.Instance.Providers[typeof(T)].Where(x => x.GetContext() != context).ToList();
+					var possibleValues = SimulationManager.Instance.Contexts[typeof(T)].Where(x => x.GetContext() != context).ToList();
 					value = SimRandom.RandomEntryFromList(possibleValues);
 				}
 			}
@@ -90,17 +90,17 @@ namespace Game.Incidents
 			return (value != null) || (delayedValue != null);
 		}
 
-		private IIncidentContextProvider RetrieveFieldByCriteria(IIncidentContext context)
+		private IIncidentContext RetrieveFieldByCriteria(IIncidentContext context)
 		{
 			var criteriaContainer = new IncidentCriteriaContainer(criteria);
-			List<IIncidentContextProvider> possibleMatches;
+			List<IIncidentContext> possibleMatches;
 			if (AllowSelf)
 			{
-				possibleMatches = SimulationManager.Instance.Providers[typeof(T)].Where(x => criteriaContainer.Evaluate(x.GetContext()) == true).ToList();
+				possibleMatches = SimulationManager.Instance.Contexts[typeof(T)].Where(x => criteriaContainer.Evaluate(x.GetContext()) == true).ToList();
 			}
 			else
 			{
-				possibleMatches = SimulationManager.Instance.Providers[typeof(T)].Where(x => x.GetContext() != context && criteriaContainer.Evaluate(x.GetContext()) == true).ToList();
+				possibleMatches = SimulationManager.Instance.Contexts[typeof(T)].Where(x => x.GetContext() != context && criteriaContainer.Evaluate(x.GetContext()) == true).ToList();
 			}
 
 			return possibleMatches.Count > 0 ? SimRandom.RandomEntryFromList(possibleMatches) : null;

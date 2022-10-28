@@ -36,7 +36,7 @@ namespace Game.Incidents
 				action.PerformAction(context);
 			}
 
-			report.Providers = GetContextProviderDictionary(context);
+			report.Contexts = GetContextProviderDictionary(context);
 			report.ReportLog = incidentLog;
 
 			foreach(var deployer in Deployers)
@@ -47,10 +47,10 @@ namespace Game.Incidents
 			return true;
 		}
 
-		public Dictionary<string, IIncidentContextProvider> GetContextProviderDictionary(IIncidentContext context)
+		public Dictionary<string, IIncidentContext> GetContextProviderDictionary(IIncidentContext context)
 		{
-			var providerDictionary = new Dictionary<string, IIncidentContextProvider>();
-			providerDictionary.Add("{0}", context.Provider);
+			var contextDictionary = new Dictionary<string, IIncidentContext>();
+			contextDictionary.Add("{0}", context);
 
 			foreach (var action in Actions)
 			{
@@ -61,11 +61,11 @@ namespace Game.Incidents
 				foreach (var field in matchingFields)
 				{
 					var actionField = field.GetValue(action) as IIncidentActionField;
-					providerDictionary.Add(actionField.ActionFieldIDString, actionField.GetFieldValue());
+					contextDictionary.Add(actionField.ActionFieldIDString, actionField.GetFieldValue());
 				}
 			}
 
-			return providerDictionary;
+			return contextDictionary;
 		}
 
 		public IIncidentActionField GetProviderFromActionFields(int actionFieldID)

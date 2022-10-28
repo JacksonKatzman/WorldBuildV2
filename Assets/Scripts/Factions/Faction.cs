@@ -6,10 +6,15 @@ using System.Collections.Generic;
 
 namespace Game.Factions
 {
-	public class Faction : IIncidentContextProvider
+	[Serializable]
+	public class Faction : IIncidentContext
 	{
 		public FactionContext context;
 		public Type ContextType => typeof(FactionContext);
+
+		public int NumIncidents => throw new NotImplementedException();
+
+		public int ParentID => throw new NotImplementedException();
 
 		public Faction()
 		{

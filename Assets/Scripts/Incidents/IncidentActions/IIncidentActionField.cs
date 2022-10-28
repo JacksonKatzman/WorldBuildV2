@@ -11,7 +11,7 @@ namespace Game.Incidents
 		Type ContextType { get; }
 
 		bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction);
-		IIncidentContextProvider GetFieldValue();
+		IIncidentContext GetFieldValue();
 	}
 
 	public class ConstantActionField : IIncidentActionField
