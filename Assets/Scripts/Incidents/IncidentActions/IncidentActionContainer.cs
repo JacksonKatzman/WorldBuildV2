@@ -1,97 +1,70 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
 
 namespace Game.Incidents
 {
 	public class IncidentActionContainer
 	{
-		public string incidentLog;
-		public List<IIncidentAction> Actions { get; set; }
-		public List<IContextDeployer> Deployers { get; set; }
+		[TypeFilter("GetFilteredTypeList"), OnValueChanged("SetAction"), HideLabel]
+		public IIncidentAction incidentAction;
 
-		private IIncidentContext providedContext;
+		private Action onSetCallback;
 
-		public IncidentActionContainer(List<IIncidentAction> actions, List<IContextDeployer> deployers, string log)
+		public IncidentActionContainer() { }
+		public IncidentActionContainer(Action onSetCallback)
 		{
-			Actions = actions;
-			Deployers = deployers;
-			incidentLog = log;
+			this.onSetCallback = onSetCallback;
 		}
 
-		public bool PerformActions(IIncidentContext context, ref IncidentReport report)
+		public IncidentActionContainer(IIncidentAction action, Action onSetCallback) : this(onSetCallback)
 		{
-			providedContext = context;
+			this.incidentAction = action;
+		}
 
-			foreach(var action in Actions)
+		public bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		{
+			if (!incidentAction.VerifyAction(context, delayedCalculateAction))
 			{
-				if(!action.VerifyAction(context, GetContextFromActionFields))
-				{
-					OutputLogger.LogWarning("ActionContainer failed to verify action context!");
-					return false;
-				}
+				return false;
 			}
-
-			foreach (var action in Actions)
-			{
-				action.PerformAction(context);
-			}
-
-			report.Contexts = GetContextDictionary(context);
-			report.ReportLog = incidentLog;
-
-			foreach(var deployer in Deployers)
-			{
-				deployer.Deploy(context, GetContextFromActionFields);
-			}
-
 			return true;
 		}
 
-		public Dictionary<string, IIncidentContext> GetContextDictionary(IIncidentContext context)
+		public void PerformAction(IIncidentContext context)
 		{
-			var contextDictionary = new Dictionary<string, IIncidentContext>();
-			contextDictionary.Add("{0}", context);
-
-			foreach (var action in Actions)
-			{
-				var actionType = action.GetType();
-				var fields = actionType.GetFields();
-				var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>)).ToList();
-
-				foreach (var field in matchingFields)
-				{
-					var actionField = field.GetValue(action) as IIncidentActionField;
-					contextDictionary.Add(actionField.ActionFieldIDString, actionField.GetFieldValue());
-				}
-			}
-
-			return contextDictionary;
+			incidentAction.PerformAction(context);
 		}
 
-		public IIncidentActionField GetContextFromActionFields(int actionFieldID)
+		public void UpdateActionFieldIDs(ref int startingValue)
 		{
-			if(actionFieldID == 0)
+			incidentAction.UpdateActionFieldIDs(ref startingValue);
+		}
+
+		public void AddContext(ref Dictionary<string, IIncidentContext> contextDictionary)
+		{
+			incidentAction.AddContext(ref contextDictionary);
+		}
+
+		public bool GetContextField(int id, out IIncidentActionField contextField)
+		{
+			if(incidentAction.GetContextField(id, out contextField))
 			{
-				return new ConstantActionField(providedContext.ContextType);
+				return true;
 			}
 
-			foreach (var action in Actions)
-			{
-				var actionType = action.GetType();
-				var fields = actionType.GetFields();
-				var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>)).ToList();
+			return false;
+		}
 
-				foreach (var field in matchingFields)
-				{
-					var actionField = field.GetValue(action) as IIncidentActionField;
-					if(actionField.ActionFieldID == actionFieldID)
-					{
-						return actionField;
-					}
-				}
-			}
+		private void SetAction()
+		{
+			incidentAction.UpdateEditor();
+			IncidentEditorWindow.UpdateActionFieldIDs();
+		}
 
-			return null;
+		private IEnumerable<Type> GetFilteredTypeList()
+		{
+			return IncidentActionHelpers.GetFilteredTypeList(IncidentEditorWindow.ContextType);
 		}
 	}
 }

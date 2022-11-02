@@ -57,14 +57,14 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
         public List<IIncidentCriteria> criteria;
 
-        [ShowIfGroup("ContextTypeChosen")]
-        public string incidentLog;
+        //[ShowIfGroup("ContextTypeChosen")]
+        //public string incidentLog;
 
-        [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewActionItem"), HideReferenceObjectPicker]
-        public List<ActionChoiceContainer> actions;
+        [ShowIfGroup("ContextTypeChosen"), HideReferenceObjectPicker, ShowInInspector]
+        static public IncidentActionHandler actionHandler;
 
-        [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewContextDeployer"), HideReferenceObjectPicker]
-        public List<IContextDeployer> contextDeployers;
+        //[ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewContextDeployer"), HideReferenceObjectPicker]
+        //public List<IContextDeployer> contextDeployers;
 
         [Button("New Incident"), HorizontalGroup("B1"), PropertyOrder(-1)]
         public void OnNewButtonPressed()
@@ -72,7 +72,7 @@ namespace Game.Incidents
             incidentContextType = null;
             incidentName = string.Empty;
             weight = 0;
-            incidentLog = string.Empty;
+            //incidentLog = string.Empty;
             modeChosen = true;
         }
 
@@ -87,12 +87,12 @@ namespace Game.Incidents
             ContextType = incidentContextType;
             incidentName = savedIncidentName;
             weight = loadedIncident.Weight;
-            incidentLog = loadedIncident.Actions.incidentLog;
+            //incidentLog = loadedIncident.ActionHandler.incidentLog;
             criteria = loadedIncident.Criteria.criteria;
-            actions = new List<ActionChoiceContainer>();
-            loadedIncident.Actions.Actions.ForEach(x => actions.Add(new ActionChoiceContainer(x, UpdateActionFieldIDs)));
-            contextDeployers = loadedIncident.Actions.Deployers;
-            UpdateActionFieldIDs();
+            actionHandler = loadedIncident.ActionHandler;
+            //need to call to get/update IDs
+            //contextDeployers = loadedIncident.ActionHandler.Deployers;
+            actionHandler.UpdateActionFieldIDs();
             modeChosen = true;
 
             OutputLogger.Log("Incident Loaded!");
@@ -104,13 +104,9 @@ namespace Game.Incidents
         [Button("Save"), ShowIfGroup("ContextTypeChosen"), PropertyOrder(10)]
         public void OnSaveButtonPressed()
 		{
-            if (ContextTypeChosen && actions.Count > 0)
+            if (ContextTypeChosen && actionHandler.Actions.Count > 0)
             {
-                var incidentActions = new List<IIncidentAction>();
-                actions.ForEach(x => incidentActions.Add(x.incidentAction));
-                var container = new IncidentActionContainer(incidentActions, contextDeployers, incidentLog);
-
-                var incident = new Incident(ContextType, criteria, container, weight);
+                var incident = new Incident(ContextType, criteria, actionHandler, weight);
 
                 var path = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + incidentName + ".json");
                 string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);
@@ -118,6 +114,11 @@ namespace Game.Incidents
 
                 OutputLogger.Log("Incident Saved!");
             }
+		}
+
+        public static void UpdateActionFieldIDs()
+		{
+            actionHandler.UpdateActionFieldIDs();
 		}
 
         private IEnumerable<Type> GetFilteredTypeList()
@@ -140,8 +141,8 @@ namespace Game.Incidents
 		{
             ContextType = incidentContextType;
             criteria = new List<IIncidentCriteria>();
-            actions = new List<ActionChoiceContainer>();
-            contextDeployers = new List<IContextDeployer>();
+            actionHandler = new IncidentActionHandler(ContextType);
+            //contextDeployers = new List<IContextDeployer>();
 		}
 
         private void AddNewCriteriaItem()
@@ -149,39 +150,10 @@ namespace Game.Incidents
             criteria.Add(new IncidentCriteria(ContextType));
         }
 
-        private void AddNewActionItem()
-		{
-            actions.Add(new ActionChoiceContainer(UpdateActionFieldIDs));
-		}
-
         private void AddNewContextDeployer()
 		{
-            contextDeployers.Add(new ContextDeployer());
+            //contextDeployers.Add(new ContextDeployer());
 		}
-
-        public void UpdateActionFieldIDs()
-		{
-            var fieldCount = 1;
-            actionFields.Clear();
-            actionFields.Add(new ConstantActionField(ContextType));
-
-            foreach (var a in actions)
-			{
-                var incidentAction = a.incidentAction;
-                var actionType = incidentAction.GetType();
-                var fields = actionType.GetFields();
-                var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>));
-
-                foreach(var f in matchingFields)
-				{
-                    var fa = f.GetValue(incidentAction) as IIncidentActionField;
-                    fa.ActionFieldID = fieldCount;
-                    fa.NameID = string.Format("{0}:{1}:{2}", fa.ActionFieldIDString, actionType.Name, f.Name);
-                    actionFields.Add(fa);
-                    fieldCount++;
-				}
-			}
-        }
 
         private static void GetPropertyList()
         {
@@ -203,50 +175,5 @@ namespace Game.Incidents
         }
 
         public bool ContextTypeChosen => incidentContextType != null;
-    }
-
-    public class ActionChoiceContainer
-	{
-        [TypeFilter("GetFilteredTypeList"), OnValueChanged("SetAction"), HideLabel]
-        public IIncidentAction incidentAction;
-
-        private Action onSetCallback;
-
-        public ActionChoiceContainer() { }
-        public ActionChoiceContainer(Action onSetCallback)
-		{
-			this.onSetCallback = onSetCallback;
-		}
-
-        public ActionChoiceContainer(IIncidentAction action, Action onSetCallback) : this(onSetCallback)
-		{
-            this.incidentAction = action;
-		}
-
-		public IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
-        {
-            return from x in assembly.GetTypes()
-                   from z in x.GetInterfaces()
-                   let y = x.BaseType
-                   where
-                   (y != null && y.IsGenericType &&
-                   openGenericType.IsAssignableFrom(y.GetGenericTypeDefinition())) ||
-                   (z.IsGenericType &&
-                   openGenericType.IsAssignableFrom(z.GetGenericTypeDefinition()))
-                   select x;
-        }
-
-        public IEnumerable<Type> GetFilteredTypeList()
-		{
-            var allActions = GetAllTypesImplementingOpenGenericType(typeof(IIncidentAction), Assembly.GetExecutingAssembly());
-            var matches = allActions.Where(x => x.BaseType.IsGenericType == true && x.BaseType.GetGenericArguments()[0] == IncidentEditorWindow.ContextType).ToList();
-            return matches;
-		}
-
-        public void SetAction()
-		{
-            incidentAction.UpdateEditor();
-            onSetCallback?.Invoke();
-        }
     }
 }

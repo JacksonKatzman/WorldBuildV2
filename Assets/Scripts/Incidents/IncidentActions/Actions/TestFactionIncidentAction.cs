@@ -9,7 +9,7 @@ namespace Game.Incidents
 	public class TestFactionIncidentAction : ContextualIncidentAction<Faction>
 	{
 		[HideReferenceObjectPicker]
-		public IncidentContextActionField<Faction> requiredFaction;
+		public ContextualIncidentActionField<Faction> requiredFaction;
 
 		override public void PerformAction(IIncidentContext context)
 		{
