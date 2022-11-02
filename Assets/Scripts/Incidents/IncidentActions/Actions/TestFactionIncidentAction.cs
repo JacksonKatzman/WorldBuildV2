@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.Factions;
 using Sirenix.OdinInspector;
 
 namespace Game.Incidents
 {
 	[Serializable]
-	public class TestFactionIncidentAction : IncidentAction<FactionContext>
+	public class TestFactionIncidentAction : IncidentAction<Faction>
 	{
 		[HideReferenceObjectPicker]
-		public IncidentContextActionField<FactionContext> requiredFaction;
+		public IncidentContextActionField<Faction> requiredFaction;
 
 		override public void PerformAction(IIncidentContext context)
 		{

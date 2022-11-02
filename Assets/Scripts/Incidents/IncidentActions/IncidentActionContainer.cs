@@ -24,7 +24,7 @@ namespace Game.Incidents
 
 			foreach(var action in Actions)
 			{
-				if(!action.VerifyAction(context, GetProviderFromActionFields))
+				if(!action.VerifyAction(context, GetContextFromActionFields))
 				{
 					OutputLogger.LogWarning("ActionContainer failed to verify action context!");
 					return false;
@@ -36,21 +36,21 @@ namespace Game.Incidents
 				action.PerformAction(context);
 			}
 
-			report.Providers = GetContextProviderDictionary(context);
+			report.Contexts = GetContextDictionary(context);
 			report.ReportLog = incidentLog;
 
 			foreach(var deployer in Deployers)
 			{
-				deployer.Deploy(context, GetProviderFromActionFields);
+				deployer.Deploy(context, GetContextFromActionFields);
 			}
 
 			return true;
 		}
 
-		public Dictionary<string, IIncidentContextProvider> GetContextProviderDictionary(IIncidentContext context)
+		public Dictionary<string, IIncidentContext> GetContextDictionary(IIncidentContext context)
 		{
-			var providerDictionary = new Dictionary<string, IIncidentContextProvider>();
-			providerDictionary.Add("{0}", context.Provider);
+			var contextDictionary = new Dictionary<string, IIncidentContext>();
+			contextDictionary.Add("{0}", context);
 
 			foreach (var action in Actions)
 			{
@@ -61,14 +61,14 @@ namespace Game.Incidents
 				foreach (var field in matchingFields)
 				{
 					var actionField = field.GetValue(action) as IIncidentActionField;
-					providerDictionary.Add(actionField.ActionFieldIDString, actionField.GetFieldValue());
+					contextDictionary.Add(actionField.ActionFieldIDString, actionField.GetFieldValue());
 				}
 			}
 
-			return providerDictionary;
+			return contextDictionary;
 		}
 
-		public IIncidentActionField GetProviderFromActionFields(int actionFieldID)
+		public IIncidentActionField GetContextFromActionFields(int actionFieldID)
 		{
 			if(actionFieldID == 0)
 			{

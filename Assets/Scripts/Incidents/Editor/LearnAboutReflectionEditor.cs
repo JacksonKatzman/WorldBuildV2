@@ -18,44 +18,28 @@ namespace Game.Incidents
 			DrawDefaultInspector();
 
 			if (GUILayout.Button("REFLECT!"))
-			{
-
-				Type contextType = typeof(FactionContext);
-				Type type = typeof(Foo);
-				var allActions = System.Reflection.Assembly.GetExecutingAssembly().GetTypes().Where(x => type.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract).ToList();
-				var onlyGenerics = System.Reflection.Assembly.GetExecutingAssembly().GetTypes().Where(x => type.IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract && x.IsGenericType).ToList();
-				var otherMethod = GetAllTypesImplementingOpenGenericType(typeof(IIncidentContext), Assembly.GetExecutingAssembly()).ToList();
-				//var typesThatMatch = allActions.Where((IncidentAction)x => )
-
-				foreach (var t in otherMethod)
-				{
-					var isGT = t.BaseType.IsGenericType;
-					if (isGT && t.BaseType.GetGenericArguments()[0] == contextType)
-					{
-						OutputLogger.Log(t.FullName);
-					}
-				}
+			{ 
 
 			}
 
 			if (GUILayout.Button("Test Faction"))
 			{
 				var faction = new Faction();
-				faction.context.Population = 14;
+				faction.Population = 14;
 
 				var faction2 = new Faction();
-				faction2.context.Population = 5;
+				faction2.Population = 5;
 
 				var simMan = SimulationManager.Instance;
 
 				simMan.CreateDebugWorld();
-				simMan.Providers[typeof(FactionContext)].Add(faction);
-				simMan.Providers[typeof(FactionContext)].Add(faction2);
+				simMan.Contexts[typeof(Faction)].Add(faction);
+				simMan.Contexts[typeof(Faction)].Add(faction2);
 
 				faction.DeployContext();
 			}
 
-			if(GUILayout.Button("In game test!"))
+			if (GUILayout.Button("In game test!"))
 			{
 				SimulationManager.Instance.DebugRun();
 			}
@@ -73,27 +57,4 @@ namespace Game.Incidents
 				   select x;
 		}
 	}
-
-
-	public interface Foo
-	{
-
-	}
-
-	abstract public class Bar<T> : Foo where T : IIncidentContext
-	{
-		//abstract public Type ContextType { get; }
-		public Type ContextType => typeof(T);
-	}
-
-	public class Goo : Bar<FactionContext>
-	{
-		//override public Type ContextType => typeof(FactionContext);
-	}
-
-	public class Ga : Bar<FactionContext>
-	{
-		//override public Type ContextType => typeof(FactionContext);
-	}
-
 }

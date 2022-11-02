@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Factions;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,14 +92,14 @@ namespace Game.Incidents
 			{
 				if (fieldAction.CalculateField(context, delayedCalculateAction))
 				{
-					var contextProvider = fieldAction.GetFieldValue();
-					return criteria.Evaluate(contextProvider.GetContext());
+					var calculatedContext = fieldAction.GetFieldValue();
+					return criteria.Evaluate(calculatedContext);
 				}
 			}
 			else
 			{
-				var contextProvider = fieldAction.GetFieldValue();
-				return criteria.Evaluate(contextProvider.GetContext());
+				var calculatedContext = fieldAction.GetFieldValue();
+				return criteria.Evaluate(calculatedContext);
 			}
 			return false;
 		}
@@ -126,8 +127,6 @@ namespace Game.Incidents
 
 	public abstract class DeployableContext : IDeployableContext
 	{
-		public IIncidentContextProvider Provider => null;
-
 		public Type ContextType => this.GetType();
 
 		[ShowInInspector]
@@ -151,13 +150,17 @@ namespace Game.Incidents
 
 			return true;
 		}
+
+		public void DeployContext() { }
+
+		public void UpdateContext() { }
 	}
 
 	public class WarDeclaredContext : DeployableContext
 	{
 		[HideReferenceObjectPicker]
-		public DeployedContextActionField<FactionContext> faction1;
+		public DeployedContextActionField<Faction> faction1;
 		[HideReferenceObjectPicker]
-		public DeployedContextActionField<FactionContext> faction2;
+		public DeployedContextActionField<Faction> faction2;
 	}
 }

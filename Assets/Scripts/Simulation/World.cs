@@ -11,17 +11,18 @@ namespace Game.Simulation
 		[NonSerialized]
 		private HexGrid hexGrid;
 
-		public ContextTypeListDictionary<IIncidentContextProvider> Providers { get; private set; }
+		public ContextTypeListDictionary<IIncidentContext> Contexts { get; private set; }
 
 		public World()
 		{
-			Providers = new ContextTypeListDictionary<IIncidentContextProvider>();
+			Contexts = new ContextTypeListDictionary<IIncidentContext>();
 		}
 
 		public World(HexGrid hexGrid)
 		{
 			this.hexGrid = hexGrid;
-			Providers = new ContextTypeListDictionary<IIncidentContextProvider>();
+
+			Contexts = new ContextTypeListDictionary<IIncidentContext>();
 		}
 
 		public void Initialize()
@@ -31,12 +32,12 @@ namespace Game.Simulation
 
 		public void AdvanceTime()
 		{
-			foreach(var providerList in Providers.Values)
+			foreach(var contextList in Contexts.Values)
 			{
-				foreach(var provider in providerList)
+				foreach(var context in contextList)
 				{
-					provider.UpdateContext();
-					provider.DeployContext();
+					context.UpdateContext();
+					context.DeployContext();
 				}
 			}
 		}
@@ -59,7 +60,7 @@ namespace Game.Simulation
 			for(int i = 0; i < numFactions; i++)
 			{
 				var faction = new Faction();
-				Providers[typeof(FactionContext)].Add(faction);
+				Contexts[typeof(Faction)].Add(faction);
 				faction.AttemptExpandBorder(1);
 			}
 		}

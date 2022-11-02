@@ -3,24 +3,32 @@ using Game.Simulation;
 using Game.Terrain;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Factions
 {
-	public class Faction : IIncidentContextProvider
+	[Serializable]
+	public class Faction : IIncidentContext
 	{
-		public FactionContext context;
-		public Type ContextType => typeof(FactionContext);
+		public Type ContextType => typeof(Faction);
+
+		public int NumIncidents { get; set; }
+
+		public int ParentID => -1;
+		public int Population { get; set; }
+		public int Influence { get; set; }
+		public Dictionary<IIncidentContext, int> TestInts { get; set; }
+		public int ControlledTiles => controlledTileIndices.Count;
+
+		[HideInInspector]
+		public List<int> controlledTileIndices;
 
 		public Faction()
 		{
-			context = new FactionContext();
-			context.Provider = this;
 		}
 
 		public Faction(int startingTiles)
 		{
-			context = new FactionContext();
-			context.Provider = this;
 			AttemptExpandBorder(startingTiles);
 		}
 
@@ -28,20 +36,10 @@ namespace Game.Factions
 		{
 			IncidentService.Instance.PerformIncidents(this);
 		}
-
-		public IIncidentContext GetContext()
-		{
-			return context;
-		}
-
 		public void UpdateContext()
 		{
-			context.Influence += 1;
-			if(context.TestInts == null)
-			{
-				context.TestInts = new Dictionary<IIncidentContext, int>();
-				context.TestInts.Add(this.context, 5);
-			}
+			NumIncidents = 1;
+			Influence += 1;
 		}
 
 		public bool AttemptExpandBorder(int numTimes)
@@ -50,15 +48,15 @@ namespace Game.Factions
 			int searchFrontierPhase = 1;
 			int size = 0;
 
-			if (context.controlledTileIndices == null)
+			if (controlledTileIndices == null)
 			{
-				context.controlledTileIndices = new List<int>();
+				controlledTileIndices = new List<int>();
 			}
-			if(context.controlledTileIndices.Count == 0)
+			if(controlledTileIndices.Count == 0)
 			{
 				if (SimulationUtilities.GetRandomUnclaimedCellIndex(out var index))
 				{
-					context.controlledTileIndices.Add(index);
+					controlledTileIndices.Add(index);
 					size++;
 				}
 				else
@@ -68,7 +66,7 @@ namespace Game.Factions
 				}
 			}
 
-			HexCell firstCell = SimulationManager.Instance.HexGrid.GetCell(context.controlledTileIndices[0]);
+			HexCell firstCell = SimulationManager.Instance.HexGrid.GetCell(controlledTileIndices[0]);
 			firstCell.SearchPhase = searchFrontierPhase;
 			firstCell.Distance = 0;
 			firstCell.SearchHeuristic = 0;
@@ -80,7 +78,7 @@ namespace Game.Factions
 				HexCell current = searchFrontier.Dequeue();
 				if(SimulationUtilities.IsCellIndexUnclaimed(current.Index))
 				{
-					context.controlledTileIndices.Add(current.Index);
+					controlledTileIndices.Add(current.Index);
 					size++;
 				}
 

@@ -34,10 +34,6 @@ namespace Game.Incidents
 			OutputLogger.Log("Calling Setup!");
 			Setup();
 		}
-		public void PerformIncidents(IIncidentContextProvider incidentContextProvider)
-		{
-			PerformIncidents(incidentContextProvider.GetContext());
-		}
 
 		public void PerformIncidents(IIncidentContext context)
 		{
@@ -59,18 +55,21 @@ namespace Game.Incidents
 				return;
 			}
 
-			var report = new IncidentReport();
-
-			var completed = false;
-			for(int i = 0; i < 5 && i < possibleIncidents.Count && !completed; i++)
+			for (int a = 0; a < context.NumIncidents; a++)
 			{
-				completed = SimRandom.RandomEntryFromList(possibleIncidents).PerformIncident(incidentContext, ref report);
-			}
+				var report = new IncidentReport();
 
-			if(completed)
-			{
-				nextIncidentID++;
-				reports.Add(report);
+				var completed = false;
+				for (int i = 0; i < 5 && i < possibleIncidents.Count && !completed; i++)
+				{
+					completed = SimRandom.RandomEntryFromList(possibleIncidents).PerformIncident(incidentContext, ref report);
+				}
+
+				if (completed)
+				{
+					nextIncidentID++;
+					reports.Add(report);
+				}
 			}
 		}
 

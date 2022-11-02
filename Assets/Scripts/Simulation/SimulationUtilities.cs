@@ -34,9 +34,9 @@ namespace Game.Simulation
 
 		public static bool IsCellIndexUnclaimed(int index)
 		{
-			foreach (var faction in SimulationManager.Instance.world.Providers[typeof(FactionContext)])
+			foreach (var faction in SimulationManager.Instance.world.Contexts[typeof(Faction)])
 			{
-				var context = faction.GetContext() as FactionContext;
+				var context = faction as Faction;
 				if (context.controlledTileIndices.Contains(index))
 				{
 					return false;
