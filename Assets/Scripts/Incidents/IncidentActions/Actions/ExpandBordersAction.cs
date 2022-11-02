@@ -4,7 +4,7 @@ using System;
 
 namespace Game.Incidents
 {
-	public class ExpandBordersAction : IncidentAction<Faction>
+	public class ExpandBordersAction : ContextualIncidentAction<Faction>
 	{
 		public override void PerformAction(IIncidentContext context)
 		{

@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 namespace Game.Incidents
 {
 	[Serializable]
-	public class TestFactionIncidentAction : IncidentAction<Faction>
+	public class TestFactionIncidentAction : ContextualIncidentAction<Faction>
 	{
 		[HideReferenceObjectPicker]
 		public IncidentContextActionField<Faction> requiredFaction;
