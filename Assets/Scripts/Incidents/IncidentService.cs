@@ -73,7 +73,7 @@ namespace Game.Incidents
 			}
 		}
 
-		public void PerformDelatedContexts()
+		public void PerformDelayedContexts()
 		{
 			foreach(var context in delayedContexts)
 			{
