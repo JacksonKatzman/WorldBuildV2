@@ -24,28 +24,40 @@ namespace Game.Incidents
 			ContextType = type;
 		}
 
-		public bool PerformActions(IIncidentContext context, ref IncidentReport report)
+		public bool VerifyActions(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction = null)
 		{
 			providedContext = context;
 
-			foreach(var action in Actions)
+			if (delayedCalculateAction == null)
 			{
-				if(!action.VerifyAction(context, GetContextFromActionFields))
+				delayedCalculateAction = GetContextFromActionFields;
+			}
+
+			foreach (var action in Actions)
+			{
+				if (!action.VerifyAction(context, delayedCalculateAction))
 				{
 					OutputLogger.LogWarning("ActionContainer failed to verify action context!");
 					return false;
 				}
 			}
 
+			return true;
+		}
+
+		public bool PerformActions(IIncidentContext context, ref IncidentReport report)
+		{
+			providedContext = context;
+
 			foreach (var action in Actions)
 			{
-				action.PerformAction(context);
+				action.PerformAction(context, ref report);
 			}
 
-			report.Contexts = GetContextDictionary(context);
-			report.ReportLog = incidentLog;
+			report.ReportLog += incidentLog;
+			GetContextDictionary(ref report);
 
-			foreach(var deployer in Deployers)
+			foreach (var deployer in Deployers)
 			{
 				deployer.Deploy(context, GetContextFromActionFields);
 			}
@@ -53,29 +65,27 @@ namespace Game.Incidents
 			return true;
 		}
 
-		public void UpdateActionFieldIDs()
+		public void UpdateActionFieldIDs(ref int startingValue)
 		{
-			var constant = new ConstantActionField(ContextType);
-			IncidentEditorWindow.actionFields.Add(constant);
-			int startingValue = 1;
+			if (startingValue == 0)
+			{
+				var constant = new ConstantActionField(ContextType);
+				IncidentEditorWindow.actionFields.Add(constant);
+				startingValue++;
+			}
+
 			foreach(var container in Actions)
 			{
 				container.UpdateActionFieldIDs(ref startingValue);
 			}
 		}
 
-		//need to refactor these both to grab shit at the right reflection level
-		public Dictionary<string, IIncidentContext> GetContextDictionary(IIncidentContext context)
+		public void GetContextDictionary(ref IncidentReport report)
 		{
-			var contextDictionary = new Dictionary<string, IIncidentContext>();
-			contextDictionary.Add("{0}", context);
-
 			foreach (var action in Actions)
 			{
-				action.AddContext(ref contextDictionary);
+				action.AddContext(ref report);
 			}
-
-			return contextDictionary;
 		}
 
 		public IIncidentActionField GetContextFromActionFields(int actionFieldID)

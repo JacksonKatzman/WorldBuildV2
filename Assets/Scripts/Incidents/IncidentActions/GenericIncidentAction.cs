@@ -19,38 +19,107 @@ namespace Game.Incidents
 		public BranchingAction()
 		{
 		}
-		public override void PerformAction(IIncidentContext context)
+
+		override public bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
-			throw new NotImplementedException();
+			foreach (var branch in branches)
+			{
+				if(!branch.VerifyActions(context, delayedCalculateAction))
+				{
+					return false;
+				}
+			}
+
+			return true;
 		}
 
-		public override void UpdateEditor()
+		override public void PerformAction(IIncidentContext context, ref IncidentReport report)
+		{
+			//instead of foreach need to choose one based on weights
+			foreach (var branch in branches)
+			{
+				branch.PerformActions(context, ref report);
+			}
+		}
+
+		override public void UpdateEditor()
 		{
 			base.UpdateEditor();
 			branches = new List<IncidentActionBranch>();
 		}
 
+		override public void UpdateActionFieldIDs(ref int startingValue)
+		{
+			foreach(var branch in branches)
+			{
+				branch.UpdateActionFieldIDs(ref startingValue);
+			}
+		}
+/*
+		override public void AddContext(ref IncidentReport report)
+		{
+			foreach (var branch in branches)
+			{
+				branch.AddContext(ref report);
+			}
+		}
+*/
+		override public bool GetContextField(int id, out IIncidentActionField contextField)
+		{
+			foreach (var branch in branches)
+			{
+				var test = branch.GetContextField(id);
+				if(test != null)
+				{
+					contextField = test;
+					return true;
+				}
+			}
+			contextField = null;
+			return false;
+		}
+
 		private void AddBranch()
 		{
-			branches.Add(new IncidentActionBranch());
+			branches.Add(new IncidentActionBranch(IncidentEditorWindow.ContextType));
 		}
 	}
 
 	public class IncidentActionBranch
 	{
 		public int weight;
-		[TypeFilter("GetFilteredTypeList"), OnValueChanged("SetAction"), HideLabel]
-		public List<IIncidentAction> actions;
 
-		private void SetAction()
+		[HideReferenceObjectPicker]
+		public IncidentActionHandler actionHandler;
+
+		public IncidentActionBranch(Type type)
 		{
-			//incidentAction.UpdateEditor();
-			//onSetCallback?.Invoke();
+			actionHandler = new IncidentActionHandler(type);
 		}
 
-		private IEnumerable<Type> GetFilteredTypeList()
+		public bool VerifyActions(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
-			return IncidentActionHelpers.GetFilteredTypeList(IncidentEditorWindow.ContextType);
+			return actionHandler.VerifyActions(context, delayedCalculateAction);
+		}
+
+		public void PerformActions(IIncidentContext context, ref IncidentReport report)
+		{
+			actionHandler.PerformActions(context, ref report);
+		}
+
+		public void UpdateActionFieldIDs(ref int startingValue)
+		{
+			actionHandler.UpdateActionFieldIDs(ref startingValue);
+		}
+
+		public void AddContext(ref IncidentReport report)
+		{
+			actionHandler.GetContextDictionary(ref report);
+		}
+
+		public IIncidentActionField GetContextField(int id)
+		{
+			return actionHandler.GetContextFromActionFields(id);
 		}
 	}
 

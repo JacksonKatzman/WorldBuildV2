@@ -10,8 +10,7 @@ namespace Game.Incidents
 	{
 		virtual public bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
-			var fields = this.GetType().GetFields();
-			var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(ContextualIncidentActionField<>)).ToList();
+			var matchingFields = GetContexualActionFields();
 
 			foreach (var field in matchingFields)
 			{
@@ -25,7 +24,7 @@ namespace Game.Incidents
 			return true;
 		}
 
-		abstract public void PerformAction(IIncidentContext context);
+		abstract public void PerformAction(IIncidentContext context, ref IncidentReport report);
 
 		virtual public void UpdateEditor()
 		{
@@ -39,8 +38,6 @@ namespace Game.Incidents
 
 		virtual public void UpdateActionFieldIDs(ref int startingValue)
 		{
-			IncidentEditorWindow.actionFields.Clear();
-
 			var matchingFields = GetContexualActionFields();
 
 			foreach (var f in matchingFields)
@@ -51,17 +48,16 @@ namespace Game.Incidents
 				IncidentEditorWindow.actionFields.Add(fa);
 				startingValue++;
 			}
-			
 		}
 
-		virtual public void AddContext(ref Dictionary<string, IIncidentContext> contextDictionary)
+		virtual public void AddContext(ref IncidentReport report)
 		{
 			var matchingFields = GetContexualActionFields();
 
 			foreach (var field in matchingFields)
 			{
 				var actionField = field.GetValue(this) as IIncidentActionField;
-				contextDictionary.Add(actionField.ActionFieldIDString, actionField.GetFieldValue());
+				report.Contexts.Add(actionField.ActionFieldIDString, actionField.GetFieldValue());
 			}
 		}
 

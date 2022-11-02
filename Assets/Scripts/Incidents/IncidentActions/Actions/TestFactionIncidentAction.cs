@@ -11,7 +11,7 @@ namespace Game.Incidents
 		[HideReferenceObjectPicker]
 		public ContextualIncidentActionField<Faction> requiredFaction;
 
-		override public void PerformAction(IIncidentContext context)
+		override public void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
 			PerformDebugAction();
 		}

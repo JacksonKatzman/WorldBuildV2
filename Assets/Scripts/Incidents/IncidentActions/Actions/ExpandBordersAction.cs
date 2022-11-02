@@ -6,7 +6,7 @@ namespace Game.Incidents
 {
 	public class ExpandBordersAction : ContextualIncidentAction<Faction>
 	{
-		public override void PerformAction(IIncidentContext context)
+		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
 			//Calculate the cell that is best within the ones closest to the current center that arent unclaimed.
 			//Can allow for a little wiggle room for more interesting generation

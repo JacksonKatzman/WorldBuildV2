@@ -39,7 +39,7 @@ namespace Game.Incidents
                 }
 		}
 
-        private int numActionFields;
+        static private int numActionFields;
         private bool modeChosen;
 
         public static Dictionary<string, Type> Properties => properties;
@@ -92,7 +92,7 @@ namespace Game.Incidents
             actionHandler = loadedIncident.ActionHandler;
             //need to call to get/update IDs
             //contextDeployers = loadedIncident.ActionHandler.Deployers;
-            actionHandler.UpdateActionFieldIDs();
+            UpdateActionFieldIDs();
             modeChosen = true;
 
             OutputLogger.Log("Incident Loaded!");
@@ -118,7 +118,9 @@ namespace Game.Incidents
 
         public static void UpdateActionFieldIDs()
 		{
-            actionHandler.UpdateActionFieldIDs();
+            actionFields.Clear();
+            numActionFields = 0;
+            actionHandler.UpdateActionFieldIDs(ref numActionFields);
 		}
 
         private IEnumerable<Type> GetFilteredTypeList()

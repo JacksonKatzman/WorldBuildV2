@@ -31,9 +31,9 @@ namespace Game.Incidents
 			return true;
 		}
 
-		public void PerformAction(IIncidentContext context)
+		public void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			incidentAction.PerformAction(context);
+			incidentAction.PerformAction(context, ref report);
 		}
 
 		public void UpdateActionFieldIDs(ref int startingValue)
@@ -41,9 +41,9 @@ namespace Game.Incidents
 			incidentAction.UpdateActionFieldIDs(ref startingValue);
 		}
 
-		public void AddContext(ref Dictionary<string, IIncidentContext> contextDictionary)
+		public void AddContext(ref IncidentReport report)
 		{
-			incidentAction.AddContext(ref contextDictionary);
+			incidentAction.AddContext(ref report);
 		}
 
 		public bool GetContextField(int id, out IIncidentActionField contextField)

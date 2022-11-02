@@ -32,7 +32,18 @@ namespace Game.Incidents
 
 		public bool PerformIncident(IIncidentContext context, ref IncidentReport report )
 		{
-			return ActionHandler.PerformActions(context, ref report);
+			var contextDictionary = new Dictionary<string, IIncidentContext>();
+			contextDictionary.Add("{0}", context);
+			report.Contexts = contextDictionary;
+
+			if(!ActionHandler.VerifyActions(context))
+			{
+				return false;
+			}
+
+			ActionHandler.PerformActions(context, ref report);
+
+			return true;
 		}
 	}
 }
