@@ -35,10 +35,20 @@ namespace Game.Incidents
 
 		override public void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			//instead of foreach need to choose one based on weights
+			var totalWeight = 0;
 			foreach (var branch in branches)
 			{
-				branch.PerformActions(context, ref report);
+				totalWeight += branch.GetWeight(context);
+			}
+			var decider = SimRandom.RandomRange(0, totalWeight);
+			for(int i = 0; i < branches.Count; i++)
+			{
+				totalWeight -= branches[i].GetWeight(context);
+				if(decider > totalWeight)
+				{
+					branches[i].PerformActions(context, ref report);
+					return;
+				}
 			}
 		}
 
@@ -85,16 +95,60 @@ namespace Game.Incidents
 		}
 	}
 
+	public class IncidentActionBranchWeightModifier
+	{
+		public Type ContextType { get; set; }
+		[ValueDropdown("GetPropertyList")]
+		public string propertyName;
+
+		public IncidentActionBranchWeightModifier() { }
+		public IncidentActionBranchWeightModifier(Type type)
+		{
+			ContextType = type;
+		}
+
+		public int Evaluate(IIncidentContext context)
+		{
+			return (int)ContextType.GetProperty(propertyName).GetValue(context);
+		}
+
+		private IEnumerable<string> GetPropertyList()
+		{
+			var propertyInfo = ContextType.GetProperties();
+			var interfacePropertyInfo = typeof(IIncidentContext).GetProperties();
+
+			var validProperties = propertyInfo.Where(x => !interfacePropertyInfo.Any(y => x.Name == y.Name) && x.PropertyType == typeof(int));
+			return validProperties.Select(x => x.Name);
+		}
+	}
+
 	public class IncidentActionBranch
 	{
-		public int weight;
+		public Type ContextType { get; set; }
+
+		public int baseWeight;
+		[ListDrawerSettings(CustomAddFunction = "AddModifier"), HideReferenceObjectPicker]
+		public List<IncidentActionBranchWeightModifier> modifiers;
 
 		[HideReferenceObjectPicker]
 		public IncidentActionHandler actionHandler;
 
+		public IncidentActionBranch() { }
 		public IncidentActionBranch(Type type)
 		{
+			ContextType = type;
+			modifiers = new List<IncidentActionBranchWeightModifier>();
 			actionHandler = new IncidentActionHandler(type);
+		}
+
+		public int GetWeight(IIncidentContext context)
+		{
+			var totalWeight = baseWeight;
+			foreach(var mod in modifiers)
+			{
+				totalWeight += mod.Evaluate(context);
+			}
+			return totalWeight;
 		}
 
 		public bool VerifyActions(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
@@ -120,6 +174,11 @@ namespace Game.Incidents
 		public IIncidentActionField GetContextField(int id)
 		{
 			return actionHandler.GetContextFromActionFields(id);
+		}
+
+		private void AddModifier()
+		{
+			modifiers.Add(new IncidentActionBranchWeightModifier(ContextType));
 		}
 	}
 
