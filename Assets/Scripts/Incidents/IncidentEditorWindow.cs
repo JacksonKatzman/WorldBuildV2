@@ -57,14 +57,8 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
         public List<IIncidentCriteria> criteria;
 
-        //[ShowIfGroup("ContextTypeChosen")]
-        //public string incidentLog;
-
         [ShowIfGroup("ContextTypeChosen"), HideReferenceObjectPicker, ShowInInspector]
         static public IncidentActionHandler actionHandler;
-
-        //[ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewContextDeployer"), HideReferenceObjectPicker]
-        //public List<IContextDeployer> contextDeployers;
 
         [Button("New Incident"), HorizontalGroup("B1"), PropertyOrder(-1)]
         public void OnNewButtonPressed()
@@ -72,7 +66,6 @@ namespace Game.Incidents
             incidentContextType = null;
             incidentName = string.Empty;
             weight = 0;
-            //incidentLog = string.Empty;
             modeChosen = true;
         }
 
@@ -87,11 +80,8 @@ namespace Game.Incidents
             ContextType = incidentContextType;
             incidentName = savedIncidentName;
             weight = loadedIncident.Weight;
-            //incidentLog = loadedIncident.ActionHandler.incidentLog;
             criteria = loadedIncident.Criteria.criteria;
             actionHandler = loadedIncident.ActionHandler;
-            //need to call to get/update IDs
-            //contextDeployers = loadedIncident.ActionHandler.Deployers;
             UpdateActionFieldIDs();
             modeChosen = true;
 
@@ -144,18 +134,12 @@ namespace Game.Incidents
             ContextType = incidentContextType;
             criteria = new List<IIncidentCriteria>();
             actionHandler = new IncidentActionHandler(ContextType);
-            //contextDeployers = new List<IContextDeployer>();
 		}
 
         private void AddNewCriteriaItem()
         {
             criteria.Add(new IncidentCriteria(ContextType));
         }
-
-        private void AddNewContextDeployer()
-		{
-            //contextDeployers.Add(new ContextDeployer());
-		}
 
         private static void GetPropertyList()
         {

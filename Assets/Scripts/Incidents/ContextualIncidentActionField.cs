@@ -138,14 +138,4 @@ namespace Game.Incidents
 			previousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == previousField).ActionFieldID;
 		}
 	}
-
-	public class DeployedContextActionField<T> : ContextualIncidentActionField<T> where T : IIncidentContext
-	{
-		[ShowInInspector]
-		override public string ActionFieldIDString => "None";
-
-		public DeployedContextActionField(Type parentType) : base(parentType)
-		{
-		}
-	}
 }
