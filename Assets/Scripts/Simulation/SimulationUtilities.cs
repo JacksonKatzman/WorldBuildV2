@@ -37,7 +37,7 @@ namespace Game.Simulation
 			foreach (var faction in SimulationManager.Instance.world.Contexts[typeof(Faction)])
 			{
 				var context = faction as Faction;
-				if (context.controlledTileIndices.Contains(index))
+				if (context.ControlledTileIndices.Contains(index))
 				{
 					return false;
 				}

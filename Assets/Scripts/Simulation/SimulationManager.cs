@@ -35,7 +35,7 @@ namespace Game.Simulation
 		}
 
 
-		public ContextTypeListDictionary<IIncidentContext> Contexts => world.Contexts;
+		public TypeListDictionary<IIncidentContext> Contexts => world.Contexts;
 
 		public void CreateWorld()
 		{

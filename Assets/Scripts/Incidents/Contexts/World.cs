@@ -2,27 +2,32 @@
 using Game.Incidents;
 using Game.Terrain;
 using System;
-using System.Collections.Generic;
 
 namespace Game.Simulation
 {
-	public class World
+	public class World : IIncidentContext
 	{
 		[NonSerialized]
 		private HexGrid hexGrid;
 
-		public ContextTypeListDictionary<IIncidentContext> Contexts { get; private set; }
+		public TypeListDictionary<IIncidentContext> Contexts { get; private set; }
+
+		public Type ContextType => typeof(World);
+
+		public int NumIncidents { get; set; }
+
+		public int ParentID => -1;
 
 		public World()
 		{
-			Contexts = new ContextTypeListDictionary<IIncidentContext>();
+			Contexts = new TypeListDictionary<IIncidentContext>();
 		}
 
 		public World(HexGrid hexGrid)
 		{
 			this.hexGrid = hexGrid;
 
-			Contexts = new ContextTypeListDictionary<IIncidentContext>();
+			Contexts = new TypeListDictionary<IIncidentContext>();
 		}
 
 		public void Initialize()
@@ -32,11 +37,20 @@ namespace Game.Simulation
 
 		public void AdvanceTime()
 		{
+			UpdateContext();
 			foreach(var contextList in Contexts.Values)
 			{
 				foreach(var context in contextList)
 				{
 					context.UpdateContext();
+				}
+			}
+
+			DeployContext();
+			foreach (var contextList in Contexts.Values)
+			{
+				foreach (var context in contextList)
+				{
 					context.DeployContext();
 				}
 			}
@@ -64,30 +78,15 @@ namespace Game.Simulation
 				faction.AttemptExpandBorder(1);
 			}
 		}
-	}
 
-	public class ContextTypeListDictionary<T> : Dictionary<Type, List<T>>
-	{
-		public new List<T> this[Type key]
+		public void UpdateContext()
 		{
-			get
-			{
-				if(!this.ContainsKey(key))
-				{
-					this.Add(key, new List<T>());
-				}
+			throw new NotImplementedException();
+		}
 
-				return base[key];
-			}
-			set
-			{
-				if (!this.ContainsKey(key))
-				{
-					this.Add(key, new List<T>());
-				}
-
-				base[key] = value;
-			}
+		public void DeployContext()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
