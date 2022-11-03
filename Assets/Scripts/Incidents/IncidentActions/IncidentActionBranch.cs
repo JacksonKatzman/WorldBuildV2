@@ -13,14 +13,14 @@ namespace Game.Incidents
 		public List<IncidentActionBranchWeightModifier> modifiers;
 
 		[HideReferenceObjectPicker]
-		public IncidentActionHandler actionHandler;
+		public IncidentActionHandlerContainer actionHandler;
 
 		public IncidentActionBranch() { }
 		public IncidentActionBranch(Type type)
 		{
 			ContextType = type;
 			modifiers = new List<IncidentActionBranchWeightModifier>();
-			actionHandler = new IncidentActionHandler(type);
+			actionHandler = new IncidentActionHandlerContainer(type);
 		}
 
 		public int GetWeight(IIncidentContext context)

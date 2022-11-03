@@ -17,7 +17,8 @@ namespace Game.Factions
 		public int ParentID => -1;
 		public int Population { get; set; }
 		public int Influence { get; set; }
-		public Dictionary<IIncidentContext, int> TestInts { get; set; }
+		public int Wealth { get; set; }
+		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		public int ControlledTiles => controlledTileIndices.Count;
 
 		[HideInInspector]

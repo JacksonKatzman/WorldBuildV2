@@ -58,7 +58,7 @@ namespace Game.Incidents
         public List<IIncidentCriteria> criteria;
 
         [ShowIfGroup("ContextTypeChosen"), HideReferenceObjectPicker, ShowInInspector]
-        static public IncidentActionHandler actionHandler;
+        static public IncidentActionHandlerContainer actionHandler;
 
         [Button("New Incident"), HorizontalGroup("B1"), PropertyOrder(-1)]
         public void OnNewButtonPressed()
@@ -81,7 +81,7 @@ namespace Game.Incidents
             incidentName = savedIncidentName;
             weight = loadedIncident.Weight;
             criteria = loadedIncident.Criteria.criteria;
-            actionHandler = loadedIncident.ActionHandler;
+            actionHandler = loadedIncident.ActionContainer;
             UpdateActionFieldIDs();
             modeChosen = true;
 
@@ -133,7 +133,7 @@ namespace Game.Incidents
 		{
             ContextType = incidentContextType;
             criteria = new List<IIncidentCriteria>();
-            actionHandler = new IncidentActionHandler(ContextType);
+            actionHandler = new IncidentActionHandlerContainer(ContextType);
 		}
 
         private void AddNewCriteriaItem()

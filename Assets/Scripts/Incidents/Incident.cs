@@ -11,22 +11,22 @@ namespace Game.Incidents
 		public int Weight { get; set; }
 		public IncidentCriteriaContainer Criteria { get; set; }
 
-		public IncidentActionHandler ActionHandler { get; set; }
+		public IncidentActionHandlerContainer ActionContainer { get; set; }
 
 		[JsonConstructor]
-		public Incident(Type contextType, IncidentCriteriaContainer criteria, IncidentActionHandler actions, int weight)
+		public Incident(Type contextType, IncidentCriteriaContainer criteria, IncidentActionHandlerContainer actions, int weight)
 		{
 			ContextType = contextType;
 			Criteria = criteria;
-			ActionHandler = actions;
+			ActionContainer = actions;
 			Weight = weight;
 		}
 
-		public Incident(Type contextType, List<IIncidentCriteria> criteria, IncidentActionHandler container, int weight = 5)
+		public Incident(Type contextType, List<IIncidentCriteria> criteria, IncidentActionHandlerContainer container, int weight = 5)
 		{
 			ContextType = contextType;
 			Criteria = new IncidentCriteriaContainer(criteria);
-			ActionHandler = container;
+			ActionContainer = container;
 			Weight = weight;
 		}
 
@@ -36,12 +36,12 @@ namespace Game.Incidents
 			contextDictionary.Add("{0}", context);
 			report.Contexts = contextDictionary;
 
-			if(!ActionHandler.VerifyActions(context))
+			if(!ActionContainer.VerifyActions(context))
 			{
 				return false;
 			}
 
-			ActionHandler.PerformActions(context, ref report);
+			ActionContainer.PerformActions(context, ref report);
 
 			return true;
 		}
