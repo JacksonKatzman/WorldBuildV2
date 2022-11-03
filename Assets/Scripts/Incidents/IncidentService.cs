@@ -62,7 +62,7 @@ namespace Game.Incidents
 				var completed = false;
 				for (int i = 0; i < 5 && i < possibleIncidents.Count && !completed; i++)
 				{
-					completed = SimRandom.RandomEntryFromList(possibleIncidents).PerformIncident(incidentContext, ref report);
+					completed = SimRandom.RandomEntryFromWeightedDictionary(possibleIncidents).PerformIncident(incidentContext, ref report);
 				}
 
 				if (completed)
@@ -73,7 +73,7 @@ namespace Game.Incidents
 			}
 		}
 
-		public void PerformDelatedContexts()
+		public void PerformDelayedContexts()
 		{
 			foreach(var context in delayedContexts)
 			{
@@ -96,10 +96,19 @@ namespace Game.Incidents
 			var items = incidents.Where(x => x.ContextType == type).ToList();
 			return items;
 		}
-		private List<IIncident> GetIncidentsWithMatchingCriteria(List<IIncident> incidents, IIncidentContext context)
+		private Dictionary<int, List<IIncident>> GetIncidentsWithMatchingCriteria(List<IIncident> incidents, IIncidentContext context)
 		{
 			var items = incidents.Where(x => x.Criteria.Evaluate(context) == true).ToList();
-			return items;
+			Dictionary<int, List<IIncident>> sortedItems = new Dictionary<int, List<IIncident>>();
+			foreach(var item in items)
+			{
+				if(!sortedItems.ContainsKey(item.Weight))
+				{
+					sortedItems.Add(item.Weight, new List<IIncident>());
+				}
+				sortedItems[item.Weight].Add(item);
+			}
+			return sortedItems;
 		}
 
 		private void Setup()

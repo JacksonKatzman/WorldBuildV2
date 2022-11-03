@@ -1,63 +1,88 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Game.Incidents
 {
-	abstract public class IncidentAction<T> : IIncidentAction where T : IIncidentContext
+	abstract public class IncidentAction : IIncidentAction
 	{
-		private IIncidentContext context;
-		public Type ContextType => typeof(T);
-		public IIncidentContext Context
+		virtual public bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
-			get { return context; }
-			set
-			{
-				if (value != null)
-				{
-					if (value.ContextType == ContextType)
-					{
-						context = value;
-					}
-					else
-					{
-						OutputLogger.LogError(string.Format("Cannot assign context of type {0} to action with context type {1}", value.GetType().ToString(), ContextType.ToString()));
-					}
-				}
-			}
-		}
-
-		public bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
-		{
-			return VerifyContextActionFields(context, delayedCalculateAction);
-		}
-
-		abstract public void PerformAction(IIncidentContext context);
-
-		public void UpdateEditor()
-		{
-			var fields = this.GetType().GetFields();
-			var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>)).ToList();
-
-			foreach (var field in matchingFields)
-			{
-				field.SetValue(this, Activator.CreateInstance(field.FieldType, ContextType));
-			}
-		}
-		protected bool VerifyContextActionFields(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
-		{
-			var fields = this.GetType().GetFields();
-			var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(IncidentContextActionField<>)).ToList();
+			var matchingFields = GetContexualActionFields();
 
 			foreach (var field in matchingFields)
 			{
 				var actionField = field.GetValue(this) as IIncidentActionField;
-				if(!actionField.CalculateField(context, delayedCalculateAction))
+				if (!actionField.CalculateField(context, delayedCalculateAction))
 				{
 					return false;
 				}
 			}
 
 			return true;
+		}
+
+		abstract public void PerformAction(IIncidentContext context, ref IncidentReport report);
+
+		virtual public void UpdateEditor()
+		{
+			var matchingFields = GetContexualActionFields();
+
+			foreach (var field in matchingFields)
+			{
+				field.SetValue(this, Activator.CreateInstance(field.FieldType));
+			}
+		}
+
+		virtual public void UpdateActionFieldIDs(ref int startingValue)
+		{
+			var matchingFields = GetContexualActionFields();
+
+			foreach (var f in matchingFields)
+			{
+				var fa = f.GetValue(this) as IIncidentActionField;
+				fa.ActionFieldID = startingValue;
+				fa.NameID = string.Format("{0}:{1}:{2}", fa.ActionFieldIDString, GetType().Name, f.Name);
+				IncidentEditorWindow.actionFields.Add(fa);
+				startingValue++;
+			}
+		}
+
+		virtual public void AddContext(ref IncidentReport report)
+		{
+			var matchingFields = GetContexualActionFields();
+
+			foreach (var field in matchingFields)
+			{
+				var actionField = field.GetValue(this) as IIncidentActionField;
+				report.Contexts.Add(actionField.ActionFieldIDString, actionField.GetFieldValue());
+			}
+		}
+
+		virtual public bool GetContextField(int id, out IIncidentActionField contextField)
+		{
+			var matchingFields = GetContexualActionFields();
+
+			foreach (var field in matchingFields)
+			{
+				var actionField = field.GetValue(this) as IIncidentActionField;
+				if (actionField.ActionFieldID == id)
+				{
+					contextField = actionField;
+					return true;
+				}
+			}
+
+			contextField = null;
+			return false;
+		}
+
+		private IEnumerable<FieldInfo> GetContexualActionFields()
+		{
+			var fields = this.GetType().GetFields();
+			return fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(ContextualIncidentActionField<>));
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace Game.Incidents
 	public enum ActionFieldRetrievalMethod { Criteria, From_Previous, Random };
 
 	[Serializable]
-	public class IncidentContextActionField<T> : IIncidentActionField where T : IIncidentContext
+	public class ContextualIncidentActionField<T> : IIncidentActionField where T : IIncidentContext
 	{
 		[HideInInspector]
 		public Type parentType;
@@ -43,12 +43,13 @@ namespace Game.Incidents
 		private IIncidentContext value;
 		private IIncidentActionField delayedValue;
 
-		public IncidentContextActionField() { }
-		public IncidentContextActionField(Type parentType)
+		public ContextualIncidentActionField() 
+		{
+			RetrievalTypeChanged();
+		}
+		public ContextualIncidentActionField(Type parentType) : base()
 		{
 			this.parentType = parentType;
-
-			RetrievalTypeChanged();
 		}
 
 		public IIncidentContext GetFieldValue()
@@ -135,16 +136,6 @@ namespace Game.Incidents
 		private void SetPreviousFieldID()
 		{
 			previousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == previousField).ActionFieldID;
-		}
-	}
-
-	public class DeployedContextActionField<T> : IncidentContextActionField<T> where T : IIncidentContext
-	{
-		[ShowInInspector]
-		override public string ActionFieldIDString => "None";
-
-		public DeployedContextActionField(Type parentType) : base(parentType)
-		{
 		}
 	}
 }

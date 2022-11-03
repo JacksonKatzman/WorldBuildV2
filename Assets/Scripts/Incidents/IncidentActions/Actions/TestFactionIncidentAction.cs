@@ -6,12 +6,12 @@ using Sirenix.OdinInspector;
 namespace Game.Incidents
 {
 	[Serializable]
-	public class TestFactionIncidentAction : IncidentAction<Faction>
+	public class TestFactionIncidentAction : ContextualIncidentAction<Faction>
 	{
 		[HideReferenceObjectPicker]
-		public IncidentContextActionField<Faction> requiredFaction;
+		public ContextualIncidentActionField<Faction> requiredFaction;
 
-		override public void PerformAction(IIncidentContext context)
+		override public void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
 			PerformDebugAction();
 		}
