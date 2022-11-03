@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Factions
+namespace Game.Incidents
 {
 	[Serializable]
 	public class Faction : IIncidentContext
@@ -19,10 +19,16 @@ namespace Game.Factions
 		public int Influence { get; set; }
 		public int Wealth { get; set; }
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
-		public int ControlledTiles => controlledTileIndices.Count;
+		public int ControlledTiles => ControlledTileIndices.Count;
+		public List<City> Cities { get; set; }
+		public int PoliticalPriority { get; set; }
+		public int EconomicPriority { get; set; }
+		public int ReligiousPriority { get; set; }
+		public int MilitaryPriority { get; set; }
+		//Government structure related stuff goes here
 
 		[HideInInspector]
-		public List<int> controlledTileIndices;
+		public List<int> ControlledTileIndices { get; set; }
 
 		public Faction()
 		{
@@ -39,8 +45,11 @@ namespace Game.Factions
 		}
 		public void UpdateContext()
 		{
-			NumIncidents = 1;
-			Influence += 1;
+			UpdateWealth();
+			UpdatePopulation();
+			UpdateInfluence();
+			UpdatePERMS();
+			UpdateNumIncidents();
 		}
 
 		public bool AttemptExpandBorder(int numTimes)
@@ -49,15 +58,15 @@ namespace Game.Factions
 			int searchFrontierPhase = 1;
 			int size = 0;
 
-			if (controlledTileIndices == null)
+			if (ControlledTileIndices == null)
 			{
-				controlledTileIndices = new List<int>();
+				ControlledTileIndices = new List<int>();
 			}
-			if(controlledTileIndices.Count == 0)
+			if(ControlledTileIndices.Count == 0)
 			{
 				if (SimulationUtilities.GetRandomUnclaimedCellIndex(out var index))
 				{
-					controlledTileIndices.Add(index);
+					ControlledTileIndices.Add(index);
 					size++;
 				}
 				else
@@ -67,7 +76,7 @@ namespace Game.Factions
 				}
 			}
 
-			HexCell firstCell = SimulationManager.Instance.HexGrid.GetCell(controlledTileIndices[0]);
+			HexCell firstCell = SimulationManager.Instance.HexGrid.GetCell(ControlledTileIndices[0]);
 			firstCell.SearchPhase = searchFrontierPhase;
 			firstCell.Distance = 0;
 			firstCell.SearchHeuristic = 0;
@@ -79,7 +88,7 @@ namespace Game.Factions
 				HexCell current = searchFrontier.Dequeue();
 				if(SimulationUtilities.IsCellIndexUnclaimed(current.Index))
 				{
-					controlledTileIndices.Add(current.Index);
+					ControlledTileIndices.Add(current.Index);
 					size++;
 				}
 
@@ -99,6 +108,31 @@ namespace Game.Factions
 			SimulationManager.Instance.HexGrid.ResetSearchPhases();
 
 			return size != 0;
+		}
+
+		private void UpdateInfluence()
+		{
+
+		}
+
+		private void UpdateWealth()
+		{
+
+		}
+
+		private void UpdatePopulation()
+		{
+
+		}
+
+		private void UpdatePERMS()
+		{
+
+		}
+
+		private void UpdateNumIncidents()
+		{
+
 		}
 	}
 }
