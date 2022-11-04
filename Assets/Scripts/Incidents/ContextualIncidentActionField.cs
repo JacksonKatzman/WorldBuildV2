@@ -9,17 +9,20 @@ namespace Game.Incidents
 {
 	public enum ActionFieldRetrievalMethod { Criteria, From_Previous, Random };
 
-	[Serializable]
+	[Serializable, HideReferenceObjectPicker]
 	public class ContextualIncidentActionField<T> : IIncidentActionField where T : IIncidentContext
 	{
 		[HideInInspector]
 		public Type parentType;
 
-		[OnValueChanged("RetrievalTypeChanged"), ShowIf("@this.ShowMethodChoice"), PropertyOrder(-1)]
+		[OnValueChanged("RetrievalTypeChanged"), PropertyOrder(-1), ShowInInspector, ShowIf("ShowMethodChoice")]
 		virtual public ActionFieldRetrievalMethod Method { get; set; }
 
-		[ShowIf("@this.ShowAllowSelf")]
+		[ShowInInspector, ShowIf("@this.ShowAllowSelf")]
 		public bool AllowSelf;
+
+		[ShowInInspector, ShowIf("@this.Method == ActionFieldRetrievalMethod.From_Previous")]
+		public bool AllowNull;
 
 		[ShowIf("Method", ActionFieldRetrievalMethod.Criteria), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
 		public List<IIncidentCriteria> criteria;
@@ -66,6 +69,18 @@ namespace Game.Incidents
 			}
 		}
 
+		virtual public T GetTypedFieldValue()
+		{
+			if (Method == ActionFieldRetrievalMethod.From_Previous)
+			{
+				return (T)delayedValue.GetFieldValue();
+			}
+			else
+			{
+				return (T)value;
+			}
+		}
+
 		virtual public bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
 			if(Method == ActionFieldRetrievalMethod.Criteria)
@@ -90,7 +105,7 @@ namespace Game.Incidents
 				}
 			}
 
-			return (value != null) || (delayedValue != null);
+			return (Method == ActionFieldRetrievalMethod.From_Previous && AllowNull) ? true : ((value != null) || (delayedValue != null));
 		}
 
 		private IIncidentContext RetrieveFieldByCriteria(IIncidentContext context)
