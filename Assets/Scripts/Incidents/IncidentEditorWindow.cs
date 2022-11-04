@@ -118,7 +118,8 @@ namespace Game.Incidents
             var q = typeof(IIncidentContext).Assembly.GetTypes()
                 .Where(x => !x.IsAbstract)                                          // Excludes BaseClass
                 .Where(x => !x.IsGenericTypeDefinition)                             // Excludes C1<>
-                .Where(x => typeof(IIncidentContext).IsAssignableFrom(x));          // Excludes classes not inheriting from BaseClass
+                .Where(x => typeof(IIncidentContext).IsAssignableFrom(x))          // Excludes classes not inheriting from BaseClass
+                .Where(x => !typeof(InertIncidentContext).IsAssignableFrom(x));
 
             return q;
         }
