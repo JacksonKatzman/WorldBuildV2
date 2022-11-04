@@ -15,10 +15,10 @@ namespace Game.Incidents
 		[HideInInspector]
 		public Type parentType;
 
-		[OnValueChanged("RetrievalTypeChanged"), ShowInInspector, PropertyOrder(-1)]
+		[OnValueChanged("RetrievalTypeChanged"), ShowIf("@this.ShowMethodChoice"), PropertyOrder(-1)]
 		virtual public ActionFieldRetrievalMethod Method { get; set; }
 
-		[ShowIf("@this.ParentTypeMatches"), HideIf("@this.Method == ActionFieldRetrievalMethod.From_Previous")]
+		[ShowIf("@this.ShowAllowSelf")]
 		public bool AllowSelf;
 
 		[ShowIf("Method", ActionFieldRetrievalMethod.Criteria), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
@@ -39,20 +39,22 @@ namespace Game.Incidents
 
 		public Type ContextType => typeof(T);
 		private bool ParentTypeMatches => parentType == typeof(T);
+		virtual protected bool ShowMethodChoice => true;
+		virtual protected bool ShowAllowSelf => ParentTypeMatches && ShowMethodChoice && Method != ActionFieldRetrievalMethod.From_Previous;
 
-		private IIncidentContext value;
+		protected IIncidentContext value;
 		private IIncidentActionField delayedValue;
 
 		public ContextualIncidentActionField() 
 		{
 			RetrievalTypeChanged();
 		}
-		public ContextualIncidentActionField(Type parentType) : base()
+		public ContextualIncidentActionField(Type parentType) : this()
 		{
 			this.parentType = parentType;
 		}
 
-		public IIncidentContext GetFieldValue()
+		virtual public IIncidentContext GetFieldValue()
 		{
 			if (Method == ActionFieldRetrievalMethod.From_Previous)
 			{
@@ -64,7 +66,7 @@ namespace Game.Incidents
 			}
 		}
 
-		public bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		virtual public bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
 			if(Method == ActionFieldRetrievalMethod.Criteria)
 			{

@@ -32,7 +32,7 @@ namespace Game.Incidents
 
 			foreach (var field in matchingFields)
 			{
-				field.SetValue(this, Activator.CreateInstance(field.FieldType));
+				field.SetValue(this, Activator.CreateInstance(field.FieldType, IncidentEditorWindow.ContextType));
 			}
 		}
 
@@ -82,7 +82,8 @@ namespace Game.Incidents
 		private IEnumerable<FieldInfo> GetContexualActionFields()
 		{
 			var fields = this.GetType().GetFields();
-			return fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(ContextualIncidentActionField<>));
+			return fields.Where(x => x.FieldType.IsGenericType && (x.FieldType.GetGenericTypeDefinition() == typeof(ContextualIncidentActionField<>)
+			|| x.FieldType.GetGenericTypeDefinition() == typeof(ActionResultField<>)));
 		}
 	}
 }
