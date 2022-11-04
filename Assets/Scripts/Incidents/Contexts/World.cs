@@ -69,6 +69,11 @@ namespace Game.Simulation
 			return world;
 		}
 
+		public void AddContext<T>(T context) where T : IIncidentContext
+		{
+			Contexts[typeof(T)].Add(context);
+		}
+
 		private void CreateFactions(int numFactions)
 		{
 			for(int i = 0; i < numFactions; i++)
