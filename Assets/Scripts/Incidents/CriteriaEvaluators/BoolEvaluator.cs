@@ -9,7 +9,7 @@ namespace Game.Incidents
         public BoolEvaluator(string propertyName, bool value) : base(propertyName, value) { }
         public BoolEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 
-        override protected void Setup()
+        override public void Setup()
         {
             Comparators = ExpressionHelpers.BoolComparators;
             Operators = ExpressionHelpers.BoolOperators;

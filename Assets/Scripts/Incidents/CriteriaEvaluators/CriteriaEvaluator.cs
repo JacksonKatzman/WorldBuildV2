@@ -27,7 +27,11 @@ namespace Game.Incidents
         public List<Expression<T>> expressions;
         virtual public bool AllowMultipleExpressions => true;
 
-        virtual public bool Evaluate(IIncidentContext context, string propertyName)
+        public bool Evaluate(IIncidentContext context, string propertyName, IIncidentContext parentContext = null)
+        {
+            return Evaluate(context, propertyName);
+        }
+        virtual protected bool Evaluate(IIncidentContext context, string propertyName)
         {
             var propertyValue = (T)context.GetType().GetProperty(propertyName).GetValue(context);
             return Comparators[Comparator].Invoke(propertyValue, CombineExpressions(context));
@@ -55,7 +59,7 @@ namespace Game.Incidents
             expressions.Add(new Expression<T>(ContextType));
         }
 
-        abstract protected void Setup();
+        abstract public void Setup();
 
         public T CombineExpressions(IIncidentContext context)
         {
@@ -89,5 +93,5 @@ namespace Game.Incidents
         {
             comparator = Comparator;
         }
-    }
+	}
 }

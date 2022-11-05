@@ -9,7 +9,7 @@ namespace Game.Incidents
         public FloatEvaluator(string propertyName, float value) : base(propertyName, value) { }
         public FloatEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 
-        override protected void Setup()
+        override public void Setup()
         {
             Comparators = ExpressionHelpers.FloatComparators;
             Operators = ExpressionHelpers.FloatOperators;

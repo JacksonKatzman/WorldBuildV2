@@ -9,7 +9,7 @@ namespace Game.Incidents
         public IntegerEvaluator(string propertyName, int value) : base(propertyName, value) { }
         public IntegerEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 
-        override protected void Setup()
+        override public void Setup()
 		{
             Comparators = ExpressionHelpers.IntegerComparators;
             Operators = ExpressionHelpers.IntegerOperators;
