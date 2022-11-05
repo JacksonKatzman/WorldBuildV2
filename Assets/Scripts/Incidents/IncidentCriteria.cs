@@ -35,9 +35,9 @@ namespace Game.Incidents
             this.evaluator = evaluator;
         }
 
-        public bool Evaluate(IIncidentContext context)
+        virtual public bool Evaluate(IIncidentContext context, IIncidentContext parentContext = null)
         {
-            return evaluator.Evaluate(context, propertyName);
+            return evaluator.Evaluate(context, propertyName, parentContext);
         }
 
         private void GetPropertyList()
@@ -59,7 +59,7 @@ namespace Game.Incidents
             }
         }
 
-        private bool IsValidPropertyType(Type type)
+        virtual protected bool IsValidPropertyType(Type type)
 		{
             return type == typeof(int) || type == typeof(float) || type == typeof(bool)
                 || type == typeof(Dictionary<IIncidentContext, int>)
@@ -77,7 +77,7 @@ namespace Game.Incidents
             return properties.Keys.ToList();
         }
 
-        private void SetPrimitiveType()
+        virtual protected void SetPrimitiveType()
         {
             PrimitiveType = properties[propertyName];
 
@@ -113,8 +113,6 @@ namespace Game.Incidents
                 OutputLogger.Log("Found Complex Type");
                 evaluator = new ListEvaluator(propertyName, ContextType);
             }
-
-            //PrimitiveType.IsGenericType && PrimitiveType.GetGenericTypeDefinition() == typeof(Dictionary<,>)
         }
 
         bool PropertyChosen => propertyName != null;

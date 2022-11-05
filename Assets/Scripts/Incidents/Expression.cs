@@ -187,5 +187,11 @@ namespace Game.Incidents
             {"==", (a, b) => a == b },
             {"!=", (a, b) => a != b }
         };
+
+        public static Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>> ContextComparators = new Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>>
+        {
+            {"==", (a, b) => a == b },
+            {"!=", (a, b) => a != b }
+        };
     }
 }

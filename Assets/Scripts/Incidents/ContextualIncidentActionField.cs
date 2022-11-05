@@ -25,7 +25,7 @@ namespace Game.Incidents
 		public bool AllowNull;
 
 		[ShowIf("Method", ActionFieldRetrievalMethod.Criteria), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
-		public List<IIncidentCriteria> criteria;
+		public List<IncidentActionFieldCriteria> criteria;
 
 		[ShowIf("Method", ActionFieldRetrievalMethod.From_Previous), ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID")]
 		public string previousField;
@@ -110,15 +110,15 @@ namespace Game.Incidents
 
 		private IIncidentContext RetrieveFieldByCriteria(IIncidentContext context)
 		{
-			var criteriaContainer = new IncidentCriteriaContainer(criteria);
+			var criteriaContainer = new IncidentActionFieldCriteriaContainer(criteria);
 			List<IIncidentContext> possibleMatches;
 			if (AllowSelf)
 			{
-				possibleMatches = SimulationManager.Instance.Contexts[typeof(T)].Where(x => criteriaContainer.Evaluate(x) == true).ToList();
+				possibleMatches = SimulationManager.Instance.Contexts[typeof(T)].Where(x => criteriaContainer.Evaluate(x, context) == true).ToList();
 			}
 			else
 			{
-				possibleMatches = SimulationManager.Instance.Contexts[typeof(T)].Where(x => x != context && criteriaContainer.Evaluate(x) == true).ToList();
+				possibleMatches = SimulationManager.Instance.Contexts[typeof(T)].Where(x => x != context && criteriaContainer.Evaluate(x, context) == true).ToList();
 			}
 
 			return possibleMatches.Count > 0 ? SimRandom.RandomEntryFromList(possibleMatches) : null;
@@ -133,13 +133,13 @@ namespace Game.Incidents
 		{
 			if (criteria == null)
 			{
-				criteria = new List<IIncidentCriteria>();
+				criteria = new List<IncidentActionFieldCriteria>();
 			}
 		}
 
 		private void AddNewCriteriaItem()
 		{
-			criteria.Add(new IncidentCriteria(typeof(T)));
+			criteria.Add(new IncidentActionFieldCriteria(typeof(T)));
 		}
 
 		private List<string> GetActionFieldIdentifiers()
