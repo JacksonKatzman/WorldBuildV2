@@ -1,12 +1,16 @@
 ﻿using Game.Enums;
+using Game.Incidents;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
 namespace Game.Generators.Items
 {
-	public class Item
+	public class Item : InertIncidentContext
 	{
 		public virtual string Name => name;
+
+		public override Type ContextType => typeof(Item);
 
 		protected string name;
 		protected Material material;
