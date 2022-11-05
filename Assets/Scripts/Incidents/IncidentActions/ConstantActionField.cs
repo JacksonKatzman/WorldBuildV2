@@ -12,12 +12,15 @@ namespace Game.Incidents
 
 		private IIncidentContext context;
 
-		public ConstantActionField(IIncidentContext context)
+		public ConstantActionField(Type contextType)
 		{
-			this.context = context;
-			ContextType = context.ContextType;
+			ContextType = contextType;
 			ActionFieldID = 0;
 			NameID = ActionFieldIDString + " - Original Context";
+		}
+		public ConstantActionField(IIncidentContext context) : this(context.ContextType)
+		{
+			this.context = context;
 		}
 		public bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{

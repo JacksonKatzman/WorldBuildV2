@@ -69,7 +69,7 @@ namespace Game.Incidents
 		{
 			if (startingValue == 0)
 			{
-				var constant = new ConstantActionField(providedContext);
+				var constant = new ConstantActionField(ContextType);
 				IncidentEditorWindow.actionFields.Add(constant);
 				startingValue++;
 			}
