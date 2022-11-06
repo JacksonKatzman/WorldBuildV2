@@ -1,6 +1,5 @@
 ﻿using Game.Enums;
 using Game.Simulation;
-using System;
 using System.Collections.Generic;
 
 namespace Game.Incidents
