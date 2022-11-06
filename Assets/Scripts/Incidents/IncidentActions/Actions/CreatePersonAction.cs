@@ -33,6 +33,7 @@ namespace Game.Incidents
 				economicPriority, religiousPriority, militaryPriority, influence, wealth, strength, dexterity, constitution,
 				intelligence, wisdom, charisma, null, parents);
 			SimulationManager.Instance.world.AddContext(person);
+			OutputLogger.Log("Person Created!");
 		}
 	}
 }

@@ -61,7 +61,7 @@ namespace Game.Incidents
 		{
 			if (Method == ActionFieldRetrievalMethod.From_Previous)
 			{
-				return delayedValue.GetFieldValue();
+				return delayedValue == null? null : delayedValue.GetFieldValue();
 			}
 			else
 			{
@@ -73,11 +73,11 @@ namespace Game.Incidents
 		{
 			if (Method == ActionFieldRetrievalMethod.From_Previous)
 			{
-				return (T)delayedValue.GetFieldValue();
+				return delayedValue == null ? default(T) :(T)delayedValue.GetFieldValue();
 			}
 			else
 			{
-				return (T)value;
+				return value == null? default(T) : (T)value;
 			}
 		}
 

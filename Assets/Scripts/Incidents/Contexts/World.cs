@@ -18,6 +18,8 @@ namespace Game.Simulation
 
 		public int ParentID => -1;
 
+		public int NumPeople => Contexts[typeof(Person)].Count;
+
 		public World()
 		{
 			Contexts = new TypeListDictionary<IIncidentContext>();
@@ -74,6 +76,11 @@ namespace Game.Simulation
 			Contexts[typeof(T)].Add(context);
 		}
 
+		public void RemoveContext<T>(T context) where T : IIncidentContext
+		{
+			Contexts[typeof(T)].Remove(context);
+		}
+
 		private void CreateFactions(int numFactions)
 		{
 			for(int i = 0; i < numFactions; i++)
@@ -86,12 +93,12 @@ namespace Game.Simulation
 
 		public void UpdateContext()
 		{
-			throw new NotImplementedException();
+			NumIncidents = 1;
 		}
 
 		public void DeployContext()
 		{
-			throw new NotImplementedException();
+			IncidentService.Instance.PerformIncidents(this);
 		}
 	}
 }

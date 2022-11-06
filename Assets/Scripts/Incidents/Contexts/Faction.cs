@@ -132,7 +132,7 @@ namespace Game.Incidents
 
 		private void UpdateNumIncidents()
 		{
-
+			NumIncidents = 1;
 		}
 	}
 }
