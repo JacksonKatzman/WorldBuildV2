@@ -92,7 +92,7 @@ namespace Game.Incidents
 		{
 			if(actionFieldID == 0)
 			{
-				return new ConstantActionField(providedContext.ContextType);
+				return new ConstantActionField(providedContext);
 			}
 
 			foreach (var action in Actions)

@@ -5,6 +5,6 @@ namespace Game.Incidents
 	public interface IIncidentCriteria
 	{
 		Type ContextType { get; }
-		bool Evaluate(IIncidentContext context);
+		bool Evaluate(IIncidentContext context, IIncidentContext parentContext = null);
 	}
 }
