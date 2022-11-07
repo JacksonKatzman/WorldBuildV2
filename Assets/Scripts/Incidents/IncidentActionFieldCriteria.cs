@@ -9,7 +9,7 @@ namespace Game.Incidents
 
 		protected override bool IsValidPropertyType(Type type)
 		{
-            return base.IsValidPropertyType(type) || type == typeof(Faction);
+            return base.IsValidPropertyType(type) || type == typeof(Faction) || type == typeof(Location);
         }
 
 		protected override void SetPrimitiveType()
@@ -19,6 +19,10 @@ namespace Game.Incidents
 			if (PrimitiveType == typeof(Faction))
 			{
 				evaluator = new FactionEvaluator();
+			}
+			else if(PrimitiveType == typeof(Location))
+			{
+				evaluator = new LocationEvaluator();
 			}
 		}
 	}
