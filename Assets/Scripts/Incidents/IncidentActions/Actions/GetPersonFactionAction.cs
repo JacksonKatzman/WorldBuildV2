@@ -7,7 +7,7 @@
 
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			faction.SetValue(person.GetTypedFieldValue().Faction);
+			faction.SetValue(person.GetTypedFieldValue().AffiliatedFaction);
 		}
 	}
 }
