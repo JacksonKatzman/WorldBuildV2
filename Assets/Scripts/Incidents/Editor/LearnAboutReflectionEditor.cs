@@ -17,28 +17,6 @@ namespace Game.Incidents
 		{
 			DrawDefaultInspector();
 
-			if (GUILayout.Button("REFLECT!"))
-			{ 
-
-			}
-
-			if (GUILayout.Button("Test Faction"))
-			{
-				var faction = new Faction();
-				faction.Population = 14;
-
-				var faction2 = new Faction();
-				faction2.Population = 5;
-
-				var simMan = SimulationManager.Instance;
-
-				simMan.CreateDebugWorld();
-				simMan.Contexts[typeof(Faction)].Add(faction);
-				simMan.Contexts[typeof(Faction)].Add(faction2);
-
-				faction.DeployContext();
-			}
-
 			if (GUILayout.Button("In game test!"))
 			{
 				SimulationManager.Instance.DebugRun();
