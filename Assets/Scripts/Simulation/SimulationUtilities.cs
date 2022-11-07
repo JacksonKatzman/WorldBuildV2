@@ -1,5 +1,4 @@
-﻿using Game.Factions;
-using Game.Incidents;
+﻿using Game.Incidents;
 using Game.Terrain;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,13 +51,13 @@ namespace Game.Simulation
 			}
 		}
 
-		public static List<int> GetEmptyTilesFromList(List<int> tiles)
+		public static List<int> GetEmptyCellsFromList(List<int> tiles)
 		{
 			var claimedList = GetClaimedCells();
 			return tiles.Where(x => !claimedList.Contains(x)).ToList();
 		}
 
-		public static List<int> GetCitylessTilesFromList(List<int> tiles)
+		public static List<int> GetCitylessCellsFromList(List<int> tiles)
 		{
 			var claimedList = GetCellsWithCities();
 			return tiles.Where(x => !claimedList.Contains(x)).ToList();
