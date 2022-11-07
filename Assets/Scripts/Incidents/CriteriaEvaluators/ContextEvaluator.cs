@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Game.Incidents
 {
-	abstract public class ContextEvaluator<T, V> : ICriteriaEvaluator where T : IIncidentContext where V : IIncidentContext
+	abstract public class ContextEvaluator<T> : ICriteriaEvaluator where T : IIncidentContext
 	{
 		protected Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>> Comparators { get; set; }
 
@@ -32,7 +32,7 @@ namespace Game.Incidents
 
 		abstract protected T GetContext(IIncidentContext context);
 
-		public void Setup()
+		virtual public void Setup()
 		{
 			Comparators = ExpressionHelpers.ContextComparators;
 		}
