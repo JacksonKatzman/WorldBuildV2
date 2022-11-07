@@ -8,13 +8,14 @@ using UnityEngine;
 namespace Game.Incidents
 {
 	[Serializable]
-	public class Faction : IIncidentContext
+	public class Faction : IIncidentContext, IFactionAffiliated
 	{
 		public Type ContextType => typeof(Faction);
 
 		public int NumIncidents { get; set; }
 
 		public int ParentID => -1;
+		public Faction AffiliatedFaction => this;
 		public int Population { get; set; }
 		public int Influence { get; set; }
 		public int Wealth { get; set; }

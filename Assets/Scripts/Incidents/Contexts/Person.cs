@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Game.Incidents
 {
-	public class Person : IIncidentContext
+	public class Person : IIncidentContext, IFactionAffiliated
 	{
 		public Person() { }
 		public Person(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
@@ -16,7 +16,7 @@ namespace Game.Incidents
 			Age = age;
 			Race = race;
 			Gender = gender == Gender.ANY ? (Gender)(SimRandom.RandomRange(0, 2)) : gender;
-			Faction = faction;
+			AffiliatedFaction = faction;
 			PoliticalPriority = politicalPriority;
 			EconomicPriority = economicPriority;
 			ReligiousPriority = religiousPriority;
@@ -41,7 +41,7 @@ namespace Game.Incidents
 		public int Age { get; set; }
 		public Gender Gender { get; set; }
 		public Race Race { get; set; }
-		public Faction Faction { get; set; }
+		public Faction AffiliatedFaction { get; private set; }
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
