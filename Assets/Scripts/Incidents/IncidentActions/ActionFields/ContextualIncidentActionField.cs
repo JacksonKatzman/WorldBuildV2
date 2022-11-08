@@ -24,7 +24,7 @@ namespace Game.Incidents
 		[ShowInInspector, ShowIf("@this.Method == ActionFieldRetrievalMethod.From_Previous")]
 		public bool AllowNull;
 
-		[ShowIf("Method", ActionFieldRetrievalMethod.Criteria), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
+		[ShowIf("@this.ShowStandardCriteria"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
 		public List<IncidentActionFieldCriteria> criteria;
 
 		[ShowIf("Method", ActionFieldRetrievalMethod.From_Previous), ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID")]
@@ -44,9 +44,10 @@ namespace Game.Incidents
 		private bool ParentTypeMatches => parentType == typeof(T);
 		virtual protected bool ShowMethodChoice => true;
 		virtual protected bool ShowAllowSelf => ParentTypeMatches && ShowMethodChoice && Method != ActionFieldRetrievalMethod.From_Previous;
+		virtual protected bool ShowStandardCriteria => Method == ActionFieldRetrievalMethod.Criteria;
 
 		protected IIncidentContext value;
-		private IIncidentActionField delayedValue;
+		protected IIncidentActionField delayedValue;
 
 		public ContextualIncidentActionField() 
 		{
@@ -93,22 +94,13 @@ namespace Game.Incidents
 			}
 			else
 			{
-				if (AllowSelf)
-				{
-					var possibleValues = SimulationManager.Instance.Contexts[typeof(T)];
-					value = SimRandom.RandomEntryFromList(possibleValues);
-				}
-				else
-				{
-					var possibleValues = SimulationManager.Instance.Contexts[typeof(T)].Where(x => x != context).ToList();
-					value = SimRandom.RandomEntryFromList(possibleValues);
-				}
+				value = RetrieveFieldAtRandom(context);
 			}
 
 			return (Method == ActionFieldRetrievalMethod.From_Previous && AllowNull) ? true : ((value != null) || (delayedValue != null));
 		}
 
-		private IIncidentContext RetrieveFieldByCriteria(IIncidentContext context)
+		virtual protected IIncidentContext RetrieveFieldByCriteria(IIncidentContext context)
 		{
 			var criteriaContainer = new IncidentActionFieldCriteriaContainer(criteria);
 			List<IIncidentContext> possibleMatches;
@@ -124,7 +116,21 @@ namespace Game.Incidents
 			return possibleMatches.Count > 0 ? SimRandom.RandomEntryFromList(possibleMatches) : null;
 		}
 
-		private IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		virtual protected IIncidentContext RetrieveFieldAtRandom(IIncidentContext context)
+		{
+			if (AllowSelf)
+			{
+				var possibleValues = SimulationManager.Instance.Contexts[typeof(T)];
+				return SimRandom.RandomEntryFromList(possibleValues);
+			}
+			else
+			{
+				var possibleValues = SimulationManager.Instance.Contexts[typeof(T)].Where(x => x != context).ToList();
+				return SimRandom.RandomEntryFromList(possibleValues);
+			}
+		}
+
+		protected IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
 			return delayedCalculateAction.Invoke(previousFieldID);
 		}

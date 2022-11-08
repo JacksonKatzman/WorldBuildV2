@@ -1,16 +1,12 @@
 ﻿namespace Game.Incidents
 {
-	public class FactionEvaluator : ContextEvaluator<Faction, Person>
+	public class FactionEvaluator : ContextEvaluator<Faction>
 	{
 		protected override Faction GetContext(IIncidentContext context)
 		{
-			if (context.ContextType == typeof(Faction))
+			if (context.ContextType.IsAssignableFrom(typeof(IFactionAffiliated)))
 			{
-				return (Faction)context;
-			}
-			else if (context.ContextType == typeof(Person))
-			{
-				return ((Person)context).Faction;
+				return ((IFactionAffiliated)context).AffiliatedFaction;
 			}
 			else
 			{

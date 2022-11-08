@@ -3,7 +3,8 @@ using System;
 
 namespace Game.Incidents
 {
-	public class Landmark
+	public class Landmark : ILocationAffiliated
 	{
+		public Location CurrentLocation { get; set; }
 	}
 }

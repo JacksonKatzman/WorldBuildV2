@@ -58,15 +58,7 @@ namespace Game.Incidents
 				branch.UpdateActionFieldIDs(ref startingValue);
 			}
 		}
-/*
-		override public void AddContext(ref IncidentReport report)
-		{
-			foreach (var branch in branches)
-			{
-				branch.AddContext(ref report);
-			}
-		}
-*/
+
 		override public bool GetContextField(int id, out IIncidentActionField contextField)
 		{
 			foreach (var branch in branches)
