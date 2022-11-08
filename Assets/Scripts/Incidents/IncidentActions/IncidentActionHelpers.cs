@@ -33,7 +33,7 @@ namespace Game.Incidents
 			var allActionsWithGenericParents = GetAllTypesImplementingOpenGenericType(typeof(IIncidentAction), Assembly.GetExecutingAssembly()).ToList();
 			var contextualActions = allActionsWithGenericParents.Where(x => (x.BaseType.IsGenericType == true && x.BaseType.GetGenericArguments()[0] == contextType));
 			var genericActions = GetAllTypesImplementingType(typeof(GenericIncidentAction), Assembly.GetExecutingAssembly());
-			var matches = contextualActions.Concat(genericActions).ToList();
+			var matches = contextualActions.Concat(genericActions).Where(x => x.IsAbstract == false).ToList();
 			return matches;
 		}
 	}

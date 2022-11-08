@@ -17,6 +17,8 @@ namespace Game.Incidents
         [ShowIfGroup("PropertyChosen"), HideReferenceObjectPicker]
         public ICriteriaEvaluator evaluator;
 
+        private bool PropertyChosen => propertyName != null;
+
         public IncidentCriteria() 
         {
             GetPropertyList();
@@ -114,7 +116,5 @@ namespace Game.Incidents
                 evaluator = new ListEvaluator(propertyName, ContextType);
             }
         }
-
-        bool PropertyChosen => propertyName != null;
     }
 }
