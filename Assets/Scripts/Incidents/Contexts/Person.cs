@@ -60,12 +60,12 @@ namespace Game.Incidents
 		public List<Person> Children { get; set; }
 		public void DeployContext()
 		{
-			
+			IncidentService.Instance.PerformIncidents(this);
 		}
 
 		public void UpdateContext()
 		{
-			
+			NumIncidents = 1;
 		}
 	}
 }
