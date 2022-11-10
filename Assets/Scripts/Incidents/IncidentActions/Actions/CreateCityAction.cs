@@ -1,5 +1,4 @@
 ﻿using Game.Simulation;
-using System;
 
 namespace Game.Incidents
 {
@@ -13,6 +12,7 @@ namespace Game.Incidents
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
 			var city = new City(faction.GetTypedFieldValue(), location.GetTypedFieldValue(), population, wealth);
+			faction.GetTypedFieldValue().Cities.Add(city);
 			SimulationManager.Instance.world.AddContext(city);
 			resultCity.SetValue(city);
 			OutputLogger.Log("City created!");
