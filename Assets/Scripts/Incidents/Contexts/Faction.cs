@@ -26,6 +26,9 @@ namespace Game.Incidents
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
 		public int MilitaryPriority { get; set; }
+
+		virtual public bool CanExpandTerritory => true;
+		virtual public bool CanTakeMilitaryAction => true;
 		//Government structure related stuff goes here
 
 		[HideInInspector]
@@ -33,6 +36,7 @@ namespace Game.Incidents
 
 		public Faction()
 		{
+			Cities = new List<City>();
 		}
 
 		public Faction(int startingTiles)
@@ -40,9 +44,20 @@ namespace Game.Incidents
 			AttemptExpandBorder(startingTiles);
 		}
 
+		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority) : this()
+		{
+			Population = population;
+			Influence = influence;
+			Wealth = wealth;
+			PoliticalPriority = politicalPriority;
+			EconomicPriority = economicPriority;
+			ReligiousPriority = religiousPriority;
+			MilitaryPriority = militaryPriority;
+		}
+
 		public void DeployContext()
 		{
-			IncidentService.Instance.PerformIncidents(this);
+			IncidentService.Instance.PerformIncidents((Faction)this);
 		}
 		public void UpdateContext()
 		{
@@ -51,6 +66,14 @@ namespace Game.Incidents
 			UpdateInfluence();
 			UpdatePERMS();
 			UpdateNumIncidents();
+		}
+
+		public void CreateStartingCity()
+		{
+			var cells = SimulationUtilities.GetCitylessCellsFromList(ControlledTileIndices);
+			var city = new City(this, new Location(SimRandom.RandomEntryFromList(cells)), 10, 0);
+			Cities.Add(city);
+			SimulationManager.Instance.world.AddContext(city);
 		}
 
 		public bool AttemptExpandBorder(int numTimes)
