@@ -26,7 +26,9 @@ namespace Game.Incidents
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
 		public int MilitaryPriority { get; set; }
+		public List<Faction> FactionsAtWarWith { get; set; }
 
+		public bool AtWar => FactionsAtWarWith.Count > 0;
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		//Government structure related stuff goes here
@@ -37,6 +39,7 @@ namespace Game.Incidents
 		public Faction()
 		{
 			Cities = new List<City>();
+			FactionsAtWarWith = new List<Faction>();
 		}
 
 		public Faction(int startingTiles)
