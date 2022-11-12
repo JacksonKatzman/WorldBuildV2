@@ -18,6 +18,8 @@ namespace Game.Simulation
 
 		public int ParentID => -1;
 
+		public int Age { get; set; }
+
 		public int NumPeople => Contexts[typeof(Person)].Count;
 
 		public World()
@@ -28,6 +30,7 @@ namespace Game.Simulation
 		public World(HexGrid hexGrid)
 		{
 			this.hexGrid = hexGrid;
+			Age = 0;
 
 			Contexts = new TypeListDictionary<IIncidentContext>();
 		}
@@ -85,14 +88,14 @@ namespace Game.Simulation
 		{
 			for(int i = 0; i < numFactions; i++)
 			{
-				var faction = new Faction();
+				var faction = new Faction(1);
 				Contexts[typeof(Faction)].Add(faction);
-				faction.AttemptExpandBorder(1);
 			}
 		}
 
 		public void UpdateContext()
 		{
+			Age += 1;
 			NumIncidents = 1;
 		}
 

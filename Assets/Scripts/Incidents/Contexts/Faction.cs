@@ -38,18 +38,18 @@ namespace Game.Incidents
 
 		public Faction()
 		{
+		}
+
+		public Faction(int startingTiles)
+		{
+			AttemptExpandBorder(startingTiles);
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<Faction>();
 			CreateStartingCity();
 			CreateStartingGovernment();
 		}
 
-		public Faction(int startingTiles)
-		{
-			AttemptExpandBorder(startingTiles);
-		}
-
-		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority) : this()
+		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, int startingTiles = 1) : this(startingTiles)
 		{
 			Population = population;
 			Influence = influence;
@@ -147,7 +147,7 @@ namespace Game.Incidents
 
 		private void UpdateInfluence()
 		{
-
+			Influence += 1;
 		}
 
 		private void UpdateWealth()
