@@ -1,6 +1,7 @@
 ﻿using Game.Enums;
 using Game.Generators.Items;
 using Game.Incidents;
+using Game.Simulation;
 using System;
 using System.Collections.Generic;
 
@@ -58,6 +59,8 @@ namespace Game.Incidents
 		public List<Person> Parents { get; set; }
 		public List<Person> Spouses { get; set; }
 		public List<Person> Children { get; set; }
+
+		private Action OnDeathAction;
 		public void DeployContext()
 		{
 			IncidentService.Instance.PerformIncidents(this);
@@ -66,6 +69,17 @@ namespace Game.Incidents
 		public void UpdateContext()
 		{
 			NumIncidents = 1;
+		}
+
+		public void SetOnDeathAction(Action action)
+		{
+			OnDeathAction = action;
+		}
+
+		public void Die()
+		{
+			SimulationManager.Instance.world.RemoveContext(this);
+			OnDeathAction.Invoke();
 		}
 	}
 }

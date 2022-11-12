@@ -31,7 +31,7 @@ namespace Game.Incidents
 		public bool AtWar => FactionsAtWarWith.Count > 0;
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
-		//Government structure related stuff goes here
+		public Government Government { get; set; }
 
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
@@ -40,6 +40,8 @@ namespace Game.Incidents
 		{
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<Faction>();
+			CreateStartingCity();
+			CreateStartingGovernment();
 		}
 
 		public Faction(int startingTiles)
@@ -77,6 +79,12 @@ namespace Game.Incidents
 			var city = new City(this, new Location(SimRandom.RandomEntryFromList(cells)), 10, 0);
 			Cities.Add(city);
 			SimulationManager.Instance.world.AddContext(city);
+		}
+
+		public void CreateStartingGovernment()
+		{
+			Government = new Government(this);
+			Government.SelectNewLeader();
 		}
 
 		public bool AttemptExpandBorder(int numTimes)
@@ -144,7 +152,10 @@ namespace Game.Incidents
 
 		private void UpdateWealth()
 		{
-
+			foreach(var city in Cities)
+			{
+				Wealth += city.GenerateWealth();
+			}
 		}
 
 		private void UpdatePopulation()
