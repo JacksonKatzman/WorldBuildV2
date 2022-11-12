@@ -7,7 +7,7 @@ namespace Game.Incidents
 		public ContextualIncidentActionField<Person> person;
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			SimulationManager.Instance.world.RemoveContext(person.GetTypedFieldValue());
+			person.GetTypedFieldValue().Die();
 			OutputLogger.Log("Person Killed!");
 		}
 	}

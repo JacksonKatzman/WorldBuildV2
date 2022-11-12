@@ -22,5 +22,10 @@ namespace Game.Incidents
 			Population = population;
 			Wealth = wealth;
 		}
+
+		public int GenerateWealth()
+		{
+			return 1;
+		}
 	}
 }
