@@ -6,6 +6,7 @@ namespace Game.Incidents
 	{
 		Type ContextType { get; }
 		int NumIncidents { get; }
+		int ID { get; set; }
 		int ParentID { get; }
 		void UpdateContext();
 		void DeployContext();

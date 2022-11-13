@@ -15,6 +15,7 @@ namespace Game.Incidents
 		public int NumIncidents { get; set; }
 
 		public int ParentID => -1;
+		public int ID { get; set; }
 		public Faction AffiliatedFaction => this;
 		public int Population { get; set; }
 		public int Influence { get; set; }
@@ -43,6 +44,7 @@ namespace Game.Incidents
 		public Faction(int startingTiles)
 		{
 			AttemptExpandBorder(startingTiles);
+			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<Faction>();
 			CreateStartingCity();

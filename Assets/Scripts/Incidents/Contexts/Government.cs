@@ -1,4 +1,6 @@
-﻿namespace Game.Incidents
+﻿using Game.Simulation;
+
+namespace Game.Incidents
 {
 	public class Government : IFactionAffiliated
 	{
@@ -15,6 +17,7 @@
 		{
 			Leader = new Person(35, Enums.Gender.ANY, null, AffiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10);
 			Leader.SetOnDeathAction(SelectNewLeader);
+			SimulationManager.Instance.world.AddContext(Leader);
 		}
 	}
 }

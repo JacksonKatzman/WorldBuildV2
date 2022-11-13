@@ -131,6 +131,7 @@ namespace Game.Incidents
 
 		[ShowInInspector]
 		public int NumIncidents { get; set; }
+		public int ID { get; set; }
 
 		public int ParentID { get; set; }
 

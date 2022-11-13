@@ -7,6 +7,7 @@ namespace Game.Incidents
 		abstract public Type ContextType { get; }
 
 		public int NumIncidents => 0;
+		public int ID { get; set; }
 
 		public int ParentID => -1;
 

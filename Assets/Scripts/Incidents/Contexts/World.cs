@@ -11,16 +11,31 @@ namespace Game.Simulation
 		private HexGrid hexGrid;
 
 		public TypeListDictionary<IIncidentContext> Contexts { get; private set; }
+		private TypeListDictionary<IIncidentContext> contextsToAdd;
+		private TypeListDictionary<IIncidentContext> contextsToRemove;
 
 		public Type ContextType => typeof(World);
 
 		public int NumIncidents { get; set; }
+		public int ID
+		{
+			get
+			{
+				return 0;
+			}
+			set
+			{
+
+			}
+		}
 
 		public int ParentID => -1;
 
 		public int Age { get; set; }
 
 		public int NumPeople => Contexts[typeof(Person)].Count;
+
+		public int nextID;
 
 		public World()
 		{
@@ -30,18 +45,24 @@ namespace Game.Simulation
 		public World(HexGrid hexGrid)
 		{
 			this.hexGrid = hexGrid;
+			nextID = ID + 1;
 			Age = 0;
 
 			Contexts = new TypeListDictionary<IIncidentContext>();
+			contextsToAdd = new TypeListDictionary<IIncidentContext>();
+			contextsToRemove = new TypeListDictionary<IIncidentContext>();
 		}
 
 		public void Initialize()
 		{
-			CreateFactions(1);
+			CreateFactions(5);
 		}
 
 		public void AdvanceTime()
 		{
+			DelayedRemoveContexts();
+			DelayedAddContexts();
+
 			UpdateContext();
 			foreach(var contextList in Contexts.Values)
 			{
@@ -76,12 +97,39 @@ namespace Game.Simulation
 
 		public void AddContext<T>(T context) where T : IIncidentContext
 		{
-			Contexts[typeof(T)].Add(context);
+			//Contexts[typeof(T)].Add(context);
+			context.ID = GetNextID();
+			contextsToAdd[typeof(T)].Add(context);
 		}
 
 		public void RemoveContext<T>(T context) where T : IIncidentContext
 		{
-			Contexts[typeof(T)].Remove(context);
+			//Contexts[typeof(T)].Remove(context);
+			contextsToRemove[typeof(T)].Add(context);
+		}
+
+		private void DelayedAddContexts()
+		{
+			foreach (var contextList in contextsToAdd.Values)
+			{
+				foreach (var context in contextList)
+				{
+					Contexts[context.ContextType].Add(context);
+				}
+				contextList.Clear();
+			}
+		}
+
+		private void DelayedRemoveContexts()
+		{
+			foreach (var contextList in contextsToRemove.Values)
+			{
+				foreach (var context in contextList)
+				{
+					Contexts[context.ContextType].Remove(context);
+				}
+				contextList.Clear();
+			}
 		}
 
 		private void CreateFactions(int numFactions)
@@ -89,7 +137,7 @@ namespace Game.Simulation
 			for(int i = 0; i < numFactions; i++)
 			{
 				var faction = new Faction(1);
-				Contexts[typeof(Faction)].Add(faction);
+				AddContext(faction);
 			}
 		}
 
@@ -102,6 +150,11 @@ namespace Game.Simulation
 		public void DeployContext()
 		{
 			IncidentService.Instance.PerformIncidents(this);
+		}
+
+		private int GetNextID()
+		{
+			return nextID++;
 		}
 	}
 }

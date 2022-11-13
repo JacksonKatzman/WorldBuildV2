@@ -37,6 +37,7 @@ namespace Game.Incidents
 		public Type ContextType => typeof(Person);
 
 		public int NumIncidents { get; set; }
+		public int ID { get; set; }
 
 		public int ParentID => -1;
 		public int Age { get; set; }
@@ -79,7 +80,7 @@ namespace Game.Incidents
 		public void Die()
 		{
 			SimulationManager.Instance.world.RemoveContext(this);
-			OnDeathAction.Invoke();
+			OnDeathAction?.Invoke();
 		}
 	}
 }
