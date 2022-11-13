@@ -190,14 +190,14 @@ namespace Game.Incidents
 
         public static Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>> ContextComparators = new Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>>
         {
-            {"==", (a, b) => a == b },
-            {"!=", (a, b) => a != b }
+            {"==", (a, b) => a.ID == b.ID },
+            {"!=", (a, b) => a.ID != b.ID }
         };
 
         public static Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>> LocationComparators = new Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>>
         {
             {"==", (a, b) => ((Location)a).TileIndex == ((Location)b).TileIndex },
-            {"!=", (a, b) => ((Location)a).TileIndex != ((Location)b).TileIndex  }
+            {"!=", (a, b) => ((Location)a).TileIndex != ((Location)b).TileIndex }
         };
     }
 }
