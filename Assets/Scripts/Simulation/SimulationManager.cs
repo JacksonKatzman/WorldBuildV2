@@ -1,7 +1,9 @@
 ﻿using Game.Incidents;
 using Game.IO;
 using Game.Terrain;
+using System.Data;
 using System.IO;
+using UnityEngine;
 
 namespace Game.Simulation
 {
@@ -35,7 +37,7 @@ namespace Game.Simulation
 		}
 
 
-		public TypeListDictionary<IIncidentContext> Contexts => world.Contexts;
+		public TypeListDictionary<IIncidentContext> Contexts => world.CurrentContexts;
 
 		public void CreateWorld()
 		{
@@ -73,6 +75,18 @@ namespace Game.Simulation
 			{
 				world.AdvanceTime();
 			}
+			var table = world.GetDataTable();
+
+			foreach(var contextList in world.AllContexts.Values)
+			{
+				foreach (var context in contextList)
+				{
+					var contextTable = context.GetDataTable();
+					table.Merge(contextTable);
+				}
+			}
+
+			table.ToCSV(Application.dataPath + "/Resources/" + "factionCSV" + ".csv");
 		}
 	}
 }

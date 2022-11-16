@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace Game.Incidents
 {
@@ -16,7 +17,17 @@ namespace Game.Incidents
 
 		}
 
+		public DataTable GetDataTable()
+		{
+			return new DataTable();
+		}
+
 		public void UpdateContext()
+		{
+
+		}
+
+		public void UpdateHistoricalData()
 		{
 
 		}

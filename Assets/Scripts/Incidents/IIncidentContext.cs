@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace Game.Incidents
 {
@@ -10,5 +11,7 @@ namespace Game.Incidents
 		int ParentID { get; }
 		void UpdateContext();
 		void DeployContext();
+		void UpdateHistoricalData();
+		DataTable GetDataTable();
 	}
 }

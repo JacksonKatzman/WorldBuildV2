@@ -2,22 +2,21 @@
 using Game.Incidents;
 using Game.Terrain;
 using System;
+using System.Data;
 
 namespace Game.Simulation
 {
-	public class World : IIncidentContext
+	public class World : IncidentContext
 	{
 		[NonSerialized]
 		private HexGrid hexGrid;
 
-		public TypeListDictionary<IIncidentContext> Contexts { get; private set; }
+		public TypeListDictionary<IIncidentContext> CurrentContexts { get; private set; }
+		public TypeListDictionary<IIncidentContext> AllContexts { get; private set; }
 		private TypeListDictionary<IIncidentContext> contextsToAdd;
 		private TypeListDictionary<IIncidentContext> contextsToRemove;
 
-		public Type ContextType => typeof(World);
-
-		public int NumIncidents { get; set; }
-		public int ID
+		override public int ID
 		{
 			get
 			{
@@ -29,17 +28,15 @@ namespace Game.Simulation
 			}
 		}
 
-		public int ParentID => -1;
-
 		public int Age { get; set; }
 
-		public int NumPeople => Contexts[typeof(Person)].Count;
+		public int NumPeople => CurrentContexts[typeof(Person)].Count;
 
 		public int nextID;
 
 		public World()
 		{
-			Contexts = new TypeListDictionary<IIncidentContext>();
+			CurrentContexts = new TypeListDictionary<IIncidentContext>();
 		}
 
 		public World(HexGrid hexGrid)
@@ -48,7 +45,8 @@ namespace Game.Simulation
 			nextID = ID + 1;
 			Age = 0;
 
-			Contexts = new TypeListDictionary<IIncidentContext>();
+			CurrentContexts = new TypeListDictionary<IIncidentContext>();
+			AllContexts = new TypeListDictionary<IIncidentContext>();
 			contextsToAdd = new TypeListDictionary<IIncidentContext>();
 			contextsToRemove = new TypeListDictionary<IIncidentContext>();
 		}
@@ -64,7 +62,7 @@ namespace Game.Simulation
 			DelayedAddContexts();
 
 			UpdateContext();
-			foreach(var contextList in Contexts.Values)
+			foreach(var contextList in CurrentContexts.Values)
 			{
 				foreach(var context in contextList)
 				{
@@ -73,11 +71,20 @@ namespace Game.Simulation
 			}
 
 			DeployContext();
-			foreach (var contextList in Contexts.Values)
+			foreach (var contextList in CurrentContexts.Values)
 			{
 				foreach (var context in contextList)
 				{
 					context.DeployContext();
+				}
+			}
+
+			UpdateHistoricalData();
+			foreach (var contextList in CurrentContexts.Values)
+			{
+				foreach (var context in contextList)
+				{
+					context.UpdateHistoricalData();
 				}
 			}
 		}
@@ -114,7 +121,8 @@ namespace Game.Simulation
 			{
 				foreach (var context in contextList)
 				{
-					Contexts[context.ContextType].Add(context);
+					CurrentContexts[context.ContextType].Add(context);
+					AllContexts[context.ContextType].Add(context);
 				}
 				contextList.Clear();
 			}
@@ -126,7 +134,7 @@ namespace Game.Simulation
 			{
 				foreach (var context in contextList)
 				{
-					Contexts[context.ContextType].Remove(context);
+					CurrentContexts[context.ContextType].Remove(context);
 				}
 				contextList.Clear();
 			}
@@ -141,20 +149,22 @@ namespace Game.Simulation
 			}
 		}
 
-		public void UpdateContext()
+		override public void UpdateContext()
 		{
 			Age += 1;
 			NumIncidents = 1;
 		}
 
-		public void DeployContext()
+		override public void DeployContext()
 		{
 			IncidentService.Instance.PerformIncidents(this);
 		}
 
 		private int GetNextID()
 		{
-			return nextID++;
+			var next = nextID;
+			nextID++;
+			return next;
 		}
 	}
 }

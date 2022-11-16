@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Person : IIncidentContext, IFactionAffiliated
+	public class Person : IncidentContext, IFactionAffiliated
 	{
 		public Person() { }
 		public Person(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
@@ -35,12 +35,6 @@ namespace Game.Incidents
 			Parents = parents == null ? new List<Person>() : parents;
 		}
 
-		public Type ContextType => typeof(Person);
-
-		public int NumIncidents { get; set; }
-		public int ID { get; set; }
-
-		public int ParentID => -1;
 		public int Age { get; set; }
 		public Gender Gender { get; set; }
 		public Race Race { get; set; }
@@ -63,14 +57,15 @@ namespace Game.Incidents
 		public List<Person> Children { get; set; }
 
 		private Action OnDeathAction;
-		public void DeployContext()
+		override public void DeployContext()
 		{
 			IncidentService.Instance.PerformIncidents(this);
 			CheckForNaturalDeath();
 		}
 
-		public void UpdateContext()
+		override public void UpdateContext()
 		{
+			Age += 1;
 			NumIncidents = 1;
 		}
 
@@ -107,7 +102,7 @@ namespace Game.Incidents
 			var randomValue = SimRandom.RandomFloat01();
 			if(randomValue <= deathChance)
 			{
-				OutputLogger.Log(ID + " dying of natural causes.");
+				//OutputLogger.Log(ID + " dying of natural causes.");
 				Die();
 			}			
 		}
