@@ -102,6 +102,7 @@ namespace Game.Incidents
                 string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);
                 File.WriteAllText(path, output);
 
+                AssetDatabase.Refresh();
                 OutputLogger.Log("Incident Saved!");
             }
 		}
