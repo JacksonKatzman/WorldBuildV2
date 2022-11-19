@@ -12,6 +12,7 @@ namespace Game.Incidents
 		{
 			var matchingFields = GetContexualActionFields();
 			var matchingLists = GetCollectionsOfActionFields();
+			var matchingContainers = GetActionFieldContainers();
 
 			foreach (var field in matchingFields)
 			{
@@ -32,6 +33,15 @@ namespace Game.Incidents
 					{
 						return false;
 					}
+				}
+			}
+
+			foreach(var c in matchingContainers)
+			{
+				var container = c.GetValue(this) as IncidentActionFieldContainer;
+				if(!container.actionField.CalculateField(context, delayedCalculateAction))
+				{
+					return false;
 				}
 			}
 
@@ -56,6 +66,13 @@ namespace Game.Incidents
 				field.SetValue(this, Activator.CreateInstance(field.FieldType));
 			}
 
+			matchingFields = GetActionFieldContainers();
+
+			foreach (var field in matchingFields)
+			{
+				field.SetValue(this, Activator.CreateInstance(field.FieldType));
+			}
+
 			matchingFields = GetIntegerRangeFields();
 
 			foreach (var field in matchingFields)
@@ -68,6 +85,7 @@ namespace Game.Incidents
 		{
 			var matchingFields = GetContexualActionFields();
 			var matchingLists = GetCollectionsOfActionFields();
+			var matchingContainers = GetActionFieldContainers();
 
 			foreach (var f in matchingFields)
 			{
@@ -89,12 +107,26 @@ namespace Game.Incidents
 					startingValue++;
 				}
 			}
+
+			foreach (var c in matchingContainers)
+			{
+				var container = c.GetValue(this) as IncidentActionFieldContainer;
+				if (container.contextType != null)
+				{
+					var fa = container.actionField;
+					fa.ActionFieldID = startingValue;
+					fa.NameID = string.Format("{0}:{1}:{2}", fa.ActionFieldIDString, GetType().Name, c.Name);
+					IncidentEditorWindow.actionFields.Add(fa);
+					startingValue++;
+				}
+			}
 		}
 
 		virtual public void AddContext(ref IncidentReport report)
 		{
 			var matchingFields = GetContexualActionFields();
 			var matchingLists = GetCollectionsOfActionFields();
+			var matchingContainers = GetActionFieldContainers();
 
 			foreach (var field in matchingFields)
 			{
@@ -111,12 +143,19 @@ namespace Game.Incidents
 					report.Contexts.Add(actionField.ActionFieldIDString, actionField.GetFieldValue());
 				}
 			}
+
+			foreach(var c in matchingContainers)
+			{
+				var container = c.GetValue(this) as IncidentActionFieldContainer;
+				report.Contexts.Add(container.actionField.ActionFieldIDString, container.actionField.GetFieldValue());
+			}
 		}
 
 		virtual public bool GetContextField(int id, out IIncidentActionField contextField)
 		{
 			var matchingFields = GetContexualActionFields();
 			var matchingLists = GetCollectionsOfActionFields();
+			var matchingContainers = GetActionFieldContainers();
 
 			foreach (var field in matchingFields)
 			{
@@ -142,6 +181,16 @@ namespace Game.Incidents
 				}
 			}
 
+			foreach (var c in matchingContainers)
+			{
+				var container = c.GetValue(this) as IncidentActionFieldContainer;
+				if (container.actionField.ActionFieldID == id)
+				{
+					contextField = container.actionField;
+					return true;
+				}
+			}
+
 			contextField = null;
 			return false;
 		}
@@ -158,6 +207,12 @@ namespace Game.Incidents
 			var fields = this.GetType().GetFields();
 			var lists = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(List<>) && x.FieldType.GetGenericArguments()[0] == typeof(IncidentActionFieldContainer));
 			return lists;
+		}
+
+		private IEnumerable<FieldInfo> GetActionFieldContainers()
+		{
+			var fields = this.GetType().GetFields();
+			return fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(InterfacedIncidentActionFieldContainer<>));
 		}
 
 		private IEnumerable<FieldInfo> GetIntegerRangeFields()
