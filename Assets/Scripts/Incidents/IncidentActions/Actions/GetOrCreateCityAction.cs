@@ -27,6 +27,4 @@ namespace Game.Incidents
 			}
 		}
 	}
-
-	//public class 
 }
