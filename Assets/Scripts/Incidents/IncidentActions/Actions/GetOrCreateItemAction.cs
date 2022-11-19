@@ -7,25 +7,16 @@ using System.Linq;
 
 namespace Game.Incidents
 {
-	public class GetOrCreateItemAction : GenericIncidentAction
+	public class GetOrCreateItemAction : GetOrCreateAction<Item>
 	{
-		public ContextualIncidentActionField<Item> item;
-
 		[ValueDropdown("GetFilteredTypeList")]
 		public Type itemType;
-		public ActionResultField<Item> resultItem;
-		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
+
+		protected override void MakeNew()
 		{
-			if (item.GetTypedFieldValue() == null)
-			{
-				var newItem = (Item)Activator.CreateInstance(itemType);
-				SimulationManager.Instance.world.AddContext(newItem);
-				resultItem.SetValue(newItem);
-			}
-			else
-			{
-				resultItem.SetValue(item.GetTypedFieldValue());
-			}
+			var newItem = (Item)Activator.CreateInstance(itemType);
+			SimulationManager.Instance.world.AddContext(newItem);
+			result.SetValue(newItem);
 		}
 
 		private IEnumerable<Type> GetFilteredTypeList()

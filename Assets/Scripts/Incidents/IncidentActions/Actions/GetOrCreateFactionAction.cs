@@ -2,10 +2,8 @@
 
 namespace Game.Incidents
 {
-	public class GetOrCreateFactionAction : GenericIncidentAction
+	public class GetOrCreateFactionAction : GetOrCreateAction<Faction>
 	{
-        public ContextualIncidentActionField<Faction> faction;
-
         public IntegerRange population;
         public IntegerRange influence;
         public IntegerRange wealth;
@@ -14,22 +12,13 @@ namespace Game.Incidents
         public IntegerRange religiousPriority;
         public IntegerRange militaryPriority;
 
-        public ActionResultField<Faction> factionResult;
-
-        public override void PerformAction(IIncidentContext context, ref IncidentReport report)
+		protected override void MakeNew()
 		{
-            if (faction.GetTypedFieldValue() == null)
-            {
-                var newFaction = new Faction(population, influence, wealth, politicalPriority, economicPriority, religiousPriority, militaryPriority);
-                newFaction.AttemptExpandBorder(1);
-                newFaction.CreateStartingCity();
-                factionResult.SetValue(newFaction);
-                SimulationManager.Instance.world.AddContext(newFaction);
-            }
-            else
-			{
-                factionResult.SetValue(faction.GetTypedFieldValue());
-			}
-		}
+            var newFaction = new Faction(population, influence, wealth, politicalPriority, economicPriority, religiousPriority, militaryPriority);
+            newFaction.AttemptExpandBorder(1);
+            newFaction.CreateStartingCity();
+            result.SetValue(newFaction);
+            SimulationManager.Instance.world.AddContext(newFaction);
+        }
 	}
 }

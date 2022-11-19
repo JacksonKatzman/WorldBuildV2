@@ -8,29 +8,23 @@ namespace Game.Incidents
 {
 	public class GetOrCreateSpecialFactionAction : GetOrCreateFactionAction
 	{
-        public override void PerformAction(IIncidentContext context, ref IncidentReport report)
-        {
-            if (faction.GetTypedFieldValue() == null)
-            {
-                var specialFactionType = SpecialFaction.CalculateFactionType(politicalPriority, economicPriority, religiousPriority, militaryPriority);
-                var specialFaction = (Faction)Activator.CreateInstance(specialFactionType);
-                specialFaction.Population = population;
-                specialFaction.Influence = influence;
-                specialFaction.Wealth = wealth;
-                specialFaction.PoliticalPriority = politicalPriority;
-                specialFaction.EconomicPriority = economicPriority;
-                specialFaction.ReligiousPriority = religiousPriority;
-                specialFaction.MilitaryPriority = militaryPriority;
+		protected override void MakeNew()
+		{
+            var specialFactionType = SpecialFaction.CalculateFactionType(politicalPriority, economicPriority, religiousPriority, militaryPriority);
+            var specialFaction = (Faction)Activator.CreateInstance(specialFactionType);
+            specialFaction.Population = population;
+            specialFaction.Influence = influence;
+            specialFaction.Wealth = wealth;
+            specialFaction.PoliticalPriority = politicalPriority;
+            specialFaction.EconomicPriority = economicPriority;
+            specialFaction.ReligiousPriority = religiousPriority;
+            specialFaction.MilitaryPriority = militaryPriority;
 
-                SimulationManager.Instance.world.AddContext<Faction>(specialFaction);
-            }
-            else
-			{
-                factionResult.SetValue(faction.GetTypedFieldValue());
-			}
+            SimulationManager.Instance.world.AddContext<Faction>(specialFaction);
+            result.SetValue(specialFaction);
         }
 
-        private IEnumerable<Type> GetFilteredTypeList()
+		private IEnumerable<Type> GetFilteredTypeList()
         {
             var q = typeof(SpecialFaction).Assembly.GetTypes()
                 .Where(x => !x.IsAbstract)
