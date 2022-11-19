@@ -56,7 +56,7 @@ public static class SimRandom
 		}
 
         T randomItem = default(T);
-        var randomWeight = RandomRange(0, totalWeight);
+        var randomWeight = RandomRange(1, totalWeight+1);
 
         foreach (var pair in collection)
         {

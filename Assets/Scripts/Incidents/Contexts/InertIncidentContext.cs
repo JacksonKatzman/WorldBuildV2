@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace Game.Incidents
 {
@@ -7,6 +8,7 @@ namespace Game.Incidents
 		abstract public Type ContextType { get; }
 
 		public int NumIncidents => 0;
+		public int ID { get; set; }
 
 		public int ParentID => -1;
 
@@ -15,7 +17,17 @@ namespace Game.Incidents
 
 		}
 
+		public DataTable GetDataTable()
+		{
+			return new DataTable();
+		}
+
 		public void UpdateContext()
+		{
+
+		}
+
+		public void UpdateHistoricalData()
 		{
 
 		}

@@ -2,6 +2,7 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using UnityEngine;
 
@@ -131,6 +132,7 @@ namespace Game.Incidents
 
 		[ShowInInspector]
 		public int NumIncidents { get; set; }
+		public int ID { get; set; }
 
 		public int ParentID { get; set; }
 
@@ -153,7 +155,16 @@ namespace Game.Incidents
 
 		public void DeployContext() { }
 
+		public DataTable GetDataTable()
+		{
+			return null;
+		}
+
 		public void UpdateContext() { }
+
+		public void UpdateHistoricalData()
+		{
+		}
 	}
 
 	public class WarDeclaredContext : DeployableContext

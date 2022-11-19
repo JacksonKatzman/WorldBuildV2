@@ -19,6 +19,7 @@ namespace Game.Incidents
 			{
 				if(!branch.VerifyActions(context, delayedCalculateAction))
 				{
+					OutputLogger.LogError(String.Format("{0} failed to verify.", GetType().Name));
 					return false;
 				}
 			}

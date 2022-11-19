@@ -4,10 +4,11 @@ using Game.Incidents;
 using Game.Simulation;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Person : IIncidentContext, IFactionAffiliated
+	public class Person : IncidentContext, IFactionAffiliated
 	{
 		public Person() { }
 		public Person(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
@@ -15,7 +16,7 @@ namespace Game.Incidents
 			int constitution, int intelligence, int wisdom, int charisma, List<Item> inventory = null, List<Person> parents = null)
 		{
 			Age = age;
-			Race = race;
+			Race = race == null ? new Race() : race;
 			Gender = gender == Gender.ANY ? (Gender)(SimRandom.RandomRange(0, 2)) : gender;
 			AffiliatedFaction = faction;
 			PoliticalPriority = politicalPriority;
@@ -34,11 +35,6 @@ namespace Game.Incidents
 			Parents = parents == null ? new List<Person>() : parents;
 		}
 
-		public Type ContextType => typeof(Person);
-
-		public int NumIncidents { get; set; }
-
-		public int ParentID => -1;
 		public int Age { get; set; }
 		public Gender Gender { get; set; }
 		public Race Race { get; set; }
@@ -61,13 +57,15 @@ namespace Game.Incidents
 		public List<Person> Children { get; set; }
 
 		private Action OnDeathAction;
-		public void DeployContext()
+		override public void DeployContext()
 		{
 			IncidentService.Instance.PerformIncidents(this);
+			CheckForNaturalDeath();
 		}
 
-		public void UpdateContext()
+		override public void UpdateContext()
 		{
+			Age += 1;
 			NumIncidents = 1;
 		}
 
@@ -79,7 +77,34 @@ namespace Game.Incidents
 		public void Die()
 		{
 			SimulationManager.Instance.world.RemoveContext(this);
-			OnDeathAction.Invoke();
+			OnDeathAction?.Invoke();
+		}
+
+		private void CheckForNaturalDeath()
+		{
+			var cuspA = Race.UpperAgeLimit * 0.3f;
+			var cuspB = Race.UpperAgeLimit * 0.85f;
+			var deathChance = -Mathf.Atan(((cuspA + (cuspB - cuspA)) - Age) / (Mathf.Sqrt(cuspB - cuspA) * Mathf.PI / 2.0f)) / Mathf.PI + 0.5f;
+			/*
+			if(Age <= cuspA)
+			{
+				deathChance = Mathf.Pow(Age / cuspA, 2) / 7.0f;
+			}
+			else if(Age > cuspA && Age <= cuspB)
+			{
+				deathChance = ((Age - cuspA) / ((cuspB - cuspA) / 4) - Mathf.Atan((cuspB - cuspA) / 2 - (Age - cuspA))) / 10 + 0.3f;
+			}
+			else
+			{
+				deathChance = Mathf.Sqrt(0.731025f * ((Age - cuspB) / Race.UpperAgeLimit * 0.75f) + 1);
+			}
+			*/
+			var randomValue = SimRandom.RandomFloat01();
+			if(randomValue <= deathChance)
+			{
+				//OutputLogger.Log(ID + " dying of natural causes.");
+				Die();
+			}			
 		}
 	}
 }

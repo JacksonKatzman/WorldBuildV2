@@ -4,7 +4,7 @@
 	{
 		protected override Faction GetContext(IIncidentContext context)
 		{
-			if (context.ContextType.IsAssignableFrom(typeof(IFactionAffiliated)))
+			if ((typeof(IFactionAffiliated)).IsAssignableFrom(context.ContextType))
 			{
 				return ((IFactionAffiliated)context).AffiliatedFaction;
 			}

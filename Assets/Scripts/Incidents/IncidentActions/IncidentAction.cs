@@ -18,6 +18,7 @@ namespace Game.Incidents
 				var actionField = field.GetValue(this) as IIncidentActionField;
 				if (!actionField.CalculateField(context, delayedCalculateAction))
 				{
+					OutputLogger.Log(String.Format("{0} failed to verify.", GetType().Name));
 					return false;
 				}
 			}

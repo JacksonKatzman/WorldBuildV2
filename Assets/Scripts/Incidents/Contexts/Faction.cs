@@ -3,18 +3,15 @@ using Game.Simulation;
 using Game.Terrain;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Incidents
 {
 	[Serializable]
-	public class Faction : IIncidentContext, IFactionAffiliated
+	public class Faction : IncidentContext, IFactionAffiliated
 	{
-		public Type ContextType => typeof(Faction);
-
-		public int NumIncidents { get; set; }
-
-		public int ParentID => -1;
 		public Faction AffiliatedFaction => this;
 		public int Population { get; set; }
 		public int Influence { get; set; }
@@ -36,20 +33,21 @@ namespace Game.Incidents
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
 
-		public Faction()
+		public Faction() : base()
 		{
+		}
+
+		public Faction(int startingTiles) : this()
+		{
+			AttemptExpandBorder(startingTiles);
+			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<Faction>();
 			CreateStartingCity();
 			CreateStartingGovernment();
 		}
 
-		public Faction(int startingTiles)
-		{
-			AttemptExpandBorder(startingTiles);
-		}
-
-		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority) : this()
+		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, int startingTiles = 1) : this(startingTiles)
 		{
 			Population = population;
 			Influence = influence;
@@ -60,11 +58,11 @@ namespace Game.Incidents
 			MilitaryPriority = militaryPriority;
 		}
 
-		public void DeployContext()
+		override public void DeployContext()
 		{
 			IncidentService.Instance.PerformIncidents((Faction)this);
 		}
-		public void UpdateContext()
+		override public void UpdateContext()
 		{
 			UpdateWealth();
 			UpdatePopulation();
@@ -97,7 +95,7 @@ namespace Game.Incidents
 			{
 				ControlledTileIndices = new List<int>();
 			}
-			if(ControlledTileIndices.Count == 0)
+			if (ControlledTileIndices.Count == 0)
 			{
 				if (SimulationUtilities.GetRandomUnclaimedCellIndex(out var index))
 				{
@@ -121,7 +119,7 @@ namespace Game.Incidents
 			while (size < numTimes && searchFrontier.Count > 0)
 			{
 				HexCell current = searchFrontier.Dequeue();
-				if(SimulationUtilities.IsCellIndexUnclaimed(current.Index))
+				if (SimulationUtilities.IsCellIndexUnclaimed(current.Index))
 				{
 					ControlledTileIndices.Add(current.Index);
 					size++;
@@ -147,12 +145,12 @@ namespace Game.Incidents
 
 		private void UpdateInfluence()
 		{
-
+			Influence += 1;
 		}
 
 		private void UpdateWealth()
 		{
-			foreach(var city in Cities)
+			foreach (var city in Cities)
 			{
 				Wealth += city.GenerateWealth();
 			}

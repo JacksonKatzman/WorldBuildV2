@@ -7,9 +7,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	//THEN: try to make it so you can give the user a choice between a static value and
-	//using a function to determine the value to check against. Even better if you can pass params to that fn.
-    public enum ExpressionType { Const, Method, Property };
+    public enum ExpressionType { Const, Method, Property, Range };
 
 
 	public class Expression<T>
@@ -32,12 +30,22 @@ namespace Game.Incidents
         [ValueDropdown("GetPropertyNames"), ShowIf("ExpressionType", ExpressionType.Property), HideLabel]
         public string chosenProperty;
 
+        [ShowIf("CanShowRange"), HideLabel]
+        public IValueRange range;
+
+        [ShowIf("RangeNotApplicable"), HideLabel, ReadOnly]
+        public string rangeWarning = "Range not implemented for non integers!";
+
         [ShowIf("@this.hasNextOperator"), ValueDropdown("GetOperators"), HideLabel, HideReferenceObjectPicker]
         public string nextOperator;
+
+        private bool CanShowRange => typeof(T) == typeof(int) && ExpressionType == ExpressionType.Range;
+        private bool RangeNotApplicable => typeof(T) != typeof(int) && ExpressionType == ExpressionType.Range;
 
         public Expression()
 		{
             GetMethodInfo();
+            range = ValueRangeFactory.CreateValueRange<T>();
 		}
 
         public Expression(Type contextType) : this()
@@ -47,17 +55,21 @@ namespace Game.Incidents
 
         public T GetValue(IIncidentContext context)
 		{
-            if(ExpressionType == ExpressionType.Const)
+            if(ExpressionType == ExpressionType.Method)
 			{
-                return constValue;
-			}
+                return (T)methods[chosenMethod].Invoke(null, null);
+            }
             else if(ExpressionType == ExpressionType.Property)
 			{
                 return (T)context.GetType().GetProperty(chosenProperty).GetValue(context);
             }
+            else if(ExpressionType == ExpressionType.Range && typeof(T) == typeof(int))
+			{
+                return ValueRangeFactory.FetchValue<T>(range);
+			}
             else
 			{
-                return (T)methods[chosenMethod].Invoke(null, null);
+                return constValue;
 			}
 		}
 
@@ -190,14 +202,14 @@ namespace Game.Incidents
 
         public static Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>> ContextComparators = new Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>>
         {
-            {"==", (a, b) => a == b },
-            {"!=", (a, b) => a != b }
+            {"==", (a, b) => a.ID == b.ID },
+            {"!=", (a, b) => a.ID != b.ID }
         };
 
         public static Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>> LocationComparators = new Dictionary<string, Func<IIncidentContext, IIncidentContext, bool>>
         {
             {"==", (a, b) => ((Location)a).TileIndex == ((Location)b).TileIndex },
-            {"!=", (a, b) => ((Location)a).TileIndex != ((Location)b).TileIndex  }
+            {"!=", (a, b) => ((Location)a).TileIndex != ((Location)b).TileIndex }
         };
     }
 }
