@@ -21,7 +21,7 @@ namespace Game.Incidents
 		[ShowInInspector, ShowIf("@this.ShowAllowSelf")]
 		public bool AllowSelf;
 
-		[ShowInInspector, ShowIf("@this.Method == ActionFieldRetrievalMethod.From_Previous")]
+		[ShowInInspector]
 		public bool AllowNull;
 
 		[ShowIf("@this.ShowStandardCriteria"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
@@ -97,7 +97,7 @@ namespace Game.Incidents
 				value = RetrieveFieldAtRandom(context);
 			}
 
-			return (Method == ActionFieldRetrievalMethod.From_Previous && AllowNull) ? true : ((value != null) || (delayedValue != null));
+			return AllowNull ? true : ((value != null) || (delayedValue != null));
 		}
 
 		virtual protected IIncidentContext RetrieveFieldByCriteria(IIncidentContext context)
