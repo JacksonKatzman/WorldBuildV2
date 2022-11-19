@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Person : IncidentContext, IFactionAffiliated
+	public class Person : IncidentContext, IFactionAffiliated, IInventoryAffiliated
 	{
 		public Person() { }
 		public Person(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
