@@ -9,7 +9,7 @@ namespace Game.Incidents
 {
 	public class GetOrCreateItemAction : GetOrCreateAction<Item>
 	{
-		[ValueDropdown("GetFilteredTypeList")]
+		[ValueDropdown("GetFilteredTypeList"), ShowIf("@this.allowCreate")]
 		public Type itemType;
 
 		protected override void MakeNew()

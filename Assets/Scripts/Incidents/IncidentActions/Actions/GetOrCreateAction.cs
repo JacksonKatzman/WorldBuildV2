@@ -5,6 +5,7 @@ namespace Game.Incidents
 	abstract public class GetOrCreateAction<T> : GenericIncidentAction where T : IIncidentContext
 	{
 		public bool findFirst = true;
+		public bool allowCreate = true;
 
 		[ShowIf("@this.findFirst")]
 		public ContextualIncidentActionField<T> valueToFind;
@@ -14,7 +15,7 @@ namespace Game.Incidents
 
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			if(!findFirst || valueToFind.GetTypedFieldValue() == null)
+			if(!findFirst || (valueToFind.GetTypedFieldValue() == null && allowCreate))
 			{
 				MakeNew();
 			}

@@ -166,12 +166,4 @@ namespace Game.Incidents
 		{
 		}
 	}
-
-	public class WarDeclaredContext : DeployableContext
-	{
-		[HideReferenceObjectPicker]
-		public DeployedContextActionField<Faction> faction1;
-		[HideReferenceObjectPicker]
-		public DeployedContextActionField<Faction> faction2;
-	}
 }
