@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Game.Incidents
 {
-	public class City : InertIncidentContext, IFactionAffiliated, ILocationAffiliated
+	public class City : InertIncidentContext, IFactionAffiliated, ILocationAffiliated, IInventoryAffiliated
 	{
 		public override Type ContextType => typeof(City);
 		public Location CurrentLocation { get; set; }
@@ -15,12 +15,15 @@ namespace Game.Incidents
 		public List<Resource> Resources { get; set; }
 		public List<Landmark> Landmarks { get; set; }
 
+		public List<Item> Inventory { get; set; }
+
 		public City(Faction faction, Location location, int population, int wealth)
 		{
 			AffiliatedFaction = faction;
 			CurrentLocation = location;
 			Population = population;
 			Wealth = wealth;
+			Inventory = new List<Item>();
 		}
 
 		public int GenerateWealth()

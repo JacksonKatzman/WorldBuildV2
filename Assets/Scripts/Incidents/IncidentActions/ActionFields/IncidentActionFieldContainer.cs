@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Game.Incidents
 {
+	[HideReferenceObjectPicker]
 	public class IncidentActionFieldContainer
 	{
 		[ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Context Type")]
@@ -20,7 +21,7 @@ namespace Game.Incidents
 			actionField = (IIncidentActionField)Activator.CreateInstance(combinedType);
 			IncidentEditorWindow.UpdateActionFieldIDs();
 		}
-		private IEnumerable<Type> GetFilteredTypeList()
+		virtual protected IEnumerable<Type> GetFilteredTypeList()
 		{
 			var q = typeof(IIncidentContext).Assembly.GetTypes()
 				.Where(x => !x.IsAbstract)                                          // Excludes BaseClass

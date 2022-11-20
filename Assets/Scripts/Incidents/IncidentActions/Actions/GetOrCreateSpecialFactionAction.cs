@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace Game.Incidents
 {
-	public class CreateSpecialFactionAction : CreateFactionAction
+	public class GetOrCreateSpecialFactionAction : GetOrCreateFactionAction
 	{
-        public override void PerformAction(IIncidentContext context, ref IncidentReport report)
-        {
+		protected override void MakeNew()
+		{
             var specialFactionType = SpecialFaction.CalculateFactionType(politicalPriority, economicPriority, religiousPriority, militaryPriority);
             var specialFaction = (Faction)Activator.CreateInstance(specialFactionType);
             specialFaction.Population = population;
@@ -21,9 +21,10 @@ namespace Game.Incidents
             specialFaction.MilitaryPriority = militaryPriority;
 
             SimulationManager.Instance.world.AddContext<Faction>(specialFaction);
+            result.SetValue(specialFaction);
         }
 
-        private IEnumerable<Type> GetFilteredTypeList()
+		private IEnumerable<Type> GetFilteredTypeList()
         {
             var q = typeof(SpecialFaction).Assembly.GetTypes()
                 .Where(x => !x.IsAbstract)

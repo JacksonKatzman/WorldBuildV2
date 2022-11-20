@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Game.Incidents
 {
-	public class CreatePersonAction : GenericIncidentAction
+	public class GetOrCreatePersonAction : GetOrCreateAction<Person>
 	{
 		public ContextualIncidentActionField<Person> parent;
 		public ContextualIncidentActionField<Race> race;
@@ -23,15 +23,15 @@ namespace Game.Incidents
 		public IntegerRange intelligence;
 		public IntegerRange wisdom;
 		public IntegerRange charisma;
-		public ActionResultField<Person> personResult;
 
-		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
+		protected override void MakeNew()
 		{
 			var parents = parent.GetTypedFieldValue() != null ? new List<Person>() { parent.GetTypedFieldValue() } : null;
-			var person = new Person(age, gender, race.GetTypedFieldValue(), faction.GetTypedFieldValue(), politicalPriority,
+			var newPerson = new Person(age, gender, race.GetTypedFieldValue(), faction.GetTypedFieldValue(), politicalPriority,
 				economicPriority, religiousPriority, militaryPriority, influence, wealth, strength, dexterity, constitution,
 				intelligence, wisdom, charisma, null, parents);
-			SimulationManager.Instance.world.AddContext(person);
+			SimulationManager.Instance.world.AddContext(newPerson);
+			result.SetValue(newPerson);
 			OutputLogger.Log("Person Created!");
 		}
 	}
