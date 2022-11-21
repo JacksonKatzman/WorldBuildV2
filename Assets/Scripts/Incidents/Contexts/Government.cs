@@ -15,7 +15,12 @@ namespace Game.Incidents
 
 		public void SelectNewLeader()
 		{
-			Leader = new Person(35, Enums.Gender.ANY, null, AffiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10);
+			var leaderRace = Leader == null ? new Race() : Leader.Race;
+			if(Leader == null)
+			{
+				SimulationManager.Instance.world.AddContext(leaderRace);
+			}
+			Leader = new Person(35, Enums.Gender.ANY, leaderRace, AffiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10);
 			Leader.SetOnDeathAction(SelectNewLeader);
 			SimulationManager.Instance.world.AddContext(Leader);
 		}
