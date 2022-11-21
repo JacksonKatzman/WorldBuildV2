@@ -1,0 +1,417 @@
+{
+  "$id": "1",
+  "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Weight": 2,
+  "Criteria": {
+    "$id": "2",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Assembly-CSharp",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
+      "$values": []
+    }
+  },
+  "ActionContainer": {
+    "$id": "3",
+    "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
+    "incidentLog": "{0} offered insult to {5}.",
+    "Actions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$id": "4",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "5",
+            "$type": "Game.Incidents.GetOrCreatePersonAction, Assembly-CSharp",
+            "parent": {
+              "$id": "6",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Person, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": null,
+              "previousFieldID": -1,
+              "Method": 0,
+              "ActionFieldID": 1,
+              "NameID": "{1}:GetOrCreatePersonAction:parent",
+              "ActionFieldIDString": "{1}",
+              "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "race": {
+              "$id": "7",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Race, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": null,
+              "previousFieldID": -1,
+              "Method": 0,
+              "ActionFieldID": 2,
+              "NameID": "{2}:GetOrCreatePersonAction:race",
+              "ActionFieldIDString": "{2}",
+              "ContextType": "Game.Incidents.Race, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "faction": {
+              "$id": "8",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": null,
+              "previousFieldID": -1,
+              "Method": 0,
+              "ActionFieldID": 3,
+              "NameID": "{3}:GetOrCreatePersonAction:faction",
+              "ActionFieldIDString": "{3}",
+              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "gender": 0,
+            "age": {
+              "$id": "9",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 13,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "politicalPriority": {
+              "$id": "10",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 10,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "economicPriority": {
+              "$id": "11",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 2,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "religiousPriority": {
+              "$id": "12",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 10,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "militaryPriority": {
+              "$id": "13",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 0,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "influence": {
+              "$id": "14",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 5,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "wealth": {
+              "$id": "15",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 3,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "strength": {
+              "$id": "16",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 16,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "dexterity": {
+              "$id": "17",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 10,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "constitution": {
+              "$id": "18",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 19,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "intelligence": {
+              "$id": "19",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 19,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "wisdom": {
+              "$id": "20",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 4,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "charisma": {
+              "$id": "21",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 8,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "findFirst": true,
+            "allowCreate": false,
+            "valueToFind": {
+              "$id": "22",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Person, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": [
+                  {
+                    "$id": "23",
+                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp",
+                    "propertyName": "AffiliatedFaction",
+                    "evaluator": {
+                      "$id": "24",
+                      "$type": "Game.Incidents.FactionEvaluator, Assembly-CSharp",
+                      "Comparator": "!=",
+                      "toWho": "Mine",
+                      "Type": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                    },
+                    "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "PrimitiveType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  }
+                ]
+              },
+              "previousField": null,
+              "previousFieldID": -1,
+              "Method": 0,
+              "ActionFieldID": 4,
+              "NameID": "{4}:GetOrCreatePersonAction:valueToFind",
+              "ActionFieldIDString": "{4}",
+              "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "result": {
+              "$id": "25",
+              "$type": "Game.Incidents.ActionResultField`1[[Game.Incidents.Person, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": null,
+              "previousFieldID": -1,
+              "Method": 2,
+              "ActionFieldID": 5,
+              "NameID": "{5}:GetOrCreatePersonAction:result",
+              "ActionFieldIDString": "{5}",
+              "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            }
+          }
+        },
+        {
+          "$id": "26",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "27",
+            "$type": "Game.Incidents.GetPersonFactionAction, Assembly-CSharp",
+            "person": {
+              "$id": "28",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Person, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": "{0} - Original Context",
+              "previousFieldID": 0,
+              "Method": 1,
+              "ActionFieldID": 6,
+              "NameID": "{6}:GetPersonFactionAction:person",
+              "ActionFieldIDString": "{6}",
+              "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "faction": {
+              "$id": "29",
+              "$type": "Game.Incidents.ActionResultField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": null,
+              "previousFieldID": -1,
+              "Method": 2,
+              "ActionFieldID": 7,
+              "NameID": "{7}:GetPersonFactionAction:faction",
+              "ActionFieldIDString": "{7}",
+              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            }
+          }
+        },
+        {
+          "$id": "30",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "31",
+            "$type": "Game.Incidents.GetPersonFactionAction, Assembly-CSharp",
+            "person": {
+              "$id": "32",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Person, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": "{5}:GetOrCreatePersonAction:result",
+              "previousFieldID": 5,
+              "Method": 1,
+              "ActionFieldID": 8,
+              "NameID": "{8}:GetPersonFactionAction:person",
+              "ActionFieldIDString": "{8}",
+              "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "faction": {
+              "$id": "33",
+              "$type": "Game.Incidents.ActionResultField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": null,
+              "previousFieldID": -1,
+              "Method": 2,
+              "ActionFieldID": 9,
+              "NameID": "{9}:GetPersonFactionAction:faction",
+              "ActionFieldIDString": "{9}",
+              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            }
+          }
+        },
+        {
+          "$id": "34",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "35",
+            "$type": "Game.Incidents.ChangeFactionRelationsAction, Assembly-CSharp",
+            "affectedFaction": {
+              "$id": "36",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": "{9}:GetPersonFactionAction:faction",
+              "previousFieldID": 9,
+              "Method": 1,
+              "ActionFieldID": 10,
+              "NameID": "{10}:ChangeFactionRelationsAction:affectedFaction",
+              "ActionFieldIDString": "{10}",
+              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "otherFaction": {
+              "$id": "37",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": "{7}:GetPersonFactionAction:faction",
+              "previousFieldID": 7,
+              "Method": 1,
+              "ActionFieldID": 11,
+              "NameID": "{11}:ChangeFactionRelationsAction:otherFaction",
+              "ActionFieldIDString": "{11}",
+              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "amount": {
+              "$id": "38",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": -10,
+              "max": -5,
+              "constant": 0,
+              "Value": -6,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            }
+          }
+        }
+      ]
+    },
+    "Deployers": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Assembly-CSharp]], mscorlib",
+      "$values": []
+    },
+    "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+  }
+}
