@@ -8,9 +8,11 @@ namespace Game.Incidents
 {
 	public class GetOrCreateSpecialFactionAction : GetOrCreateFactionAction
 	{
-		protected override void MakeNew()
+        [ValueDropdown("GetFilteredTypeList"), LabelText("Special Faction Type")]
+        public Type factionType;
+        protected override void MakeNew()
 		{
-            var specialFactionType = SpecialFaction.CalculateFactionType(politicalPriority, economicPriority, religiousPriority, militaryPriority);
+            var specialFactionType = factionType == null ? SpecialFaction.CalculateFactionType(politicalPriority, economicPriority, religiousPriority, militaryPriority) : factionType;
             var specialFaction = (Faction)Activator.CreateInstance(specialFactionType);
             specialFaction.Population = population;
             specialFaction.Influence = influence;
