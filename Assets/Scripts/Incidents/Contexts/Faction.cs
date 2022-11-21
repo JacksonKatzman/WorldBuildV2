@@ -13,6 +13,7 @@ namespace Game.Incidents
 	public class Faction : IncidentContext, IFactionAffiliated
 	{
 		public Faction AffiliatedFaction => this;
+		public Type FactionType => ContextType;
 		public int Population { get; set; }
 		public int Influence { get; set; }
 		public int Wealth { get; set; }

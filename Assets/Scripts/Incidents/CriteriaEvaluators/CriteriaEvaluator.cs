@@ -23,9 +23,10 @@ namespace Game.Incidents
         [ValueDropdown("GetComparatorNames"), OnValueChanged("SetComparatorType"), HorizontalGroup("Group 1", 50), HideLabel]
         public string Comparator;
 
-        [ListDrawerSettings(CustomAddFunction = "AddNewExpression"), HorizontalGroup("Group 1"), HideReferenceObjectPicker]
+        [ShowIf("UseExpressions"), ListDrawerSettings(CustomAddFunction = "AddNewExpression"), HorizontalGroup("Group 1"), HideReferenceObjectPicker]
         public List<Expression<T>> expressions;
         virtual public bool AllowMultipleExpressions => true;
+        virtual protected bool UseExpressions => true;
 
         public bool Evaluate(IIncidentContext context, string propertyName, IIncidentContext parentContext = null)
         {
