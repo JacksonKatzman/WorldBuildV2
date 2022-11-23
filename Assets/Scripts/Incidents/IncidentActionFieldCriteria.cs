@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game.Incidents
 {
@@ -27,6 +28,10 @@ namespace Game.Incidents
 			else if(PrimitiveType == typeof(Type))
 			{
 				evaluator = new TypeEvaluator(propertyName, ContextType);
+			}
+			else if(PrimitiveType == typeof(Dictionary<IIncidentContext, int>))
+			{
+				evaluator = new ActionFieldIntDictionaryEvaluator(propertyName, ContextType);
 			}
 		}
 	}
