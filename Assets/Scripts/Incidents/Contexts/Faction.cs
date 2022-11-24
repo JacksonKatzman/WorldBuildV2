@@ -24,7 +24,7 @@ namespace Game.Incidents
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
 		public int MilitaryPriority { get; set; }
-		public List<Faction> FactionsAtWarWith { get; set; }
+		public List<IIncidentContext> FactionsAtWarWith { get; set; }
 
 		public bool AtWar => FactionsAtWarWith.Count > 0;
 		virtual public bool CanExpandTerritory => true;
@@ -43,7 +43,7 @@ namespace Game.Incidents
 			AttemptExpandBorder(startingTiles);
 			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
-			FactionsAtWarWith = new List<Faction>();
+			FactionsAtWarWith = new List<IIncidentContext>();
 			CreateStartingCity();
 			CreateStartingGovernment();
 		}
