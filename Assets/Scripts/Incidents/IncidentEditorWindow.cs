@@ -51,7 +51,7 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen")]
         public string incidentName;
 
-        [Range(0, 10), ShowIfGroup("ContextTypeChosen")]
+        [Range(0, 20), ShowIfGroup("ContextTypeChosen")]
         public int weight;
 
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
