@@ -27,6 +27,7 @@ namespace Game.Incidents
 		public List<IIncidentContext> FactionsAtWarWith { get; set; }
 
 		public bool AtWar => FactionsAtWarWith.Count > 0;
+		public bool CouldMakePeace => FactionsAtWarWith.Where(x => FactionRelations[x] >= 0).ToList().Count >= 1;
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		public Government Government { get; set; }
