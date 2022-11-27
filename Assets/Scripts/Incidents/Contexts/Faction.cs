@@ -17,6 +17,7 @@ namespace Game.Incidents
 		public int Population { get; set; }
 		public int Influence { get; set; }
 		public int Wealth { get; set; }
+		public int MilitaryPower { get; set; }
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		public int ControlledTiles => ControlledTileIndices.Count;
 		public List<City> Cities { get; set; }
