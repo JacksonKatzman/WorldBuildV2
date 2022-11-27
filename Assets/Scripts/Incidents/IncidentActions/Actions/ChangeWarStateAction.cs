@@ -14,6 +14,7 @@
 			{
 				f1.FactionsAtWarWith.Add(f2);
 				f2.FactionsAtWarWith.Add(f1);
+				OutputLogger.Log("War were declared.");
 			}
 			else
 			{
@@ -25,6 +26,8 @@
 				{
 					f2.FactionsAtWarWith.Remove(f1);
 				}
+
+				OutputLogger.Log("War were ended.");
 			}
 		}
 	}

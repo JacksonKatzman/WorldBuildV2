@@ -211,5 +211,11 @@ namespace Game.Incidents
             {"==", (a, b) => ((Location)a).TileIndex == ((Location)b).TileIndex },
             {"!=", (a, b) => ((Location)a).TileIndex != ((Location)b).TileIndex }
         };
+
+        public static Dictionary<string, Func<Type, Type, bool>> TypeComparators = new Dictionary<string, Func<Type, Type, bool>>
+        {
+            {"==", (a, b) => a == b },
+            {"!=", (a, b) => a != b }
+        };
     }
 }

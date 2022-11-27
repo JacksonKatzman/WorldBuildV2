@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game.Incidents
 {
@@ -9,7 +10,7 @@ namespace Game.Incidents
 
 		protected override bool IsValidPropertyType(Type type)
 		{
-            return base.IsValidPropertyType(type) || type == typeof(Faction) || type == typeof(Location);
+            return base.IsValidPropertyType(type) || type == typeof(Faction) || type == typeof(Location) || type == typeof(Type);
         }
 
 		protected override void SetPrimitiveType()
@@ -23,6 +24,18 @@ namespace Game.Incidents
 			else if(PrimitiveType == typeof(Location))
 			{
 				evaluator = new LocationEvaluator();
+			}
+			else if(PrimitiveType == typeof(Type))
+			{
+				evaluator = new TypeEvaluator(propertyName, ContextType);
+			}
+			else if(PrimitiveType == typeof(Dictionary<IIncidentContext, int>))
+			{
+				evaluator = new ActionFieldIntDictionaryEvaluator(propertyName, ContextType);
+			}
+			else if(PrimitiveType == typeof(List<IIncidentContext>))
+			{
+				evaluator = new ActionFieldListContainsEvaluator(propertyName, ContextType);
 			}
 		}
 	}

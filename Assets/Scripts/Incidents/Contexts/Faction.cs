@@ -13,9 +13,11 @@ namespace Game.Incidents
 	public class Faction : IncidentContext, IFactionAffiliated
 	{
 		public Faction AffiliatedFaction => this;
+		public Type FactionType => ContextType;
 		public int Population { get; set; }
 		public int Influence { get; set; }
 		public int Wealth { get; set; }
+		public int MilitaryPower { get; set; }
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		public int ControlledTiles => ControlledTileIndices.Count;
 		public List<City> Cities { get; set; }
@@ -23,9 +25,10 @@ namespace Game.Incidents
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
 		public int MilitaryPriority { get; set; }
-		public List<Faction> FactionsAtWarWith { get; set; }
+		public List<IIncidentContext> FactionsAtWarWith { get; set; }
 
 		public bool AtWar => FactionsAtWarWith.Count > 0;
+		public bool CouldMakePeace => FactionsAtWarWith.Where(x => FactionRelations[x] >= 0).ToList().Count >= 1;
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		public Government Government { get; set; }
@@ -42,7 +45,7 @@ namespace Game.Incidents
 			AttemptExpandBorder(startingTiles);
 			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
-			FactionsAtWarWith = new List<Faction>();
+			FactionsAtWarWith = new List<IIncidentContext>();
 			CreateStartingCity();
 			CreateStartingGovernment();
 		}
