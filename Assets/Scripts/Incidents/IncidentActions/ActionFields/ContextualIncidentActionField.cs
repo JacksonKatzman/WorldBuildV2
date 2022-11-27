@@ -133,7 +133,8 @@ namespace Game.Incidents
 
 		protected IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
 		{
-			return delayedCalculateAction.Invoke(previousFieldID);
+			return IncidentService.Instance.CurrentIncident.ActionContainer.GetContextFromActionFields(previousFieldID);
+			//return delayedCalculateAction.Invoke(previousFieldID);
 		}
 
 		private void RetrievalTypeChanged()
@@ -161,5 +162,12 @@ namespace Game.Incidents
 		{
 			previousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == previousField).ActionFieldID;
 		}
+	}
+
+	public class PreviousOnlyContextualIncidentActionField<T> : ContextualIncidentActionField<T> where T: IIncidentContext
+	{
+		[ReadOnly]
+		public override ActionFieldRetrievalMethod Method => ActionFieldRetrievalMethod.From_Previous;
+		public override string ActionFieldIDString => "None";
 	}
 }

@@ -4,14 +4,14 @@ namespace Game.Incidents
 {
 	abstract public class ContextEvaluator<T> : ActionFieldCriteriaEvaluator<T, IIncidentContext> where T: IIncidentContext
 	{
-		[HorizontalGroup("Group 1", 100), ReadOnly, HideLabel]
-		public string toWho = "Mine";
+		public PreviousOnlyContextualIncidentActionField<T> compareTo;
+		//public string toWho = "Mine";
 
 		public ContextEvaluator() : base() { }
 
 		override public bool Evaluate(IIncidentContext context, string propertyName, IIncidentContext parentContext)
 		{
-			var parentValue = GetContext(parentContext);
+			var parentValue = compareTo.GetTypedFieldValue();
 			var contextValue = GetContext(context);
 
 			return Comparators[Comparator].Invoke(parentValue, contextValue);
@@ -22,6 +22,7 @@ namespace Game.Incidents
 		override public void Setup()
 		{
 			Comparators = ExpressionHelpers.ContextComparators;
+			compareTo = new PreviousOnlyContextualIncidentActionField<T>();
 		}
 	}
 }
