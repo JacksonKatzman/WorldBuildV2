@@ -17,6 +17,8 @@ namespace Game.Incidents
 		private int nextIncidentID;
 		private List<IncidentReport> reports;
 
+		public IIncident CurrentIncident { get; set; }
+
 		public static IncidentService Instance
 		{
 			get
@@ -62,7 +64,8 @@ namespace Game.Incidents
 				var completed = false;
 				for (int i = 0; i < 5 && i < possibleIncidents.Count && !completed; i++)
 				{
-					completed = SimRandom.RandomEntryFromWeightedDictionary(possibleIncidents).PerformIncident(incidentContext, ref report);
+					CurrentIncident = SimRandom.RandomEntryFromWeightedDictionary(possibleIncidents);
+					completed = CurrentIncident.PerformIncident(incidentContext, ref report);
 				}
 
 				if (completed)
