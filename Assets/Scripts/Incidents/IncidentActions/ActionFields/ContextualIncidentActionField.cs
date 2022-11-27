@@ -97,6 +97,7 @@ namespace Game.Incidents
 				value = RetrieveFieldAtRandom(context);
 			}
 
+			var status = AllowNull ? true : ((value != null) || (delayedValue != null));
 			return AllowNull ? true : ((value != null) || (delayedValue != null));
 		}
 

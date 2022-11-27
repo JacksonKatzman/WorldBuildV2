@@ -197,28 +197,89 @@ namespace Game.Incidents
 
 		private IEnumerable<FieldInfo> GetContexualActionFields()
 		{
+			return ActionFieldReflection.GetGenericFieldsByType(this.GetType(),
+				typeof(ContextualIncidentActionField<>),
+				typeof(ActionResultField<>),
+				typeof(LocationActionField));
+
+			/*
 			var fields = this.GetType().GetFields();
 			return fields.Where(x => (x.FieldType.IsGenericType && (x.FieldType.GetGenericTypeDefinition() == typeof(ContextualIncidentActionField<>)
 			|| x.FieldType.GetGenericTypeDefinition() == typeof(ActionResultField<>))) || x.FieldType == typeof(LocationActionField));
+			*/
 		}
 
 		private IEnumerable<FieldInfo> GetCollectionsOfActionFields()
 		{
+			return ActionFieldReflection.GetListsByType(this.GetType(), typeof(IncidentActionFieldContainer));
+			/*
 			var fields = this.GetType().GetFields();
 			var lists = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(List<>) && x.FieldType.GetGenericArguments()[0] == typeof(IncidentActionFieldContainer));
 			return lists;
+			*/
 		}
 
 		private IEnumerable<FieldInfo> GetActionFieldContainers()
 		{
-			var fields = this.GetType().GetFields();
-			return fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(InterfacedIncidentActionFieldContainer<>));
+			return ActionFieldReflection.GetGenericFieldsByType(this.GetType(), typeof(InterfacedIncidentActionFieldContainer<>));
+
+			//var fields = this.GetType().GetFields();
+			//return fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(InterfacedIncidentActionFieldContainer<>));
 		}
 
 		private IEnumerable<FieldInfo> GetIntegerRangeFields()
 		{
-			var fields = this.GetType().GetFields();
-			return fields.Where(x => x.FieldType == typeof(IntegerRange));
+			return ActionFieldReflection.GetFieldsByType(this.GetType(), typeof(IntegerRange));
+			//var fields = this.GetType().GetFields();
+			//return fields.Where(x => x.FieldType == typeof(IntegerRange));
+		}
+	}
+
+	public static class ActionFieldReflection
+	{
+		public static IEnumerable<FieldInfo> GetGenericFieldsByType(Type contextType, params Type[] types)
+		{
+			var fields = contextType.GetFields();
+			var actionFields = new List<FieldInfo>();
+
+			foreach(var type in types)
+			{
+				actionFields.AddRange(fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == type));
+			}
+
+			return actionFields;
+			//return fields.Where(x => (x.FieldType.IsGenericType && (x.FieldType.GetGenericTypeDefinition() == typeof(ContextualIncidentActionField<>)
+			//|| x.FieldType.GetGenericTypeDefinition() == typeof(ActionResultField<>))) || x.FieldType == typeof(LocationActionField));
+		}
+
+		public static IEnumerable<FieldInfo> GetListsByType(Type contextType, params Type[] types)
+		{
+			var fields = contextType.GetFields();
+			var actionFields = new List<FieldInfo>();
+
+			foreach (var type in types)
+			{
+				actionFields.AddRange(fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(List<>) && x.FieldType.GetGenericArguments()[0] == type));
+			}
+
+			return actionFields;
+
+			//var lists = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(List<>) && x.FieldType.GetGenericArguments()[0] == typeof(IncidentActionFieldContainer));
+			//return lists;
+		}
+
+		public static IEnumerable<FieldInfo> GetFieldsByType(Type contextType, params Type[] types)
+		{
+			var fields = contextType.GetFields();
+			var actionFields = new List<FieldInfo>();
+
+			foreach (var type in types)
+			{
+				actionFields.AddRange(fields.Where(x => x.FieldType == type));
+			}
+
+			return actionFields;
+			//return fields.Where(x => x.FieldType == typeof(IntegerRange));
 		}
 	}
 }
