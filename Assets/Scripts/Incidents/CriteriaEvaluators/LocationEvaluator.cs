@@ -1,7 +1,11 @@
-﻿namespace Game.Incidents
+﻿using System;
+
+namespace Game.Incidents
 {
 	public class LocationEvaluator : ContextEvaluator<Location, ILocationAffiliated>
 	{
+		public LocationEvaluator() : base() { }
+		public LocationEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 		protected override Location GetContext(IIncidentContext context)
 		{
 			if (context.ContextType.IsAssignableFrom(typeof(ILocationAffiliated)))

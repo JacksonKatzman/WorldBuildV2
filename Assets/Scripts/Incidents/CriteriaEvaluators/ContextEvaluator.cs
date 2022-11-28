@@ -1,4 +1,5 @@
 ﻿using Sirenix.OdinInspector;
+using System;
 
 namespace Game.Incidents
 {
@@ -7,6 +8,7 @@ namespace Game.Incidents
 		public InterfacedIncidentActionFieldContainer<U> compareTo;
 
 		public ContextEvaluator() : base() { }
+		public ContextEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 
 		override public bool Evaluate(IIncidentContext context, string propertyName, IIncidentContext parentContext)
 		{
