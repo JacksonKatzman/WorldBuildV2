@@ -20,13 +20,23 @@ namespace Game.Incidents
         [ShowIf("@this.allowCreate")]
         public IntegerRange militaryPriority;
 
-		protected override void MakeNew()
+		protected override Faction MakeNew()
 		{
             var newFaction = new Faction(population, influence, wealth, politicalPriority, economicPriority, religiousPriority, militaryPriority);
-            newFaction.AttemptExpandBorder(1);
-            newFaction.CreateStartingCity();
-            result.SetValue(newFaction);
-            SimulationManager.Instance.world.AddContext(newFaction);
+            //newFaction.AttemptExpandBorder(1);
+            //newFaction.CreateStartingCity();
+
+            return newFaction;
+            //result.SetValue(newFaction);
+            //SimulationManager.Instance.world.AddContext(newFaction);
         }
+
+		protected override void Complete()
+		{
+            var faction = actionField.GetTypedFieldValue();
+            faction.AttemptExpandBorder(1);
+            faction.CreateStartingCity();
+			base.Complete();
+		}
 	}
 }

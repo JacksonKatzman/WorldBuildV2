@@ -12,11 +12,13 @@ namespace Game.Incidents
 		[ValueDropdown("GetFilteredTypeList"), ShowIf("@this.allowCreate")]
 		public Type itemType;
 
-		protected override void MakeNew()
+		protected override Item MakeNew()
 		{
 			var newItem = (Item)Activator.CreateInstance(itemType);
-			SimulationManager.Instance.world.AddContext(newItem);
-			result.SetValue(newItem);
+
+			return newItem;
+			//SimulationManager.Instance.world.AddContext(newItem);
+			//result.SetValue(newItem);
 		}
 
 		private IEnumerable<Type> GetFilteredTypeList()

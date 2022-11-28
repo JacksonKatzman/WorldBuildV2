@@ -10,7 +10,7 @@ namespace Game.Incidents
 	{
         [ValueDropdown("GetFilteredTypeList"), LabelText("Special Faction Type")]
         public Type factionType;
-        protected override void MakeNew()
+        protected override Faction MakeNew()
 		{
             var specialFactionType = factionType == null ? SpecialFaction.CalculateFactionType(politicalPriority, economicPriority, religiousPriority, militaryPriority) : factionType;
             var specialFaction = (Faction)Activator.CreateInstance(specialFactionType);
@@ -22,8 +22,9 @@ namespace Game.Incidents
             specialFaction.ReligiousPriority = religiousPriority;
             specialFaction.MilitaryPriority = militaryPriority;
 
-            SimulationManager.Instance.world.AddContext<Faction>(specialFaction);
-            result.SetValue(specialFaction);
+            return specialFaction;
+            //SimulationManager.Instance.world.AddContext<Faction>(specialFaction);
+            //result.SetValue(specialFaction);
         }
 
 		private IEnumerable<Type> GetFilteredTypeList()

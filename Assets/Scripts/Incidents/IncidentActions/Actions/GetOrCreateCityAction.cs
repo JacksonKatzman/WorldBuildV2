@@ -13,13 +13,14 @@ namespace Game.Incidents
 		public IntegerRange population;
 		[ShowIf("@this.allowCreate")]
 		public IntegerRange wealth;
-		protected override void MakeNew()
+		protected override City MakeNew()
 		{
 			var newCity = new City(faction.GetTypedFieldValue(), location.GetTypedFieldValue(), population, wealth);
 			faction.GetTypedFieldValue().Cities.Add(newCity);
-			SimulationManager.Instance.world.AddContext(newCity);
-			result.SetValue(newCity);
-			OutputLogger.Log("City created!");
+
+			return newCity;
+			//SimulationManager.Instance.world.AddContext(newCity);
+			//result.SetValue(newCity);
 		}
 	}
 }

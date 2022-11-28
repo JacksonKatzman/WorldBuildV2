@@ -38,7 +38,7 @@ namespace Game.Incidents
 		public string NameID { get; set; }
 
 		[ShowInInspector]
-		virtual public string ActionFieldIDString => "{" + ActionFieldID + "}";
+		virtual public string ActionFieldIDString => ActionFieldID == 0 ? "None" : "{" + ActionFieldID + "}";
 
 		public Type ContextType => typeof(T);
 		private bool ParentTypeMatches => parentType == typeof(T);
@@ -46,8 +46,8 @@ namespace Game.Incidents
 		virtual protected bool ShowAllowSelf => ParentTypeMatches && ShowMethodChoice && Method != ActionFieldRetrievalMethod.From_Previous;
 		virtual protected bool ShowStandardCriteria => Method == ActionFieldRetrievalMethod.Criteria;
 
-		protected IIncidentContext value;
-		protected IIncidentActionField delayedValue;
+		public IIncidentContext value;
+		public IIncidentActionField delayedValue;
 
 		public ContextualIncidentActionField() 
 		{
@@ -98,7 +98,7 @@ namespace Game.Incidents
 			}
 
 			var status = AllowNull ? true : ((value != null) || (delayedValue != null));
-			return AllowNull ? true : ((value != null) || (delayedValue != null));
+			return status;
 		}
 
 		virtual protected IIncidentContext RetrieveFieldByCriteria(IIncidentContext context)
@@ -150,7 +150,7 @@ namespace Game.Incidents
 			criteria.Add(new IncidentActionFieldCriteria(typeof(T)));
 		}
 
-		private List<string> GetActionFieldIdentifiers()
+		virtual protected List<string> GetActionFieldIdentifiers()
 		{
 			var ids = new List<string>();
 			var matches = IncidentEditorWindow.actionFields.Where(x => x.ContextType == ContextType && x != this).ToList();
@@ -162,12 +162,5 @@ namespace Game.Incidents
 		{
 			previousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == previousField).ActionFieldID;
 		}
-	}
-
-	public class PreviousOnlyContextualIncidentActionField<T> : ContextualIncidentActionField<T> where T: IIncidentContext
-	{
-		[ReadOnly]
-		public override ActionFieldRetrievalMethod Method => ActionFieldRetrievalMethod.From_Previous;
-		public override string ActionFieldIDString => "None";
 	}
 }

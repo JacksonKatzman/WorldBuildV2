@@ -199,7 +199,6 @@ namespace Game.Incidents
 		{
 			return ActionFieldReflection.GetGenericFieldsByType(this.GetType(),
 				typeof(ContextualIncidentActionField<>),
-				typeof(ActionResultField<>),
 				typeof(LocationActionField));
 
 			/*

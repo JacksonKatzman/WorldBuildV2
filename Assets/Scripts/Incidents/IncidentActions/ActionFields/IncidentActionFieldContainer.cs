@@ -12,6 +12,7 @@ namespace Game.Incidents
 		public Type contextType;
 		[ShowIf("@this.actionField != null")]
 		public IIncidentActionField actionField;
+		//make the genericBase something we can choose here and create an interface specific version of the contextualincidentactionfield
 
 		private void SetContextType()
 		{
