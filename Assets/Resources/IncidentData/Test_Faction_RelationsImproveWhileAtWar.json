@@ -1,6 +1,7 @@
 {
   "$id": "1",
   "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "IncidentName": "Test_Faction_RelationsImproveWhileAtWar",
   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
   "Weight": 3,
   "Criteria": {
@@ -79,9 +80,9 @@
               "value": null,
               "delayedValue": null,
               "Method": 1,
-              "ActionFieldID": 5,
-              "NameID": "{5}:ChangeFactionRelationsAction:affectedFaction",
-              "ActionFieldIDString": "{5}",
+              "ActionFieldID": 1,
+              "NameID": "{1}:ChangeFactionRelationsAction:affectedFaction",
+              "ActionFieldIDString": "{1}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "otherFaction": {
@@ -115,9 +116,9 @@
               "value": null,
               "delayedValue": null,
               "Method": 0,
-              "ActionFieldID": 6,
-              "NameID": "{6}:ChangeFactionRelationsAction:otherFaction",
-              "ActionFieldIDString": "{6}",
+              "ActionFieldID": 2,
+              "NameID": "{2}:ChangeFactionRelationsAction:otherFaction",
+              "ActionFieldIDString": "{2}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "amount": {
@@ -127,7 +128,7 @@
               "min": 20,
               "max": 40,
               "constant": 120,
-              "Value": 30,
+              "Value": 38,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "set": false,

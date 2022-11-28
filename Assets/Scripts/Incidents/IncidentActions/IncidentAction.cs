@@ -16,8 +16,8 @@ namespace Game.Incidents
 
 			foreach (var field in matchingFields)
 			{
-				var actionField = field.GetValue(this) as IIncidentActionField;
-				if (!actionField.CalculateField(context))
+				var af = field.GetValue(this) as IIncidentActionField;
+				if (!af.CalculateField(context))
 				{
 					OutputLogger.Log(String.Format("{0} failed to verify.", GetType().Name));
 					return false;

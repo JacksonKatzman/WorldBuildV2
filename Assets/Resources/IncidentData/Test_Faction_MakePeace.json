@@ -1,6 +1,7 @@
 {
   "$id": "1",
   "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "IncidentName": "Test_Faction_MakePeace",
   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
   "Weight": 1,
   "Criteria": {
@@ -118,9 +119,9 @@
               "value": null,
               "delayedValue": null,
               "Method": 1,
-              "ActionFieldID": 3,
-              "NameID": "{3}:ChangeWarStateAction:factionOne",
-              "ActionFieldIDString": "{3}",
+              "ActionFieldID": 1,
+              "NameID": "{1}:ChangeWarStateAction:factionOne",
+              "ActionFieldIDString": "{1}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "factionTwo": {
@@ -155,9 +156,9 @@
               "value": null,
               "delayedValue": null,
               "Method": 0,
-              "ActionFieldID": 4,
-              "NameID": "{4}:ChangeWarStateAction:factionTwo",
-              "ActionFieldIDString": "{4}",
+              "ActionFieldID": 2,
+              "NameID": "{2}:ChangeWarStateAction:factionTwo",
+              "ActionFieldIDString": "{2}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "atWar": false

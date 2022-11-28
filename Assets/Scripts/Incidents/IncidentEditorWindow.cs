@@ -96,7 +96,7 @@ namespace Game.Incidents
 		{
             if (ContextTypeChosen && actionHandler.Actions.Count > 0)
             {
-                var incident = new Incident(ContextType, criteria, actionHandler, weight);
+                var incident = new Incident(incidentName, ContextType, criteria, actionHandler, weight);
 
                 var path = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + incidentName + ".json");
                 string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);

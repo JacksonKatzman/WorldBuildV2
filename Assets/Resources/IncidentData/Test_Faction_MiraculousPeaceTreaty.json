@@ -1,6 +1,7 @@
 {
   "$id": "1",
   "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "IncidentName": "Test_Faction_MiraculousPeaceTreaty",
   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
   "Weight": 1,
   "Criteria": {

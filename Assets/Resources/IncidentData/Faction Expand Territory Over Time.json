@@ -1,6 +1,7 @@
 {
   "$id": "1",
   "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "IncidentName": "Faction Expand Territory Over Time",
   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
   "Weight": 17,
   "Criteria": {
@@ -112,6 +113,8 @@
               },
               "previousField": "{0} - Original Context",
               "previousFieldID": 0,
+              "value": null,
+              "delayedValue": null,
               "Method": 1,
               "ActionFieldID": 1,
               "NameID": "{1}:ModifyFactionAction:contextToModify",

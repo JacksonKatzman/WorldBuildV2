@@ -65,6 +65,7 @@ namespace Game.Incidents
 				for (int i = 0; i < 5 && i < possibleIncidents.Count && !completed; i++)
 				{
 					CurrentIncident = SimRandom.RandomEntryFromWeightedDictionary(possibleIncidents);
+					OutputLogger.Log("Attempting to run incident: " + CurrentIncident.IncidentName);
 					completed = CurrentIncident.PerformIncident(incidentContext, ref report);
 				}
 
