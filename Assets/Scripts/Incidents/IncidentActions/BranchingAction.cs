@@ -13,11 +13,11 @@ namespace Game.Incidents
 		{
 		}
 
-		override public bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		override public bool VerifyAction(IIncidentContext context)
 		{
 			foreach (var branch in branches)
 			{
-				if(!branch.VerifyActions(context, delayedCalculateAction))
+				if(!branch.VerifyActions(context))
 				{
 					OutputLogger.LogError(String.Format("{0} failed to verify.", GetType().Name));
 					return false;

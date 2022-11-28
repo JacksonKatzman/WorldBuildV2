@@ -5,12 +5,12 @@ namespace Game.Incidents
 	abstract public class ContextEvaluator<T> : ActionFieldCriteriaEvaluator<T, IIncidentContext> where T: IIncidentContext
 	{
 		public PreviousOnlyContextualIncidentActionField<T> compareTo;
-		//public string toWho = "Mine";
 
 		public ContextEvaluator() : base() { }
 
 		override public bool Evaluate(IIncidentContext context, string propertyName, IIncidentContext parentContext)
 		{
+			compareTo.CalculateField(context);
 			var parentValue = compareTo.GetTypedFieldValue();
 			var contextValue = GetContext(context);
 

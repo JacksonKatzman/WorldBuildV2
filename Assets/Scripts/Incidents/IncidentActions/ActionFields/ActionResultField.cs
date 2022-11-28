@@ -25,7 +25,7 @@ namespace Game.Incidents
 			return (T)value;
 		}
 
-		public override bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		public override bool CalculateField(IIncidentContext context)
 		{
 			return true;
 		}

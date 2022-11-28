@@ -23,18 +23,18 @@ namespace Game.Incidents
 			deploymentCriteria = new List<DeploymentCriterium>();
 		}
 
-		public void Deploy(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		public void Deploy(IIncidentContext context)
 		{
 			foreach(var criterium in deploymentCriteria)
 			{
-				if(!criterium.Evaluate(context, delayedCalculateAction))
+				if(!criterium.Evaluate(context))
 				{
 					OutputLogger.Log("Failed deployment criteria!");
 					return;
 				}
 			}
 
-			incidentContext.CalculateFields(context, delayedCalculateAction);
+			incidentContext.CalculateFields(context);
 
 			if(delayTime == 0)
 			{
@@ -86,12 +86,12 @@ namespace Game.Incidents
 		[ShowIf("@this.previousFieldID != -1"), HideReferenceObjectPicker]
 		public IncidentCriteria criteria;
 
-		public bool Evaluate(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		public bool Evaluate(IIncidentContext context)
 		{
-			var fieldAction = delayedCalculateAction.Invoke(previousFieldID);
+			var fieldAction = IncidentService.Instance.CurrentIncident.ActionContainer.GetContextFromActionFields(previousFieldID);
 			if (fieldAction.GetFieldValue() == null)
 			{
-				if (fieldAction.CalculateField(context, delayedCalculateAction))
+				if (fieldAction.CalculateField(context))
 				{
 					var calculatedContext = fieldAction.GetFieldValue();
 					return criteria.Evaluate(calculatedContext);
@@ -123,7 +123,7 @@ namespace Game.Incidents
 
 	public interface IDeployableContext : IIncidentContext
 	{
-		bool CalculateFields(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction);
+		bool CalculateFields(IIncidentContext context);
 	}
 
 	public abstract class DeployableContext : IDeployableContext
@@ -136,7 +136,7 @@ namespace Game.Incidents
 
 		public int ParentID { get; set; }
 
-		public bool CalculateFields(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		public bool CalculateFields(IIncidentContext context)
 		{
 			var fields = ContextType.GetFields();
 			var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(DeployedContextActionField<>)).ToList();
@@ -144,7 +144,7 @@ namespace Game.Incidents
 			foreach (var field in matchingFields)
 			{
 				var actionField = field.GetValue(this) as IIncidentActionField;
-				if (!actionField.CalculateField(context, delayedCalculateAction))
+				if (!actionField.CalculateField(context))
 				{
 					return false;
 				}

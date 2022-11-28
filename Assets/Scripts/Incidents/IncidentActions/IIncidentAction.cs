@@ -5,7 +5,7 @@ namespace Game.Incidents
 {
 	public interface IIncidentAction
 	{
-		bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedAction);
+		bool VerifyAction(IIncidentContext context);
 		void PerformAction(IIncidentContext context, ref IncidentReport report);
 		void UpdateActionFieldIDs(ref int startingValue);
 		void AddContext(ref IncidentReport report);

@@ -10,7 +10,7 @@ namespace Game.Incidents
 
 		Type ContextType { get; }
 
-		bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction);
+		bool CalculateField(IIncidentContext context);
 		IIncidentContext GetFieldValue();
 	}
 }

@@ -33,9 +33,9 @@ namespace Game.Incidents
 			return totalWeight;
 		}
 
-		public bool VerifyActions(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		public bool VerifyActions(IIncidentContext context)
 		{
-			return actionHandler.VerifyActions(context, delayedCalculateAction);
+			return actionHandler.VerifyActions(context);
 		}
 
 		public void PerformActions(IIncidentContext context, ref IncidentReport report)

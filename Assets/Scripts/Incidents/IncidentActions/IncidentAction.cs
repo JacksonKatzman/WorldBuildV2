@@ -8,7 +8,7 @@ namespace Game.Incidents
 {
 	abstract public class IncidentAction : IIncidentAction
 	{
-		virtual public bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		virtual public bool VerifyAction(IIncidentContext context)
 		{
 			var matchingFields = GetContexualActionFields();
 			var matchingLists = GetCollectionsOfActionFields();
@@ -17,7 +17,7 @@ namespace Game.Incidents
 			foreach (var field in matchingFields)
 			{
 				var actionField = field.GetValue(this) as IIncidentActionField;
-				if (!actionField.CalculateField(context, delayedCalculateAction))
+				if (!actionField.CalculateField(context))
 				{
 					OutputLogger.Log(String.Format("{0} failed to verify.", GetType().Name));
 					return false;
@@ -29,7 +29,7 @@ namespace Game.Incidents
 				var list = l.GetValue(this) as List<IncidentActionFieldContainer>;
 				foreach (var actionFieldContainer in list)
 				{
-					if (!actionFieldContainer.actionField.CalculateField(context, delayedCalculateAction))
+					if (!actionFieldContainer.actionField.CalculateField(context))
 					{
 						return false;
 					}
@@ -39,7 +39,7 @@ namespace Game.Incidents
 			foreach(var c in matchingContainers)
 			{
 				var container = c.GetValue(this) as IncidentActionFieldContainer;
-				if(!container.actionField.CalculateField(context, delayedCalculateAction))
+				if(!container.actionField.CalculateField(context))
 				{
 					return false;
 				}

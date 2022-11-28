@@ -20,7 +20,7 @@ namespace Game.Incidents
 
 		public LocationActionField(Type parentType) : base(parentType) { }
 
-		public override bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		public override bool CalculateField(IIncidentContext context)
 		{
 			if (Method == ActionFieldRetrievalMethod.Criteria)
 			{
@@ -28,7 +28,7 @@ namespace Game.Incidents
 			}
 			else if (Method == ActionFieldRetrievalMethod.From_Previous)
 			{
-				delayedValue = RetrieveFieldFromPrevious(context, delayedCalculateAction);
+				delayedValue = RetrieveFieldFromPrevious(context);
 			}
 			else
 			{

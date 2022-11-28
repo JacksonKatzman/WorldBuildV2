@@ -22,7 +22,7 @@ namespace Game.Incidents
 		{
 			this.context = context;
 		}
-		public bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		public bool CalculateField(IIncidentContext context)
 		{
 			//this.context = context;
 			return true;

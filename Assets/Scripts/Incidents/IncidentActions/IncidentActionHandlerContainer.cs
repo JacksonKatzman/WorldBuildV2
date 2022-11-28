@@ -24,18 +24,13 @@ namespace Game.Incidents
 			ContextType = type;
 		}
 
-		public bool VerifyActions(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction = null)
+		public bool VerifyActions(IIncidentContext context)
 		{
 			providedContext = context;
 
-			if (delayedCalculateAction == null)
-			{
-				delayedCalculateAction = GetContextFromActionFields;
-			}
-
 			foreach (var action in Actions)
 			{
-				if (!action.VerifyAction(context, delayedCalculateAction))
+				if (!action.VerifyAction(context))
 				{
 					OutputLogger.LogWarning("ActionContainer failed to verify action context!");
 					return false;
@@ -59,7 +54,7 @@ namespace Game.Incidents
 
 			foreach (var deployer in Deployers)
 			{
-				deployer.Deploy(context, GetContextFromActionFields);
+				deployer.Deploy(context);
 			}
 
 			return true;

@@ -82,7 +82,7 @@ namespace Game.Incidents
 			}
 		}
 
-		virtual public bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		virtual public bool CalculateField(IIncidentContext context)
 		{
 			if(Method == ActionFieldRetrievalMethod.Criteria)
 			{
@@ -90,7 +90,7 @@ namespace Game.Incidents
 			}
 			else if(Method == ActionFieldRetrievalMethod.From_Previous)
 			{
-				delayedValue = RetrieveFieldFromPrevious(context, delayedCalculateAction);
+				delayedValue = RetrieveFieldFromPrevious(context);
 			}
 			else
 			{
@@ -131,7 +131,7 @@ namespace Game.Incidents
 			}
 		}
 
-		protected IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		protected IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context)
 		{
 			return IncidentService.Instance.CurrentIncident.ActionContainer.GetContextFromActionFields(previousFieldID);
 			//return delayedCalculateAction.Invoke(previousFieldID);
