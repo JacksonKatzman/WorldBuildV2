@@ -8,6 +8,7 @@ namespace Game.Incidents
 		public bool findFirst = true;
 		public bool allowCreate = true;
 
+		[ShowIf("@this.findFirst")]
 		public ContextualIncidentActionField<T> actionField;
 
 		public override bool VerifyAction(IIncidentContext context)

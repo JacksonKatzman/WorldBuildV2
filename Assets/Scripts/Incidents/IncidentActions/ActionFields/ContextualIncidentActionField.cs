@@ -46,7 +46,9 @@ namespace Game.Incidents
 		virtual protected bool ShowAllowSelf => ParentTypeMatches && ShowMethodChoice && Method != ActionFieldRetrievalMethod.From_Previous;
 		virtual protected bool ShowStandardCriteria => Method == ActionFieldRetrievalMethod.Criteria;
 
+		[HideInInspector]
 		public IIncidentContext value;
+		[HideInInspector]
 		public IIncidentActionField delayedValue;
 
 		public ContextualIncidentActionField() 
