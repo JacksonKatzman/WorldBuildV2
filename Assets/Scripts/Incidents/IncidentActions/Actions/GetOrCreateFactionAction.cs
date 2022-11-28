@@ -33,10 +33,14 @@ namespace Game.Incidents
 
 		protected override void Complete()
 		{
-            var faction = actionField.GetTypedFieldValue();
-            faction.AttemptExpandBorder(1);
-            faction.CreateStartingCity();
-			base.Complete();
+            if (madeNew)
+            {
+                var faction = actionField.GetTypedFieldValue();
+                faction.AttemptExpandBorder(1);
+                faction.CreateStartingCity();
+            }
+            
+            base.Complete();
 		}
 	}
 }

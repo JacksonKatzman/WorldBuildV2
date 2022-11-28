@@ -7,6 +7,7 @@ namespace Game.Incidents
 	{
 		public bool findFirst = true;
 		public bool allowCreate = true;
+		protected bool madeNew;
 
 		[ShowIf("@this.findFirst")]
 		public ContextualIncidentActionField<T> actionField;
@@ -14,6 +15,7 @@ namespace Game.Incidents
 		public override bool VerifyAction(IIncidentContext context)
 		{
 			var verified = false;
+			madeNew = false;
 			if(findFirst && !allowCreate)
 			{
 				verified = base.VerifyAction(context);
@@ -25,12 +27,14 @@ namespace Game.Incidents
 				{
 					actionField.value = MakeNew();
 					verified = true;
+					madeNew = true;
 				}
 			}
 			else if(!findFirst && allowCreate)
 			{
 				actionField.value = MakeNew();
 				verified = true;
+				madeNew = true;
 			}
 
 			return verified;
@@ -43,7 +47,10 @@ namespace Game.Incidents
 
 		virtual protected void Complete()
 		{
-			SimulationManager.Instance.world.AddContext(actionField.GetTypedFieldValue());
+			if (madeNew)
+			{
+				SimulationManager.Instance.world.AddContext(actionField.GetTypedFieldValue());
+			}
 		}
 
 		abstract protected T MakeNew();
