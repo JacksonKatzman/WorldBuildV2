@@ -1,6 +1,6 @@
 ﻿namespace Game.Incidents
 {
-	public class LocationEvaluator : ContextEvaluator<Location>
+	public class LocationEvaluator : ContextEvaluator<Location, ILocationAffiliated>
 	{
 		protected override Location GetContext(IIncidentContext context)
 		{
@@ -17,6 +17,7 @@
 		public override void Setup()
 		{
 			Comparators = ExpressionHelpers.LocationComparators;
+			compareTo = new InterfacedIncidentActionFieldContainer<ILocationAffiliated>();
 		}
 	}
 }

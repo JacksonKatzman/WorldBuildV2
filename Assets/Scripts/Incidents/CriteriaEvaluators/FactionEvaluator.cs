@@ -1,6 +1,6 @@
 ﻿namespace Game.Incidents
 {
-	public class FactionEvaluator : ContextEvaluator<Faction>
+	public class FactionEvaluator : ContextEvaluator<Faction, IFactionAffiliated>
 	{
 		protected override Faction GetContext(IIncidentContext context)
 		{
