@@ -156,7 +156,8 @@ namespace Game.Incidents
             { "-", (a, b) => a - b },
             { "*", (a, b) => a * b },
             { "/", (a, b) => a / b },
-            { "^", (a, b) => (int)System.Math.Pow(a, b) }
+            { "^", (a, b) => (int)System.Math.Pow(a, b) },
+            { "=", (a, b) => b }
         };
 
         public static Dictionary<string, Func<int, int, bool>> IntegerComparators = new Dictionary<string, Func<int, int, bool>>
