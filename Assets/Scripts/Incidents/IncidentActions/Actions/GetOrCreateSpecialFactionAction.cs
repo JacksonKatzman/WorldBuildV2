@@ -23,8 +23,6 @@ namespace Game.Incidents
             specialFaction.MilitaryPriority = militaryPriority;
 
             return specialFaction;
-            //SimulationManager.Instance.world.AddContext<Faction>(specialFaction);
-            //result.SetValue(specialFaction);
         }
 
 		private IEnumerable<Type> GetFilteredTypeList()

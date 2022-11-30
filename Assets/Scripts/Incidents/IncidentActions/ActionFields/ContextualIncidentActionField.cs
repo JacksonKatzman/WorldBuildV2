@@ -136,7 +136,6 @@ namespace Game.Incidents
 		protected IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context)
 		{
 			return IncidentService.Instance.CurrentIncident.ActionContainer.GetContextFromActionFields(previousFieldID);
-			//return delayedCalculateAction.Invoke(previousFieldID);
 		}
 
 		private void RetrievalTypeChanged()

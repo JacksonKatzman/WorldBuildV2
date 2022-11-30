@@ -50,9 +50,6 @@ namespace Game.Incidents
 				intelligence, wisdom, charisma, null, parents);
 
 			return newPerson;
-			//SimulationManager.Instance.world.AddContext(newPerson);
-			//result.SetValue(newPerson);
-			//OutputLogger.Log("Person Created!");
 		}
 	}
 }

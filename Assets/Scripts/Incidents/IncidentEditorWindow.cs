@@ -114,50 +114,7 @@ namespace Game.Incidents
             UpdateMainContextActionFieldIDs(ref numActionFields);
             actionHandler.UpdateActionFieldIDs(ref numActionFields);
 		}
-        /*
-        public static void UpdateActionFields(IEnumerable<FieldInfo> fields, ref int startingValue)
-		{
-            foreach (var f in fields)
-            {
-                var fa = f.GetValue(incidentContextType) as IIncidentActionField;
-                fa.ActionFieldID = startingValue;
-                fa.NameID = string.Format("{0}:{1}:{2}", fa.ActionFieldIDString, GetType().Name, f.Name);
-                actionFields.Add(fa);
-                startingValue++;
-            }
-        }
 
-        public void UpdateActionFieldCollections(IEnumerable<FieldInfo> collections, ref int startingValue)
-        {
-            foreach (var l in collections)
-            {
-                var list = l.GetValue(this) as List<IncidentActionFieldContainer>;
-                foreach (var f in list)
-                {
-                    f.actionField.ActionFieldID = startingValue;
-                    f.actionField.NameID = string.Format("{0}:{1}:{2}", f.actionField.ActionFieldIDString, GetType().Name, l.Name);
-                    actionFields.Add(f.actionField);
-                    startingValue++;
-                }
-            }
-        }
-
-        public void UpdateActionFieldContainers(IEnumerable<FieldInfo> containers, ref int startingValue)
-		{
-            foreach (var c in containers)
-            {
-                var container = c.GetValue(this) as IncidentActionFieldContainer;
-                if (container.contextType != null)
-                {
-                    var fa = container.actionField;
-                    fa.ActionFieldID = startingValue;
-                    fa.NameID = string.Format("{0}:{1}:{2}", fa.ActionFieldIDString, GetType().Name, c.Name);
-                    IncidentEditorWindow.actionFields.Add(fa);
-                    startingValue++;
-                }
-            }
-        }
-*/
         private static void UpdateMainContextActionFieldIDs(ref int startingValue)
 		{
             if (startingValue == 0)

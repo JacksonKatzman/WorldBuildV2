@@ -23,12 +23,8 @@ namespace Game.Incidents
 		protected override Faction MakeNew()
 		{
             var newFaction = new Faction(population, influence, wealth, politicalPriority, economicPriority, religiousPriority, militaryPriority);
-            //newFaction.AttemptExpandBorder(1);
-            //newFaction.CreateStartingCity();
 
             return newFaction;
-            //result.SetValue(newFaction);
-            //SimulationManager.Instance.world.AddContext(newFaction);
         }
 
 		protected override void Complete()

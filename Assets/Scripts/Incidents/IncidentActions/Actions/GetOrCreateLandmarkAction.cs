@@ -14,8 +14,6 @@ namespace Game.Incidents
 			var newLandmark = new Landmark(location.GetTypedFieldValue());
 
 			return newLandmark;
-			//SimulationManager.Instance.world.AddContext(newLandmark);
-			//result.SetValue(newLandmark);
 		}
 	}
 }

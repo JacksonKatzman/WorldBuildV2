@@ -200,37 +200,21 @@ namespace Game.Incidents
 			return ActionFieldReflection.GetGenericFieldsByType(this.GetType(),
 				typeof(ContextualIncidentActionField<>),
 				typeof(LocationActionField));
-
-			/*
-			var fields = this.GetType().GetFields();
-			return fields.Where(x => (x.FieldType.IsGenericType && (x.FieldType.GetGenericTypeDefinition() == typeof(ContextualIncidentActionField<>)
-			|| x.FieldType.GetGenericTypeDefinition() == typeof(ActionResultField<>))) || x.FieldType == typeof(LocationActionField));
-			*/
 		}
 
 		private IEnumerable<FieldInfo> GetCollectionsOfActionFields()
 		{
 			return ActionFieldReflection.GetListsByType(this.GetType(), typeof(IncidentActionFieldContainer));
-			/*
-			var fields = this.GetType().GetFields();
-			var lists = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(List<>) && x.FieldType.GetGenericArguments()[0] == typeof(IncidentActionFieldContainer));
-			return lists;
-			*/
 		}
 
 		private IEnumerable<FieldInfo> GetActionFieldContainers()
 		{
 			return ActionFieldReflection.GetGenericFieldsByType(this.GetType(), typeof(InterfacedIncidentActionFieldContainer<>));
-
-			//var fields = this.GetType().GetFields();
-			//return fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(InterfacedIncidentActionFieldContainer<>));
 		}
 
 		private IEnumerable<FieldInfo> GetIntegerRangeFields()
 		{
 			return ActionFieldReflection.GetFieldsByType(this.GetType(), typeof(IntegerRange));
-			//var fields = this.GetType().GetFields();
-			//return fields.Where(x => x.FieldType == typeof(IntegerRange));
 		}
 	}
 
@@ -247,8 +231,6 @@ namespace Game.Incidents
 			}
 
 			return actionFields;
-			//return fields.Where(x => (x.FieldType.IsGenericType && (x.FieldType.GetGenericTypeDefinition() == typeof(ContextualIncidentActionField<>)
-			//|| x.FieldType.GetGenericTypeDefinition() == typeof(ActionResultField<>))) || x.FieldType == typeof(LocationActionField));
 		}
 
 		public static IEnumerable<FieldInfo> GetListsByType(Type contextType, params Type[] types)
@@ -262,9 +244,6 @@ namespace Game.Incidents
 			}
 
 			return actionFields;
-
-			//var lists = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(List<>) && x.FieldType.GetGenericArguments()[0] == typeof(IncidentActionFieldContainer));
-			//return lists;
 		}
 
 		public static IEnumerable<FieldInfo> GetFieldsByType(Type contextType, params Type[] types)
@@ -278,7 +257,6 @@ namespace Game.Incidents
 			}
 
 			return actionFields;
-			//return fields.Where(x => x.FieldType == typeof(IntegerRange));
 		}
 	}
 }

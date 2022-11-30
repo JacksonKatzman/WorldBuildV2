@@ -19,8 +19,6 @@ namespace Game.Incidents
 			faction.GetTypedFieldValue().Cities.Add(newCity);
 
 			return newCity;
-			//SimulationManager.Instance.world.AddContext(newCity);
-			//result.SetValue(newCity);
 		}
 	}
 }

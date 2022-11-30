@@ -17,8 +17,6 @@ namespace Game.Incidents
 			var newItem = (Item)Activator.CreateInstance(itemType);
 
 			return newItem;
-			//SimulationManager.Instance.world.AddContext(newItem);
-			//result.SetValue(newItem);
 		}
 
 		private IEnumerable<Type> GetFilteredTypeList()
