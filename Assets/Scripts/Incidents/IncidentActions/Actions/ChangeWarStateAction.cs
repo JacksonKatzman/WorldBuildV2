@@ -13,7 +13,16 @@
 			if(atWar)
 			{
 				f1.FactionsAtWarWith.Add(f2);
+				if(!f1.FactionRelations.ContainsKey(f2))
+				{
+					f1.FactionRelations.Add(f2, -100);
+				}
+
 				f2.FactionsAtWarWith.Add(f1);
+				if (!f2.FactionRelations.ContainsKey(f1))
+				{
+					f2.FactionRelations.Add(f1, -100);
+				}
 				OutputLogger.Log("War were declared.");
 			}
 			else

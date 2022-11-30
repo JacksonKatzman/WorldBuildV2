@@ -38,7 +38,7 @@ namespace Game.Incidents
 		public string NameID { get; set; }
 
 		[ShowInInspector]
-		virtual public string ActionFieldIDString => "{" + ActionFieldID + "}";
+		virtual public string ActionFieldIDString => ActionFieldID == 0 ? "None" : "{" + ActionFieldID + "}";
 
 		public Type ContextType => typeof(T);
 		private bool ParentTypeMatches => parentType == typeof(T);
@@ -46,8 +46,10 @@ namespace Game.Incidents
 		virtual protected bool ShowAllowSelf => ParentTypeMatches && ShowMethodChoice && Method != ActionFieldRetrievalMethod.From_Previous;
 		virtual protected bool ShowStandardCriteria => Method == ActionFieldRetrievalMethod.Criteria;
 
-		protected IIncidentContext value;
-		protected IIncidentActionField delayedValue;
+		[HideInInspector]
+		public IIncidentContext value;
+		[HideInInspector]
+		public IIncidentActionField delayedValue;
 
 		public ContextualIncidentActionField() 
 		{
@@ -82,7 +84,7 @@ namespace Game.Incidents
 			}
 		}
 
-		virtual public bool CalculateField(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		virtual public bool CalculateField(IIncidentContext context)
 		{
 			if(Method == ActionFieldRetrievalMethod.Criteria)
 			{
@@ -90,14 +92,15 @@ namespace Game.Incidents
 			}
 			else if(Method == ActionFieldRetrievalMethod.From_Previous)
 			{
-				delayedValue = RetrieveFieldFromPrevious(context, delayedCalculateAction);
+				delayedValue = RetrieveFieldFromPrevious(context);
 			}
 			else
 			{
 				value = RetrieveFieldAtRandom(context);
 			}
 
-			return AllowNull ? true : ((value != null) || (delayedValue != null));
+			var status = AllowNull ? true : ((value != null) || (delayedValue != null));
+			return status;
 		}
 
 		virtual protected IIncidentContext RetrieveFieldByCriteria(IIncidentContext context)
@@ -130,9 +133,9 @@ namespace Game.Incidents
 			}
 		}
 
-		protected IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		protected IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context)
 		{
-			return delayedCalculateAction.Invoke(previousFieldID);
+			return IncidentService.Instance.CurrentIncident.ActionContainer.GetContextFromActionFields(previousFieldID);
 		}
 
 		private void RetrievalTypeChanged()
@@ -148,7 +151,7 @@ namespace Game.Incidents
 			criteria.Add(new IncidentActionFieldCriteria(typeof(T)));
 		}
 
-		private List<string> GetActionFieldIdentifiers()
+		virtual protected List<string> GetActionFieldIdentifiers()
 		{
 			var ids = new List<string>();
 			var matches = IncidentEditorWindow.actionFields.Where(x => x.ContextType == ContextType && x != this).ToList();

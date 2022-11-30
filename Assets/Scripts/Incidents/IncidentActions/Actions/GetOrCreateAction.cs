@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Simulation;
+using Sirenix.OdinInspector;
 
 namespace Game.Incidents
 {
@@ -6,25 +7,52 @@ namespace Game.Incidents
 	{
 		public bool findFirst = true;
 		public bool allowCreate = true;
+		protected bool madeNew;
 
 		[ShowIf("@this.findFirst")]
-		public ContextualIncidentActionField<T> valueToFind;
+		public ContextualIncidentActionField<T> actionField;
 
-		[PropertyOrder(10)]
-		public ActionResultField<T> result;
+		public override bool VerifyAction(IIncidentContext context)
+		{
+			var verified = false;
+			madeNew = false;
+			if(findFirst && !allowCreate)
+			{
+				verified = base.VerifyAction(context);
+			}
+			else if(findFirst && allowCreate)
+			{
+				verified = base.VerifyAction(context);
+				if(!verified)
+				{
+					actionField.value = MakeNew();
+					verified = true;
+					madeNew = true;
+				}
+			}
+			else if(!findFirst && allowCreate)
+			{
+				actionField.value = MakeNew();
+				verified = true;
+				madeNew = true;
+			}
+
+			return verified;
+		}
 
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			if(!findFirst || (valueToFind.GetTypedFieldValue() == null && allowCreate))
+			Complete();
+		}
+
+		virtual protected void Complete()
+		{
+			if (madeNew)
 			{
-				MakeNew();
-			}
-			else
-			{
-				result.SetValue(valueToFind.GetTypedFieldValue());
+				SimulationManager.Instance.world.AddContext(actionField.GetTypedFieldValue());
 			}
 		}
 
-		abstract protected void MakeNew();
+		abstract protected T MakeNew();
 	}
 }

@@ -9,11 +9,11 @@ namespace Game.Incidents
 		[ShowIf("@this.allowCreate")]
 		public LocationActionField location;
 
-		protected override void MakeNew()
+		protected override Landmark MakeNew()
 		{
 			var newLandmark = new Landmark(location.GetTypedFieldValue());
-			SimulationManager.Instance.world.AddContext(newLandmark);
-			result.SetValue(newLandmark);
+
+			return newLandmark;
 		}
 	}
 }

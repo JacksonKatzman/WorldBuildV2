@@ -19,11 +19,11 @@ namespace Game.Incidents
 
 			if (PrimitiveType == typeof(Faction))
 			{
-				evaluator = new FactionEvaluator();
+				evaluator = new FactionEvaluator(propertyName, ContextType);
 			}
 			else if(PrimitiveType == typeof(Location))
 			{
-				evaluator = new LocationEvaluator();
+				evaluator = new LocationEvaluator(propertyName, ContextType);
 			}
 			else if(PrimitiveType == typeof(Type))
 			{

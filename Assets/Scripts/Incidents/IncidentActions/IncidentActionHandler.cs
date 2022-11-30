@@ -22,9 +22,9 @@ namespace Game.Incidents
 			this.incidentAction = action;
 		}
 
-		public bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		public bool VerifyAction(IIncidentContext context)
 		{
-			if (!incidentAction.VerifyAction(context, delayedCalculateAction))
+			if (!incidentAction.VerifyAction(context))
 			{
 				return false;
 			}

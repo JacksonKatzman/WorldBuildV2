@@ -1,17 +1,19 @@
 ﻿using Sirenix.OdinInspector;
+using System;
 
 namespace Game.Incidents
 {
-	abstract public class ContextEvaluator<T> : ActionFieldCriteriaEvaluator<T, IIncidentContext> where T: IIncidentContext
+	abstract public class ContextEvaluator<T, U> : ActionFieldCriteriaEvaluator<T, IIncidentContext> where T: IIncidentContext
 	{
-		[HorizontalGroup("Group 1", 100), ReadOnly, HideLabel]
-		public string toWho = "Mine";
+		public InterfacedIncidentActionFieldContainer<U> compareTo;
 
 		public ContextEvaluator() : base() { }
+		public ContextEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 
 		override public bool Evaluate(IIncidentContext context, string propertyName, IIncidentContext parentContext)
 		{
-			var parentValue = GetContext(parentContext);
+			compareTo.actionField.CalculateField(context);
+			var parentValue = compareTo.actionField.GetFieldValue();
 			var contextValue = GetContext(context);
 
 			return Comparators[Comparator].Invoke(parentValue, contextValue);
@@ -22,6 +24,7 @@ namespace Game.Incidents
 		override public void Setup()
 		{
 			Comparators = ExpressionHelpers.ContextComparators;
+			compareTo = new InterfacedIncidentActionFieldContainer<U>();
 		}
 	}
 }

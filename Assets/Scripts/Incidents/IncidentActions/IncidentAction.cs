@@ -8,7 +8,7 @@ namespace Game.Incidents
 {
 	abstract public class IncidentAction : IIncidentAction
 	{
-		virtual public bool VerifyAction(IIncidentContext context, Func<int, IIncidentActionField> delayedCalculateAction)
+		virtual public bool VerifyAction(IIncidentContext context)
 		{
 			var matchingFields = GetContexualActionFields();
 			var matchingLists = GetCollectionsOfActionFields();
@@ -16,8 +16,8 @@ namespace Game.Incidents
 
 			foreach (var field in matchingFields)
 			{
-				var actionField = field.GetValue(this) as IIncidentActionField;
-				if (!actionField.CalculateField(context, delayedCalculateAction))
+				var af = field.GetValue(this) as IIncidentActionField;
+				if (!af.CalculateField(context))
 				{
 					OutputLogger.Log(String.Format("{0} failed to verify.", GetType().Name));
 					return false;
@@ -29,7 +29,7 @@ namespace Game.Incidents
 				var list = l.GetValue(this) as List<IncidentActionFieldContainer>;
 				foreach (var actionFieldContainer in list)
 				{
-					if (!actionFieldContainer.actionField.CalculateField(context, delayedCalculateAction))
+					if (!actionFieldContainer.actionField.CalculateField(context))
 					{
 						return false;
 					}
@@ -39,7 +39,7 @@ namespace Game.Incidents
 			foreach(var c in matchingContainers)
 			{
 				var container = c.GetValue(this) as IncidentActionFieldContainer;
-				if(!container.actionField.CalculateField(context, delayedCalculateAction))
+				if(!container.actionField.CalculateField(context))
 				{
 					return false;
 				}
@@ -197,28 +197,66 @@ namespace Game.Incidents
 
 		private IEnumerable<FieldInfo> GetContexualActionFields()
 		{
-			var fields = this.GetType().GetFields();
-			return fields.Where(x => (x.FieldType.IsGenericType && (x.FieldType.GetGenericTypeDefinition() == typeof(ContextualIncidentActionField<>)
-			|| x.FieldType.GetGenericTypeDefinition() == typeof(ActionResultField<>))) || x.FieldType == typeof(LocationActionField));
+			return ActionFieldReflection.GetGenericFieldsByType(this.GetType(),
+				typeof(ContextualIncidentActionField<>),
+				typeof(LocationActionField));
 		}
 
 		private IEnumerable<FieldInfo> GetCollectionsOfActionFields()
 		{
-			var fields = this.GetType().GetFields();
-			var lists = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(List<>) && x.FieldType.GetGenericArguments()[0] == typeof(IncidentActionFieldContainer));
-			return lists;
+			return ActionFieldReflection.GetListsByType(this.GetType(), typeof(IncidentActionFieldContainer));
 		}
 
 		private IEnumerable<FieldInfo> GetActionFieldContainers()
 		{
-			var fields = this.GetType().GetFields();
-			return fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(InterfacedIncidentActionFieldContainer<>));
+			return ActionFieldReflection.GetGenericFieldsByType(this.GetType(), typeof(InterfacedIncidentActionFieldContainer<>));
 		}
 
 		private IEnumerable<FieldInfo> GetIntegerRangeFields()
 		{
-			var fields = this.GetType().GetFields();
-			return fields.Where(x => x.FieldType == typeof(IntegerRange));
+			return ActionFieldReflection.GetFieldsByType(this.GetType(), typeof(IntegerRange));
+		}
+	}
+
+	public static class ActionFieldReflection
+	{
+		public static IEnumerable<FieldInfo> GetGenericFieldsByType(Type contextType, params Type[] types)
+		{
+			var fields = contextType.GetFields();
+			var actionFields = new List<FieldInfo>();
+
+			foreach(var type in types)
+			{
+				actionFields.AddRange(fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == type));
+			}
+
+			return actionFields;
+		}
+
+		public static IEnumerable<FieldInfo> GetListsByType(Type contextType, params Type[] types)
+		{
+			var fields = contextType.GetFields();
+			var actionFields = new List<FieldInfo>();
+
+			foreach (var type in types)
+			{
+				actionFields.AddRange(fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(List<>) && x.FieldType.GetGenericArguments()[0] == type));
+			}
+
+			return actionFields;
+		}
+
+		public static IEnumerable<FieldInfo> GetFieldsByType(Type contextType, params Type[] types)
+		{
+			var fields = contextType.GetFields();
+			var actionFields = new List<FieldInfo>();
+
+			foreach (var type in types)
+			{
+				actionFields.AddRange(fields.Where(x => x.FieldType == type));
+			}
+
+			return actionFields;
 		}
 	}
 }

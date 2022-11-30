@@ -4,6 +4,7 @@ namespace Game.Incidents
 {
 	public interface IIncident
 	{
+		string IncidentName { get; set; }
 		Type ContextType { get; }
 		int Weight { get; }
 		IncidentCriteriaContainer Criteria { get; }

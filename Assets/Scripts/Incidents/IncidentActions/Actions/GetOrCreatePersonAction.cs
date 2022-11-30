@@ -42,15 +42,14 @@ namespace Game.Incidents
 		[ShowIf("@this.allowCreate")]
 		public IntegerRange charisma;
 
-		protected override void MakeNew()
+		protected override Person MakeNew()
 		{
 			var parents = parent.GetTypedFieldValue() != null ? new List<Person>() { parent.GetTypedFieldValue() } : null;
 			var newPerson = new Person(age, gender, race.GetTypedFieldValue(), faction.GetTypedFieldValue(), politicalPriority,
 				economicPriority, religiousPriority, militaryPriority, influence, wealth, strength, dexterity, constitution,
 				intelligence, wisdom, charisma, null, parents);
-			SimulationManager.Instance.world.AddContext(newPerson);
-			result.SetValue(newPerson);
-			OutputLogger.Log("Person Created!");
+
+			return newPerson;
 		}
 	}
 }

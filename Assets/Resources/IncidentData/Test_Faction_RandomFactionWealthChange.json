@@ -1,6 +1,7 @@
 {
   "$id": "1",
   "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "IncidentName": "Test_Faction_RandomFactionWealthChange",
   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
   "Weight": 5,
   "Criteria": {
@@ -36,6 +37,8 @@
               },
               "previousField": "{0} - Original Context",
               "previousFieldID": 0,
+              "value": null,
+              "delayedValue": null,
               "Method": 1,
               "ActionFieldID": 1,
               "NameID": "{1}:ModifyFactionAction:contextToModify",
@@ -72,7 +75,7 @@
                             "min": -20,
                             "max": 20,
                             "constant": 0,
-                            "Value": 7,
+                            "Value": -2,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "rangeWarning": "Range not implemented for non integers!",

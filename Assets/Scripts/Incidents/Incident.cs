@@ -7,6 +7,7 @@ namespace Game.Incidents
 	[System.Serializable]
 	public class Incident : IIncident
 	{
+		public string IncidentName { get; set; }
 		public Type ContextType { get; set; }
 		public int Weight { get; set; }
 		public IncidentCriteriaContainer Criteria { get; set; }
@@ -22,8 +23,9 @@ namespace Game.Incidents
 			Weight = weight;
 		}
 
-		public Incident(Type contextType, List<IIncidentCriteria> criteria, IncidentActionHandlerContainer container, int weight = 5)
+		public Incident(string incidentName, Type contextType, List<IIncidentCriteria> criteria, IncidentActionHandlerContainer container, int weight = 5)
 		{
+			IncidentName = incidentName;
 			ContextType = contextType;
 			Criteria = new IncidentCriteriaContainer(criteria);
 			ActionContainer = container;

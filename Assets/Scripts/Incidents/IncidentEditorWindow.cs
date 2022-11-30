@@ -96,7 +96,7 @@ namespace Game.Incidents
 		{
             if (ContextTypeChosen && actionHandler.Actions.Count > 0)
             {
-                var incident = new Incident(ContextType, criteria, actionHandler, weight);
+                var incident = new Incident(incidentName, ContextType, criteria, actionHandler, weight);
 
                 var path = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + incidentName + ".json");
                 string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);
@@ -111,8 +111,32 @@ namespace Game.Incidents
 		{
             actionFields.Clear();
             numActionFields = 0;
+            UpdateMainContextActionFieldIDs(ref numActionFields);
             actionHandler.UpdateActionFieldIDs(ref numActionFields);
 		}
+
+        private static void UpdateMainContextActionFieldIDs(ref int startingValue)
+		{
+            if (startingValue == 0)
+            {
+                var constant = new ConstantActionField(ContextType);
+                actionFields.Add(constant);
+                startingValue++;
+            }
+
+            var matchingFields = ActionFieldReflection.GetGenericFieldsByType(ContextType, typeof(DeployedContextActionField<>));
+            foreach (var f in matchingFields)
+            {
+                var dataType = new Type[] { f.FieldType.GetGenericArguments()[0] };
+                var genericBase = typeof(DeployedContextActionField<>);
+                var combinedType = genericBase.MakeGenericType(dataType);
+                var actionField = (IIncidentActionField)Activator.CreateInstance(combinedType, ContextType);
+                actionField.ActionFieldID = startingValue;
+                actionField.NameID = string.Format("{0}:{1}:{2}", actionField.ActionFieldIDString, ContextType.Name, f.Name);
+                actionFields.Add(actionField);
+                startingValue++;
+            }
+        }
 
         private IEnumerable<Type> GetFilteredTypeList()
         {
