@@ -21,6 +21,7 @@ namespace Game.Incidents
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		public int ControlledTiles => ControlledTileIndices.Count;
 		public List<City> Cities { get; set; }
+		public int NumCities => Cities.Count;
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }

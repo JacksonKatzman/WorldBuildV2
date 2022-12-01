@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-    public enum ExpressionType { Const, Method, Property, Range };
+    public enum ExpressionType { Const, Method, Property, Range, Subexpression };
 
 
 	public class Expression<T>
@@ -19,6 +19,7 @@ namespace Game.Incidents
         [HideInInspector]
         public bool hasNextOperator;
 
+        [OnValueChanged("OnExpressionTypeChanged")]
         public ExpressionType ExpressionType;
 
         [LabelText("Value"), ShowIf("ExpressionType", ExpressionType.Const)]
@@ -33,6 +34,9 @@ namespace Game.Incidents
         [ShowIf("CanShowRange"), HideLabel]
         public IValueRange range;
 
+        [ShowIf("ExpressionType", ExpressionType.Subexpression), ListDrawerSettings(CustomAddFunction = "AddNewExpression"), HideReferenceObjectPicker]
+        public List<Expression<T>> subexpressions;
+
         [ShowIf("RangeNotApplicable"), HideLabel, ReadOnly]
         public string rangeWarning = "Range not implemented for non integers!";
 
@@ -46,14 +50,14 @@ namespace Game.Incidents
 		{
             GetMethodInfo();
             range = ValueRangeFactory.CreateValueRange<T>();
-		}
+        }
 
         public Expression(Type contextType) : this()
 		{
             ContextType = contextType;
 		}
 
-        public T GetValue(IIncidentContext context)
+        public T GetValue(IIncidentContext context, Dictionary<string, Func<T, T, T>> operators)
 		{
             if(ExpressionType == ExpressionType.Method)
 			{
@@ -67,11 +71,44 @@ namespace Game.Incidents
 			{
                 return ValueRangeFactory.FetchValue<T>(range);
 			}
+            else if(ExpressionType == ExpressionType.Subexpression)
+			{
+                return CombineExpressions(context, subexpressions, operators);
+			}
             else
 			{
                 return constValue;
 			}
 		}
+
+        public static T CombineExpressions(IIncidentContext context, List<Expression<T>> expressions, Dictionary<string, Func<T, T, T>> operators)
+		{
+            var currentValue = expressions[0].GetValue(context, operators);
+            for (int i = 0; i < expressions.Count - 1; i++)
+            {
+                currentValue = operators[expressions[i].nextOperator].Invoke(currentValue, expressions[i + 1].GetValue(context, operators));
+            }
+            return currentValue;
+        }
+
+        private void OnExpressionTypeChanged()
+		{
+            if(ExpressionType == ExpressionType.Subexpression && subexpressions == null)
+			{
+                subexpressions = new List<Expression<T>>();
+                subexpressions.Add(new Expression<T>(ContextType));
+            }
+        }
+
+        private void AddNewExpression()
+		{
+            subexpressions.Add(new Expression<T>(ContextType));
+            for (int i = 0; i < subexpressions.Count - 1; i++)
+            {
+                subexpressions[i].hasNextOperator = true;
+            }
+            subexpressions[subexpressions.Count - 1].hasNextOperator = false;
+        }
 
         private void GetMethodInfo()
         {
