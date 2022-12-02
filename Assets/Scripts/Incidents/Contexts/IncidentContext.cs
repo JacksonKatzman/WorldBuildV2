@@ -45,6 +45,9 @@ namespace Game.Incidents
 		{
 
 		}
+
+		abstract public void Die();
+
 		public DataTable GetDataTable()
 		{
 			var table1 = new DataTable();

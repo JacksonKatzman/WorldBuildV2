@@ -74,7 +74,7 @@ namespace Game.Incidents
 			OnDeathAction = action;
 		}
 
-		public void Die()
+		override public void Die()
 		{
 			SimulationManager.Instance.world.RemoveContext(this);
 			OnDeathAction?.Invoke();

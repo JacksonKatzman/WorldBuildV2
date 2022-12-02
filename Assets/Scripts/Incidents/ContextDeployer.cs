@@ -155,6 +155,10 @@ namespace Game.Incidents
 
 		public void DeployContext() { }
 
+		public void Die()
+		{
+		}
+
 		public DataTable GetDataTable()
 		{
 			return null;

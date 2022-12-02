@@ -11,6 +11,7 @@ namespace Game.Incidents
 		int ParentID { get; }
 		void UpdateContext();
 		void DeployContext();
+		void Die();
 		void UpdateHistoricalData();
 		DataTable GetDataTable();
 	}

@@ -166,6 +166,8 @@ namespace Game.Simulation
 			IncidentService.Instance.PerformIncidents(this);
 		}
 
+		override public void Die() { }
+
 		private int GetNextID()
 		{
 			var next = nextID;
