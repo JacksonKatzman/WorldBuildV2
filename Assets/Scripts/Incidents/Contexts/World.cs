@@ -36,10 +36,11 @@ namespace Game.Simulation
 
 		public World()
 		{
-			CurrentContexts = new TypeListDictionary<IIncidentContext>();
+			//CurrentContexts = new TypeListDictionary<IIncidentContext>();
+			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
-		public World(HexGrid hexGrid)
+		public World(HexGrid hexGrid) : this()
 		{
 			this.hexGrid = hexGrid;
 			nextID = ID + 1;
@@ -113,6 +114,11 @@ namespace Game.Simulation
 		{
 			//Contexts[typeof(T)].Remove(context);
 			contextsToRemove[typeof(T)].Add(context);
+		}
+
+		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)
+		{
+			RemoveContext(gameEvent.context);
 		}
 
 		private void DelayedAddContexts()

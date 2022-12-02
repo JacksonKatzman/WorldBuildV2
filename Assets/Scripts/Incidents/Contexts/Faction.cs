@@ -39,6 +39,9 @@ namespace Game.Incidents
 
 		public Faction() : base()
 		{
+			//need a smart generic way to go through our collections of contexts and remove a context
+			//when we get sent a contextremovedevent
+			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
 		public Faction(int startingTiles) : this()
@@ -73,6 +76,17 @@ namespace Game.Incidents
 			UpdateInfluence();
 			UpdatePERMS();
 			UpdateNumIncidents();
+
+			if(CheckDestroyed())
+			{
+				Die();
+			}
+		}
+
+		public void Die()
+		{
+			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
 		}
 
 		public void CreateStartingCity()
@@ -147,6 +161,29 @@ namespace Game.Incidents
 			return size != 0;
 		}
 
+		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)
+		{
+			if(gameEvent.context.ContextType == typeof(Faction))
+			{
+				//remove factions from collections
+				if(FactionRelations.Keys.Contains(gameEvent.context))
+				{
+					FactionRelations.Remove(gameEvent.context);
+				}
+				if(FactionsAtWarWith.Contains(gameEvent.context))
+				{
+					FactionsAtWarWith.Remove(gameEvent.context);
+				}
+			}
+			if(gameEvent.context.ContextType == typeof(City))
+			{
+				if(Cities.Contains((City)gameEvent.context))
+				{
+					Cities.Remove((City)gameEvent.context);
+				}
+			}
+		}
+
 		private void UpdateInfluence()
 		{
 			Influence += 1;
@@ -173,6 +210,11 @@ namespace Game.Incidents
 		private void UpdateNumIncidents()
 		{
 			NumIncidents = 1;
+		}
+
+		private bool CheckDestroyed()
+		{
+			return NumCities <= 0;
 		}
 	}
 }

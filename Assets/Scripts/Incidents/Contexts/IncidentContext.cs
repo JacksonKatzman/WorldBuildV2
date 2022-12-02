@@ -75,7 +75,7 @@ namespace Game.Incidents
 
 		private void SetupHistoricalData()
 		{
-			propertyList = GetPropertyList();
+			propertyList = GetIntegerPropertyList();
 			historicalData = new Dictionary<string, List<YearData<int>>>();
 			//historicalData.Add("Influence", new List<IYearData>{ new YearData<int>(SimulationManager.Instance.world.Age, Influence) });
 			foreach (var property in propertyList)
@@ -89,7 +89,12 @@ namespace Game.Incidents
 			var propertyInfo = ContextType.GetProperties();
 			var interfacePropertyInfo = typeof(IIncidentContext).GetProperties();
 
-			return propertyInfo.Where(x => !interfacePropertyInfo.Any(y => x.Name == y.Name) && x.PropertyType == typeof(int)).ToList();
+			return propertyInfo.Where(x => !interfacePropertyInfo.Any(y => x.Name == y.Name)).ToList();
+		}
+
+		private List<PropertyInfo> GetIntegerPropertyList()
+		{
+			return GetPropertyList().Where(x => x.PropertyType == typeof(int)).ToList();
 		}
 	}
 }

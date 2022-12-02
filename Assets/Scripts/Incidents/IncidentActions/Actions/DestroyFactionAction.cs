@@ -8,7 +8,7 @@ namespace Game.Incidents
 
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-            SimulationManager.Instance.world.RemoveContext(faction.GetTypedFieldValue());
+			EventManager.Instance.Dispatch(new RemoveContextEvent(faction.GetTypedFieldValue()));
 		}
 	}
 }
