@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-    public enum ExpressionType { Const, Method, Property, Range, Subexpression };
+    public enum ExpressionType { Const, Method, Property, Range, Subexpression, From_Previous };
 
 
 	public class Expression<T>
@@ -36,6 +36,9 @@ namespace Game.Incidents
 
         [ShowIf("ExpressionType", ExpressionType.Subexpression), ListDrawerSettings(CustomAddFunction = "AddNewExpression"), HideReferenceObjectPicker]
         public List<Expression<T>> subexpressions;
+
+        [ValueDropdown("GetCalculatedValues"), ShowIf("ExpressionType", ExpressionType.From_Previous), HideLabel]
+        public string previousCalculatedID;
 
         [ShowIf("RangeNotApplicable"), HideLabel, ReadOnly]
         public string rangeWarning = "Range not implemented for non integers!";
@@ -74,6 +77,10 @@ namespace Game.Incidents
             else if(ExpressionType == ExpressionType.Subexpression)
 			{
                 return CombineExpressions(context, subexpressions, operators);
+			}
+            else if(ExpressionType == ExpressionType.From_Previous)
+			{
+                return (T)IncidentService.Instance.currentExpressionValues[previousCalculatedID].Value;
 			}
             else
 			{
@@ -150,6 +157,12 @@ namespace Game.Incidents
             return properties.Keys.ToList();
         }
 
+        private IEnumerable<string> GetCalculatedValues()
+		{
+            var values = IncidentEditorWindow.calculators.Where(x => x.PrimitiveType == typeof(T));
+            return values.Select(x => x.NameID);
+		}
+
         private IEnumerable<string> GetMethodNames()
 		{
             return methods.Keys.ToList();
@@ -159,6 +172,16 @@ namespace Game.Incidents
 		{
             return ExpressionHelpers.GetOperatorNames<T>();
 		}
+	}
+
+    public class ExpressionValue
+	{
+		public ExpressionValue(object value)
+		{
+			Value = value;
+		}
+
+		public object Value { get; set; }
 	}
 
     public static class ExpressionExtensions

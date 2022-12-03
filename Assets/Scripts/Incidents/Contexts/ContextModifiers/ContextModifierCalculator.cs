@@ -9,8 +9,11 @@ namespace Game.Incidents
 	public abstract class ContextModifierCalculator<T> : IContextModifierCalculator
     {
         [HideInInspector]
-        public Type Type => typeof(T);
+        public Type PrimitiveType => typeof(T);
         public Type ContextType { get; set; }
+        public int ID { get; set; }
+        [ReadOnly, ShowInInspector]
+        public string NameID => "{EX " + ID + "}";
 
         protected Dictionary<string, Func<T, T, T>> Operators { get; set; }
 
@@ -42,7 +45,9 @@ namespace Game.Incidents
         {
             var property = context.GetType().GetProperty(propertyName);
             var propertyValue = (T)property.GetValue(context);
-            var calculatedValue = Operators[Operation].Invoke(propertyValue, CombineExpressions(context));
+            var combinedExpressions = CombineExpressions(context);
+            IncidentService.Instance.currentExpressionValues.Add(NameID, new ExpressionValue(combinedExpressions));
+            var calculatedValue = Operators[Operation].Invoke(propertyValue, combinedExpressions);
             property.SetValue(context, calculatedValue);
         }
         public T CombineExpressions(IIncidentContext context)

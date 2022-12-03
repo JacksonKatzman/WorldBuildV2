@@ -12,6 +12,8 @@ namespace Game.Incidents
 	{
 		private static IncidentService instance;
 
+		public Dictionary<string, ExpressionValue> currentExpressionValues;
+
 		private List<IIncident> incidents;
 		private List<DelayedIncidentContext> delayedContexts;
 		private int nextIncidentID;
@@ -67,6 +69,7 @@ namespace Game.Incidents
 					CurrentIncident = SimRandom.RandomEntryFromWeightedDictionary(possibleIncidents);
 					OutputLogger.Log("Attempting to run incident: " + CurrentIncident.IncidentName);
 					completed = CurrentIncident.PerformIncident(incidentContext, ref report);
+					currentExpressionValues.Clear();
 				}
 
 				if (completed)
@@ -132,6 +135,8 @@ namespace Game.Incidents
 			nextIncidentID = 0;
 			delayedContexts = new List<DelayedIncidentContext>();
 			reports = new List<IncidentReport>();
+
+			currentExpressionValues = new Dictionary<string, ExpressionValue>();
 		}
 	}
 }

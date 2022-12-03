@@ -33,10 +33,11 @@ namespace Game.Incidents
         public static Type ContextType
 		{
             get { return contextType; }
-            set {
-                    contextType = value;
-                    GetPropertyList();
-                }
+            set 
+            {
+                contextType = value;
+                GetPropertyList();
+            }
 		}
 
         static private int numActionFields;
@@ -44,6 +45,7 @@ namespace Game.Incidents
 
         public static Dictionary<string, Type> Properties => properties;
         public static List<IIncidentActionField> actionFields = new List<IIncidentActionField>();
+        public static List<IContextModifierCalculator> calculators = new List<IContextModifierCalculator>();
 
 		[ShowIf("@this.modeChosen == true"), ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type"), PropertySpace(SpaceBefore = 30, SpaceAfter = 20)]
         public Type incidentContextType;
@@ -110,12 +112,37 @@ namespace Game.Incidents
         public static void UpdateActionFieldIDs()
 		{
             actionFields.Clear();
+            calculators.Clear();
             numActionFields = 0;
             UpdateMainContextActionFieldIDs(ref numActionFields);
             actionHandler.UpdateActionFieldIDs(ref numActionFields);
 		}
+/*
+		public static void UpdateExpressionIDs(IContextModifierCalculator calculator, bool add)
+		{
+            int id = 0;
+            if(calculators == null)
+			{
+                calculators = new List<IContextModifierCalculator>();
+			}
 
-        private static void UpdateMainContextActionFieldIDs(ref int startingValue)
+            if(add && !calculators.Contains(calculator))
+			{
+                calculators.Add(calculator);
+			}
+            if(!add && calculators.Contains(calculator))
+			{
+                calculators.Remove(calculator);
+			}
+
+            foreach(var c in calculators)
+			{
+                c.ID = id;
+                id++;
+			}
+		}
+*/
+		private static void UpdateMainContextActionFieldIDs(ref int startingValue)
 		{
             if (startingValue == 0)
             {
