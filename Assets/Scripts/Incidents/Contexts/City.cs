@@ -13,6 +13,7 @@ namespace Game.Incidents
 		public Faction AffiliatedFaction { get; set; }
 		public int Population { get; set; }
 		public int Wealth { get; set; }
+		public bool IsOnBorder => SimulationUtilities.FindBorderWithinFaction(AffiliatedFaction).Contains(CurrentLocation.TileIndex);
 		public List<Resource> Resources { get; set; }
 		public List<Landmark> Landmarks { get; set; }
 
