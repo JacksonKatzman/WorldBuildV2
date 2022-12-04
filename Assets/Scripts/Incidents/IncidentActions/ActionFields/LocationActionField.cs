@@ -1,4 +1,5 @@
 ﻿using Game.Simulation;
+using Game.Terrain;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,16 @@ using System.Collections.Generic;
 namespace Game.Incidents
 {
 	public enum LocationFindMethod { Random_Unclaimed, Random_Empty, Within_Faction }
+	public enum FactionCellLocationMethod { Within, Border_Within, Border_Without, Border_Shared }
 	public class LocationActionField : ContextualIncidentActionField<Location>
 	{
 		protected override bool ShowStandardCriteria => false;
-		[ShowInInspector, PropertyOrder(-1), ShowIf("@this.Method == ActionFieldRetrievalMethod.Criteria")]
+		[ShowInInspector, PropertyOrder(-2), ShowIf("@this.Method == ActionFieldRetrievalMethod.Criteria")]
 		public LocationFindMethod LocationFindMethod { get; set; }
+
+		[ShowInInspector, PropertyOrder(-1), ShowIf("@this.ShowFactionBasedProperties")]
+		public FactionCellLocationMethod FactionCellLocationMethod { get; set; }
+
 		[ShowIf("@this.ShowFactionBasedProperties")]
 		public int minDistanceFromCities;
 		private bool ShowFactionBasedProperties => LocationFindMethod == LocationFindMethod.Within_Faction;
@@ -50,7 +56,7 @@ namespace Game.Incidents
 			}
 			else
 			{
-				index = FindWithinFaction(context);
+				index = FindFactionRelatedCell(context);
 			}
 			if (index != -1)
 			{
@@ -81,33 +87,30 @@ namespace Game.Incidents
 			return index;
 		}
 
-		private int FindWithinFaction(IIncidentContext context)
+		private int FindFactionRelatedCell(IIncidentContext context)
 		{
 			if(!context.ContextType.IsAssignableFrom(typeof(IFactionAffiliated)))
 			{
 				return -1;
 			}
 			var faction = ((IFactionAffiliated)context).AffiliatedFaction;
+			List<int> possibleIndices;
 
-			List<int> possibleIndices = new List<int>();
-			var cityTiles = SimulationUtilities.GetCellsWithCities();
-			foreach (var index in faction.ControlledTileIndices)
+			if(FactionCellLocationMethod == FactionCellLocationMethod.Within)
 			{
-				var cell = SimulationManager.Instance.HexGrid.cells[index];
-				var valid = true;
-				foreach (var cityIndex in cityTiles)
-				{
-					var cityCell = SimulationManager.Instance.HexGrid.cells[cityIndex];
-					if (cell.coordinates.DistanceTo(cityCell.coordinates) < minDistanceFromCities)
-					{
-						valid = false;
-						break;
-					}
-				}
-				if (valid)
-				{
-					possibleIndices.Add(index);
-				}
+				possibleIndices = SimulationUtilities.FindCitylessCellWithinFaction(faction, minDistanceFromCities);
+			}
+			else if(FactionCellLocationMethod == FactionCellLocationMethod.Border_Within)
+			{
+				possibleIndices = SimulationUtilities.FindCitylessBorderWithinFaction(faction);
+			}
+			else if(FactionCellLocationMethod == FactionCellLocationMethod.Border_Without)
+			{
+				possibleIndices = SimulationUtilities.FindBorderOutsideFaction(faction);
+			}
+			else
+			{
+				possibleIndices = SimulationUtilities.FindSharedBorderFaction(faction);
 			}
 
 			if (possibleIndices.Count > 0)
