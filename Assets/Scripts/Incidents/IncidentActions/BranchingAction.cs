@@ -19,7 +19,7 @@ namespace Game.Incidents
 			{
 				if(!branch.VerifyActions(context))
 				{
-					OutputLogger.LogError(String.Format("{0} failed to verify.", GetType().Name));
+					OutputLogger.LogWarning(String.Format("{0} failed to verify branch {1}.", GetType().Name, branches.IndexOf(branch)));
 					return false;
 				}
 			}
