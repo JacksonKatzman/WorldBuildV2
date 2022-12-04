@@ -31,6 +31,7 @@
 				loser.ControlledTileIndices.Remove(tileIndex);
 			}
 
+			c.AffiliatedFaction = gainer;
 			//Might need to notify tile inhabitants later so they can adjust for the change
 		}
 	}
