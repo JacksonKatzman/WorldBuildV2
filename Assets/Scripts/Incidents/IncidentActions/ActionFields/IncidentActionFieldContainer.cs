@@ -15,10 +15,17 @@ namespace Game.Incidents
 
 		private void SetContextType()
 		{
-			var dataType = new Type[] { contextType };
-			var genericBase = typeof(ContextualIncidentActionField<>);
-			var combinedType = genericBase.MakeGenericType(dataType);
-			actionField = (IIncidentActionField)Activator.CreateInstance(combinedType);
+			if (contextType == typeof(Location))
+			{
+				actionField = new LocationActionField();
+			}
+			else
+			{
+				var dataType = new Type[] { contextType };
+				var genericBase = typeof(ContextualIncidentActionField<>);
+				var combinedType = genericBase.MakeGenericType(dataType);
+				actionField = (IIncidentActionField)Activator.CreateInstance(combinedType);
+			}
 			IncidentEditorWindow.UpdateActionFieldIDs();
 		}
 		virtual protected IEnumerable<Type> GetFilteredTypeList()
