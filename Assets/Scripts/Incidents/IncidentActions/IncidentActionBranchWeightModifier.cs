@@ -7,6 +7,7 @@ namespace Game.Incidents
 {
 	public class IncidentActionBranchWeightModifier
 	{
+		[OnValueChanged("ToggleAdvancedMode")]
 		public bool advancedMode;
 		[ShowIf("@this.advancedMode == false")]
 		public int baseWeight;
@@ -41,6 +42,15 @@ namespace Game.Incidents
 		public int Calculate()
 		{
 			return advancedMode ? weight.CalculateWeight(container.actionField.GetFieldValue()) : baseWeight;
+		}
+
+		private void ToggleAdvancedMode()
+		{
+			if(advancedMode && container == null)
+			{
+				container = new IncidentActionFieldContainer();
+				container.onSetContextType += Setup;
+			}
 		}
 
 		private void Setup()

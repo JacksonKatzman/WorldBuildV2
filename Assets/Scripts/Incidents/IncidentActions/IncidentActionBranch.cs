@@ -24,7 +24,7 @@ namespace Game.Incidents
 
 		public bool VerifyActions(IIncidentContext context)
 		{
-			return actionHandler.VerifyActions(context) && weightModifier.container.actionField.CalculateField(context);
+			return actionHandler.VerifyActions(context) && weightModifier.VerifyField(context);
 		}
 
 		public void PerformActions(IIncidentContext context, ref IncidentReport report)

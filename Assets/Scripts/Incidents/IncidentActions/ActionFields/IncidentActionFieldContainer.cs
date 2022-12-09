@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Game.Incidents
 		[ShowIf("@this.actionField != null")]
 		public IIncidentActionField actionField;
 
-		[HideInInspector]
+		[HideInInspector, JsonIgnore]
 		public Action onSetContextType;
 
 		private void SetContextType()
@@ -32,7 +33,7 @@ namespace Game.Incidents
 			}
 			IncidentEditorWindow.UpdateActionFieldIDs();
 
-			onSetContextType.Invoke();
+			onSetContextType?.Invoke();
 		}
 		virtual protected IEnumerable<Type> GetFilteredTypeList()
 		{

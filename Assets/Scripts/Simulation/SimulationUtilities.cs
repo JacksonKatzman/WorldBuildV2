@@ -123,7 +123,7 @@ namespace Game.Simulation
 				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 				{
 					HexCell neighbor = hexCell.GetNeighbor(d);
-					if (!controlledCells.Contains(neighbor.Index))
+					if (neighbor != null && !controlledCells.Contains(neighbor.Index))
 					{
 						possibleIndices.Add(hexCell.Index);
 						break;
@@ -163,7 +163,7 @@ namespace Game.Simulation
 				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 				{
 					HexCell neighbor = hexCell.GetNeighbor(d);
-					if (!controlledCells.Contains(neighbor.Index))
+					if (neighbor != null && !controlledCells.Contains(neighbor.Index))
 					{
 						possibleIndices.Add(neighbor.Index);
 					}
