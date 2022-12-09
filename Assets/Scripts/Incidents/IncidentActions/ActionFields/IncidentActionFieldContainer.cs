@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Game.Incidents
 {
@@ -12,6 +13,9 @@ namespace Game.Incidents
 		public Type contextType;
 		[ShowIf("@this.actionField != null")]
 		public IIncidentActionField actionField;
+
+		[HideInInspector]
+		public Action onSetContextType;
 
 		private void SetContextType()
 		{
@@ -27,6 +31,8 @@ namespace Game.Incidents
 				actionField = (IIncidentActionField)Activator.CreateInstance(combinedType);
 			}
 			IncidentEditorWindow.UpdateActionFieldIDs();
+
+			onSetContextType.Invoke();
 		}
 		virtual protected IEnumerable<Type> GetFilteredTypeList()
 		{

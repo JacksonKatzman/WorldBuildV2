@@ -9,7 +9,7 @@ namespace Game.Incidents
 {
     public enum ExpressionType { Const, Method, Property, Range, Subexpression, From_Previous };
 
-
+    [HideReferenceObjectPicker]
 	public class Expression<T>
 	{
         private Dictionary<string, MethodInfo> methods;

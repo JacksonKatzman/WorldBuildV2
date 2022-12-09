@@ -7,28 +7,52 @@ namespace Game.Incidents
 {
 	public class IncidentActionBranchWeightModifier
 	{
-		public Type ContextType { get; set; }
-		[ValueDropdown("GetPropertyList")]
-		public string propertyName;
-
+		public bool advancedMode;
+		[ShowIf("@this.advancedMode == false")]
+		public int baseWeight;
+		[ShowIf("@this.advancedMode == true")]
+		public IncidentActionFieldContainer container;
+		[ShowIf("ShowWeight"), HideReferenceObjectPicker]
+		public IIncidentWeight weight;
+		private bool ShowWeight => advancedMode && weight != null;
 		public IncidentActionBranchWeightModifier() { }
-		public IncidentActionBranchWeightModifier(Type type)
+		public IncidentActionBranchWeightModifier(Type contextType)
 		{
-			ContextType = type;
+			/*
+			var dataType = new Type[] { contextType };
+			var genericBase = typeof(IncidentWeight<>);
+			var combinedType = genericBase.MakeGenericType(dataType);
+			weight = (IIncidentWeight)Activator.CreateInstance(combinedType);
+
+			genericBase = typeof(ContextualIncidentActionField<>);
+			combinedType = genericBase.MakeGenericType(dataType);
+			actionField = (IIncidentActionField)Activator.CreateInstance(combinedType);
+			*/
+
+			container = new IncidentActionFieldContainer();
+			container.onSetContextType += Setup;
 		}
 
-		public int Evaluate(IIncidentContext context)
+		public bool VerifyField(IIncidentContext context)
 		{
-			return (int)ContextType.GetProperty(propertyName).GetValue(context);
+			return !advancedMode || container.actionField.CalculateField(context);
 		}
 
-		private IEnumerable<string> GetPropertyList()
+		public int Calculate()
 		{
-			var propertyInfo = ContextType.GetProperties();
-			var interfacePropertyInfo = typeof(IIncidentContext).GetProperties();
-
-			var validProperties = propertyInfo.Where(x => !interfacePropertyInfo.Any(y => x.Name == y.Name) && x.PropertyType == typeof(int));
-			return validProperties.Select(x => x.Name);
+			return advancedMode ? weight.CalculateWeight(container.actionField.GetFieldValue()) : baseWeight;
 		}
+
+		private void Setup()
+		{
+			var dataType = new Type[] { container.contextType };
+			var genericBase = typeof(IncidentWeight<>);
+			var combinedType = genericBase.MakeGenericType(dataType);
+			weight = (IIncidentWeight)Activator.CreateInstance(combinedType);
+		}
+
+		//Step 1: Have a ContextualIncidentActionField where we can first choose the context type (like in the get contexts action)
+		//Step 2: Once we know the type, use it to create an IncidentModifier<T>
+		//Step 3: As part of the branch weighting, we first grab the context from the action field and pass that into the modifiers calculator
 	}
 }

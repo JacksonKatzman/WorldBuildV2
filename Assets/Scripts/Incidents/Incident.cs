@@ -9,27 +9,33 @@ namespace Game.Incidents
 	{
 		public string IncidentName { get; set; }
 		public Type ContextType { get; set; }
-		public int Weight { get; set; }
+		public IIncidentWeight Weights { get; set; }
 		public IncidentCriteriaContainer Criteria { get; set; }
 
 		public IncidentActionHandlerContainer ActionContainer { get; set; }
 
 		[JsonConstructor]
-		public Incident(Type contextType, IncidentCriteriaContainer criteria, IncidentActionHandlerContainer actions, int weight)
+		public Incident(Type contextType, IncidentCriteriaContainer criteria, IncidentActionHandlerContainer actions, IIncidentWeight weight)
 		{
 			ContextType = contextType;
 			Criteria = criteria;
 			ActionContainer = actions;
-			Weight = weight;
+			Weights = weight;
+			/*
+			var dataType = new Type[] { ContextType };
+			var genericBase = typeof(IncidentWeight<>);
+			var combinedType = genericBase.MakeGenericType(dataType);
+			Weights= (IIncidentWeight)Activator.CreateInstance(combinedType, weight);
+			*/
 		}
 
-		public Incident(string incidentName, Type contextType, List<IIncidentCriteria> criteria, IncidentActionHandlerContainer container, int weight = 5)
+		public Incident(string incidentName, Type contextType, List<IIncidentCriteria> criteria, IncidentActionHandlerContainer container, IIncidentWeight weight)
 		{
 			IncidentName = incidentName;
 			ContextType = contextType;
 			Criteria = new IncidentCriteriaContainer(criteria);
 			ActionContainer = container;
-			Weight = weight;
+			Weights = weight;
 		}
 
 		public bool PerformIncident(IIncidentContext context, ref IncidentReport report )

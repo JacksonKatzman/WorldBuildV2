@@ -32,12 +32,12 @@ namespace Game.Incidents
 			var totalWeight = 0;
 			foreach (var branch in branches)
 			{
-				totalWeight += branch.GetWeight(context);
+				totalWeight += branch.weightModifier.Calculate();
 			}
 			var decider = SimRandom.RandomRange(0, totalWeight);
 			for(int i = 0; i < branches.Count; i++)
 			{
-				totalWeight -= branches[i].GetWeight(context);
+				totalWeight -= branches[i].weightModifier.Calculate();
 				if(decider > totalWeight)
 				{
 					branches[i].PerformActions(context, ref report);

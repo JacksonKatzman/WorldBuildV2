@@ -109,11 +109,12 @@ namespace Game.Incidents
 			Dictionary<int, List<IIncident>> sortedItems = new Dictionary<int, List<IIncident>>();
 			foreach(var item in items)
 			{
-				if(!sortedItems.ContainsKey(item.Weight))
+				var weight = item.Weights.CalculateWeight(context);
+				if(!sortedItems.ContainsKey(weight))
 				{
-					sortedItems.Add(item.Weight, new List<IIncident>());
+					sortedItems.Add(weight, new List<IIncident>());
 				}
-				sortedItems[item.Weight].Add(item);
+				sortedItems[weight].Add(item);
 			}
 			return sortedItems;
 		}

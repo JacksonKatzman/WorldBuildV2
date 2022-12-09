@@ -8,9 +8,8 @@ namespace Game.Incidents
 	{
 		public Type ContextType { get; set; }
 
-		public int baseWeight;
-		[ListDrawerSettings(CustomAddFunction = "AddModifier"), HideReferenceObjectPicker]
-		public List<IncidentActionBranchWeightModifier> modifiers;
+		[HideReferenceObjectPicker]
+		public IncidentActionBranchWeightModifier weightModifier;
 
 		[HideReferenceObjectPicker]
 		public IncidentActionHandlerContainer actionHandler;
@@ -19,23 +18,13 @@ namespace Game.Incidents
 		public IncidentActionBranch(Type type)
 		{
 			ContextType = type;
-			modifiers = new List<IncidentActionBranchWeightModifier>();
+			weightModifier = new IncidentActionBranchWeightModifier(type);
 			actionHandler = new IncidentActionHandlerContainer(type);
-		}
-
-		public int GetWeight(IIncidentContext context)
-		{
-			var totalWeight = baseWeight;
-			foreach(var mod in modifiers)
-			{
-				totalWeight += mod.Evaluate(context);
-			}
-			return totalWeight;
 		}
 
 		public bool VerifyActions(IIncidentContext context)
 		{
-			return actionHandler.VerifyActions(context);
+			return actionHandler.VerifyActions(context) && weightModifier.container.actionField.CalculateField(context);
 		}
 
 		public void PerformActions(IIncidentContext context, ref IncidentReport report)
@@ -56,11 +45,6 @@ namespace Game.Incidents
 		public IIncidentActionField GetContextField(int id)
 		{
 			return actionHandler.GetContextFromActionFields(id);
-		}
-
-		private void AddModifier()
-		{
-			modifiers.Add(new IncidentActionBranchWeightModifier(ContextType));
 		}
 	}
 }
