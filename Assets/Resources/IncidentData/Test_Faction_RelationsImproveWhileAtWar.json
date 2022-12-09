@@ -3,19 +3,28 @@
   "$type": "Game.Incidents.Incident, Assembly-CSharp",
   "IncidentName": "Test_Faction_RelationsImproveWhileAtWar",
   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-  "Weight": 3,
-  "Criteria": {
+  "Weights": {
     "$id": "2",
+    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+    "baseWeight": 3,
+    "Operation": null,
+    "expressions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+      "$values": []
+    }
+  },
+  "Criteria": {
+    "$id": "3",
     "$type": "Game.Incidents.IncidentCriteriaContainer, Assembly-CSharp",
     "criteria": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
       "$values": [
         {
-          "$id": "3",
+          "$id": "4",
           "$type": "Game.Incidents.IncidentCriteria, Assembly-CSharp",
           "propertyName": "AtWar",
           "evaluator": {
-            "$id": "4",
+            "$id": "5",
             "$type": "Game.Incidents.BoolEvaluator, Assembly-CSharp",
             "propertyName": "AtWar",
             "Comparator": "==",
@@ -23,7 +32,7 @@
               "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Assembly-CSharp]], mscorlib",
               "$values": [
                 {
-                  "$id": "5",
+                  "$id": "6",
                   "$type": "Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Assembly-CSharp",
                   "hasNextOperator": false,
                   "ExpressionType": 0,
@@ -31,11 +40,13 @@
                   "chosenMethod": null,
                   "chosenProperty": null,
                   "range": {
-                    "$id": "6",
+                    "$id": "7",
                     "$type": "Game.Incidents.BoolRange, Assembly-CSharp",
                     "Value": false,
                     "GetValueType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
+                  "subexpressions": null,
+                  "previousCalculatedID": null,
                   "rangeWarning": "Range not implemented for non integers!",
                   "nextOperator": null,
                   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
@@ -53,20 +64,20 @@
     }
   },
   "ActionContainer": {
-    "$id": "7",
+    "$id": "8",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
     "incidentLog": "Relations imrpove between {0} and {2}.",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
       "$values": [
         {
-          "$id": "8",
+          "$id": "9",
           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
           "incidentAction": {
-            "$id": "9",
+            "$id": "10",
             "$type": "Game.Incidents.ChangeFactionRelationsAction, Assembly-CSharp",
             "affectedFaction": {
-              "$id": "10",
+              "$id": "11",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
               "parentType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -86,7 +97,7 @@
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "otherFaction": {
-              "$id": "11",
+              "$id": "12",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
               "parentType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -95,11 +106,11 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": [
                   {
-                    "$id": "12",
+                    "$id": "13",
                     "$type": "Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp",
                     "propertyName": "FactionsAtWarWith",
                     "evaluator": {
-                      "$id": "13",
+                      "$id": "14",
                       "$type": "Game.Incidents.ActionFieldListContainsEvaluator, Assembly-CSharp",
                       "propertyName": "FactionsAtWarWith",
                       "Comparator": "==",
@@ -122,13 +133,13 @@
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "amount": {
-              "$id": "14",
+              "$id": "15",
               "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
               "randomRange": true,
               "min": 20,
               "max": 40,
               "constant": 120,
-              "Value": 38,
+              "Value": 22,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "set": false,
