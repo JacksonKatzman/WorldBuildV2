@@ -11,13 +11,13 @@ namespace Game.Incidents
 
 		public override Type ContextType => typeof(Landmark);
 
-		public List<Item> Inventory { get; set; }
+		public Inventory Inventory { get; set; }
 
 		public Landmark() { }
 		public Landmark(Location location)
 		{
 			CurrentLocation = location;
-			Inventory = new List<Item>();
+			Inventory = new Inventory();
 		}
 	}
 }

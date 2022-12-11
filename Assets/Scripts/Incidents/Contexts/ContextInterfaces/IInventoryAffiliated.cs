@@ -5,6 +5,6 @@ namespace Game.Incidents
 {
 	public interface IInventoryAffiliated
 	{
-		List<Item> Inventory { get; }
+		Inventory Inventory { get; }
 	}
 }

@@ -68,6 +68,7 @@ namespace Game.Incidents
                 || type == typeof(Dictionary<IIncidentContext, float>)
                 || type == typeof(Dictionary<IIncidentContext, bool>)
                 || type == typeof(List<IIncidentContext>);
+                //|| (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && typeof(IIncidentContext).IsAssignableFrom(type.GetGenericArguments()[0]));
 		}
 
         private IEnumerable<string> GetPropertyNames()

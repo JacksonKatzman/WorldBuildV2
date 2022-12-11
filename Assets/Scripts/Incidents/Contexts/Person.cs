@@ -13,7 +13,7 @@ namespace Game.Incidents
 		public Person() { }
 		public Person(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
 			int religiousPriority, int militaryPriority, int influence, int wealth, int strength, int dexterity,
-			int constitution, int intelligence, int wisdom, int charisma, List<Item> inventory = null, List<Person> parents = null)
+			int constitution, int intelligence, int wisdom, int charisma, Inventory inventory = null, List<Person> parents = null)
 		{
 			Age = age;
 			Race = race == null ? new Race() : race;
@@ -31,7 +31,7 @@ namespace Game.Incidents
 			Intelligence = intelligence;
 			Wisdom = wisdom;
 			Charisma = charisma;
-			Inventory = inventory == null ? new List<Item>() : inventory;
+			Inventory = inventory == null ? new Inventory() : inventory;
 			Parents = parents == null ? new List<Person>() : parents;
 		}
 
@@ -51,7 +51,7 @@ namespace Game.Incidents
 		public int Intelligence { get; set; }
 		public int Wisdom { get; set; }
 		public int Charisma { get; set; }
-		public List<Item> Inventory { get; set; }
+		public Inventory Inventory { get; set; }
 		public List<Person> Parents { get; set; }
 		public List<Person> Spouses { get; set; }
 		public List<Person> Children { get; set; }
