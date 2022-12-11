@@ -53,9 +53,5 @@ namespace Game.Incidents
 			var combinedType = genericBase.MakeGenericType(dataType);
 			weight = (IIncidentWeight)Activator.CreateInstance(combinedType);
 		}
-
-		//Step 1: Have a ContextualIncidentActionField where we can first choose the context type (like in the get contexts action)
-		//Step 2: Once we know the type, use it to create an IncidentModifier<T>
-		//Step 3: As part of the branch weighting, we first grab the context from the action field and pass that into the modifiers calculator
 	}
 }

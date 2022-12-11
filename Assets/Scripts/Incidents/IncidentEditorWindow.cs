@@ -117,31 +117,7 @@ namespace Game.Incidents
             UpdateMainContextActionFieldIDs(ref numActionFields);
             actionHandler.UpdateActionFieldIDs(ref numActionFields);
 		}
-/*
-		public static void UpdateExpressionIDs(IContextModifierCalculator calculator, bool add)
-		{
-            int id = 0;
-            if(calculators == null)
-			{
-                calculators = new List<IContextModifierCalculator>();
-			}
 
-            if(add && !calculators.Contains(calculator))
-			{
-                calculators.Add(calculator);
-			}
-            if(!add && calculators.Contains(calculator))
-			{
-                calculators.Remove(calculator);
-			}
-
-            foreach(var c in calculators)
-			{
-                c.ID = id;
-                id++;
-			}
-		}
-*/
 		private static void UpdateMainContextActionFieldIDs(ref int startingValue)
 		{
             if (startingValue == 0)

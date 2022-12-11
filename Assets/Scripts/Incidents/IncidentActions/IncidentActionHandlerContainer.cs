@@ -111,8 +111,6 @@ namespace Game.Incidents
 			return null;
 		}
 
-		//Need a way to go get all ModifyContextActions and get all of their ContextModifiers to check IDs against their calculators
-
 		private void AddNewActionContainer()
 		{
 			Actions.Add(new IncidentActionHandler());
