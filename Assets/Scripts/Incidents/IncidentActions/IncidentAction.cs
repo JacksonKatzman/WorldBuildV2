@@ -228,7 +228,14 @@ namespace Game.Incidents
 
 			foreach(var type in types)
 			{
-				actionFields.AddRange(fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == type));
+				if (type.IsGenericType)
+				{
+					actionFields.AddRange(fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == type));
+				}
+				else
+				{
+					actionFields.AddRange(fields.Where(x => x.FieldType == type));
+				}
 			}
 
 			return actionFields;

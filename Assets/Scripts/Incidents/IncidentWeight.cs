@@ -45,6 +45,11 @@ namespace Game.Incidents
 		private void AddNewExpression()
 		{
 			expressions.Add(new Expression<int>(typeof(T)));
+			for (int i = 0; i < expressions.Count - 1; i++)
+			{
+				expressions[i].hasNextOperator = true;
+			}
+			expressions[expressions.Count - 1].hasNextOperator = false;
 		}
 
 		private List<string> GetOperatorNames()

@@ -16,20 +16,12 @@ namespace Game.Incidents
 		[ShowIf("ShowWeight"), HideReferenceObjectPicker]
 		public IIncidentWeight weight;
 		private bool ShowWeight => advancedMode && weight != null;
-		public IncidentActionBranchWeightModifier() { }
+		public IncidentActionBranchWeightModifier()
+		{
+			
+		}
 		public IncidentActionBranchWeightModifier(Type contextType)
 		{
-			/*
-			var dataType = new Type[] { contextType };
-			var genericBase = typeof(IncidentWeight<>);
-			var combinedType = genericBase.MakeGenericType(dataType);
-			weight = (IIncidentWeight)Activator.CreateInstance(combinedType);
-
-			genericBase = typeof(ContextualIncidentActionField<>);
-			combinedType = genericBase.MakeGenericType(dataType);
-			actionField = (IIncidentActionField)Activator.CreateInstance(combinedType);
-			*/
-
 			container = new IncidentActionFieldContainer();
 			container.onSetContextType += Setup;
 		}
@@ -49,8 +41,9 @@ namespace Game.Incidents
 			if(advancedMode && container == null)
 			{
 				container = new IncidentActionFieldContainer();
-				container.onSetContextType += Setup;
 			}
+
+			container.onSetContextType += Setup;
 		}
 
 		private void Setup()
