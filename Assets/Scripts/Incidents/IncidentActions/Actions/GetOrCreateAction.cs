@@ -32,8 +32,12 @@ namespace Game.Incidents
 			}
 			else if(!findFirst && allowCreate)
 			{
+				verified = VersionSpecificVerify(context);
+				if(!verified)
+				{
+					return false;
+				}
 				actionField.value = MakeNew();
-				verified = true;
 				madeNew = true;
 			}
 
@@ -51,6 +55,11 @@ namespace Game.Incidents
 			{
 				SimulationManager.Instance.world.AddContext(actionField.GetTypedFieldValue());
 			}
+		}
+
+		virtual protected bool VersionSpecificVerify(IIncidentContext context)
+		{
+			return true;
 		}
 
 		abstract protected T MakeNew();
