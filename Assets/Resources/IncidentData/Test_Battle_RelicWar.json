@@ -85,7 +85,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 15,
+              "Value": 19,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -95,7 +95,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 10,
+              "Value": 0,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "findFirst": true,
@@ -394,7 +394,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 19,
+                              "Value": 16,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "wealth": {
@@ -404,7 +404,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 8,
+                              "Value": 13,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "findFirst": true,
@@ -589,7 +589,7 @@
                                     "$id": "57",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
-                                    "Operation": "=",
+                                    "Operation": "-",
                                     "expressions": {
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
@@ -608,7 +608,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 17,
+                                            "Value": 7,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -632,7 +632,7 @@
                                             "min": 8,
                                             "max": 11,
                                             "constant": 0,
-                                            "Value": 10,
+                                            "Value": 9,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -643,6 +643,7 @@
                                         }
                                       ]
                                     },
+                                    "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                     "ID": 15,
@@ -693,7 +694,7 @@
                                     "$id": "66",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
-                                    "Operation": "=",
+                                    "Operation": "-",
                                     "expressions": {
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
@@ -712,7 +713,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 9,
+                                            "Value": 6,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -736,7 +737,7 @@
                                             "min": 7,
                                             "max": 9,
                                             "constant": 0,
-                                            "Value": 8,
+                                            "Value": 7,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -747,6 +748,7 @@
                                         }
                                       ]
                                     },
+                                    "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                     "ID": 17,
@@ -830,7 +832,7 @@
                                     "$id": "79",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
-                                    "Operation": "=",
+                                    "Operation": "-",
                                     "expressions": {
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
@@ -849,7 +851,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 7,
+                                            "Value": 0,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -873,7 +875,7 @@
                                             "min": 6,
                                             "max": 8,
                                             "constant": 0,
-                                            "Value": 6,
+                                            "Value": 7,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -884,6 +886,7 @@
                                         }
                                       ]
                                     },
+                                    "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                     "ID": 19,
@@ -934,7 +937,7 @@
                                     "$id": "88",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
-                                    "Operation": "=",
+                                    "Operation": "-",
                                     "expressions": {
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
@@ -953,7 +956,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 17,
+                                            "Value": 13,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -977,7 +980,7 @@
                                             "min": 10,
                                             "max": 12,
                                             "constant": 0,
-                                            "Value": 10,
+                                            "Value": 11,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -988,6 +991,7 @@
                                         }
                                       ]
                                     },
+                                    "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                     "ID": 21,
@@ -1222,7 +1226,7 @@
                                     "$id": "113",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
-                                    "Operation": "=",
+                                    "Operation": "-",
                                     "expressions": {
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
@@ -1241,7 +1245,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 9,
+                                            "Value": 11,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1276,6 +1280,7 @@
                                         }
                                       ]
                                     },
+                                    "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                     "ID": 28,
@@ -1326,7 +1331,7 @@
                                     "$id": "122",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
-                                    "Operation": "=",
+                                    "Operation": "-",
                                     "expressions": {
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
@@ -1345,7 +1350,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 6,
+                                            "Value": 1,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1369,7 +1374,7 @@
                                             "min": 7,
                                             "max": 10,
                                             "constant": 0,
-                                            "Value": 8,
+                                            "Value": 7,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1380,6 +1385,7 @@
                                         }
                                       ]
                                     },
+                                    "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                     "ID": 30,

@@ -104,7 +104,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 15,
+              "Value": 14,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -114,7 +114,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 1,
+              "Value": 6,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "findFirst": true,
@@ -288,7 +288,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 19,
+                              "Value": 17,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "subexpressions": null,
@@ -366,7 +366,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 5,
+                                            "Value": 4,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -390,7 +390,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 7,
+                                            "Value": 10,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -414,7 +414,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 17,
+                                            "Value": 7,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -495,7 +495,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 16,
+                                            "Value": 4,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -519,7 +519,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 1,
+                                            "Value": 16,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -543,7 +543,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 10,
+                                            "Value": 12,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -632,7 +632,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 14,
+                              "Value": 5,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "subexpressions": null,
@@ -656,7 +656,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 2,
+                              "Value": 14,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "subexpressions": null,
@@ -734,7 +734,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 6,
+                                            "Value": 8,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -758,7 +758,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 1,
+                                            "Value": 7,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -863,7 +863,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 5,
+                                            "Value": 6,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -887,7 +887,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 2,
+                                            "Value": 13,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": {
@@ -908,7 +908,7 @@
                                                   "min": 0,
                                                   "max": 20,
                                                   "constant": 0,
-                                                  "Value": 17,
+                                                  "Value": 11,
                                                   "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                                 },
                                                 "subexpressions": null,
@@ -932,7 +932,7 @@
                                                   "min": 0,
                                                   "max": 20,
                                                   "constant": 0,
-                                                  "Value": 15,
+                                                  "Value": 1,
                                                   "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                                 },
                                                 "subexpressions": null,
@@ -1096,7 +1096,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 10,
+                              "Value": 1,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "subexpressions": null,
@@ -1120,7 +1120,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 0,
+                              "Value": 1,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "subexpressions": null,
@@ -1198,7 +1198,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 19,
+                                            "Value": 14,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1222,7 +1222,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 15,
+                                            "Value": 16,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1251,7 +1251,7 @@
                                     "$id": "112",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
-                                    "Operation": "=",
+                                    "Operation": "-",
                                     "expressions": {
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
@@ -1270,7 +1270,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 13,
+                                            "Value": 18,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1294,7 +1294,7 @@
                                             "min": 5,
                                             "max": 10,
                                             "constant": 0,
-                                            "Value": 5,
+                                            "Value": 8,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1375,7 +1375,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 9,
+                                            "Value": 18,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1404,7 +1404,7 @@
                                     "$id": "125",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
-                                    "Operation": "=",
+                                    "Operation": "-",
                                     "expressions": {
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
@@ -1423,7 +1423,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 18,
+                                            "Value": 7,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1447,7 +1447,7 @@
                                             "min": 8,
                                             "max": 11,
                                             "constant": 0,
-                                            "Value": 8,
+                                            "Value": 9,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1635,7 +1635,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 8,
+                              "Value": 3,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "subexpressions": null,
@@ -1659,7 +1659,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 12,
+                              "Value": 8,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "subexpressions": null,
@@ -1737,7 +1737,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 13,
+                                            "Value": 15,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1761,7 +1761,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 13,
+                                            "Value": 7,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1833,7 +1833,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 0,
+                                            "Value": 15,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1914,11 +1914,11 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 14,
+                                            "Value": 3,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
-                                          "previousCalculatedID": "{EX 26}",
+                                          "previousCalculatedID": "{EX 27}",
                                           "rangeWarning": "Range not implemented for non integers!",
                                           "nextOperator": null,
                                           "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
