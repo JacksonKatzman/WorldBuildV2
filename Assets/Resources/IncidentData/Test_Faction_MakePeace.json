@@ -6,7 +6,7 @@
   "Weights": {
     "$id": "2",
     "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
-    "baseWeight": 1,
+    "baseWeight": 8,
     "Operation": null,
     "expressions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
