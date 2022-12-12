@@ -15,7 +15,7 @@ namespace Game.Incidents
 		[HideInInspector]
 		public Type parentType;
 
-		[OnValueChanged("RetrievalTypeChanged"), PropertyOrder(-1), ShowInInspector, ShowIf("ShowMethodChoice")]
+		[OnValueChanged("RetrievalTypeChanged"), PropertyOrder(-3), ShowInInspector, ShowIf("ShowMethodChoice")]
 		virtual public ActionFieldRetrievalMethod Method { get; set; }
 
 		[ShowInInspector, ShowIf("@this.ShowAllowSelf")]

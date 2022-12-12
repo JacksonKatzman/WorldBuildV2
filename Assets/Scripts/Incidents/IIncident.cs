@@ -6,7 +6,7 @@ namespace Game.Incidents
 	{
 		string IncidentName { get; set; }
 		Type ContextType { get; }
-		int Weight { get; }
+		IIncidentWeight Weights { get; }
 		IncidentCriteriaContainer Criteria { get; }
 		IncidentActionHandlerContainer ActionContainer { get; }
 		bool PerformIncident(IIncidentContext context, ref IncidentReport report);

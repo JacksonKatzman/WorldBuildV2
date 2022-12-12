@@ -9,8 +9,11 @@ namespace Game.Incidents
 	public abstract class ContextModifierCalculator<T> : IContextModifierCalculator
     {
         [HideInInspector]
-        public Type Type => typeof(T);
+        public Type PrimitiveType => typeof(T);
         public Type ContextType { get; set; }
+        public int ID { get; set; }
+        [ReadOnly, ShowInInspector]
+        public string NameID => "{EX " + ID + "}";
 
         protected Dictionary<string, Func<T, T, T>> Operators { get; set; }
 
@@ -22,6 +25,8 @@ namespace Game.Incidents
 
         [ListDrawerSettings(CustomAddFunction = "AddNewExpression"), HorizontalGroup("Group 1"), HideReferenceObjectPicker]
         public List<Expression<T>> expressions;
+
+        public bool clamped = true;
 
         virtual public bool AllowMultipleExpressions => true;
 
@@ -42,20 +47,23 @@ namespace Game.Incidents
         {
             var property = context.GetType().GetProperty(propertyName);
             var propertyValue = (T)property.GetValue(context);
-            var calculatedValue = Operators[Operation].Invoke(propertyValue, CombineExpressions(context));
+            var combinedExpressions = CombineExpressions(context);
+            IncidentService.Instance.currentExpressionValues.Add(NameID, new ExpressionValue(combinedExpressions));
+            var calculatedValue = Operators[Operation].Invoke(propertyValue, combinedExpressions);
+            if(clamped)
+			{
+                calculatedValue = Clamp(calculatedValue);
+			}
             property.SetValue(context, calculatedValue);
         }
         public T CombineExpressions(IIncidentContext context)
         {
-            var currentValue = expressions[0].GetValue(context);
-            for (int i = 0; i < expressions.Count - 1; i++)
-            {
-                currentValue = Operators[expressions[i].nextOperator].Invoke(currentValue, expressions[i + 1].GetValue(context));
-            }
-            return currentValue;
+            return Expression<T>.CombineExpressions(context, expressions, Operators);
         }
 
         abstract public void Setup();
+
+        abstract protected T Clamp(T value);
 
         private void AddNewExpression()
         {

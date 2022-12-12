@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Simulation;
+using System;
 using System.Data;
 
 namespace Game.Incidents
@@ -25,6 +26,11 @@ namespace Game.Incidents
 		public void UpdateContext()
 		{
 
+		}
+
+		public void Die()
+		{
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
 		}
 
 		public void UpdateHistoricalData()

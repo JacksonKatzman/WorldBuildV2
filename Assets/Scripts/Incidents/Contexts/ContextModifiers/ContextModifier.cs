@@ -5,7 +5,13 @@ using System.Linq;
 
 namespace Game.Incidents
 {
-	public class ContextModifier<T>
+    public interface IContextModifier
+    {
+        [ShowInInspector]
+        IContextModifierCalculator Calculator { get; set; }
+        void Modify(IIncidentContext context);
+    }
+	public class ContextModifier<T> : IContextModifier
 	{
 		public Type ContextType => typeof(T);
 		public Type PrimitiveType { get; set; }
@@ -14,8 +20,8 @@ namespace Game.Incidents
 		[ValueDropdown("GetPropertyNames"), OnValueChanged("SetPrimitiveType"), HorizontalGroup("Group 1")]
 		public string propertyName;
 
-        [ShowIfGroup("PropertyChosen"), HideReferenceObjectPicker]
-        public IContextModifierCalculator calculator;
+        [ShowInInspector, ShowIfGroup("PropertyChosen"), HideReferenceObjectPicker]
+        public IContextModifierCalculator Calculator { get; set; }
 
         private bool PropertyChosen => propertyName != null;
 
@@ -26,7 +32,7 @@ namespace Game.Incidents
 
         public void Modify(IIncidentContext context)
 		{
-            calculator.Calculate(context);
+            Calculator.Calculate(context);
 		}
 
         private void GetPropertyList()
@@ -68,16 +74,17 @@ namespace Game.Incidents
 
             if (PrimitiveType == typeof(int))
             {
-                calculator = new IntegerContextModifierCalculator(propertyName, ContextType);
+                Calculator = new IntegerContextModifierCalculator(propertyName, ContextType);
             }
             else if (PrimitiveType == typeof(float))
             {
-                calculator = new FloatContextModifierCalculator(propertyName, ContextType);
+                Calculator = new FloatContextModifierCalculator(propertyName, ContextType);
             }
             else if (PrimitiveType == typeof(bool))
             {
-                calculator = new BooleanContextModifierCalculator(propertyName, ContextType);
+                Calculator = new BooleanContextModifierCalculator(propertyName, ContextType);
             }
+            IncidentEditorWindow.UpdateActionFieldIDs();
         }
     }
 }

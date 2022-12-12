@@ -33,10 +33,11 @@ namespace Game.Incidents
         public static Type ContextType
 		{
             get { return contextType; }
-            set {
-                    contextType = value;
-                    GetPropertyList();
-                }
+            set 
+            {
+                contextType = value;
+                GetPropertyList();
+            }
 		}
 
         static private int numActionFields;
@@ -44,6 +45,7 @@ namespace Game.Incidents
 
         public static Dictionary<string, Type> Properties => properties;
         public static List<IIncidentActionField> actionFields = new List<IIncidentActionField>();
+        public static List<IContextModifierCalculator> calculators = new List<IContextModifierCalculator>();
 
 		[ShowIf("@this.modeChosen == true"), ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type"), PropertySpace(SpaceBefore = 30, SpaceAfter = 20)]
         public Type incidentContextType;
@@ -51,8 +53,8 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen")]
         public string incidentName;
 
-        [Range(0, 20), ShowIfGroup("ContextTypeChosen")]
-        public int weight;
+        [ShowIfGroup("ContextTypeChosen"), HideReferenceObjectPicker]
+        public IIncidentWeight weight;
 
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
         public List<IIncidentCriteria> criteria;
@@ -65,7 +67,7 @@ namespace Game.Incidents
         {
             incidentContextType = null;
             incidentName = string.Empty;
-            weight = 0;
+            weight = null;
             modeChosen = true;
         }
 
@@ -79,7 +81,7 @@ namespace Game.Incidents
             incidentContextType = loadedIncident.ContextType;
             ContextType = incidentContextType;
             incidentName = savedIncidentName;
-            weight = loadedIncident.Weight;
+            weight = loadedIncident.Weights;
             criteria = loadedIncident.Criteria.criteria;
             actionHandler = loadedIncident.ActionContainer;
             UpdateActionFieldIDs();
@@ -94,7 +96,7 @@ namespace Game.Incidents
         [Button("Save"), ShowIfGroup("ContextTypeChosen"), PropertyOrder(10)]
         public void OnSaveButtonPressed()
 		{
-            if (ContextTypeChosen && actionHandler.Actions.Count > 0)
+            if (ContextTypeChosen)// && actionHandler.Actions.Count > 0)
             {
                 var incident = new Incident(incidentName, ContextType, criteria, actionHandler, weight);
 
@@ -110,12 +112,13 @@ namespace Game.Incidents
         public static void UpdateActionFieldIDs()
 		{
             actionFields.Clear();
+            calculators.Clear();
             numActionFields = 0;
             UpdateMainContextActionFieldIDs(ref numActionFields);
             actionHandler.UpdateActionFieldIDs(ref numActionFields);
 		}
 
-        private static void UpdateMainContextActionFieldIDs(ref int startingValue)
+		private static void UpdateMainContextActionFieldIDs(ref int startingValue)
 		{
             if (startingValue == 0)
             {
@@ -156,12 +159,21 @@ namespace Game.Incidents
             return files;
 		}
 
-        void SetContextType()
+        private void SetContextType()
 		{
             ContextType = incidentContextType;
             criteria = new List<IIncidentCriteria>();
             actionHandler = new IncidentActionHandlerContainer(ContextType);
+            CreateIncidentWeight();
 		}
+
+        private void CreateIncidentWeight()
+		{
+            var dataType = new Type[] { incidentContextType };
+            var genericBase = typeof(IncidentWeight<>);
+            var combinedType = genericBase.MakeGenericType(dataType);
+            weight = (IIncidentWeight)Activator.CreateInstance(combinedType);
+        }
 
         private void AddNewCriteriaItem()
         {

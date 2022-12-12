@@ -14,7 +14,8 @@ namespace Game.IO
 		{
 			// ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
 			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-			TypeNameHandling = TypeNameHandling.All
+			TypeNameHandling = TypeNameHandling.All,
+			MissingMemberHandling = MissingMemberHandling.Ignore
 		};
 
 		public static string ROOT = Path.Combine(Application.persistentDataPath, "GameData");

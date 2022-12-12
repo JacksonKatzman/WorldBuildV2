@@ -111,5 +111,109 @@ namespace Game.Simulation
 
 			return claimedList;
 		}
+
+		public static List<int> FindBorderWithinFaction(Faction faction)
+		{
+			List<int> possibleIndices = new List<int>();
+			var controlledCells = faction.ControlledTileIndices;
+
+			foreach (var cell in controlledCells)
+			{
+				HexCell hexCell = SimulationManager.Instance.HexGrid.GetCell(cell);
+				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+				{
+					HexCell neighbor = hexCell.GetNeighbor(d);
+					if (neighbor != null && !controlledCells.Contains(neighbor.Index))
+					{
+						possibleIndices.Add(hexCell.Index);
+						break;
+					}
+				}
+			}
+
+			return possibleIndices;
+		}
+
+		public static List<int> FindCitylessBorderWithinFaction(Faction faction)
+		{
+			var cityTiles = GetCellsWithCities();
+			var borderTiles = FindBorderWithinFaction(faction);
+			List<int> possibleIndices = new List<int>();
+
+			foreach (var cell in borderTiles)
+			{
+				if (!cityTiles.Contains(cell))
+				{
+					possibleIndices.Add(cell);
+				}
+			}
+
+			return possibleIndices;
+		}
+
+		public static List<int> FindBorderOutsideFaction(Faction faction)
+		{
+			var insideIndices = FindBorderWithinFaction(faction);
+			var possibleIndices = new HashSet<int>();
+			var controlledCells = faction.ControlledTileIndices;
+
+			foreach (var cell in insideIndices)
+			{
+				HexCell hexCell = SimulationManager.Instance.HexGrid.GetCell(cell);
+				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+				{
+					HexCell neighbor = hexCell.GetNeighbor(d);
+					if (neighbor != null && !controlledCells.Contains(neighbor.Index))
+					{
+						possibleIndices.Add(neighbor.Index);
+					}
+				}
+			}
+
+			return new List<int>(possibleIndices);
+		}
+
+		public static List<int> FindSharedBorderFaction(Faction faction)
+		{
+			var outsideIndices = FindBorderOutsideFaction(faction);
+			var possibleIndices = new List<int>();
+			var claimedCells = GetClaimedCells();
+
+			foreach (var cell in outsideIndices)
+			{
+				if (claimedCells.Contains(cell))
+				{
+					possibleIndices.Add(cell);
+				}
+			}
+
+			return possibleIndices;
+		}
+
+		public static List<int> FindCitylessCellWithinFaction(Faction faction, int minDistanceFromCities)
+		{
+			List<int> possibleIndices = new List<int>();
+			var cityTiles = GetCellsWithCities();
+			foreach (var index in faction.ControlledTileIndices)
+			{
+				var cell = SimulationManager.Instance.HexGrid.cells[index];
+				var valid = true;
+				foreach (var cityIndex in cityTiles)
+				{
+					var cityCell = SimulationManager.Instance.HexGrid.cells[cityIndex];
+					if (cell.coordinates.DistanceTo(cityCell.coordinates) < minDistanceFromCities)
+					{
+						valid = false;
+						break;
+					}
+				}
+				if (valid)
+				{
+					possibleIndices.Add(index);
+				}
+			}
+
+			return possibleIndices;
+		}
 	}
 }

@@ -1,7 +1,9 @@
-﻿using Sirenix.OdinInspector;
+﻿using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Game.Incidents
 {
@@ -13,13 +15,25 @@ namespace Game.Incidents
 		[ShowIf("@this.actionField != null")]
 		public IIncidentActionField actionField;
 
+		[HideInInspector, JsonIgnore]
+		public Action onSetContextType;
+
 		private void SetContextType()
 		{
-			var dataType = new Type[] { contextType };
-			var genericBase = typeof(ContextualIncidentActionField<>);
-			var combinedType = genericBase.MakeGenericType(dataType);
-			actionField = (IIncidentActionField)Activator.CreateInstance(combinedType);
+			if (contextType == typeof(Location))
+			{
+				actionField = new LocationActionField();
+			}
+			else
+			{
+				var dataType = new Type[] { contextType };
+				var genericBase = typeof(ContextualIncidentActionField<>);
+				var combinedType = genericBase.MakeGenericType(dataType);
+				actionField = (IIncidentActionField)Activator.CreateInstance(combinedType);
+			}
 			IncidentEditorWindow.UpdateActionFieldIDs();
+
+			onSetContextType?.Invoke();
 		}
 		virtual protected IEnumerable<Type> GetFilteredTypeList()
 		{

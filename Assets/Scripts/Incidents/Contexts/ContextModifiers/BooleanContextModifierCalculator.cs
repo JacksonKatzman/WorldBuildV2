@@ -9,5 +9,10 @@ namespace Game.Incidents
         {
             Operators = ExpressionHelpers.BoolOperators;
         }
-    }
+
+		protected override bool Clamp(bool value)
+		{
+			return value;
+		}
+	}
 }

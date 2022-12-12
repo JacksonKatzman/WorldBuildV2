@@ -64,12 +64,7 @@ namespace Game.Incidents
 
         public T CombineExpressions(IIncidentContext context)
         {
-            var currentValue = expressions[0].GetValue(context);
-            for (int i = 0; i < expressions.Count - 1; i++)
-            {
-                currentValue = Operators[expressions[i].nextOperator].Invoke(currentValue, expressions[i + 1].GetValue(context));
-            }
-            return currentValue;
+            return Expression<T>.CombineExpressions(context, expressions, Operators);
         }
 
         private void AddNewExpression()

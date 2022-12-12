@@ -12,6 +12,8 @@ namespace Game.Incidents
 	{
 		private static IncidentService instance;
 
+		public Dictionary<string, ExpressionValue> currentExpressionValues;
+
 		private List<IIncident> incidents;
 		private List<DelayedIncidentContext> delayedContexts;
 		private int nextIncidentID;
@@ -67,6 +69,7 @@ namespace Game.Incidents
 					CurrentIncident = SimRandom.RandomEntryFromWeightedDictionary(possibleIncidents);
 					OutputLogger.Log("Attempting to run incident: " + CurrentIncident.IncidentName);
 					completed = CurrentIncident.PerformIncident(incidentContext, ref report);
+					currentExpressionValues.Clear();
 				}
 
 				if (completed)
@@ -106,11 +109,12 @@ namespace Game.Incidents
 			Dictionary<int, List<IIncident>> sortedItems = new Dictionary<int, List<IIncident>>();
 			foreach(var item in items)
 			{
-				if(!sortedItems.ContainsKey(item.Weight))
+				var weight = item.Weights.CalculateWeight(context);
+				if(!sortedItems.ContainsKey(weight))
 				{
-					sortedItems.Add(item.Weight, new List<IIncident>());
+					sortedItems.Add(weight, new List<IIncident>());
 				}
-				sortedItems[item.Weight].Add(item);
+				sortedItems[weight].Add(item);
 			}
 			return sortedItems;
 		}
@@ -132,6 +136,8 @@ namespace Game.Incidents
 			nextIncidentID = 0;
 			delayedContexts = new List<DelayedIncidentContext>();
 			reports = new List<IncidentReport>();
+
+			currentExpressionValues = new Dictionary<string, ExpressionValue>();
 		}
 	}
 }

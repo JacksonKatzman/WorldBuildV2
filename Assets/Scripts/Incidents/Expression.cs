@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-    public enum ExpressionType { Const, Method, Property, Range };
+    public enum ExpressionType { Const, Method, Property, Range, Subexpression, From_Previous };
 
-
+    [HideReferenceObjectPicker]
 	public class Expression<T>
 	{
         private Dictionary<string, MethodInfo> methods;
@@ -19,6 +19,7 @@ namespace Game.Incidents
         [HideInInspector]
         public bool hasNextOperator;
 
+        [OnValueChanged("OnExpressionTypeChanged")]
         public ExpressionType ExpressionType;
 
         [LabelText("Value"), ShowIf("ExpressionType", ExpressionType.Const)]
@@ -33,6 +34,12 @@ namespace Game.Incidents
         [ShowIf("CanShowRange"), HideLabel]
         public IValueRange range;
 
+        [ShowIf("ExpressionType", ExpressionType.Subexpression), ListDrawerSettings(CustomAddFunction = "AddNewExpression"), HideReferenceObjectPicker]
+        public List<Expression<T>> subexpressions;
+
+        [ValueDropdown("GetCalculatedValues"), ShowIf("ExpressionType", ExpressionType.From_Previous), HideLabel]
+        public string previousCalculatedID;
+
         [ShowIf("RangeNotApplicable"), HideLabel, ReadOnly]
         public string rangeWarning = "Range not implemented for non integers!";
 
@@ -46,14 +53,14 @@ namespace Game.Incidents
 		{
             GetMethodInfo();
             range = ValueRangeFactory.CreateValueRange<T>();
-		}
+        }
 
         public Expression(Type contextType) : this()
 		{
             ContextType = contextType;
 		}
 
-        public T GetValue(IIncidentContext context)
+        public T GetValue(IIncidentContext context, Dictionary<string, Func<T, T, T>> operators)
 		{
             if(ExpressionType == ExpressionType.Method)
 			{
@@ -67,11 +74,48 @@ namespace Game.Incidents
 			{
                 return ValueRangeFactory.FetchValue<T>(range);
 			}
+            else if(ExpressionType == ExpressionType.Subexpression)
+			{
+                return CombineExpressions(context, subexpressions, operators);
+			}
+            else if(ExpressionType == ExpressionType.From_Previous)
+			{
+                return (T)IncidentService.Instance.currentExpressionValues[previousCalculatedID].Value;
+			}
             else
 			{
                 return constValue;
 			}
 		}
+
+        public static T CombineExpressions(IIncidentContext context, List<Expression<T>> expressions, Dictionary<string, Func<T, T, T>> operators)
+		{
+            var currentValue = expressions[0].GetValue(context, operators);
+            for (int i = 0; i < expressions.Count - 1; i++)
+            {
+                currentValue = operators[expressions[i].nextOperator].Invoke(currentValue, expressions[i + 1].GetValue(context, operators));
+            }
+            return currentValue;
+        }
+
+        private void OnExpressionTypeChanged()
+		{
+            if(ExpressionType == ExpressionType.Subexpression && subexpressions == null)
+			{
+                subexpressions = new List<Expression<T>>();
+                subexpressions.Add(new Expression<T>(ContextType));
+            }
+        }
+
+        private void AddNewExpression()
+		{
+            subexpressions.Add(new Expression<T>(ContextType));
+            for (int i = 0; i < subexpressions.Count - 1; i++)
+            {
+                subexpressions[i].hasNextOperator = true;
+            }
+            subexpressions[subexpressions.Count - 1].hasNextOperator = false;
+        }
 
         private void GetMethodInfo()
         {
@@ -113,6 +157,12 @@ namespace Game.Incidents
             return properties.Keys.ToList();
         }
 
+        private IEnumerable<string> GetCalculatedValues()
+		{
+            var values = IncidentEditorWindow.calculators.Where(x => x.PrimitiveType == typeof(T));
+            return values.Select(x => x.NameID);
+		}
+
         private IEnumerable<string> GetMethodNames()
 		{
             return methods.Keys.ToList();
@@ -122,6 +172,16 @@ namespace Game.Incidents
 		{
             return ExpressionHelpers.GetOperatorNames<T>();
 		}
+	}
+
+    public class ExpressionValue
+	{
+		public ExpressionValue(object value)
+		{
+			Value = value;
+		}
+
+		public object Value { get; set; }
 	}
 
     public static class ExpressionExtensions

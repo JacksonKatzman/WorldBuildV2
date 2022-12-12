@@ -7,28 +7,51 @@ namespace Game.Incidents
 {
 	public class IncidentActionBranchWeightModifier
 	{
-		public Type ContextType { get; set; }
-		[ValueDropdown("GetPropertyList")]
-		public string propertyName;
-
-		public IncidentActionBranchWeightModifier() { }
-		public IncidentActionBranchWeightModifier(Type type)
+		[OnValueChanged("ToggleAdvancedMode")]
+		public bool advancedMode;
+		[ShowIf("@this.advancedMode == false")]
+		public int baseWeight;
+		[ShowIf("@this.advancedMode == true")]
+		public IncidentActionFieldContainer container;
+		[ShowIf("ShowWeight"), HideReferenceObjectPicker]
+		public IIncidentWeight weight;
+		private bool ShowWeight => advancedMode && weight != null;
+		public IncidentActionBranchWeightModifier()
 		{
-			ContextType = type;
+			
+		}
+		public IncidentActionBranchWeightModifier(Type contextType)
+		{
+			container = new IncidentActionFieldContainer();
+			container.onSetContextType += Setup;
 		}
 
-		public int Evaluate(IIncidentContext context)
+		public bool VerifyField(IIncidentContext context)
 		{
-			return (int)ContextType.GetProperty(propertyName).GetValue(context);
+			return !advancedMode || container.actionField.CalculateField(context);
 		}
 
-		private IEnumerable<string> GetPropertyList()
+		public int Calculate()
 		{
-			var propertyInfo = ContextType.GetProperties();
-			var interfacePropertyInfo = typeof(IIncidentContext).GetProperties();
+			return advancedMode ? weight.CalculateWeight(container.actionField.GetFieldValue()) : baseWeight;
+		}
 
-			var validProperties = propertyInfo.Where(x => !interfacePropertyInfo.Any(y => x.Name == y.Name) && x.PropertyType == typeof(int));
-			return validProperties.Select(x => x.Name);
+		private void ToggleAdvancedMode()
+		{
+			if(advancedMode && container == null)
+			{
+				container = new IncidentActionFieldContainer();
+			}
+
+			container.onSetContextType += Setup;
+		}
+
+		private void Setup()
+		{
+			var dataType = new Type[] { container.contextType };
+			var genericBase = typeof(IncidentWeight<>);
+			var combinedType = genericBase.MakeGenericType(dataType);
+			weight = (IIncidentWeight)Activator.CreateInstance(combinedType);
 		}
 	}
 }

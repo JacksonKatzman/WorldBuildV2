@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Generators.Items;
+using System;
 using System.Collections.Generic;
 
 namespace Game.Incidents
@@ -10,7 +11,7 @@ namespace Game.Incidents
 
 		protected override bool IsValidPropertyType(Type type)
 		{
-            return base.IsValidPropertyType(type) || type == typeof(Faction) || type == typeof(Location) || type == typeof(Type);
+            return base.IsValidPropertyType(type) || type == typeof(Faction) || type == typeof(Location) || type == typeof(Inventory) || type == typeof(Type);
         }
 
 		protected override void SetPrimitiveType()
@@ -24,6 +25,10 @@ namespace Game.Incidents
 			else if(PrimitiveType == typeof(Location))
 			{
 				evaluator = new LocationEvaluator(propertyName, ContextType);
+			}
+			else if(PrimitiveType == typeof(Inventory))
+			{
+				evaluator = new InventoryEvaluator(propertyName, ContextType);
 			}
 			else if(PrimitiveType == typeof(Type))
 			{

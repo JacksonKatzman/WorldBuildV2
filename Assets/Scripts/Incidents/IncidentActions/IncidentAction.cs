@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Simulation;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Game.Incidents
 				var af = field.GetValue(this) as IIncidentActionField;
 				if (!af.CalculateField(context))
 				{
-					OutputLogger.Log(String.Format("{0} failed to verify.", GetType().Name));
+					OutputLogger.LogWarning(String.Format("{0} failed to verify in year {1} for incident: {2}.", GetType().Name, SimulationManager.Instance.world.Age, IncidentService.Instance.CurrentIncident.IncidentName));
 					return false;
 				}
 			}
@@ -227,7 +228,14 @@ namespace Game.Incidents
 
 			foreach(var type in types)
 			{
-				actionFields.AddRange(fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == type));
+				if (type.IsGenericType)
+				{
+					actionFields.AddRange(fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == type));
+				}
+				else
+				{
+					actionFields.AddRange(fields.Where(x => x.FieldType == type));
+				}
 			}
 
 			return actionFields;

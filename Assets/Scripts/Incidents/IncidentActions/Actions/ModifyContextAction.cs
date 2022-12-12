@@ -10,7 +10,7 @@ namespace Game.Incidents
 	{
 		public ContextualIncidentActionField<T> contextToModify;
 
-        [ListDrawerSettings(CustomAddFunction = "AddNewModifier"), HorizontalGroup("Group 1"), HideReferenceObjectPicker]
+        [ListDrawerSettings(CustomAddFunction = "AddNewModifier", CustomRemoveIndexFunction = "RemoveModifier"), HorizontalGroup("Group 1"), HideReferenceObjectPicker]
         public List<ContextModifier<T>> modifiers;
 
         public ModifyContextAction() { }
@@ -24,6 +24,17 @@ namespace Game.Incidents
             OutputLogger.Log("Context Modified Via Action.");
 		}
 
+		public override void UpdateActionFieldIDs(ref int startingValue)
+		{
+			base.UpdateActionFieldIDs(ref startingValue);
+			foreach(var mod in modifiers)
+			{
+				mod.Calculator.ID = startingValue;
+				IncidentEditorWindow.calculators.Add(mod.Calculator);
+				startingValue++;
+			}
+		}
+
 		public override void UpdateEditor()
 		{
 			base.UpdateEditor();
@@ -33,6 +44,12 @@ namespace Game.Incidents
 		private void AddNewModifier()
 		{
             modifiers.Add(new ContextModifier<T>());
+		}
+
+		private void RemoveModifier(int index)
+		{
+			modifiers.RemoveAt(index);
+			IncidentEditorWindow.UpdateActionFieldIDs();
 		}
 	}
 }

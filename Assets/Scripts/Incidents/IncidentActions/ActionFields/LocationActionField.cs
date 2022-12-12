@@ -1,21 +1,35 @@
 ﻿using Game.Simulation;
+using Game.Terrain;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.Incidents
 {
 	public enum LocationFindMethod { Random_Unclaimed, Random_Empty, Within_Faction }
+	public enum FactionCellLocationMethod { Within, Border_Within, Border_Without, Border_Shared }
 	public class LocationActionField : ContextualIncidentActionField<Location>
 	{
 		protected override bool ShowStandardCriteria => false;
-		[ShowInInspector, PropertyOrder(-1), ShowIf("@this.Method == ActionFieldRetrievalMethod.Criteria")]
+		protected override bool ShowMethodChoice => true;
+		[ShowInInspector, PropertyOrder(-2), ShowIf("@this.Method == ActionFieldRetrievalMethod.Criteria")]
 		public LocationFindMethod LocationFindMethod { get; set; }
+
+		[ShowInInspector, PropertyOrder(-1), ShowIf("@this.ShowFactionBasedProperties")]
+		public FactionCellLocationMethod FactionCellLocationMethod { get; set; }
+		//[ValueDropdown("GetFactionProperties")]
+		//public string faction;
+
+		[ShowIf("@this.ShowFactionBasedProperties")]
+		public ContextualIncidentActionField<Faction> relatedFaction;
+
 		[ShowIf("@this.ShowFactionBasedProperties")]
 		public int minDistanceFromCities;
 		private bool ShowFactionBasedProperties => LocationFindMethod == LocationFindMethod.Within_Faction;
 		public LocationActionField() : base()
 		{
+			relatedFaction = new ContextualIncidentActionField<Faction>();
 		}
 
 		public LocationActionField(Type parentType) : base(parentType) { }
@@ -29,6 +43,7 @@ namespace Game.Incidents
 			else if (Method == ActionFieldRetrievalMethod.From_Previous)
 			{
 				delayedValue = RetrieveFieldFromPrevious(context);
+				return delayedValue != null;
 			}
 			else
 			{
@@ -50,7 +65,11 @@ namespace Game.Incidents
 			}
 			else
 			{
-				index = FindWithinFaction(context);
+				if (!relatedFaction.CalculateField(context))
+				{
+					return false;
+				}
+				index = FindFactionRelatedCell(context);
 			}
 			if (index != -1)
 			{
@@ -81,33 +100,26 @@ namespace Game.Incidents
 			return index;
 		}
 
-		private int FindWithinFaction(IIncidentContext context)
+		private int FindFactionRelatedCell(IIncidentContext context)
 		{
-			if(!context.ContextType.IsAssignableFrom(typeof(IFactionAffiliated)))
-			{
-				return -1;
-			}
-			var faction = ((IFactionAffiliated)context).AffiliatedFaction;
+			var faction = relatedFaction.GetTypedFieldValue();
+			List<int> possibleIndices;
 
-			List<int> possibleIndices = new List<int>();
-			var cityTiles = SimulationUtilities.GetCellsWithCities();
-			foreach (var index in faction.ControlledTileIndices)
+			if(FactionCellLocationMethod == FactionCellLocationMethod.Within)
 			{
-				var cell = SimulationManager.Instance.HexGrid.cells[index];
-				var valid = true;
-				foreach (var cityIndex in cityTiles)
-				{
-					var cityCell = SimulationManager.Instance.HexGrid.cells[cityIndex];
-					if (cell.coordinates.DistanceTo(cityCell.coordinates) < minDistanceFromCities)
-					{
-						valid = false;
-						break;
-					}
-				}
-				if (valid)
-				{
-					possibleIndices.Add(index);
-				}
+				possibleIndices = SimulationUtilities.FindCitylessCellWithinFaction(faction, minDistanceFromCities);
+			}
+			else if(FactionCellLocationMethod == FactionCellLocationMethod.Border_Within)
+			{
+				possibleIndices = SimulationUtilities.FindCitylessBorderWithinFaction(faction);
+			}
+			else if(FactionCellLocationMethod == FactionCellLocationMethod.Border_Without)
+			{
+				possibleIndices = SimulationUtilities.FindBorderOutsideFaction(faction);
+			}
+			else
+			{
+				possibleIndices = SimulationUtilities.FindSharedBorderFaction(faction);
 			}
 
 			if (possibleIndices.Count > 0)
@@ -118,6 +130,13 @@ namespace Game.Incidents
 			{
 				return -1;
 			}
+		}
+
+		private IEnumerable<string> GetFactionProperties()
+		{
+			var contextType = IncidentEditorWindow.ContextType;
+			var properties = contextType.GetProperties().Where(x => x.PropertyType == typeof(Faction)).Select(x => x.Name).ToList();
+			return properties;
 		}
 	}
 }

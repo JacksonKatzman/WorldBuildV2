@@ -19,7 +19,7 @@ namespace Game.Incidents
 			{
 				if(!branch.VerifyActions(context))
 				{
-					OutputLogger.LogError(String.Format("{0} failed to verify.", GetType().Name));
+					OutputLogger.LogWarning(String.Format("{0} failed to verify branch {1}.", GetType().Name, branches.IndexOf(branch)));
 					return false;
 				}
 			}
@@ -32,12 +32,12 @@ namespace Game.Incidents
 			var totalWeight = 0;
 			foreach (var branch in branches)
 			{
-				totalWeight += branch.GetWeight(context);
+				totalWeight += branch.weightModifier.Calculate();
 			}
 			var decider = SimRandom.RandomRange(0, totalWeight);
 			for(int i = 0; i < branches.Count; i++)
 			{
-				totalWeight -= branches[i].GetWeight(context);
+				totalWeight -= branches[i].weightModifier.Calculate();
 				if(decider > totalWeight)
 				{
 					branches[i].PerformActions(context, ref report);

@@ -4,11 +4,11 @@ namespace Game.Incidents
 {
 	public class DestroyCityAction : GenericIncidentAction
 	{
-		ContextualIncidentActionField<City> city;
+		public ContextualIncidentActionField<City> city;
 
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			SimulationManager.Instance.world.RemoveContext(city.GetTypedFieldValue());
+			city.GetTypedFieldValue().Die();
 			OutputLogger.Log("City destroyed!");
 		}
 	}
