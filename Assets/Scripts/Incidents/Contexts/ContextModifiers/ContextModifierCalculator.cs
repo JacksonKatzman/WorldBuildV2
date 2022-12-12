@@ -26,6 +26,8 @@ namespace Game.Incidents
         [ListDrawerSettings(CustomAddFunction = "AddNewExpression"), HorizontalGroup("Group 1"), HideReferenceObjectPicker]
         public List<Expression<T>> expressions;
 
+        public bool clamped = true;
+
         virtual public bool AllowMultipleExpressions => true;
 
         public ContextModifierCalculator()
@@ -48,6 +50,10 @@ namespace Game.Incidents
             var combinedExpressions = CombineExpressions(context);
             IncidentService.Instance.currentExpressionValues.Add(NameID, new ExpressionValue(combinedExpressions));
             var calculatedValue = Operators[Operation].Invoke(propertyValue, combinedExpressions);
+            if(clamped)
+			{
+                calculatedValue = Clamp(calculatedValue);
+			}
             property.SetValue(context, calculatedValue);
         }
         public T CombineExpressions(IIncidentContext context)
@@ -56,6 +62,8 @@ namespace Game.Incidents
         }
 
         abstract public void Setup();
+
+        abstract protected T Clamp(T value);
 
         private void AddNewExpression()
         {

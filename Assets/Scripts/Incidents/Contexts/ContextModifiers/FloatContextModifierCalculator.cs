@@ -9,5 +9,10 @@ namespace Game.Incidents
         {
             Operators = ExpressionHelpers.FloatOperators;
         }
-    }
+
+		protected override float Clamp(float value)
+		{
+			return value < 0 ? 0 : value;
+		}
+	}
 }

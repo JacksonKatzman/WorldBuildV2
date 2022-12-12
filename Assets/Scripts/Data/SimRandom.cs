@@ -19,6 +19,10 @@ public static class SimRandom
 
     public static int RandomRange(int minValue, int maxValue)
     {
+        if(minValue >= maxValue)
+		{
+            OutputLogger.LogError(string.Format("{0} isnt less than {1}!", minValue, maxValue));
+		}
         return rand.Next(minValue, maxValue);
     }
 

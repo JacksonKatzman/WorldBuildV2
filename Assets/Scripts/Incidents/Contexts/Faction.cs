@@ -14,7 +14,17 @@ namespace Game.Incidents
 	{
 		public Faction AffiliatedFaction => this;
 		public Type FactionType => ContextType;
-		public int Population { get; set; }
+		public int Population
+		{
+			get
+			{
+				return (int)populationFloat;
+			}
+			set
+			{
+				populationFloat = (float)value;
+			}
+		}
 		public int Influence { get; set; }
 		public int Wealth { get; set; }
 		public int MilitaryPower { get; set; }
@@ -37,6 +47,8 @@ namespace Game.Incidents
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
 
+		private float populationFloat;
+
 		public Faction() : base()
 		{
 			//need a smart generic way to go through our collections of contexts and remove a context
@@ -52,6 +64,7 @@ namespace Game.Incidents
 			FactionsAtWarWith = new List<IIncidentContext>();
 			CreateStartingCity();
 			CreateStartingGovernment();
+			populationFloat = 1000f;
 		}
 
 		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, int startingTiles = 1) : this(startingTiles)
@@ -186,7 +199,7 @@ namespace Game.Incidents
 
 		private void UpdateInfluence()
 		{
-			Influence += 1;
+			Influence += 3;
 		}
 
 		private void UpdateWealth()
@@ -199,7 +212,7 @@ namespace Game.Incidents
 
 		private void UpdatePopulation()
 		{
-
+			populationFloat *= 1.011f;
 		}
 
 		private void UpdatePERMS()
