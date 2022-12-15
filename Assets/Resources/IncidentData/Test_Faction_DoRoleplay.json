@@ -1,0 +1,38 @@
+{
+  "$id": "1",
+  "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "IncidentName": "Test_Faction_DoRoleplay",
+  "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Weights": {
+    "$id": "2",
+    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+    "baseWeight": 15,
+    "Operation": null,
+    "expressions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+      "$values": []
+    }
+  },
+  "Criteria": {
+    "$id": "3",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Assembly-CSharp",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
+      "$values": []
+    }
+  },
+  "ActionContainer": {
+    "$id": "4",
+    "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
+    "incidentLog": "{0} did some roleplay related incident.",
+    "Actions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
+      "$values": []
+    },
+    "Deployers": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Assembly-CSharp]], mscorlib",
+      "$values": []
+    },
+    "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+  }
+}
