@@ -24,7 +24,7 @@
   "ActionContainer": {
     "$id": "4",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
-    "incidentLog": "Randomly chosen medium faction relation degradation.",
+    "incidentLog": "Relations between {0} and {1} degrade moderately.",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
       "$values": [
@@ -81,7 +81,7 @@
               "min": -25,
               "max": -15,
               "constant": 0,
-              "Value": -16,
+              "Value": -18,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "set": false,

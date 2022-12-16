@@ -87,6 +87,7 @@ namespace Game.Simulation
 			}
 
 			table.ToCSV(Application.dataPath + "/Resources/" + "factionCSV" + ".csv");
+			IncidentService.Instance.WriteIncidentLogToDisk();
 		}
 	}
 }

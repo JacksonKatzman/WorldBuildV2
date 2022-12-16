@@ -66,7 +66,7 @@
   "ActionContainer": {
     "$id": "8",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
-    "incidentLog": "Sent battle context because at war.",
+    "incidentLog": "{0} plans to attack {1}.",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
       "$values": [
@@ -83,7 +83,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 9,
+              "Value": 16,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "influence": {
@@ -103,7 +103,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 5,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "politicalPriority": {
@@ -113,7 +113,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 8,
+              "Value": 12,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "economicPriority": {
@@ -123,7 +123,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 12,
+              "Value": 4,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "religiousPriority": {
@@ -133,7 +133,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 13,
+              "Value": 16,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "militaryPriority": {
@@ -143,7 +143,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 13,
+              "Value": 4,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "findFirst": true,

@@ -24,7 +24,7 @@
   "ActionContainer": {
     "$id": "4",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
-    "incidentLog": null,
+    "incidentLog": "{0}'s wealth changes.",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
       "$values": [
@@ -86,7 +86,7 @@
                             "min": -20,
                             "max": 20,
                             "constant": 0,
-                            "Value": 6,
+                            "Value": -5,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
@@ -97,6 +97,7 @@
                         }
                       ]
                     },
+                    "clamped": true,
                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                     "ID": 2,
