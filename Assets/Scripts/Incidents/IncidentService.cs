@@ -18,7 +18,7 @@ namespace Game.Incidents
 		private List<IIncident> incidents;
 		private List<DelayedIncidentContext> delayedContexts;
 		private int nextIncidentID;
-		private List<IncidentReport> reports;
+		public List<IncidentReport> reports;
 
 		public IIncident CurrentIncident { get; set; }
 
