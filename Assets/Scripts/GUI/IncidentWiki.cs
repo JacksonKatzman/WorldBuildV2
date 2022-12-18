@@ -13,13 +13,21 @@ namespace Game.Wiki
 	public class IncidentWiki : MonoBehaviour, IPointerClickHandler
 	{
 		[SerializeField]
+		private Transform tabRoot;
+		[SerializeField]
+		private GameObject wikiTabPrefab;
+		[SerializeField]
+		private Transform pageRoot;
+		[SerializeField]
 		private GameObject wikiPagePrefab;
 
 		public Dictionary<int, IncidentWikiPage> pages;
+		public List<IncidentWikiTab> tabs;
+		private IncidentWikiTab currentTab;
 		//private IncidentWikiPage currentPage;
 
-		private LinkedList<IncidentWikiPage> pageHistory;
-		private LinkedListNode<IncidentWikiPage> currentPage;
+		//private LinkedList<IncidentWikiPage> pageHistory;
+		//private LinkedListNode<IncidentWikiPage> currentPage;
 
 		private bool initialized;
 		public void Awake()
@@ -32,7 +40,9 @@ namespace Game.Wiki
 			if(!initialized)
 			{
 				pages = new Dictionary<int, IncidentWikiPage>();
-				pageHistory = new LinkedList<IncidentWikiPage>();
+				tabs = new List<IncidentWikiTab>();
+				currentTab = MakeTab();
+				tabs.Add(currentTab);
 				OpenPage(0);
 
 				initialized = true;
@@ -41,38 +51,41 @@ namespace Game.Wiki
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			var linkIndex = TMP_TextUtilities.FindIntersectingLink(currentPage.Value.wikiText, Input.mousePosition, null);
+			var page = currentTab.currentPage;
+			var linkIndex = TMP_TextUtilities.FindIntersectingLink(page.Value.wikiText, Input.mousePosition, null);
 			if (linkIndex >= 0)
 			{
-				var linkID = Int32.Parse(currentPage.Value.wikiText.textInfo.linkInfo[linkIndex].GetLinkID());
-				if (linkID != currentPage.Value.contextID)
+				var linkID = Int32.Parse(page.Value.wikiText.textInfo.linkInfo[linkIndex].GetLinkID());
+				if (linkID != page.Value.contextID)
 				{
+					if(Input.GetKey(KeyCode.LeftControl))
+					{
+						currentTab = MakeTab();
+					}
+
 					OpenPage(linkID);
 				}
 			}
 		}
 
+		public void SwitchToTab(IncidentWikiTab tab)
+		{
+			currentTab.currentPage.Value.gameObject.SetActive(false);
+			currentTab = tab;
+			currentTab.currentPage.Value.gameObject.SetActive(true);
+		}
+
 		public void GoToPreviousPage()
 		{
-			if (currentPage.Previous != null)
-			{
-				currentPage.Value.gameObject.SetActive(false);
-				currentPage = currentPage.Previous;
-				currentPage.Value.gameObject.SetActive(true);
-			}
+			currentTab.GoToPreviousPage();
 		}
 
 		public void GoToNextPage()
 		{
-			if (currentPage.Next != null)
-			{
-				currentPage.Value.gameObject.SetActive(false);
-				currentPage = currentPage.Next;
-				currentPage.Value.gameObject.SetActive(true);
-			}
+			currentTab.GoToNextPage();
 		}
 
-		public void OpenPage(int id)
+		public void OpenPage(int id, bool newTab = false)
 		{
 			if(!pages.ContainsKey(id))
 			{
@@ -81,7 +94,7 @@ namespace Game.Wiki
 				if (context != null)
 				{
 					//make a new page
-					var page = Instantiate(wikiPagePrefab, transform).GetComponent<IncidentWikiPage>();
+					var page = Instantiate(wikiPagePrefab, pageRoot).GetComponent<IncidentWikiPage>();
 					page.contextID = id;
 					page.wikiTitle.text = id + "!";
 
@@ -107,25 +120,36 @@ namespace Game.Wiki
 				}
 			}
 
-			if(currentPage != null)
+			currentTab.SwitchToPage(pages[id]);
+
+			/*
+			if(currentTab.currentPage != null)
 			{
-				currentPage.Value.gameObject.SetActive(false);
+				currentTab.currentPage.Value.gameObject.SetActive(false);
 			}
 
-			if(currentPage != null && currentPage.Next != null)
+			if(currentTab.currentPage != null && currentTab.currentPage.Next != null)
 			{
 				//pageHistory.Remove(currentPage.Next);
-				var last = pageHistory.Last;
-				while(last != currentPage)
+				var last = currentTab.pageHistory.Last;
+				while(last != currentTab.currentPage)
 				{
 					last = last.Previous;
-					pageHistory.RemoveLast();
+					currentTab.pageHistory.RemoveLast();
 				}
 			}
 
-			pageHistory.AddLast(pages[id]);
-			currentPage = pageHistory.Last;
-			currentPage.Value.gameObject.SetActive(true);
+			currentTab.pageHistory.AddLast(pages[id]);
+			currentTab.currentPage = currentTab.pageHistory.Last;
+			currentTab.currentPage.Value.gameObject.SetActive(true);
+			*/
+		}
+
+		private IncidentWikiTab MakeTab()
+		{
+			var createdTab = Instantiate(wikiTabPrefab, tabRoot).GetComponent<IncidentWikiTab>();
+			createdTab.onButtonClicked += SwitchToTab;
+			return createdTab;
 		}
 
 		private void AddReportToPage(IncidentWikiPage page, IncidentReport report)
@@ -143,17 +167,6 @@ namespace Game.Wiki
 
 			page.wikiText.text += textLine;
 			page.wikiText.text += "\n";
-		}
-
-		private void AddPage(int id)
-		{
-			var page = Instantiate(wikiPagePrefab, transform).GetComponent<IncidentWikiPage>();
-			page.contextID = id;
-
-			if(id == 0)
-			{
-
-			}
 		}
 	}
 }
