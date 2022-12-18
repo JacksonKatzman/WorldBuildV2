@@ -76,6 +76,7 @@ namespace Game.Incidents
 				if (completed)
 				{
 					nextIncidentID++;
+					report.CreateFullLog();
 					reports.Add(report);
 				}
 			}

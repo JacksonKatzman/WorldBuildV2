@@ -49,7 +49,7 @@ namespace Game.Incidents
 				action.PerformAction(context, ref report);
 			}
 
-			report.ReportLog += incidentLog;
+			report.AddLog(incidentLog);
 			GetContextDictionary(ref report);
 
 			foreach (var deployer in Deployers)
