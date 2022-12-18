@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Wiki
+namespace Game.GUI.Wiki
 {
 	public class IncidentWikiTab : MonoBehaviour
 	{

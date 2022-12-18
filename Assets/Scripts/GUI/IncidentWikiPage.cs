@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Game.Wiki
+namespace Game.GUI.Wiki
 {
 	public class IncidentWikiPage : MonoBehaviour
 	{

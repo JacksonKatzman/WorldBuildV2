@@ -112,7 +112,7 @@ namespace Game.Incidents
 
 			File.WriteAllText(path, output);
 
-			OutputLogger.Log("Incident Saved!");
+			OutputLogger.Log("Incident Log saved to disk!");
 		}
 
 		private List<IIncident> GetIncidentsOfType(Type type)

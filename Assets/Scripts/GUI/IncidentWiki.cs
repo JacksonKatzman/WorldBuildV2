@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.Wiki
+namespace Game.GUI.Wiki
 {
 	public class IncidentWiki : MonoBehaviour, IPointerClickHandler
 	{
@@ -121,28 +121,6 @@ namespace Game.Wiki
 			}
 
 			currentTab.SwitchToPage(pages[id]);
-
-			/*
-			if(currentTab.currentPage != null)
-			{
-				currentTab.currentPage.Value.gameObject.SetActive(false);
-			}
-
-			if(currentTab.currentPage != null && currentTab.currentPage.Next != null)
-			{
-				//pageHistory.Remove(currentPage.Next);
-				var last = currentTab.pageHistory.Last;
-				while(last != currentTab.currentPage)
-				{
-					last = last.Previous;
-					currentTab.pageHistory.RemoveLast();
-				}
-			}
-
-			currentTab.pageHistory.AddLast(pages[id]);
-			currentTab.currentPage = currentTab.pageHistory.Last;
-			currentTab.currentPage.Value.gameObject.SetActive(true);
-			*/
 		}
 
 		private IncidentWikiTab MakeTab()

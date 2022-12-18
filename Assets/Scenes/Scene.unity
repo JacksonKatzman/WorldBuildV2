@@ -2515,7 +2515,7 @@ GameObject:
   - component: {fileID: 302068270}
   - component: {fileID: 302068269}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Wiki Enable/Disable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2588,6 +2588,18 @@ MonoBehaviour:
       - m_Target: {fileID: 214131023}
         m_TargetAssemblyTypeName: Game.Wiki.IncidentWiki, Assembly-CSharp
         m_MethodName: InitializeWiki
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 827212500}
+        m_TargetAssemblyTypeName: Game.GUI.MainGUI, Assembly-CSharp
+        m_MethodName: ToggleWiki
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3098,6 +3110,7 @@ GameObject:
   - component: {fileID: 344356026}
   - component: {fileID: 344356028}
   - component: {fileID: 344356027}
+  - component: {fileID: 344356029}
   m_Layer: 5
   m_Name: Wiki Background
   m_TagString: Untagged
@@ -3163,6 +3176,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344356025}
   m_CullTransparentMesh: 1
+--- !u!225 &344356029
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344356025}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &345848024
 GameObject:
   m_ObjectHideFlags: 0
@@ -6608,8 +6633,9 @@ GameObject:
   - component: {fileID: 827212498}
   - component: {fileID: 827212497}
   - component: {fileID: 827212496}
+  - component: {fileID: 827212500}
   m_Layer: 5
-  m_Name: WikiUI
+  m_Name: Main UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6697,6 +6723,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &827212500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827212495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd60636cefc264a4bb7c8ee0c405b756, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wikiCanvas: {fileID: 344356029}
 --- !u!1 &848715296
 GameObject:
   m_ObjectHideFlags: 0
