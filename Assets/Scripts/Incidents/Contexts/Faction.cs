@@ -32,7 +32,7 @@ namespace Game.Incidents
 		public int ControlledTiles => ControlledTileIndices.Count;
 		public int InfluenceForNextTile => ControlledTiles * 2 + 1;
 		public List<City> Cities { get; set; }
-		public City Capitol => Cities[0];
+		public City Capitol => Cities.Count > 0? Cities[0] : null;
 		public int NumCities => Cities.Count;
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
@@ -211,11 +211,16 @@ namespace Game.Incidents
 			var range = ((ControlledTiles / 6) + PoliticalPriority) * 5;
 			var result = new List<IIncidentContext>();
 
+			if(Capitol == null)
+			{
+				return result;
+			}
+
 			foreach(var f in world.CurrentContexts[typeof(Faction)])
 			{
 				var faction = (Faction)f;
 
-				if (faction != this && Capitol.GetDistanceBetweenLocations(faction.Capitol) <= range)
+				if (faction != this && faction.Capitol != null && Capitol.GetDistanceBetweenLocations(faction.Capitol) <= range)
 				{
 					result.Add(faction);
 				}
