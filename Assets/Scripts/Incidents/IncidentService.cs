@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine;
 using System;
 using Game.IO;
+using Game.Simulation;
 
 namespace Game.Incidents
 {
@@ -17,7 +18,7 @@ namespace Game.Incidents
 		private List<IIncident> incidents;
 		private List<DelayedIncidentContext> delayedContexts;
 		private int nextIncidentID;
-		private List<IncidentReport> reports;
+		public List<IncidentReport> reports;
 
 		public IIncident CurrentIncident { get; set; }
 
@@ -61,7 +62,7 @@ namespace Game.Incidents
 
 			for (int a = 0; a < context.NumIncidents; a++)
 			{
-				var report = new IncidentReport();
+				var report = new IncidentReport(nextIncidentID, context.ParentID, SimulationManager.Instance.world.Age);
 
 				var completed = false;
 				for (int i = 0; i < 5 && i < possibleIncidents.Count && !completed; i++)
@@ -75,6 +76,7 @@ namespace Game.Incidents
 				if (completed)
 				{
 					nextIncidentID++;
+					report.CreateFullLog();
 					reports.Add(report);
 				}
 			}
@@ -96,6 +98,21 @@ namespace Game.Incidents
 		public void AddDelayedContext(IIncidentContext context, int delay)
 		{
 			delayedContexts.Add(new DelayedIncidentContext(context, delay));
+		}
+
+		public void WriteIncidentLogToDisk()
+		{
+			var path = Path.Combine(Application.dataPath + SaveUtilities.RESOURCES_DATA_PATH + "incidentLog.txt");
+			string output = string.Empty;
+
+			foreach(var entry in reports)
+			{
+				output += string.Format("{0}: {1}\n", entry.ReportYear, entry.ReportLog);
+			}
+
+			File.WriteAllText(path, output);
+
+			OutputLogger.Log("Incident Log saved to disk!");
 		}
 
 		private List<IIncident> GetIncidentsOfType(Type type)

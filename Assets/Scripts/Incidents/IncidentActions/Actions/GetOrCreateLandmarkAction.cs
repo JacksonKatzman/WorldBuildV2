@@ -15,5 +15,10 @@ namespace Game.Incidents
 
 			return newLandmark;
 		}
+
+		protected override bool VersionSpecificVerify(IIncidentContext context)
+		{
+			return location.CalculateField(context);
+		}
 	}
 }

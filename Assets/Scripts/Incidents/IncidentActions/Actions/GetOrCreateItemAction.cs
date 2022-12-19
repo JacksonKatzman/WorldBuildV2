@@ -20,6 +20,11 @@ namespace Game.Incidents
 			return newItem;
 		}
 
+		protected override bool VersionSpecificVerify(IIncidentContext context)
+		{
+			return inventoryToAddTo.actionField.CalculateField(context);
+		}
+
 		private IEnumerable<Type> GetFilteredTypeList()
 		{
 			var q = typeof(Item).Assembly.GetTypes()

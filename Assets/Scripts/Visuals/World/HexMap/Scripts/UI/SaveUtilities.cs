@@ -10,6 +10,7 @@ namespace Game.IO
 		const int mapFileVersion = 4;
 
 		public static string INCIDENT_DATA_PATH = "/Resources/IncidentData/";
+		public static string RESOURCES_DATA_PATH = "/Resources/";
 		public static JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings()
 		{
 			// ReferenceLoopHandling = ReferenceLoopHandling.Ignore,

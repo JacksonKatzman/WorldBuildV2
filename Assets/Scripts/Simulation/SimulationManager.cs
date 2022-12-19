@@ -37,7 +37,7 @@ namespace Game.Simulation
 		}
 
 
-		public TypeListDictionary<IIncidentContext> Contexts => world.CurrentContexts;
+		public IncidentContextDictionary Contexts => world.AllContexts;
 
 		public void CreateWorld()
 		{
@@ -87,6 +87,7 @@ namespace Game.Simulation
 			}
 
 			table.ToCSV(Application.dataPath + "/Resources/" + "factionCSV" + ".csv");
+			IncidentService.Instance.WriteIncidentLogToDisk();
 		}
 	}
 }

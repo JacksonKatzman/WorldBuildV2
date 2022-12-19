@@ -42,6 +42,15 @@ namespace Game.Incidents
 		{
 			var contextDictionary = new Dictionary<string, IIncidentContext>();
 			contextDictionary.Add("{0}", context);
+
+			var matchingFields = ActionFieldReflection.GetGenericFieldsByType(ContextType, typeof(DeployedContextActionField<>));
+			var startingValue = 1;
+			foreach (var f in matchingFields)
+			{
+				var actionField = (IIncidentActionField)f.GetValue(context);
+				contextDictionary.Add("{" + startingValue + "}", actionField.GetFieldValue());
+				startingValue++;
+			}
 			report.Contexts = contextDictionary;
 
 			if(!ActionContainer.VerifyActions(context))

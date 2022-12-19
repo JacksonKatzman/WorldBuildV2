@@ -51,5 +51,10 @@ namespace Game.Incidents
 
 			return newPerson;
 		}
+
+		protected override bool VersionSpecificVerify(IIncidentContext context)
+		{
+			return faction.CalculateField(context) && race.CalculateField(context);
+		}
 	}
 }

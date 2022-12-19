@@ -20,5 +20,10 @@ namespace Game.Incidents
 
 			return newCity;
 		}
+
+		protected override bool VersionSpecificVerify(IIncidentContext context)
+		{
+			return faction.CalculateField(context) && location.CalculateField(context);
+		}
 	}
 }

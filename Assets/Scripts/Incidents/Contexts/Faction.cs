@@ -64,7 +64,12 @@ namespace Game.Incidents
 			FactionsAtWarWith = new List<IIncidentContext>();
 			CreateStartingCity();
 			CreateStartingGovernment();
+
 			populationFloat = 1000f;
+			PoliticalPriority = SimRandom.RandomRange(1, 4);
+			ReligiousPriority = SimRandom.RandomRange(1, 4);
+			EconomicPriority = SimRandom.RandomRange(1, 4);
+			MilitaryPriority = SimRandom.RandomRange(1, 4);
 		}
 
 		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, int startingTiles = 1) : this(startingTiles)
@@ -213,6 +218,10 @@ namespace Game.Incidents
 		private void UpdatePopulation()
 		{
 			populationFloat *= 1.011f;
+			if(MilitaryPower < (populationFloat/10))
+			{
+				MilitaryPower += MilitaryPriority / 2;
+			}
 		}
 
 		private void UpdatePERMS()

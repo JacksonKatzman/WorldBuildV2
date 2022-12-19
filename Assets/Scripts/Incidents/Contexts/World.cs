@@ -11,10 +11,10 @@ namespace Game.Simulation
 		[NonSerialized]
 		private HexGrid hexGrid;
 
-		public TypeListDictionary<IIncidentContext> CurrentContexts { get; private set; }
-		public TypeListDictionary<IIncidentContext> AllContexts { get; private set; }
-		private TypeListDictionary<IIncidentContext> contextsToAdd;
-		private TypeListDictionary<IIncidentContext> contextsToRemove;
+		public IncidentContextDictionary CurrentContexts { get; private set; }
+		public IncidentContextDictionary AllContexts { get; private set; }
+		private IncidentContextDictionary contextsToAdd;
+		private IncidentContextDictionary contextsToRemove;
 
 		override public int ID
 		{
@@ -46,10 +46,10 @@ namespace Game.Simulation
 			nextID = ID + 1;
 			Age = 0;
 
-			CurrentContexts = new TypeListDictionary<IIncidentContext>();
-			AllContexts = new TypeListDictionary<IIncidentContext>();
-			contextsToAdd = new TypeListDictionary<IIncidentContext>();
-			contextsToRemove = new TypeListDictionary<IIncidentContext>();
+			CurrentContexts = new IncidentContextDictionary();
+			AllContexts = new IncidentContextDictionary();
+			contextsToAdd = new IncidentContextDictionary();
+			contextsToRemove = new IncidentContextDictionary();
 		}
 
 		public void Initialize()
@@ -105,14 +105,12 @@ namespace Game.Simulation
 
 		public void AddContext<T>(T context) where T : IIncidentContext
 		{
-			//Contexts[typeof(T)].Add(context);
 			context.ID = GetNextID();
 			contextsToAdd[typeof(T)].Add(context);
 		}
 
 		public void RemoveContext<T>(T context) where T : IIncidentContext
 		{
-			//Contexts[typeof(T)].Remove(context);
 			contextsToRemove[typeof(T)].Add(context);
 		}
 
