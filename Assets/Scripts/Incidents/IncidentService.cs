@@ -17,6 +17,7 @@ namespace Game.Incidents
 
 		private List<IIncident> incidents;
 		private List<DelayedIncidentContext> delayedContexts;
+		private List<IIncidentContext> followUpContexts;
 		private int nextIncidentID;
 		public List<IncidentReport> reports;
 
@@ -78,7 +79,16 @@ namespace Game.Incidents
 					nextIncidentID++;
 					report.CreateFullLog();
 					reports.Add(report);
+
+					while(followUpContexts.Count > 0)
+					{
+						var deployedContext = followUpContexts.First();
+						followUpContexts.Remove(deployedContext);
+						PerformIncidents(deployedContext);
+					}
 				}
+
+				followUpContexts.Clear();
 			}
 		}
 
@@ -98,6 +108,11 @@ namespace Game.Incidents
 		public void AddDelayedContext(IIncidentContext context, int delay)
 		{
 			delayedContexts.Add(new DelayedIncidentContext(context, delay));
+		}
+
+		public void AddFollowUpContext(IIncidentContext context)
+		{
+			followUpContexts.Add(context);
 		}
 
 		public void WriteIncidentLogToDisk()
@@ -152,6 +167,7 @@ namespace Game.Incidents
 
 			nextIncidentID = 0;
 			delayedContexts = new List<DelayedIncidentContext>();
+			followUpContexts = new List<IIncidentContext>();
 			reports = new List<IncidentReport>();
 
 			currentExpressionValues = new Dictionary<string, ExpressionValue>();
