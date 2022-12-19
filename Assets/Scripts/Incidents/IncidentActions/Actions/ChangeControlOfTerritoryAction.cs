@@ -1,4 +1,6 @@
-﻿namespace Game.Incidents
+﻿using Game.Simulation;
+
+namespace Game.Incidents
 {
 	public class ChangeControlOfTerritoryAction : GenericIncidentAction
 	{
@@ -14,7 +16,10 @@
 
 			if (!gainer.ControlledTileIndices.Contains(tileIndex))
 			{
-				gainer.ControlledTileIndices.Add(tileIndex);
+				if(SimulationUtilities.FindSharedBorderFaction(gainer).Contains(tileIndex))
+				{
+					gainer.ControlledTileIndices.Add(tileIndex);
+				}
 			}
 			if(loser.ControlledTileIndices.Contains(tileIndex))
 			{
