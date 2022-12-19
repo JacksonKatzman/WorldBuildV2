@@ -30,6 +30,7 @@ namespace Game.Incidents
 		public int MilitaryPower { get; set; }
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		public int ControlledTiles => ControlledTileIndices.Count;
+		public int InfluenceForNextTile => ControlledTiles * 2 + 1;
 		public List<City> Cities { get; set; }
 		public City Capitol => Cities[0];
 		public int NumCities => Cities.Count;
@@ -209,12 +210,12 @@ namespace Game.Incidents
 			var world = SimulationManager.Instance.world;
 			var range = ((ControlledTiles / 6) + PoliticalPriority) * 5;
 			var result = new List<IIncidentContext>();
+
 			foreach(var f in world.CurrentContexts[typeof(Faction)])
 			{
 				var faction = (Faction)f;
-				var myTile = SimulationManager.Instance.HexGrid.GetCell(Capitol.CurrentLocation.ID);
-				var theirTile = SimulationManager.Instance.HexGrid.GetCell(faction.Capitol.CurrentLocation.ID);
-				if (faction != this && myTile.coordinates.DistanceTo(theirTile.coordinates) <= range)
+
+				if (faction != this && Capitol.GetDistanceBetweenLocations(faction.Capitol) <= range)
 				{
 					result.Add(faction);
 				}
