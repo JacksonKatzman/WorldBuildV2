@@ -30,12 +30,15 @@ namespace Game.Incidents
 		public int MilitaryPower { get; set; }
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		public int ControlledTiles => ControlledTileIndices.Count;
+		public int InfluenceForNextTile => ControlledTiles * 2 + 1;
 		public List<City> Cities { get; set; }
+		public City Capitol => Cities.Count > 0? Cities[0] : null;
 		public int NumCities => Cities.Count;
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
 		public int MilitaryPriority { get; set; }
+		public List<IIncidentContext> FactionsWithinInteractionRange => GetFactionsWithinInteractionRange();
 		public List<IIncidentContext> FactionsAtWarWith { get; set; }
 
 		public bool AtWar => FactionsAtWarWith.Count > 0;
@@ -200,6 +203,30 @@ namespace Game.Incidents
 					Cities.Remove((City)gameEvent.context);
 				}
 			}
+		}
+
+		private List<IIncidentContext> GetFactionsWithinInteractionRange()
+		{
+			var world = SimulationManager.Instance.world;
+			var range = ((ControlledTiles / 6) + PoliticalPriority) * 5;
+			var result = new List<IIncidentContext>();
+
+			if(Capitol == null)
+			{
+				return result;
+			}
+
+			foreach(var f in world.CurrentContexts[typeof(Faction)])
+			{
+				var faction = (Faction)f;
+
+				if (faction != this && faction.Capitol != null && Capitol.GetDistanceBetweenLocations(faction.Capitol) <= range)
+				{
+					result.Add(faction);
+				}
+			}
+
+			return result;
 		}
 
 		private void UpdateInfluence()

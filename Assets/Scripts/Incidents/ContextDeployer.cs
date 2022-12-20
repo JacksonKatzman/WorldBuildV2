@@ -25,6 +25,11 @@ namespace Game.Incidents
 
 		public void Deploy(IIncidentContext context)
 		{
+			if(incidentContext == null)
+			{
+				return;
+			}
+
 			foreach(var criterium in deploymentCriteria)
 			{
 				if(!criterium.Evaluate(context))
@@ -38,7 +43,7 @@ namespace Game.Incidents
 
 			if(delayTime == 0)
 			{
-				IncidentService.Instance.PerformIncidents(incidentContext);
+				IncidentService.Instance.AddFollowUpContext(incidentContext);
 			}
 			else
 			{
