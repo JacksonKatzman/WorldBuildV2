@@ -1,21 +1,29 @@
-﻿using System;
+﻿using Game.Data;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.Generators.Names
 {
 	[Serializable]
 	public class NamingThemeCollection
 	{
-		public SerializedStringIntDictionary nouns;
-		public SerializedStringIntDictionary verbs;
-		public SerializedStringIntDictionary adjectives;
+		public WeightedListSerializableDictionary<string> nouns;
+		public WeightedListSerializableDictionary<string> verbs;
+		public WeightedListSerializableDictionary<string> adjectives;
 
-		public SerializedStringIntDictionary consonants;
-		public SerializedStringIntDictionary vowels;
-		public SerializedStringIntDictionary prepositions;
+		public WeightedListSerializableDictionary<string> consonants;
+		public WeightedListSerializableDictionary<string> vowels;
+		public WeightedListSerializableDictionary<string> prepositions;
 
-		public NamingThemeCollection() { }
+		public NamingThemeCollection() 
+		{
+			nouns = new WeightedListSerializableDictionary<string>();
+			verbs = new WeightedListSerializableDictionary<string>();
+			adjectives = new WeightedListSerializableDictionary<string>();
+			consonants = new WeightedListSerializableDictionary<string>();
+			vowels = new WeightedListSerializableDictionary<string>();
+			prepositions = new WeightedListSerializableDictionary<string>();
+		}
 
 		public NamingThemeCollection(NamingThemeCollection copy)
 		{
@@ -32,12 +40,12 @@ namespace Game.Generators.Names
 		{
 			var result = new NamingThemeCollection();
 
-			result.nouns = SerializedStringIntDictionary.Merge(a.nouns, b.nouns);
-			result.verbs = SerializedStringIntDictionary.Merge(a.verbs, b.verbs);
-			result.adjectives = SerializedStringIntDictionary.Merge(a.adjectives, b.adjectives);
-			result.consonants = SerializedStringIntDictionary.Merge(a.consonants, b.consonants);
-			result.vowels = SerializedStringIntDictionary.Merge(a.vowels, b.vowels);
-			result.prepositions = SerializedStringIntDictionary.Merge(a.prepositions, b.prepositions);
+			result.nouns = WeightedListSerializableDictionary<string>.Merge(a.nouns, b.nouns);
+			result.verbs = WeightedListSerializableDictionary<string>.Merge(a.verbs, b.verbs);
+			result.adjectives = WeightedListSerializableDictionary<string>.Merge(a.adjectives, b.adjectives);
+			result.consonants = WeightedListSerializableDictionary<string>.Merge(a.consonants, b.consonants);
+			result.vowels = WeightedListSerializableDictionary<string>.Merge(a.vowels, b.vowels);
+			result.prepositions = WeightedListSerializableDictionary<string>.Merge(a.prepositions, b.prepositions);
 
 			return result;
 		}
