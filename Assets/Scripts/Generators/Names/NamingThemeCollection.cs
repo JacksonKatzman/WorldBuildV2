@@ -1,28 +1,76 @@
 ﻿using Game.Data;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Game.Generators.Names
 {
-	[Serializable]
-	public class NamingThemeCollection
+	[CreateAssetMenu(fileName = "ThemeCollection", menuName = "ScriptableObjects/Names/Theme Collection", order = 2)]
+	public class NamingThemeCollection : SerializedScriptableObject
 	{
-		public WeightedListSerializableDictionary<string> nouns;
-		public WeightedListSerializableDictionary<string> verbs;
-		public WeightedListSerializableDictionary<string> adjectives;
+		public List<WeightedString> nouns;
+		public List<WeightedString> verbs;
+		public List<WeightedString> adjectives;
 
-		public WeightedListSerializableDictionary<string> consonants;
-		public WeightedListSerializableDictionary<string> vowels;
-		public WeightedListSerializableDictionary<string> prepositions;
+		public List<WeightedString> consonants;
+		public List<WeightedString> vowels;
+
+		public List<TextAsset> maleNames;
+		public List<TextAsset> femaleNames;
+
+		[Button("Populate Consonants and Vowels")]
+		private void PopulateConsonantsAndVowels()
+		{
+			if (vowels == null || vowels.Count == 0)
+			{
+				vowels = new List<WeightedString>(StaticNamingCollections.VOWELS);
+			}
+			if (consonants == null || consonants.Count == 0)
+			{
+				consonants = new List<WeightedString>(StaticNamingCollections.CONSONANTS);
+			}
+		}
+
+		[TextArea]
+		public string input;
+
+		[Button("Add Inputs")]
+		private void AddInputs()
+		{
+			var inputs = input.Split('\n');
+			List<WeightedString> list = null;
+			if(inputs[0].Contains("{N}"))
+			{
+				list = nouns;
+			}
+			else if(inputs[0].Contains("{V}"))
+			{
+				list = verbs;
+			}
+			else if(inputs[0].Contains("{A}"))
+			{
+				list = adjectives;
+			}
+
+			if (list != null)
+			{
+				for(int i = 1; i < inputs.Length; i++)
+				{
+					var item = new WeightedString(inputs[i], 1, true, true);
+					if (list.Where(x => x.value == inputs[i]).Count() == 0)
+					{
+						list.Add(item);
+					}
+				}
+			}
+		}
 
 		public NamingThemeCollection() 
 		{
-			nouns = new WeightedListSerializableDictionary<string>();
-			verbs = new WeightedListSerializableDictionary<string>();
-			adjectives = new WeightedListSerializableDictionary<string>();
-			consonants = new WeightedListSerializableDictionary<string>();
-			vowels = new WeightedListSerializableDictionary<string>();
-			prepositions = new WeightedListSerializableDictionary<string>();
+			OutputLogger.LogWarning(">*> Default Constructor for ThemeCollection");
 		}
 
 		public NamingThemeCollection(NamingThemeCollection copy)
@@ -33,21 +81,6 @@ namespace Game.Generators.Names
 
 			consonants = copy.consonants;
 			vowels = copy.vowels;
-			prepositions = copy.prepositions;
-		}
-
-		public static NamingThemeCollection operator + (NamingThemeCollection a, NamingThemeCollection b)
-		{
-			var result = new NamingThemeCollection();
-
-			result.nouns = WeightedListSerializableDictionary<string>.Merge(a.nouns, b.nouns);
-			result.verbs = WeightedListSerializableDictionary<string>.Merge(a.verbs, b.verbs);
-			result.adjectives = WeightedListSerializableDictionary<string>.Merge(a.adjectives, b.adjectives);
-			result.consonants = WeightedListSerializableDictionary<string>.Merge(a.consonants, b.consonants);
-			result.vowels = WeightedListSerializableDictionary<string>.Merge(a.vowels, b.vowels);
-			result.prepositions = WeightedListSerializableDictionary<string>.Merge(a.prepositions, b.prepositions);
-
-			return result;
 		}
 	}
 }

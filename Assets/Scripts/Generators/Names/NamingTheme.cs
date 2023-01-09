@@ -1,75 +1,201 @@
 using Game.Data;
+using Game.Enums;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Game.Generators.Names
 {
 	public class NamingTheme
 	{
-		private NamingThemeCollection collection;
-		public int averageFirstNameSyllables;
-		public int averageSurnameSyllables;
-		public WeightedListSerializableDictionary<string> personNameFormats;
-		public WeightedListSerializableDictionary<string> surnameFormats;
+		public ModifiableWeightedCollection nouns;
+		public ModifiableWeightedCollection verbs;
+		public ModifiableWeightedCollection adjectives;
+
+		public ModifiableWeightedCollection consonants;
+		public ModifiableWeightedCollection beginningConsonants;
+		public ModifiableWeightedCollection endConsonants;
+
+		public ModifiableWeightedCollection vowels;
+		public ModifiableWeightedCollection beginningVowels;
+		public ModifiableWeightedCollection endVowels;
+
+		public List<string> maleNames;
+		public List<string> femaleNames;
+
+		public int minFirstNameSyllables;
+		public int maxFirstNameSyllables;
+		public int minSurnameSyllables;
+		public int maxSurnameSyllables;
+		public Dictionary<int, List<string>> personNameFormats;
+
+		private string currentNameFormat;
 
 		public NamingTheme(NamingThemePreset preset)
 		{
-			collection = new NamingThemeCollection(preset.themeCollections[0].collection);
+			nouns = new ModifiableWeightedCollection();
+			verbs = new ModifiableWeightedCollection();
+			adjectives = new ModifiableWeightedCollection();
 
-			for(int i = 1; i < preset.themeCollections.Count; i++)
+			consonants = new ModifiableWeightedCollection();
+			beginningConsonants = new ModifiableWeightedCollection();
+			endConsonants = new ModifiableWeightedCollection();
+
+			vowels = new ModifiableWeightedCollection();
+			beginningVowels = new ModifiableWeightedCollection();
+			endVowels = new ModifiableWeightedCollection();
+
+			maleNames = new List<string>();
+			femaleNames = new List<string>();
+
+			for(int i = 0; i < preset.themeCollections.Count; i++)
 			{
-				collection = collection + preset.themeCollections[i].collection;
+				AddThemeCollection(preset.themeCollections[i]);
 			}
 
-			averageFirstNameSyllables = preset.averageFirstNameSyllables;
-			averageSurnameSyllables = preset.averageSurnameSyllables;
-			surnameFormats = preset.surnameFormats;
+			minFirstNameSyllables = preset.minFirstNameSyllables;
+			maxFirstNameSyllables = preset.maxFirstNameSyllables;
+			minSurnameSyllables = preset.minSurnameSyllables;
+			maxSurnameSyllables = preset.maxSurnameSyllables;
+			personNameFormats = preset.personNameFormats;
+
+			SetupNameFormat();
 		}
 
-		public string GenerateName<Person>()
+		public string GenerateName<Person>(Gender gender)
 		{
-			var format = SimRandom.RandomEntryFromWeightedDictionary(personNameFormats);
+			var format = string.Copy(currentNameFormat);
 
-			return FillOutFormat(format);
+			return FillOutFormat(format, gender);
 		}
 
-		private string FillOutFormat(string format)
+		private void AddThemeCollection(NamingThemeCollection collection)
+		{
+			nouns.AddWeightedStrings(collection.nouns);
+			verbs.AddWeightedStrings(collection.verbs);
+			adjectives.AddWeightedStrings(collection.adjectives);
+
+			consonants.AddWeightedStrings(collection.consonants);
+			beginningConsonants.AddWeightedStrings(collection.consonants.Where(x => x.allowedAtBeginning == true).ToList());
+			endConsonants.AddWeightedStrings(collection.consonants.Where(x => x.allowedAtEnd == true).ToList());
+
+			vowels.AddWeightedStrings(collection.vowels);
+			beginningVowels.AddWeightedStrings(collection.vowels.Where(x => x.allowedAtBeginning == true).ToList());
+			endVowels.AddWeightedStrings(collection.vowels.Where(x => x.allowedAtEnd == true).ToList());
+
+			foreach(var asset in collection.maleNames)
+			{
+				char[] delims = new[] { '\n' };
+				var names = asset.text.Split(delims, StringSplitOptions.RemoveEmptyEntries);
+				maleNames.AddRange(names);
+			}
+
+			foreach (var asset in collection.femaleNames)
+			{
+				char[] delims = new[] { '\n' };
+				var names = asset.text.Split(delims, StringSplitOptions.RemoveEmptyEntries);
+				femaleNames.AddRange(names);
+			}
+		}
+
+		private void SetupNameFormat()
+		{
+			currentNameFormat = SimRandom.RandomEntryFromWeightedDictionary(personNameFormats);
+			while(currentNameFormat.Contains("{P}"))
+			{
+				currentNameFormat = ReplaceFirstOccurence(currentNameFormat, "{P}", GenerateSyllabicName(2, 5));
+			}
+		}
+
+		private string ReplaceFirstOccurence(string source, string find, string replace)
+		{
+			int place = source.IndexOf(find);
+			string result = source.Remove(place, find.Length).Insert(place, replace);
+			return result.Replace("\r", "");
+		}
+
+		private string FillOutFormat(string format, Gender gender)
 		{
 			var result = format;
-			result = result.Replace("{F}", GenerateSyllabicName(averageFirstNameSyllables))
-				.Replace("{S}", GenerateSurname())
-				.Replace("{P}", SimRandom.RandomEntryFromWeightedDictionary(collection.prepositions))
-				.Replace("{A}", SimRandom.RandomEntryFromWeightedDictionary(collection.adjectives))
-				.Replace("{V}", SimRandom.RandomEntryFromWeightedDictionary(collection.verbs))
-				.Replace("{N}", SimRandom.RandomEntryFromWeightedDictionary(collection.nouns));
 
-			return result;
+			while(result.Contains("{F}"))
+			{
+				result = ReplaceFirstOccurence(result,"{F}", GenerateFirstName(gender));
+			}
+			while(result.Contains("{S}"))
+			{
+				result = ReplaceFirstOccurence(result,"{S}", GenerateSurname());
+			}
+			while(result.Contains("{A}"))
+			{
+				result = ReplaceFirstOccurence(result,"{A}", SimRandom.RandomEntryFromWeightedDictionary(adjectives.dictionary));
+			}
+			while(result.Contains("{V}"))
+			{
+				result = ReplaceFirstOccurence(result, "{V}", SimRandom.RandomEntryFromWeightedDictionary(verbs.dictionary));
+			}
+			while(result.Contains("{N}"))
+			{
+				result = ReplaceFirstOccurence(result, "{N}", SimRandom.RandomEntryFromWeightedDictionary(nouns.dictionary));
+			}
+
+			return Regex.Replace(result, @"((^\w)|(\s|\p{P})\w)", match => match.Value.ToUpper());
+		}
+
+		private string GenerateFirstName(Gender gender)
+		{
+			return SimRandom.RandomFloat01() > 0.5f ? GenerateNameFromExisting(gender) : GenerateSyllabicName(minFirstNameSyllables, maxFirstNameSyllables);
 		}
 
 		private string GenerateSurname()
 		{
-			var format = SimRandom.RandomEntryFromWeightedDictionary(surnameFormats);
-			format = format.Replace("{S}", GenerateSyllabicName(averageSurnameSyllables));
-			return FillOutFormat(format);
+			return GenerateSyllabicName(minSurnameSyllables, maxSurnameSyllables);
 		}
 
-		private string GenerateSyllabicName(int averageSyllables)
+		private string GenerateSyllabicName(int min, int max)
 		{
 			var startWithConsonant = SimRandom.RandomBool();
-			var halfAverage = averageSyllables / 2;
-			var totalSounds = SimRandom.RandomRange(averageSyllables - halfAverage, averageSyllables + halfAverage + 1) * 2;
+			var totalSounds = SimRandom.RandomRange(min, max + 1);
+			if(!startWithConsonant && totalSounds < 3)
+			{
+				totalSounds = 3;
+			}
 			var result = string.Empty;
 
 			for(int i = 0; i < totalSounds; i++)
 			{
 				if(startWithConsonant)
 				{
-					result += SimRandom.RandomEntryFromWeightedDictionary(collection.consonants);
+					if (i == 0)
+					{
+						result += SimRandom.RandomEntryFromWeightedDictionary(beginningConsonants.dictionary);
+					}
+					else if (i == totalSounds - 1)
+					{
+						result += SimRandom.RandomEntryFromWeightedDictionary(endConsonants.dictionary);
+					}
+					else
+					{
+						result += SimRandom.RandomEntryFromWeightedDictionary(consonants.dictionary);
+					}
 				}
 				else
 				{
-					result += SimRandom.RandomEntryFromWeightedDictionary(collection.vowels);
+					if (i == 0)
+					{
+						result += SimRandom.RandomEntryFromWeightedDictionary(beginningVowels.dictionary);
+					}
+					else if (i == totalSounds - 1)
+					{
+						result += SimRandom.RandomEntryFromWeightedDictionary(endVowels.dictionary);
+					}
+					else
+					{
+						result += SimRandom.RandomEntryFromWeightedDictionary(vowels.dictionary);
+					}
 				}
 
 				startWithConsonant = !startWithConsonant;
@@ -77,10 +203,25 @@ namespace Game.Generators.Names
 
 			return result;
 		}
-	}
 
-	static public class NameGenerator
-	{
-		//static public string GenerateName<Person>()
+		private string GenerateNameFromExisting(Gender gender)
+		{
+			var result = string.Empty;
+			if(gender == Gender.MALE)
+			{
+				result = SimRandom.RandomEntryFromList(maleNames);
+			}
+			else
+			{
+				result = SimRandom.RandomEntryFromList(femaleNames);
+			}
+
+			var candidates = new List<char>() { 'a', 'e', 'i', 'o', 'u' };
+			var toReplace = result.First(x => candidates.Contains(x));
+			var regex = new Regex(Regex.Escape(toReplace.ToString()));
+			result = regex.Replace(result, SimRandom.RandomEntryFromWeightedDictionary(vowels.dictionary), 1);
+
+			return result;
+		}
 	}
 }
