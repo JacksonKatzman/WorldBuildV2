@@ -14,6 +14,7 @@ namespace Game.Generators.Names
 		public List<WeightedString> nouns;
 		public List<WeightedString> verbs;
 		public List<WeightedString> adjectives;
+		public List<WeightedString> townNouns;
 
 		public List<WeightedString> consonants;
 		public List<WeightedString> vowels;
@@ -54,6 +55,10 @@ namespace Game.Generators.Names
 			{
 				list = adjectives;
 			}
+			else if (inputs[0].Contains("{T}"))
+			{
+				list = townNouns;
+			}
 
 			if (list != null)
 			{
@@ -78,6 +83,7 @@ namespace Game.Generators.Names
 			nouns = copy.nouns;
 			verbs = copy.verbs;
 			adjectives = copy.adjectives;
+			townNouns = copy.townNouns;
 
 			consonants = copy.consonants;
 			vowels = copy.vowels;
