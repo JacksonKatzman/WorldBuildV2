@@ -11,6 +11,11 @@ public static class SimRandom
         return rand.Next(-100000, 100000);
     }
 
+    public static bool RandomBool()
+	{
+        return RandomFloat01() >= 0.5f;
+	}
+
     public static float RandomFloat01()
     {
         float precision = 100000.0f;
