@@ -16,5 +16,7 @@ namespace Game.Generators.Names
 		public int minSurnameSyllables;
 		public int maxSurnameSyllables;
 		public Dictionary<int, List<string>> personNameFormats;
+		public Dictionary<int, List<string>> townNameFormats;
+		public Dictionary<int, List<string>> factionNameFormats;
 	}
 }

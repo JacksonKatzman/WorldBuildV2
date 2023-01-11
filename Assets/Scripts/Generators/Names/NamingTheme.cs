@@ -14,6 +14,7 @@ namespace Game.Generators.Names
 		public ModifiableWeightedCollection nouns;
 		public ModifiableWeightedCollection verbs;
 		public ModifiableWeightedCollection adjectives;
+		public ModifiableWeightedCollection townNouns;
 
 		public ModifiableWeightedCollection consonants;
 		public ModifiableWeightedCollection beginningConsonants;
@@ -31,6 +32,8 @@ namespace Game.Generators.Names
 		public int minSurnameSyllables;
 		public int maxSurnameSyllables;
 		public Dictionary<int, List<string>> personNameFormats;
+		public Dictionary<int, List<string>> townNameFormats;
+		public Dictionary<int, List<string>> factionNameFormats;
 
 		private string currentNameFormat;
 
@@ -39,6 +42,7 @@ namespace Game.Generators.Names
 			nouns = new ModifiableWeightedCollection();
 			verbs = new ModifiableWeightedCollection();
 			adjectives = new ModifiableWeightedCollection();
+			townNouns = new ModifiableWeightedCollection();
 
 			consonants = new ModifiableWeightedCollection();
 			beginningConsonants = new ModifiableWeightedCollection();
@@ -61,6 +65,8 @@ namespace Game.Generators.Names
 			minSurnameSyllables = preset.minSurnameSyllables;
 			maxSurnameSyllables = preset.maxSurnameSyllables;
 			personNameFormats = preset.personNameFormats;
+			townNameFormats = preset.townNameFormats;
+			factionNameFormats = preset.factionNameFormats;
 
 			SetupNameFormat();
 		}
@@ -72,11 +78,31 @@ namespace Game.Generators.Names
 			return FillOutFormat(format, gender);
 		}
 
+		public string GenerateTownName()
+		{
+			var format = SimRandom.RandomEntryFromWeightedDictionary(townNameFormats);
+
+			return FillOutFormat(format, Gender.ANY);
+		}
+
+		public string GenerateFactionName()
+		{
+			var format = SimRandom.RandomEntryFromWeightedDictionary(factionNameFormats);
+
+			return FillOutFormat(format, Gender.ANY);
+		}
+
+		public string GenerateTerrainName(string format)
+		{
+			return FillOutFormat(format, Gender.ANY);
+		}
+
 		private void AddThemeCollection(NamingThemeCollection collection)
 		{
 			nouns.AddWeightedStrings(collection.nouns);
 			verbs.AddWeightedStrings(collection.verbs);
 			adjectives.AddWeightedStrings(collection.adjectives);
+			townNouns.AddWeightedStrings(collection.townNouns);
 
 			consonants.AddWeightedStrings(collection.consonants);
 			beginningConsonants.AddWeightedStrings(collection.consonants.Where(x => x.allowedAtBeginning == true).ToList());
@@ -133,7 +159,11 @@ namespace Game.Generators.Names
 			{
 				result = ReplaceFirstOccurence(result,"{A}", SimRandom.RandomEntryFromWeightedDictionary(adjectives.dictionary));
 			}
-			while(result.Contains("{V}"))
+			while (result.Contains("{T}"))
+			{
+				result = ReplaceFirstOccurence(result, "{T}", SimRandom.RandomEntryFromWeightedDictionary(townNouns.dictionary));
+			}
+			while (result.Contains("{V}"))
 			{
 				result = ReplaceFirstOccurence(result, "{V}", SimRandom.RandomEntryFromWeightedDictionary(verbs.dictionary));
 			}
