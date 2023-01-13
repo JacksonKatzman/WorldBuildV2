@@ -2,7 +2,9 @@
 using Game.Incidents;
 using Game.Terrain;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Game.Simulation
 {
@@ -52,9 +54,9 @@ namespace Game.Simulation
 			contextsToRemove = new IncidentContextDictionary();
 		}
 
-		public void Initialize()
+		public void Initialize(List<FactionPreset> factions)
 		{
-			CreateFactions(5);
+			CreateRacesAndFactions(factions);
 		}
 
 		public void AdvanceTime()
@@ -144,12 +146,30 @@ namespace Game.Simulation
 			}
 		}
 
-		private void CreateFactions(int numFactions)
+		private void CreateRacesAndFactions(List<FactionPreset> presets)
 		{
-			for(int i = 0; i < numFactions; i++)
+			var uniqueRacePresets = new Dictionary<RacePreset, int>();
+			foreach(var preset in presets)
 			{
-				var faction = new Faction(1);
-				AddContext(faction);
+				if(!uniqueRacePresets.Keys.Contains(preset.race))
+				{
+					uniqueRacePresets.Add(preset.race, 1);
+				}
+				else
+				{
+					uniqueRacePresets[preset.race] += 1;
+				}
+			}
+
+			foreach(var racePresetPair in uniqueRacePresets)
+			{
+				var race = new Race(racePresetPair.Key);
+				AddContext(race);
+				for (var i = 0; i < racePresetPair.Value; i++)
+				{
+					var faction = new Faction(1, race);
+					AddContext(faction);
+				}
 			}
 		}
 

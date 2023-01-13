@@ -1,4 +1,5 @@
 ﻿using Game.Terrain;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Simulation
@@ -14,6 +15,9 @@ namespace Game.Simulation
 		[SerializeField]
 		private int worldChunksX = 16, worldChunksZ = 12;
 
+		[SerializeField]
+		public List<FactionPreset> factions;
+
 		private void Awake()
 		{
 			var simMan = SimulationManager.Instance;
@@ -23,7 +27,7 @@ namespace Game.Simulation
 			simMan.WorldChunksX = worldChunksX;
 			simMan.WorldChunksZ = worldChunksZ;
 
-			simMan.CreateWorld();
+			simMan.CreateWorld(factions);
 		}
 	}
 }

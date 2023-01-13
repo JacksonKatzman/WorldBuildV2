@@ -76,14 +76,14 @@ namespace Game.Incidents
 
 		override public void Die()
 		{
-			SimulationManager.Instance.world.RemoveContext(this);
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
 			OnDeathAction?.Invoke();
 		}
 
 		private void CheckDestroyed()
 		{
-			var cuspA = Race.UpperAgeLimit * 0.3f;
-			var cuspB = Race.UpperAgeLimit * 0.85f;
+			var cuspA = Race.MaxAge * 0.3f;
+			var cuspB = Race.MaxAge * 0.85f;
 			var deathChance = -Mathf.Atan(((cuspA + (cuspB - cuspA)) - Age) / (Mathf.Sqrt(cuspB - cuspA) * Mathf.PI / 2.0f)) / Mathf.PI + 0.5f;
 
 			var randomValue = SimRandom.RandomFloat01();
