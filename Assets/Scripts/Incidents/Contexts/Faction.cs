@@ -54,7 +54,7 @@ namespace Game.Incidents
 
 		private float populationFloat;
 
-		private NamingTheme namingTheme;
+		public NamingTheme namingTheme;
 
 		public Faction() : base()
 		{
@@ -72,6 +72,7 @@ namespace Game.Incidents
 			CreateStartingCity();
 			CreateStartingGovernment(startingMajorityRace);
 			namingTheme = new NamingTheme(MajorityRace.racePreset.namingTheme);
+			Name = namingTheme.GenerateFactionName();
 
 			populationFloat = 1000f;
 			PoliticalPriority = SimRandom.RandomRange(1, 4);

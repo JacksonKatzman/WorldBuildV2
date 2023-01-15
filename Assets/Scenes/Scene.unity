@@ -10088,6 +10088,12 @@ MonoBehaviour:
   mapGenerator: {fileID: 2056945512}
   worldChunksX: 16
   worldChunksZ: 12
+  factions:
+  - race: {fileID: 11400000, guid: 259780341ca3b0e499f89e287c1ce1c3, type: 2}
+  - race: {fileID: 11400000, guid: 259780341ca3b0e499f89e287c1ce1c3, type: 2}
+  - race: {fileID: 11400000, guid: 259780341ca3b0e499f89e287c1ce1c3, type: 2}
+  - race: {fileID: 11400000, guid: 259780341ca3b0e499f89e287c1ce1c3, type: 2}
+  - race: {fileID: 11400000, guid: 259780341ca3b0e499f89e287c1ce1c3, type: 2}
 --- !u!4 &1269840646
 Transform:
   m_ObjectHideFlags: 0

@@ -140,6 +140,7 @@ namespace Game.Incidents
 		public int ID { get; set; }
 
 		public int ParentID { get; set; }
+		public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 		public bool CalculateFields(IIncidentContext context)
 		{

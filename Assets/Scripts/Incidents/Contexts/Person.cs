@@ -16,7 +16,7 @@ namespace Game.Incidents
 			int constitution, int intelligence, int wisdom, int charisma, Inventory inventory = null, List<Person> parents = null)
 		{
 			Age = age;
-			Race = race == null ? new Race() : race;
+			Race = race;
 			Gender = gender == Gender.ANY ? (Gender)(SimRandom.RandomRange(0, 2)) : gender;
 			AffiliatedFaction = faction;
 			PoliticalPriority = politicalPriority;
@@ -33,6 +33,8 @@ namespace Game.Incidents
 			Charisma = charisma;
 			Inventory = inventory == null ? new Inventory() : inventory;
 			Parents = parents == null ? new List<Person>() : parents;
+
+			Name = AffiliatedFaction.namingTheme.GenerateName<Person>(Gender);
 		}
 
 		public int Age { get; set; }

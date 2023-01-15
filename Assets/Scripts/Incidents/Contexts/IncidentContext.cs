@@ -15,6 +15,7 @@ namespace Game.Incidents
 		public Type ContextType => this.GetType();
 
 		public int NumIncidents { get; set; }
+		public string Name { get; set; }
 
 		virtual public int ID { get; set; }
 
