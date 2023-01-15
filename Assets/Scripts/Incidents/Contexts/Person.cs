@@ -16,7 +16,7 @@ namespace Game.Incidents
 			int constitution, int intelligence, int wisdom, int charisma, Inventory inventory = null, List<Person> parents = null)
 		{
 			Age = age;
-			Race = race == null ? new Race() : race;
+			Race = race;
 			Gender = gender == Gender.ANY ? (Gender)(SimRandom.RandomRange(0, 2)) : gender;
 			AffiliatedFaction = faction;
 			PoliticalPriority = politicalPriority;
@@ -33,6 +33,8 @@ namespace Game.Incidents
 			Charisma = charisma;
 			Inventory = inventory == null ? new Inventory() : inventory;
 			Parents = parents == null ? new List<Person>() : parents;
+
+			Name = AffiliatedFaction.namingTheme.GenerateName<Person>(Gender);
 		}
 
 		public int Age { get; set; }
@@ -76,14 +78,14 @@ namespace Game.Incidents
 
 		override public void Die()
 		{
-			SimulationManager.Instance.world.RemoveContext(this);
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
 			OnDeathAction?.Invoke();
 		}
 
 		private void CheckDestroyed()
 		{
-			var cuspA = Race.UpperAgeLimit * 0.3f;
-			var cuspB = Race.UpperAgeLimit * 0.85f;
+			var cuspA = Race.MaxAge * 0.3f;
+			var cuspB = Race.MaxAge * 0.85f;
 			var deathChance = -Mathf.Atan(((cuspA + (cuspB - cuspA)) - Age) / (Mathf.Sqrt(cuspB - cuspA) * Mathf.PI / 2.0f)) / Mathf.PI + 0.5f;
 
 			var randomValue = SimRandom.RandomFloat01();

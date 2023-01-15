@@ -1,6 +1,7 @@
 ﻿using Game.Incidents;
 using Game.IO;
 using Game.Terrain;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using UnityEngine;
@@ -39,11 +40,11 @@ namespace Game.Simulation
 
 		public IncidentContextDictionary Contexts => world.AllContexts;
 
-		public void CreateWorld()
+		public void CreateWorld(List<FactionPreset> factions)
 		{
 			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
 			world = new World(HexGrid);
-			world.Initialize();
+			world.Initialize(factions);
 		}
 
 		public void CreateDebugWorld()

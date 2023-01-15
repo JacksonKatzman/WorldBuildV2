@@ -8,13 +8,13 @@ using System.Collections.Generic;
 using Game.Simulation;
 using System.Data;
 using System.IO;
+using Game.Generators.Names;
 
 namespace Game.Incidents
 {
 	[CustomEditor(typeof(LearnAboutReflection))]
 	public class LearnAboutReflectionEditor : Editor
 	{
-		int goofball = 0;
 		public override void OnInspectorGUI()
 		{
 			DrawDefaultInspector();
@@ -24,9 +24,10 @@ namespace Game.Incidents
 				SimulationManager.Instance.DebugRun();
 			}
 
-			if (GUILayout.Button("Wiki Test"))
+			if (GUILayout.Button("Name Test"))
 			{
-
+				var test = (LearnAboutReflection)target;
+				test.TestName();
 			}
 		}
 		public static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
@@ -40,6 +41,19 @@ namespace Game.Incidents
 				   (z.IsGenericType &&
 				   openGenericType.IsAssignableFrom(z.GetGenericTypeDefinition()))
 				   select x;
+		}
+	}
+
+	//[CustomEditor(typeof(NamingThemeCollection))]
+	public class NamingThemeCollectionEditor : Editor
+	{
+		public override void OnInspectorGUI()
+		{
+			if (GUILayout.Button("Populate Vowels/Consonants"))
+			{
+				
+			}
+			base.OnInspectorGUI();
 		}
 	}
 }

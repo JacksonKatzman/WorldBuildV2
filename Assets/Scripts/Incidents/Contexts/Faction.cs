@@ -1,4 +1,5 @@
-﻿using Game.Incidents;
+﻿using Game.Generators.Names;
+using Game.Incidents;
 using Game.Simulation;
 using Game.Terrain;
 using System;
@@ -46,11 +47,14 @@ namespace Game.Incidents
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		public Government Government { get; set; }
+		public Race MajorityRace => Government.Leader.Race;
 
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
 
 		private float populationFloat;
+
+		public NamingTheme namingTheme;
 
 		public Faction() : base()
 		{
@@ -59,14 +63,16 @@ namespace Game.Incidents
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
-		public Faction(int startingTiles) : this()
+		public Faction(int startingTiles, Race startingMajorityRace) : this()
 		{
 			AttemptExpandBorder(startingTiles);
 			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<IIncidentContext>();
 			CreateStartingCity();
-			CreateStartingGovernment();
+			CreateStartingGovernment(startingMajorityRace);
+			namingTheme = new NamingTheme(MajorityRace.racePreset.namingTheme);
+			Name = namingTheme.GenerateFactionName();
 
 			populationFloat = 1000f;
 			PoliticalPriority = SimRandom.RandomRange(1, 4);
@@ -75,7 +81,7 @@ namespace Game.Incidents
 			MilitaryPriority = SimRandom.RandomRange(1, 4);
 		}
 
-		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, int startingTiles = 1) : this(startingTiles)
+		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles = 1) : this(startingTiles, race)
 		{
 			Population = population;
 			Influence = influence;
@@ -118,10 +124,10 @@ namespace Game.Incidents
 			SimulationManager.Instance.world.AddContext(city);
 		}
 
-		public void CreateStartingGovernment()
+		public void CreateStartingGovernment(Race majorityStartingRace)
 		{
 			Government = new Government(this);
-			Government.SelectNewLeader();
+			Government.SelectNewLeader(majorityStartingRace);
 		}
 
 		public bool AttemptExpandBorder(int numTimes)

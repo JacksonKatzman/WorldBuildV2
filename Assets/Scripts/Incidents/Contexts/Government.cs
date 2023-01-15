@@ -11,17 +11,20 @@ namespace Game.Incidents
 		public Government(Faction faction)
 		{
 			AffiliatedFaction = faction;
+			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
-		public void SelectNewLeader()
+		public void OnRemoveContextEvent(RemoveContextEvent gameEvent)
 		{
-			var leaderRace = Leader == null ? new Race() : Leader.Race;
-			if(Leader == null)
+			if(gameEvent.context == Leader)
 			{
-				SimulationManager.Instance.world.AddContext(leaderRace);
+				SelectNewLeader(Leader.Race);
 			}
-			Leader = new Person(35, Enums.Gender.ANY, leaderRace, AffiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10);
-			Leader.SetOnDeathAction(SelectNewLeader);
+		}
+
+		public void SelectNewLeader(Race majorityRace)
+		{
+			Leader = new Person(35, Enums.Gender.ANY, majorityRace, AffiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10);
 			SimulationManager.Instance.world.AddContext(Leader);
 		}
 	}
