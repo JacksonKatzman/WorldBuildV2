@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Game.Enums
 {
 	[System.Serializable]
@@ -21,12 +25,18 @@ namespace Game.Enums
 	public enum ItemGrade { AWFUL, POOR, NORMAL, GOOD, EXCELLENT, MASTERWORK, LEGENDARY };
 	public enum LogSource { CITY, NAMEGEN, WORLDGEN, MAIN, IMPORTANT, FACTION, FACTIONACTION, PEOPLE, EVENT, PROFILE };
 	public enum LogAllowance { ALL, SOME, NONE };
-	public enum EventBranchStyle { PRIORITY, ROLL };
-	public enum TileBisectType { NONE, STRAIGHT, CURVE, THREEWAY, FOURWAY, DOUBLE };
 	public enum Disposition { PASSIVE, AGGRESSIVE };
-	public enum WorldTagType { DEATH };
-	public enum SpecialCaseTagType { END_OF_TURN, TEST };
+	public enum EncounterLocationType { OVERWORLD, DUNGEON };
+	public enum EncounterType { COMBAT, PUZZLE, ROLEPLAY, CURIOSITY };
 	public enum HexEdgeType { Flat, Slope, Cliff };
+
+	public static class EnumHelpers
+	{
+		internal static IEnumerable<T> ToEnumerableOf<T>(this Enum theEnum)
+		{
+			return Enum.GetValues(theEnum.GetType()).Cast<T>();
+		}
+	}
 
 	public enum HexDirection { NE, E, SE, SW, W, NW };
 	public static class HexDirectionExtensions
