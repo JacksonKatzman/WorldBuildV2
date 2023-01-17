@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Game.Creatures
 {
-	[CreateAssetMenu(fileName = nameof(MonsterStats), menuName = "ScriptableObjects/Creatures/" + nameof(MonsterStats), order = 1)]
-	public class MonsterStats : ScriptableObject
+	[CreateAssetMenu(fileName = nameof(MonsterData), menuName = "ScriptableObjects/Creatures/" + nameof(MonsterData), order = 1)]
+	public class MonsterData : ScriptableObject
 	{
 		public string name;
 		public string Name => name;
@@ -19,6 +19,10 @@ namespace Game.Creatures
 		public CreatureType type;
 		//alignment
 		public CreatureAlignment alignment;
+		//cr
+		public float challengeRating;
+		//xp
+		public float experienceYield;
 		//ac
 		public string armorValue;
 		//hp
