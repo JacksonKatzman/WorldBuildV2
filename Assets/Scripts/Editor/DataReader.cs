@@ -57,13 +57,13 @@ namespace Assets.Scripts.Editor
 		{
 			var rawCreatureData = Resources.LoadAll("RawData/Creatures");
 			var existingCreatures = Resources.LoadAll("ScriptableObjects/Creatures");
-			var creatureDictionary = new Dictionary<string, Game.Creatures.MonsterStats>();
+			var creatureDictionary = new Dictionary<string, Game.Creatures.MonsterData>();
 
 			if (existingCreatures != null)
 			{
 				foreach (var c in existingCreatures)
 				{
-					creatureDictionary.Add(((Game.Creatures.MonsterStats)c).Name, ((Game.Creatures.MonsterStats)c));
+					creatureDictionary.Add(((Game.Creatures.MonsterData)c).Name, ((Game.Creatures.MonsterData)c));
 				}
 			}
 			if (rawCreatureData != null)
@@ -90,7 +90,7 @@ namespace Assets.Scripts.Editor
 							continue;
 						}
 
-						var creatureStats = (Game.Creatures.MonsterStats)ScriptableObject.CreateInstance(typeof(Game.Creatures.MonsterStats));
+						var creatureStats = (Game.Creatures.MonsterData)ScriptableObject.CreateInstance(typeof(Game.Creatures.MonsterData));
 
 						var assetName = dataLines[0].Replace('/', '-');
 						AssetDatabase.CreateAsset(creatureStats, "Assets/Resources/ScriptableObjects/Creatures/" + assetName + ".asset");
@@ -124,6 +124,11 @@ namespace Assets.Scripts.Editor
 						{
 							if(line.StartsWith("Challenge"))
 							{
+								var clippedLine = line.Replace("Challenge ", "");
+								var splits = clippedLine.Split(' ');
+								creatureStats.challengeRating = float.Parse(splits[0]);
+								creatureStats.experienceYield = float.Parse(splits[1].Replace("(", ""));
+
 								abilitiesIndex = dataLines.IndexOf(line);
 							}
 							if(line.StartsWith("ACTIONS"))
