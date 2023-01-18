@@ -69,10 +69,12 @@ namespace Game.Incidents
 			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<IIncidentContext>();
-			CreateStartingCity();
-			CreateStartingGovernment(startingMajorityRace);
+			
 			namingTheme = new NamingTheme(MajorityRace.racePreset.namingTheme);
 			Name = namingTheme.GenerateFactionName();
+
+			CreateStartingCity();
+			CreateStartingGovernment(startingMajorityRace);
 
 			populationFloat = 1000f;
 			PoliticalPriority = SimRandom.RandomRange(1, 4);

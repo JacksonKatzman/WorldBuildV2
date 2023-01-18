@@ -39,12 +39,7 @@ namespace Game.Incidents
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 
 			hierarchy = new List<OrganizationTier>();
-			AddTier(new OrganizationPosition(AffiliatedFaction, majorityStartingRace, organizationType, 0, maxTiers));
-
-			//point buy for titles
-
-			//organization type? military/government/religious/etc
-
+			AddTier();
 		}
 
 		public void OnRemoveContextEvent(RemoveContextEvent gameEvent)
@@ -102,18 +97,18 @@ namespace Game.Incidents
 			{
 				random -= weights[i];
 				if(random <= 0)
-				{		
-					hierarchy[i].Add(new OrganizationPosition(AffiliatedFaction, Leader.Race, organizationType, i, maxTiers));
+				{
+					hierarchy[i].AddPosition(AffiliatedFaction, Leader.Race);
 					return;
 				}
 			}
 
-			AddTier(new OrganizationPosition(AffiliatedFaction, Leader.Race, organizationType, hierarchy.Count, maxTiers));
+			AddTier();
 		}
 
-		private void AddTier(OrganizationPosition firstPosition)
+		private void AddTier()
 		{
-			var newTier = new OrganizationTier(firstPosition);
+			var newTier = new OrganizationTier(AffiliatedFaction, Leader.Race, organizationType, hierarchy.Count, maxTiers);
 			hierarchy.Add(newTier);
 		}
 	}
@@ -121,24 +116,14 @@ namespace Game.Incidents
 	public class OrganizationPosition
 	{
 		public Person official;
-		//points to spend on titles
-		private int titlePoints;
-		//title chosen
 		public TitlePair titlePair;
 		public OrganizationType organizationType;
 		//responsibilities
+
 		public OrganizationPosition() { }
-		public OrganizationPosition(Faction affiliatedFaction, Race majorityRace, OrganizationType organizationType, int tier, int maxTiers)
+		public OrganizationPosition(OrganizationType organizationType)
 		{
 			this.organizationType = organizationType;
-			titlePoints = maxTiers - tier;
-
-			if(tier < 2)
-			{
-				SelectNewOfficial(affiliatedFaction, majorityRace);
-			}
-
-			titlePair = affiliatedFaction.namingTheme.GenerateTitle(organizationType, titlePoints);
 		}
 		public void SelectNewOfficial(Faction affiliatedFaction, Race majorityRace)
 		{
@@ -150,11 +135,36 @@ namespace Game.Incidents
 	public class OrganizationTier : List<OrganizationPosition>
 	{
 		//whether or not all positions in this tier share titles/responsibilities such as high lords
+		private int titlePoints;
+		public bool sharedTitle;
+		public TitlePair titlePair;
+		public OrganizationType organizationType;
+		public int tier;
 
 		public OrganizationTier() { }
-		public OrganizationTier(OrganizationPosition firstPostition)
+		public OrganizationTier(Faction affiliatedFaction, Race majorityRace, OrganizationType organizationType, int tier, int maxTiers)
 		{
-			Add(firstPostition);
+			this.organizationType = organizationType;
+			this.tier = tier;
+			titlePoints = maxTiers - tier;
+			if (sharedTitle)
+			{
+				titlePair = affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
+			}
+
+			AddPosition(affiliatedFaction, majorityRace);
+		}
+
+		public OrganizationPosition AddPosition(Faction affiliatedFaction, Race majorityRace)
+		{
+			var position = new OrganizationPosition();
+			position.organizationType = organizationType;
+			position.titlePair = sharedTitle ? titlePair : affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
+			if (tier < 2)
+			{
+				position.SelectNewOfficial(affiliatedFaction, majorityRace);
+			}
+			return position;
 		}
 	}
 }

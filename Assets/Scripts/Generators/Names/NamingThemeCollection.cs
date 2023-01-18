@@ -143,22 +143,4 @@ namespace Game.Generators.Names
 			}
 		}
 	}
-
-	public class MergableDictionary<T,V> : Dictionary<T,V>
-	{
-		public void Merge(MergableDictionary<T,V> other)
-		{
-			foreach (var pair in other)
-			{
-				if (this.ContainsKey(pair.Key))
-				{
-					this[pair.Key] = this[pair.Key].Union(pair.Value).ToList();
-				}
-				else
-				{
-					this.Add(pair.Key, pair.Value);
-				}
-			}
-		}
-	}
 }
