@@ -1,5 +1,4 @@
 ﻿using Game.Enums;
-using Game.Generators.Names;
 using Game.Simulation;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +17,6 @@ namespace Game.Incidents
 		 *		- Things like head of state/church/treasury etc
 		 *		- Perhaps a flavor list of responsibilities that gets generated at random
 		 *	- Need a way of determining at what level to add a new position
-		 *		- It needs to be possible to have oligarchical systems
-		 *		- Perhaps to make it easier for now they choose from predefined structures that weight likelihoods of tiers
-		 *		- So it randomly chooses a 3/5/7 or something and just fills in those positions over time?'
-		 *		- Would need buckets of responsibilites for them to grab from?
-		 *		- Would RATHER do it with math tho
-		 *		
 		 *		Weight at n (where n = index of current tier) = ceil((Total Height of subtree + total count of nodes in subtree + 1) * (n+1)^2) - ceil(nodes in current tier * height of subtree^2)
 		 */
 
@@ -108,61 +101,6 @@ namespace Game.Incidents
 		{
 			var newTier = new OrganizationTier(AffiliatedFaction, Leader.Race, organizationType, hierarchy.Count, maxTiers);
 			hierarchy.Add(newTier);
-		}
-	}
-
-	public class OrganizationPosition
-	{
-		public Person official;
-		public TitlePair titlePair;
-		public OrganizationType organizationType;
-		//responsibilities
-
-		public OrganizationPosition() { }
-		public OrganizationPosition(OrganizationType organizationType)
-		{
-			this.organizationType = organizationType;
-		}
-		public void SelectNewOfficial(Faction affiliatedFaction, Race majorityRace)
-		{
-			official = new Person(35, Enums.Gender.ANY, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10);
-			SimulationManager.Instance.world?.AddContext(official);
-		}
-	}
-
-	public class OrganizationTier : List<OrganizationPosition>
-	{
-		//whether or not all positions in this tier share titles/responsibilities such as high lords
-		private int titlePoints;
-		public bool sharedTitle;
-		public TitlePair titlePair;
-		public OrganizationType organizationType;
-		public int tier;
-
-		public OrganizationTier() { }
-		public OrganizationTier(Faction affiliatedFaction, Race majorityRace, OrganizationType organizationType, int tier, int maxTiers)
-		{
-			this.organizationType = organizationType;
-			this.tier = tier;
-			titlePoints = maxTiers - tier;
-			if (sharedTitle)
-			{
-				titlePair = affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
-			}
-
-			AddPosition(affiliatedFaction, majorityRace);
-		}
-
-		public OrganizationPosition AddPosition(Faction affiliatedFaction, Race majorityRace)
-		{
-			var position = new OrganizationPosition();
-			position.organizationType = organizationType;
-			position.titlePair = sharedTitle ? titlePair : affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
-			if (tier < 2)
-			{
-				position.SelectNewOfficial(affiliatedFaction, majorityRace);
-			}
-			return position;
 		}
 	}
 }
