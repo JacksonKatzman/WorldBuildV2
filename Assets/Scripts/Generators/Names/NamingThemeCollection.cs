@@ -1,4 +1,5 @@
 ﻿using Game.Data;
+using Game.Enums;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System;
@@ -21,6 +22,9 @@ namespace Game.Generators.Names
 
 		public List<TextAsset> maleNames;
 		public List<TextAsset> femaleNames;
+
+		public Dictionary<OrganizationType, TitleDictionary> titles;
+		public List<string> titleQualifiers;
 
 		[Button("Populate Consonants and Vowels")]
 		private void PopulateConsonantsAndVowels()
@@ -87,6 +91,74 @@ namespace Game.Generators.Names
 
 			consonants = copy.consonants;
 			vowels = copy.vowels;
+			titles = copy.titles;
+			titleQualifiers = copy.titleQualifiers;
+		}
+	}
+
+	[Serializable, HideReferenceObjectPicker]
+	public class TitlePair
+	{
+		public string maleTitle, femaleTitle;
+
+		public TitlePair() { }
+		public TitlePair(TitlePair other)
+		{
+			maleTitle = other.maleTitle;
+			femaleTitle = other.femaleTitle;
+		}
+
+		public string GetTitle(Gender gender)
+		{
+			if(gender == Gender.MALE)
+			{
+				return maleTitle;
+			}
+			else if(gender == Gender.FEMALE)
+			{
+				return femaleTitle;
+			}
+			else
+			{
+				return SimRandom.RandomRange(0, 2) > 0 ? maleTitle : femaleTitle;
+			}
+		}
+	}
+
+	[Serializable]
+	public class TitleDictionary : Dictionary<int, List<TitlePair>>
+	{
+		public void Merge(TitleDictionary other)
+		{
+			foreach (var pair in other)
+			{
+				if (this.ContainsKey(pair.Key))
+				{
+					this[pair.Key] = this[pair.Key].Union(pair.Value).ToList();
+				}
+				else
+				{
+					this.Add(pair.Key, pair.Value);
+				}
+			}
+		}
+	}
+
+	public class MergableDictionary<T,V> : Dictionary<T,V>
+	{
+		public void Merge(MergableDictionary<T,V> other)
+		{
+			foreach (var pair in other)
+			{
+				if (this.ContainsKey(pair.Key))
+				{
+					this[pair.Key] = this[pair.Key].Union(pair.Value).ToList();
+				}
+				else
+				{
+					this.Add(pair.Key, pair.Value);
+				}
+			}
 		}
 	}
 }

@@ -27,6 +27,9 @@ namespace Game.Generators.Names
 		public List<string> maleNames;
 		public List<string> femaleNames;
 
+		public Dictionary<OrganizationType, TitleDictionary> titles;
+		public List<string> titleQualifiers;
+
 		public int minFirstNameSyllables;
 		public int maxFirstNameSyllables;
 		public int minSurnameSyllables;
@@ -54,6 +57,9 @@ namespace Game.Generators.Names
 
 			maleNames = new List<string>();
 			femaleNames = new List<string>();
+
+			titles = new Dictionary<OrganizationType, TitleDictionary>();
+			titleQualifiers = new List<string>();
 
 			for(int i = 0; i < preset.themeCollections.Count; i++)
 			{
@@ -97,6 +103,15 @@ namespace Game.Generators.Names
 			return FillOutFormat(format, Gender.ANY);
 		}
 
+		public TitlePair GenerateTitle(OrganizationType titleType, int points)
+		{
+			var list = titles[titleType][points];
+			var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list));
+			titlePair.maleTitle = FillOutFormat(titlePair.maleTitle, Gender.MALE);
+			titlePair.femaleTitle = FillOutFormat(titlePair.femaleTitle, Gender.FEMALE);
+			return titlePair;
+		}
+
 		private void AddThemeCollection(NamingThemeCollection collection)
 		{
 			nouns.AddWeightedStrings(collection.nouns);
@@ -125,6 +140,20 @@ namespace Game.Generators.Names
 				var names = asset.text.Split(delims, StringSplitOptions.RemoveEmptyEntries);
 				femaleNames.AddRange(names);
 			}
+
+			foreach(var upperPair in collection.titles)
+			{
+				if(!titles.ContainsKey(upperPair.Key))
+				{
+					titles.Add(upperPair.Key, upperPair.Value);
+				}
+				else
+				{
+					titles[upperPair.Key].Merge(collection.titles[upperPair.Key]);
+				}
+			}
+
+			titleQualifiers = titleQualifiers.Union(collection.titleQualifiers).ToList();
 		}
 
 		private void SetupNameFormat()

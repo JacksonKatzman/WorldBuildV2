@@ -46,7 +46,7 @@ namespace Game.Incidents
 		public bool CouldMakePeace => FactionsAtWarWith.Where(x => FactionRelations[x] >= 0).ToList().Count >= 1;
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
-		public Government Government { get; set; }
+		public Organization Government { get; set; }
 		public Race MajorityRace => Government.Leader.Race;
 
 		[HideInInspector]
@@ -126,8 +126,7 @@ namespace Game.Incidents
 
 		public void CreateStartingGovernment(Race majorityStartingRace)
 		{
-			Government = new Government(this);
-			Government.SelectNewLeader(majorityStartingRace);
+			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL);
 		}
 
 		public bool AttemptExpandBorder(int numTimes)
