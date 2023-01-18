@@ -90,8 +90,6 @@ namespace Game.Incidents
 				totalWeight += (int)(2 * Mathf.Pow(weights.Length + 1, 2));
 			}
 
-			var position = new OrganizationPosition();
-			position.SelectNewOfficial(AffiliatedFaction, Leader.Race);
 			var random = SimRandom.RandomRange(0, totalWeight + 1);
 			for(int i = weights.Length - 1; i >= 0; i--)
 			{
