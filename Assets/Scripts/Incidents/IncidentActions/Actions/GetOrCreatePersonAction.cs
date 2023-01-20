@@ -47,7 +47,7 @@ namespace Game.Incidents
 			var parents = parent.GetTypedFieldValue() != null ? new List<Person>() { parent.GetTypedFieldValue() } : null;
 			var newPerson = new Person(age, gender, race.GetTypedFieldValue(), faction.GetTypedFieldValue(), politicalPriority,
 				economicPriority, religiousPriority, militaryPriority, influence, wealth, strength, dexterity, constitution,
-				intelligence, wisdom, charisma, null, parents);
+				intelligence, wisdom, charisma, parents);
 
 			return newPerson;
 		}

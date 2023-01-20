@@ -13,7 +13,7 @@ namespace Game.Incidents
 		public Person() { }
 		public Person(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
 			int religiousPriority, int militaryPriority, int influence, int wealth, int strength, int dexterity,
-			int constitution, int intelligence, int wisdom, int charisma, Inventory inventory = null, List<Person> parents = null)
+			int constitution, int intelligence, int wisdom, int charisma, List<Person> parents = null, Inventory inventory = null)
 		{
 			Age = age;
 			Race = race;
@@ -34,7 +34,14 @@ namespace Game.Incidents
 			Inventory = inventory == null ? new Inventory() : inventory;
 			Parents = parents == null ? new List<Person>() : parents;
 
-			Name = AffiliatedFaction?.namingTheme.GenerateName<Person>(Gender);
+			if(Parents.Count > 0)
+			{
+				Name = AffiliatedFaction?.namingTheme.GenerateName(Gender, parents);
+			}
+			else
+			{
+				Name = AffiliatedFaction?.namingTheme.GenerateName(Gender);
+			}
 		}
 
 		public override string Name { get => GetFullName(); set => name = value; }
@@ -74,15 +81,18 @@ namespace Game.Incidents
 			NumIncidents = 1;
 		}
 
-		public void SetOnDeathAction(Action action)
+		public Person CreateChild()
 		{
-			OnDeathAction = action;
+			var childAge = SimRandom.RandomRange(14, 35);
+			var child = new Person(childAge, Enums.Gender.ANY, Race, AffiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, new List<Person>() { this });
+
+			return child;
 		}
 
 		override public void Die()
 		{
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
-			OnDeathAction?.Invoke();
+			IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this });
 		}
 
 		private void CheckDestroyed()
@@ -96,6 +106,12 @@ namespace Game.Incidents
 			{
 				Die();
 			}			
+		}
+
+		public string GetSurname()
+		{
+			var names = name.Split(' ');
+			return names[names.Length - 1];
 		}
 
 		private string GetFullName()

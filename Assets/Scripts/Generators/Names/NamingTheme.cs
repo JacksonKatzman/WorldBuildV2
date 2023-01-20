@@ -1,5 +1,6 @@
 using Game.Data;
 using Game.Enums;
+using Game.Incidents;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -77,10 +78,19 @@ namespace Game.Generators.Names
 			SetupNameFormat();
 		}
 
-		public string GenerateName<Person>(Gender gender)
+		public string GenerateName(Gender gender)
 		{
 			var format = string.Copy(currentNameFormat);
 
+			return FillOutFormat(format, gender);
+		}
+
+		public string GenerateName(Gender gender, List<Person> parents)
+		{
+			var parent = SimRandom.RandomEntryFromList(parents);
+			var surname = parent.GetSurname();
+			var format = string.Copy(currentNameFormat);
+			format = ReplaceLastOccurrence(format, "{S}", surname);
 			return FillOutFormat(format, gender);
 		}
 
@@ -190,6 +200,13 @@ namespace Game.Generators.Names
 			int place = source.IndexOf(find);
 			string result = source.Remove(place, find.Length).Insert(place, replace);
 			return result.Replace("\r", "");
+		}
+
+		public static string ReplaceLastOccurrence(string source, string find, string replace)
+		{
+			int place = source.LastIndexOf(find);
+			string result = source.Remove(place, find.Length).Insert(place, replace);
+			return result;
 		}
 
 		private string FillOutFormat(string format, Gender gender)

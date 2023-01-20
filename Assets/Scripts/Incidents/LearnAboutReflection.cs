@@ -17,7 +17,7 @@ namespace Game.Incidents
 				theme = new NamingTheme(preset);
 			}
 
-			var name = theme.GenerateName<Person>(Enums.Gender.MALE);
+			var name = theme.GenerateName(Enums.Gender.MALE);
 
 			OutputLogger.Log("Generated Name is: " + name);
 		}
