@@ -38,6 +38,8 @@ namespace Game.Incidents
 			{
 				position.SelectNewOfficial(affiliatedFaction, majorityRace);
 			}
+
+			Add(position);
 			return position;
 		}
 	}
