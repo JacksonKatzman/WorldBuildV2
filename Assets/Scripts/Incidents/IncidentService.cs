@@ -92,6 +92,16 @@ namespace Game.Incidents
 			}
 		}
 
+		public void ReportStaticIncident(string log, List<IIncidentContext> contexts)
+		{
+			var report = new StaticIncidentReport(nextIncidentID, -1, SimulationManager.Instance.world.Age);
+			report.AddLog(log);
+			report.AddContexts(contexts);
+			nextIncidentID++;
+			report.CreateFullLog();
+			reports.Add(report);
+		}
+
 		public void PerformDelayedContexts()
 		{
 			foreach(var context in delayedContexts)
