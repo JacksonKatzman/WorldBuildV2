@@ -106,7 +106,7 @@ namespace Game.Generators.Names
 		public TitlePair GenerateTitle(OrganizationType titleType, int points)
 		{
 			var list = titles[titleType][points];
-			var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list));
+			var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list.titlePairs));
 			//need to make it so that the male and females get the same format fill
 			titlePair.maleTitle = FillOutFormat(titlePair.maleTitle, Gender.MALE);
 			titlePair.femaleTitle = FillOutFormat(titlePair.femaleTitle, Gender.FEMALE);

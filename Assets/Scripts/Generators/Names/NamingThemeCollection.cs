@@ -126,7 +126,7 @@ namespace Game.Generators.Names
 	}
 
 	[Serializable]
-	public class TitleDictionary : Dictionary<int, List<TitlePair>>
+	public class TitleDictionary : Dictionary<int, TitlePairList>
 	{
 		public void Merge(TitleDictionary other)
 		{
@@ -134,13 +134,36 @@ namespace Game.Generators.Names
 			{
 				if (this.ContainsKey(pair.Key))
 				{
-					this[pair.Key] = this[pair.Key].Union(pair.Value).ToList();
+					var first = this[pair.Key].titlePairs;
+					var second = other[pair.Key].titlePairs;
+					var combined = first.Union(second);
+					this[pair.Key] = new TitlePairList(combined.ToList());
 				}
 				else
 				{
 					this.Add(pair.Key, pair.Value);
 				}
 			}
+		}
+	}
+
+	[HideReferenceObjectPicker]
+	public class TitlePairList
+	{
+		[ListDrawerSettings(CustomAddFunction = "AddTitlePair")]
+		public List<TitlePair> titlePairs;
+		public TitlePairList()
+		{
+			titlePairs = new List<TitlePair>();
+		}
+
+		public TitlePairList(List<TitlePair> pairs)
+		{
+			titlePairs = new List<TitlePair>(pairs);
+		}
+		private void AddTitlePair()
+		{
+			titlePairs.Add(new TitlePair());
 		}
 	}
 }
