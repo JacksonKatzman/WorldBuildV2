@@ -23,7 +23,7 @@ namespace Game.Incidents
 			sharedTitle = tier < 2 ? false : true;
 			if (sharedTitle)
 			{
-				//titlePair = affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
+				titlePair = affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
 			}
 
 			AddPosition(affiliatedFaction, majorityRace);
@@ -33,7 +33,7 @@ namespace Game.Incidents
 		{
 			var position = new OrganizationPosition();
 			position.organizationType = organizationType;
-			//position.titlePair = sharedTitle ? titlePair : affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
+			position.titlePair = sharedTitle ? titlePair : affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
 			if (tier < 2)
 			{
 				position.SelectNewOfficial(affiliatedFaction, majorityRace);

@@ -105,12 +105,26 @@ namespace Game.Generators.Names
 
 		public TitlePair GenerateTitle(OrganizationType titleType, int points)
 		{
-			var list = titles[titleType][points];
-			var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list.titlePairs));
-			//need to make it so that the male and females get the same format fill
-			titlePair.maleTitle = FillOutFormat(titlePair.maleTitle, Gender.MALE);
-			titlePair.femaleTitle = FillOutFormat(titlePair.femaleTitle, Gender.FEMALE);
-			return titlePair;
+			var useQualifier = SimRandom.RandomTrueFalse();
+			if (useQualifier)
+			{
+				var list = titles[titleType][points-1];
+				var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list.titlePairs));
+				var qualifier = SimRandom.RandomEntryFromList(titleQualifiers);
+				//need to make it so that the male and females get the same format fill
+				titlePair.maleTitle = CapitalizeString(string.Format(qualifier, FillOutFormat(titlePair.maleTitle, Gender.MALE)));
+				titlePair.femaleTitle = CapitalizeString(string.Format(qualifier, FillOutFormat(titlePair.femaleTitle, Gender.FEMALE)));
+				return titlePair;
+			}
+			else
+			{
+				var list = titles[titleType][points];
+				var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list.titlePairs));
+				//need to make it so that the male and females get the same format fill
+				titlePair.maleTitle = FillOutFormat(titlePair.maleTitle, Gender.MALE);
+				titlePair.femaleTitle = FillOutFormat(titlePair.femaleTitle, Gender.FEMALE);
+				return titlePair;
+			}
 		}
 
 		private void AddThemeCollection(NamingThemeCollection collection)
@@ -155,6 +169,11 @@ namespace Game.Generators.Names
 			}
 
 			titleQualifiers = titleQualifiers.Union(collection.titleQualifiers).ToList();
+		}
+
+		private string CapitalizeString(string toBeFormatted)
+		{
+			return Regex.Replace(toBeFormatted.ToLower(), @"((^\w)|(\s|\p{P})\w)", match => match.Value.ToUpper());
 		}
 
 		private void SetupNameFormat()

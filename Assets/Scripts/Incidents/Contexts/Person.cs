@@ -37,10 +37,12 @@ namespace Game.Incidents
 			Name = AffiliatedFaction?.namingTheme.GenerateName<Person>(Gender);
 		}
 
+		public override string Name { get => GetFullName(); set => name = value; }
 		public int Age { get; set; }
 		public Gender Gender { get; set; }
 		public Race Race { get; set; }
 		public Faction AffiliatedFaction { get; private set; }
+		public OrganizationPosition OfficialPosition { get; set; }
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
@@ -58,6 +60,7 @@ namespace Game.Incidents
 		public List<Person> Spouses { get; set; }
 		public List<Person> Children { get; set; }
 
+		private string name;
 		private Action OnDeathAction;
 		override public void DeployContext()
 		{
@@ -93,6 +96,17 @@ namespace Game.Incidents
 			{
 				Die();
 			}			
+		}
+
+		private string GetFullName()
+		{
+			var fullName = name;
+			if(OfficialPosition != null)
+			{
+				fullName = string.Format(OfficialPosition.titlePair.GetTitle(Gender), fullName);
+			}
+
+			return fullName;
 		}
 	}
 }

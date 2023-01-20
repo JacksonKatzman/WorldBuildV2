@@ -19,6 +19,7 @@ namespace Game.Incidents
 		public void SelectNewOfficial(Faction affiliatedFaction, Race majorityRace)
 		{
 			official = new Person(35, Enums.Gender.ANY, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10);
+			official.OfficialPosition = this;
 			SimulationManager.Instance.world?.AddContext(official);
 		}
 	}

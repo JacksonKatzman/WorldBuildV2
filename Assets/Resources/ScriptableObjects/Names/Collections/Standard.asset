@@ -60,7 +60,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 8
     - Name: 
       Entry: 7
       Data: 
@@ -82,10 +82,10 @@ MonoBehaviour:
       Data: 6|Game.Generators.Names.TitlePair, Assembly-CSharp
     - Name: maleTitle
       Entry: 1
-      Data: King
+      Data: King {0}
     - Name: femaleTitle
       Entry: 1
-      Data: Queen
+      Data: Queen {0}
     - Name: 
       Entry: 8
       Data: 
@@ -122,10 +122,10 @@ MonoBehaviour:
       Data: 9|Game.Generators.Names.TitlePair, Assembly-CSharp
     - Name: maleTitle
       Entry: 1
-      Data: Prince
+      Data: Prince {0}
     - Name: femaleTitle
       Entry: 1
-      Data: Princess
+      Data: Princess {0}
     - Name: 
       Entry: 8
       Data: 
@@ -162,10 +162,10 @@ MonoBehaviour:
       Data: 12|Game.Generators.Names.TitlePair, Assembly-CSharp
     - Name: maleTitle
       Entry: 1
-      Data: Duke
+      Data: Duke {0}
     - Name: femaleTitle
       Entry: 1
-      Data: Dutchess
+      Data: Dutchess {0}
     - Name: 
       Entry: 8
       Data: 
@@ -202,10 +202,10 @@ MonoBehaviour:
       Data: 15|Game.Generators.Names.TitlePair, Assembly-CSharp
     - Name: maleTitle
       Entry: 1
-      Data: Marquis
+      Data: Marquis {0}
     - Name: femaleTitle
       Entry: 1
-      Data: Marsuise
+      Data: Marquise {0}
     - Name: 
       Entry: 8
       Data: 
@@ -242,10 +242,10 @@ MonoBehaviour:
       Data: 18|Game.Generators.Names.TitlePair, Assembly-CSharp
     - Name: maleTitle
       Entry: 1
-      Data: Count
+      Data: Count {0}
     - Name: femaleTitle
       Entry: 1
-      Data: Countess
+      Data: Countess {0}
     - Name: 
       Entry: 8
       Data: 
@@ -282,10 +282,10 @@ MonoBehaviour:
       Data: 21|Game.Generators.Names.TitlePair, Assembly-CSharp
     - Name: maleTitle
       Entry: 1
-      Data: Baron
+      Data: Baron {0}
     - Name: femaleTitle
       Entry: 1
-      Data: Baroness
+      Data: Baroness {0}
     - Name: 
       Entry: 8
       Data: 
@@ -322,10 +322,50 @@ MonoBehaviour:
       Data: 24|Game.Generators.Names.TitlePair, Assembly-CSharp
     - Name: maleTitle
       Entry: 1
-      Data: Lord
+      Data: Lord {0}
     - Name: femaleTitle
       Entry: 1
-      Data: Lady
+      Data: Lady {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: 25|Game.Generators.Names.TitlePairList, Assembly-CSharp
+    - Name: titlePairs
+      Entry: 7
+      Data: 26|System.Collections.Generic.List`1[[Game.Generators.Names.TitlePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 27|Game.Generators.Names.TitlePair, Assembly-CSharp
+    - Name: maleTitle
+      Entry: 1
+      Data: Knight {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Knight {0}
     - Name: 
       Entry: 8
       Data: 
@@ -766,5 +806,9 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 5a1a45c671de40b4cbc5eeea0b5977da, type: 3}
   femaleNames:
   - {fileID: 4900000, guid: 2261e3efea750904092ffe04ad2077f4, type: 3}
-  titleQualifiers: []
+  titleQualifiers:
+  - Grand {0}
+  - High {0}
+  - Arch{0}
+  - True{0}
   input: 
