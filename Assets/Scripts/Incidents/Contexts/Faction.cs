@@ -70,7 +70,7 @@ namespace Game.Incidents
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<IIncidentContext>();
 			
-			namingTheme = new NamingTheme(MajorityRace.racePreset.namingTheme);
+			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
 			Name = namingTheme.GenerateFactionName();
 
 			CreateStartingCity();

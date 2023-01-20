@@ -107,6 +107,7 @@ namespace Game.Generators.Names
 		{
 			var list = titles[titleType][points];
 			var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list));
+			//need to make it so that the male and females get the same format fill
 			titlePair.maleTitle = FillOutFormat(titlePair.maleTitle, Gender.MALE);
 			titlePair.femaleTitle = FillOutFormat(titlePair.femaleTitle, Gender.FEMALE);
 			return titlePair;
@@ -199,6 +200,10 @@ namespace Game.Generators.Names
 			while(result.Contains("{N}"))
 			{
 				result = ReplaceFirstOccurence(result, "{N}", SimRandom.RandomEntryFromWeightedDictionary(nouns.dictionary));
+			}
+			while (result.Contains("{Q}"))
+			{
+				result = ReplaceFirstOccurence(result, "{Q}", SimRandom.RandomEntryFromList(titleQualifiers));
 			}
 
 			return Regex.Replace(result, @"((^\w)|(\s|\p{P})\w)", match => match.Value.ToUpper());

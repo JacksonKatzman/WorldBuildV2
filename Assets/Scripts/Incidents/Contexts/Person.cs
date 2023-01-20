@@ -34,7 +34,7 @@ namespace Game.Incidents
 			Inventory = inventory == null ? new Inventory() : inventory;
 			Parents = parents == null ? new List<Person>() : parents;
 
-			Name = AffiliatedFaction.namingTheme.GenerateName<Person>(Gender);
+			Name = AffiliatedFaction?.namingTheme.GenerateName<Person>(Gender);
 		}
 
 		public int Age { get; set; }

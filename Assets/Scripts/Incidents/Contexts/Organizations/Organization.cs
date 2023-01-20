@@ -32,7 +32,7 @@ namespace Game.Incidents
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 
 			hierarchy = new List<OrganizationTier>();
-			AddTier();
+			AddTier(majorityStartingRace);
 		}
 
 		public void OnRemoveContextEvent(RemoveContextEvent gameEvent)
@@ -47,10 +47,10 @@ namespace Game.Incidents
 		{
 			foreach(var tier in hierarchy)
 			{
-				var found = tier.Where(x => x.official == person).First();
-				if(found != null)
+				var found = tier.Where(x => x.official == person);
+				if(found.Count() > 0)
 				{
-					position = found;
+					position = found.First();
 					return true;
 				}
 			}
@@ -94,12 +94,12 @@ namespace Game.Incidents
 				}
 			}
 
-			AddTier();
+			AddTier(Leader.Race);
 		}
 
-		private void AddTier()
+		private void AddTier(Race race)
 		{
-			var newTier = new OrganizationTier(AffiliatedFaction, Leader.Race, organizationType, hierarchy.Count, maxTiers);
+			var newTier = new OrganizationTier(AffiliatedFaction, race, organizationType, hierarchy.Count, maxTiers);
 			hierarchy.Add(newTier);
 		}
 	}
