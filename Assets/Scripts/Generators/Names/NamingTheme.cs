@@ -1,5 +1,6 @@
 using Game.Data;
 using Game.Enums;
+using Game.Incidents;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -26,6 +27,9 @@ namespace Game.Generators.Names
 
 		public List<string> maleNames;
 		public List<string> femaleNames;
+
+		public Dictionary<OrganizationType, TitleDictionary> titles;
+		public List<string> titleQualifiers;
 
 		public int minFirstNameSyllables;
 		public int maxFirstNameSyllables;
@@ -55,6 +59,9 @@ namespace Game.Generators.Names
 			maleNames = new List<string>();
 			femaleNames = new List<string>();
 
+			titles = new Dictionary<OrganizationType, TitleDictionary>();
+			titleQualifiers = new List<string>();
+
 			for(int i = 0; i < preset.themeCollections.Count; i++)
 			{
 				AddThemeCollection(preset.themeCollections[i]);
@@ -71,10 +78,19 @@ namespace Game.Generators.Names
 			SetupNameFormat();
 		}
 
-		public string GenerateName<Person>(Gender gender)
+		public string GenerateName(Gender gender)
 		{
 			var format = string.Copy(currentNameFormat);
 
+			return FillOutFormat(format, gender);
+		}
+
+		public string GenerateName(Gender gender, List<Person> parents)
+		{
+			var parent = SimRandom.RandomEntryFromList(parents);
+			var surname = parent.GetSurname();
+			var format = string.Copy(currentNameFormat);
+			format = ReplaceLastOccurrence(format, "{S}", surname);
 			return FillOutFormat(format, gender);
 		}
 
@@ -95,6 +111,30 @@ namespace Game.Generators.Names
 		public string GenerateTerrainName(string format)
 		{
 			return FillOutFormat(format, Gender.ANY);
+		}
+
+		public TitlePair GenerateTitle(OrganizationType titleType, int points)
+		{
+			var useQualifier = SimRandom.RandomTrueFalse();
+			if (useQualifier)
+			{
+				var list = titles[titleType][points-1];
+				var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list.titlePairs));
+				var qualifier = SimRandom.RandomEntryFromList(titleQualifiers);
+				//need to make it so that the male and females get the same format fill
+				titlePair.maleTitle = CapitalizeString(string.Format(qualifier, FillOutFormat(titlePair.maleTitle, Gender.MALE)));
+				titlePair.femaleTitle = CapitalizeString(string.Format(qualifier, FillOutFormat(titlePair.femaleTitle, Gender.FEMALE)));
+				return titlePair;
+			}
+			else
+			{
+				var list = titles[titleType][points];
+				var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list.titlePairs));
+				//need to make it so that the male and females get the same format fill
+				titlePair.maleTitle = FillOutFormat(titlePair.maleTitle, Gender.MALE);
+				titlePair.femaleTitle = FillOutFormat(titlePair.femaleTitle, Gender.FEMALE);
+				return titlePair;
+			}
 		}
 
 		private void AddThemeCollection(NamingThemeCollection collection)
@@ -125,6 +165,25 @@ namespace Game.Generators.Names
 				var names = asset.text.Split(delims, StringSplitOptions.RemoveEmptyEntries);
 				femaleNames.AddRange(names);
 			}
+
+			foreach(var upperPair in collection.titles)
+			{
+				if(!titles.ContainsKey(upperPair.Key))
+				{
+					titles.Add(upperPair.Key, upperPair.Value);
+				}
+				else
+				{
+					titles[upperPair.Key].Merge(collection.titles[upperPair.Key]);
+				}
+			}
+
+			titleQualifiers = titleQualifiers.Union(collection.titleQualifiers).ToList();
+		}
+
+		private string CapitalizeString(string toBeFormatted)
+		{
+			return Regex.Replace(toBeFormatted.ToLower(), @"((^\w)|(\s|\p{P})\w)", match => match.Value.ToUpper());
 		}
 
 		private void SetupNameFormat()
@@ -141,6 +200,13 @@ namespace Game.Generators.Names
 			int place = source.IndexOf(find);
 			string result = source.Remove(place, find.Length).Insert(place, replace);
 			return result.Replace("\r", "");
+		}
+
+		public static string ReplaceLastOccurrence(string source, string find, string replace)
+		{
+			int place = source.LastIndexOf(find);
+			string result = source.Remove(place, find.Length).Insert(place, replace);
+			return result;
 		}
 
 		private string FillOutFormat(string format, Gender gender)
@@ -170,6 +236,10 @@ namespace Game.Generators.Names
 			while(result.Contains("{N}"))
 			{
 				result = ReplaceFirstOccurence(result, "{N}", SimRandom.RandomEntryFromWeightedDictionary(nouns.dictionary));
+			}
+			while (result.Contains("{Q}"))
+			{
+				result = ReplaceFirstOccurence(result, "{Q}", SimRandom.RandomEntryFromList(titleQualifiers));
 			}
 
 			return Regex.Replace(result, @"((^\w)|(\s|\p{P})\w)", match => match.Value.ToUpper());

@@ -1,0 +1,814 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6d1cd9a27d4f4448a27a0268b73488, type: 3}
+  m_Name: Standard
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: titles
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[Game.Enums.OrganizationType,
+        Assembly-CSharp],[Game.Generators.Names.TitleDictionary, Assembly-CSharp]],
+        mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Game.Enums.OrganizationType,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: 2|Game.Generators.Names.TitleDictionary, Assembly-CSharp
+    - Name: comparer
+      Entry: 7
+      Data: 3|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 8
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 7
+    - Name: $v
+      Entry: 7
+      Data: 4|Game.Generators.Names.TitlePairList, Assembly-CSharp
+    - Name: titlePairs
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Game.Generators.Names.TitlePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 6|Game.Generators.Names.TitlePair, Assembly-CSharp
+    - Name: maleTitle
+      Entry: 1
+      Data: King {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Queen {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 6
+    - Name: $v
+      Entry: 7
+      Data: 7|Game.Generators.Names.TitlePairList, Assembly-CSharp
+    - Name: titlePairs
+      Entry: 7
+      Data: 8|System.Collections.Generic.List`1[[Game.Generators.Names.TitlePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 9|Game.Generators.Names.TitlePair, Assembly-CSharp
+    - Name: maleTitle
+      Entry: 1
+      Data: Prince {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Princess {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 7
+      Data: 10|Game.Generators.Names.TitlePairList, Assembly-CSharp
+    - Name: titlePairs
+      Entry: 7
+      Data: 11|System.Collections.Generic.List`1[[Game.Generators.Names.TitlePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 12|Game.Generators.Names.TitlePair, Assembly-CSharp
+    - Name: maleTitle
+      Entry: 1
+      Data: Duke {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Dutchess {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: 13|Game.Generators.Names.TitlePairList, Assembly-CSharp
+    - Name: titlePairs
+      Entry: 7
+      Data: 14|System.Collections.Generic.List`1[[Game.Generators.Names.TitlePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 15|Game.Generators.Names.TitlePair, Assembly-CSharp
+    - Name: maleTitle
+      Entry: 1
+      Data: Marquis {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Marquise {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 16|Game.Generators.Names.TitlePairList, Assembly-CSharp
+    - Name: titlePairs
+      Entry: 7
+      Data: 17|System.Collections.Generic.List`1[[Game.Generators.Names.TitlePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 18|Game.Generators.Names.TitlePair, Assembly-CSharp
+    - Name: maleTitle
+      Entry: 1
+      Data: Count {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Countess {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 19|Game.Generators.Names.TitlePairList, Assembly-CSharp
+    - Name: titlePairs
+      Entry: 7
+      Data: 20|System.Collections.Generic.List`1[[Game.Generators.Names.TitlePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 21|Game.Generators.Names.TitlePair, Assembly-CSharp
+    - Name: maleTitle
+      Entry: 1
+      Data: Baron {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Baroness {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 22|Game.Generators.Names.TitlePairList, Assembly-CSharp
+    - Name: titlePairs
+      Entry: 7
+      Data: 23|System.Collections.Generic.List`1[[Game.Generators.Names.TitlePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 24|Game.Generators.Names.TitlePair, Assembly-CSharp
+    - Name: maleTitle
+      Entry: 1
+      Data: Lord {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Lady {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: 25|Game.Generators.Names.TitlePairList, Assembly-CSharp
+    - Name: titlePairs
+      Entry: 7
+      Data: 26|System.Collections.Generic.List`1[[Game.Generators.Names.TitlePair,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 27|Game.Generators.Names.TitlePair, Assembly-CSharp
+    - Name: maleTitle
+      Entry: 1
+      Data: Knight {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Knight {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  nouns:
+  - value: Bridge
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: Crossing
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: Ford
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  verbs: []
+  adjectives: []
+  townNouns: []
+  consonants:
+  - value: x
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: gl
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: g
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: gr
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: h
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ng
+    weight: 3
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: j
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ph
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: q
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: pl
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: y
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: pr
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: b
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: qu
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: f
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: sc
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: p
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: sh
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: v
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: sk
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: w
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: sl
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: z
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: sm
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: d
+    weight: 4
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: sn
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: k
+    weight: 4
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: sp
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: c
+    weight: 5
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: st
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: l
+    weight: 5
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: sw
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: m
+    weight: 5
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: th
+    weight: 4
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: s
+    weight: 6
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: tr
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: r
+    weight: 8
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: tw
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: n
+    weight: 9
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: wh
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: t
+    weight: 9
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: wr
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: bl
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: nth
+    weight: 1
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: br
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: sch
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ch
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: scr
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: ck
+    weight: 3
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: shr
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: cl
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: spl
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: cr
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: spr
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: dr
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: squ
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: fl
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: str
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: fr
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: thr
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 0
+  - value: gh
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  vowels:
+  - value: aa
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ui
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ai
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: uo
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ao
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: uu
+    weight: 1
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: au
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: uy
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ei
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: y
+    weight: 2
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: eo
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ay
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: eu
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ea
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ie
+    weight: 1
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: ey
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ii
+    weight: 1
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: ia
+    weight: 2
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: io
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ou
+    weight: 2
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: iu
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ae
+    weight: 3
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: iy
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ee
+    weight: 3
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: oa
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: oo
+    weight: 3
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: oe
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: o
+    weight: 9
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: oi
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: u
+    weight: 6
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: oy
+    weight: 1
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: i
+    weight: 10
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ua
+    weight: 1
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: a
+    weight: 12
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  - value: ue
+    weight: 1
+    allowedAtBeginning: 0
+    allowedAtEnd: 1
+  - value: e
+    weight: 12
+    allowedAtBeginning: 1
+    allowedAtEnd: 1
+  maleNames:
+  - {fileID: 4900000, guid: 5a1a45c671de40b4cbc5eeea0b5977da, type: 3}
+  femaleNames:
+  - {fileID: 4900000, guid: 2261e3efea750904092ffe04ad2077f4, type: 3}
+  titleQualifiers:
+  - Grand {0}
+  - High {0}
+  - Arch{0}
+  - True{0}
+  input: 

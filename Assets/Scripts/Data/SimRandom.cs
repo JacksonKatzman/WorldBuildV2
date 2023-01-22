@@ -22,6 +22,12 @@ public static class SimRandom
         return rand.Next(0, (int)precision) / precision;
     }
 
+    public static bool RandomTrueFalse()
+	{
+        int check = RandomRange(0, 2);
+        return check > 0 ? true : false;
+	}
+
     public static int RandomRange(int minValue, int maxValue)
     {
         if(minValue >= maxValue)

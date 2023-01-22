@@ -10,7 +10,8 @@ namespace Game.Enums
 	public enum LandType { OCEAN, FLAT, HILLS, MOUNTAINS, RIVER };
 	public enum LandTemperature { HOT, TEMPERATE, COLD };
 	public enum Direction { NORTH, SOUTH, EAST, WEST };
-	public enum PriorityType { MILITARY, INFRASTRUCTURE, MERCANTILE, POLITICAL, RELIGIOUS};
+	public enum PriorityType { POLITICAL, ECONOMIC, RELIGIOUS, MILITARY, OTHER };
+	public enum OrganizationType { POLITICAL, ECONOMIC, RELIGIOUS, MILITARY, OTHER };
 	public enum TroopType { LIGHT_INFANTRY, HEAVY_INFANTRY, LIGHT_CAVALRY, HEAVY_CAVALRY, ARCHER};
 	public enum StatType { STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA, LUCK };
 	public enum RoleType { GOVERNER, MAGIC_USER, ROGUE };

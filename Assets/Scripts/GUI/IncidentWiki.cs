@@ -96,7 +96,7 @@ namespace Game.GUI.Wiki
 					//make a new page
 					var page = Instantiate(wikiPagePrefab, pageRoot).GetComponent<IncidentWikiPage>();
 					page.contextID = id;
-					page.wikiTitle.text = id + "!";
+					page.wikiTitle.text = context.Name;
 
 					if (id == 0)
 					{
@@ -139,7 +139,7 @@ namespace Game.GUI.Wiki
 			{
 				var matchString = match.Value;
 				var linkedContext = report.Contexts[matchString];
-				var linkString = string.Format("<link=\"{0}\">{1}</link>", linkedContext.ID, linkedContext.ID + "!");
+				var linkString = string.Format("<link=\"{0}\">{1}</link>", linkedContext.ID, linkedContext.Name);
 				textLine = textLine.Replace(matchString, linkString);
 			}
 
