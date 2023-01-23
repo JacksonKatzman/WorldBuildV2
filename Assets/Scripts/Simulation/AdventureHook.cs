@@ -2,6 +2,7 @@
 using Game.Incidents;
 using Game.Terrain;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,43 +68,38 @@ namespace Game.Simulation
 	[CreateAssetMenu(fileName = nameof(AdventureEncounter), menuName = "ScriptableObjects/Adventures/" + nameof(AdventureEncounter), order = 1)]
 	public class AdventureEncounter : SerializedScriptableObject
 	{
+		[PropertyOrder(-10)]
+		public string encounterTitle;
+		[PropertyOrder(-9)]
 		public EncounterLocationType encounterLocationType;
 
-		[ValueDropdown("GetEncounterTypes", IsUniqueList = true, DropdownTitle = "Encounter Types")]
+		[ValueDropdown("GetEncounterTypes", IsUniqueList = true, DropdownTitle = "Encounter Types"), PropertyOrder(-8)]
 		public List<EncounterType> encounterTypes;
 
-		[ValueDropdown("GetBiomeTerrainTypes", IsUniqueList = true, DropdownTitle = "Allowed Biomes")]
+		[ValueDropdown("GetBiomeTerrainTypes", IsUniqueList = true, DropdownTitle = "Allowed Biomes"), PropertyOrder(-7)]
 		public List<BiomeTerrainType> allowedBiomes;
 
-		public bool containsPossibleThreat;
+		[ListDrawerSettings(HideAddButton = true), PropertyOrder(0)]
+		public List<IAdventureContextCriteria> contextCriterium;
 
-		[ShowIf("@this.containsPossibleThreat"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem", CustomRemoveIndexFunction = "RemoveCriteriaItem"), HideReferenceObjectPicker]
-		public List<ThreatCriteriaContainer> possibleThreats;
+		[TextArea, PropertyOrder(0)]
+		public string encounterSummary;
+		[PropertyOrder(0)]
+		public List<AdventureEncounterPath> encounterPaths;
 
 		public AdventureEncounter()
 		{
 			encounterTypes = new List<EncounterType>();
 			allowedBiomes = new List<BiomeTerrainType>();
-			possibleThreats = new List<ThreatCriteriaContainer>();
-		}
-
-		private void AddNewCriteriaItem()
-		{
-			possibleThreats.Add(new ThreatCriteriaContainer());
-			UpdateContainerIDs();
-		}
-
-		private void RemoveCriteriaItem(int index)
-		{
-			possibleThreats.RemoveAt(index);
-			UpdateContainerIDs();
+			encounterPaths = new List<AdventureEncounterPath>();
+			contextCriterium = new List<IAdventureContextCriteria>();
 		}
 
 		private void UpdateContainerIDs()
 		{
-			for(int i = 0; i < possibleThreats.Count; i++)
+			for(int i = 0; i < contextCriterium.Count; i++)
 			{
-				possibleThreats[i].ContainerID = i;
+				contextCriterium[i].ContextID = "{" + i + "}";
 			}
 		}
 
@@ -116,47 +112,68 @@ namespace Game.Simulation
 		{
 			return Enum.GetValues(typeof(BiomeTerrainType)).Cast<BiomeTerrainType>();
 		}
-	}
 
-	[HideReferenceObjectPicker]
-	public class ThreatCriteriaContainer
-	{
-		[ReadOnly, ShowInInspector]
-		public int ContainerID { get; set; }
-
-		[ValueDropdown("GetThreatCriteriaTypes"), OnValueChanged("SetCriteriaType"), LabelText("Threat Type")]
-		public Type threatCriteriaType;
-
-		[Range(0.0f, 1.0f)]
-		public float crPercentage;
-
-		[ShowIf("@this.threatCriteriaType != null")]
-		public IThreatCriteria threatCriteria;
-
-		public ThreatCriteriaContainer() { }
-
-		private IEnumerable<Type> GetThreatCriteriaTypes()
+		private void RemoveCriteria(int index)
 		{
-			var q = typeof(IThreatCriteria).Assembly.GetTypes()
-				.Where(x => !x.IsAbstract)                                          // Excludes BaseClass
-				.Where(x => !x.IsGenericTypeDefinition)                             // Excludes Generics
-				.Where(x => typeof(IThreatCriteria).IsAssignableFrom(x));           // Excludes classes not inheriting from IIncidentContext
-
-			return q;
+			contextCriterium.RemoveAt(index);
+			UpdateContainerIDs();
 		}
 
-		private void SetCriteriaType()
+		[ButtonGroup("1"), PropertyOrder(-1)]
+		private void AddMonster()
 		{
-			threatCriteria = (IThreatCriteria)Activator.CreateInstance(threatCriteriaType);
+			contextCriterium.Add(new MonsterCriteria());
+			UpdateContainerIDs();
+		}
+
+		[ButtonGroup("1"), PropertyOrder(-1)]
+		private void AddPerson()
+		{
+			contextCriterium.Add(new AdventureContextCriteria(typeof(Person)));
+			UpdateContainerIDs();
 		}
 	}
 
-	public interface IThreatCriteria
+	public class AdventureEncounterPath
 	{
+		public string pathTitle;
+		[TextArea]
+		public string pathSummary;
+		[TextArea]
+		public string pathInformation;
 	}
 
-	[SerializeField, HideReferenceObjectPicker]
-	public class MonsterCriteria : IThreatCriteria
+	public interface IAdventureContextCriteria 
+	{
+		public Type ContextType { get; set; }
+		public string ContextID { get; set; }
+	}
+
+	[Serializable, HideReferenceObjectPicker]
+	public class AdventureContextCriteria : IAdventureContextCriteria
+	{
+		public Type ContextType { get; set; }
+
+		public string ContextID
+		{
+			get { return contextID; }
+			set { contextID = value; }
+		}
+
+		[SerializeField, ReadOnly, HorizontalGroup, PropertyOrder(-1)]
+		private string contextTypeName;
+		[SerializeField, ReadOnly, HorizontalGroup, PropertyOrder(-1)]
+		private string contextID;
+
+		public AdventureContextCriteria(Type contextType)
+		{
+			ContextType = contextType;
+			contextTypeName = contextType.Name;
+		}
+	}
+
+	[Serializable, HideReferenceObjectPicker]
+	public class MonsterCriteria : AdventureContextCriteria
 	{
 		public bool isLegendary;
 		public bool isLandDwelling;
@@ -168,7 +185,7 @@ namespace Game.Simulation
 		[ValueDropdown("GetCreatureAlignments", IsUniqueList = true, DropdownTitle = "Allowed Alignments")]
 		public List<CreatureAlignment> allowedAlignments;
 
-		public MonsterCriteria()
+		public MonsterCriteria() : base(typeof(Monster))
 		{
 			allowedSizes = new List<CreatureSize>();
 			allowedTypes = new List<CreatureType>();
