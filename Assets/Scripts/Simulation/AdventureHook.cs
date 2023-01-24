@@ -82,16 +82,23 @@ namespace Game.Simulation
 		[ListDrawerSettings(HideAddButton = true), PropertyOrder(0)]
 		public List<IAdventureContextCriteria> contextCriterium;
 
-		[TextArea, PropertyOrder(0)]
+		[TextArea(2, 4), PropertyOrder(0)]
+		public string encounterBlurb;
+
+		[TextArea(10,15), PropertyOrder(0)]
 		public string encounterSummary;
-		[PropertyOrder(0)]
-		public List<AdventureEncounterPath> encounterPaths;
+
+		[TextArea(15, 20), PropertyOrder(0)]
+		public string encounterApproach;
+
+		[PropertyOrder(0), ListDrawerSettings(CustomAddFunction = "AddAct")]
+		public List<AdventureEncounterAct> encounterActs;
 
 		public AdventureEncounter()
 		{
 			encounterTypes = new List<EncounterType>();
 			allowedBiomes = new List<BiomeTerrainType>();
-			encounterPaths = new List<AdventureEncounterPath>();
+			encounterActs = new List<AdventureEncounterAct>();
 			contextCriterium = new List<IAdventureContextCriteria>();
 		}
 
@@ -111,6 +118,11 @@ namespace Game.Simulation
 		private IEnumerable<BiomeTerrainType> GetBiomeTerrainTypes()
 		{
 			return Enum.GetValues(typeof(BiomeTerrainType)).Cast<BiomeTerrainType>();
+		}
+
+		private void AddAct()
+		{
+			encounterActs.Add(new AdventureEncounterAct());
 		}
 
 		private void RemoveCriteria(int index)
@@ -134,12 +146,31 @@ namespace Game.Simulation
 		}
 	}
 
+	[HideReferenceObjectPicker]
+	public class AdventureEncounterAct
+	{
+		public string actTitle;
+		public AdventureEncounterAct()
+		{
+			paths = new List<AdventureEncounterPath>();
+		}
+
+		[ListDrawerSettings(CustomAddFunction = "AddPath")]
+		public List<AdventureEncounterPath> paths;
+
+		private void AddPath()
+		{
+			paths.Add(new AdventureEncounterPath());
+		}
+	}
+
+	[HideReferenceObjectPicker]
 	public class AdventureEncounterPath
 	{
 		public string pathTitle;
-		[TextArea]
+		[TextArea(10,15), FoldoutGroup("Summary")]
 		public string pathSummary;
-		[TextArea]
+		[TextArea(15,20), FoldoutGroup("Full Description")]
 		public string pathInformation;
 	}
 
