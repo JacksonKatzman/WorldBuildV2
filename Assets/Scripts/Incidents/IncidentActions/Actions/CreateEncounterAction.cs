@@ -22,6 +22,8 @@ namespace Game.Incidents
 			{
 				historicals[i].Context = actionFields[i].actionField.GetFieldValue();
 			}
+
+			AdventureService.Instance.AddAvailableEncounter(copy);
 		}
 
 		private void OnEncounterChanged()
