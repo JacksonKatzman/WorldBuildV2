@@ -20,7 +20,8 @@ namespace Game.Simulation
 			}
 		}
 
-		public List<AdventureEncounter> encounters;
+		public List<AdventureEncounter> evergreenEncounters;
+		public List<AdventureEncounter> availableEncounters;
 		public List<AdventureEncounter> usedEncounters;
 
 		public AdventureService()
@@ -28,15 +29,21 @@ namespace Game.Simulation
 			Setup();
 		}
 
+		public void AddAvailableEncounter(AdventureEncounter encounter)
+		{
+			availableEncounters.Add(encounter);
+		}
+
 		private void Setup()
 		{
-			encounters = new List<AdventureEncounter>();
+			evergreenEncounters = new List<AdventureEncounter>();
+			availableEncounters = new List<AdventureEncounter>();
 			usedEncounters = new List<AdventureEncounter>();
 
 			var path = "ScriptableObjects/Encounters";
 
-			encounters.AddRange(Resources.LoadAll(path, typeof(AdventureEncounter)).Cast<AdventureEncounter>().ToList());
-			OutputLogger.Log(string.Format("{0} encounters loaded.", encounters.Count));
+			evergreenEncounters.AddRange(Resources.LoadAll(path, typeof(AdventureEncounter)).Cast<AdventureEncounter>().ToList());
+			OutputLogger.Log(string.Format("{0} encounters loaded.", evergreenEncounters.Count));
 		}
 	}
 }
