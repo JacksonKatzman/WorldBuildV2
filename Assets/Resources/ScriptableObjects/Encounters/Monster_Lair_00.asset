@@ -1,0 +1,368 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 084bf99f985f0d341a9f6e9f9a93e27c, type: 3}
+  m_Name: Monster_Lair_00
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: contextCriterium
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Game.Simulation.IAdventureContextCriteria,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 1|Game.Simulation.MonsterCriteria, Assembly-CSharp
+    - Name: contextTypeName
+      Entry: 1
+      Data: Monster
+    - Name: contextID
+      Entry: 1
+      Data: '{0}'
+    - Name: historical
+      Entry: 5
+      Data: false
+    - Name: isLegendary
+      Entry: 5
+      Data: false
+    - Name: isLandDwelling
+      Entry: 5
+      Data: true
+    - Name: allowedSizes
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: allowedTypes
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Game.Enums.CreatureType, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 9
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: allowedAlignments
+      Entry: 7
+      Data: 4|System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 3
+      Data: 5
+    - Name: 
+      Entry: 3
+      Data: 7
+    - Name: 
+      Entry: 3
+      Data: 8
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Game.Simulation.AdventureContextCriteria`1[[Game.Incidents.Person,
+        Assembly-CSharp]], Assembly-CSharp
+    - Name: contextTypeName
+      Entry: 1
+      Data: Person
+    - Name: contextID
+      Entry: 1
+      Data: '{1}'
+    - Name: historical
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: encounterActs
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Game.Simulation.AdventureEncounterAct,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 7|Game.Simulation.AdventureEncounterAct, Assembly-CSharp
+    - Name: actTitle
+      Entry: 1
+      Data: Into the maw
+    - Name: paths
+      Entry: 7
+      Data: 8|System.Collections.Generic.List`1[[Game.Simulation.AdventureEncounterPath,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 9|Game.Simulation.AdventureEncounterPath, Assembly-CSharp
+    - Name: pathTitle
+      Entry: 1
+      Data: Attack them head on!
+    - Name: pathSummary
+      Entry: 1
+      Data: The most straight-forward way for the party to gain entrance to the {0}s'
+        lair, is to fight and dispatch the guards. This approach would require the
+        party to have strong combat skills and be well-equipped for fighting against
+        {0}s.
+    - Name: pathInformation
+      Entry: 1
+      Data: '[COMBAT with 2 {0}]'
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|Game.Simulation.AdventureEncounterPath, Assembly-CSharp
+    - Name: pathTitle
+      Entry: 1
+      Data: Distract the guards.
+    - Name: pathSummary
+      Entry: 1
+      Data: Another way for the party to gain entrance to the {0}s' lair is by distracting
+        the guard {0}s at the main entrance. To do this, the party could use a combination
+        of [STEALTH], [DECEPTION], and [NATURE] skills.
+    - Name: pathInformation
+      Entry: 1
+      Data: 'First, the party would need to sneak up to the cave entrance without
+        being detected by the guard {0}s. This would require a [GROUP_STEALTH_CHECK].
+
+        Once
+        they are close enough, they could attempt to create a distraction that would
+        draw the guard {0}s away from the entrance. For example, they could throw
+        a rock into a nearby bushes to simulate the noise of an animal running away,
+        or mimic the call of a predator to lure the {0}s away. This would require
+        a [DECEPTION_CHECK] if using a distraction, or a [NATURE_CHECK] if using
+        something like an animal call.
+
+        If the distraction is successful,
+        the guard {0}s would leave their post to investigate, giving the party an
+        opportunity to slip into the cave unnoticed. However, if the distraction
+        fails or the party is not able to create it, the guard {0}s would remain
+        at their post and the party would have to find another way to enter the lair.
+
+        It''s
+        worth noting that the {0}s being distracted by the party doesn''t guarantee
+        that the entire -0- would be away from the lair, so the party would still
+        need to be cautious while they are inside the cave.'
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 11|Game.Simulation.AdventureEncounterPath, Assembly-CSharp
+    - Name: pathTitle
+      Entry: 1
+      Data: Find a sneaky way in...
+    - Name: pathSummary
+      Entry: 1
+      Data: The party could attempt to be stealthy and find a different way in. To
+        do this, the party could use a combination of [STEALTH] and [INVESTIGATION]
+        skills.
+    - Name: pathInformation
+      Entry: 1
+      Data: 'Should they choose to attempt this, have them roll a [GROUP_STEALTH_CHECK]
+        to see if they can avoid drawing the attention of the guards at the mouth
+        fo the lair.
+
+        If they fail this roll, the guards will have spotted
+        them, and they will be forced to either run away, or fight the guards.
+
+        However,
+        should they succeed, give them this information: "You manage to sneak through
+        the underbrush, avoiding the attention of the guards, and make it to a rocky
+        outcrop to the right of the cave entrance where you are hidden from view."
+
+        Now
+        have each of your players roll a [INVESTIGATION_CHECK]. Shoud they all fail,
+        have them select a different strategy for entering the lair.
+
+        If
+        even one of them succeeds, give them this information: "As you are exploring
+        the area around the cave entrance, you notice that there is a small crevice
+        on the side of the mountain that is partially hidden by a thick growth of
+        bushes. Upon closer inspection, you realize that the crevice is large enough
+        for a person to squeeze through, and it leads deep into the mountain."
+
+        The
+        crevice is narrow and dark, and the party must make their way through it
+        carefully, as the walls are jagged and the footing is uncertain. As they
+        progress through the crevice, they can hear the sound of running water. The
+        crevice opens into a small underground stream, that flows into the cave.
+        The party can follow the stream, which leads them deeper into the {0}s''
+        lair, bypassing the main entrance and the guard {0}s. However, the stream
+        is noisy, and the party has to take extra care not to alert the {0}s of their
+        presence.'
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 12|Game.Simulation.AdventureEncounterAct, Assembly-CSharp
+    - Name: actTitle
+      Entry: 1
+      Data: What must be done
+    - Name: paths
+      Entry: 7
+      Data: 13|System.Collections.Generic.List`1[[Game.Simulation.AdventureEncounterPath,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 14|Game.Simulation.AdventureEncounterPath, Assembly-CSharp
+    - Name: pathTitle
+      Entry: 1
+      Data: Kill their leader!
+    - Name: pathSummary
+      Entry: 1
+      Data: In order to complete their quest, the party must now delve deep into
+        the bowels of the lair and slay the leader of the {0} -0-. Without a leader,
+        the -0- will surely disperse.
+    - Name: pathInformation
+      Entry: 1
+      Data: "Begin by giving the players this information: \"The inside of the {0}'s
+        lair is dark and damp, with the only light coming from the occasional glow
+        of phosphorescent mushrooms that grow in the cave, and small openings in
+        the cave's ceiling that let in natural light. The walls are jagged and rough,
+        and the floor is covered with loose gravel and bones. You can hear the <0>s
+        and <0>s of the {0}s echoing through the cave, as well as the sound of running
+        water. The smell of musk and decay is thick in the air.\"\nThe main path
+        through the cave twists and turns, with several tunnels branching off in
+        different directions. The party must navigate these tunnels carefully, as
+        they will have to avoid a pit that has been covered with branches and leaves,
+        making it hard to spot. It's located near the first bend in the tunnel, and
+        the party will need to make a [PERCEPTION_CHECK] to spot it before blundering
+        into it, or an [INVESTIGATION_CHECK] to uncover it if they are actively looking
+        for traps.\r\nThe lead {0}\u2019s is located deep within the cave, accessible
+        only through a narrow and winding tunnel. As they near the exit to the tunnel,
+        give the party this information: \n\u201CThe chamber is large and circular,
+        with a high ceiling that is supported by natural columns of rock. The chamber
+        is lit by natural light coming from the small openings in the cave's ceiling.
+        At the center of the chamber, there is a natural formation that resembles
+        a throne made of bones, and upon it lounges what you can only guess must
+        be the leader of the {0}s.\u201D\r\nThe leader of the {0}s is the most powerful
+        {0} in the -0-, and it's the one that has been coordinating the attacks on
+        the town's livestock. The party will have to face the leader and its followers
+        in a fierce battle, and bring proof of it\u2019s demise back to {1} in order
+        to receive their reward.\n[COMBAT with #{0}s, 1 ELITE {0}]\n"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  encounterTitle: A Lair of Monsters
+  encounterLocationType: 0
+  encounterTypes: 00000000
+  allowedBiomes: 0000000001000000020000000300000005000000
+  encounterBlurb: '{1} has called upon a group of adventurers to remove a group of
+    {0} that have been terrorizing the nearby countryside.'
+  encounterSummary: '{1} explains that the monsters, a -0- of {0}s, have been attacking
+    and killing the town''s livestock, causing a shortage of food and putting the
+    town in danger of starvation. [1] offers a reward to the adventurers if they
+    can successfully remove the {0}s from the area. From information gathered from
+    local woodsman, [1] believes that the {0}s can be found near {LOCATION}.'
+  encounterApproach: "As you approach the {0}s\u2019 lair, you find yourself in a
+    dense forest, with tall trees blocking out much of the sunlight. The ground beneath
+    your feet is soft and moist, with fallen leaves and branches scattered about.
+    You can hear the distant sound of <0>ing, growing louder as you get closer to
+    the lair.\r\nAs you push deeper into the woods, the trees begin to thin out and
+    you find yourself at the base of a steep mountain. The mountain is rocky, with
+    jagged outcroppings and loose gravel making the climb difficult. You can see
+    a faint trail leading up the mountain, and you follow it, carefully making your
+    way upward.\r\nReaching the top, you find yourself standing before a large cave
+    entrance. The cave is dark, with the only light coming from the flickering of
+    a fire deep within. The sound of the {0}s is louder now, and you can hear the
+    <0>s and <0>s of the {0}s echoing through the cave. The entrance to the cave
+    is guarded by a pair of {0}s..\r\nYou can see that the cave winds deep into the
+    mountain, with various tunnels branching off in different directions. You can
+    smell the musky scent of {0}s and the damp earth of the cave. It's clear that
+    the {0}s have been living here for some time, as bones and half-eaten corpses
+    of animals are scattered about the cave entrance."

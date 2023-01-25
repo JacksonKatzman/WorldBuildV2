@@ -11,6 +11,7 @@ namespace Game.IO
 
 		public static string INCIDENT_DATA_PATH = "/Resources/IncidentData/";
 		public static string RESOURCES_DATA_PATH = "/Resources/";
+		public static string SCRIPTABLE_OBJECTS_PATH = "/Resources/ScriptableObjects/";
 		public static JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings()
 		{
 			// ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
