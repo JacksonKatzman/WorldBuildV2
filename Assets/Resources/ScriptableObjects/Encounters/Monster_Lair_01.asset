@@ -331,7 +331,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  encounterTitle: 
+  encounterTitle: A Lair of Monsters
   encounterLocationType: 0
   encounterTypes: 
   allowedBiomes: 
