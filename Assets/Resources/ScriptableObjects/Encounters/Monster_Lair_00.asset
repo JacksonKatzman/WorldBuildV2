@@ -37,6 +37,9 @@ MonoBehaviour:
     - Name: contextID
       Entry: 1
       Data: '{0}'
+    - Name: historical
+      Entry: 5
+      Data: false
     - Name: isLegendary
       Entry: 5
       Data: false
@@ -114,13 +117,17 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 5|Game.Simulation.AdventureContextCriteria, Assembly-CSharp
+      Data: 5|Game.Simulation.AdventureContextCriteria`1[[Game.Incidents.Person,
+        Assembly-CSharp]], Assembly-CSharp
     - Name: contextTypeName
       Entry: 1
       Data: Person
     - Name: contextID
       Entry: 1
       Data: '{1}'
+    - Name: historical
+      Entry: 5
+      Data: false
     - Name: 
       Entry: 8
       Data: 

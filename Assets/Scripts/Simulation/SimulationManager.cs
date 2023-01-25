@@ -45,6 +45,7 @@ namespace Game.Simulation
 			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
 			world = new World(HexGrid);
 			world.Initialize(factions);
+			var test = AdventureService.Instance;
 		}
 
 		public void CreateDebugWorld()
