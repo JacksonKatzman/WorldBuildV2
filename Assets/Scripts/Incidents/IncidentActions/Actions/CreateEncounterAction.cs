@@ -9,6 +9,8 @@ namespace Game.Incidents
 {
 	public class CreateEncounterAction : GenericIncidentAction
 	{
+		public ContextualIncidentActionField<Location> location;
+
 		[SerializeField, OnValueChanged("OnEncounterChanged")]
 		public AdventureEncounter encounter;
 
@@ -17,6 +19,7 @@ namespace Game.Incidents
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
 			var copy = UnityEngine.Object.Instantiate(encounter);
+			copy.Location = location.GetTypedFieldValue();
 			var historicals = copy.contextCriterium.Where(x => x.IsHistorical).ToList();
 			for(int i = 0; i < historicals.Count; i++)
 			{

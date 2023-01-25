@@ -49,6 +49,8 @@ namespace Game.Simulation
 		[PropertyOrder(-9)]
 		public EncounterLocationType encounterLocationType;
 
+		public Location Location { get; set; }
+
 		[ValueDropdown("GetEncounterTypes", IsUniqueList = true, DropdownTitle = "Encounter Types"), PropertyOrder(-8)]
 		public List<EncounterType> encounterTypes;
 
