@@ -1,6 +1,7 @@
 using Game.Data;
 using Game.Enums;
 using Game.Incidents;
+using Game.Utilities;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
@@ -90,7 +91,7 @@ namespace Game.Generators.Names
 			var parent = SimRandom.RandomEntryFromList(parents);
 			var surname = parent.GetSurname();
 			var format = string.Copy(currentNameFormat);
-			format = ReplaceLastOccurrence(format, "{S}", surname);
+			format = StringUtilities.ReplaceLastOccurrence(format, "{S}", surname);
 			return FillOutFormat(format, gender);
 		}
 
@@ -191,22 +192,8 @@ namespace Game.Generators.Names
 			currentNameFormat = SimRandom.RandomEntryFromWeightedDictionary(personNameFormats);
 			while(currentNameFormat.Contains("{P}"))
 			{
-				currentNameFormat = ReplaceFirstOccurence(currentNameFormat, "{P}", GenerateSyllabicName(2, 5));
+				currentNameFormat = StringUtilities.ReplaceFirstOccurence(currentNameFormat, "{P}", GenerateSyllabicName(2, 5));
 			}
-		}
-
-		private string ReplaceFirstOccurence(string source, string find, string replace)
-		{
-			int place = source.IndexOf(find);
-			string result = source.Remove(place, find.Length).Insert(place, replace);
-			return result.Replace("\r", "");
-		}
-
-		public static string ReplaceLastOccurrence(string source, string find, string replace)
-		{
-			int place = source.LastIndexOf(find);
-			string result = source.Remove(place, find.Length).Insert(place, replace);
-			return result;
 		}
 
 		private string FillOutFormat(string format, Gender gender)
@@ -215,31 +202,31 @@ namespace Game.Generators.Names
 
 			while(result.Contains("{F}"))
 			{
-				result = ReplaceFirstOccurence(result,"{F}", GenerateFirstName(gender));
+				result = StringUtilities.ReplaceFirstOccurence(result,"{F}", GenerateFirstName(gender));
 			}
 			while(result.Contains("{S}"))
 			{
-				result = ReplaceFirstOccurence(result,"{S}", GenerateSurname());
+				result = StringUtilities.ReplaceFirstOccurence(result,"{S}", GenerateSurname());
 			}
 			while(result.Contains("{A}"))
 			{
-				result = ReplaceFirstOccurence(result,"{A}", SimRandom.RandomEntryFromWeightedDictionary(adjectives.dictionary));
+				result = StringUtilities.ReplaceFirstOccurence(result,"{A}", SimRandom.RandomEntryFromWeightedDictionary(adjectives.dictionary));
 			}
 			while (result.Contains("{T}"))
 			{
-				result = ReplaceFirstOccurence(result, "{T}", SimRandom.RandomEntryFromWeightedDictionary(townNouns.dictionary));
+				result = StringUtilities.ReplaceFirstOccurence(result, "{T}", SimRandom.RandomEntryFromWeightedDictionary(townNouns.dictionary));
 			}
 			while (result.Contains("{V}"))
 			{
-				result = ReplaceFirstOccurence(result, "{V}", SimRandom.RandomEntryFromWeightedDictionary(verbs.dictionary));
+				result = StringUtilities.ReplaceFirstOccurence(result, "{V}", SimRandom.RandomEntryFromWeightedDictionary(verbs.dictionary));
 			}
 			while(result.Contains("{N}"))
 			{
-				result = ReplaceFirstOccurence(result, "{N}", SimRandom.RandomEntryFromWeightedDictionary(nouns.dictionary));
+				result = StringUtilities.ReplaceFirstOccurence(result, "{N}", SimRandom.RandomEntryFromWeightedDictionary(nouns.dictionary));
 			}
 			while (result.Contains("{Q}"))
 			{
-				result = ReplaceFirstOccurence(result, "{Q}", SimRandom.RandomEntryFromList(titleQualifiers));
+				result = StringUtilities.ReplaceFirstOccurence(result, "{Q}", SimRandom.RandomEntryFromList(titleQualifiers));
 			}
 
 			return Regex.Replace(result, @"((^\w)|(\s|\p{P})\w)", match => match.Value.ToUpper());

@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Utilities;
+using Sirenix.OdinInspector;
 using System;
 
 namespace Game.Incidents

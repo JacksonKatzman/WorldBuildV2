@@ -1,6 +1,7 @@
 ﻿using Game.Enums;
 using Game.Generators.Names;
 using Game.Simulation;
+using Game.Utilities;
 using System.Collections.Generic;
 
 namespace Game.Incidents

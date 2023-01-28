@@ -1,5 +1,4 @@
 ﻿using Game.Creatures;
-using Game.IO;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -51,7 +50,7 @@ namespace Game.Simulation
 
 			var monstersPath = "ScriptableObjects/Monsters";
 			monsterData.AddRange(Resources.LoadAll(monstersPath, typeof(MonsterData)).Cast<MonsterData>().ToList());
-			OutputLogger.Log(string.Format("{0} monsterss loaded.", monsterData.Count));
+			OutputLogger.Log(string.Format("{0} monsters loaded.", monsterData.Count));
 		}
 	}
 }

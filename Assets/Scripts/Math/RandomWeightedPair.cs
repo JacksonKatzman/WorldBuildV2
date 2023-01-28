@@ -1,4 +1,6 @@
-﻿namespace Game.Factions
+﻿using Game.Utilities;
+
+namespace Game.Factions
 {
 	public class RandomWeightedPair
 	{
