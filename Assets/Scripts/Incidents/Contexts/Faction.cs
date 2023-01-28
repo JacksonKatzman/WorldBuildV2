@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Game.Incidents
 {
 	[Serializable]
-	public class Faction : IncidentContext, IFactionAffiliated
+	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated
 	{
 		public Faction AffiliatedFaction => this;
 		public Type FactionType => ContextType;
@@ -39,6 +39,8 @@ namespace Game.Incidents
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
 		public int MilitaryPriority { get; set; }
+		public int LawfulChaoticAlignmentAxis { get; set; }
+		public int GoodEvilAlignmentAxis { get; set; }
 		public List<IIncidentContext> FactionsWithinInteractionRange => GetFactionsWithinInteractionRange();
 		public List<IIncidentContext> FactionsAtWarWith { get; set; }
 
