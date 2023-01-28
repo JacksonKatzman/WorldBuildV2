@@ -1,4 +1,5 @@
-﻿using Game.IO;
+﻿using Game.Creatures;
+using Game.IO;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace Game.Simulation
 		public List<AdventureEncounter> availableEncounters;
 		public List<AdventureEncounter> usedEncounters;
 
+		public List<MonsterData> monsterData;
+
 		public AdventureService()
 		{
 			Setup();
@@ -39,11 +42,16 @@ namespace Game.Simulation
 			evergreenEncounters = new List<AdventureEncounter>();
 			availableEncounters = new List<AdventureEncounter>();
 			usedEncounters = new List<AdventureEncounter>();
+			monsterData = new List<MonsterData>();
 
-			var path = "ScriptableObjects/Encounters";
+			var encountersPath = "ScriptableObjects/Encounters";
 
-			evergreenEncounters.AddRange(Resources.LoadAll(path, typeof(AdventureEncounter)).Cast<AdventureEncounter>().ToList());
+			evergreenEncounters.AddRange(Resources.LoadAll(encountersPath, typeof(AdventureEncounter)).Cast<AdventureEncounter>().ToList());
 			OutputLogger.Log(string.Format("{0} encounters loaded.", evergreenEncounters.Count));
+
+			var monstersPath = "ScriptableObjects/Monsters";
+			monsterData.AddRange(Resources.LoadAll(monstersPath, typeof(MonsterData)).Cast<MonsterData>().ToList());
+			OutputLogger.Log(string.Format("{0} monsterss loaded.", monsterData.Count));
 		}
 	}
 }

@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Game.Incidents
 {
 	public class IncidentActionHandlerContainer
 	{
+		[TextArea(4,10)]
 		public string incidentLog;
 		[ShowInInspector, ListDrawerSettings(CustomAddFunction = "AddNewActionContainer"), HideReferenceObjectPicker]
 		public List<IncidentActionHandler> Actions { get; set; }

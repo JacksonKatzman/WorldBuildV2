@@ -18,8 +18,6 @@ namespace Game.Incidents
 
 		[ShowInInspector, PropertyOrder(-1), ShowIf("@this.ShowFactionBasedProperties")]
 		public FactionCellLocationMethod FactionCellLocationMethod { get; set; }
-		//[ValueDropdown("GetFactionProperties")]
-		//public string faction;
 
 		[ShowIf("@this.ShowFactionBasedProperties")]
 		public ContextualIncidentActionField<Faction> relatedFaction;
