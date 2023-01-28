@@ -132,18 +132,7 @@ namespace Game.GUI.Wiki
 
 		private void AddReportToPage(IncidentWikiPage page, IncidentReport report)
 		{
-			var textLine = report.ReportLog;
-			var matches = Regex.Matches(textLine, @"\{(\d+)\}");
-
-			foreach (Match match in matches)
-			{
-				var matchString = match.Value;
-				var linkedContext = report.Contexts[matchString];
-				var linkString = string.Format("<link=\"{0}\">{1}</link>", linkedContext.ID, linkedContext.Name);
-				textLine = textLine.Replace(matchString, linkString);
-			}
-
-			page.wikiText.text += textLine;
+			page.wikiText.text += report.GenerateLinkedLog();
 			page.wikiText.text += "\n";
 		}
 	}
