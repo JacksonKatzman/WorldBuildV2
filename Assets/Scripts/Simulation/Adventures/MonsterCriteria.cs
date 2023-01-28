@@ -1,4 +1,5 @@
-﻿using Game.Enums;
+﻿using Game.Creatures;
+using Game.Enums;
 using Game.Incidents;
 using Sirenix.OdinInspector;
 using System;
@@ -25,6 +26,19 @@ namespace Game.Simulation
 			allowedSizes = new List<CreatureSize>();
 			allowedTypes = new List<CreatureType>();
 			allowedAlignments = new List<CreatureAlignment>();
+		}
+
+		public MonsterData GetMonsterData()
+		{
+			var candidates = AdventureService.Instance.monsterData
+				.Where(x => x.legendary == isLegendary)
+				.Where(x => x.landDwelling == isLandDwelling)
+				.Where(x => allowedSizes.Contains(x.size))
+				.Where(x => allowedTypes.Contains(x.type))
+				.Where(x => allowedAlignments.Contains(x.alignment))
+				.ToList();
+
+			return SimRandom.RandomEntryFromList(candidates);
 		}
 
 		private IEnumerable<CreatureSize> GetCreatureSizes()

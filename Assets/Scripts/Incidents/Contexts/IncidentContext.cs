@@ -37,15 +37,9 @@ namespace Game.Incidents
 			}
 		}
 
-		virtual public void UpdateContext()
-		{
+		abstract public void UpdateContext();
 
-		}
-
-		virtual public void DeployContext()
-		{
-
-		}
+		abstract public void DeployContext();
 
 		abstract public void Die();
 

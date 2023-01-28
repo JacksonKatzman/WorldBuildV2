@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Person : IncidentContext, IFactionAffiliated, IInventoryAffiliated
+	public class Person : IncidentContext, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated
 	{
 		public Person() { }
 		public Person(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
@@ -66,6 +66,9 @@ namespace Game.Incidents
 		public List<Person> Parents { get; set; }
 		public List<Person> Spouses { get; set; }
 		public List<Person> Children { get; set; }
+
+		public int LawfulChaoticAlignmentAxis { get; set; }
+		public int GoodEvilAlignmentAxis { get; set; }
 
 		private string name;
 		private Action OnDeathAction;
