@@ -18,6 +18,12 @@ namespace Game.Incidents
 			this.dataBlock = dataBlock;
 		}
 
+		public GreatMonster(MonsterData dataBlock, Person person) : this(dataBlock)
+		{
+			Name = person.Name;
+			person.Die();
+		}
+
 		public override void DeployContext()
 		{
 

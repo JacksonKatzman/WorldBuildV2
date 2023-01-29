@@ -26,7 +26,7 @@
             "min": 0,
             "max": 20,
             "constant": 0,
-            "Value": 18,
+            "Value": 15,
             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
           },
           "subexpressions": null,
@@ -50,7 +50,7 @@
             "min": 0,
             "max": 20,
             "constant": 0,
-            "Value": 18,
+            "Value": 1,
             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
           },
           "subexpressions": null,
@@ -83,6 +83,8 @@
           "incidentAction": {
             "$id": "10",
             "$type": "Game.Incidents.GetOrCreateGreatMonsterAction, Assembly-CSharp",
+            "useSpecificMonster": false,
+            "monster": null,
             "criteria": {
               "$id": "11",
               "$type": "Game.Simulation.MonsterCriteria, Assembly-CSharp",
@@ -120,10 +122,31 @@
               "Context": null,
               "IsHistorical": false
             },
+            "transformPerson": false,
+            "personToTransform": {
+              "$id": "12",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Person, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": null,
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "previousField": null,
+              "previousFieldID": -1,
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "ActionFieldID": 0,
+              "NameID": null,
+              "ActionFieldIDString": "None",
+              "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
             "findFirst": false,
             "allowCreate": true,
             "actionField": {
-              "$id": "12",
+              "$id": "13",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.GreatMonster, Assembly-CSharp]], Assembly-CSharp",
               "parentType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
