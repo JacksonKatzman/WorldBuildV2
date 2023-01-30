@@ -49,6 +49,7 @@ namespace Game.Incidents
         public static List<IContextModifierCalculator> calculators = new List<IContextModifierCalculator>();
         public static List<IncidentActionHandlerContainer> handlerContainers = new List<IncidentActionHandlerContainer>();
         public static Dictionary<int, IIncidentActionField> updates = new Dictionary<int, IIncidentActionField>();
+        public static List<int> removedIDs = new List<int>();
 
 		[ShowIf("@this.modeChosen == true"), ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type"), PropertySpace(SpaceBefore = 30, SpaceAfter = 20)]
         public Type incidentContextType;
@@ -130,12 +131,6 @@ namespace Game.Incidents
             {
                 updates.Add(oldID, actionField);
             }
-            /*
-            foreach(var container in handlerContainers)
-			{
-                container.incidentLog = Regex.Replace(container.incidentLog, @"\{" + oldID + @"\}", @"{replace" + newID + @"}");
-			}
-            */
 		}
 
         private static void CompleteLogIDUpdate()
@@ -143,6 +138,11 @@ namespace Game.Incidents
             foreach(var field in actionFields)
 			{
                 var prev = field.PreviousFieldID;
+                if(removedIDs.Contains(prev))
+				{
+                    field.PreviousFieldID = -1;
+                    field.PreviousField = "REMOVED";
+                }
                 if(updates.ContainsKey(prev))
 				{
                     field.PreviousFieldID = updates[prev].ActionFieldID;
@@ -161,7 +161,9 @@ namespace Game.Incidents
                     }
                     container.incidentLog = Regex.Replace(container.incidentLog, @"{replace", @"{");
                 }
-            }        
+            }
+
+            removedIDs.Clear();
         }
 
 		private static void UpdateMainContextActionFieldIDs(ref int startingValue)

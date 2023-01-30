@@ -10,7 +10,7 @@ namespace Game.Incidents
 	{
 		[TextArea(4,10)]
 		public string incidentLog;
-		[ShowInInspector, ListDrawerSettings(CustomAddFunction = "AddNewActionContainer"), HideReferenceObjectPicker]
+		[ShowInInspector, ListDrawerSettings(CustomAddFunction = "AddNewActionContainer", CustomRemoveIndexFunction = "RemoveActionContainer"), HideReferenceObjectPicker]
 		public List<IncidentActionHandler> Actions { get; set; }
 		[ShowInInspector, ListDrawerSettings(CustomAddFunction = "AddNewContextDeployer"), HideReferenceObjectPicker]
 		public List<IContextDeployer> Deployers { get; set; }
@@ -125,6 +125,13 @@ namespace Game.Incidents
 		private void AddNewActionContainer()
 		{
 			Actions.Add(new IncidentActionHandler());
+		}
+
+		private void RemoveActionContainer(int i)
+		{
+			IncidentEditorWindow.removedIDs.AddRange(Actions[i].incidentAction.GetAllActionFieldIDs());
+			Actions.RemoveAt(i);
+			IncidentEditorWindow.UpdateActionFieldIDs();
 		}
 
 		private void AddNewContextDeployer()

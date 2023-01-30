@@ -222,6 +222,42 @@ namespace Game.Incidents
 			return false;
 		}
 
+		public List<int> GetAllActionFieldIDs()
+		{
+			var matchingFields = GetContexualActionFields();
+			var matchingLists = GetCollectionsOfActionFields();
+			var matchingContainers = GetActionFieldContainers();
+
+			var ids = new List<int>();
+
+			foreach (var f in matchingFields)
+			{
+				var fa = f.GetValue(this) as IIncidentActionField;
+				ids.Add(fa.ActionFieldID);
+			}
+
+			foreach (var l in matchingLists)
+			{
+				var list = l.GetValue(this) as List<IncidentActionFieldContainer>;
+				foreach (var f in list)
+				{
+					ids.Add(f.actionField.ActionFieldID);
+				}
+			}
+
+			foreach (var c in matchingContainers)
+			{
+				var container = c.GetValue(this) as IncidentActionFieldContainer;
+				if (container.contextType != null)
+				{
+					var fa = container.actionField;
+					ids.Add(fa.ActionFieldID);
+				}
+			}
+
+			return ids;
+		}
+
 		private IEnumerable<FieldInfo> GetContexualActionFields()
 		{
 			return ActionFieldReflection.GetGenericFieldsByType(this.GetType(),

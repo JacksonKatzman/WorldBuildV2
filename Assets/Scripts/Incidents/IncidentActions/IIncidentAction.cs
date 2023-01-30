@@ -10,6 +10,7 @@ namespace Game.Incidents
 		void UpdateActionFieldIDs(ref int startingValue);
 		void AddContext(ref IncidentReport report);
 		bool GetContextField(int id, out IIncidentActionField contextField);
+		List<int> GetAllActionFieldIDs();
 		void UpdateEditor();
 	}
 }

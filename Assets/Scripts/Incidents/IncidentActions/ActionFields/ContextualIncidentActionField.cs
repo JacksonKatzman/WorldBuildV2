@@ -28,7 +28,7 @@ namespace Game.Incidents
 		[ShowIf("@this.ShowStandardCriteria"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
 		public List<IncidentActionFieldCriteria> criteria;
 
-		[ShowInInspector, ShowIf("Method", ActionFieldRetrievalMethod.From_Previous), ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID")]
+		[ShowInInspector, ShowIf("Method", ActionFieldRetrievalMethod.From_Previous), ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID"), GUIColor("GetLabelColor")]
 		public string PreviousField { get; set; }
 
 		[HideInInspector]
@@ -165,6 +165,11 @@ namespace Game.Incidents
 		private void SetPreviousFieldID()
 		{
 			PreviousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == PreviousField).ActionFieldID;
+		}
+
+		private Color GetLabelColor()
+		{
+			return PreviousFieldID == -1 ? Color.red : Color.green;
 		}
 	}
 }
