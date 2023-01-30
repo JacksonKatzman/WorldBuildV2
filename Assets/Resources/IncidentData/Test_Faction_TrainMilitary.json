@@ -26,7 +26,7 @@
             "min": 0,
             "max": 20,
             "constant": 0,
-            "Value": 14,
+            "Value": 3,
             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
           },
           "subexpressions": null,
@@ -71,7 +71,7 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 11,
+                    "Value": 8,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
@@ -95,7 +95,7 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 2,
+                    "Value": 3,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
@@ -139,11 +139,11 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": []
               },
-              "previousField": "{0} - Original Context",
-              "previousFieldID": 0,
               "value": null,
               "delayedValue": null,
               "Method": 1,
+              "PreviousField": "{0} - Original Context",
+              "PreviousFieldID": 0,
               "ActionFieldID": 1,
               "NameID": "{1}:ModifyFactionAction:contextToModify",
               "ActionFieldIDString": "{1}",
@@ -181,7 +181,7 @@
                             "min": 2,
                             "max": 5,
                             "constant": 0,
-                            "Value": 4,
+                            "Value": 2,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
@@ -192,6 +192,7 @@
                         }
                       ]
                     },
+                    "clamped": true,
                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                     "ID": 2,

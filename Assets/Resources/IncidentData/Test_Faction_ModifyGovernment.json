@@ -44,11 +44,11 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": []
               },
-              "previousField": "{0} - Original Context",
-              "previousFieldID": 0,
               "value": null,
               "delayedValue": null,
               "Method": 1,
+              "PreviousField": "{0} - Original Context",
+              "PreviousFieldID": 0,
               "ActionFieldID": 1,
               "NameID": "{1}:ModifyFactionOrganizationAction:faction",
               "ActionFieldIDString": "{1}",
