@@ -43,7 +43,7 @@ namespace Game.Incidents
 
 			foreach (Match match in matches)
 			{
-				var groupType = match.Groups[0].Value.ToString();
+				var groupType = match.Groups[1].Value.ToString();
 				if(Enum.TryParse<CreatureAlignment>(groupType, out CreatureAlignment result))
 				{
 					var matchString = match.Value;
