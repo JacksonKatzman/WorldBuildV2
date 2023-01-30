@@ -3,7 +3,7 @@ using System.IO;
 using Game.Terrain;
 using Newtonsoft.Json;
 
-namespace Game.IO
+namespace Game.Utilities
 {
 	public static class SaveUtilities
 	{
@@ -44,8 +44,8 @@ namespace Game.IO
 
 		public static void CreateMapDirectories(string mapName)
 		{
-			Directory.CreateDirectory(SaveUtilities.GetHexMapDataPath(mapName));
-			Directory.CreateDirectory(SaveUtilities.GetSimCellsPath(mapName));
+			Directory.CreateDirectory(GetHexMapDataPath(mapName));
+			Directory.CreateDirectory(GetSimCellsPath(mapName));
 		}
 
 		public static void SerializeSave<T>(T item, string path)
@@ -62,7 +62,7 @@ namespace Game.IO
 			var text = File.ReadAllText(file);
 			if (text.Length > 0)
 			{
-				return JsonConvert.DeserializeObject<T>(text, SaveUtilities.SERIALIZER_SETTINGS);
+				return JsonConvert.DeserializeObject<T>(text, SERIALIZER_SETTINGS);
 			}
 
 			return default;

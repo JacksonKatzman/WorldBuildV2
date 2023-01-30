@@ -38,7 +38,10 @@ namespace Game.Incidents
 		public override void UpdateEditor()
 		{
 			base.UpdateEditor();
-            modifiers = new List<ContextModifier<T>>();
+			if (modifiers == null)
+			{
+				modifiers = new List<ContextModifier<T>>();
+			}
 		}
 
 		private void AddNewModifier()

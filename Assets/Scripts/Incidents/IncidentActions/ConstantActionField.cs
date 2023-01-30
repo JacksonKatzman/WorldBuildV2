@@ -9,11 +9,14 @@ namespace Game.Incidents
 		public string NameID { get; set; }
 
 		public Type ContextType { get; set; }
+		public int PreviousFieldID { get; set; }
+		public string PreviousField { get; set; }
 
 		private IIncidentContext context;
 
 		public ConstantActionField(Type contextType)
 		{
+			PreviousFieldID = -1;
 			ContextType = contextType;
 			ActionFieldID = 0;
 			NameID = ActionFieldIDString + " - Original Context";

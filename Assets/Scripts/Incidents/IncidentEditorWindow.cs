@@ -1,4 +1,4 @@
-﻿using Game.IO;
+﻿using Game.Utilities;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -46,6 +47,9 @@ namespace Game.Incidents
         public static Dictionary<string, Type> Properties => properties;
         public static List<IIncidentActionField> actionFields = new List<IIncidentActionField>();
         public static List<IContextModifierCalculator> calculators = new List<IContextModifierCalculator>();
+        public static List<IncidentActionHandlerContainer> handlerContainers = new List<IncidentActionHandlerContainer>();
+        public static Dictionary<int, IIncidentActionField> updates = new Dictionary<int, IIncidentActionField>();
+        public static List<int> removedIDs = new List<int>();
 
 		[ShowIf("@this.modeChosen == true"), ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type"), PropertySpace(SpaceBefore = 30, SpaceAfter = 20)]
         public Type incidentContextType;
@@ -111,12 +115,56 @@ namespace Game.Incidents
 
         public static void UpdateActionFieldIDs()
 		{
+            updates.Clear();
+            handlerContainers.Clear();
             actionFields.Clear();
             calculators.Clear();
             numActionFields = 0;
             UpdateMainContextActionFieldIDs(ref numActionFields);
             actionHandler.UpdateActionFieldIDs(ref numActionFields);
+            CompleteLogIDUpdate();
 		}
+
+        public static void UpdateLogIDs(int oldID, IIncidentActionField actionField)
+		{
+            if (!updates.ContainsKey(oldID))
+            {
+                updates.Add(oldID, actionField);
+            }
+		}
+
+        private static void CompleteLogIDUpdate()
+		{
+            foreach(var field in actionFields)
+			{
+                var prev = field.PreviousFieldID;
+                if(removedIDs.Contains(prev))
+				{
+                    field.PreviousFieldID = -1;
+                    field.PreviousField = "REMOVED";
+                }
+                if(updates.ContainsKey(prev))
+				{
+                    field.PreviousFieldID = updates[prev].ActionFieldID;
+                    field.PreviousField = updates[prev].NameID;
+				}
+			}
+            
+            foreach (var container in handlerContainers)
+            {
+                if (container.incidentLog != null)
+                {
+                    foreach (var pair in updates)
+                    {
+                        container.incidentLog = Regex.Replace(container.incidentLog, @"\{" + pair.Key + @"\}", @"{replace" + pair.Value.ActionFieldID + @"}");
+                        container.UpdatedDeployableContextIDs(updates);
+                    }
+                    container.incidentLog = Regex.Replace(container.incidentLog, @"{replace", @"{");
+                }
+            }
+
+            removedIDs.Clear();
+        }
 
 		private static void UpdateMainContextActionFieldIDs(ref int startingValue)
 		{

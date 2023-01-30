@@ -127,11 +127,11 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": []
               },
-              "previousField": "{0} - Original Context",
-              "previousFieldID": 0,
               "value": null,
               "delayedValue": null,
               "Method": 1,
+              "PreviousField": "{0} - Original Context",
+              "PreviousFieldID": 0,
               "ActionFieldID": 1,
               "NameID": "{1}:ChangeWarStateAction:factionOne",
               "ActionFieldIDString": "{1}",
@@ -164,11 +164,11 @@
                   }
                 ]
               },
-              "previousField": "{2}:GetOrCreateFactionAction:result",
-              "previousFieldID": 2,
               "value": null,
               "delayedValue": null,
               "Method": 0,
+              "PreviousField": "{2}:GetOrCreateFactionAction:result",
+              "PreviousFieldID": 2,
               "ActionFieldID": 2,
               "NameID": "{2}:ChangeWarStateAction:factionTwo",
               "ActionFieldIDString": "{2}",

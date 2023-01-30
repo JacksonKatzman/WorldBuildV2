@@ -44,11 +44,11 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": []
               },
-              "previousField": null,
-              "previousFieldID": -1,
               "value": null,
               "delayedValue": null,
               "Method": 0,
+              "PreviousField": "{6}:GetOrCreateItemAction:creator",
+              "PreviousFieldID": 6,
               "ActionFieldID": 3,
               "NameID": "{3}:GetOrCreateCityAction:faction",
               "ActionFieldIDString": "{3}",
@@ -66,13 +66,13 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": []
               },
-              "previousField": null,
-              "previousFieldID": -1,
               "value": null,
               "delayedValue": null,
               "LocationFindMethod": 0,
               "FactionCellLocationMethod": 0,
               "Method": 0,
+              "PreviousField": "{6}:GetOrCreateItemAction:creator",
+              "PreviousFieldID": 6,
               "ActionFieldID": 5,
               "NameID": "{5}:GetOrCreateCityAction:location",
               "ActionFieldIDString": "{5}",
@@ -85,7 +85,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 3,
+              "Value": 16,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -95,7 +95,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 8,
+              "Value": 15,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "findFirst": true,
@@ -136,7 +136,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 15,
+                              "Value": 10,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "subexpressions": null,
@@ -175,11 +175,11 @@
                             "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                             "$values": []
                           },
-                          "previousField": "{2}:FactionBattleContext:defender",
-                          "previousFieldID": 2,
                           "value": null,
                           "delayedValue": null,
                           "Method": 1,
+                          "PreviousField": "{2}:FactionBattleContext:defender",
+                          "PreviousFieldID": 2,
                           "ActionFieldID": 0,
                           "NameID": null,
                           "ActionFieldIDString": "None",
@@ -196,11 +196,11 @@
                   }
                 ]
               },
-              "previousField": null,
-              "previousFieldID": -1,
               "value": null,
               "delayedValue": null,
               "Method": 0,
+              "PreviousField": "{6}:GetOrCreateItemAction:creator",
+              "PreviousFieldID": 6,
               "ActionFieldID": 4,
               "NameID": "{4}:GetOrCreateCityAction:actionField",
               "ActionFieldIDString": "{4}",
@@ -228,22 +228,43 @@
                   "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                   "$values": []
                 },
-                "previousField": "{4}:GetOrCreateCityAction:actionField",
-                "previousFieldID": 4,
                 "value": null,
                 "delayedValue": null,
                 "Method": 1,
-                "ActionFieldID": 7,
-                "NameID": "{7}:GetOrCreateItemAction:inventoryToAddTo",
-                "ActionFieldIDString": "{7}",
+                "PreviousField": "{4}:GetOrCreateCityAction:actionField",
+                "PreviousFieldID": 4,
+                "ActionFieldID": 8,
+                "NameID": "{8}:GetOrCreateItemAction:inventoryToAddTo",
+                "ActionFieldIDString": "{8}",
                 "ContextType": "Game.Incidents.City, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
               }
             },
             "itemType": "Game.Generators.Items.Trinket, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "createdByPerson": false,
+            "creator": {
+              "$id": "24",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Person, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": "{6}:GetOrCreateItemAction:creator",
+              "PreviousFieldID": 6,
+              "ActionFieldID": 6,
+              "NameID": "{6}:GetOrCreateItemAction:creator",
+              "ActionFieldIDString": "{6}",
+              "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
             "findFirst": true,
             "allowCreate": true,
             "actionField": {
-              "$id": "24",
+              "$id": "25",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Generators.Items.Item, Assembly-CSharp]], Assembly-CSharp",
               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -252,18 +273,18 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": [
                   {
-                    "$id": "25",
+                    "$id": "26",
                     "$type": "Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp",
                     "propertyName": "Inventory",
                     "evaluator": {
-                      "$id": "26",
+                      "$id": "27",
                       "$type": "Game.Incidents.InventoryEvaluator, Assembly-CSharp",
                       "compareTo": {
-                        "$id": "27",
+                        "$id": "28",
                         "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IInventoryAffiliated, Assembly-CSharp]], Assembly-CSharp",
                         "contextType": "Game.Incidents.City, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                         "actionField": {
-                          "$id": "28",
+                          "$id": "29",
                           "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.City, Assembly-CSharp]], Assembly-CSharp",
                           "parentType": null,
                           "AllowSelf": false,
@@ -272,11 +293,11 @@
                             "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                             "$values": []
                           },
-                          "previousField": "{4}:GetOrCreateCityAction:actionField",
-                          "previousFieldID": 4,
                           "value": null,
                           "delayedValue": null,
                           "Method": 1,
+                          "PreviousField": "{4}:GetOrCreateCityAction:actionField",
+                          "PreviousFieldID": 4,
                           "ActionFieldID": 0,
                           "NameID": null,
                           "ActionFieldIDString": "None",
@@ -293,37 +314,37 @@
                   }
                 ]
               },
-              "previousField": null,
-              "previousFieldID": -1,
               "value": null,
               "delayedValue": null,
               "Method": 0,
-              "ActionFieldID": 6,
-              "NameID": "{6}:GetOrCreateItemAction:actionField",
-              "ActionFieldIDString": "{6}",
+              "PreviousField": "{6}:GetOrCreateItemAction:creator",
+              "PreviousFieldID": 6,
+              "ActionFieldID": 7,
+              "NameID": "{7}:GetOrCreateItemAction:actionField",
+              "ActionFieldIDString": "{7}",
               "ContextType": "Game.Generators.Items.Item, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             }
           }
         },
         {
-          "$id": "29",
+          "$id": "30",
           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
           "incidentAction": {
-            "$id": "30",
+            "$id": "31",
             "$type": "Game.Incidents.BranchingAction, Assembly-CSharp",
             "branches": {
               "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionBranch, Assembly-CSharp]], mscorlib",
               "$values": [
                 {
-                  "$id": "31",
+                  "$id": "32",
                   "$type": "Game.Incidents.IncidentActionBranch, Assembly-CSharp",
                   "weightModifier": {
-                    "$id": "32",
+                    "$id": "33",
                     "$type": "Game.Incidents.IncidentActionBranchWeightModifier, Assembly-CSharp",
                     "advancedMode": false,
                     "baseWeight": 3,
                     "container": {
-                      "$id": "33",
+                      "$id": "34",
                       "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                       "contextType": null,
                       "actionField": null
@@ -331,20 +352,20 @@
                     "weight": null
                   },
                   "actionHandler": {
-                    "$id": "34",
+                    "$id": "35",
                     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
-                    "incidentLog": "{1} captures {6}.",
+                    "incidentLog": "{1} captures {7}.",
                     "Actions": {
                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
                       "$values": [
                         {
-                          "$id": "35",
+                          "$id": "36",
                           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
                           "incidentAction": {
-                            "$id": "36",
+                            "$id": "37",
                             "$type": "Game.Incidents.GetOrCreateCityAction, Assembly-CSharp",
                             "faction": {
-                              "$id": "37",
+                              "$id": "38",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -353,18 +374,18 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": null,
-                              "previousFieldID": -1,
                               "value": null,
                               "delayedValue": null,
                               "Method": 0,
-                              "ActionFieldID": 8,
-                              "NameID": "{8}:GetOrCreateCityAction:faction",
-                              "ActionFieldIDString": "{8}",
+                              "PreviousField": "{6}:GetOrCreateItemAction:creator",
+                              "PreviousFieldID": 6,
+                              "ActionFieldID": 9,
+                              "NameID": "{9}:GetOrCreateCityAction:faction",
+                              "ActionFieldIDString": "{9}",
                               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "location": {
-                              "$id": "38",
+                              "$id": "39",
                               "$type": "Game.Incidents.LocationActionField, Assembly-CSharp",
                               "relatedFaction": null,
                               "minDistanceFromCities": 0,
@@ -375,42 +396,42 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": null,
-                              "previousFieldID": -1,
                               "value": null,
                               "delayedValue": null,
                               "LocationFindMethod": 0,
                               "FactionCellLocationMethod": 0,
                               "Method": 0,
-                              "ActionFieldID": 10,
-                              "NameID": "{10}:GetOrCreateCityAction:location",
-                              "ActionFieldIDString": "{10}",
+                              "PreviousField": "{6}:GetOrCreateItemAction:creator",
+                              "PreviousFieldID": 6,
+                              "ActionFieldID": 11,
+                              "NameID": "{11}:GetOrCreateCityAction:location",
+                              "ActionFieldIDString": "{11}",
                               "ContextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "population": {
-                              "$id": "39",
-                              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
-                              "randomRange": true,
-                              "min": 0,
-                              "max": 20,
-                              "constant": 0,
-                              "Value": 7,
-                              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
-                            },
-                            "wealth": {
                               "$id": "40",
                               "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                               "randomRange": true,
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 12,
+                              "Value": 0,
+                              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                            },
+                            "wealth": {
+                              "$id": "41",
+                              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+                              "randomRange": true,
+                              "min": 0,
+                              "max": 20,
+                              "constant": 0,
+                              "Value": 19,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "findFirst": true,
                             "allowCreate": false,
                             "actionField": {
-                              "$id": "41",
+                              "$id": "42",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.City, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -419,18 +440,18 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": [
                                   {
-                                    "$id": "42",
+                                    "$id": "43",
                                     "$type": "Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp",
                                     "propertyName": "AffiliatedFaction",
                                     "evaluator": {
-                                      "$id": "43",
+                                      "$id": "44",
                                       "$type": "Game.Incidents.FactionEvaluator, Assembly-CSharp",
                                       "compareTo": {
-                                        "$id": "44",
+                                        "$id": "45",
                                         "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Assembly-CSharp]], Assembly-CSharp",
                                         "contextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                         "actionField": {
-                                          "$id": "45",
+                                          "$id": "46",
                                           "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                                           "parentType": null,
                                           "AllowSelf": false,
@@ -439,11 +460,11 @@
                                             "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                             "$values": []
                                           },
-                                          "previousField": "{1}:FactionBattleContext:attacker",
-                                          "previousFieldID": 1,
                                           "value": null,
                                           "delayedValue": null,
                                           "Method": 1,
+                                          "PreviousField": "{1}:FactionBattleContext:attacker",
+                                          "PreviousFieldID": 1,
                                           "ActionFieldID": 0,
                                           "NameID": null,
                                           "ActionFieldIDString": "None",
@@ -460,26 +481,26 @@
                                   }
                                 ]
                               },
-                              "previousField": null,
-                              "previousFieldID": -1,
                               "value": null,
                               "delayedValue": null,
                               "Method": 0,
-                              "ActionFieldID": 9,
-                              "NameID": "{9}:GetOrCreateCityAction:actionField",
-                              "ActionFieldIDString": "{9}",
+                              "PreviousField": "{6}:GetOrCreateItemAction:creator",
+                              "PreviousFieldID": 6,
+                              "ActionFieldID": 10,
+                              "NameID": "{10}:GetOrCreateCityAction:actionField",
+                              "ActionFieldIDString": "{10}",
                               "ContextType": "Game.Incidents.City, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             }
                           }
                         },
                         {
-                          "$id": "46",
+                          "$id": "47",
                           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
                           "incidentAction": {
-                            "$id": "47",
+                            "$id": "48",
                             "$type": "Game.Incidents.TradeItemsAction, Assembly-CSharp",
                             "itemField": {
-                              "$id": "48",
+                              "$id": "49",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Generators.Items.Item, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -488,22 +509,22 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": "{6}:GetOrCreateItemAction:actionField",
-                              "previousFieldID": 6,
                               "value": null,
                               "delayedValue": null,
                               "Method": 1,
-                              "ActionFieldID": 11,
-                              "NameID": "{11}:TradeItemsAction:itemField",
-                              "ActionFieldIDString": "{11}",
+                              "PreviousField": "{7}:GetOrCreateItemAction:actionField",
+                              "PreviousFieldID": 7,
+                              "ActionFieldID": 12,
+                              "NameID": "{12}:TradeItemsAction:itemField",
+                              "ActionFieldIDString": "{12}",
                               "ContextType": "Game.Generators.Items.Item, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "givingInventory": {
-                              "$id": "49",
+                              "$id": "50",
                               "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IInventoryAffiliated, Assembly-CSharp]], Assembly-CSharp",
                               "contextType": "Game.Incidents.City, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "actionField": {
-                                "$id": "50",
+                                "$id": "51",
                                 "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.City, Assembly-CSharp]], Assembly-CSharp",
                                 "parentType": null,
                                 "AllowSelf": false,
@@ -512,23 +533,23 @@
                                   "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                   "$values": []
                                 },
-                                "previousField": "{4}:GetOrCreateCityAction:actionField",
-                                "previousFieldID": 4,
                                 "value": null,
                                 "delayedValue": null,
                                 "Method": 1,
-                                "ActionFieldID": 12,
-                                "NameID": "{12}:TradeItemsAction:givingInventory",
-                                "ActionFieldIDString": "{12}",
+                                "PreviousField": "{4}:GetOrCreateCityAction:actionField",
+                                "PreviousFieldID": 4,
+                                "ActionFieldID": 13,
+                                "NameID": "{13}:TradeItemsAction:givingInventory",
+                                "ActionFieldIDString": "{13}",
                                 "ContextType": "Game.Incidents.City, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                               }
                             },
                             "receivingInventory": {
-                              "$id": "51",
+                              "$id": "52",
                               "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IInventoryAffiliated, Assembly-CSharp]], Assembly-CSharp",
                               "contextType": "Game.Incidents.City, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "actionField": {
-                                "$id": "52",
+                                "$id": "53",
                                 "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.City, Assembly-CSharp]], Assembly-CSharp",
                                 "parentType": null,
                                 "AllowSelf": false,
@@ -537,27 +558,27 @@
                                   "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                   "$values": []
                                 },
-                                "previousField": "{9}:GetOrCreateCityAction:actionField",
-                                "previousFieldID": 9,
                                 "value": null,
                                 "delayedValue": null,
                                 "Method": 1,
-                                "ActionFieldID": 13,
-                                "NameID": "{13}:TradeItemsAction:receivingInventory",
-                                "ActionFieldIDString": "{13}",
+                                "PreviousField": "{10}:GetOrCreateCityAction:actionField",
+                                "PreviousFieldID": 10,
+                                "ActionFieldID": 14,
+                                "NameID": "{14}:TradeItemsAction:receivingInventory",
+                                "ActionFieldIDString": "{14}",
                                 "ContextType": "Game.Incidents.City, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                               }
                             }
                           }
                         },
                         {
-                          "$id": "53",
+                          "$id": "54",
                           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
                           "incidentAction": {
-                            "$id": "54",
+                            "$id": "55",
                             "$type": "Game.Incidents.ModifyFactionAction, Assembly-CSharp",
                             "contextToModify": {
-                              "$id": "55",
+                              "$id": "56",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -566,27 +587,27 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": "{1}:FactionBattleContext:attacker",
-                              "previousFieldID": 1,
                               "value": null,
                               "delayedValue": null,
                               "Method": 1,
-                              "ActionFieldID": 14,
-                              "NameID": "{14}:ModifyFactionAction:contextToModify",
-                              "ActionFieldIDString": "{14}",
+                              "PreviousField": "{1}:FactionBattleContext:attacker",
+                              "PreviousFieldID": 1,
+                              "ActionFieldID": 15,
+                              "NameID": "{15}:ModifyFactionAction:contextToModify",
+                              "ActionFieldIDString": "{15}",
                               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "modifiers": {
                               "$type": "System.Collections.Generic.List`1[[Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp]], mscorlib",
                               "$values": [
                                 {
-                                  "$id": "56",
+                                  "$id": "57",
                                   "$type": "Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                                   "propertyName": "MilitaryPower",
                                   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                   "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                   "Calculator": {
-                                    "$id": "57",
+                                    "$id": "58",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
                                     "Operation": "-",
@@ -594,7 +615,7 @@
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
                                         {
-                                          "$id": "58",
+                                          "$id": "59",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": true,
                                           "ExpressionType": 2,
@@ -602,13 +623,13 @@
                                           "chosenMethod": null,
                                           "chosenProperty": "MilitaryPower",
                                           "range": {
-                                            "$id": "59",
+                                            "$id": "60",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 15,
+                                            "Value": 8,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -618,7 +639,7 @@
                                           "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                                         },
                                         {
-                                          "$id": "60",
+                                          "$id": "61",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": false,
                                           "ExpressionType": 3,
@@ -626,13 +647,13 @@
                                           "chosenMethod": null,
                                           "chosenProperty": null,
                                           "range": {
-                                            "$id": "61",
+                                            "$id": "62",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 8,
                                             "max": 11,
                                             "constant": 0,
-                                            "Value": 8,
+                                            "Value": 10,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -646,8 +667,8 @@
                                     "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                                    "ID": 15,
-                                    "NameID": "{EX 15}",
+                                    "ID": 16,
+                                    "NameID": "{EX 16}",
                                     "AllowMultipleExpressions": true
                                   }
                                 }
@@ -656,13 +677,13 @@
                           }
                         },
                         {
-                          "$id": "62",
+                          "$id": "63",
                           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
                           "incidentAction": {
-                            "$id": "63",
+                            "$id": "64",
                             "$type": "Game.Incidents.ModifyFactionAction, Assembly-CSharp",
                             "contextToModify": {
-                              "$id": "64",
+                              "$id": "65",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -671,27 +692,27 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": "{2}:FactionBattleContext:defender",
-                              "previousFieldID": 2,
                               "value": null,
                               "delayedValue": null,
                               "Method": 1,
-                              "ActionFieldID": 16,
-                              "NameID": "{16}:ModifyFactionAction:contextToModify",
-                              "ActionFieldIDString": "{16}",
+                              "PreviousField": "{2}:FactionBattleContext:defender",
+                              "PreviousFieldID": 2,
+                              "ActionFieldID": 17,
+                              "NameID": "{17}:ModifyFactionAction:contextToModify",
+                              "ActionFieldIDString": "{17}",
                               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "modifiers": {
                               "$type": "System.Collections.Generic.List`1[[Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp]], mscorlib",
                               "$values": [
                                 {
-                                  "$id": "65",
+                                  "$id": "66",
                                   "$type": "Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                                   "propertyName": "MilitaryPower",
                                   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                   "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                   "Calculator": {
-                                    "$id": "66",
+                                    "$id": "67",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
                                     "Operation": "-",
@@ -699,7 +720,7 @@
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
                                         {
-                                          "$id": "67",
+                                          "$id": "68",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": true,
                                           "ExpressionType": 2,
@@ -707,13 +728,13 @@
                                           "chosenMethod": null,
                                           "chosenProperty": "MilitaryPower",
                                           "range": {
-                                            "$id": "68",
+                                            "$id": "69",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 11,
+                                            "Value": 16,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -723,7 +744,7 @@
                                           "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                                         },
                                         {
-                                          "$id": "69",
+                                          "$id": "70",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": false,
                                           "ExpressionType": 3,
@@ -731,7 +752,7 @@
                                           "chosenMethod": null,
                                           "chosenProperty": null,
                                           "range": {
-                                            "$id": "70",
+                                            "$id": "71",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 7,
@@ -751,8 +772,8 @@
                                     "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                                    "ID": 17,
-                                    "NameID": "{EX 17}",
+                                    "ID": 18,
+                                    "NameID": "{EX 18}",
                                     "AllowMultipleExpressions": true
                                   }
                                 }
@@ -771,15 +792,15 @@
                   "ContextType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                 },
                 {
-                  "$id": "71",
+                  "$id": "72",
                   "$type": "Game.Incidents.IncidentActionBranch, Assembly-CSharp",
                   "weightModifier": {
-                    "$id": "72",
+                    "$id": "73",
                     "$type": "Game.Incidents.IncidentActionBranchWeightModifier, Assembly-CSharp",
                     "advancedMode": false,
                     "baseWeight": 5,
                     "container": {
-                      "$id": "73",
+                      "$id": "74",
                       "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                       "contextType": null,
                       "actionField": null
@@ -787,20 +808,20 @@
                     "weight": null
                   },
                   "actionHandler": {
-                    "$id": "74",
+                    "$id": "75",
                     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
                     "incidentLog": "{2} forces {1} to retreat.",
                     "Actions": {
                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
                       "$values": [
                         {
-                          "$id": "75",
+                          "$id": "76",
                           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
                           "incidentAction": {
-                            "$id": "76",
+                            "$id": "77",
                             "$type": "Game.Incidents.ModifyFactionAction, Assembly-CSharp",
                             "contextToModify": {
-                              "$id": "77",
+                              "$id": "78",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -809,27 +830,27 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": "{1}:FactionBattleContext:attacker",
-                              "previousFieldID": 1,
                               "value": null,
                               "delayedValue": null,
                               "Method": 1,
-                              "ActionFieldID": 18,
-                              "NameID": "{18}:ModifyFactionAction:contextToModify",
-                              "ActionFieldIDString": "{18}",
+                              "PreviousField": "{1}:FactionBattleContext:attacker",
+                              "PreviousFieldID": 1,
+                              "ActionFieldID": 19,
+                              "NameID": "{19}:ModifyFactionAction:contextToModify",
+                              "ActionFieldIDString": "{19}",
                               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "modifiers": {
                               "$type": "System.Collections.Generic.List`1[[Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp]], mscorlib",
                               "$values": [
                                 {
-                                  "$id": "78",
+                                  "$id": "79",
                                   "$type": "Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                                   "propertyName": "MilitaryPower",
                                   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                   "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                   "Calculator": {
-                                    "$id": "79",
+                                    "$id": "80",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
                                     "Operation": "-",
@@ -837,7 +858,7 @@
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
                                         {
-                                          "$id": "80",
+                                          "$id": "81",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": true,
                                           "ExpressionType": 2,
@@ -845,13 +866,13 @@
                                           "chosenMethod": null,
                                           "chosenProperty": "MilitaryPower",
                                           "range": {
-                                            "$id": "81",
+                                            "$id": "82",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 14,
+                                            "Value": 12,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -861,7 +882,7 @@
                                           "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                                         },
                                         {
-                                          "$id": "82",
+                                          "$id": "83",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": false,
                                           "ExpressionType": 3,
@@ -869,13 +890,13 @@
                                           "chosenMethod": null,
                                           "chosenProperty": null,
                                           "range": {
-                                            "$id": "83",
+                                            "$id": "84",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 6,
                                             "max": 8,
                                             "constant": 0,
-                                            "Value": 7,
+                                            "Value": 6,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -889,8 +910,8 @@
                                     "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                                    "ID": 19,
-                                    "NameID": "{EX 19}",
+                                    "ID": 20,
+                                    "NameID": "{EX 20}",
                                     "AllowMultipleExpressions": true
                                   }
                                 }
@@ -899,13 +920,13 @@
                           }
                         },
                         {
-                          "$id": "84",
+                          "$id": "85",
                           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
                           "incidentAction": {
-                            "$id": "85",
+                            "$id": "86",
                             "$type": "Game.Incidents.ModifyFactionAction, Assembly-CSharp",
                             "contextToModify": {
-                              "$id": "86",
+                              "$id": "87",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -914,27 +935,27 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": "{2}:FactionBattleContext:defender",
-                              "previousFieldID": 2,
                               "value": null,
                               "delayedValue": null,
                               "Method": 1,
-                              "ActionFieldID": 20,
-                              "NameID": "{20}:ModifyFactionAction:contextToModify",
-                              "ActionFieldIDString": "{20}",
+                              "PreviousField": "{2}:FactionBattleContext:defender",
+                              "PreviousFieldID": 2,
+                              "ActionFieldID": 21,
+                              "NameID": "{21}:ModifyFactionAction:contextToModify",
+                              "ActionFieldIDString": "{21}",
                               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "modifiers": {
                               "$type": "System.Collections.Generic.List`1[[Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp]], mscorlib",
                               "$values": [
                                 {
-                                  "$id": "87",
+                                  "$id": "88",
                                   "$type": "Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                                   "propertyName": "MilitaryPower",
                                   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                   "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                   "Calculator": {
-                                    "$id": "88",
+                                    "$id": "89",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
                                     "Operation": "-",
@@ -942,7 +963,7 @@
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
                                         {
-                                          "$id": "89",
+                                          "$id": "90",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": true,
                                           "ExpressionType": 2,
@@ -950,13 +971,13 @@
                                           "chosenMethod": null,
                                           "chosenProperty": "MilitaryPower",
                                           "range": {
-                                            "$id": "90",
+                                            "$id": "91",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 3,
+                                            "Value": 9,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -966,7 +987,7 @@
                                           "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                                         },
                                         {
-                                          "$id": "91",
+                                          "$id": "92",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": false,
                                           "ExpressionType": 3,
@@ -974,7 +995,7 @@
                                           "chosenMethod": null,
                                           "chosenProperty": null,
                                           "range": {
-                                            "$id": "92",
+                                            "$id": "93",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 10,
@@ -994,8 +1015,8 @@
                                     "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                                    "ID": 21,
-                                    "NameID": "{EX 21}",
+                                    "ID": 22,
+                                    "NameID": "{EX 22}",
                                     "AllowMultipleExpressions": true
                                   }
                                 }
@@ -1014,15 +1035,15 @@
                   "ContextType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                 },
                 {
-                  "$id": "93",
+                  "$id": "94",
                   "$type": "Game.Incidents.IncidentActionBranch, Assembly-CSharp",
                   "weightModifier": {
-                    "$id": "94",
+                    "$id": "95",
                     "$type": "Game.Incidents.IncidentActionBranchWeightModifier, Assembly-CSharp",
                     "advancedMode": false,
                     "baseWeight": 1,
                     "container": {
-                      "$id": "95",
+                      "$id": "96",
                       "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                       "contextType": null,
                       "actionField": null
@@ -1030,23 +1051,23 @@
                     "weight": null
                   },
                   "actionHandler": {
-                    "$id": "96",
+                    "$id": "97",
                     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
-                    "incidentLog": "Both forces retreat and {6} is lost.",
+                    "incidentLog": "Both forces retreat and {7} is lost.",
                     "Actions": {
                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
                       "$values": [
                         {
-                          "$id": "97",
+                          "$id": "98",
                           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
                           "incidentAction": {
-                            "$id": "98",
+                            "$id": "99",
                             "$type": "Game.Incidents.GetOrCreateLandmarkAction, Assembly-CSharp",
                             "location": {
-                              "$id": "99",
+                              "$id": "100",
                               "$type": "Game.Incidents.LocationActionField, Assembly-CSharp",
                               "relatedFaction": {
-                                "$id": "100",
+                                "$id": "101",
                                 "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                                 "parentType": null,
                                 "AllowSelf": false,
@@ -1055,11 +1076,11 @@
                                   "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                   "$values": []
                                 },
-                                "previousField": "{2}:FactionBattleContext:defender",
-                                "previousFieldID": 2,
                                 "value": null,
                                 "delayedValue": null,
                                 "Method": 1,
+                                "PreviousField": "{2}:FactionBattleContext:defender",
+                                "PreviousFieldID": 2,
                                 "ActionFieldID": 0,
                                 "NameID": null,
                                 "ActionFieldIDString": "None",
@@ -1073,22 +1094,22 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": null,
-                              "previousFieldID": -1,
                               "value": null,
                               "delayedValue": null,
                               "LocationFindMethod": 2,
                               "FactionCellLocationMethod": 0,
                               "Method": 0,
-                              "ActionFieldID": 23,
-                              "NameID": "{23}:GetOrCreateLandmarkAction:location",
-                              "ActionFieldIDString": "{23}",
+                              "PreviousField": "{6}:GetOrCreateItemAction:creator",
+                              "PreviousFieldID": 6,
+                              "ActionFieldID": 24,
+                              "NameID": "{24}:GetOrCreateLandmarkAction:location",
+                              "ActionFieldIDString": "{24}",
                               "ContextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "findFirst": false,
                             "allowCreate": true,
                             "actionField": {
-                              "$id": "101",
+                              "$id": "102",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Landmark, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -1097,26 +1118,26 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": null,
-                              "previousFieldID": -1,
                               "value": null,
                               "delayedValue": null,
                               "Method": 0,
-                              "ActionFieldID": 22,
-                              "NameID": "{22}:GetOrCreateLandmarkAction:actionField",
-                              "ActionFieldIDString": "{22}",
+                              "PreviousField": "{6}:GetOrCreateItemAction:creator",
+                              "PreviousFieldID": 6,
+                              "ActionFieldID": 23,
+                              "NameID": "{23}:GetOrCreateLandmarkAction:actionField",
+                              "ActionFieldIDString": "{23}",
                               "ContextType": "Game.Incidents.Landmark, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             }
                           }
                         },
                         {
-                          "$id": "102",
+                          "$id": "103",
                           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
                           "incidentAction": {
-                            "$id": "103",
+                            "$id": "104",
                             "$type": "Game.Incidents.TradeItemsAction, Assembly-CSharp",
                             "itemField": {
-                              "$id": "104",
+                              "$id": "105",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Generators.Items.Item, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -1125,22 +1146,22 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": "{6}:GetOrCreateItemAction:actionField",
-                              "previousFieldID": 6,
                               "value": null,
                               "delayedValue": null,
                               "Method": 1,
-                              "ActionFieldID": 24,
-                              "NameID": "{24}:TradeItemsAction:itemField",
-                              "ActionFieldIDString": "{24}",
+                              "PreviousField": "{7}:GetOrCreateItemAction:actionField",
+                              "PreviousFieldID": 7,
+                              "ActionFieldID": 25,
+                              "NameID": "{25}:TradeItemsAction:itemField",
+                              "ActionFieldIDString": "{25}",
                               "ContextType": "Game.Generators.Items.Item, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "givingInventory": {
-                              "$id": "105",
+                              "$id": "106",
                               "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IInventoryAffiliated, Assembly-CSharp]], Assembly-CSharp",
                               "contextType": "Game.Incidents.City, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "actionField": {
-                                "$id": "106",
+                                "$id": "107",
                                 "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.City, Assembly-CSharp]], Assembly-CSharp",
                                 "parentType": null,
                                 "AllowSelf": false,
@@ -1149,23 +1170,23 @@
                                   "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                   "$values": []
                                 },
-                                "previousField": "{4}:GetOrCreateCityAction:actionField",
-                                "previousFieldID": 4,
                                 "value": null,
                                 "delayedValue": null,
                                 "Method": 1,
-                                "ActionFieldID": 25,
-                                "NameID": "{25}:TradeItemsAction:givingInventory",
-                                "ActionFieldIDString": "{25}",
+                                "PreviousField": "{4}:GetOrCreateCityAction:actionField",
+                                "PreviousFieldID": 4,
+                                "ActionFieldID": 26,
+                                "NameID": "{26}:TradeItemsAction:givingInventory",
+                                "ActionFieldIDString": "{26}",
                                 "ContextType": "Game.Incidents.City, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                               }
                             },
                             "receivingInventory": {
-                              "$id": "107",
+                              "$id": "108",
                               "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IInventoryAffiliated, Assembly-CSharp]], Assembly-CSharp",
                               "contextType": "Game.Incidents.Landmark, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "actionField": {
-                                "$id": "108",
+                                "$id": "109",
                                 "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Landmark, Assembly-CSharp]], Assembly-CSharp",
                                 "parentType": null,
                                 "AllowSelf": false,
@@ -1174,27 +1195,27 @@
                                   "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                   "$values": []
                                 },
-                                "previousField": "{22}:GetOrCreateLandmarkAction:actionField",
-                                "previousFieldID": 22,
                                 "value": null,
                                 "delayedValue": null,
                                 "Method": 1,
-                                "ActionFieldID": 26,
-                                "NameID": "{26}:TradeItemsAction:receivingInventory",
-                                "ActionFieldIDString": "{26}",
+                                "PreviousField": "{23}:GetOrCreateLandmarkAction:actionField",
+                                "PreviousFieldID": 23,
+                                "ActionFieldID": 27,
+                                "NameID": "{27}:TradeItemsAction:receivingInventory",
+                                "ActionFieldIDString": "{27}",
                                 "ContextType": "Game.Incidents.Landmark, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                               }
                             }
                           }
                         },
                         {
-                          "$id": "109",
+                          "$id": "110",
                           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
                           "incidentAction": {
-                            "$id": "110",
+                            "$id": "111",
                             "$type": "Game.Incidents.ModifyFactionAction, Assembly-CSharp",
                             "contextToModify": {
-                              "$id": "111",
+                              "$id": "112",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -1203,27 +1224,27 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": "{1}:FactionBattleContext:attacker",
-                              "previousFieldID": 1,
                               "value": null,
                               "delayedValue": null,
                               "Method": 1,
-                              "ActionFieldID": 27,
-                              "NameID": "{27}:ModifyFactionAction:contextToModify",
-                              "ActionFieldIDString": "{27}",
+                              "PreviousField": "{1}:FactionBattleContext:attacker",
+                              "PreviousFieldID": 1,
+                              "ActionFieldID": 28,
+                              "NameID": "{28}:ModifyFactionAction:contextToModify",
+                              "ActionFieldIDString": "{28}",
                               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "modifiers": {
                               "$type": "System.Collections.Generic.List`1[[Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp]], mscorlib",
                               "$values": [
                                 {
-                                  "$id": "112",
+                                  "$id": "113",
                                   "$type": "Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                                   "propertyName": "MilitaryPower",
                                   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                   "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                   "Calculator": {
-                                    "$id": "113",
+                                    "$id": "114",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
                                     "Operation": "-",
@@ -1231,7 +1252,7 @@
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
                                         {
-                                          "$id": "114",
+                                          "$id": "115",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": true,
                                           "ExpressionType": 2,
@@ -1239,13 +1260,13 @@
                                           "chosenMethod": null,
                                           "chosenProperty": "MilitaryPower",
                                           "range": {
-                                            "$id": "115",
+                                            "$id": "116",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 14,
+                                            "Value": 1,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1255,7 +1276,7 @@
                                           "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                                         },
                                         {
-                                          "$id": "116",
+                                          "$id": "117",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": false,
                                           "ExpressionType": 3,
@@ -1263,7 +1284,7 @@
                                           "chosenMethod": null,
                                           "chosenProperty": null,
                                           "range": {
-                                            "$id": "117",
+                                            "$id": "118",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 7,
@@ -1283,8 +1304,8 @@
                                     "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                                    "ID": 28,
-                                    "NameID": "{EX 28}",
+                                    "ID": 29,
+                                    "NameID": "{EX 29}",
                                     "AllowMultipleExpressions": true
                                   }
                                 }
@@ -1293,13 +1314,13 @@
                           }
                         },
                         {
-                          "$id": "118",
+                          "$id": "119",
                           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
                           "incidentAction": {
-                            "$id": "119",
+                            "$id": "120",
                             "$type": "Game.Incidents.ModifyFactionAction, Assembly-CSharp",
                             "contextToModify": {
-                              "$id": "120",
+                              "$id": "121",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -1308,27 +1329,27 @@
                                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                                 "$values": []
                               },
-                              "previousField": "{2}:FactionBattleContext:defender",
-                              "previousFieldID": 2,
                               "value": null,
                               "delayedValue": null,
                               "Method": 1,
-                              "ActionFieldID": 29,
-                              "NameID": "{29}:ModifyFactionAction:contextToModify",
-                              "ActionFieldIDString": "{29}",
+                              "PreviousField": "{2}:FactionBattleContext:defender",
+                              "PreviousFieldID": 2,
+                              "ActionFieldID": 30,
+                              "NameID": "{30}:ModifyFactionAction:contextToModify",
+                              "ActionFieldIDString": "{30}",
                               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
                             "modifiers": {
                               "$type": "System.Collections.Generic.List`1[[Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp]], mscorlib",
                               "$values": [
                                 {
-                                  "$id": "121",
+                                  "$id": "122",
                                   "$type": "Game.Incidents.ContextModifier`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                                   "propertyName": "MilitaryPower",
                                   "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                                   "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                   "Calculator": {
-                                    "$id": "122",
+                                    "$id": "123",
                                     "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
                                     "propertyName": "MilitaryPower",
                                     "Operation": "-",
@@ -1336,7 +1357,7 @@
                                       "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
                                       "$values": [
                                         {
-                                          "$id": "123",
+                                          "$id": "124",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": true,
                                           "ExpressionType": 2,
@@ -1344,13 +1365,13 @@
                                           "chosenMethod": null,
                                           "chosenProperty": "MilitaryPower",
                                           "range": {
-                                            "$id": "124",
+                                            "$id": "125",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 16,
+                                            "Value": 5,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1360,7 +1381,7 @@
                                           "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                                         },
                                         {
-                                          "$id": "125",
+                                          "$id": "126",
                                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
                                           "hasNextOperator": false,
                                           "ExpressionType": 3,
@@ -1368,7 +1389,7 @@
                                           "chosenMethod": null,
                                           "chosenProperty": null,
                                           "range": {
-                                            "$id": "126",
+                                            "$id": "127",
                                             "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
                                             "randomRange": true,
                                             "min": 7,
@@ -1388,8 +1409,8 @@
                                     "clamped": true,
                                     "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                                     "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                                    "ID": 30,
-                                    "NameID": "{EX 30}",
+                                    "ID": 31,
+                                    "NameID": "{EX 31}",
                                     "AllowMultipleExpressions": true
                                   }
                                 }

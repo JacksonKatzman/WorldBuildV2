@@ -1,5 +1,6 @@
 ﻿using Game.Simulation;
 using Game.Terrain;
+using Game.Utilities;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,6 @@ namespace Game.Incidents
 
 		[ShowInInspector, PropertyOrder(-1), ShowIf("@this.ShowFactionBasedProperties")]
 		public FactionCellLocationMethod FactionCellLocationMethod { get; set; }
-		//[ValueDropdown("GetFactionProperties")]
-		//public string faction;
 
 		[ShowIf("@this.ShowFactionBasedProperties")]
 		public ContextualIncidentActionField<Faction> relatedFaction;

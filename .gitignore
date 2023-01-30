@@ -11,6 +11,10 @@
 /[Mm]emoryCaptures/
 
 # /[Aa]ssets/Resources/ScriptableObjects
+/[Aa]ssets/Notes
+/[Aa]ssets/Resources/*.txt
+/[Aa]ssets/Resources/*.csv
+/[Aa]ssets/Resources/*.txt.meta
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -74,3 +78,5 @@ crashlytics-build.properties
 /[Aa]ssets/_MicroSplatShaders/*
 /[Aa]ssets/VistaScreenshots/*
 /[Aa]ssets/MapMagic/*
+Assets/Resources/factionCSV.csv.meta
+Assets/Resources/incidentLog.txt.meta

@@ -2,18 +2,19 @@
 using Game.Generators.Items;
 using Game.Incidents;
 using Game.Simulation;
+using Game.Utilities;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Person : IncidentContext, IFactionAffiliated, IInventoryAffiliated
+	public class Person : IncidentContext, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated
 	{
 		public Person() { }
 		public Person(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
 			int religiousPriority, int militaryPriority, int influence, int wealth, int strength, int dexterity,
-			int constitution, int intelligence, int wisdom, int charisma, List<Person> parents = null, Inventory inventory = null)
+			int constitution, int intelligence, int wisdom, int charisma, bool worldPlayer, List<Person> parents = null, Inventory inventory = null)
 		{
 			Age = age;
 			Race = race;
@@ -31,6 +32,8 @@ namespace Game.Incidents
 			Intelligence = intelligence;
 			Wisdom = wisdom;
 			Charisma = charisma;
+			WorldPlayer = worldPlayer;
+			Spouses = new List<Person>();
 			Inventory = inventory == null ? new Inventory() : inventory;
 			Parents = parents == null ? new List<Person>() : parents;
 
@@ -67,24 +70,38 @@ namespace Game.Incidents
 		public List<Person> Spouses { get; set; }
 		public List<Person> Children { get; set; }
 
+		public int LawfulChaoticAlignmentAxis { get; set; }
+		public int GoodEvilAlignmentAxis { get; set; }
+
+		public bool WorldPlayer { get; set; }
+
 		private string name;
 		private Action OnDeathAction;
 		override public void DeployContext()
 		{
-			IncidentService.Instance.PerformIncidents(this);
+			if (NumIncidents > 0)
+			{
+				IncidentService.Instance.PerformIncidents(this);
+			}
+
 			CheckDestroyed();
 		}
 
 		override public void UpdateContext()
 		{
 			Age += 1;
-			NumIncidents = 1;
+			NumIncidents = WorldPlayer ? 1 : 0;
 		}
 
-		public Person CreateChild()
+		public Person CreateChild(bool majorPlayer)
 		{
 			var childAge = SimRandom.RandomRange(14, 35);
-			var child = new Person(childAge, Enums.Gender.ANY, Race, AffiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, new List<Person>() { this });
+			var parents = new List<Person>() { this };
+			if(Spouses.Count > 0)
+			{
+				parents.Add(SimRandom.RandomEntryFromList(Spouses));
+			}
+			var child = new Person(childAge, Enums.Gender.ANY, Race, AffiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, majorPlayer, parents);
 
 			return child;
 		}

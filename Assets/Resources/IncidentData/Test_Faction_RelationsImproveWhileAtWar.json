@@ -86,11 +86,11 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": []
               },
-              "previousField": "{0} - Original Context",
-              "previousFieldID": 0,
               "value": null,
               "delayedValue": null,
               "Method": 1,
+              "PreviousField": "{0} - Original Context",
+              "PreviousFieldID": 0,
               "ActionFieldID": 1,
               "NameID": "{1}:ChangeFactionRelationsAction:affectedFaction",
               "ActionFieldIDString": "{1}",
@@ -122,11 +122,11 @@
                   }
                 ]
               },
-              "previousField": "{2}:GetOrCreateFactionAction:result",
-              "previousFieldID": 2,
               "value": null,
               "delayedValue": null,
               "Method": 0,
+              "PreviousField": "{2}:GetOrCreateFactionAction:result",
+              "PreviousFieldID": 2,
               "ActionFieldID": 2,
               "NameID": "{2}:ChangeFactionRelationsAction:otherFaction",
               "ActionFieldIDString": "{2}",
@@ -139,7 +139,7 @@
               "min": 20,
               "max": 40,
               "constant": 120,
-              "Value": 22,
+              "Value": 35,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "set": false,

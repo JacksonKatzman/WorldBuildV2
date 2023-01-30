@@ -2,13 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Game.Incidents
 {
 	public class IncidentActionHandlerContainer
 	{
+		[TextArea(4,10)]
 		public string incidentLog;
-		[ShowInInspector, ListDrawerSettings(CustomAddFunction = "AddNewActionContainer"), HideReferenceObjectPicker]
+		[ShowInInspector, ListDrawerSettings(CustomAddFunction = "AddNewActionContainer", CustomRemoveIndexFunction = "RemoveActionContainer"), HideReferenceObjectPicker]
 		public List<IncidentActionHandler> Actions { get; set; }
 		[ShowInInspector, ListDrawerSettings(CustomAddFunction = "AddNewContextDeployer"), HideReferenceObjectPicker]
 		public List<IContextDeployer> Deployers { get; set; }
@@ -62,6 +64,7 @@ namespace Game.Incidents
 
 		public void UpdateActionFieldIDs(ref int startingValue)
 		{
+			IncidentEditorWindow.handlerContainers.Add(this);
 			if (startingValue == 0)
 			{
 				var constant = new ConstantActionField(ContextType);
@@ -111,9 +114,24 @@ namespace Game.Incidents
 			return null;
 		}
 
+		public void UpdatedDeployableContextIDs(Dictionary<int, IIncidentActionField> updates)
+		{
+			foreach(var deployer in Deployers)
+			{
+				deployer.UpdateContextIDs(updates);
+			}
+		}
+
 		private void AddNewActionContainer()
 		{
 			Actions.Add(new IncidentActionHandler());
+		}
+
+		private void RemoveActionContainer(int i)
+		{
+			IncidentEditorWindow.removedIDs.AddRange(Actions[i].incidentAction.GetAllActionFieldIDs());
+			Actions.RemoveAt(i);
+			IncidentEditorWindow.UpdateActionFieldIDs();
 		}
 
 		private void AddNewContextDeployer()

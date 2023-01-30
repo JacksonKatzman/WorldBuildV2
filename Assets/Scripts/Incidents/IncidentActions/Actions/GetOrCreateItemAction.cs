@@ -12,17 +12,32 @@ namespace Game.Incidents
 		public InterfacedIncidentActionFieldContainer<IInventoryAffiliated> inventoryToAddTo;
 		[ValueDropdown("GetFilteredTypeList"), ShowIf("@this.allowCreate")]
 		public Type itemType;
+		[ShowIf("@this.allowCreate")]
+		public bool createdByPerson;
+		[ShowIf("@this.createdByPerson")]
+		public ContextualIncidentActionField<Person> creator;
 
 		protected override Item MakeNew()
 		{
 			var newItem = (Item)Activator.CreateInstance(itemType);
 			((IInventoryAffiliated)inventoryToAddTo.actionField.GetFieldValue()).Inventory.Items.Add(newItem);
+
+			if(createdByPerson)
+			{
+				newItem.Name = creator.GetTypedFieldValue().AffiliatedFaction.namingTheme.GenerateItemName(newItem, creator.GetTypedFieldValue());
+			}
+			else
+			{
+				newItem.Name = "Unnamed Item";
+			}
+
 			return newItem;
 		}
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)
 		{
-			return inventoryToAddTo.actionField.CalculateField(context);
+			var check = createdByPerson ? inventoryToAddTo.actionField.CalculateField(context) && creator.CalculateField(context) : inventoryToAddTo.actionField.CalculateField(context);
+			return check;
 		}
 
 		private IEnumerable<Type> GetFilteredTypeList()

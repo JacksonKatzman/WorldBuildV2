@@ -26,7 +26,7 @@
             "min": 0,
             "max": 20,
             "constant": 0,
-            "Value": 10,
+            "Value": 11,
             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
           },
           "subexpressions": null,
@@ -50,7 +50,7 @@
             "min": 0,
             "max": 20,
             "constant": 0,
-            "Value": 7,
+            "Value": 1,
             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
           },
           "subexpressions": null,
@@ -95,7 +95,7 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 4,
+                    "Value": 3,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
@@ -119,7 +119,7 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 16,
+                    "Value": 11,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
@@ -143,7 +143,7 @@
   "ActionContainer": {
     "$id": "14",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
-    "incidentLog": "{0} built a new city: {3}.",
+    "incidentLog": "{0} built a new city: {2}.",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
       "$values": [
@@ -163,11 +163,11 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": []
               },
-              "previousField": "{0} - Original Context",
-              "previousFieldID": 0,
               "value": null,
               "delayedValue": null,
               "Method": 1,
+              "PreviousField": "{0} - Original Context",
+              "PreviousFieldID": 0,
               "ActionFieldID": 1,
               "NameID": "{1}:GetOrCreateCityAction:faction",
               "ActionFieldIDString": "{1}",
@@ -186,11 +186,11 @@
                   "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                   "$values": []
                 },
-                "previousField": "{0} - Original Context",
-                "previousFieldID": 0,
                 "value": null,
                 "delayedValue": null,
                 "Method": 1,
+                "PreviousField": "{0} - Original Context",
+                "PreviousFieldID": 0,
                 "ActionFieldID": 0,
                 "NameID": null,
                 "ActionFieldIDString": "None",
@@ -204,13 +204,13 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": []
               },
-              "previousField": null,
-              "previousFieldID": -1,
               "value": null,
               "delayedValue": null,
               "LocationFindMethod": 2,
               "FactionCellLocationMethod": 0,
               "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
               "ActionFieldID": 3,
               "NameID": "{3}:GetOrCreateCityAction:location",
               "ActionFieldIDString": "{3}",
@@ -223,7 +223,7 @@
               "min": 10,
               "max": 20,
               "constant": 0,
-              "Value": 16,
+              "Value": 18,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -233,7 +233,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 5,
+              "Value": 18,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "findFirst": false,
@@ -248,11 +248,11 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": []
               },
-              "previousField": null,
-              "previousFieldID": -1,
               "value": null,
               "delayedValue": null,
               "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
               "ActionFieldID": 2,
               "NameID": "{2}:GetOrCreateCityAction:actionField",
               "ActionFieldIDString": "{2}",

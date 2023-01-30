@@ -29,7 +29,7 @@ namespace Game.Incidents
 		public void UpdateHistoricalData()
 		{
 			var year = SimulationManager.Instance.world.Age;
-			//historicalData["Influence"].Add(new YearData<int>(SimulationManager.Instance.world.Age, Influence));
+
 			foreach (var property in propertyList)
 			{
 				var value = (int)property.GetValue(this);
@@ -37,15 +37,9 @@ namespace Game.Incidents
 			}
 		}
 
-		virtual public void UpdateContext()
-		{
+		abstract public void UpdateContext();
 
-		}
-
-		virtual public void DeployContext()
-		{
-
-		}
+		abstract public void DeployContext();
 
 		abstract public void Die();
 

@@ -1,4 +1,5 @@
-﻿using Game.Simulation;
+﻿using Game.Generators.Names;
+using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -22,10 +23,27 @@ namespace Game.Incidents
             specialFaction.ReligiousPriority = religiousPriority;
             specialFaction.MilitaryPriority = militaryPriority;
 
+            if (createdByPerson)
+            {
+                specialFaction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
+            }
+            else
+            {
+                specialFaction.namingTheme = FlavorService.Instance.GenerateMonsterFactionNamingTheme();
+            }
+
             return specialFaction;
         }
 
-		private IEnumerable<Type> GetFilteredTypeList()
+        protected override void Complete()
+        {
+            if (madeNew)
+            {
+                SimulationManager.Instance.world.AddContext(actionField.GetTypedFieldValue());
+            }
+        }
+
+        private IEnumerable<Type> GetFilteredTypeList()
         {
             var q = typeof(SpecialFaction).Assembly.GetTypes()
                 .Where(x => !x.IsAbstract)

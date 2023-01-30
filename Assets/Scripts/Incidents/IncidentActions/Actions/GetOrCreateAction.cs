@@ -8,9 +8,13 @@ namespace Game.Incidents
 		public bool findFirst = true;
 		public bool allowCreate = true;
 		protected bool madeNew;
+		protected bool OnlyCreate => !findFirst && allowCreate;
 
 		[ShowIf("@this.findFirst")]
 		public ContextualIncidentActionField<T> actionField;
+
+		[ReadOnly, ShowInInspector]
+		public string ResultID => actionField.ActionFieldIDString;
 
 		public override bool VerifyAction(IIncidentContext context)
 		{
@@ -18,15 +22,19 @@ namespace Game.Incidents
 			madeNew = false;
 			if(findFirst && !allowCreate)
 			{
-				verified = base.VerifyAction(context);
+				verified = actionField.CalculateField(context);
 			}
 			else if(findFirst && allowCreate)
 			{
-				verified = base.VerifyAction(context);
-				if(!verified)
+				verified = actionField.CalculateField(context);
+				if (!verified)
 				{
+					verified = VersionSpecificVerify(context);
+					if (!verified)
+					{
+						return false;
+					}
 					actionField.value = MakeNew();
-					verified = true;
 					madeNew = true;
 				}
 			}

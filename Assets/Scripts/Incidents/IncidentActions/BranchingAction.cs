@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Utilities;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 
@@ -49,7 +50,10 @@ namespace Game.Incidents
 		override public void UpdateEditor()
 		{
 			base.UpdateEditor();
-			branches = new List<IncidentActionBranch>();
+			if (branches == null)
+			{
+				branches = new List<IncidentActionBranch>();
+			}
 		}
 
 		override public void UpdateActionFieldIDs(ref int startingValue)

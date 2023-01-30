@@ -1,4 +1,5 @@
 ﻿using Game.Simulation;
+using Game.Utilities;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -27,11 +28,11 @@ namespace Game.Incidents
 		[ShowIf("@this.ShowStandardCriteria"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
 		public List<IncidentActionFieldCriteria> criteria;
 
-		[ShowIf("Method", ActionFieldRetrievalMethod.From_Previous), ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID")]
-		public string previousField;
+		[ShowInInspector, ShowIf("Method", ActionFieldRetrievalMethod.From_Previous), ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID"), GUIColor("GetLabelColor")]
+		public string PreviousField { get; set; }
 
 		[HideInInspector]
-		public int previousFieldID = -1;
+		public int PreviousFieldID { get; set; }
 
 		public int ActionFieldID { get; set; }
 
@@ -53,6 +54,8 @@ namespace Game.Incidents
 
 		public ContextualIncidentActionField() 
 		{
+			PreviousFieldID = -1;
+			ActionFieldID = -1;
 			RetrievalTypeChanged();
 		}
 		public ContextualIncidentActionField(Type parentType) : this()
@@ -135,7 +138,7 @@ namespace Game.Incidents
 
 		protected IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context)
 		{
-			return IncidentService.Instance.CurrentIncident.ActionContainer.GetContextFromActionFields(previousFieldID);
+			return IncidentService.Instance.CurrentIncident.ActionContainer.GetContextFromActionFields(PreviousFieldID);
 		}
 
 		private void RetrievalTypeChanged()
@@ -154,14 +157,32 @@ namespace Game.Incidents
 		virtual protected List<string> GetActionFieldIdentifiers()
 		{
 			var ids = new List<string>();
-			var matches = IncidentEditorWindow.actionFields.Where(x => x.ContextType == ContextType && x != this).ToList();
+			var matches = IncidentEditorWindow.actionFields.Where(x => (x.ContextType == ContextType || GetAllMatchingContextTypes(ContextType).Contains(x.ContextType)) && x != this).ToList();
 			matches.ForEach(x => ids.Add(x.NameID));
 			return ids;
 		}
 
 		private void SetPreviousFieldID()
 		{
-			previousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == previousField).ActionFieldID;
+			PreviousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == PreviousField).ActionFieldID;
+		}
+
+		private Color GetLabelColor()
+		{
+			return PreviousFieldID == -1 ? Color.red : Color.green;
+		}
+
+		private List<Type> GetAllMatchingContextTypes(Type type)
+		{
+			var q = type.Assembly.GetTypes()
+				.Where(x => !x.IsAbstract)                                          // Excludes BaseClass
+				.Where(x => !x.IsGenericTypeDefinition)                             // Excludes Generics
+				.Where(x => type.IsAssignableFrom(x));           // Excludes classes not inheriting from IIncidentContext
+
+			OutputLogger.Log("Type looked for:" + type.ToString());
+			var qList = q.ToList();
+
+			return qList;
 		}
 	}
 }
