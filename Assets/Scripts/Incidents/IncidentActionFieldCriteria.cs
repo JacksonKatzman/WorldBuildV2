@@ -11,7 +11,7 @@ namespace Game.Incidents
 
 		protected override bool IsValidPropertyType(Type type)
 		{
-            return base.IsValidPropertyType(type) || type == typeof(Faction) || type == typeof(Location) || type == typeof(Inventory) || type == typeof(Type);
+            return base.IsValidPropertyType(type) || type == typeof(Faction) || type == typeof(Location) || type == typeof(Inventory) || type == typeof(Type) || type.IsEnum;
         }
 
 		protected override void SetPrimitiveType()
@@ -41,6 +41,13 @@ namespace Game.Incidents
 			else if(PrimitiveType == typeof(List<IIncidentContext>))
 			{
 				evaluator = new ActionFieldListContainsEvaluator(propertyName, ContextType);
+			}
+			else if(PrimitiveType.IsEnum)
+			{
+				var dataType = new Type[] { PrimitiveType };
+				var genericBase = typeof(EnumEvaluator<>);
+				var combinedType = genericBase.MakeGenericType(dataType);
+				evaluator = (ICriteriaEvaluator)Activator.CreateInstance(combinedType, propertyName, ContextType);
 			}
 		}
 	}
