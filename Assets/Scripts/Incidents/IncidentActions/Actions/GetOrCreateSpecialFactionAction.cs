@@ -35,7 +35,15 @@ namespace Game.Incidents
             return specialFaction;
         }
 
-		private IEnumerable<Type> GetFilteredTypeList()
+        protected override void Complete()
+        {
+            if (madeNew)
+            {
+                SimulationManager.Instance.world.AddContext(actionField.GetTypedFieldValue());
+            }
+        }
+
+        private IEnumerable<Type> GetFilteredTypeList()
         {
             var q = typeof(SpecialFaction).Assembly.GetTypes()
                 .Where(x => !x.IsAbstract)

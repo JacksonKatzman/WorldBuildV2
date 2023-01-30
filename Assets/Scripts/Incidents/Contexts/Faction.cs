@@ -31,11 +31,11 @@ namespace Game.Incidents
 		public int Wealth { get; set; }
 		public int MilitaryPower { get; set; }
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
-		public int ControlledTiles => ControlledTileIndices.Count;
+		virtual public int ControlledTiles => ControlledTileIndices.Count;
 		public int InfluenceForNextTile => ControlledTiles * 2 + 1;
 		public List<City> Cities { get; set; }
 		public City Capitol => Cities.Count > 0? Cities[0] : null;
-		public int NumCities => Cities.Count;
+		virtual public int NumCities => Cities.Count;
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
@@ -99,7 +99,15 @@ namespace Game.Incidents
 
 		override public void DeployContext()
 		{
-			IncidentService.Instance.PerformIncidents((Faction)this);
+			if (NumIncidents > 0)
+			{
+				IncidentService.Instance.PerformIncidents((Faction)this);
+			}
+
+			if (CheckDestroyed())
+			{
+				Die();
+			}
 		}
 		override public void UpdateContext()
 		{
@@ -108,11 +116,6 @@ namespace Game.Incidents
 			UpdateInfluence();
 			UpdatePERMS();
 			UpdateNumIncidents();
-
-			if(CheckDestroyed())
-			{
-				Die();
-			}
 		}
 
 		override public void Die()

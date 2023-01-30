@@ -10,6 +10,9 @@ namespace Game.Incidents
 			{ new SpecialFactionBiasContainer(12, 10, 0, 0, typeof(MagicAcademy)) }
 		};
 
+		public override int ControlledTiles => 1;
+		public override int NumCities => 0;
+
 		public static Type CalculateFactionType(int political, int economic, int religious, int military)
 		{
 			var container = FactionTypes[0];
@@ -23,6 +26,11 @@ namespace Game.Incidents
 				}
 			}
 			return container.factionType;
+		}
+
+		override public void UpdateContext()
+		{
+			NumIncidents = 0;
 		}
 
 		private static int CalculateScores(SpecialFactionBiasContainer container, int political, int economic, int religious, int military)
