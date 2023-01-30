@@ -157,7 +157,7 @@ namespace Game.Incidents
 		virtual protected List<string> GetActionFieldIdentifiers()
 		{
 			var ids = new List<string>();
-			var matches = IncidentEditorWindow.actionFields.Where(x => x.ContextType == ContextType && x != this).ToList();
+			var matches = IncidentEditorWindow.actionFields.Where(x => (x.ContextType == ContextType || GetAllMatchingContextTypes(ContextType).Contains(x.ContextType)) && x != this).ToList();
 			matches.ForEach(x => ids.Add(x.NameID));
 			return ids;
 		}
@@ -170,6 +170,19 @@ namespace Game.Incidents
 		private Color GetLabelColor()
 		{
 			return PreviousFieldID == -1 ? Color.red : Color.green;
+		}
+
+		private List<Type> GetAllMatchingContextTypes(Type type)
+		{
+			var q = type.Assembly.GetTypes()
+				.Where(x => !x.IsAbstract)                                          // Excludes BaseClass
+				.Where(x => !x.IsGenericTypeDefinition)                             // Excludes Generics
+				.Where(x => type.IsAssignableFrom(x));           // Excludes classes not inheriting from IIncidentContext
+
+			OutputLogger.Log("Type looked for:" + type.ToString());
+			var qList = q.ToList();
+
+			return qList;
 		}
 	}
 }

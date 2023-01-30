@@ -13,6 +13,9 @@ namespace Game.Incidents
 		[ShowIf("@this.findFirst")]
 		public ContextualIncidentActionField<T> actionField;
 
+		[ReadOnly, ShowInInspector]
+		public string ResultID => actionField.ActionFieldIDString;
+
 		public override bool VerifyAction(IIncidentContext context)
 		{
 			var verified = false;

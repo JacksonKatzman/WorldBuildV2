@@ -13,6 +13,8 @@ namespace Game.Incidents
 		[ShowIf("@!this.useSpecificMonster")]
 		public MonsterCriteria criteria = new MonsterCriteria();
 
+		public ContextualIncidentActionField<Faction> faction;
+
 		[ShowIf("@this.OnlyCreate")]
 		public bool transformPerson;
 		[ShowIf("@this.transformPerson")]
@@ -20,14 +22,19 @@ namespace Game.Incidents
 		protected override GreatMonster MakeNew()
 		{
 			var monsterToCreate = useSpecificMonster ? monster : criteria.GetMonsterData();
-			return transformPerson ? new GreatMonster(monsterToCreate,  personToTransform.GetTypedFieldValue()) : new GreatMonster(monsterToCreate);
+			var createdMonster = transformPerson ? new GreatMonster(monsterToCreate, personToTransform.GetTypedFieldValue()) : new GreatMonster(monsterToCreate);
+			createdMonster.AffiliatedFaction = faction.GetTypedFieldValue();
+			createdMonster.Name = createdMonster.AffiliatedFaction.namingTheme.GenerateName(Enums.Gender.ANY);
+			
+			return createdMonster;
 		}
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)
 		{
-			if (OnlyCreate && transformPerson)
+			if (OnlyCreate)
 			{
-				return personToTransform.CalculateField(context);
+				var factionFound = faction.CalculateField(context);
+				return transformPerson ? factionFound && personToTransform.CalculateField(context) : factionFound;
 			}
 			else
 			{

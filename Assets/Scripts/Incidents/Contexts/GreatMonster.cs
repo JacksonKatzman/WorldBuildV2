@@ -4,13 +4,15 @@ using System;
 
 namespace Game.Incidents
 {
-	public class GreatMonster : IncidentContext, IInventoryAffiliated, IAlignmentAffiliated
+	public class GreatMonster : IncidentContext, IInventoryAffiliated, IAlignmentAffiliated, IFactionAffiliated
 	{
 		public MonsterData dataBlock;
 		public Inventory Inventory { get; private set; }
 
 		public int LawfulChaoticAlignmentAxis { get; set; }
 		public int GoodEvilAlignmentAxis { get; set; }
+
+		public Faction AffiliatedFaction { get; set; }
 
 		public GreatMonster() { }
 		public GreatMonster(MonsterData dataBlock)
