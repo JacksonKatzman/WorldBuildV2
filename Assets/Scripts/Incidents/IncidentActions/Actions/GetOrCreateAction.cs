@@ -19,15 +19,19 @@ namespace Game.Incidents
 			madeNew = false;
 			if(findFirst && !allowCreate)
 			{
-				verified = base.VerifyAction(context);
+				verified = actionField.CalculateField(context);
 			}
 			else if(findFirst && allowCreate)
 			{
-				verified = base.VerifyAction(context);
-				if(!verified)
+				verified = actionField.CalculateField(context);
+				if (!verified)
 				{
+					verified = VersionSpecificVerify(context);
+					if (!verified)
+					{
+						return false;
+					}
 					actionField.value = MakeNew();
-					verified = true;
 					madeNew = true;
 				}
 			}

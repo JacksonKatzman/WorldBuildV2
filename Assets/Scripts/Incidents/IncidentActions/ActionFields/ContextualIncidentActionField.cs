@@ -54,6 +54,7 @@ namespace Game.Incidents
 
 		public ContextualIncidentActionField() 
 		{
+			ActionFieldID = -1;
 			RetrievalTypeChanged();
 		}
 		public ContextualIncidentActionField(Type parentType) : this()

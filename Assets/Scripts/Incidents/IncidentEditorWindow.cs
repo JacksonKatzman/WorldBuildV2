@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -46,6 +47,7 @@ namespace Game.Incidents
         public static Dictionary<string, Type> Properties => properties;
         public static List<IIncidentActionField> actionFields = new List<IIncidentActionField>();
         public static List<IContextModifierCalculator> calculators = new List<IContextModifierCalculator>();
+        public static List<IncidentActionHandlerContainer> handlerContainers = new List<IncidentActionHandlerContainer>();
 
 		[ShowIf("@this.modeChosen == true"), ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type"), PropertySpace(SpaceBefore = 30, SpaceAfter = 20)]
         public Type incidentContextType;
@@ -111,12 +113,30 @@ namespace Game.Incidents
 
         public static void UpdateActionFieldIDs()
 		{
+            handlerContainers.Clear();
             actionFields.Clear();
             calculators.Clear();
             numActionFields = 0;
             UpdateMainContextActionFieldIDs(ref numActionFields);
             actionHandler.UpdateActionFieldIDs(ref numActionFields);
+            CompleteLogIDUpdate();
 		}
+
+        public static void UpdateLogIDs(int oldID, int newID)
+		{
+            foreach(var container in handlerContainers)
+			{
+                container.incidentLog = Regex.Replace(container.incidentLog, @"\{" + oldID + @"\}", @"{replace" + newID + @"}");
+			}
+		}
+
+        private static void CompleteLogIDUpdate()
+		{
+            foreach (var container in handlerContainers)
+            {
+                container.incidentLog = Regex.Replace(container.incidentLog, @"{replace", @"{");
+            }
+        }
 
 		private static void UpdateMainContextActionFieldIDs(ref int startingValue)
 		{

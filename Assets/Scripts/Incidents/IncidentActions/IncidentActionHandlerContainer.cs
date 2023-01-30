@@ -64,6 +64,7 @@ namespace Game.Incidents
 
 		public void UpdateActionFieldIDs(ref int startingValue)
 		{
+			IncidentEditorWindow.handlerContainers.Add(this);
 			if (startingValue == 0)
 			{
 				var constant = new ConstantActionField(ContextType);

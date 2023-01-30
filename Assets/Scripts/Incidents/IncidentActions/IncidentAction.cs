@@ -57,33 +57,47 @@ namespace Game.Incidents
 
 			foreach (var field in matchingFields)
 			{
-				field.SetValue(this, Activator.CreateInstance(field.FieldType, IncidentEditorWindow.ContextType));
+				if (field.GetValue(this) == null)
+				{
+					field.SetValue(this, Activator.CreateInstance(field.FieldType, IncidentEditorWindow.ContextType));
+				}
 			}
 
 			matchingFields = GetCollectionsOfActionFields();
 
 			foreach(var field in matchingFields)
 			{
-				field.SetValue(this, Activator.CreateInstance(field.FieldType));
+				if (field.GetValue(this) == null)
+				{
+					field.SetValue(this, Activator.CreateInstance(field.FieldType));
+				}
 			}
 
 			matchingFields = GetActionFieldContainers();
 
 			foreach (var field in matchingFields)
 			{
-				field.SetValue(this, Activator.CreateInstance(field.FieldType));
+				if (field.GetValue(this) == null)
+				{
+					field.SetValue(this, Activator.CreateInstance(field.FieldType));
+				}
 			}
 
 			matchingFields = GetIntegerRangeFields();
 
 			foreach (var field in matchingFields)
 			{
-				field.SetValue(this, Activator.CreateInstance(field.FieldType));
+				if (field.GetValue(this) == null)
+				{
+					field.SetValue(this, Activator.CreateInstance(field.FieldType));
+				}
 			}
 		}
 
 		virtual public void UpdateActionFieldIDs(ref int startingValue)
 		{
+			UpdateEditor();
+
 			var matchingFields = GetContexualActionFields();
 			var matchingLists = GetCollectionsOfActionFields();
 			var matchingContainers = GetActionFieldContainers();
@@ -91,6 +105,10 @@ namespace Game.Incidents
 			foreach (var f in matchingFields)
 			{
 				var fa = f.GetValue(this) as IIncidentActionField;
+				if(fa.ActionFieldID != startingValue)
+				{
+					IncidentEditorWindow.UpdateLogIDs(fa.ActionFieldID, startingValue);
+				}
 				fa.ActionFieldID = startingValue;
 				fa.NameID = string.Format("{0}:{1}:{2}", fa.ActionFieldIDString, GetType().Name, f.Name);
 				IncidentEditorWindow.actionFields.Add(fa);
@@ -161,7 +179,7 @@ namespace Game.Incidents
 			foreach (var field in matchingFields)
 			{
 				var actionField = field.GetValue(this) as IIncidentActionField;
-				if (actionField.ActionFieldID == id)
+				if (actionField != null && actionField.ActionFieldID == id)
 				{
 					contextField = actionField;
 					return true;
