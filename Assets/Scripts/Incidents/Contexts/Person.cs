@@ -33,6 +33,7 @@ namespace Game.Incidents
 			Wisdom = wisdom;
 			Charisma = charisma;
 			WorldPlayer = worldPlayer;
+			Spouses = new List<Person>();
 			Inventory = inventory == null ? new Inventory() : inventory;
 			Parents = parents == null ? new List<Person>() : parents;
 

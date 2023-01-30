@@ -107,7 +107,7 @@ namespace Game.Incidents
 				var fa = f.GetValue(this) as IIncidentActionField;
 				if(fa.ActionFieldID != startingValue)
 				{
-					IncidentEditorWindow.UpdateLogIDs(fa.ActionFieldID, startingValue);
+					IncidentEditorWindow.UpdateLogIDs(fa.ActionFieldID, fa);
 				}
 				fa.ActionFieldID = startingValue;
 				fa.NameID = string.Format("{0}:{1}:{2}", fa.ActionFieldIDString, GetType().Name, f.Name);
@@ -120,6 +120,10 @@ namespace Game.Incidents
 				var list = l.GetValue(this) as List<IncidentActionFieldContainer>;
 				foreach(var f in list)
 				{
+					if (f.actionField.ActionFieldID != startingValue)
+					{
+						IncidentEditorWindow.UpdateLogIDs(f.actionField.ActionFieldID, f.actionField);
+					}
 					f.actionField.ActionFieldID = startingValue;
 					f.actionField.NameID = string.Format("{0}:{1}:{2}", f.actionField.ActionFieldIDString, GetType().Name, l.Name);
 					IncidentEditorWindow.actionFields.Add(f.actionField);
@@ -133,6 +137,10 @@ namespace Game.Incidents
 				if (container.contextType != null)
 				{
 					var fa = container.actionField;
+					if (fa.ActionFieldID != startingValue)
+					{
+						IncidentEditorWindow.UpdateLogIDs(fa.ActionFieldID, fa);
+					}
 					fa.ActionFieldID = startingValue;
 					fa.NameID = string.Format("{0}:{1}:{2}", fa.ActionFieldIDString, GetType().Name, c.Name);
 					IncidentEditorWindow.actionFields.Add(fa);

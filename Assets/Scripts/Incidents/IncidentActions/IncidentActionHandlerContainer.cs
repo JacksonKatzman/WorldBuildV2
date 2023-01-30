@@ -114,6 +114,14 @@ namespace Game.Incidents
 			return null;
 		}
 
+		public void UpdatedDeployableContextIDs(Dictionary<int, IIncidentActionField> updates)
+		{
+			foreach(var deployer in Deployers)
+			{
+				deployer.UpdateContextIDs(updates);
+			}
+		}
+
 		private void AddNewActionContainer()
 		{
 			Actions.Add(new IncidentActionHandler());

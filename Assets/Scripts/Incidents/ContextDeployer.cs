@@ -53,6 +53,23 @@ namespace Game.Incidents
 			OutputLogger.Log("Deployed Criteria!");
 		}
 
+		public void UpdateContextIDs(Dictionary<int, IIncidentActionField> updates)
+		{
+			var fields = incidentContext.GetType().GetFields();
+			var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(DeployedContextActionField<>)).ToList();
+
+			foreach (var matchingField in matchingFields)
+			{
+				var field = matchingField.GetValue(incidentContext) as IIncidentActionField;
+				var prev = field.PreviousFieldID;
+				if (updates.ContainsKey(prev))
+				{
+					field.PreviousFieldID = updates[prev].ActionFieldID;
+					field.PreviousField = updates[prev].NameID;
+				}
+			}
+		}
+
 		private IEnumerable<Type> GetFilteredTypeList()
 		{
 			var q = typeof(IDeployableContext).Assembly.GetTypes()
@@ -140,7 +157,7 @@ namespace Game.Incidents
 		public int ID { get; set; }
 
 		public int ParentID { get; set; }
-		public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public string Name { get; set; }
 
 		public bool CalculateFields(IIncidentContext context)
 		{

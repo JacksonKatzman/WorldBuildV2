@@ -7,6 +7,8 @@ namespace Game.Incidents
 		int ActionFieldID { get; set; }
 		string ActionFieldIDString { get; }
 		string NameID { get; set; }
+		string PreviousField { get; set; }
+		int PreviousFieldID { get; set; }
 
 		Type ContextType { get; }
 

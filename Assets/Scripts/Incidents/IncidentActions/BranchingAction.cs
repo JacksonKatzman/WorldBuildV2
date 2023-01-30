@@ -50,7 +50,10 @@ namespace Game.Incidents
 		override public void UpdateEditor()
 		{
 			base.UpdateEditor();
-			branches = new List<IncidentActionBranch>();
+			if (branches == null)
+			{
+				branches = new List<IncidentActionBranch>();
+			}
 		}
 
 		override public void UpdateActionFieldIDs(ref int startingValue)

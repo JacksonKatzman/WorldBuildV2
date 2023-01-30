@@ -48,6 +48,7 @@ namespace Game.Incidents
         public static List<IIncidentActionField> actionFields = new List<IIncidentActionField>();
         public static List<IContextModifierCalculator> calculators = new List<IContextModifierCalculator>();
         public static List<IncidentActionHandlerContainer> handlerContainers = new List<IncidentActionHandlerContainer>();
+        public static Dictionary<int, IIncidentActionField> updates = new Dictionary<int, IIncidentActionField>();
 
 		[ShowIf("@this.modeChosen == true"), ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Incident Type"), PropertySpace(SpaceBefore = 30, SpaceAfter = 20)]
         public Type incidentContextType;
@@ -113,6 +114,7 @@ namespace Game.Incidents
 
         public static void UpdateActionFieldIDs()
 		{
+            updates.Clear();
             handlerContainers.Clear();
             actionFields.Clear();
             calculators.Clear();
@@ -122,20 +124,44 @@ namespace Game.Incidents
             CompleteLogIDUpdate();
 		}
 
-        public static void UpdateLogIDs(int oldID, int newID)
+        public static void UpdateLogIDs(int oldID, IIncidentActionField actionField)
 		{
+            if (!updates.ContainsKey(oldID))
+            {
+                updates.Add(oldID, actionField);
+            }
+            /*
             foreach(var container in handlerContainers)
 			{
                 container.incidentLog = Regex.Replace(container.incidentLog, @"\{" + oldID + @"\}", @"{replace" + newID + @"}");
 			}
+            */
 		}
 
         private static void CompleteLogIDUpdate()
 		{
+            foreach(var field in actionFields)
+			{
+                var prev = field.PreviousFieldID;
+                if(updates.ContainsKey(prev))
+				{
+                    field.PreviousFieldID = updates[prev].ActionFieldID;
+                    field.PreviousField = updates[prev].NameID;
+				}
+			}
+            
             foreach (var container in handlerContainers)
             {
-                container.incidentLog = Regex.Replace(container.incidentLog, @"{replace", @"{");
-            }
+                if (container.incidentLog != null)
+                {
+                    foreach (var pair in updates)
+                    {
+                        container.incidentLog = Regex.Replace(container.incidentLog, @"\{" + pair.Key + @"\}", @"{replace" + pair.Value.ActionFieldID + @"}");
+                        container.UpdatedDeployableContextIDs(updates);
+                    }
+                    container.incidentLog = Regex.Replace(container.incidentLog, @"{replace", @"{");
+                }
+            }        
         }
 
 		private static void UpdateMainContextActionFieldIDs(ref int startingValue)

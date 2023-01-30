@@ -28,11 +28,11 @@ namespace Game.Incidents
 		[ShowIf("@this.ShowStandardCriteria"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
 		public List<IncidentActionFieldCriteria> criteria;
 
-		[ShowIf("Method", ActionFieldRetrievalMethod.From_Previous), ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID")]
-		public string previousField;
+		[ShowInInspector, ShowIf("Method", ActionFieldRetrievalMethod.From_Previous), ValueDropdown("GetActionFieldIdentifiers"), OnValueChanged("SetPreviousFieldID")]
+		public string PreviousField { get; set; }
 
 		[HideInInspector]
-		public int previousFieldID = -1;
+		public int PreviousFieldID { get; set; }
 
 		public int ActionFieldID { get; set; }
 
@@ -54,6 +54,7 @@ namespace Game.Incidents
 
 		public ContextualIncidentActionField() 
 		{
+			PreviousFieldID = -1;
 			ActionFieldID = -1;
 			RetrievalTypeChanged();
 		}
@@ -137,7 +138,7 @@ namespace Game.Incidents
 
 		protected IIncidentActionField RetrieveFieldFromPrevious(IIncidentContext context)
 		{
-			return IncidentService.Instance.CurrentIncident.ActionContainer.GetContextFromActionFields(previousFieldID);
+			return IncidentService.Instance.CurrentIncident.ActionContainer.GetContextFromActionFields(PreviousFieldID);
 		}
 
 		private void RetrievalTypeChanged()
@@ -163,7 +164,7 @@ namespace Game.Incidents
 
 		private void SetPreviousFieldID()
 		{
-			previousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == previousField).ActionFieldID;
+			PreviousFieldID = IncidentEditorWindow.actionFields.Find(x => x.NameID == PreviousField).ActionFieldID;
 		}
 	}
 }
