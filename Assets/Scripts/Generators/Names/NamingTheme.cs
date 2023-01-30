@@ -1,5 +1,6 @@
 using Game.Data;
 using Game.Enums;
+using Game.Generators.Items;
 using Game.Incidents;
 using Game.Utilities;
 using Sirenix.OdinInspector;
@@ -79,6 +80,38 @@ namespace Game.Generators.Names
 			SetupNameFormat();
 		}
 
+		public NamingTheme(NamingTheme other)
+		{
+			nouns = new ModifiableWeightedCollection(other.nouns);
+			verbs = new ModifiableWeightedCollection(other.verbs);
+			adjectives = new ModifiableWeightedCollection(other.adjectives);
+			townNouns = new ModifiableWeightedCollection(other.townNouns);
+
+			consonants = new ModifiableWeightedCollection(other.consonants);
+			beginningConsonants = new ModifiableWeightedCollection(other.beginningConsonants);
+			endConsonants = new ModifiableWeightedCollection(other.endConsonants);
+
+			vowels = new ModifiableWeightedCollection(other.vowels);
+			beginningVowels = new ModifiableWeightedCollection(other.beginningVowels);
+			endVowels = new ModifiableWeightedCollection(other.endVowels);
+
+			maleNames = new List<string>(other.maleNames);
+			femaleNames = new List<string>(other.femaleNames);
+
+			titles = new Dictionary<OrganizationType, TitleDictionary>(other.titles);
+			titleQualifiers = new List<string>(other.titleQualifiers);
+
+			minFirstNameSyllables = other.minFirstNameSyllables;
+			maxFirstNameSyllables = other.maxFirstNameSyllables;
+			minSurnameSyllables = other.minSurnameSyllables;
+			maxSurnameSyllables = other.maxSurnameSyllables;
+			personNameFormats = new Dictionary<int, List<string>>(other.personNameFormats);
+			townNameFormats = new Dictionary<int, List<string>>(other.townNameFormats);
+			factionNameFormats = new Dictionary<int, List<string>>(other.factionNameFormats);
+
+			SetupNameFormat();
+		}
+
 		public string GenerateName(Gender gender)
 		{
 			var format = string.Copy(currentNameFormat);
@@ -112,6 +145,16 @@ namespace Game.Generators.Names
 		public string GenerateTerrainName(string format)
 		{
 			return FillOutFormat(format, Gender.ANY);
+		}
+
+		public string GenerateItemName(Item item)
+		{
+			return "ITEM";
+		}
+
+		public string GenerateItemName(Item item, Person creator)
+		{
+			return string.Format("{0}'s ITEM", creator.Name);
 		}
 
 		public TitlePair GenerateTitle(OrganizationType titleType, int points)

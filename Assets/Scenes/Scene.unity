@@ -10253,6 +10253,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  monsterPreset: {fileID: 11400000, guid: 3b986edcfb108ff42865cbad56bf1c78, type: 2}
 --- !u!1 &1287639886
 GameObject:
   m_ObjectHideFlags: 0

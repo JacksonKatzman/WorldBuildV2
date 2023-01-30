@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Game.Utilities;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Game.Generators.Names
@@ -12,6 +13,12 @@ namespace Game.Generators.Names
 		{
 			weightedStrings = new List<WeightedString>();
 			dictionary = new Dictionary<int, List<string>>();
+		}
+
+		public ModifiableWeightedCollection(ModifiableWeightedCollection other)
+		{
+			weightedStrings = new List<WeightedString>(other.weightedStrings);
+			dictionary = new Dictionary<int, List<string>>(other.dictionary);
 		}
 
 		public void AddWeightedStrings(List<WeightedString> strings)
@@ -33,6 +40,16 @@ namespace Game.Generators.Names
 				{
 					weightedStrings.Add(new WeightedString(s.value, s.weight));
 				}
+			}
+
+			RebuildDictionary();
+		}
+
+		public void RandomizeWeights(int min, int max)
+		{
+			foreach(var w in weightedStrings)
+			{
+				w.weight = SimRandom.RandomRange(min, max + 1);
 			}
 
 			RebuildDictionary();
