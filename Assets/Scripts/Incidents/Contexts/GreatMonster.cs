@@ -1,4 +1,5 @@
 ﻿using Game.Creatures;
+using Game.Enums;
 using Game.Simulation;
 using System;
 
@@ -13,6 +14,9 @@ namespace Game.Incidents
 		public int GoodEvilAlignmentAxis { get; set; }
 
 		public Faction AffiliatedFaction { get; set; }
+
+		public CreatureSize CreatureSize => dataBlock.size;
+		public CreatureType CreatureType => dataBlock.type;
 
 		public GreatMonster() { }
 		public GreatMonster(MonsterData dataBlock)
