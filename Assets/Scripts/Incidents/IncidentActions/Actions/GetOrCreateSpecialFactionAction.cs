@@ -1,4 +1,5 @@
-﻿using Game.Simulation;
+﻿using Game.Generators.Names;
+using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,15 @@ namespace Game.Incidents
             specialFaction.EconomicPriority = economicPriority;
             specialFaction.ReligiousPriority = religiousPriority;
             specialFaction.MilitaryPriority = militaryPriority;
+
+            if (createdByPerson)
+            {
+                specialFaction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
+            }
+            else
+            {
+                specialFaction.namingTheme = FlavorService.Instance.GenerateMonsterFactionNamingTheme();
+            }
 
             return specialFaction;
         }

@@ -40,13 +40,15 @@ namespace Game.Incidents
 		public IntegerRange wisdom;
 		[ShowIf("@this.allowCreate")]
 		public IntegerRange charisma;
+		[ShowIf("@this.allowCreate")]
+		public bool worldPlayer = true;
 
 		protected override Person MakeNew()
 		{
 			var parents = parent.GetTypedFieldValue() != null ? new List<Person>() { parent.GetTypedFieldValue() } : null;
 			var newPerson = new Person(age, gender, race.GetTypedFieldValue(), faction.GetTypedFieldValue(), politicalPriority,
 				economicPriority, religiousPriority, militaryPriority, influence, wealth, strength, dexterity, constitution,
-				intelligence, wisdom, charisma, parents);
+				intelligence, wisdom, charisma, worldPlayer, parents);
 
 			return newPerson;
 		}
