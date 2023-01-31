@@ -211,7 +211,7 @@ namespace Game.Incidents
 			}
 			if(gameEvent.context.ContextType == typeof(City))
 			{
-				if(Cities.Contains((City)gameEvent.context))
+				if(Cities != null && Cities.Contains((City)gameEvent.context))
 				{
 					Cities.Remove((City)gameEvent.context);
 				}

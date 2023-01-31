@@ -74,6 +74,7 @@ namespace Game.Incidents
 		public int GoodEvilAlignmentAxis { get; set; }
 
 		public bool WorldPlayer { get; set; }
+		public bool Possessed { get; set; }
 
 		private string name;
 		private Action OnDeathAction;
