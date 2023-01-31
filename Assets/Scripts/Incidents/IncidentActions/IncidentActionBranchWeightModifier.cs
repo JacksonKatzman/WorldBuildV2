@@ -10,7 +10,7 @@ namespace Game.Incidents
 		[OnValueChanged("ToggleAdvancedMode")]
 		public bool advancedMode;
 		[ShowIf("@this.advancedMode == false")]
-		public int baseWeight;
+		public int baseWeight = 1;
 		[ShowIf("@this.advancedMode == true")]
 		public IncidentActionFieldContainer container;
 		[ShowIf("ShowWeight"), HideReferenceObjectPicker]

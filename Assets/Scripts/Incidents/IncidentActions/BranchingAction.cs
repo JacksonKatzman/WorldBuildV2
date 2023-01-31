@@ -35,7 +35,7 @@ namespace Game.Incidents
 			{
 				totalWeight += branch.weightModifier.Calculate();
 			}
-			var decider = SimRandom.RandomRange(0, totalWeight);
+			var decider = SimRandom.RandomRange(0, totalWeight+1);
 			for(int i = 0; i < branches.Count; i++)
 			{
 				totalWeight -= branches[i].weightModifier.Calculate();
