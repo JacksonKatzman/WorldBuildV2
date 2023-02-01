@@ -8,7 +8,7 @@ namespace Game.Incidents
 	{
 		abstract public Type ContextType { get; }
 
-		public string Name {get; set;}
+		virtual public string Name {get; set;}
 		public int NumIncidents => 0;
 		public int ID { get; set; }
 
@@ -24,7 +24,7 @@ namespace Game.Incidents
 			return new DataTable();
 		}
 
-		public void UpdateContext()
+		virtual public void UpdateContext()
 		{
 
 		}
