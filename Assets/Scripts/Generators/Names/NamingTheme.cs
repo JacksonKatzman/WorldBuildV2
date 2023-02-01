@@ -38,6 +38,7 @@ namespace Game.Generators.Names
 		public int minSurnameSyllables;
 		public int maxSurnameSyllables;
 		public Dictionary<int, List<string>> personNameFormats;
+		public Dictionary<int, List<string>> surnameFormats;
 		public Dictionary<int, List<string>> townNameFormats;
 		public Dictionary<int, List<string>> factionNameFormats;
 
@@ -74,6 +75,7 @@ namespace Game.Generators.Names
 			minSurnameSyllables = preset.minSurnameSyllables;
 			maxSurnameSyllables = preset.maxSurnameSyllables;
 			personNameFormats = preset.personNameFormats;
+			surnameFormats = preset.surnameFormats;
 			townNameFormats = preset.townNameFormats;
 			factionNameFormats = preset.factionNameFormats;
 
@@ -106,26 +108,52 @@ namespace Game.Generators.Names
 			minSurnameSyllables = other.minSurnameSyllables;
 			maxSurnameSyllables = other.maxSurnameSyllables;
 			personNameFormats = new Dictionary<int, List<string>>(other.personNameFormats);
+			surnameFormats = new Dictionary<int, List<string>>(other.surnameFormats);
 			townNameFormats = new Dictionary<int, List<string>>(other.townNameFormats);
 			factionNameFormats = new Dictionary<int, List<string>>(other.factionNameFormats);
 
 			SetupNameFormat();
 		}
 
-		public string GenerateName(Gender gender)
+		public CreatureName GenerateName(CreatureName personName, Gender gender, string format)
 		{
-			var format = string.Copy(currentNameFormat);
+			while (format.Contains("{F}"))
+			{
+				var result = GenerateFirstName(gender);
+				personName.firstNames.Add(result);
+				format = StringUtilities.ReplaceFirstOccurence(format, "{F}", result);
+			}
+			while (format.Contains("{S}"))
+			{
+				var result = GenerateSurname(gender);
+				personName.surnames.Add(result);
+				format = StringUtilities.ReplaceFirstOccurence(format, "{S}", result);
+			}
 
-			return FillOutFormat(format, gender);
+			personName.fullName = FillOutFormat(format, gender);
+
+			return personName;
 		}
 
-		public string GenerateName(Gender gender, List<Person> parents)
+		public CreatureName GenerateName(Gender gender)
+		{
+			var format = string.Copy(currentNameFormat);
+			var personName = new CreatureName(format);
+
+			return GenerateName(personName, gender, format);
+		}
+
+		public CreatureName GenerateName(Gender gender, List<IPerson> parents)
 		{
 			var parent = SimRandom.RandomEntryFromList(parents);
-			var surname = parent.GetSurname();
-			var format = string.Copy(currentNameFormat);
+			var personName = new CreatureName(parent.PersonName.nameFormat);
+
+			var surname = parent.PersonName.Surname;
+			personName.surnames.Add(surname);
+			var format = string.Copy(personName.nameFormat);
 			format = StringUtilities.ReplaceLastOccurrence(format, "{S}", surname);
-			return FillOutFormat(format, gender);
+
+			return GenerateName(personName, gender, format);
 		}
 
 		public string GenerateTownName()
@@ -249,7 +277,7 @@ namespace Game.Generators.Names
 			}
 			while(result.Contains("{S}"))
 			{
-				result = StringUtilities.ReplaceFirstOccurence(result,"{S}", GenerateSurname());
+				result = StringUtilities.ReplaceFirstOccurence(result,"{S}", GenerateSurname(gender));
 			}
 			while(result.Contains("{A}"))
 			{
@@ -280,9 +308,34 @@ namespace Game.Generators.Names
 			return SimRandom.RandomFloat01() > 0.5f ? GenerateNameFromExisting(gender) : GenerateSyllabicName(minFirstNameSyllables, maxFirstNameSyllables);
 		}
 
-		private string GenerateSurname()
+		private string GenerateSurname(Gender gender)
 		{
-			return GenerateSyllabicName(minSurnameSyllables, maxSurnameSyllables);
+			var surnameFormat = SimRandom.RandomEntryFromWeightedDictionary(surnameFormats);
+			while (surnameFormat.Contains("{F}"))
+			{
+				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{F}", GenerateFirstName(gender));
+			}
+			while (surnameFormat.Contains("{S}"))
+			{
+				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{S}", GenerateSyllabicName(minSurnameSyllables, maxSurnameSyllables));
+			}
+			while (surnameFormat.Contains("{A}"))
+			{
+				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{A}", SimRandom.RandomEntryFromWeightedDictionary(adjectives.dictionary));
+			}
+			while (surnameFormat.Contains("{T}"))
+			{
+				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{T}", SimRandom.RandomEntryFromWeightedDictionary(townNouns.dictionary));
+			}
+			while (surnameFormat.Contains("{V}"))
+			{
+				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{V}", SimRandom.RandomEntryFromWeightedDictionary(verbs.dictionary));
+			}
+			while (surnameFormat.Contains("{N}"))
+			{
+				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{N}", SimRandom.RandomEntryFromWeightedDictionary(nouns.dictionary));
+			}
+			return surnameFormat;
 		}
 
 		private string GenerateSyllabicName(int min, int max)

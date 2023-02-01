@@ -26,7 +26,7 @@ namespace Game.Incidents
 			var monsterToCreate = useSpecificMonster ? monster : retrievedMonsterData;
 			var createdMonster = transformPerson ? new GreatMonster(monsterToCreate, personToTransform.GetTypedFieldValue()) : new GreatMonster(monsterToCreate);
 			createdMonster.AffiliatedFaction = faction.GetTypedFieldValue();
-			createdMonster.Name = createdMonster.AffiliatedFaction.namingTheme.GenerateName(Enums.Gender.ANY);
+			createdMonster.PersonName = createdMonster.AffiliatedFaction.namingTheme.GenerateName(Enums.Gender.ANY);
 			
 			return createdMonster;
 		}
