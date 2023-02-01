@@ -45,7 +45,7 @@ namespace Game.Incidents
 
 		protected override Person MakeNew()
 		{
-			var parents = parent.GetTypedFieldValue() != null ? new List<Person>() { parent.GetTypedFieldValue() } : null;
+			var parents = parent.GetTypedFieldValue() != null ? new List<IPerson>() { parent.GetTypedFieldValue() } : null;
 			var newPerson = new Person(age, gender, race.GetTypedFieldValue(), faction.GetTypedFieldValue(), politicalPriority,
 				economicPriority, religiousPriority, militaryPriority, influence, wealth, strength, dexterity, constitution,
 				intelligence, wisdom, charisma, worldPlayer, parents);
@@ -58,4 +58,8 @@ namespace Game.Incidents
 			return faction.CalculateField(context) && race.CalculateField(context);
 		}
 	}
+
+	//make IPerson, make MinorPerson, make it and Person implement IPerson
+	//make family lists of IPerson, non world players are minor persons, minor person doesnt inherit from person
+	//iperson contains Die and other shared functions, killpersonaction uses IPerson contexts
 }
