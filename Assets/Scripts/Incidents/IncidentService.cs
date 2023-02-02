@@ -19,6 +19,7 @@ namespace Game.Incidents
 		private List<DelayedIncidentContext> delayedContexts;
 		private List<IIncidentContext> followUpContexts;
 		private int nextIncidentID;
+
 		public List<IncidentReport> reports;
 
 		public IIncident CurrentIncident { get; set; }
@@ -69,8 +70,8 @@ namespace Game.Incidents
 				for (int i = 0; i < 5 && i < possibleIncidents.Count && !completed; i++)
 				{
 					CurrentIncident = SimRandom.RandomEntryFromWeightedDictionary(possibleIncidents);
-					OutputLogger.Log("Attempting to run incident: " + CurrentIncident.IncidentName);
 					completed = CurrentIncident.PerformIncident(incidentContext, ref report);
+					OutputLogger.Log("Attempted to run incident: " + CurrentIncident.IncidentName + " Success: " + completed);
 					currentExpressionValues.Clear();
 				}
 
@@ -152,6 +153,10 @@ namespace Game.Incidents
 			foreach(var item in items)
 			{
 				var weight = item.Weights.CalculateWeight(context);
+				if(weight <= 0)
+				{
+					continue;
+				}
 				if(!sortedItems.ContainsKey(weight))
 				{
 					sortedItems.Add(weight, new List<IIncident>());

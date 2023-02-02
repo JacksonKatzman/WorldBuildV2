@@ -4,7 +4,7 @@ using System;
 
 namespace Game.Incidents
 {
-	public class MinorPerson : InertIncidentContext, IPerson
+	public class MinorPerson : InertIncidentContext, IPerson, IFactionAffiliated
 	{
 		public override Type ContextType => typeof(MinorPerson);
 

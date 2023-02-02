@@ -127,7 +127,7 @@ namespace Game.Incidents
 
         public static void UpdateLogIDs(int oldID, IIncidentActionField actionField)
 		{
-            if (!updates.ContainsKey(oldID))
+            if (oldID > -1 && !updates.ContainsKey(oldID))
             {
                 updates.Add(oldID, actionField);
             }

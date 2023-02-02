@@ -22,6 +22,7 @@ namespace Game.Incidents
 		{
 			var previousOfficial = official;
 			official = SimRandom.RandomRange(0, 5) < 4 && previousOfficial != null ? official.CreateChild(true) : new Person(35, Enums.Gender.ANY, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, true);
+			official.GenerateFamily(true, true);
 			official.OfficialPosition = this;
 			SimulationManager.Instance.world?.AddContext(official);
 			var report = previousOfficial == null ? "{0} takes power." : "{0} succeeds {1}.";

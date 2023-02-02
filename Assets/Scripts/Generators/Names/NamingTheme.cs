@@ -143,7 +143,7 @@ namespace Game.Generators.Names
 			return GenerateName(personName, gender, format);
 		}
 
-		public CreatureName GenerateName(Gender gender, List<IPerson> parents)
+		public CreatureName GenerateName(Gender gender, List<Person> parents)
 		{
 			var parent = SimRandom.RandomEntryFromList(parents);
 			var personName = new CreatureName(parent.PersonName.nameFormat);
@@ -400,9 +400,13 @@ namespace Game.Generators.Names
 			}
 
 			var candidates = new List<char>() { 'a', 'e', 'i', 'o', 'u' };
-			var toReplace = result.First(x => candidates.Contains(x));
-			var regex = new Regex(Regex.Escape(toReplace.ToString()));
-			result = regex.Replace(result, SimRandom.RandomEntryFromWeightedDictionary(vowels.dictionary), 1);
+			var containsVowel = result.Count(x => candidates.Contains(x)) > 0;
+			if (containsVowel)
+			{
+				var toReplace = result.First(x => candidates.Contains(x));
+				var regex = new Regex(Regex.Escape(toReplace.ToString()));
+				result = regex.Replace(result, SimRandom.RandomEntryFromWeightedDictionary(vowels.dictionary), 1);
+			}
 
 			return result;
 		}

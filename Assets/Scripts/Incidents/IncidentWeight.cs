@@ -8,7 +8,7 @@ namespace Game.Incidents
 {
 	public class IncidentWeight<T> : IIncidentWeight where T : IIncidentContext
 	{
-		[Range(0, 20)]
+		[Range(1, 20)]
 		public int baseWeight;
 
 		[ValueDropdown("GetOperatorNames"), HorizontalGroup("Group 1", 50), HideLabel]
@@ -34,7 +34,8 @@ namespace Game.Incidents
 		{
 			if (expressions.Count > 0 && context != null)
 			{
-				return Operators[Operation].Invoke(baseWeight, Expression<int>.CombineExpressions(context, expressions, Operators));
+				var weight = Operators[Operation].Invoke(baseWeight, Expression<int>.CombineExpressions(context, expressions, Operators));
+				return weight > 1 ? weight : 1;
 			}
 			else
 			{
