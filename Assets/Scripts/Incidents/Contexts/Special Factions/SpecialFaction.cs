@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Utilities;
+using System;
 using System.Collections.Generic;
 
 namespace Game.Incidents
@@ -26,6 +27,18 @@ namespace Game.Incidents
 				}
 			}
 			return container.factionType;
+		}
+
+		public SpecialFaction()
+		{
+			FactionRelations = new Dictionary<IIncidentContext, int>();
+			Cities = new List<City>();
+			FactionsAtWarWith = new List<IIncidentContext>();
+
+			PoliticalPriority = SimRandom.RandomRange(1, 4);
+			ReligiousPriority = SimRandom.RandomRange(1, 4);
+			EconomicPriority = SimRandom.RandomRange(1, 4);
+			MilitaryPriority = SimRandom.RandomRange(1, 4);
 		}
 
 		override public void UpdateContext()

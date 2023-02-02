@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using Game.Simulation;
 using System.Data;
-using System.IO;
+using System.IO;	
 using Game.Generators.Names;
 
 namespace Game.Incidents
@@ -28,6 +28,20 @@ namespace Game.Incidents
 			{
 				var test = (LearnAboutReflection)target;
 				test.TestName();
+			}
+
+			if (GUILayout.Button("Govt Test"))
+			{
+				var govt = new Organization(null, null, Enums.OrganizationType.POLITICAL);
+				for(int i = 0; i < 40; i++)
+				{
+					govt.UpdateHierarchy();
+				}
+				OutputLogger.Log(string.Format("Number of Tiers: {0}", govt.hierarchy.Count));
+				for(int i = 0; i < govt.hierarchy.Count; i++)
+				{
+					OutputLogger.Log(string.Format("Number of Positions in Tier {0}: {1}", i, govt.hierarchy[i].Count));
+				}
 			}
 		}
 		public static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)

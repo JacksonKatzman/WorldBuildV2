@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 
 namespace Game.Incidents
 {
 	public class ActionFieldListContainsEvaluator : ActionFieldCriteriaEvaluator<List<IIncidentContext>, bool>
 	{
+		[ReadOnly]
+		public string warning = "This evaluator finds items that exist within the chosen List within the parent ({0}) context.";
 		public ActionFieldListContainsEvaluator() { }
 		public ActionFieldListContainsEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 		public override bool Evaluate(IIncidentContext context, string propertyName, IIncidentContext parentContext = null)

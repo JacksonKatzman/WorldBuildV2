@@ -11,8 +11,9 @@ namespace Game.Incidents
 
 		protected override bool IsValidPropertyType(Type type)
 		{
-            return base.IsValidPropertyType(type) || type == typeof(Faction) || type == typeof(Location) || type == typeof(Inventory) || type == typeof(Type);
-        }
+            return base.IsValidPropertyType(type) || type == typeof(Faction) || type == typeof(Location) || type == typeof(Inventory) || type == typeof(Type) || type.IsEnum
+			|| (ContextType == IncidentEditorWindow.ContextType && (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && typeof(IIncidentContext).IsAssignableFrom(type.GetGenericArguments()[0])));
+		}
 
 		protected override void SetPrimitiveType()
 		{
@@ -41,6 +42,17 @@ namespace Game.Incidents
 			else if(PrimitiveType == typeof(List<IIncidentContext>))
 			{
 				evaluator = new ActionFieldListContainsEvaluator(propertyName, ContextType);
+			}
+			else if(ContextType == IncidentEditorWindow.ContextType && PrimitiveType.IsGenericType && PrimitiveType.GetGenericTypeDefinition() == typeof(List<>) && typeof(IIncidentContext).IsAssignableFrom(PrimitiveType.GetGenericArguments()[0]))
+			{
+				evaluator = new ActionFieldListContainsEvaluator(propertyName, ContextType);
+			}
+			else if(PrimitiveType.IsEnum)
+			{
+				var dataType = new Type[] { PrimitiveType };
+				var genericBase = typeof(EnumEvaluator<>);
+				var combinedType = genericBase.MakeGenericType(dataType);
+				evaluator = (ICriteriaEvaluator)Activator.CreateInstance(combinedType, propertyName, ContextType);
 			}
 		}
 	}

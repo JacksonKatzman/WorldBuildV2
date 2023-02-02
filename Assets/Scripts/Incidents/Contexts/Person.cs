@@ -1,15 +1,17 @@
 ﻿using Game.Enums;
 using Game.Generators.Items;
+using Game.Generators.Names;
 using Game.Incidents;
 using Game.Simulation;
 using Game.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Person : IncidentContext, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated
+	public class Person : IncidentContext, IPerson, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated
 	{
 		public Person() { }
 		public Person(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
@@ -36,22 +38,66 @@ namespace Game.Incidents
 			Spouses = new List<Person>();
 			Inventory = inventory == null ? new Inventory() : inventory;
 			Parents = parents == null ? new List<Person>() : parents;
+			Siblings = new List<Person>();
 
 			if(Parents.Count > 0)
 			{
-				Name = AffiliatedFaction?.namingTheme.GenerateName(Gender, parents);
+				PersonName = AffiliatedFaction?.namingTheme.GenerateName(Gender, parents);
 			}
 			else
 			{
-				Name = AffiliatedFaction?.namingTheme.GenerateName(Gender);
+				PersonName = AffiliatedFaction?.namingTheme.GenerateName(Gender);
 			}
 		}
 
-		public override string Name { get => GetFullName(); set => name = value; }
+		public Person(Gender gender, Race race, Faction faction, bool worldPlayer, List<Person> parents = null) :
+			this(SimRandom.RandomRange(18, 55), gender, race, faction,
+				SimRandom.RandomRange(0,7), SimRandom.RandomRange(0, 7),
+				SimRandom.RandomRange(0, 7), SimRandom.RandomRange(0, 7),
+				0, 0, SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				worldPlayer, parents){ }
+		public Person(int age, Gender gender, Race race, Faction faction, bool worldPlayer, List<Person> parents = null) :
+			this(age, gender, race, faction,
+				SimRandom.RandomRange(0, 7), SimRandom.RandomRange(0, 7),
+				SimRandom.RandomRange(0, 7), SimRandom.RandomRange(0, 7),
+				0, 0, SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				worldPlayer, parents){ }
+
+		public Person(Gender gender, Race race, Faction faction, int politicalPriority,
+			int economicPriority, int religiousPriority, int militaryPriority, bool worldPlayer, List<Person> parents = null) : 
+			this(SimRandom.RandomRange(18, 55), gender, race, faction,
+				politicalPriority, economicPriority,
+				religiousPriority, militaryPriority,
+				0, 0, SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				worldPlayer, parents){ }
+
+		public Person(int age, Gender gender, Race race, Faction faction, int politicalPriority,
+			int economicPriority, int religiousPriority, int militaryPriority, bool worldPlayer, List<Person> parents = null) :
+			this(age, gender, race, faction,
+				politicalPriority, economicPriority,
+				religiousPriority, militaryPriority,
+				0, 0, SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
+				worldPlayer, parents){ }
+
+		public Person(Person parent, Gender gender = Gender.ANY)
+		{
+
+		}
+
+		public override string Name => PersonName.GetTitledFullName(this);
+		public CreatureName PersonName { get; set; }
 		public int Age { get; set; }
 		public Gender Gender { get; set; }
 		public Race Race { get; set; }
-		public Faction AffiliatedFaction { get; private set; }
+		public Faction AffiliatedFaction { get; set; }
 		public OrganizationPosition OfficialPosition { get; set; }
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
@@ -68,15 +114,16 @@ namespace Game.Incidents
 		public Inventory Inventory { get; set; }
 		public List<Person> Parents { get; set; }
 		public List<Person> Spouses { get; set; }
+		public List<Person> Siblings { get; set; }
 		public List<Person> Children { get; set; }
+		public List<Person> Family => new List<Person>().Union(Parents).Union(Spouses).Union(Siblings).Union(Children).ToList();
 
 		public int LawfulChaoticAlignmentAxis { get; set; }
 		public int GoodEvilAlignmentAxis { get; set; }
 
 		public bool WorldPlayer { get; set; }
+		public bool Possessed { get; set; }
 
-		private string name;
-		private Action OnDeathAction;
 		override public void DeployContext()
 		{
 			if (NumIncidents > 0)
@@ -84,7 +131,10 @@ namespace Game.Incidents
 				IncidentService.Instance.PerformIncidents(this);
 			}
 
-			CheckDestroyed();
+			if(this.CheckDestroyed())
+			{
+				Die();
+			}
 		}
 
 		override public void UpdateContext()
@@ -101,45 +151,50 @@ namespace Game.Incidents
 			{
 				parents.Add(SimRandom.RandomEntryFromList(Spouses));
 			}
-			var child = new Person(childAge, Enums.Gender.ANY, Race, AffiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, majorPlayer, parents);
+			var child = new Person(childAge, Enums.Gender.ANY, Race, AffiliatedFaction, majorPlayer, parents);
 
 			return child;
 		}
 
+		public void GenerateFamily(bool generateParents, bool canGenerateSpouse)
+		{
+			if(generateParents)
+			{
+				if(Parents.Count(x => x.Gender == Gender.MALE) < 1)
+				{
+					Parents.Add(new Person(Gender.MALE, Race, AffiliatedFaction, false));
+				}
+				if(Parents.Count(x => x.Gender == Gender.FEMALE) < 1)
+				{
+					Parents.Add(new Person(Gender.FEMALE, Race, AffiliatedFaction, false));
+				}
+			}
+			if(canGenerateSpouse && Spouses.Count == 0)
+			{
+				if(SimRandom.RandomBool())
+				{
+					var gender = Gender == Gender.MALE ? Gender.FEMALE : Gender.MALE;
+					Spouses.Add(new Person(gender, Race, AffiliatedFaction, false));
+				}
+			}
+			if (Siblings.Count == 0)
+			{
+				//Change to be a curve later
+				var numSiblings = SimRandom.RandomRange(0, 5);
+				for (int i = 0; i < numSiblings; i++)
+				{
+					Siblings.Add(new Person(Gender.ANY, Race, AffiliatedFaction, false, Parents));
+				}
+			}
+		}
+
 		override public void Die()
 		{
-			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
-			IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this });
-		}
-
-		private void CheckDestroyed()
-		{
-			var cuspA = Race.MaxAge * 0.3f;
-			var cuspB = Race.MaxAge * 0.85f;
-			var deathChance = -Mathf.Atan(((cuspA + (cuspB - cuspA)) - Age) / (Mathf.Sqrt(cuspB - cuspA) * Mathf.PI / 2.0f)) / Mathf.PI + 0.5f;
-
-			var randomValue = SimRandom.RandomFloat01();
-			if(randomValue <= deathChance)
+			if(WorldPlayer)
 			{
-				Die();
-			}			
-		}
-
-		public string GetSurname()
-		{
-			var names = name.Split(' ');
-			return names[names.Length - 1];
-		}
-
-		private string GetFullName()
-		{
-			var fullName = name;
-			if(OfficialPosition != null)
-			{
-				fullName = string.Format(OfficialPosition.titlePair.GetTitle(Gender), fullName);
+				IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this });
 			}
-
-			return fullName;
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
 		}
 	}
 }
