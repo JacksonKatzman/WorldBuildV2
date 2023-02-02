@@ -1,0 +1,121 @@
+{
+  "$id": "1",
+  "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "IncidentName": "Person_Murder_00",
+  "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Weights": {
+    "$id": "2",
+    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Person, Assembly-CSharp]], Assembly-CSharp",
+    "baseWeight": 1,
+    "Operation": "-",
+    "expressions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$id": "3",
+          "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
+          "hasNextOperator": true,
+          "ExpressionType": 2,
+          "constValue": 0,
+          "chosenMethod": null,
+          "chosenProperty": "GoodEvilAlignmentAxis",
+          "range": {
+            "$id": "4",
+            "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+            "randomRange": true,
+            "min": 0,
+            "max": 20,
+            "constant": 0,
+            "Value": 15,
+            "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+          },
+          "subexpressions": null,
+          "previousCalculatedID": null,
+          "rangeWarning": "Range not implemented for non integers!",
+          "nextOperator": "/",
+          "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+        },
+        {
+          "$id": "5",
+          "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
+          "hasNextOperator": false,
+          "ExpressionType": 0,
+          "constValue": 5,
+          "chosenMethod": null,
+          "chosenProperty": null,
+          "range": {
+            "$id": "6",
+            "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+            "randomRange": true,
+            "min": 0,
+            "max": 20,
+            "constant": 0,
+            "Value": 1,
+            "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+          },
+          "subexpressions": null,
+          "previousCalculatedID": null,
+          "rangeWarning": "Range not implemented for non integers!",
+          "nextOperator": null,
+          "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+        }
+      ]
+    }
+  },
+  "Criteria": {
+    "$id": "7",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Assembly-CSharp",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
+      "$values": []
+    }
+  },
+  "ActionContainer": {
+    "$id": "8",
+    "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
+    "incidentLog": "{1} is found dead.",
+    "Actions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$id": "9",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "10",
+            "$type": "Game.Incidents.KillPersonAction, Assembly-CSharp",
+            "person": {
+              "$id": "11",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IPerson, Assembly-CSharp]], Assembly-CSharp",
+              "contextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "actionField": {
+                "$id": "12",
+                "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Person, Assembly-CSharp]], Assembly-CSharp",
+                "parentType": null,
+                "AllowSelf": false,
+                "AllowNull": false,
+                "criteria": {
+                  "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                  "$values": []
+                },
+                "value": null,
+                "delayedValue": null,
+                "Method": 1,
+                "PreviousField": "{0} - Original Context",
+                "PreviousFieldID": 0,
+                "ActionFieldID": 1,
+                "NameID": "{1}:KillPersonAction:person",
+                "ActionFieldIDString": "{1}",
+                "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Deployers": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Assembly-CSharp]], mscorlib",
+      "$values": []
+    },
+    "ContextType": "Game.Incidents.Person, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+  }
+}
