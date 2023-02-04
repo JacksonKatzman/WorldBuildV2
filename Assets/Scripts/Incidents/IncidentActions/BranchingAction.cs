@@ -35,16 +35,17 @@ namespace Game.Incidents
 			{
 				totalWeight += branch.weightModifier.Calculate();
 			}
-			var decider = SimRandom.RandomRange(0, totalWeight+1);
+			var randomWeight = SimRandom.RandomRange(1, totalWeight+1);
 			for(int i = 0; i < branches.Count; i++)
 			{
-				totalWeight -= branches[i].weightModifier.Calculate();
-				if(decider > totalWeight)
+				randomWeight -= branches[i].weightModifier.Calculate();
+				if(randomWeight <= 0)
 				{
 					branches[i].PerformActions(context, ref report);
 					return;
 				}
 			}
+			return;
 		}
 
 		override public void UpdateEditor()

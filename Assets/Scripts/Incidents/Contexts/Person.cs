@@ -162,11 +162,15 @@ namespace Game.Incidents
 			{
 				if(Parents.Count(x => x.Gender == Gender.MALE) < 1)
 				{
-					Parents.Add(new Person(Gender.MALE, Race, AffiliatedFaction, false));
+					var father = new Person(Gender.MALE, Race, AffiliatedFaction, false);
+					Parents.Add(father);
+					SimulationManager.Instance.world.AddContext(father);
 				}
 				if(Parents.Count(x => x.Gender == Gender.FEMALE) < 1)
 				{
-					Parents.Add(new Person(Gender.FEMALE, Race, AffiliatedFaction, false));
+					var mother = new Person(Gender.FEMALE, Race, AffiliatedFaction, false);
+					Parents.Add(mother);
+					SimulationManager.Instance.world.AddContext(mother);
 				}
 			}
 			if(canGenerateSpouse && Spouses.Count == 0)
@@ -174,7 +178,9 @@ namespace Game.Incidents
 				if(SimRandom.RandomBool())
 				{
 					var gender = Gender == Gender.MALE ? Gender.FEMALE : Gender.MALE;
-					Spouses.Add(new Person(gender, Race, AffiliatedFaction, false));
+					var spouse = new Person(gender, Race, AffiliatedFaction, false);
+					Spouses.Add(spouse);
+					SimulationManager.Instance.world.AddContext(spouse);
 				}
 			}
 			if (Siblings.Count == 0)
@@ -183,7 +189,9 @@ namespace Game.Incidents
 				var numSiblings = SimRandom.RandomRange(0, 5);
 				for (int i = 0; i < numSiblings; i++)
 				{
-					Siblings.Add(new Person(Gender.ANY, Race, AffiliatedFaction, false, Parents));
+					var sibling = new Person(Gender.ANY, Race, AffiliatedFaction, false, Parents);
+					Siblings.Add(sibling);
+					SimulationManager.Instance.world.AddContext(sibling);
 				}
 			}
 		}
@@ -197,4 +205,6 @@ namespace Game.Incidents
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
 		}
 	}
+
+	//add years to wiki and find out why non world players arent dying
 }
