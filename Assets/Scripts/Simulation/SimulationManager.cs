@@ -38,7 +38,8 @@ namespace Game.Simulation
 		}
 
 
-		public IncidentContextDictionary Contexts => world.AllContexts;
+		public IncidentContextDictionary CurrentContexts => world.CurrentContexts;
+		public IncidentContextDictionary AllContexts => world.AllContexts;
 
 		public void CreateWorld(List<FactionPreset> factions)
 		{
