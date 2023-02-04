@@ -90,7 +90,7 @@ namespace Game.GUI.Wiki
 			if(!pages.ContainsKey(id))
 			{
 				//Get the context in question
-				var context = id == 0 ? SimulationManager.Instance.world : SimulationManager.Instance.Contexts.GetContextByID(id);
+				var context = id == 0 ? SimulationManager.Instance.world : SimulationManager.Instance.AllContexts.GetContextByID(id);
 				if (context != null)
 				{
 					//make a new page
@@ -132,6 +132,7 @@ namespace Game.GUI.Wiki
 
 		private void AddReportToPage(IncidentWikiPage page, IncidentReport report)
 		{
+			page.wikiText.text += report.ReportYear + ": ";
 			page.wikiText.text += report.GenerateLinkedLog();
 			page.wikiText.text += "\n";
 		}
