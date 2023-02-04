@@ -13,7 +13,7 @@ namespace Game.Incidents
 		override public bool Evaluate(IIncidentContext context, string propertyName, IIncidentContext parentContext)
 		{
 			compareTo.actionField.CalculateField(context);
-			var parentValue = compareTo.actionField.GetFieldValue();
+			var parentValue = GetContext(compareTo.actionField.GetFieldValue());
 			var contextValue = GetContext(context);
 
 			return Comparators[Comparator].Invoke(parentValue, contextValue);
