@@ -1,5 +1,7 @@
 ﻿using Game.Simulation;
 using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -12,7 +14,8 @@ namespace Game.GUI.Wiki
 
 		public override void BuildUIComponents(IAdventureComponent component)
 		{
-			//throw new System.NotImplementedException();
+			var typedComponent = component as AdventureNarrationComponent;
+			text.text = typedComponent.text;
 		}
 
 		protected override void ToggleElements()

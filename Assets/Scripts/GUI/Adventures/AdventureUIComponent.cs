@@ -1,5 +1,6 @@
 ﻿using Game.Simulation;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,6 +15,9 @@ namespace Game.GUI.Wiki
 
 		public static float DOUBLE_CLICK_THRESHOLD = 0.2f;
 		private float lastClickTime = -1;
+
+		public int BranchGroup { get; set; }
+		public int PathGroup { get; set; }
 
 		virtual public bool Completed { get; set; }
 		public void ToggleCompleted()

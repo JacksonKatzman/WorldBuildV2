@@ -164,11 +164,11 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: title
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: Title 1
     - Name: text
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: Some text goes here
     - Name: 
       Entry: 8
       Data: 
