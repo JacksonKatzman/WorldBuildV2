@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities.Editor;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -127,127 +126,6 @@ namespace Game.Simulation
 		{
 			contextCriterium.Add(new AdventureContextCriteria<Person>());
 			UpdateContainerIDs();
-		}
-	}
-
-	public interface IAdventureComponent
-	{
-		public bool Completed { get; set; }
-		public int ComponentID { get; set; }
-		public void UpdateComponentID(ref int nextID, List<int> removedIds = null);
-		public List<int> GetRemovedIds();
-	}
-
-	[HideReferenceObjectPicker]
-	public abstract class AdventureComponent : IAdventureComponent
-	{
-		virtual public bool Completed { get; set; }
-		[SerializeField, ReadOnly]
-		public int ComponentID { get; set; }
-		virtual public void UpdateComponentID(ref int nextID, List<int> removedIds = null)
-		{
-			ComponentID = nextID;
-			nextID++;
-		}
-
-		virtual public List<int> GetRemovedIds()
-		{
-			return new List<int>() { ComponentID };
-		}
-
-		protected void UpdateLinkID(ref int link, List<int> removedIds)
-		{
-			if (removedIds.Contains(link))
-			{
-				link = -1;
-			}
-			else
-			{
-				var currentLink = link;
-				var count = removedIds.Where(x => x < currentLink).Count();
-				link -= count;
-			}
-		}
-	}
-
-	public class AdventureTextComponent : AdventureComponent
-	{
-		[Title("Descriptive/Background Text")]
-		public string title;
-
-		[TextArea(15, 20), PropertyOrder(0)]
-		public string text;
-	}
-
-	public class AdventureNarrationComponent : AdventureComponent
-	{
-		[TextArea(15, 20), PropertyOrder(0), Title("Narration Text")]
-		public string text;
-	}
-
-	public class AdventureBranchingComponent : AdventureComponent
-	{
-		[Title("Branching Action Paths"), ListDrawerSettings(CustomAddFunction = "AddPath")]
-		public ObservableCollection<AdventurePathComponent> paths;
-
-		public AdventureBranchingComponent()
-		{
-			paths = new ObservableCollection<AdventurePathComponent>();
-			paths.CollectionChanged += EncounterEditorWindow.UpdateIDs;
-		}
-
-		public override void UpdateComponentID(ref int nextID, List<int> removedIds = null)
-		{
-			base.UpdateComponentID(ref nextID, removedIds);
-			foreach (var path in paths)
-			{
-				path.UpdateComponentID(ref nextID, removedIds);
-			}
-		}
-
-		private void AddPath()
-		{
-			paths.Add(new AdventurePathComponent());
-		}
-	}
-
-	public class AdventurePathComponent : AdventureComponent
-	{
-		public ObservableCollection<IAdventureComponent> components;
-
-		public AdventurePathComponent()
-		{
-			components = new ObservableCollection<IAdventureComponent>();
-			components.CollectionChanged += EncounterEditorWindow.UpdateIDs;
-		}
-
-		public override void UpdateComponentID(ref int nextID, List<int> removedIds = null)
-		{
-			base.UpdateComponentID(ref nextID, removedIds);
-			foreach (var component in components)
-			{
-				component.UpdateComponentID(ref nextID, removedIds);
-			}
-		}
-	}
-
-	public class AdventureSkillCheckComponent : AdventureComponent
-	{
-		//skill check type
-		//difficulty
-		[GUIColor("@successLink > -1 ? Color.green : Color.red")]
-		public int successLink = -1;
-		[GUIColor("@failureLink > -1 ? Color.green : Color.red")]
-		public int failureLink = -1;
-
-		public override void UpdateComponentID(ref int nextID, List<int> removedIds = null)
-		{
-			base.UpdateComponentID(ref nextID, removedIds);
-			if (removedIds != null)
-			{
-				UpdateLinkID(ref successLink, removedIds);
-				UpdateLinkID(ref failureLink, removedIds);
-			}
 		}
 	}
 }
