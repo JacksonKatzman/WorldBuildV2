@@ -10,37 +10,14 @@ using UnityEngine.EventSystems;
 
 namespace Game.GUI.Wiki
 {
-	public class IncidentWiki : MonoBehaviour, IPointerClickHandler
+	public class IncidentWiki : Wiki
 	{
-		[SerializeField]
-		private Transform tabRoot;
-		[SerializeField]
-		private GameObject wikiTabPrefab;
-		[SerializeField]
-		private Transform pageRoot;
-		[SerializeField]
-		private GameObject wikiPagePrefab;
-
-		public Dictionary<int, IncidentWikiPage> pages;
-		public List<IncidentWikiTab> tabs;
-		private IncidentWikiTab currentTab;
-		//private IncidentWikiPage currentPage;
-
-		//private LinkedList<IncidentWikiPage> pageHistory;
-		//private LinkedListNode<IncidentWikiPage> currentPage;
-
 		private bool initialized;
-		public void Awake()
-		{
-			//pages = new Dictionary<int, IncidentWikiPage>();
-		}
 
 		public void InitializeWiki()
 		{
 			if(!initialized)
 			{
-				pages = new Dictionary<int, IncidentWikiPage>();
-				tabs = new List<IncidentWikiTab>();
 				currentTab = MakeTab();
 				tabs.Add(currentTab);
 				OpenPage(0);
@@ -49,43 +26,21 @@ namespace Game.GUI.Wiki
 			}
 		}
 
-		public void OnPointerClick(PointerEventData eventData)
+		protected override void OnLinkClick(string linkID)
 		{
-			var page = currentTab.currentPage;
-			var linkIndex = TMP_TextUtilities.FindIntersectingLink(page.Value.wikiText, Input.mousePosition, null);
-			if (linkIndex >= 0)
+			var id = Int32.Parse(linkID);
+			if (id != currentTab.currentPage.Value.contextID)
 			{
-				var linkID = Int32.Parse(page.Value.wikiText.textInfo.linkInfo[linkIndex].GetLinkID());
-				if (linkID != page.Value.contextID)
+				if (Input.GetKey(KeyCode.LeftControl))
 				{
-					if(Input.GetKey(KeyCode.LeftControl))
-					{
-						currentTab = MakeTab();
-					}
-
-					OpenPage(linkID);
+					currentTab = MakeTab();
 				}
+
+				OpenPage(id);
 			}
 		}
 
-		public void SwitchToTab(IncidentWikiTab tab)
-		{
-			currentTab.currentPage.Value.gameObject.SetActive(false);
-			currentTab = tab;
-			currentTab.currentPage.Value.gameObject.SetActive(true);
-		}
-
-		public void GoToPreviousPage()
-		{
-			currentTab.GoToPreviousPage();
-		}
-
-		public void GoToNextPage()
-		{
-			currentTab.GoToNextPage();
-		}
-
-		public void OpenPage(int id, bool newTab = false)
+		override public void OpenPage(int id)
 		{
 			if(!pages.ContainsKey(id))
 			{
@@ -94,7 +49,7 @@ namespace Game.GUI.Wiki
 				if (context != null)
 				{
 					//make a new page
-					var page = Instantiate(wikiPagePrefab, pageRoot).GetComponent<IncidentWikiPage>();
+					var page = Instantiate(wikiPagePrefab, pageRoot).GetComponent<WikiPage>();
 					page.contextID = id;
 					page.wikiTitle.text = context.Name;
 
@@ -123,14 +78,7 @@ namespace Game.GUI.Wiki
 			currentTab.SwitchToPage(pages[id]);
 		}
 
-		private IncidentWikiTab MakeTab()
-		{
-			var createdTab = Instantiate(wikiTabPrefab, tabRoot).GetComponent<IncidentWikiTab>();
-			createdTab.onButtonClicked += SwitchToTab;
-			return createdTab;
-		}
-
-		private void AddReportToPage(IncidentWikiPage page, IncidentReport report)
+		private void AddReportToPage(WikiPage page, IncidentReport report)
 		{
 			page.wikiText.text += report.ReportYear + ": ";
 			page.wikiText.text += report.GenerateLinkedLog();
