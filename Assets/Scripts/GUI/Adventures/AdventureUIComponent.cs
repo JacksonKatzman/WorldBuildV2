@@ -16,8 +16,10 @@ namespace Game.GUI.Wiki
 		public static float DOUBLE_CLICK_THRESHOLD = 0.2f;
 		private float lastClickTime = -1;
 
+		public int ComponentID { get; set; }
 		public int BranchGroup { get; set; }
 		public int PathGroup { get; set; }
+		public RectTransform RectTransform => GetComponent<RectTransform>();
 
 		virtual public bool Completed { get; set; }
 		public void ToggleCompleted()

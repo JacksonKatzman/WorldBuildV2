@@ -9290,6 +9290,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 745601499399190231, guid: 8753017f5bb33264f82b268683ba2ec2, type: 3}
     - {fileID: 4905425454928020980, guid: 673119f60f7ab43468b6541bc0d873a8, type: 3}
+    - {fileID: 2750217441902480492, guid: 82067d59fea93e04bbac7d8fe9e051b0, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -9308,7 +9309,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 
@@ -9346,6 +9347,24 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 4|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Game.Simulation.AdventureBranchingComponent, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -9354,6 +9373,8 @@ MonoBehaviour:
   encounterObjects:
   - {fileID: 11400000, guid: eeaf62ca66502344497daefcd02d316f, type: 2}
   rootTransform: {fileID: 1243887275}
+  scrollRect: {fileID: 1010348474}
+  contentPanel: {fileID: 1243887275}
 --- !u!1 &1109763441
 GameObject:
   m_ObjectHideFlags: 0

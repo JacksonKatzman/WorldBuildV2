@@ -1,6 +1,5 @@
 ﻿using Game.Simulation;
 using Sirenix.OdinInspector;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;

@@ -5,6 +5,7 @@ namespace Game.Simulation
 {
 	public class AdventurePathComponent : AdventureComponent
 	{
+		public string pathTitle;
 		public ObservableCollection<IAdventureComponent> components;
 
 		public AdventurePathComponent()
