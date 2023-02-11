@@ -85,14 +85,6 @@ namespace Game.Simulation
 			contextCriterium = new List<IAdventureContextCriteria>();
 		}
 
-		private void UpdateContainerIDs()
-		{
-			for (int i = 0; i < contextCriterium.Count; i++)
-			{
-				contextCriterium[i].ContextID = "{" + i + "}";
-			}
-		}
-
 		private IEnumerable<EncounterType> GetEncounterTypes()
 		{
 			return Enum.GetValues(typeof(EncounterType)).Cast<EncounterType>();
@@ -106,26 +98,6 @@ namespace Game.Simulation
 		private void AddAct()
 		{
 			encounterActs.Add(new AdventureEncounterAct());
-		}
-
-		private void RemoveCriteria(int index)
-		{
-			contextCriterium.RemoveAt(index);
-			UpdateContainerIDs();
-		}
-
-		[ButtonGroup("1"), PropertyOrder(-1)]
-		private void AddMonster()
-		{
-			contextCriterium.Add(new MonsterCriteria());
-			UpdateContainerIDs();
-		}
-
-		[ButtonGroup("1"), PropertyOrder(-1)]
-		private void AddPerson()
-		{
-			contextCriterium.Add(new AdventureContextCriteria<Person>());
-			UpdateContainerIDs();
 		}
 	}
 }

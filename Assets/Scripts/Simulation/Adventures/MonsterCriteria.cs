@@ -56,5 +56,11 @@ namespace Game.Simulation
 		{
 			return Enum.GetValues(typeof(CreatureAlignment)).Cast<CreatureAlignment>();
 		}
+
+		public override void RetrieveContext()
+		{
+			Context = new Monster();
+			((Monster)Context).monsterData = GetMonsterData();
+		}
 	}
 }

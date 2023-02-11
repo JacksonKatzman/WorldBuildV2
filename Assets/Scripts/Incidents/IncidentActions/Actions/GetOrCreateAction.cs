@@ -14,7 +14,7 @@ namespace Game.Incidents
 		public ContextualIncidentActionField<T> actionField;
 
 		[ReadOnly, ShowInInspector]
-		public string ResultID => actionField.ActionFieldIDString;
+		public string ResultID => actionField?.ActionFieldIDString;
 
 		public override bool VerifyAction(IIncidentContext context)
 		{

@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,31 +32,42 @@ namespace Game.Simulation
 			base.OnGUI();
 		}
 
-        private bool ModeChosen { get; set; }
+		protected override void OnEnable()
+		{
+            ModeChosen = false;
+        }
+
+		private bool ModeChosen { get; set; }
         private string LoadPath => Path.Combine("ScriptableObjects/Encounters/" + savedEncounterName);
         private string SavePath => Path.Combine("ScriptableObjects/Encounters/" + encounterTitle);
 
         [Button("New Encounter"), HorizontalGroup("B1"), PropertyOrder(-100)]
         public void OnNewButtonPressed()
         {
+            contextCriterium = new ObservableCollection<IAdventureContextCriteria>();
             components = new ObservableCollection<IAdventureComponent>();
-            UpdateModeChosen();
+
+            components.CollectionChanged += UpdateComponentIDs;
+            contextCriterium.CollectionChanged += UpdateCriteriaIDs;
+            ModeChosen = true;
         }
 
         [Button("Load Encounter"), HorizontalGroup("B1"), PropertyOrder(-100)]
         public void OnLoadButtonPressed()
         {
-            var obj = Resources.Load<AdventureEncounterObject>(LoadPath);
+            var obj = Instantiate(Resources.Load<AdventureEncounterObject>(LoadPath));
             encounterTitle = obj.encounterTitle;
             encounterLocationType = obj.encounterLocationType;
             encounterTypes = obj.encounterTypes;
             allowedBiomes = obj.allowedBiomes;
-            contextCriterium = obj.contextCriterium;
+            contextCriterium = new ObservableCollection<IAdventureContextCriteria>(obj.contextCriterium);
             encounterBlurb = obj.encounterBlurb;
             encounterSummary = obj.encounterSummary;
             components = new ObservableCollection<IAdventureComponent>(obj.components);
 
-            UpdateModeChosen();
+            components.CollectionChanged += UpdateComponentIDs;
+            contextCriterium.CollectionChanged += UpdateCriteriaIDs;
+            ModeChosen = true;
 
             OutputLogger.Log("Encounter Loaded!");
         }
@@ -74,8 +86,8 @@ namespace Game.Simulation
         [ValueDropdown("GetBiomeTerrainTypes", IsUniqueList = true, DropdownTitle = "Allowed Biomes"), PropertyOrder(-7), ShowIfGroup("ModeChosen")]
         public List<BiomeTerrainType> allowedBiomes;
 
-        [ListDrawerSettings(HideAddButton = true), PropertyOrder(0), ShowIfGroup("ModeChosen")]
-        public List<IAdventureContextCriteria> contextCriterium;
+        [PropertyOrder(0), ShowIfGroup("ModeChosen")]
+        public ObservableCollection<IAdventureContextCriteria> contextCriterium;
 
         [TextArea(2, 4), PropertyOrder(0), ShowIfGroup("ModeChosen")]
         public string encounterBlurb;
@@ -99,7 +111,7 @@ namespace Game.Simulation
             obj.encounterLocationType = encounterLocationType;
             obj.encounterTypes = encounterTypes;
             obj.allowedBiomes = allowedBiomes;
-            obj.contextCriterium = contextCriterium;
+            obj.contextCriterium = contextCriterium.ToList();
             obj.encounterBlurb = encounterBlurb;
             obj.encounterSummary = encounterSummary;
             obj.components = components.ToList();
@@ -107,7 +119,7 @@ namespace Game.Simulation
             AssetDatabase.SaveAssets();
         }
 
-        public static void UpdateIDs(object sender, NotifyCollectionChangedEventArgs e)
+        public static void UpdateComponentIDs(object sender, NotifyCollectionChangedEventArgs e)
 		{
             if(e.NewItems != null)
 			{
@@ -131,14 +143,27 @@ namespace Game.Simulation
             }
         }
 
-        private void UpdateModeChosen()
+        public void UpdateCriteriaIDs(object sender, NotifyCollectionChangedEventArgs e)
 		{
-            if(!ModeChosen)
-			{
-                ModeChosen = true;
-                components.CollectionChanged += UpdateIDs;
-			}
-		}
+            if (e.NewItems != null)
+            {
+                OutputLogger.Log("ITEM ADDED");
+                UpdateCriteriaIDs();
+            }
+            if (e.OldItems != null)
+            {
+                OutputLogger.Log("ITEM REMOVED");
+
+                var removedItems = e.OldItems.Cast<IAdventureContextCriteria>();
+                var removedIds = new List<int>();
+                foreach (var item in removedItems)
+                {
+                    removedIds.Add(item.ContextID);
+                }
+
+                UpdateCriteriaIDs(removedIds);
+            }
+        }
 
         private List<string> GetSavedEncounters()
         {
@@ -164,6 +189,65 @@ namespace Game.Simulation
             }
 
             OutputLogger.Log("Encounter Component IDs Updated");
+        }
+
+        private void UpdateCriteriaIDs(List<int> removedIds = null)
+		{
+            var index = 0;
+            foreach(var context in contextCriterium)
+			{
+                context.ContextID = index;
+                index++;
+			}
+            foreach (var component in components)
+            {
+                component.UpdateContextIDs(removedIds);
+            }
+        }
+
+        public static string UpdateInTextIDs(string oldString, List<int> removedIds)
+        {
+            if (removedIds == null || String.IsNullOrEmpty(oldString))
+            {
+                return oldString;
+            }
+
+            removedIds.Sort();
+
+            var reg = new Regex(@"({\d+})|(<\d+>)|(:\d+:)|(;\d+;)|(\[\d+\])|(\(\d+\))|(!\d+!)|(@\d+@)|(#\d+#)|(%\d+%)|(-\d+-)|(=\d+=)");
+            var reg2 = new Regex(@"(.)(\d+)(.)");
+            var splits = reg.Split(oldString);
+
+            for (int i = 0; i < splits.Length; i++)
+            {
+                if (reg.IsMatch(splits[i]))
+                {
+                    var thing = reg2.Replace(splits[i], "$2");
+                    if (Int32.TryParse(thing, out var result))
+                    {
+                        for (int j = 0; j < removedIds.Count; j++)
+                        {
+                            if (result > removedIds[j])
+                            {
+                                result -= 1;
+                            }
+                            else
+                            {
+                                if (result == removedIds[j])
+                                {
+                                    result = -1;
+                                }
+                                break;
+                            }
+                        }
+
+                        splits[i] = reg2.Replace(splits[i], $"${{{1}}}{result}$3");
+                    }
+                }
+            }
+
+            var finalString = string.Concat(splits);
+            return finalString;
         }
     }
 }

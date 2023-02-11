@@ -12,7 +12,7 @@ namespace Game.Simulation
 		public AdventureBranchingComponent()
 		{
 			paths = new ObservableCollection<AdventurePathComponent>();
-			paths.CollectionChanged += EncounterEditorWindow.UpdateIDs;
+			paths.CollectionChanged += EncounterEditorWindow.UpdateComponentIDs;
 		}
 
 		public override void UpdateComponentID(ref int nextID, List<int> removedIds = null)

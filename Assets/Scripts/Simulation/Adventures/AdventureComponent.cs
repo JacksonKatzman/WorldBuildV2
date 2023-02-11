@@ -1,7 +1,9 @@
 ﻿using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using System;
 
 namespace Game.Simulation
 {
@@ -15,6 +17,11 @@ namespace Game.Simulation
 		{
 			ComponentID = nextID;
 			nextID++;
+		}
+
+		virtual public void UpdateContextIDs(List<int> removedIds = null)
+		{
+
 		}
 
 		virtual public List<int> GetRemovedIds()

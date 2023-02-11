@@ -7,6 +7,7 @@ namespace Game.Simulation
 		public bool Completed { get; set; }
 		public int ComponentID { get; set; }
 		public void UpdateComponentID(ref int nextID, List<int> removedIds = null);
+		public void UpdateContextIDs(List<int> removedIds = null);
 		public List<int> GetRemovedIds();
 	}
 }
