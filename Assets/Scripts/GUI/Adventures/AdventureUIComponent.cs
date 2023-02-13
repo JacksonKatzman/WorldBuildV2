@@ -48,5 +48,6 @@ namespace Game.GUI.Wiki
 		}
 
 		abstract public void BuildUIComponents(IAdventureComponent component);
+		abstract public void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts);
 	}
 }

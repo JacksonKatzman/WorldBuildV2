@@ -1,5 +1,6 @@
 ﻿using Game.Incidents;
 using System;
+using System.Collections.Generic;
 
 namespace Game.Simulation
 {
@@ -9,5 +10,7 @@ namespace Game.Simulation
 		public int ContextID { get; set; }
 		public IIncidentContext Context { get; set; }
 		public bool IsHistorical { get; }
+
+		public void ReplaceTextPlaceholders(ref string text);
 	}
 }

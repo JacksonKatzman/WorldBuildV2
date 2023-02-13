@@ -1,6 +1,8 @@
 ﻿using Game.Incidents;
 using Sirenix.OdinInspector;
 using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Game.Simulation
@@ -36,17 +38,28 @@ namespace Game.Simulation
 		[SerializeField, HorizontalGroup, PropertyOrder(-1)]
 		public bool historical;
 
+		abstract public Dictionary<string, Func<T, string>> Replacements { get; }
+
 		public AdventureContextCriteria()
 		{
 			contextTypeName = ContextType.Name;
 		}
 
+		protected T GetTypedContext()
+		{
+			return (T)Context;
+		}
+
 		abstract public void RetrieveContext();
-		//need a way to ensure contexts for monsters and persons are retrievable
-		//once they are we can use them in our text replacements and as links
-		//maybe leave the HOW we get people out for now?
-		//eventually we will generate a bunch for the area and it can pick from those?
-		//just assume we get a random person back for now
-		//need a way of getting/parsing the mad lib info
+		public void ReplaceTextPlaceholders(ref string text)
+		{
+			foreach(var pair in Replacements)
+			{
+				var idReplacementPattern = $"{ContextID}";
+				var toReplace = Regex.Replace(pair.Key, "##", idReplacementPattern);
+				var replaceWith = pair.Value(GetTypedContext());
+				text = text.Replace(@toReplace, replaceWith);
+			}
+		}
 	}
 }

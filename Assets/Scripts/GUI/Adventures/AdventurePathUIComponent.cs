@@ -1,4 +1,6 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Simulation;
+using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -21,6 +23,16 @@ namespace Game.GUI.Wiki
 		public void SnapToPath()
 		{
 			AdventureGuide.Instance.SetCurrentComponent(linkID);
+		}
+
+		public void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
+		{
+			foreach(var context in contexts)
+			{
+				var currentText = pathTitle.text;
+				context.ReplaceTextPlaceholders(ref currentText);
+				pathTitle.text = currentText;
+			}
 		}
 	}
 }

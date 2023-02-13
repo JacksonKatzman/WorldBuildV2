@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,11 +12,16 @@ namespace Game.GUI.Wiki
 	public class AdventureGuide : SerializedMonoBehaviour
 	{
 		public Dictionary<Type, GameObject> prefabDictionary;
-		public List<AdventureEncounterObject> encounterObjects;
+		public AdventureEncounterObject mainEncounter;
+		public List<AdventureEncounterObject> sideEncounters;
+		[HideInInspector]
+		public Adventure currentAdventure;
 		public Transform rootTransform;
 		public ScrollRect scrollRect;
 		public RectTransform contentPanel;
 
+		public TMP_Text adventureTitleText;
+		public AdventureTextTitlePairUIComponent background;
 		private List<IAdventureUIComponent> uiComponents;
 		private int numBranches = 0;
 		private int numPaths = 0;
@@ -30,17 +36,38 @@ namespace Game.GUI.Wiki
 			else
 			{
 				Instance = this;
-				SetUpAdventure(encounterObjects);
+				//SetUpAdventure(encounterObjects);
 			}
 		}
 
-		public void SetUpAdventure(List<AdventureEncounterObject> encounters)
+		[Button("Test Display Adventure")]
+		private void TestDisplayAdventure()
+		{
+			currentAdventure = new Adventure(mainEncounter, sideEncounters);
+			SetUpAdventure(currentAdventure);
+		}
+
+
+		public void SetUpAdventure(Adventure adventure)
 		{
 			if(uiComponents == null)
 			{
 				uiComponents = new List<IAdventureUIComponent>();
 			}
 			uiComponents.Clear();
+
+			adventureTitleText.text = adventure.mainEncounter.encounterTitle;
+			background.text.text = adventure.mainEncounter.encounterBlurb;
+			background.text.text += " " + adventure.mainEncounter.encounterSummary;
+
+			foreach (var context in mainEncounter.contextCriterium)
+			{
+				var currentText = background.text.text;
+				context.ReplaceTextPlaceholders(ref currentText);
+				background.text.text = currentText;
+			}
+
+			var encounters = adventure.Encounters;
 
 			foreach(var encounter in encounters)
 			{
@@ -59,6 +86,7 @@ namespace Game.GUI.Wiki
 							foreach(var c in path.components)
 							{
 								var uic = BuildUIComponent(c, numBranches, numPaths);
+								uic.ReplaceTextPlaceholders(encounter.contextCriterium);
 								uiComponents.Add(uic);
 							}
 						}
@@ -66,6 +94,7 @@ namespace Game.GUI.Wiki
 					else
 					{
 						var uic = BuildUIComponent(component, numBranches, numPaths);
+						uic.ReplaceTextPlaceholders(encounter.contextCriterium);
 						uiComponents.Add(uic);
 					}
 				}

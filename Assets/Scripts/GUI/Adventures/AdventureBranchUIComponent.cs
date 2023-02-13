@@ -24,6 +24,14 @@ namespace Game.GUI.Wiki
 			}
 		}
 
+		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
+		{
+			foreach(var button in pathButtons)
+			{
+				button.ReplaceTextPlaceholders(contexts);
+			}
+		}
+
 		protected override void ToggleElements()
 		{
 			//throw new NotImplementedException();
