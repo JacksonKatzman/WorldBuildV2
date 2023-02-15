@@ -10,13 +10,12 @@ namespace Game.Simulation
 		public override Dictionary<string, Func<Person, string>> Replacements => replacements;
 		private static Dictionary<string, Func<Person, string>> replacements = new Dictionary<string, Func<Person, string>>
 		{
-			{"{##}", (person) => person.Name }
+			{"{##}", (person) => person.Name },
+			{"[##]", (person) => person.Gender == Enums.Gender.MALE ? "he" : "she" }
 		};
 
-		//public GetOrCreatePersonAction GetOrCreatePerson;
 		public override void RetrieveContext()
 		{
-			//temporary
 			Context = SimRandom.RandomEntryFromList(SimulationManager.Instance.CurrentContexts[typeof(Person)]);
 		}
 	}

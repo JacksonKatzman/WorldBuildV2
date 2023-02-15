@@ -33,7 +33,7 @@ namespace Game.Simulation
 
 		[SerializeField, ReadOnly, HorizontalGroup(LabelWidth = 120), PropertyOrder(-1)]
 		private string contextTypeName;
-		[ShowInInspector, HorizontalGroup, PropertyOrder(-1), ReadOnly]
+		[SerializeField, HorizontalGroup, PropertyOrder(-1), ReadOnly]
 		public int ContextID { get; set; }
 		[SerializeField, HorizontalGroup, PropertyOrder(-1)]
 		public bool historical;
@@ -60,6 +60,9 @@ namespace Game.Simulation
 				var replaceWith = pair.Value(GetTypedContext());
 				text = text.Replace(@toReplace, replaceWith);
 			}
+
+			var postPeriod = new Regex(@"(\. )([a-z])");
+			text = postPeriod.Replace(text, m => m.Groups[1].Value + m.Groups[2].Value.ToUpper());
 		}
 	}
 }
