@@ -150,6 +150,22 @@ MonoBehaviour:
     - Name: actTitle
       Entry: 1
       Data: Into the maw
+    - Name: actNotes
+      Entry: 6
+      Data: 
+    - Name: actApproach
+      Entry: 1
+      Data: 'Reaching the top, you find yourself standing before a large cave entrance.
+        The cave is dark, with the only light coming from the flickering of a fire
+        deep within. The sound of the {0}s is louder now, and you can hear the <0>s
+        and <0>s of the {0}s echoing through the cave. The entrance to the cave is
+        guarded by a pair of {0}s..
+
+        You can see that the cave winds deep
+        into the mountain, with various tunnels branching off in different directions.
+        You can smell the musky scent of {0}s and the damp earth of the cave. It''s
+        clear that the {0}s have been living here for some time, as bones and half-eaten
+        corpses of animals are scattered about the cave entrance.'
     - Name: paths
       Entry: 7
       Data: 8|System.Collections.Generic.List`1[[Game.Simulation.AdventureEncounterPath,
@@ -275,6 +291,12 @@ MonoBehaviour:
     - Name: actTitle
       Entry: 1
       Data: What must be done
+    - Name: actNotes
+      Entry: 6
+      Data: 
+    - Name: actApproach
+      Entry: 6
+      Data: 
     - Name: paths
       Entry: 7
       Data: 13|System.Collections.Generic.List`1[[Game.Simulation.AdventureEncounterPath,
@@ -338,6 +360,61 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: components
+      Entry: 7
+      Data: 15|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 16|Game.Simulation.AdventureNarrationComponent, Assembly-CSharp
+    - Name: text
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|Game.Simulation.AdventureTextComponent, Assembly-CSharp
+    - Name: title
+      Entry: 6
+      Data: 
+    - Name: text
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 18|Game.Simulation.AdventureTextComponent, Assembly-CSharp
+    - Name: title
+      Entry: 6
+      Data: 
+    - Name: text
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 19|Game.Simulation.AdventureNarrationComponent, Assembly-CSharp
+    - Name: text
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   encounterTitle: A Lair of Monsters
   encounterLocationType: 0
   encounterTypes: 00000000
@@ -357,12 +434,4 @@ MonoBehaviour:
     you find yourself at the base of a steep mountain. The mountain is rocky, with
     jagged outcroppings and loose gravel making the climb difficult. You can see
     a faint trail leading up the mountain, and you follow it, carefully making your
-    way upward.\r\nReaching the top, you find yourself standing before a large cave
-    entrance. The cave is dark, with the only light coming from the flickering of
-    a fire deep within. The sound of the {0}s is louder now, and you can hear the
-    <0>s and <0>s of the {0}s echoing through the cave. The entrance to the cave
-    is guarded by a pair of {0}s..\r\nYou can see that the cave winds deep into the
-    mountain, with various tunnels branching off in different directions. You can
-    smell the musky scent of {0}s and the damp earth of the cave. It's clear that
-    the {0}s have been living here for some time, as bones and half-eaten corpses
-    of animals are scattered about the cave entrance."
+    way upward.\r"

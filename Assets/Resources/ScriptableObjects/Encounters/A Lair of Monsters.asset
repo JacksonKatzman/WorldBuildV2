@@ -31,12 +31,12 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 1|Game.Simulation.MonsterCriteria, Assembly-CSharp
+    - Name: ContextID
+      Entry: 3
+      Data: 0
     - Name: contextTypeName
       Entry: 1
       Data: Monster
-    - Name: contextID
-      Entry: 1
-      Data: '{0}'
     - Name: historical
       Entry: 5
       Data: false
@@ -117,14 +117,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 5|Game.Simulation.AdventureContextCriteria`1[[Game.Incidents.Person,
-        Assembly-CSharp]], Assembly-CSharp
+      Data: 5|Game.Simulation.AdventurePersonContextCriteria, Assembly-CSharp
+    - Name: ContextID
+      Entry: 3
+      Data: 1
     - Name: contextTypeName
       Entry: 1
       Data: Person
-    - Name: contextID
-      Entry: 1
-      Data: '{1}'
     - Name: historical
       Entry: 5
       Data: false
@@ -156,22 +155,7 @@ MonoBehaviour:
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 8|Game.Simulation.AdventureTextComponent, Assembly-CSharp
-    - Name: ComponentID
-      Entry: 3
       Data: 0
-    - Name: title
-      Entry: 1
-      Data: Title 1
-    - Name: text
-      Entry: 1
-      Data: Some text goes here
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 
