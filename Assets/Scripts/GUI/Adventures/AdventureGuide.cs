@@ -20,7 +20,8 @@ namespace Game.GUI.Wiki
 		public Transform rootTransform;
 		public ScrollRect scrollRect;
 		public RectTransform contentPanel;
-		public Transform tableOfContentsRoot;
+		public CanvasGroup tableOfContentsCanvasGroup;
+		public Transform tableOfContentsLinkRoot;
 
 		public TMP_Text adventureTitleText;
 		public AdventureTextTitlePairUIComponent background;
@@ -126,10 +127,19 @@ namespace Game.GUI.Wiki
 
 		public void CreateTableOfContentsEntry(int id, string entryText)
 		{
-			var link = Instantiate(tableOfContentsLinkPrefab, tableOfContentsRoot).GetComponent<AdventureComponentUILink>();
+			var link = Instantiate(tableOfContentsLinkPrefab, tableOfContentsLinkRoot).GetComponent<AdventureComponentUILink>();
 			link.ComponentLinkID = id;
 			link.text.text = entryText;
 			tableOfContents.Add(link);
+		}
+
+		public void ToggleTableOfContents()
+		{
+			var toggleOn = !tableOfContentsCanvasGroup.interactable;
+
+			tableOfContentsCanvasGroup.alpha = toggleOn ? 1 : 0;
+			tableOfContentsCanvasGroup.interactable = toggleOn;
+			tableOfContentsCanvasGroup.blocksRaycasts = toggleOn;
 		}
 
 		private void SnapTo(RectTransform target)
