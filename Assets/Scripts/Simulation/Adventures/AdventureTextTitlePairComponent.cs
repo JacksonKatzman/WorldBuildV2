@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace Game.Simulation
 {
-	public class AdventureTextTitlePairComponent : AdventureComponent
+	public class AdventureTextTitlePairComponent : AdventureTitleComponent
 	{
-		public string title;
 		[TextArea(15, 20), PropertyOrder(0)]
 		public string text;
 

@@ -31,6 +31,8 @@ namespace Game.GUI.Wiki
 				context.ReplaceTextPlaceholders(ref currentText);
 				text.text = currentText;
 			}
+
+			AdventureGuide.Instance.CreateTableOfContentsEntry(ComponentID, title.text);
 		}
 
 		protected override void ToggleElements()

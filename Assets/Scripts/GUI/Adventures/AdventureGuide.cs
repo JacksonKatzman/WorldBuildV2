@@ -12,6 +12,7 @@ namespace Game.GUI.Wiki
 	public class AdventureGuide : SerializedMonoBehaviour
 	{
 		public Dictionary<Type, GameObject> prefabDictionary;
+		public GameObject tableOfContentsLinkPrefab;
 		public AdventureEncounterObject mainEncounter;
 		public List<AdventureEncounterObject> sideEncounters;
 		[HideInInspector]
@@ -19,10 +20,12 @@ namespace Game.GUI.Wiki
 		public Transform rootTransform;
 		public ScrollRect scrollRect;
 		public RectTransform contentPanel;
+		public Transform tableOfContentsRoot;
 
 		public TMP_Text adventureTitleText;
 		public AdventureTextTitlePairUIComponent background;
 		private List<IAdventureUIComponent> uiComponents;
+		private List<AdventureComponentUILink> tableOfContents;
 		private int numBranches = 0;
 		private int numPaths = 0;
 
@@ -56,9 +59,16 @@ namespace Game.GUI.Wiki
 			}
 			uiComponents.Clear();
 
+			if(tableOfContents == null)
+			{
+				tableOfContents = new List<AdventureComponentUILink>();
+			}
+			tableOfContents.Clear();
+
 			adventureTitleText.text = adventure.mainEncounter.encounterTitle;
 			background.text.text = adventure.mainEncounter.encounterBlurb;
 			background.text.text += " " + adventure.mainEncounter.encounterSummary;
+			CreateTableOfContentsEntry(-1, "Background");
 
 			foreach (var context in mainEncounter.contextCriterium)
 			{
@@ -103,8 +113,23 @@ namespace Game.GUI.Wiki
 
 		public void SetCurrentComponent(int index)
 		{
-			var component = uiComponents.First(x => x.ComponentID == index);
-			SnapTo(component.RectTransform);
+			if (index >= 0)
+			{
+				var component = uiComponents.First(x => x.ComponentID == index);
+				SnapTo(component.RectTransform);
+			}
+			else
+			{
+				SnapTo(background.RectTransform);
+			}
+		}
+
+		public void CreateTableOfContentsEntry(int id, string entryText)
+		{
+			var link = Instantiate(tableOfContentsLinkPrefab, tableOfContentsRoot).GetComponent<AdventureComponentUILink>();
+			link.ComponentLinkID = id;
+			link.text.text = entryText;
+			tableOfContents.Add(link);
 		}
 
 		private void SnapTo(RectTransform target)

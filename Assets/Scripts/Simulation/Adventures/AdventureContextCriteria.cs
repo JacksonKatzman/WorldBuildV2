@@ -61,6 +61,7 @@ namespace Game.Simulation
 				text = text.Replace(@toReplace, replaceWith);
 			}
 
+			//For capitalizing after periods
 			var postPeriod = new Regex(@"(\. )([a-z])");
 			text = postPeriod.Replace(text, m => m.Groups[1].Value + m.Groups[2].Value.ToUpper());
 		}
