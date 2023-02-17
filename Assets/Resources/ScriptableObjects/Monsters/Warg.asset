@@ -44,6 +44,9 @@ MonoBehaviour:
   conditionImmunities: 
   skills: []
   senses: 
+  groupingName: pack
+  sounds:
+  - howl
   languages: []
   abilities: []
   actions: []

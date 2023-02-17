@@ -26,7 +26,9 @@ namespace Game.Simulation
 
 		private static Dictionary<string, Func<Monster, string>> replacements = new Dictionary<string, Func<Monster, string>>
 		{
-			{"{##}", (monster) => monster.monsterData.name }
+			{"{##}", (monster) => monster.monsterData.name.ToLower() },
+			{"-##-", (monster) => monster.monsterData.groupingName },
+			{"<##>", (monster) => SimRandom.RandomEntryFromList(monster.monsterData.sounds) }
 		};
 
 		public MonsterCriteria() : base()
