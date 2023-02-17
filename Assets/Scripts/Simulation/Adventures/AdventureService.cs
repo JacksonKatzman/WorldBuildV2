@@ -20,9 +20,9 @@ namespace Game.Simulation
 			}
 		}
 
-		public List<AdventureEncounter> evergreenEncounters;
-		public List<AdventureEncounter> availableEncounters;
-		public List<AdventureEncounter> usedEncounters;
+		public List<AdventureEncounterObject> evergreenEncounters;
+		public List<AdventureEncounterObject> availableEncounters;
+		public List<AdventureEncounterObject> usedEncounters;
 
 		public List<MonsterData> monsterData;
 
@@ -31,21 +31,21 @@ namespace Game.Simulation
 			Setup();
 		}
 
-		public void AddAvailableEncounter(AdventureEncounter encounter)
+		public void AddAvailableEncounter(AdventureEncounterObject encounter)
 		{
 			availableEncounters.Add(encounter);
 		}
 
 		private void Setup()
 		{
-			evergreenEncounters = new List<AdventureEncounter>();
-			availableEncounters = new List<AdventureEncounter>();
-			usedEncounters = new List<AdventureEncounter>();
+			evergreenEncounters = new List<AdventureEncounterObject>();
+			availableEncounters = new List<AdventureEncounterObject>();
+			usedEncounters = new List<AdventureEncounterObject>();
 			monsterData = new List<MonsterData>();
 
 			var encountersPath = "ScriptableObjects/Encounters";
 
-			evergreenEncounters.AddRange(Resources.LoadAll(encountersPath, typeof(AdventureEncounter)).Cast<AdventureEncounter>().ToList());
+			evergreenEncounters.AddRange(Resources.LoadAll(encountersPath, typeof(AdventureEncounterObject)).Cast<AdventureEncounterObject>().ToList());
 			OutputLogger.Log(string.Format("{0} encounters loaded.", evergreenEncounters.Count));
 
 			var monstersPath = "ScriptableObjects/Monsters";

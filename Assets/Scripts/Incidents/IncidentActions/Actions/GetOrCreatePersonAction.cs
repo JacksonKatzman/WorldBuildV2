@@ -65,8 +65,4 @@ namespace Game.Incidents
 			return faction.CalculateField(context) && race.CalculateField(context);
 		}
 	}
-
-	//make IPerson, make MinorPerson, make it and Person implement IPerson
-	//make family lists of IPerson, non world players are minor persons, minor person doesnt inherit from person
-	//iperson contains Die and other shared functions, killpersonaction uses IPerson contexts
 }

@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace Game.GUI.Wiki
 {
-	public class IncidentWikiTab : MonoBehaviour
+	public class WikiTab : MonoBehaviour
 	{
-		public LinkedList<IncidentWikiPage> pageHistory;
-		public LinkedListNode<IncidentWikiPage> currentPage;
-		public Action<IncidentWikiTab> onButtonClicked;
+		public LinkedList<WikiPage> pageHistory;
+		public LinkedListNode<WikiPage> currentPage;
+		public Action<WikiTab> onButtonClicked;
 
-		public IncidentWikiTab()
+		public WikiTab()
 		{
-			pageHistory = new LinkedList<IncidentWikiPage>();
+			pageHistory = new LinkedList<WikiPage>();
 		}
 
 		public void SwitchToTab()
@@ -40,7 +40,7 @@ namespace Game.GUI.Wiki
 			}
 		}
 
-		public void SwitchToPage(IncidentWikiPage incidentWikiPage)
+		public void SwitchToPage(WikiPage incidentWikiPage)
 		{
 			if (currentPage != null)
 			{

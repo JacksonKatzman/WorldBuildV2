@@ -9,7 +9,7 @@ namespace Game.Incidents
 	public class IncidentWeight<T> : IIncidentWeight where T : IIncidentContext
 	{
 		[Range(1, 20)]
-		public int baseWeight;
+		public int baseWeight = 1;
 
 		[ValueDropdown("GetOperatorNames"), HorizontalGroup("Group 1", 50), HideLabel]
 		public string Operation;

@@ -2,10 +2,12 @@
 using Game.Incidents;
 using Game.Terrain;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Game.Simulation
 {
@@ -41,8 +43,8 @@ namespace Game.Simulation
 	//Unrelated but need to set up a system similar to IncidentCriteria for finding threats
 	//Includes both monsters and non monster threats
 
-	[CreateAssetMenu(fileName = nameof(AdventureEncounter), menuName = "ScriptableObjects/Adventures/" + nameof(AdventureEncounter), order = 1)]
-	public class AdventureEncounter : SerializedScriptableObject
+	[CreateAssetMenu(fileName = nameof(AdventureEncounterObject), menuName = "ScriptableObjects/Adventures/" + nameof(AdventureEncounterObject), order = 1)]
+	public class AdventureEncounterObject : SerializedScriptableObject
 	{
 		[PropertyOrder(-10)]
 		public string encounterTitle;
@@ -63,7 +65,7 @@ namespace Game.Simulation
 		[TextArea(2, 4), PropertyOrder(0)]
 		public string encounterBlurb;
 
-		[TextArea(10,15), PropertyOrder(0)]
+		[TextArea(10, 15), PropertyOrder(0)]
 		public string encounterSummary;
 
 		[TextArea(15, 20), PropertyOrder(0)]
@@ -72,20 +74,15 @@ namespace Game.Simulation
 		[PropertyOrder(0), ListDrawerSettings(CustomAddFunction = "AddAct")]
 		public List<AdventureEncounterAct> encounterActs;
 
-		public AdventureEncounter()
+		[ListDrawerSettings(HideRemoveButton = true, HideAddButton = true)]
+		public List<IAdventureComponent> components;
+
+		public AdventureEncounterObject()
 		{
 			encounterTypes = new List<EncounterType>();
 			allowedBiomes = new List<BiomeTerrainType>();
 			encounterActs = new List<AdventureEncounterAct>();
 			contextCriterium = new List<IAdventureContextCriteria>();
-		}
-
-		private void UpdateContainerIDs()
-		{
-			for(int i = 0; i < contextCriterium.Count; i++)
-			{
-				contextCriterium[i].ContextID = "{" + i + "}";
-			}
 		}
 
 		private IEnumerable<EncounterType> GetEncounterTypes()
@@ -101,26 +98,6 @@ namespace Game.Simulation
 		private void AddAct()
 		{
 			encounterActs.Add(new AdventureEncounterAct());
-		}
-
-		private void RemoveCriteria(int index)
-		{
-			contextCriterium.RemoveAt(index);
-			UpdateContainerIDs();
-		}
-
-		[ButtonGroup("1"), PropertyOrder(-1)]
-		private void AddMonster()
-		{
-			contextCriterium.Add(new MonsterCriteria());
-			UpdateContainerIDs();
-		}
-
-		[ButtonGroup("1"), PropertyOrder(-1)]
-		private void AddPerson()
-		{
-			contextCriterium.Add(new AdventureContextCriteria<Person>());
-			UpdateContainerIDs();
 		}
 	}
 }

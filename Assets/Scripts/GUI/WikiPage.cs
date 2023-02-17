@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.GUI.Wiki
 {
-	public class IncidentWikiPage : MonoBehaviour
+	public class WikiPage : MonoBehaviour
 	{
 		[SerializeField]
 		public TMP_Text wikiTitle;

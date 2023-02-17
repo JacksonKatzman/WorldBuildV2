@@ -43,6 +43,8 @@ namespace Game.Creatures
 		public List<string> skills;
 		//senses
 		public string senses;
+		public string groupingName;
+		public List<string> sounds;
 		//languages
 		public List<string> languages;
 		//abilities

@@ -12,7 +12,7 @@ namespace Game.Incidents
 		public ContextualIncidentActionField<Location> location;
 
 		[SerializeField, OnValueChanged("OnEncounterChanged")]
-		public AdventureEncounter encounter;
+		public AdventureEncounterObject encounter;
 
 		[ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)]
 		public List<IncidentActionFieldContainer> actionFields;
