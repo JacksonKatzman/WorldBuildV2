@@ -1,6 +1,7 @@
 ﻿using Game.Simulation;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.EventSystems;
 
 namespace Game.GUI.Wiki
 {
@@ -29,6 +30,14 @@ namespace Game.GUI.Wiki
 		{
 			OutputLogger.Log("TOGGLE ELEMENTS");
 			text.color = Completed ? SwapColorAlpha(text.color, FADED_ALPHA) : SwapColorAlpha(text.color, FULL_ALPHA);
+		}
+
+		protected void Update()
+		{
+			if(hovered)
+			{
+				HandleTooltips(text);
+			}
 		}
 	}
 }

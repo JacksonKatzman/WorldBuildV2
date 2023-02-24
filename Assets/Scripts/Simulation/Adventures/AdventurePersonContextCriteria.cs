@@ -10,7 +10,7 @@ namespace Game.Simulation
 		public override Dictionary<string, Func<Person, string>> Replacements => replacements;
 		private static Dictionary<string, Func<Person, string>> replacements = new Dictionary<string, Func<Person, string>>
 		{
-			{"{##}", (person) => person.Name },
+			{"{##}", (person) => string.Format("<i><link=\"{0}\">{1}</link></i>", person.ID, person.Name) },
 			{"[##]", (person) => person.Gender == Enums.Gender.MALE ? "he" : "she" }
 		};
 

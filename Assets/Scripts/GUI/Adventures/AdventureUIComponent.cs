@@ -2,19 +2,23 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Game.GUI.Wiki
 {
-	public abstract class AdventureUIComponent : SerializedMonoBehaviour, IAdventureUIComponent
+	public abstract class AdventureUIComponent : SerializedMonoBehaviour, IAdventureUIComponent, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 	{
 		protected static byte FULL_ALPHA = 255;
 		protected static byte FADED_ALPHA = 100;
 
 		public static float DOUBLE_CLICK_THRESHOLD = 0.2f;
 		private float lastClickTime = -1;
+
+		private static LTDescr delay;
+		protected bool hovered;
 
 		public int ComponentID { get; set; }
 		public int BranchGroup { get; set; }
@@ -49,5 +53,41 @@ namespace Game.GUI.Wiki
 
 		abstract public void BuildUIComponents(IAdventureComponent component);
 		abstract public void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts);
+
+		public void OnPointerClick(PointerEventData eventData)
+		{
+			//grabbing links to open as popups
+		}
+		public void OnPointerEnter(PointerEventData eventData)
+		{
+			hovered = true;
+		}
+
+		public void OnPointerExit(PointerEventData eventData)
+		{
+			hovered = false;
+			TooltipService.HideTooltip();
+		}
+
+		protected void HandleTooltips(TMP_Text text)
+		{
+			var linkIndex = TMP_TextUtilities.FindIntersectingLink(text, Input.mousePosition, null);
+			if (linkIndex >= 0)
+			{
+				var linkID = text.textInfo.linkInfo[linkIndex].GetLinkID();
+				if(int.TryParse(linkID, out int result))
+				{
+					TooltipService.ShowTooltip("Context with ID: " + result);
+				}
+				else
+				{
+					TooltipService.HideTooltip();
+				}
+			}
+			else
+			{
+				TooltipService.HideTooltip();
+			}
+		}
 	}
 }
