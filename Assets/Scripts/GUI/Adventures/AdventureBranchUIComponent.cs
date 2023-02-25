@@ -25,6 +25,11 @@ namespace Game.GUI.Wiki
 			}
 		}
 
+		public override void OnPointerClick(PointerEventData eventData)
+		{
+			
+		}
+
 		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
 		{
 			foreach(var button in pathButtons)

@@ -11,6 +11,11 @@ namespace Game.GUI.Wiki
 			//throw new System.NotImplementedException();
 		}
 
+		public override void OnPointerClick(PointerEventData eventData)
+		{
+			//throw new System.NotImplementedException();
+		}
+
 		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
 		{
 			//throw new System.NotImplementedException();

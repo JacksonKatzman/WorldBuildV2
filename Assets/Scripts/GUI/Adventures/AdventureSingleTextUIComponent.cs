@@ -1,6 +1,8 @@
 ﻿using Game.Simulation;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Game.GUI.Wiki
@@ -24,6 +26,13 @@ namespace Game.GUI.Wiki
 				context.ReplaceTextPlaceholders(ref currentText);
 				text.text = currentText;
 			}
+
+			AddKeywordLinks(text);
+		}
+
+		public override void OnPointerClick(PointerEventData eventData)
+		{
+			HandleClicks(text);
 		}
 
 		protected override void ToggleElements()

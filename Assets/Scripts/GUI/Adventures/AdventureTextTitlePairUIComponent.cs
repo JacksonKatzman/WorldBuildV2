@@ -33,7 +33,14 @@ namespace Game.GUI.Wiki
 				text.text = currentText;
 			}
 
+			AddKeywordLinks(text);
+
 			AdventureGuide.Instance.CreateTableOfContentsEntry(ComponentID, title.text);
+		}
+
+		public override void OnPointerClick(PointerEventData eventData)
+		{
+			HandleClicks(text);
 		}
 
 		protected override void ToggleElements()

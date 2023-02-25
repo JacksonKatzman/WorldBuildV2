@@ -14046,7 +14046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb231d08520598b4cbe873cfba10f6fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  header: 
+  header: Skill
   content: 'Skills represent the other, non-weapon, non-magical, non-standard checks
     a player/monster might want to make.
 
@@ -23410,11 +23410,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   header: Saving Throws
-  content: "A saving throw, (also called a save), represents an attempt to resist
-    a spell, a trap, a poison, a disease, or a similar threat. You don\u2019t normally
-    decide to make a saving throw; you are forced to make one because your character
-    or creature is at risk of harm.\n\nThese values should be added to the result
-    of a die roll when making a saving throw of the corresponding type."
+  content: 'These values should be added to the result of a die roll when making
+    a saving throw of the corresponding type.
+
+'
 --- !u!114 &1828673810
 MonoBehaviour:
   m_ObjectHideFlags: 0

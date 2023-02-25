@@ -2,6 +2,7 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -54,10 +55,7 @@ namespace Game.GUI.Wiki
 		abstract public void BuildUIComponents(IAdventureComponent component);
 		abstract public void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts);
 
-		public void OnPointerClick(PointerEventData eventData)
-		{
-			//grabbing links to open as popups
-		}
+		abstract public void OnPointerClick(PointerEventData eventData);
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			hovered = true;
@@ -67,6 +65,29 @@ namespace Game.GUI.Wiki
 		{
 			hovered = false;
 			TooltipService.HideTooltip();
+		}
+
+		protected void AddKeywordLinks(TMP_Text text)
+		{
+			var keywordRegex = new Regex(@"\[([A-Z_]+)\]");
+			text.text = keywordRegex.Replace(text.text, m => string.Format("<link={0}><u><b>{0}</u></b></link>", m.Groups[1].Value));
+		}
+
+		protected void HandleClicks(TMP_Text text)
+		{
+			var linkIndex = TMP_TextUtilities.FindIntersectingLink(text, Input.mousePosition, null);
+			if (linkIndex >= 0)
+			{
+				var linkID = text.textInfo.linkInfo[linkIndex].GetLinkID();
+				if(InfoService.Keywords.TryGetValue(linkID, out var value))
+				{
+					OutputLogger.Log("* Opening Popup for: " + value.keyword);
+				}
+				else
+				{
+					OutputLogger.LogWarning("* No Keyword found for: " + linkID);
+				}
+			}
 		}
 
 		protected void HandleTooltips(TMP_Text text)
