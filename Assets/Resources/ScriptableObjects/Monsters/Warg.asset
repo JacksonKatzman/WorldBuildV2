@@ -20,9 +20,13 @@ MonoBehaviour:
   alignment: 5
   challengeRating: 0
   experienceYield: 0
-  armorValue: 
-  health: 
-  speed: 
+  armorValue: 0
+  health: 0
+  speed: 0
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 0
   stats:
     strength: 0
     dexterity: 0
@@ -43,7 +47,7 @@ MonoBehaviour:
   damageImmunities: 
   conditionImmunities: 
   skills: []
-  senses: 
+  senses: []
   groupingName: pack
   sounds:
   - howl

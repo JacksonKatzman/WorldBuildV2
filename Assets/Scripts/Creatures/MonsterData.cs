@@ -1,4 +1,5 @@
 ﻿using Game.Enums;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,11 +25,16 @@ namespace Game.Creatures
 		//xp
 		public float experienceYield;
 		//ac
-		public string armorValue;
+		public int armorValue;
 		//hp
-		public string health;
+		public int health;
 		//speed
-		public string speed;
+		public int speed;
+		public int climbSpeed;
+		public int swimSpeed;
+		public int flySpeed;
+		//passive perception
+		public int passivePerception;
 		//stats
 		public SerializableStatBlock stats;
 		//saving throws
@@ -42,7 +48,7 @@ namespace Game.Creatures
 		//skills
 		public List<string> skills;
 		//senses
-		public string senses;
+		public List<SenseRange> senses;
 		public string groupingName;
 		public List<string> sounds;
 		//languages
@@ -53,5 +59,12 @@ namespace Game.Creatures
 		public List<string> actions;
 		//actions
 		public List<string> legendaryActions;
+	}
+
+	[Serializable]
+	public struct SenseRange
+	{
+		public SensesType senseType;
+		public int distance;
 	}
 }
