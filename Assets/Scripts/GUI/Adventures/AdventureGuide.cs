@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Game.GUI.Wiki
@@ -71,13 +72,15 @@ namespace Game.GUI.Wiki
 			background.text.text += " " + adventure.mainEncounter.encounterSummary;
 			CreateTableOfContentsEntry(-1, "Background");
 
+			background.ReplaceTextPlaceholders(mainEncounter.contextCriterium);
+/*
 			foreach (var context in mainEncounter.contextCriterium)
 			{
 				var currentText = background.text.text;
 				context.ReplaceTextPlaceholders(ref currentText);
 				background.text.text = currentText;
 			}
-
+*/
 			var encounters = adventure.Encounters;
 
 			foreach(var encounter in encounters)

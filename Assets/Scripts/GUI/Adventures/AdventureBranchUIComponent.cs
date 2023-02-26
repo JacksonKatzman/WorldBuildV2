@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Game.GUI.Wiki
 {
@@ -22,6 +23,11 @@ namespace Game.GUI.Wiki
 				pathButton.Setup(path.components[0].ComponentID, path.pathTitle);
 				pathButtons.Add(pathButton);
 			}
+		}
+
+		public override void OnPointerClick(PointerEventData eventData)
+		{
+			
 		}
 
 		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)

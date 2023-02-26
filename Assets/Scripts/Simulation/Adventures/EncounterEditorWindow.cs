@@ -86,8 +86,8 @@ namespace Game.Simulation
         [ValueDropdown("GetBiomeTerrainTypes", IsUniqueList = true, DropdownTitle = "Allowed Biomes"), PropertyOrder(-7), ShowIfGroup("ModeChosen")]
         public List<BiomeTerrainType> allowedBiomes;
 
-        [PropertyOrder(0), ShowIfGroup("ModeChosen")]
-        public ObservableCollection<IAdventureContextCriteria> contextCriterium;
+        [PropertyOrder(0), ShowInInspector, ShowIfGroup("ModeChosen")]
+        public static ObservableCollection<IAdventureContextCriteria> contextCriterium;
 
         [TextArea(2, 4), PropertyOrder(0), ShowIfGroup("ModeChosen")]
         public string encounterBlurb;

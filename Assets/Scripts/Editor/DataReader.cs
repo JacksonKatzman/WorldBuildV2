@@ -143,20 +143,20 @@ namespace Assets.Scripts.Editor
 
 							if (line.StartsWith("Armor Class"))
 							{
-								creatureStats.armorValue = line.Replace("Armor Class ", "");
+								//creatureStats.armorValue = line.Replace("Armor Class ", "");
 							}
 							if (line.StartsWith("Hit Points"))
 							{
-								creatureStats.health = line.Replace("Hit Points ", "");
+								//creatureStats.health = line.Replace("Hit Points ", "");
 							}
 							if (line.StartsWith("Speed"))
 							{
-								creatureStats.speed = line.Replace("Speed ", "");
+								//creatureStats.speed = line.Replace("Speed ", "");
 								creatureStats.landDwelling = (!line.Contains("swim") || line.Contains("fly"));
 							}
 							if (line.StartsWith("Senses"))
 							{
-								creatureStats.senses = line.Replace("Senses ", "");
+								//creatureStats.senses = line.Replace("Senses ", "");
 							}
 							if (line.StartsWith("Skills"))
 							{
