@@ -26,7 +26,7 @@ namespace Game.Simulation
 
 		private static Dictionary<string, Func<Monster, string>> replacements = new Dictionary<string, Func<Monster, string>>
 		{
-			{"{##}", (monster) => monster.monsterData.name.ToLower() },
+			{"{##}", (monster) => string.Format("<i><link=\"{0}\">{1}</link></i>", monster.ID, monster.monsterData.name.ToLower()) },
 			{"-##-", (monster) => monster.monsterData.groupingName },
 			{"<##>", (monster) => SimRandom.RandomEntryFromList(monster.monsterData.sounds) }
 		};
@@ -42,6 +42,11 @@ namespace Game.Simulation
 		{
 			Context = new Monster();
 			((Monster)Context).monsterData = GetMonsterData();
+		}
+
+		public override void SpawnPopup()
+		{
+
 		}
 
 		public MonsterData GetMonsterData()

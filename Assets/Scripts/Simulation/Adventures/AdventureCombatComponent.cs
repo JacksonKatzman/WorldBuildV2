@@ -23,7 +23,7 @@ namespace Game.Simulation
 
 		private IEnumerable<int> GetCombatantIDs()
 		{
-			var ids = EncounterEditorWindow.contextCriterium.Where(x => x.GetType() == typeof(MonsterCriteria)).Select(x => x.ContextID);
+			var ids = EncounterEditorWindow.contextCriterium.Where(x => x.GetType() == typeof(MonsterCriteria)).Select(x => x.CriteriaID);
 			return ids;
 		}
 	}

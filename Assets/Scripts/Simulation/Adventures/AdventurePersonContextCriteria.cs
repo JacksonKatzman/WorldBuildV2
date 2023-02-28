@@ -18,5 +18,10 @@ namespace Game.Simulation
 		{
 			Context = SimRandom.RandomEntryFromList(SimulationManager.Instance.CurrentContexts[typeof(Person)]);
 		}
+
+		public override void SpawnPopup()
+		{
+
+		}
 	}
 }
