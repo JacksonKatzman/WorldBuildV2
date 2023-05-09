@@ -1,15 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Game.GUI.Popups
 {
-	public class Popup : MonoBehaviour
+	abstract public class Popup : MonoBehaviour, IPopup
 	{
-		[SerializeField]
-		private RectTransform contentTransform;
-
-		public void UpdateContentScale(float scale)
+		public abstract Type PopupConfigType { get; }
+		public void ClosePopup()
 		{
-			contentTransform.localScale = new Vector3(scale, scale, scale);
+			PopupService.Instance.ClosePopup(this);
 		}
 	}
 }

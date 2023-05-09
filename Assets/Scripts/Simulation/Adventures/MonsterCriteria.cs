@@ -1,5 +1,6 @@
 ﻿using Game.Creatures;
 using Game.Enums;
+using Game.GUI.Popups;
 using Game.Incidents;
 using Game.Utilities;
 using Sirenix.OdinInspector;
@@ -46,7 +47,12 @@ namespace Game.Simulation
 
 		public override void SpawnPopup()
 		{
+			var config = new MonsterInfoCardPopupConfig
+			{
+				MonsterData = TypedContext.monsterData
+			};
 
+			PopupService.Instance.ShowPopup(config);
 		}
 
 		public MonsterData GetMonsterData()

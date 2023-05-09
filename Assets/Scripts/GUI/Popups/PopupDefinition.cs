@@ -18,6 +18,9 @@ namespace Game.GUI.Popups
 		private GameObject prefab;
 		private Dictionary<string, int> Constants => GetConstantsDictionary();
 
+		public int PopupType => popupType;
+		public GameObject Prefab => prefab;
+
 			/*
 		private IEnumerable<string> ShowValues()
 		{

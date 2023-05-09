@@ -28,6 +28,9 @@ namespace Game.Simulation
 				context = value;
 			}
 		}
+
+		public T TypedContext => (T)Context;
+
 		private IIncidentContext context;
 		public bool IsHistorical => historical;
 
