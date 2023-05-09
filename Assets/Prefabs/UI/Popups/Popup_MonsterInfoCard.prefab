@@ -11056,8 +11056,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 63.8, y: 0}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: 18.337963, y: 0}
+  m_SizeDelta: {x: 320, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5137877150051697310
 MonoBehaviour:
@@ -11110,8 +11110,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Game.GUI.Popups.Popup, Assembly-CSharp
+      - m_Target: {fileID: 6383597123393473312}
+        m_TargetAssemblyTypeName: Game.GUI.Popups.TypedPopup`1[[Game.GUI.Popups.MonsterInfoCardPopupConfig,
+          Assembly-CSharp
         m_MethodName: UpdateContentScale
         m_Mode: 0
         m_Arguments:
@@ -17949,7 +17950,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 40, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5137877150625967672
 CanvasRenderer:

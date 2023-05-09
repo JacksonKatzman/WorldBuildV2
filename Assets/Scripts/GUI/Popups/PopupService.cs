@@ -41,8 +41,18 @@ namespace Game.GUI.Popups
 
 		public void ShowPopup(IPopupConfig config)
 		{
+			foreach (var activePopup in activePopups)
+			{
+				if (activePopup.CompareTo(config))
+				{
+					activePopup.GetComponent<RectTransform>().SetAsLastSibling();
+					return;
+				}
+			}
+
 			var popup = GetOrCreatePopup(config);
 			popup.transform.parent = activePopupAnchor;
+			popup.Setup(config);
 			popup.gameObject.SetActive(true);
 			activePopups.Add(popup);
 		}

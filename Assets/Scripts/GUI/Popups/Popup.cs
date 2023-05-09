@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.GUI.Popups
@@ -10,5 +11,9 @@ namespace Game.GUI.Popups
 		{
 			PopupService.Instance.ClosePopup(this);
 		}
+
+		abstract public void Setup(IPopupConfig config);
+		//abstract public bool ExistsInCollection(IEnumerable<Popup> popups);
+		abstract public bool CompareTo(IPopupConfig config);
 	}
 }
