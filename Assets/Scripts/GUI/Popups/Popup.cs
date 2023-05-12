@@ -13,7 +13,6 @@ namespace Game.GUI.Popups
 		}
 
 		abstract public void Setup(IPopupConfig config);
-		//abstract public bool ExistsInCollection(IEnumerable<Popup> popups);
 		abstract public bool CompareTo(IPopupConfig config);
 	}
 }

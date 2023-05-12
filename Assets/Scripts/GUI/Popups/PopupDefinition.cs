@@ -21,19 +21,6 @@ namespace Game.GUI.Popups
 		public int PopupType => popupType;
 		public GameObject Prefab => prefab;
 
-			/*
-		private IEnumerable<string> ShowValues()
-		{
-			var fields = typeof(PopupType).GetFields(System.Reflection.BindingFlags.Public).Where(c => c.IsPublic && c.IsLiteral && !c.IsInitOnly && c.FieldType == typeof(int));
-			var options = new List<string>();
-			foreach(var field in fields)
-			{
-				var name = string.Format("{0} - {1}", field.Name, field.GetRawConstantValue());
-			}
-
-			return EditorGUILayout.Popup("Popup Type", value, options.ToArray());
-		}
-*/
 		private IEnumerable<string> ShowValues()
 		{
 			return Constants.Keys;
