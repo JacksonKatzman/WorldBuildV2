@@ -158,7 +158,7 @@ namespace Game.Simulation
                 var removedIds = new List<int>();
                 foreach (var item in removedItems)
                 {
-                    removedIds.Add(item.ContextID);
+                    removedIds.Add(item.CriteriaID);
                 }
 
                 UpdateCriteriaIDs(removedIds);
@@ -196,7 +196,7 @@ namespace Game.Simulation
             var index = 0;
             foreach(var context in contextCriterium)
 			{
-                context.ContextID = index;
+                context.CriteriaID = index;
                 index++;
 			}
             foreach (var component in components)

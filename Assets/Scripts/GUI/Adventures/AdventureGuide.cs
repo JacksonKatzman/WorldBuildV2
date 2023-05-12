@@ -1,4 +1,5 @@
-﻿using Game.Simulation;
+﻿using Game.Incidents;
+using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -73,14 +74,7 @@ namespace Game.GUI.Wiki
 			CreateTableOfContentsEntry(-1, "Background");
 
 			background.ReplaceTextPlaceholders(mainEncounter.contextCriterium);
-/*
-			foreach (var context in mainEncounter.contextCriterium)
-			{
-				var currentText = background.text.text;
-				context.ReplaceTextPlaceholders(ref currentText);
-				background.text.text = currentText;
-			}
-*/
+
 			var encounters = adventure.Encounters;
 
 			foreach(var encounter in encounters)
@@ -143,6 +137,16 @@ namespace Game.GUI.Wiki
 			tableOfContentsCanvasGroup.alpha = toggleOn ? 1 : 0;
 			tableOfContentsCanvasGroup.interactable = toggleOn;
 			tableOfContentsCanvasGroup.blocksRaycasts = toggleOn;
+		}
+
+		public static bool TryGetContext(int id, out IIncidentContext result)
+		{
+			return Instance.currentAdventure.TryGetContext(id, out result);
+		}
+
+		public static bool TryGetContextCriteria(int id, out IAdventureContextCriteria result)
+		{
+			return Instance.currentAdventure.TryGetContextCriteria(id, out result);
 		}
 
 		private void SnapTo(RectTransform target)

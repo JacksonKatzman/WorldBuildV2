@@ -28,17 +28,21 @@ namespace Game.Simulation
 				context = value;
 			}
 		}
+
+		public T TypedContext => (T)Context;
+
 		private IIncidentContext context;
 		public bool IsHistorical => historical;
 
 		[SerializeField, ReadOnly, HorizontalGroup(LabelWidth = 120), PropertyOrder(-1)]
 		private string contextTypeName;
 		[SerializeField, HorizontalGroup, PropertyOrder(-1), ReadOnly]
-		public int ContextID { get; set; }
+		public int CriteriaID { get; set; }
 		[SerializeField, HorizontalGroup, PropertyOrder(-1)]
 		public bool historical;
 
 		abstract public Dictionary<string, Func<T, string>> Replacements { get; }
+		abstract public void SpawnPopup();
 
 		public AdventureContextCriteria()
 		{
@@ -55,7 +59,7 @@ namespace Game.Simulation
 		{
 			foreach(var pair in Replacements)
 			{
-				var idReplacementPattern = $"{ContextID}";
+				var idReplacementPattern = $"{CriteriaID}";
 				var toReplace = Regex.Replace(pair.Key, "##", idReplacementPattern);
 				var replaceWith = pair.Value(GetTypedContext());
 				text = text.Replace(@toReplace, replaceWith);

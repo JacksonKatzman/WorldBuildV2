@@ -83,6 +83,13 @@ namespace Game.GUI.Wiki
 				{
 					OutputLogger.Log("* Opening Popup for: " + value.keyword);
 				}
+				else if(Int32.TryParse(linkID, out var result))
+				{
+					if(AdventureGuide.TryGetContextCriteria(result, out var context))
+					{
+						context.SpawnPopup();
+					}
+				}
 				else
 				{
 					OutputLogger.LogWarning("* No Keyword found for: " + linkID);
