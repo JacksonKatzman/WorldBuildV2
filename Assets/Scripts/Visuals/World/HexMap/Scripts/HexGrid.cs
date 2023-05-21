@@ -13,7 +13,7 @@ namespace Game.Terrain
 		public int cellCountX = 20, cellCountZ = 15;
 
 		public HexCell cellPrefab;
-		public Text cellLabelPrefab;
+		public HexCellLabel cellLabelPrefab;
 		public HexGridChunk chunkPrefab;
 		public HexUnit unitPrefab;
 
@@ -253,10 +253,10 @@ namespace Game.Terrain
 				}
 			}
 
-			Text label = Instantiate(cellLabelPrefab);
+			var label = Instantiate(cellLabelPrefab);
 			label.rectTransform.anchoredPosition =
 				new Vector2(position.x, position.z);
-			cell.uiRect = label.rectTransform;
+			cell.hexCellLabel = label;
 
 			cell.Elevation = 0;
 			//cell.TerrainType = BiomeTerrainType.Rainforest;

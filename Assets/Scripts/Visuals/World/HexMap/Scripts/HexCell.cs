@@ -9,7 +9,7 @@ namespace Game.Terrain
 
 		public HexCoordinates coordinates;
 
-		public RectTransform uiRect;
+		public HexCellLabel hexCellLabel;
 
 		public HexGridChunk chunk;
 
@@ -361,9 +361,12 @@ namespace Game.Terrain
 				terrainType = value;
 				TerrainTypeIndex = Biome.BiomeInfo[terrainType].x;
 				var level = Biome.BiomeInfo[terrainType].y;
-				PlantLevel = HasRiver && level < 3 ? level + 1 : level;
+				Fertility = HasRiver && level < 3 ? level + 1 : level;
+				PlantLevel = Fertility;
 			}
 		}
+
+		public int Fertility { get; set; }
 
 		public int SearchPhase { get; set; }
 
@@ -398,6 +401,11 @@ namespace Game.Terrain
 
 		[SerializeField]
 		bool[] roads;
+
+		public int CalculateInhabitability()
+		{
+			return Fertility;
+		}
 
 		public void IncreaseVisibility()
 		{
@@ -599,9 +607,9 @@ namespace Game.Terrain
 				HexMetrics.elevationPerturbStrength;
 			transform.localPosition = position;
 
-			Vector3 uiPosition = uiRect.localPosition;
+			Vector3 uiPosition = hexCellLabel.rectTransform.localPosition;
 			uiPosition.z = -position.y;
-			uiRect.localPosition = uiPosition;
+			hexCellLabel.rectTransform.localPosition = uiPosition;
 		}
 
 		void Refresh()
@@ -727,21 +735,18 @@ namespace Game.Terrain
 
 		public void SetLabel(string text)
 		{
-			Text label = uiRect.GetComponent<Text>();
-			label.text = text;
+			hexCellLabel.SetText(text);
 		}
 
 		public void DisableHighlight()
 		{
-			Image highlight = uiRect.GetChild(0).GetComponent<Image>();
-			highlight.enabled = false;
+			hexCellLabel.ToggleHighlight(false);
 		}
 
 		public void EnableHighlight(Color color)
 		{
-			Image highlight = uiRect.GetChild(0).GetComponent<Image>();
-			highlight.color = color;
-			highlight.enabled = true;
+			hexCellLabel.SetHighlightColor(color);
+			hexCellLabel.ToggleHighlight(true);
 		}
 
 		public void SetMapData(float data)
