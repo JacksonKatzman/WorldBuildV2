@@ -32,6 +32,9 @@ namespace Game.Simulation
 
 		public int Age { get; set; }
 
+		public List<Person> People => CurrentContexts[typeof(Person)].Cast<Person>().ToList();
+		public List<Faction> Factions => CurrentContexts[typeof(Faction)].Cast<Faction>().ToList();
+		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
 		public int NumPeople => CurrentContexts[typeof(Person)].Count;
 
 		public int nextID;
@@ -90,6 +93,70 @@ namespace Game.Simulation
 					context.UpdateHistoricalData();
 				}
 			}
+		}
+
+		public void BeginPostGeneration()
+		{
+			//Generate towns/hamlets/villages around each of the existing cities
+			foreach(var city in Cities)
+			{
+				var location = city.CurrentLocation.TileIndex;
+				var tile = hexGrid.GetCell(location);
+				tile.SpecialIndex = 1;
+			}
+
+			foreach(var faction in Factions)
+			{
+				var numCities = faction.NumCities;
+				var numTowns = numCities * 2; //temporary calc
+				for(int i = 0; i < numTowns; i++)
+				{
+					var possibleTiles = SimulationUtilities.FindCitylessCellWithinFaction(faction, 2);
+					var ordered = possibleTiles.OrderByDescending(x => hexGrid.GetCell(x).CalculateInhabitability());
+					var chosenLocationIndex = ordered.First();
+					var createdCity = new City(faction, new Location(chosenLocationIndex), 100, 0);
+					AddContext(createdCity);
+					DelayedAddContexts();
+
+					hexGrid.GetCell(chosenLocationIndex).SpecialIndex = 2;
+				}
+
+				var borderCells = SimulationUtilities.FindBorderWithinFaction(faction);
+
+				foreach(var index in borderCells)
+				{
+					var cell = hexGrid.GetCell(index);
+					for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+					{
+						HexCell neighbor = cell.GetNeighbor(d);
+						if (!neighbor)
+						{
+							continue;
+						}
+
+						var controlledCells = faction.ControlledTileIndices;
+
+						if (!controlledCells.Contains(neighbor.Index))
+						{
+							cell.hexCellLabel.ToggleBorder(d, true);
+						}
+					}
+				}
+			}
+			//Calc how many towns to make
+			//Get citiless tiles within faction using min distance
+			//find one with best inhabitability or w/e
+			//plop town and repeat for # towns to make
+
+
+
+			//Pick location for players to start, likely in one of the towns/hamlets
+			//Generate layout of town/what its contents is
+			//Generate all the points of interest/people of interest in the town
+			//Generate NPCs for the tavern the players start in
+			//Generate adventure based in location/people of interest etc
+			//Extra credit: generate world points of interest in case players want to explore for their adventures instead?
+			//That or just include exploration contracts among the possible adventures
 		}
 
 		public void Save(string mapName)

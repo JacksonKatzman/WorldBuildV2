@@ -78,6 +78,9 @@ namespace Game.Simulation
 			{
 				world.AdvanceTime();
 			}
+
+			world.BeginPostGeneration();
+
 			var table = world.GetDataTable();
 
 			foreach(var contextList in world.AllContexts.Values)
