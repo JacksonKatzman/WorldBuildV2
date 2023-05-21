@@ -13,7 +13,7 @@ namespace Game.Simulation
 			return GetRandomCell().Index;
 		}
 
-		public static bool GetRandomUnclaimedCellIndex(out int index)
+		public static bool GetRandomUnclaimedCellIndex(out int index, bool landTile = true)
 		{
 			var grid = SimulationManager.Instance.HexGrid;
 			var claimedList = new List<int>();
@@ -22,6 +22,10 @@ namespace Game.Simulation
 				claimedList.AddRange(((Faction)context).ControlledTileIndices);
 			}
 			var unclaimed = grid.cells.Where(x => !claimedList.Contains(x.Index)).ToList();
+			if(landTile)
+			{
+				unclaimed = unclaimed.Where(x => !x.IsUnderwater).ToList();
+			}
 			if (unclaimed.Count > 0)
 			{
 				index = unclaimed[SimRandom.RandomRange(0, unclaimed.Count)].Index;
@@ -191,7 +195,7 @@ namespace Game.Simulation
 			return possibleIndices;
 		}
 
-		public static List<int> FindCitylessCellWithinFaction(Faction faction, int minDistanceFromCities)
+		public static List<int> FindCitylessCellWithinFaction(Faction faction, int minDistanceFromCities = 1)
 		{
 			List<int> possibleIndices = new List<int>();
 			var cityTiles = GetCellsWithCities();
