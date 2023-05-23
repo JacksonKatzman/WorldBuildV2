@@ -49,7 +49,6 @@ namespace Game.Incidents
             {
                 var faction = actionField.GetTypedFieldValue();
                 faction.AttemptExpandBorder(1);
-                faction.CreateStartingCity();
             }
             
             base.Complete();
