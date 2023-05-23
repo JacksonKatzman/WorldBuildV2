@@ -23,7 +23,7 @@ namespace Game.Incidents
             specialFaction.ReligiousPriority = religiousPriority;
             specialFaction.MilitaryPriority = militaryPriority;
 
-            if (createdByPerson)
+            if (createdByCharacter)
             {
                 specialFaction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
             }

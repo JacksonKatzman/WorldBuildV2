@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public interface IPerson 
+	public interface ICharacter 
 	{
 		public string Name { get; }
-		public CreatureName PersonName { get; set; }
+		public CharacterName CharacterName { get; set; }
 		public int Age { get; set; }
 		public Gender Gender { get; set; }
 		public Race Race { get; set; }
@@ -17,9 +17,9 @@ namespace Game.Incidents
 		void Die();
 	}
 
-	public static class IPersonExtensions
+	public static class ICharacterExtensions
 	{
-		public static bool CheckDestroyed(this IPerson person)
+		public static bool CheckDestroyed(this ICharacter person)
 		{
 			var cuspA = person.Race.MaxAge * 0.3f;
 			var cuspB = person.Race.MaxAge * 0.85f;

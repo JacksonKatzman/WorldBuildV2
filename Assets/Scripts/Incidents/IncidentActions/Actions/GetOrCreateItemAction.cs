@@ -13,16 +13,16 @@ namespace Game.Incidents
 		[ValueDropdown("GetFilteredTypeList"), ShowIf("@this.allowCreate")]
 		public Type itemType;
 		[ShowIf("@this.allowCreate")]
-		public bool createdByPerson;
-		[ShowIf("@this.createdByPerson")]
-		public ContextualIncidentActionField<Person> creator;
+		public bool createdByCharacter;
+		[ShowIf("@this.createdByCharacter")]
+		public ContextualIncidentActionField<Character> creator;
 
 		protected override Item MakeNew()
 		{
 			var newItem = (Item)Activator.CreateInstance(itemType);
 			((IInventoryAffiliated)inventoryToAddTo.actionField.GetFieldValue()).Inventory.Items.Add(newItem);
 
-			if(createdByPerson)
+			if(createdByCharacter)
 			{
 				newItem.Name = creator.GetTypedFieldValue().AffiliatedFaction.namingTheme.GenerateItemName(newItem, creator.GetTypedFieldValue());
 			}
@@ -36,7 +36,7 @@ namespace Game.Incidents
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)
 		{
-			var check = createdByPerson ? inventoryToAddTo.actionField.CalculateField(context) && creator.CalculateField(context) : inventoryToAddTo.actionField.CalculateField(context);
+			var check = createdByCharacter ? inventoryToAddTo.actionField.CalculateField(context) && creator.CalculateField(context) : inventoryToAddTo.actionField.CalculateField(context);
 			return check;
 		}
 

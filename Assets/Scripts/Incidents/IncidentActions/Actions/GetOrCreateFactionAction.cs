@@ -22,16 +22,16 @@ namespace Game.Incidents
         [ShowIf("@this.allowCreate")]
         public IntegerRange militaryPriority;
         [ShowIf("@this.allowCreate")]
-        public bool createdByPerson;
-        [ShowIf("@this.createdByPerson")]
-        public ContextualIncidentActionField<Person> creator;
+        public bool createdByCharacter;
+        [ShowIf("@this.createdByCharacter")]
+        public ContextualIncidentActionField<Character> creator;
 
         protected override Faction MakeNew()
 		{
             var race = (Race)SimRandom.RandomEntryFromList(SimulationManager.Instance.world.CurrentContexts[typeof(Race)]);
             var newFaction = new Faction(population, influence, wealth, politicalPriority, economicPriority, religiousPriority, militaryPriority, race);
 
-            if(createdByPerson)
+            if(createdByCharacter)
 			{
                 newFaction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
 			}
@@ -56,7 +56,7 @@ namespace Game.Incidents
 
         protected override bool VersionSpecificVerify(IIncidentContext context)
         {
-            return createdByPerson ? creator.CalculateField(context) : base.VersionSpecificVerify(context);
+            return createdByCharacter ? creator.CalculateField(context) : base.VersionSpecificVerify(context);
         }
     }
 }

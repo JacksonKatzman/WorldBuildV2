@@ -9,9 +9,9 @@ namespace Game.Incidents
 	public class GreatMonster : IncidentContext, IInventoryAffiliated, IAlignmentAffiliated, IFactionAffiliated
 	{
 		public MonsterData dataBlock;
-		public override string Name => PersonName.fullName;
+		public override string Name => CharacterName.fullName;
 		public Inventory Inventory { get; private set; }
-		public CreatureName PersonName { get; set; }
+		public CharacterName CharacterName { get; set; }
 
 		public int LawfulChaoticAlignmentAxis { get; set; }
 		public int GoodEvilAlignmentAxis { get; set; }
@@ -27,7 +27,7 @@ namespace Game.Incidents
 			this.dataBlock = dataBlock;
 		}
 
-		public GreatMonster(MonsterData dataBlock, Person person) : this(dataBlock)
+		public GreatMonster(MonsterData dataBlock, Character person) : this(dataBlock)
 		{
 			Name = person.Name;
 			person.Die();

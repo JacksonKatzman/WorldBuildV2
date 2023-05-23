@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Game.Generators.Names
 {
-	public class CreatureName
+	public class CharacterName
 	{
 		public string nameFormat;
 		public List<string> firstNames;
@@ -14,15 +14,15 @@ namespace Game.Generators.Names
 		public string FirstName => firstNames[0];
 		public string Surname => surnames[surnames.Count - 1];
 
-		public CreatureName() { }
-		public CreatureName(string format)
+		public CharacterName() { }
+		public CharacterName(string format)
 		{
 			nameFormat = format;
 			firstNames = new List<string>();
 			surnames = new List<string>();
 		}
 
-		public string GetTitledFullName(IPerson person)
+		public string GetTitledFullName(ICharacter person)
 		{
 			var result = String.Copy(fullName);
 			if (person.OfficialPosition != null)

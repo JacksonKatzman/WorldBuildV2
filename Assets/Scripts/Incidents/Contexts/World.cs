@@ -33,10 +33,10 @@ namespace Game.Simulation
 
 		public int Age { get; set; }
 
-		public List<Person> People => CurrentContexts[typeof(Person)].Cast<Person>().ToList();
+		public List<Character> People => CurrentContexts[typeof(Character)].Cast<Character>().ToList();
 		public List<Faction> Factions => CurrentContexts[typeof(Faction)].Cast<Faction>().ToList();
 		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
-		public int NumPeople => CurrentContexts[typeof(Person)].Count;
+		public int NumPeople => CurrentContexts[typeof(Character)].Count;
 
 		public int nextID;
 

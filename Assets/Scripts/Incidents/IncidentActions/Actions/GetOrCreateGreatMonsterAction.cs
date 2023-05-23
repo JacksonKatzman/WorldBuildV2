@@ -16,17 +16,17 @@ namespace Game.Incidents
 		public ContextualIncidentActionField<Faction> faction;
 
 		[ShowIf("@this.OnlyCreate")]
-		public bool transformPerson;
-		[ShowIf("@this.transformPerson")]
-		public ContextualIncidentActionField<Person> personToTransform;
+		public bool transformCharacter;
+		[ShowIf("@this.transformCharacter")]
+		public ContextualIncidentActionField<Character> personToTransform;
 
 		private MonsterData retrievedMonsterData;
 		protected override GreatMonster MakeNew()
 		{
 			var monsterToCreate = useSpecificMonster ? monster : retrievedMonsterData;
-			var createdMonster = transformPerson ? new GreatMonster(monsterToCreate, personToTransform.GetTypedFieldValue()) : new GreatMonster(monsterToCreate);
+			var createdMonster = transformCharacter ? new GreatMonster(monsterToCreate, personToTransform.GetTypedFieldValue()) : new GreatMonster(monsterToCreate);
 			createdMonster.AffiliatedFaction = faction.GetTypedFieldValue();
-			createdMonster.PersonName = createdMonster.AffiliatedFaction.namingTheme.GenerateName(Enums.Gender.ANY);
+			createdMonster.CharacterName = createdMonster.AffiliatedFaction.namingTheme.GenerateName(Enums.Gender.ANY);
 			
 			return createdMonster;
 		}
@@ -43,7 +43,7 @@ namespace Game.Incidents
 				}
 
 				var factionFound = faction.CalculateField(context);
-				return transformPerson ? factionFound && personToTransform.CalculateField(context) : factionFound;
+				return transformCharacter ? factionFound && personToTransform.CalculateField(context) : factionFound;
 			}
 			else
 			{

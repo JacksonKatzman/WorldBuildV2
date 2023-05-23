@@ -4,12 +4,12 @@ using System;
 
 namespace Game.Incidents
 {
-	public class MinorPerson : InertIncidentContext, IPerson, IFactionAffiliated
+	public class MinorCharacter : InertIncidentContext, ICharacter, IFactionAffiliated
 	{
-		public override Type ContextType => typeof(MinorPerson);
+		public override Type ContextType => typeof(MinorCharacter);
 
-		public override string Name => PersonName.GetTitledFullName(this);
-		public CreatureName PersonName { get; set; }
+		public override string Name => CharacterName.GetTitledFullName(this);
+		public CharacterName CharacterName { get; set; }
 		public int Age { get; set; }
 		public Gender Gender { get; set; }
 		public Race Race { get; set; }

@@ -115,7 +115,7 @@ namespace Game.Generators.Names
 			SetupNameFormat();
 		}
 
-		public CreatureName GenerateName(CreatureName personName, Gender gender, string format)
+		public CharacterName GenerateName(CharacterName personName, Gender gender, string format)
 		{
 			while (format.Contains("{F}"))
 			{
@@ -135,20 +135,20 @@ namespace Game.Generators.Names
 			return personName;
 		}
 
-		public CreatureName GenerateName(Gender gender)
+		public CharacterName GenerateName(Gender gender)
 		{
 			var format = string.Copy(currentNameFormat);
-			var personName = new CreatureName(format);
+			var personName = new CharacterName(format);
 
 			return GenerateName(personName, gender, format);
 		}
 
-		public CreatureName GenerateName(Gender gender, List<Person> parents)
+		public CharacterName GenerateName(Gender gender, List<Character> parents)
 		{
 			var parent = SimRandom.RandomEntryFromList(parents);
-			var personName = new CreatureName(parent.PersonName.nameFormat);
+			var personName = new CharacterName(parent.CharacterName.nameFormat);
 
-			var surname = parent.PersonName.Surname;
+			var surname = parent.CharacterName.Surname;
 			personName.surnames.Add(surname);
 			var format = string.Copy(personName.nameFormat);
 			format = StringUtilities.ReplaceLastOccurrence(format, "{S}", surname);
@@ -180,7 +180,7 @@ namespace Game.Generators.Names
 			return "ITEM";
 		}
 
-		public string GenerateItemName(Item item, Person creator)
+		public string GenerateItemName(Item item, Character creator)
 		{
 			return string.Format("{0}'s ITEM", creator.Name);
 		}
