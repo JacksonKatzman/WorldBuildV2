@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using Game.Enums;
 
 namespace Game.Terrain
 {
@@ -245,28 +246,28 @@ namespace Game.Terrain
 			}
 		}
 
-		public int SpecialIndex
+		public LandmarkType LandmarkType
 		{
 			get
 			{
-				return specialIndex;
+				return landmarkType;
 			}
 			set
 			{
-				if (specialIndex != value && !HasRiver)
+				if (landmarkType != value && !HasRiver)
 				{
-					specialIndex = value;
+					landmarkType = value;
 					RemoveRoads();
 					RefreshSelfOnly();
 				}
 			}
 		}
 
-		public bool IsSpecial
+		public bool HasLandmark
 		{
 			get
 			{
-				return specialIndex > 0;
+				return landmarkType != LandmarkType.NONE;
 			}
 		}
 
@@ -383,7 +384,7 @@ namespace Game.Terrain
 
 		int urbanLevel, farmLevel, plantLevel;
 
-		int specialIndex;
+		LandmarkType landmarkType = LandmarkType.NONE;
 
 		int distance;
 
@@ -521,12 +522,12 @@ namespace Game.Terrain
 			}
 			hasOutgoingRiver = true;
 			outgoingRiver = direction;
-			specialIndex = 0;
+			landmarkType = 0;
 
 			neighbor.RemoveIncomingRiver();
 			neighbor.hasIncomingRiver = true;
 			neighbor.incomingRiver = direction.Opposite();
-			neighbor.specialIndex = 0;
+			neighbor.landmarkType = 0;
 
 			SetRoad((int)direction, false);
 		}
@@ -540,7 +541,7 @@ namespace Game.Terrain
 		{
 			if (
 				!roads[(int)direction] && !HasRiverThroughEdge(direction) &&
-				!IsSpecial && !GetNeighbor(direction).IsSpecial &&
+				!HasLandmark && !GetNeighbor(direction).HasLandmark &&
 				GetElevationDifference(direction) <= 1
 			)
 			{
@@ -650,7 +651,7 @@ namespace Game.Terrain
 			writer.Write((byte)urbanLevel);
 			writer.Write((byte)farmLevel);
 			//writer.Write((byte)plantLevel);
-			writer.Write((byte)specialIndex);
+			writer.Write((byte)((int)landmarkType));
 			writer.Write(walled);
 
 			if (hasIncomingRiver)
@@ -698,7 +699,7 @@ namespace Game.Terrain
 			urbanLevel = reader.ReadByte();
 			farmLevel = reader.ReadByte();
 			//plantLevel = reader.ReadByte();
-			specialIndex = reader.ReadByte();
+			landmarkType = (LandmarkType)reader.ReadByte();
 			walled = reader.ReadBoolean();
 
 			byte riverData = reader.ReadByte();

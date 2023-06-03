@@ -154,11 +154,11 @@ namespace Game.Simulation
 				//Change the model based on the population, will use temp stuff for now
 				if (city.Population >= 2000)
 				{
-					tile.SpecialIndex = 1;
+					tile.LandmarkType = Enums.LandmarkType.TOWER;
 				}
 				else
 				{
-					tile.SpecialIndex = 2;
+					tile.LandmarkType = Enums.LandmarkType.TOWER;
 				}
 			}
 		}

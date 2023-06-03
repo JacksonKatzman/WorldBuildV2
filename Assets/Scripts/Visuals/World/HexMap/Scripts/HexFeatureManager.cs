@@ -63,7 +63,7 @@ namespace Game.Terrain
 
 		public void AddFeature(HexCell cell, Vector3 position)
 		{
-			if (cell.IsSpecial)
+			if (cell.HasLandmark)
 			{
 				return;
 			}
@@ -119,7 +119,7 @@ namespace Game.Terrain
 		{
 			HexHash hash = HexMetrics.SampleHashGrid(position);
 			//make a way to set the landmark type in the cell itself
-			var landmarkPrefabList = assetCollection.landmarkCollections[Enums.LandmarkType.TOWER];
+			var landmarkPrefabList = assetCollection.landmarkCollections[cell.LandmarkType];
 			var landmarkPrefab = SimRandom.RandomEntryFromList(landmarkPrefabList);
 			Transform instance = Instantiate(landmarkPrefab);
 			instance.localPosition = HexMetrics.Perturb(position);

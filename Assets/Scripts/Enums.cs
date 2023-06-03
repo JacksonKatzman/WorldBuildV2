@@ -31,7 +31,7 @@ namespace Game.Enums
 	public enum EncounterLocationType { OVERWORLD, DUNGEON };
 	public enum EncounterType { COMBAT, PUZZLE, ROLEPLAY, CURIOSITY };
 	public enum HexEdgeType { Flat, Slope, Cliff };
-	public enum LandmarkType { TOWER, STATUE };
+	public enum LandmarkType { NONE, TOWER, STATUE };
 
 	public static class EnumHelpers
 	{

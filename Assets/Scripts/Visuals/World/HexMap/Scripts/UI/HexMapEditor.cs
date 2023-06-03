@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Enums;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Game.Terrain
@@ -273,7 +274,7 @@ namespace Game.Terrain
 				}
 				if (applySpecialIndex)
 				{
-					cell.SpecialIndex = activeSpecialIndex;
+					cell.LandmarkType = (LandmarkType)activeSpecialIndex;
 				}
 				if (applyUrbanLevel)
 				{
