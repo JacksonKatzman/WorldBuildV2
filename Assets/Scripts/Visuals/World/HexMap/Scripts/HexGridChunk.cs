@@ -29,7 +29,7 @@ namespace Game.Terrain
 			cells[index] = cell;
 			cell.chunk = this;
 			cell.transform.SetParent(transform, false);
-			cell.uiRect.SetParent(gridCanvas.transform, false);
+			cell.hexCellLabel.rectTransform.SetParent(gridCanvas.transform, false);
 		}
 
 		public void Refresh()
@@ -82,7 +82,7 @@ namespace Game.Terrain
 				{
 					features.AddFeature(cell, cell.Position);
 				}
-				if (cell.IsSpecial)
+				if (cell.HasLandmark)
 				{
 					features.AddSpecialFeature(cell, cell.Position);
 				}

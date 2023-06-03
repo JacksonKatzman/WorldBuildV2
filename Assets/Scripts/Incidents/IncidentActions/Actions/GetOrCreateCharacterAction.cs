@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Game.Incidents
 {
-	public class GetOrCreatePersonAction : GetOrCreateAction<Person>
+	public class GetOrCreateCharacterAction : GetOrCreateAction<Character>
 	{
 		[ShowIf("@this.allowCreate")]
-		public ContextualIncidentActionField<Person> parent;
+		public ContextualIncidentActionField<Character> parent;
 		[ShowIf("@this.allowCreate")]
 		public ContextualIncidentActionField<Race> race;
 		[ShowIf("@this.allowCreate")]
@@ -45,10 +45,10 @@ namespace Game.Incidents
 		[ShowIf("@this.allowCreate")]
 		public bool generateFamily = true;
 
-		protected override Person MakeNew()
+		protected override Character MakeNew()
 		{
-			var parents = parent.GetTypedFieldValue() != null ? new List<Person>() { parent.GetTypedFieldValue() } : null;
-			var newPerson = new Person(age, gender, race.GetTypedFieldValue(), faction.GetTypedFieldValue(), politicalPriority,
+			var parents = parent.GetTypedFieldValue() != null ? new List<Character>() { parent.GetTypedFieldValue() } : null;
+			var newPerson = new Character(age, gender, race.GetTypedFieldValue(), faction.GetTypedFieldValue(), politicalPriority,
 				economicPriority, religiousPriority, militaryPriority, influence, wealth, strength, dexterity, constitution,
 				intelligence, wisdom, charisma, worldPlayer, parents);
 

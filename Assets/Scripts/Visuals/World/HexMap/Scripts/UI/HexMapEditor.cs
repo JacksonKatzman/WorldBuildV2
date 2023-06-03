@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Enums;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Game.Terrain
@@ -19,8 +20,8 @@ namespace Game.Terrain
 
 		int brushSize;
 
-		bool applyElevation = true;
-		bool applyWaterLevel = true;
+		bool applyElevation = false;
+		bool applyWaterLevel = false;
 
 		bool applyUrbanLevel, applyFarmLevel, applyPlantLevel, applySpecialIndex;
 
@@ -141,7 +142,7 @@ namespace Game.Terrain
 		{
 			terrainMaterial.DisableKeyword("GRID_ON");
 			Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
-			SetEditMode(true);
+			SetEditMode(false);
 		}
 
 		void Update()
@@ -273,7 +274,7 @@ namespace Game.Terrain
 				}
 				if (applySpecialIndex)
 				{
-					cell.SpecialIndex = activeSpecialIndex;
+					cell.LandmarkType = (LandmarkType)activeSpecialIndex;
 				}
 				if (applyUrbanLevel)
 				{

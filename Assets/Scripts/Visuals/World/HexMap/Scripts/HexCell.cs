@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using Game.Enums;
 
 namespace Game.Terrain
 {
@@ -9,7 +10,7 @@ namespace Game.Terrain
 
 		public HexCoordinates coordinates;
 
-		public RectTransform uiRect;
+		public HexCellLabel hexCellLabel;
 
 		public HexGridChunk chunk;
 
@@ -245,28 +246,28 @@ namespace Game.Terrain
 			}
 		}
 
-		public int SpecialIndex
+		public LandmarkType LandmarkType
 		{
 			get
 			{
-				return specialIndex;
+				return landmarkType;
 			}
 			set
 			{
-				if (specialIndex != value && !HasRiver)
+				if (landmarkType != value && !HasRiver)
 				{
-					specialIndex = value;
+					landmarkType = value;
 					RemoveRoads();
 					RefreshSelfOnly();
 				}
 			}
 		}
 
-		public bool IsSpecial
+		public bool HasLandmark
 		{
 			get
 			{
-				return specialIndex > 0;
+				return landmarkType != LandmarkType.NONE;
 			}
 		}
 
@@ -361,9 +362,12 @@ namespace Game.Terrain
 				terrainType = value;
 				TerrainTypeIndex = Biome.BiomeInfo[terrainType].x;
 				var level = Biome.BiomeInfo[terrainType].y;
-				PlantLevel = HasRiver && level < 3 ? level + 1 : level;
+				Fertility = HasRiver && level < 3 ? level + 1 : level;
+				PlantLevel = Fertility;
 			}
 		}
+
+		public int Fertility { get; set; }
 
 		public int SearchPhase { get; set; }
 
@@ -380,7 +384,7 @@ namespace Game.Terrain
 
 		int urbanLevel, farmLevel, plantLevel;
 
-		int specialIndex;
+		LandmarkType landmarkType = LandmarkType.NONE;
 
 		int distance;
 
@@ -398,6 +402,11 @@ namespace Game.Terrain
 
 		[SerializeField]
 		bool[] roads;
+
+		public int CalculateInhabitability()
+		{
+			return Fertility;
+		}
 
 		public void IncreaseVisibility()
 		{
@@ -513,12 +522,12 @@ namespace Game.Terrain
 			}
 			hasOutgoingRiver = true;
 			outgoingRiver = direction;
-			specialIndex = 0;
+			landmarkType = 0;
 
 			neighbor.RemoveIncomingRiver();
 			neighbor.hasIncomingRiver = true;
 			neighbor.incomingRiver = direction.Opposite();
-			neighbor.specialIndex = 0;
+			neighbor.landmarkType = 0;
 
 			SetRoad((int)direction, false);
 		}
@@ -532,7 +541,7 @@ namespace Game.Terrain
 		{
 			if (
 				!roads[(int)direction] && !HasRiverThroughEdge(direction) &&
-				!IsSpecial && !GetNeighbor(direction).IsSpecial &&
+				!HasLandmark && !GetNeighbor(direction).HasLandmark &&
 				GetElevationDifference(direction) <= 1
 			)
 			{
@@ -599,9 +608,9 @@ namespace Game.Terrain
 				HexMetrics.elevationPerturbStrength;
 			transform.localPosition = position;
 
-			Vector3 uiPosition = uiRect.localPosition;
+			Vector3 uiPosition = hexCellLabel.rectTransform.localPosition;
 			uiPosition.z = -position.y;
-			uiRect.localPosition = uiPosition;
+			hexCellLabel.rectTransform.localPosition = uiPosition;
 		}
 
 		void Refresh()
@@ -642,7 +651,7 @@ namespace Game.Terrain
 			writer.Write((byte)urbanLevel);
 			writer.Write((byte)farmLevel);
 			//writer.Write((byte)plantLevel);
-			writer.Write((byte)specialIndex);
+			writer.Write((byte)((int)landmarkType));
 			writer.Write(walled);
 
 			if (hasIncomingRiver)
@@ -690,7 +699,7 @@ namespace Game.Terrain
 			urbanLevel = reader.ReadByte();
 			farmLevel = reader.ReadByte();
 			//plantLevel = reader.ReadByte();
-			specialIndex = reader.ReadByte();
+			landmarkType = (LandmarkType)reader.ReadByte();
 			walled = reader.ReadBoolean();
 
 			byte riverData = reader.ReadByte();
@@ -727,21 +736,18 @@ namespace Game.Terrain
 
 		public void SetLabel(string text)
 		{
-			Text label = uiRect.GetComponent<Text>();
-			label.text = text;
+			hexCellLabel.SetText(text);
 		}
 
 		public void DisableHighlight()
 		{
-			Image highlight = uiRect.GetChild(0).GetComponent<Image>();
-			highlight.enabled = false;
+			hexCellLabel.ToggleHighlight(false);
 		}
 
 		public void EnableHighlight(Color color)
 		{
-			Image highlight = uiRect.GetChild(0).GetComponent<Image>();
-			highlight.color = color;
-			highlight.enabled = true;
+			hexCellLabel.SetHighlightColor(color);
+			hexCellLabel.ToggleHighlight(true);
 		}
 
 		public void SetMapData(float data)

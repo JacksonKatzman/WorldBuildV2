@@ -16,15 +16,15 @@ namespace Game.Incidents
 	{
 		public Faction AffiliatedFaction => this;
 		public Type FactionType => ContextType;
-		public int Population
+		virtual public int Population
 		{
 			get
 			{
-				return (int)populationFloat;
+				return Cities.Sum(x => x.Population);
 			}
 			set
 			{
-				populationFloat = (float)value;
+				OutputLogger.LogWarning("You cannot directly set a factions population.");
 			}
 		}
 		public int Influence { get; set; }
@@ -55,8 +55,6 @@ namespace Game.Incidents
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
 
-		private float populationFloat;
-
 		public NamingTheme namingTheme;
 
 		public Faction() : base()
@@ -66,7 +64,7 @@ namespace Game.Incidents
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
-		public Faction(int startingTiles, Race startingMajorityRace) : this()
+		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace) : this()
 		{
 			AttemptExpandBorder(startingTiles);
 			FactionRelations = new Dictionary<IIncidentContext, int>();
@@ -76,19 +74,17 @@ namespace Game.Incidents
 			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
 			Name = namingTheme.GenerateFactionName();
 
-			CreateStartingCity();
+			CreateStartingCity(startingPopulation);
 			CreateStartingGovernment(startingMajorityRace);
 
-			populationFloat = 1000f;
 			PoliticalPriority = SimRandom.RandomRange(1, 4);
 			ReligiousPriority = SimRandom.RandomRange(1, 4);
 			EconomicPriority = SimRandom.RandomRange(1, 4);
 			MilitaryPriority = SimRandom.RandomRange(1, 4);
 		}
 
-		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles = 1) : this(startingTiles, race)
+		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles = 1) : this(startingTiles, population, race)
 		{
-			Population = population;
 			Influence = influence;
 			Wealth = wealth;
 			PoliticalPriority = politicalPriority;
@@ -124,10 +120,10 @@ namespace Game.Incidents
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
 		}
 
-		public void CreateStartingCity()
+		public void CreateStartingCity(int startingPopulation)
 		{
 			var cells = SimulationUtilities.GetCitylessCellsFromList(ControlledTileIndices);
-			var city = new City(this, new Location(SimRandom.RandomEntryFromList(cells)), 10, 0);
+			var city = new City(this, new Location(SimRandom.RandomEntryFromList(cells)), startingPopulation, 0);
 			Cities.Add(city);
 			SimulationManager.Instance.world.AddContext(city);
 		}
@@ -257,8 +253,12 @@ namespace Game.Incidents
 
 		private void UpdatePopulation()
 		{
-			populationFloat *= 1.011f;
-			if(MilitaryPower < (populationFloat/10))
+			foreach(var city in Cities)
+			{
+				city.UpdatePopulation();
+			}
+
+			if(MilitaryPower < (Population/10))
 			{
 				MilitaryPower += MilitaryPriority / 2;
 			}

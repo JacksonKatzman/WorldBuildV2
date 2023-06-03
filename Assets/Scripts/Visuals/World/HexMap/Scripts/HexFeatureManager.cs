@@ -1,18 +1,13 @@
-﻿using UnityEngine;
+﻿using Game.Utilities;
+using UnityEngine;
 
 namespace Game.Terrain
 {
 	public class HexFeatureManager : MonoBehaviour
 	{
-
-		public HexFeatureCollection[]
-			urbanCollections, farmCollections, plantCollections;
-
 		public HexMesh walls;
 
-		public Transform wallTower, bridge;
-
-		public Transform[] special;
+		public AssetCollection assetCollection;
 
 		Transform container;
 
@@ -55,7 +50,8 @@ namespace Game.Terrain
 		{
 			roadCenter1 = HexMetrics.Perturb(roadCenter1);
 			roadCenter2 = HexMetrics.Perturb(roadCenter2);
-			Transform instance = Instantiate(bridge);
+			var bridgePrefab = SimRandom.RandomEntryFromArray(assetCollection.bridges);
+			Transform instance = Instantiate(bridgePrefab);
 			instance.localPosition = (roadCenter1 + roadCenter2) * 0.5f;
 			instance.forward = roadCenter2 - roadCenter1;
 			float length = Vector3.Distance(roadCenter1, roadCenter2);
@@ -67,17 +63,17 @@ namespace Game.Terrain
 
 		public void AddFeature(HexCell cell, Vector3 position)
 		{
-			if (cell.IsSpecial)
+			if (cell.HasLandmark)
 			{
 				return;
 			}
 
 			HexHash hash = HexMetrics.SampleHashGrid(position);
 			Transform prefab = PickPrefab(
-				urbanCollections, cell.UrbanLevel, hash.a, hash.d
+				assetCollection.urbanCollections, cell.UrbanLevel, hash.a, hash.d
 			);
 			Transform otherPrefab = PickPrefab(
-				farmCollections, cell.FarmLevel, hash.b, hash.d
+				assetCollection.ruralCollections, cell.FarmLevel, hash.b, hash.d
 			);
 			float usedHash = hash.a;
 			if (prefab)
@@ -94,7 +90,7 @@ namespace Game.Terrain
 				usedHash = hash.b;
 			}
 			otherPrefab = PickPrefab(
-				plantCollections, cell.PlantLevel, hash.c, hash.d
+				assetCollection.plantCollections, cell.PlantLevel, hash.c, hash.d
 			);
 			if (prefab)
 			{
@@ -122,7 +118,10 @@ namespace Game.Terrain
 		public void AddSpecialFeature(HexCell cell, Vector3 position)
 		{
 			HexHash hash = HexMetrics.SampleHashGrid(position);
-			Transform instance = Instantiate(special[cell.SpecialIndex - 1]);
+			//make a way to set the landmark type in the cell itself
+			var landmarkPrefabList = assetCollection.landmarkCollections[cell.LandmarkType];
+			var landmarkPrefab = SimRandom.RandomEntryFromList(landmarkPrefabList);
+			Transform instance = Instantiate(landmarkPrefab);
 			instance.localPosition = HexMetrics.Perturb(position);
 			instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
 			instance.SetParent(container, false);
@@ -236,7 +235,7 @@ namespace Game.Terrain
 
 			if (addTower)
 			{
-				Transform towerInstance = Instantiate(wallTower);
+				Transform towerInstance = Instantiate(assetCollection.wallTower);
 				towerInstance.transform.localPosition = (left + right) * 0.5f;
 				Vector3 rightDirection = right - left;
 				rightDirection.y = 0f;

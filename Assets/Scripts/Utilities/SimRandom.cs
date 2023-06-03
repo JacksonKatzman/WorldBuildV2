@@ -64,6 +64,12 @@ namespace Game.Utilities
 			return collection[randomIndex];
 		}
 
+		public static T RandomEntryFromArray<T>(T[] collection)
+		{
+			var randomIndex = RandomRange(0, collection.Length);
+			return collection[randomIndex];
+		}
+
 		public static T RandomEntryFromWeightedDictionary<T>(Dictionary<int, List<T>> collection)
 		{
 			var totalWeight = 0;

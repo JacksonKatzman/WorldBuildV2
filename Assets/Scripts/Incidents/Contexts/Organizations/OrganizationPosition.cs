@@ -8,7 +8,7 @@ namespace Game.Incidents
 {
 	public class OrganizationPosition
 	{
-		public Person official;
+		public Character official;
 		public TitlePair titlePair;
 		public OrganizationType organizationType;
 		//responsibilities
@@ -21,7 +21,7 @@ namespace Game.Incidents
 		public void SelectNewOfficial(Faction affiliatedFaction, Race majorityRace)
 		{
 			var previousOfficial = official;
-			official = SimRandom.RandomRange(0, 5) < 4 && previousOfficial != null ? official.CreateChild(true) : new Person(35, Enums.Gender.ANY, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, true);
+			official = SimRandom.RandomRange(0, 5) < 4 && previousOfficial != null ? official.CreateChild(true) : new Character(35, Enums.Gender.ANY, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, true);
 			official.GenerateFamily(true, true);
 			official.OfficialPosition = this;
 			SimulationManager.Instance.world?.AddContext(official);

@@ -11,8 +11,21 @@ namespace Game.Incidents
 			{ new SpecialFactionBiasContainer(12, 10, 0, 0, typeof(MagicAcademy)) }
 		};
 
+		override public int Population
+		{
+			get
+			{
+				return (int)populationFloat;
+			}
+			set
+			{
+				populationFloat = (float)value;
+			}
+		}
 		public override int ControlledTiles => 1;
 		public override int NumCities => 0;
+
+		private float populationFloat;
 
 		public static Type CalculateFactionType(int political, int economic, int religious, int military)
 		{

@@ -10,7 +10,7 @@ namespace Game.Incidents
 	public class Organization : IFactionAffiliated
 	{
 		public Faction AffiliatedFaction { get; set; }
-		public Person Leader => hierarchy.First().First().official;
+		public Character Leader => hierarchy.First().First().official;
 		/*Political structure with included title structure
 		 * - Levels of government and titles of those levels should be mutable and addable via incidents
 		 * - A way of adding flavor as to the responsibilites of each level?
@@ -38,13 +38,13 @@ namespace Game.Incidents
 
 		public void OnRemoveContextEvent(RemoveContextEvent gameEvent)
 		{
-			if(gameEvent.context.GetType() == typeof(Person) && Contains((Person)gameEvent.context, out var position))
+			if(gameEvent.context.GetType() == typeof(Character) && Contains((Character)gameEvent.context, out var position))
 			{
 				position.SelectNewOfficial(AffiliatedFaction, Leader.Race);
 			}
 		}
 
-		public bool Contains(Person person, out OrganizationPosition position)
+		public bool Contains(Character person, out OrganizationPosition position)
 		{
 			foreach(var tier in hierarchy)
 			{

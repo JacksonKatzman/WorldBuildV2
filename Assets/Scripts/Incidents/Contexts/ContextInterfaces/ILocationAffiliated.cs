@@ -1,5 +1,6 @@
 ﻿using Game.Simulation;
 using Game.Terrain;
+using System.Collections.Generic;
 
 namespace Game.Incidents
 {
@@ -18,6 +19,11 @@ namespace Game.Incidents
 		public static int GetDistanceBetweenLocations(this ILocationAffiliated from, ILocationAffiliated to)
 		{
 			return from.GetHexCell().coordinates.DistanceTo(to.GetHexCell().coordinates);
+		}
+
+		public static List<HexCell> GetAllCellsInRange(this ILocationAffiliated location, int range)
+		{
+			return SimulationUtilities.GetAllCellsInRange(GetHexCell(location), range);
 		}
 	}
 }
