@@ -1,4 +1,5 @@
-﻿using Game.Incidents;
+﻿using Game.Collections;
+using Game.Incidents;
 using Game.Terrain;
 using Game.Utilities;
 using System.Collections.Generic;
@@ -219,6 +220,72 @@ namespace Game.Simulation
 			}
 
 			return possibleIndices;
+		}
+
+		public static List<HexCell> GetAllCellsInRange(HexCell fromCell, int range)
+		{
+			HexCellPriorityQueue searchFrontier = new HexCellPriorityQueue();
+			List<HexCell> cellsInRange = ListPool<HexCell>.Get();
+
+			var searchFrontierPhase = 2;
+			if (searchFrontier == null)
+			{
+				searchFrontier = new HexCellPriorityQueue();
+			}
+			else
+			{
+				searchFrontier.Clear();
+			}
+
+			fromCell.SearchPhase = searchFrontierPhase;
+			fromCell.Distance = 0;
+			searchFrontier.Enqueue(fromCell);
+			HexCoordinates fromCoordinates = fromCell.coordinates;
+			while (searchFrontier.Count > 0)
+			{
+				HexCell current = searchFrontier.Dequeue();
+				current.SearchPhase += 1;
+				cellsInRange.Add(current);
+
+				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+				{
+					HexCell neighbor = current.GetNeighbor(d);
+					if (
+						neighbor == null ||
+						neighbor.SearchPhase > searchFrontierPhase ||
+						!neighbor.Explorable
+					)
+					{
+						continue;
+					}
+
+					int distance = current.Distance + 1;
+					if (distance > range ||
+						distance > fromCoordinates.DistanceTo(neighbor.coordinates)
+					)
+					{
+						continue;
+					}
+
+					if (neighbor.SearchPhase < searchFrontierPhase)
+					{
+						neighbor.SearchPhase = searchFrontierPhase;
+						neighbor.Distance = distance;
+						neighbor.SearchHeuristic = 0;
+						searchFrontier.Enqueue(neighbor);
+					}
+					else if (distance < neighbor.Distance)
+					{
+						int oldPriority = neighbor.SearchPriority;
+						neighbor.Distance = distance;
+						searchFrontier.Change(neighbor, oldPriority);
+					}
+				}
+			}
+
+			SimulationManager.Instance.HexGrid.ResetSearchPhases();
+
+			return cellsInRange;
 		}
 	}
 }
