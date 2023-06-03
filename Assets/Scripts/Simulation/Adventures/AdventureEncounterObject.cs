@@ -44,14 +44,16 @@ namespace Game.Simulation
 	//Includes both monsters and non monster threats
 
 	[CreateAssetMenu(fileName = nameof(AdventureEncounterObject), menuName = "ScriptableObjects/Adventures/" + nameof(AdventureEncounterObject), order = 1)]
-	public class AdventureEncounterObject : SerializedScriptableObject
+	public class AdventureEncounterObject : SerializedScriptableObject, ILocationAffiliated
 	{
 		[PropertyOrder(-10)]
 		public string encounterTitle;
 		[PropertyOrder(-9)]
+		public int encounterDifficulty;
+		[PropertyOrder(-8)]
 		public EncounterLocationType encounterLocationType;
 
-		public Location Location { get; set; }
+		public Location CurrentLocation { get; set; }
 
 		[ValueDropdown("GetEncounterTypes", IsUniqueList = true, DropdownTitle = "Encounter Types"), PropertyOrder(-8)]
 		public List<EncounterType> encounterTypes;

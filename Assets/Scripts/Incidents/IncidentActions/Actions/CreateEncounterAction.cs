@@ -19,7 +19,7 @@ namespace Game.Incidents
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
 			var copy = UnityEngine.Object.Instantiate(encounter);
-			copy.Location = location.GetTypedFieldValue();
+			copy.CurrentLocation = location.GetTypedFieldValue();
 			var historicals = copy.contextCriterium.Where(x => x.IsHistorical).ToList();
 			for(int i = 0; i < historicals.Count; i++)
 			{
