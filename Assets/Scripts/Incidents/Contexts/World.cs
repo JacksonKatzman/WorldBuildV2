@@ -111,12 +111,15 @@ namespace Game.Simulation
 			DrawCities();
 
 			//Pick location for players to start, likely in one of the towns/hamlets
+			var startingCity = SimRandom.RandomEntryFromList(Cities);
 			//Generate layout of town/what its contents is
 			//Generate all the points of interest/people of interest in the town
 			//Generate NPCs for the tavern the players start in
+			startingCity.GenerateMinorCharacters(5);
 			//Generate adventure based in location/people of interest etc
 			//Extra credit: generate world points of interest in case players want to explore for their adventures instead?
 			//That or just include exploration contracts among the possible adventures
+			AdventureService.Instance.SetAdventureStartingPoint(startingCity.CurrentLocation);
 		}
 
 		public void GenerateAdditionalCities(Faction faction)
@@ -202,6 +205,12 @@ namespace Game.Simulation
 		{
 			context.ID = GetNextID();
 			contextsToAdd[typeof(T)].Add(context);
+		}
+
+		public void AddContextImmediate<T>(T context) where T : IIncidentContext
+		{
+			AddContext(context);
+			DelayedAddContexts();
 		}
 
 		public void RemoveContext<T>(T context) where T : IIncidentContext

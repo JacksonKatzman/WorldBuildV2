@@ -26,6 +26,7 @@ namespace Game.Incidents
 		public bool IsOnBorder => SimulationUtilities.FindBorderWithinFaction(AffiliatedFaction).Contains(CurrentLocation.TileIndex);
 		public List<Resource> Resources { get; set; }
 		public List<Landmark> Landmarks { get; set; }
+		public List<MinorCharacter> MinorCharacters { get; set; }
 
 		public Inventory Inventory { get; set; }
 		private float populationFloat;
@@ -47,6 +48,15 @@ namespace Game.Incidents
 		public void UpdatePopulation()
 		{
 			populationFloat *= 1.011f;
+		}
+
+		public void GenerateMinorCharacters(int amount)
+		{
+			for(var i = 0; i < amount; i++)
+			{
+				var character = new MinorCharacter(AffiliatedFaction);
+				SimulationManager.Instance.world.AddContextImmediate(character);
+			}
 		}
 	}
 }
