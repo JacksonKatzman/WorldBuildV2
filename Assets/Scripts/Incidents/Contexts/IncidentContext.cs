@@ -21,6 +21,8 @@ namespace Game.Incidents
 
 		public int ParentID => -1;
 
+		protected Dictionary<string, List<int>> contextIDLoadBuffers;
+
 		public IncidentContext()
 		{
 			SetupHistoricalData();
@@ -75,7 +77,7 @@ namespace Game.Incidents
 		{
 			propertyList = GetIntegerPropertyList();
 			historicalData = new Dictionary<string, List<YearData<int>>>();
-			//historicalData.Add("Influence", new List<IYearData>{ new YearData<int>(SimulationManager.Instance.world.Age, Influence) });
+
 			foreach (var property in propertyList)
 			{
 				historicalData.Add(property.Name, new List<YearData<int>>());
@@ -94,5 +96,17 @@ namespace Game.Incidents
 		{
 			return GetPropertyList().Where(x => x.PropertyType == typeof(int)).ToList();
 		}
+
+		public void AddContextIdBuffer(string key, List<int> ids)
+		{
+			if(contextIDLoadBuffers == null)
+			{
+				contextIDLoadBuffers = new Dictionary<string, List<int>>();
+			}
+
+			contextIDLoadBuffers.Add(key, ids);
+		}
+
+		public virtual void LoadContextProperties() { }
 	}
 }

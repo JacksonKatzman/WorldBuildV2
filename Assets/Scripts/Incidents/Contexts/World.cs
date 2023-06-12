@@ -2,10 +2,12 @@
 using Game.Incidents;
 using Game.Terrain;
 using Game.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using UnityEngine;
 
 namespace Game.Simulation
 {
@@ -14,7 +16,9 @@ namespace Game.Simulation
 		[NonSerialized]
 		private HexGrid hexGrid;
 
+		[JsonProperty, ES3Serializable]
 		public IncidentContextDictionary CurrentContexts { get; private set; }
+		[JsonProperty, ES3Serializable]
 		public IncidentContextDictionary AllContexts { get; private set; }
 		private IncidentContextDictionary contextsToAdd;
 		private IncidentContextDictionary contextsToRemove;
@@ -33,9 +37,13 @@ namespace Game.Simulation
 
 		public int Age { get; set; }
 
+		[JsonIgnore]
 		public List<Character> People => CurrentContexts[typeof(Character)].Cast<Character>().ToList();
+		[JsonIgnore]
 		public List<Faction> Factions => CurrentContexts[typeof(Faction)].Cast<Faction>().ToList();
+		[JsonIgnore]
 		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
+		[JsonIgnore]
 		public int NumPeople => CurrentContexts[typeof(Character)].Count;
 
 		public int nextID;
@@ -190,12 +198,13 @@ namespace Game.Simulation
 
 		public void Save(string mapName)
 		{
-
+			SaveUtilities.SerializeSave(this, SaveUtilities.GetWorldPath(mapName));
 		}
 
 		public static World Load(HexGrid hexGrid, string mapName)
 		{
-			var world = new World();
+			//var world = new World();
+			var world = SaveUtilities.SerializeLoad<World>(SaveUtilities.GetMapRootPath(mapName), "World.json");
 			world.hexGrid = hexGrid;
 
 			return world;
@@ -293,6 +302,11 @@ namespace Game.Simulation
 			var next = nextID;
 			nextID++;
 			return next;
+		}
+
+		public override void LoadContextProperties()
+		{
+			AllContexts.LoadContextProperties();
 		}
 	}
 }

@@ -13,6 +13,7 @@ namespace Game.Incidents
 		void UpdateContext();
 		void DeployContext();
 		void Die();
+		void LoadContextProperties();
 		void UpdateHistoricalData();
 		DataTable GetDataTable();
 	}

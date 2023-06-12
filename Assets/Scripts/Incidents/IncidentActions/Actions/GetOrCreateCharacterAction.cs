@@ -41,7 +41,7 @@ namespace Game.Incidents
 		[ShowIf("@this.allowCreate")]
 		public IntegerRange charisma;
 		[ShowIf("@this.allowCreate")]
-		public bool worldPlayer = true;
+		public bool majorCharacter = true;
 		[ShowIf("@this.allowCreate")]
 		public bool generateFamily = true;
 
@@ -50,7 +50,7 @@ namespace Game.Incidents
 			var parents = parent.GetTypedFieldValue() != null ? new List<Character>() { parent.GetTypedFieldValue() } : null;
 			var newPerson = new Character(age, gender, race.GetTypedFieldValue(), faction.GetTypedFieldValue(), politicalPriority,
 				economicPriority, religiousPriority, militaryPriority, influence, wealth, strength, dexterity, constitution,
-				intelligence, wisdom, charisma, worldPlayer, parents);
+				intelligence, wisdom, charisma, majorCharacter, parents);
 
 			if(generateFamily)
 			{

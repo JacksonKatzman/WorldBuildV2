@@ -38,5 +38,7 @@ namespace Game.Incidents
 		{
 
 		}
+
+		public virtual void LoadContextProperties() { }
 	}
 }

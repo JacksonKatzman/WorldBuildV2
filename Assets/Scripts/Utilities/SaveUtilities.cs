@@ -2,6 +2,8 @@
 using System.IO;
 using Game.Terrain;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using Game.Simulation;
 
 namespace Game.Utilities
 {
@@ -18,7 +20,7 @@ namespace Game.Utilities
 			// ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
 			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
 			TypeNameHandling = TypeNameHandling.All,
-			MissingMemberHandling = MissingMemberHandling.Ignore
+			MissingMemberHandling = MissingMemberHandling.Ignore,
 		};
 
 		public static string ROOT = Path.Combine(Application.persistentDataPath, "GameData");
@@ -43,6 +45,11 @@ namespace Game.Utilities
 			return Path.Combine(ROOT, mapName, "SimCells");
 		}
 
+		public static string GetWorldPath(string mapName)
+		{
+			return Path.Combine(ROOT, mapName, "World.json");
+		}
+
 		public static void CreateMapDirectories(string mapName)
 		{
 			Directory.CreateDirectory(GetHexMapDataPath(mapName));
@@ -55,7 +62,21 @@ namespace Game.Utilities
 			File.WriteAllText(path, output);
 		}
 
-		public static T SerializeLoad<T>(string path)
+		public static T SerializeLoad<T>(string path, string fileName)
+		{
+			var files = Directory.GetFiles(path, fileName);
+			var file = files[0];
+
+			var text = File.ReadAllText(file);
+			if (text.Length > 0)
+			{
+				return JsonConvert.DeserializeObject<T>(text, SERIALIZER_SETTINGS);
+			}
+
+			return default;
+		}
+
+		public static T SerializeLoadAll<T>(string path)
 		{
 			var files = Directory.GetFiles(path, "*.json");
 			var file = files[0];
@@ -101,6 +122,21 @@ namespace Game.Utilities
 					OutputLogger.LogWarning("Unknown map format " + header);
 				}
 			}
+		}
+
+		public static T ConvertIDToContext<T>(int id)
+		{
+			return SimulationManager.Instance.AllContexts.GetContextByID<T>(id);
+		}
+
+		public static List<T> ConvertIDsToContexts<T>(List<int> ids)
+		{
+			var contexts = new List<T>();
+			foreach (var id in ids)
+			{
+				contexts.Add(SimulationManager.Instance.AllContexts.GetContextByID<T>(id));
+			}
+			return contexts;
 		}
 	}
 }
