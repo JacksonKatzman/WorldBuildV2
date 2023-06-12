@@ -20,7 +20,7 @@ namespace Game.Incidents
 		{
 			get
 			{
-				return Cities.Sum(x => x.Population);
+				return Cities == null ? 0 : Cities.Sum(x => x.Population);
 			}
 			set
 			{
@@ -33,6 +33,7 @@ namespace Game.Incidents
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		virtual public int ControlledTiles => ControlledTileIndices.Count;
 		public int InfluenceForNextTile => ControlledTiles * 2 + 1;
+		[ES3Serializable]
 		public List<City> Cities { get; set; }
 		public City Capitol => Cities.Count > 0? Cities[0] : null;
 		virtual public int NumCities => Cities.Count;
@@ -55,12 +56,11 @@ namespace Game.Incidents
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
 
+		[ES3NonSerializable]
 		public NamingTheme namingTheme;
 
 		public Faction() : base()
 		{
-			//need a smart generic way to go through our collections of contexts and remove a context
-			//when we get sent a contextremovedevent
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
@@ -91,6 +91,13 @@ namespace Game.Incidents
 			EconomicPriority = economicPriority;
 			ReligiousPriority = religiousPriority;
 			MilitaryPriority = militaryPriority;
+		}
+
+		public Faction(Race race)
+		{
+			namingTheme = new NamingTheme(race.racePreset.namingTheme);
+			Name = namingTheme.GenerateFactionName();
+			CreateStartingGovernment(race);
 		}
 
 		override public void DeployContext()
