@@ -1,6 +1,7 @@
 ﻿using Game.Incidents;
 using Game.Terrain;
 using Game.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -44,7 +45,7 @@ namespace Game.Simulation
 		public void CreateWorld(List<FactionPreset> factions)
 		{
 			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
-			world = new World(HexGrid);
+			world = new World();
 			world.Initialize(factions);
 			var test = AdventureService.Instance;
 		}
@@ -56,6 +57,10 @@ namespace Game.Simulation
 
 		public void SaveWorld(string mapName)
 		{
+			if(string.IsNullOrEmpty(mapName))
+			{
+				mapName = "TEST";
+			}
 			string[] directoriesAtRoot = Directory.GetDirectories(SaveUtilities.ROOT, mapName);
 			if (directoriesAtRoot == null || directoriesAtRoot.Length == 0)
 			{
@@ -63,13 +68,23 @@ namespace Game.Simulation
 			}
 			SaveUtilities.SaveHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
 
-			world.Save(mapName);
+			ES3.Save(mapName, world);
+		
 		}
 
 		public void LoadWorld(string mapName)
 		{
+			if (string.IsNullOrEmpty(mapName))
+			{
+				mapName = "TEST";
+			}
 			SaveUtilities.LoadHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
-			world = World.Load(HexGrid, mapName);
+
+			var loadedWorld = ES3.Load<World>(mapName, world);
+			loadedWorld.LoadContextProperties();
+			world = loadedWorld;
+
+			OutputLogger.Log("World Loaded!");
 		}
 
 		public void DebugRun()
