@@ -6,11 +6,11 @@ using System.Reflection;
 
 namespace Game.Generators.Items
 {
-	abstract public class Item : InertIncidentContext, IInventoryAffiliated
+	abstract public class Item : InertIncidentContext
 	{
 		public override Type ContextType => typeof(Item);
 
-		public Inventory Inventory { get; set; }
+		//public Inventory Inventory { get; set; }
 	}
 
 	[System.Serializable]
