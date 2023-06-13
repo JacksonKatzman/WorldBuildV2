@@ -18,11 +18,10 @@ namespace ES3Types
 		{
 			var instance = (Game.Incidents.Faction)obj;
 			
-			writer.WriteProperty("Population", instance.Population, ES3Type_int.Instance);
 			writer.WriteProperty("Influence", instance.Influence, ES3Type_int.Instance);
 			writer.WriteProperty("Wealth", instance.Wealth, ES3Type_int.Instance);
 			writer.WriteProperty("MilitaryPower", instance.MilitaryPower, ES3Type_int.Instance);
-			writer.WriteProperty("FactionRelationKeys", instance.FactionRelations.Keys.ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
+			writer.WriteProperty("FactionRelationKeys", instance.FactionRelations.Keys.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("FactionRelationValues", instance.FactionRelations.Values.ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("Cities", instance.Cities.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("PoliticalPriority", instance.PoliticalPriority, ES3Type_int.Instance);
@@ -48,9 +47,6 @@ namespace ES3Types
 				switch(propertyName)
 				{
 					
-					case "Population":
-						instance.Population = reader.Read<System.Int32>(ES3Type_int.Instance);
-						break;
 					case "Influence":
 						instance.Influence = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;

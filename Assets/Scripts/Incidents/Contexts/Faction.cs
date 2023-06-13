@@ -130,7 +130,8 @@ namespace Game.Incidents
 		public void CreateStartingCity(int startingPopulation)
 		{
 			var cells = SimulationUtilities.GetCitylessCellsFromList(ControlledTileIndices);
-			var city = new City(this, new Location(SimRandom.RandomEntryFromList(cells)), startingPopulation, 0);
+			var location = new Location(SimRandom.RandomEntryFromList(cells));
+			var city = new City(this, location, startingPopulation, 0);
 			Cities.Add(city);
 			SimulationManager.Instance.world.AddContext(city);
 		}
