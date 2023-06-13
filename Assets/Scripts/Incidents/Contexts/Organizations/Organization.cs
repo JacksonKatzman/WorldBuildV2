@@ -118,5 +118,12 @@ namespace Game.Incidents
 		{
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
 		}
+
+		public override void LoadContextProperties()
+		{
+			AffiliatedFaction = SaveUtilities.ConvertIDToContext<Faction>(contextIDLoadBuffers["AffiliatedFaction"][0]);
+
+			contextIDLoadBuffers.Clear();
+		}
 	}
 }
