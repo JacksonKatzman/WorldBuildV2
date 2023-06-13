@@ -9,6 +9,7 @@ namespace Game.Incidents
 
 		public Location CurrentLocation => this;
 
+		public Location() { }
 		public Location(int tileIndex)
 		{
 			TileIndex = tileIndex;
