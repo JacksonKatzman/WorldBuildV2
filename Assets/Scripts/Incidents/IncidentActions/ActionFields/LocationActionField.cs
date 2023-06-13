@@ -46,7 +46,8 @@ namespace Game.Incidents
 			}
 			else
 			{
-				value = new Location(FindRandom());
+				var id = FindRandom();
+				AssignLocationValue(id);
 			}
 			return true;
 		}
@@ -72,13 +73,27 @@ namespace Game.Incidents
 			}
 			if (index != -1)
 			{
-				value = new Location(index);
+				AssignLocationValue(index);
 				return true;
 			}
 			else
 			{
 				OutputLogger.LogWarning("FindLocationAction failed to find location with method: " + LocationFindMethod);
 				return false;
+			}
+		}
+
+		private void AssignLocationValue(int id)
+		{
+			var matches = SimulationManager.Instance.CurrentContexts[typeof(Location)].Where(x => ((Location)x).TileIndex == id).ToList();
+			if (matches.Count > 0)
+			{
+				value = (Location)matches[0];
+			}
+			else
+			{
+				value = new Location(id);
+				SimulationManager.Instance.world.AddContext(value);
 			}
 		}
 
