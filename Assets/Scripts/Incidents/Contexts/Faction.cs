@@ -56,7 +56,6 @@ namespace Game.Incidents
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
 
-		[ES3NonSerializable]
 		public NamingTheme namingTheme;
 
 		public Faction() : base()
@@ -198,6 +197,27 @@ namespace Game.Incidents
 			SimulationManager.Instance.HexGrid.ResetSearchPhases();
 
 			return size != 0;
+		}
+
+		public override void LoadContextProperties()
+		{
+			Government = SaveUtilities.ConvertIDToContext<Organization>(contextIDLoadBuffers["Government"][0]);
+			Cities = SaveUtilities.ConvertIDsToContexts<City>(contextIDLoadBuffers["Cities"]);
+			FactionsAtWarWith = SaveUtilities.ConvertIDsToContexts<IIncidentContext>(contextIDLoadBuffers["FactionsAtWarWith"]);
+			var relationKeys = SaveUtilities.ConvertIDsToContexts<Faction>(contextIDLoadBuffers["FactionRelationKeys"]);
+			var relationValues = contextIDLoadBuffers["FactionRelationValues"];
+
+			if(FactionRelations == null)
+			{
+				FactionRelations = new Dictionary<IIncidentContext, int>();
+			}
+
+			for(int i = 0; i < relationKeys.Count; i++)
+			{
+				FactionRelations.Add(relationKeys[i], relationValues[i]);
+			}
+
+			contextIDLoadBuffers.Clear();
 		}
 
 		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)
