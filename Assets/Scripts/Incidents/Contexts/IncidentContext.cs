@@ -12,14 +12,14 @@ namespace Game.Incidents
 		protected Dictionary<string, List<YearData<int>>> historicalData;
 		protected List<PropertyInfo> propertyList;
 
-		public Type ContextType => this.GetType();
+		virtual public Type ContextType => this.GetType();
 
-		public int NumIncidents { get; set; }
+		virtual public int NumIncidents { get; set; }
 		virtual public string Name { get; set; }
 
 		virtual public int ID { get; set; }
 
-		public int ParentID => -1;
+		virtual public int ParentID => -1;
 
 		protected Dictionary<string, List<int>> contextIDLoadBuffers;
 
@@ -28,7 +28,7 @@ namespace Game.Incidents
 			SetupHistoricalData();
 		}
 
-		public void UpdateHistoricalData()
+		virtual public void UpdateHistoricalData()
 		{
 			var year = SimulationManager.Instance.world.Age;
 
@@ -45,7 +45,7 @@ namespace Game.Incidents
 
 		abstract public void Die();
 
-		public DataTable GetDataTable()
+		virtual public DataTable GetDataTable()
 		{
 			var table1 = new DataTable();
 			table1.Columns.Add(new DataColumn("ContextID"));
