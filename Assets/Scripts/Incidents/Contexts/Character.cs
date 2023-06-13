@@ -19,8 +19,8 @@ namespace Game.Incidents
 			Spouses = new List<Character>();
 			Siblings = new List<Character>();
 			Children = new List<Character>();
-			Race = new Race(new RacePreset());
-			CharacterName = new CharacterName("FORMAT");
+			//Race = new Race(new RacePreset());
+			//CharacterName = new CharacterName("FORMAT");
 			Inventory = new Inventory();
 		}
 		public Character(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
@@ -110,6 +110,10 @@ namespace Game.Incidents
 			Gender = (Gender)(SimRandom.RandomRange(0, 2));
 			CharacterName = affiliatedFaction.namingTheme.GenerateName(Gender);
 			MajorCharacter = false;
+			Parents = new List<Character>();
+			Spouses = new List<Character>();
+			Siblings = new List<Character>();
+			Children = new List<Character>();
 		}
 
 		public override string Name => CharacterName.GetTitledFullName(this);
@@ -236,7 +240,7 @@ namespace Game.Incidents
 			Spouses = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Spouses"]);
 			Siblings = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Siblings"]);
 			Children = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Children"]);
-			Inventory.LoadContextProperties();
+			Inventory?.LoadContextProperties();
 
 			contextIDLoadBuffers.Clear();
 		}
@@ -256,16 +260,6 @@ namespace Game.Incidents
 			{
 				return null;
 			}
-		}
-
-		private List<Character> ConvertIDsToContexts(List<int> ids)
-		{
-			var contexts = new List<Character>();
-			foreach(var id in ids)
-			{
-				contexts.Add(SimulationManager.Instance.AllContexts.GetContextByID<Character>(id));
-			}
-			return contexts;
 		}
 	}
 }
