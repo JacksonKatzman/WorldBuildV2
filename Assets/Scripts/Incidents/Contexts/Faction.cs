@@ -125,6 +125,7 @@ namespace Game.Incidents
 		{
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+			Government.Die();
 		}
 
 		public void CreateStartingCity(int startingPopulation)
@@ -138,6 +139,7 @@ namespace Game.Incidents
 		public void CreateStartingGovernment(Race majorityStartingRace)
 		{
 			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL);
+			EventManager.Instance.Dispatch(new AddContextEvent(Government));
 		}
 
 		public bool AttemptExpandBorder(int numTimes)
