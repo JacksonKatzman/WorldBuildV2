@@ -2,6 +2,7 @@
 using Game.Enums;
 using Game.Generators.Names;
 using Game.Simulation;
+using Game.Utilities;
 using System;
 
 namespace Game.Incidents
@@ -46,6 +47,15 @@ namespace Game.Incidents
 		public override void UpdateContext()
 		{
 			
+		}
+
+		public override void LoadContextProperties()
+		{
+			AffiliatedFaction = SaveUtilities.ConvertIDToContext<Faction>(contextIDLoadBuffers["AffiliatedFaction"][0]);
+
+			Inventory.LoadContextProperties();
+
+			contextIDLoadBuffers.Clear();
 		}
 	}
 }
