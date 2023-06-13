@@ -13,12 +13,9 @@ namespace Game.Simulation
 {
 	public class World : IncidentContext
 	{
-		[NonSerialized]
-		private HexGrid hexGrid;
+		private HexGrid HexGrid => SimulationManager.Instance.HexGrid;
 
-		[JsonProperty, ES3Serializable]
 		public IncidentContextDictionary CurrentContexts { get; private set; }
-		[JsonProperty, ES3Serializable]
 		public IncidentContextDictionary AllContexts { get; private set; }
 		private IncidentContextDictionary contextsToAdd;
 		private IncidentContextDictionary contextsToRemove;
@@ -50,14 +47,6 @@ namespace Game.Simulation
 
 		public World()
 		{
-			//CurrentContexts = new TypeListDictionary<IIncidentContext>();
-			EventManager.Instance.AddEventHandler<AddContextEvent>(OnAddContextEvent);
-			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
-		}
-
-		public World(HexGrid hexGrid) : this()
-		{
-			this.hexGrid = hexGrid;
 			nextID = ID + 1;
 			Age = 0;
 
@@ -65,6 +54,9 @@ namespace Game.Simulation
 			AllContexts = new IncidentContextDictionary();
 			contextsToAdd = new IncidentContextDictionary();
 			contextsToRemove = new IncidentContextDictionary();
+
+			EventManager.Instance.AddEventHandler<AddContextEvent>(OnAddContextEvent);
+			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
 		public void Initialize(List<FactionPreset> factions)
@@ -144,7 +136,7 @@ namespace Game.Simulation
 				{
 					break;
 				}
-				var ordered = possibleTiles.OrderByDescending(x => hexGrid.GetCell(x).CalculateInhabitability());
+				var ordered = possibleTiles.OrderByDescending(x => HexGrid.GetCell(x).CalculateInhabitability());
 				var chosenLocationIndex = ordered.First();
 				var population = SimRandom.RandomRange((int)(faction.Cities[0].Population * 0.3f), (int)(faction.Cities[0].Population * 0.7f));
 				var createdCity = new City(faction, new Location(chosenLocationIndex), population, 0);
@@ -158,7 +150,7 @@ namespace Game.Simulation
 			foreach(var city in Cities)
 			{
 				var location = city.CurrentLocation.TileIndex;
-				var tile = hexGrid.GetCell(location);
+				var tile = HexGrid.GetCell(location);
 
 				//Change the model based on the population, will use temp stuff for now
 				if (city.Population >= 2000)
@@ -178,7 +170,7 @@ namespace Game.Simulation
 
 			foreach (var index in borderCells)
 			{
-				var cell = hexGrid.GetCell(index);
+				var cell = HexGrid.GetCell(index);
 				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 				{
 					HexCell neighbor = cell.GetNeighbor(d);
@@ -195,20 +187,6 @@ namespace Game.Simulation
 					}
 				}
 			}
-		}
-
-		public void Save(string mapName)
-		{
-			SaveUtilities.SerializeSave(this, SaveUtilities.GetWorldPath(mapName));
-		}
-
-		public static World Load(HexGrid hexGrid, string mapName)
-		{
-			//var world = new World();
-			var world = SaveUtilities.SerializeLoad<World>(SaveUtilities.GetMapRootPath(mapName), "World.json");
-			world.hexGrid = hexGrid;
-
-			return world;
 		}
 
 		public void AddContext<T>(T context) where T : IIncidentContext
@@ -313,6 +291,13 @@ namespace Game.Simulation
 		public override void LoadContextProperties()
 		{
 			AllContexts.LoadContextProperties();
+			CurrentContexts = new IncidentContextDictionary();
+
+			foreach(var id in contextIDLoadBuffers["CurrentContexts"])
+			{
+				var context = AllContexts.GetContextByID(id);
+				CurrentContexts[context.ContextType].Add(context);
+			}
 		}
 	}
 }

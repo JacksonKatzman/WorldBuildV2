@@ -48,6 +48,12 @@ namespace Game.Incidents
 		virtual public DataTable GetDataTable()
 		{
 			var table1 = new DataTable();
+
+			if(historicalData.Count == 0)
+			{
+				return table1;
+			}
+
 			table1.Columns.Add(new DataColumn("ContextID"));
 			table1.Columns.Add(new DataColumn("ContextType"));
 			table1.Columns.Add(new DataColumn("Property"));

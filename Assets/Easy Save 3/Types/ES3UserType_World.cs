@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ES3Types
@@ -17,10 +19,18 @@ namespace ES3Types
 			var instance = (Game.Simulation.World)obj;
 			
 			writer.WriteProperty("nextID", instance.nextID, ES3Type_int.Instance);
-			writer.WritePrivateProperty("CurrentContexts", instance);
+			//writer.WritePrivateProperty("CurrentContexts", instance);
 			writer.WritePrivateProperty("AllContexts", instance);
 			writer.WriteProperty("ID", instance.ID, ES3Type_int.Instance);
 			writer.WriteProperty("Age", instance.Age, ES3Type_int.Instance);
+
+			var currentContexts = new List<int>();
+			foreach(var typeListPair in instance.CurrentContexts)
+			{
+				currentContexts.AddRange(typeListPair.Value.Select(x => x.ID));
+			}
+
+			writer.WriteProperty("CurrentContexts", currentContexts, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 		}
 
 		protected override void ReadObject<T>(ES3Reader reader, object obj)
@@ -35,11 +45,11 @@ namespace ES3Types
 						instance.nextID = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
 					case "CurrentContexts":
-					instance = (Game.Simulation.World)reader.SetPrivateProperty("CurrentContexts", reader.Read<Game.Simulation.IncidentContextDictionary>(), instance);
-					break;
+						instance.AddContextIdBuffer("CurrentContexts", reader.Read<System.Collections.Generic.List<System.Int32>>());
+						break;
 					case "AllContexts":
-					instance = (Game.Simulation.World)reader.SetPrivateProperty("AllContexts", reader.Read<Game.Simulation.IncidentContextDictionary>(), instance);
-					break;
+						instance = (Game.Simulation.World)reader.SetPrivateProperty("AllContexts", reader.Read<Game.Simulation.IncidentContextDictionary>(), instance);
+						break;
 					case "ID":
 						instance.ID = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
