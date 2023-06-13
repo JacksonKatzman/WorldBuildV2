@@ -51,6 +51,7 @@ namespace Game.Simulation
 		public World()
 		{
 			//CurrentContexts = new TypeListDictionary<IIncidentContext>();
+			EventManager.Instance.AddEventHandler<AddContextEvent>(OnAddContextEvent);
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
@@ -225,6 +226,11 @@ namespace Game.Simulation
 		public void RemoveContext<T>(T context) where T : IIncidentContext
 		{
 			contextsToRemove[typeof(T)].Add(context);
+		}
+
+		private void OnAddContextEvent(AddContextEvent gameEvent)
+		{
+			AddContext(gameEvent.context);
 		}
 
 		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)
