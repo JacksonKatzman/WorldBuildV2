@@ -1,5 +1,6 @@
 ﻿using Game.Generators.Items;
 using Game.Incidents;
+using Game.Utilities;
 using System;
 using System.Collections.Generic;
 
@@ -18,6 +19,14 @@ namespace Game.Incidents
 		{
 			CurrentLocation = location;
 			Inventory = new Inventory();
+		}
+
+		public override void LoadContextProperties()
+		{
+			CurrentLocation = SaveUtilities.ConvertIDToContext<Location>(contextIDLoadBuffers["CurrentLocation"][0]);
+			Inventory.LoadContextProperties();
+
+			contextIDLoadBuffers.Clear();
 		}
 	}
 }
