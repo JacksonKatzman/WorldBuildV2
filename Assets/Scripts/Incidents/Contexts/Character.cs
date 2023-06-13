@@ -21,6 +21,7 @@ namespace Game.Incidents
 			Children = new List<Character>();
 			Race = new Race(new RacePreset());
 			CharacterName = new CharacterName("FORMAT");
+			Inventory = new Inventory();
 		}
 		public Character(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
 			int religiousPriority, int militaryPriority, int influence, int wealth, int strength, int dexterity,
@@ -117,7 +118,8 @@ namespace Game.Incidents
 		public Gender Gender { get; set; }
 		public Race Race { get; set; }
 		public Faction AffiliatedFaction { get; set; }
-		public OrganizationPosition OfficialPosition { get; set; }
+		public Organization Organization { get; set; }
+		public OrganizationPosition OfficialPosition => GetOfficialPosition();
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
@@ -234,8 +236,26 @@ namespace Game.Incidents
 			Spouses = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Spouses"]);
 			Siblings = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Siblings"]);
 			Children = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Children"]);
+			Inventory.LoadContextProperties();
 
 			contextIDLoadBuffers.Clear();
+		}
+
+		private OrganizationPosition GetOfficialPosition()
+		{
+			if(Organization == null)
+			{
+				return null;
+			}
+
+			if(Organization.Contains(this, out var position))
+			{
+				return position;
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		private List<Character> ConvertIDsToContexts(List<int> ids)

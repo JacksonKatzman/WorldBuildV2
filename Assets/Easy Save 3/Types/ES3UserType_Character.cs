@@ -23,11 +23,9 @@ namespace ES3Types
 			writer.WriteProperty("CharacterName", instance.CharacterName, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Generators.Names.CharacterName)));
 			writer.WriteProperty("Age", instance.Age, ES3Type_int.Instance);
 			writer.WriteProperty("Gender", instance.Gender, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Enums.Gender)));
-			//writer.WriteProperty("Race", instance.Race, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Incidents.Race)));
 			writer.WriteProperty("Race", new List<int>() { instance.Race.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("AffiliatedFaction", new List<int>() { instance.AffiliatedFaction.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
-			//writer.WriteProperty("AffiliatedFaction", instance.AffiliatedFaction, ES3UserType_Faction.Instance);
-			//writer.WriteProperty("OfficialPosition", instance.OfficialPosition, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Incidents.OrganizationPosition)));
+			writer.WriteProperty("Organization", new List<int>() { instance.Organization.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("PoliticalPriority", instance.PoliticalPriority, ES3Type_int.Instance);
 			writer.WriteProperty("EconomicPriority", instance.EconomicPriority, ES3Type_int.Instance);
 			writer.WriteProperty("ReligiousPriority", instance.ReligiousPriority, ES3Type_int.Instance);
@@ -40,7 +38,7 @@ namespace ES3Types
 			writer.WriteProperty("Intelligence", instance.Intelligence, ES3Type_int.Instance);
 			writer.WriteProperty("Wisdom", instance.Wisdom, ES3Type_int.Instance);
 			writer.WriteProperty("Charisma", instance.Charisma, ES3Type_int.Instance);
-			//writer.WriteProperty("Inventory", instance.Inventory, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Incidents.Inventory)));
+			writer.WriteProperty("Inventory", instance.Inventory, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Incidents.Inventory)));
 
 			writer.WriteProperty("Parents", instance.Parents.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("Spouses", instance.Spouses.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
@@ -77,8 +75,8 @@ namespace ES3Types
 					case "AffiliatedFaction":
 						instance.AddContextIdBuffer("AffiliatedFaction", reader.Read<System.Collections.Generic.List<System.Int32>>());
 						break;
-					case "OfficialPosition":
-						instance.OfficialPosition = reader.Read<Game.Incidents.OrganizationPosition>();
+					case "Organization":
+						instance.AddContextIdBuffer("Organization", reader.Read<System.Collections.Generic.List<System.Int32>>());
 						break;
 					case "PoliticalPriority":
 						instance.PoliticalPriority = reader.Read<System.Int32>(ES3Type_int.Instance);
@@ -159,26 +157,6 @@ namespace ES3Types
 			ReadObject<T>(reader, instance);
 			return instance;
 		}
-/*
-		public List<T> GetObjectsFromIDList<T>(List<int> ids) where T : IIncidentContext
-		{
-			var objs = new List<T>();
-			foreach(var i in ids)
-			{
-				objs.Add(CreateObjectByID<T>(i));
-			}
-			return objs;
-		}
-
-		public T CreateObjectByID<T>(int id) where T : IIncidentContext
-		{
-			var type = typeof(T);
-			var assembly = type.Assembly;
-			var instance = (T)assembly.CreateInstance(type.ToString());
-			instance.ID = id;
-			return instance;
-		}
-*/
 	}
 
 
