@@ -141,6 +141,20 @@ namespace Game.Incidents
 			OutputLogger.Log("Incident Log saved to disk!");
 		}
 
+		public void SaveIncidentLog(string mapName)
+		{
+			ES3.Save("nextIncidentID", nextIncidentID, SaveUtilities.GetIncidentLogPath(mapName));
+			ES3.Save("reports", reports, SaveUtilities.GetIncidentLogPath(mapName));
+			//In future we should save and load the delayedContexts
+			//to allow GMs to set things in motion and have those be remembered.
+		}
+
+		public void LoadIncidentLog(string mapName)
+		{
+			nextIncidentID = ES3.Load<int>("nextIncidentID", SaveUtilities.GetIncidentLogPath(mapName));
+			reports = ES3.Load<List<IncidentReport>>("reports", SaveUtilities.GetIncidentLogPath(mapName));
+		}
+
 		private List<IIncident> GetIncidentsOfType(Type type)
 		{
 			var items = incidents.Where(x => x.ContextType == type).ToList();

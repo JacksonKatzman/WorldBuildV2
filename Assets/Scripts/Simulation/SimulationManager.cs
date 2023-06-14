@@ -61,15 +61,11 @@ namespace Game.Simulation
 			{
 				mapName = "TEST";
 			}
-			string[] directoriesAtRoot = Directory.GetDirectories(SaveUtilities.ROOT, mapName);
-			if (directoriesAtRoot == null || directoriesAtRoot.Length == 0)
-			{
-				SaveUtilities.CreateMapDirectories(mapName);
-			}
-			SaveUtilities.SaveHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
 
-			ES3.Save(mapName, world);
-		
+			SaveUtilities.GetOrCreateMapDirectory(mapName);
+			SaveUtilities.SaveHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
+			ES3.Save(mapName, world, SaveUtilities.GetWorldPath(mapName));
+			IncidentService.Instance.SaveIncidentLog(mapName);
 		}
 
 		public void LoadWorld(string mapName)
@@ -78,11 +74,13 @@ namespace Game.Simulation
 			{
 				mapName = "TEST";
 			}
+
 			SaveUtilities.LoadHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
 
-			var loadedWorld = ES3.Load<World>(mapName, world);
-			loadedWorld.LoadContextProperties();
-			world = loadedWorld;
+			world = new World();
+			world = ES3.Load<World>(mapName, SaveUtilities.GetWorldPath(mapName));
+			world.LoadContextProperties();
+			IncidentService.Instance.LoadIncidentLog(mapName);
 
 			OutputLogger.Log("World Loaded!");
 		}
