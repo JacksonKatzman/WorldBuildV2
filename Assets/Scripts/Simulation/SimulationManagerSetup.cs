@@ -1,4 +1,5 @@
-﻿using Game.Terrain;
+﻿using Game.Incidents;
+using Game.Terrain;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ namespace Game.Simulation
 		public HexMapGenerator mapGenerator;
 
 		[SerializeField]
+		public FlavorService flavorService;
+
+		[SerializeField]
 		private int worldChunksX = 16, worldChunksZ = 12;
 
 		[SerializeField]
@@ -23,6 +27,7 @@ namespace Game.Simulation
 			var simMan = SimulationManager.Instance;
 			simMan.HexGrid = hexGrid;
 			hexGrid.Initalize();
+			flavorService.Init();
 			simMan.MapGenerator = mapGenerator;
 			simMan.WorldChunksX = worldChunksX;
 			simMan.WorldChunksZ = worldChunksZ;
