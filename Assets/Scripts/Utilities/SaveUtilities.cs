@@ -37,7 +37,7 @@ namespace Game.Utilities
 
 		public static string GetHexMapData(string mapName)
 		{
-			return Path.Combine(ROOT, mapName, "HexMapData", mapName + ".map");
+			return Path.Combine(GetMapRootPath(mapName), mapName + ".map");
 		}
 
 		public static string GetSimCellsPath(string mapName)
@@ -47,13 +47,21 @@ namespace Game.Utilities
 
 		public static string GetWorldPath(string mapName)
 		{
-			return Path.Combine(ROOT, mapName, "World.json");
+			return Path.Combine(ROOT, mapName, "World.es3");
 		}
 
-		public static void CreateMapDirectories(string mapName)
+		public static string GetIncidentLogPath(string mapName)
 		{
-			Directory.CreateDirectory(GetHexMapDataPath(mapName));
-			Directory.CreateDirectory(GetSimCellsPath(mapName));
+			return Path.Combine(ROOT, mapName, "IncidentLog.es3");
+		}
+
+		public static void GetOrCreateMapDirectory(string mapName)
+		{
+			string[] directoriesAtRoot = Directory.GetDirectories(SaveUtilities.ROOT, mapName);
+			if (directoriesAtRoot == null || directoriesAtRoot.Length == 0)
+			{
+				Directory.CreateDirectory(GetMapRootPath(mapName));
+			}
 		}
 
 		public static void SerializeSave<T>(T item, string path)
