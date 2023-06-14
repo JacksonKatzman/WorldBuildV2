@@ -40,6 +40,7 @@ namespace Game.Incidents
 			}
 
 			ReportLog = fullLog;
+			ReportLog = GenerateLinkedLog();
 		}
 
 		public string GenerateLinkedLog()
