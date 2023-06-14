@@ -55,6 +55,11 @@ namespace Game.Utilities
 			return Path.Combine(ROOT, mapName, "IncidentLog.es3");
 		}
 
+		public static string GetAdventureSavePath(string mapName)
+		{
+			return Path.Combine(ROOT, mapName, "Adventures.es3");
+		}
+
 		public static void GetOrCreateMapDirectory(string mapName)
 		{
 			string[] directoriesAtRoot = Directory.GetDirectories(SaveUtilities.ROOT, mapName);

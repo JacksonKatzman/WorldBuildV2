@@ -66,6 +66,7 @@ namespace Game.Simulation
 			SaveUtilities.SaveHexMapData(HexGrid, SaveUtilities.GetHexMapData(mapName));
 			ES3.Save(mapName, world, SaveUtilities.GetWorldPath(mapName));
 			IncidentService.Instance.SaveIncidentLog(mapName);
+			AdventureService.Instance.Save(mapName);
 		}
 
 		public void LoadWorld(string mapName)
@@ -81,6 +82,7 @@ namespace Game.Simulation
 			world = ES3.Load<World>(mapName, SaveUtilities.GetWorldPath(mapName));
 			world.LoadContextProperties();
 			IncidentService.Instance.LoadIncidentLog(mapName);
+			AdventureService.Instance.Load(mapName);
 
 			OutputLogger.Log("World Loaded!");
 		}
