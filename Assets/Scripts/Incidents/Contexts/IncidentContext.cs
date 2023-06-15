@@ -12,21 +12,23 @@ namespace Game.Incidents
 		protected Dictionary<string, List<YearData<int>>> historicalData;
 		protected List<PropertyInfo> propertyList;
 
-		public Type ContextType => this.GetType();
+		virtual public Type ContextType => this.GetType();
 
-		public int NumIncidents { get; set; }
+		virtual public int NumIncidents { get; set; }
 		virtual public string Name { get; set; }
 
 		virtual public int ID { get; set; }
 
-		public int ParentID => -1;
+		virtual public int ParentID => -1;
+
+		protected Dictionary<string, List<int>> contextIDLoadBuffers;
 
 		public IncidentContext()
 		{
 			SetupHistoricalData();
 		}
 
-		public void UpdateHistoricalData()
+		virtual public void UpdateHistoricalData()
 		{
 			var year = SimulationManager.Instance.world.Age;
 
@@ -43,9 +45,15 @@ namespace Game.Incidents
 
 		abstract public void Die();
 
-		public DataTable GetDataTable()
+		virtual public DataTable GetDataTable()
 		{
 			var table1 = new DataTable();
+
+			if(historicalData.Count == 0)
+			{
+				return table1;
+			}
+
 			table1.Columns.Add(new DataColumn("ContextID"));
 			table1.Columns.Add(new DataColumn("ContextType"));
 			table1.Columns.Add(new DataColumn("Property"));
@@ -75,7 +83,7 @@ namespace Game.Incidents
 		{
 			propertyList = GetIntegerPropertyList();
 			historicalData = new Dictionary<string, List<YearData<int>>>();
-			//historicalData.Add("Influence", new List<IYearData>{ new YearData<int>(SimulationManager.Instance.world.Age, Influence) });
+
 			foreach (var property in propertyList)
 			{
 				historicalData.Add(property.Name, new List<YearData<int>>());
@@ -94,5 +102,17 @@ namespace Game.Incidents
 		{
 			return GetPropertyList().Where(x => x.PropertyType == typeof(int)).ToList();
 		}
+
+		public void AddContextIdBuffer(string key, List<int> ids)
+		{
+			if(contextIDLoadBuffers == null)
+			{
+				contextIDLoadBuffers = new Dictionary<string, List<int>>();
+			}
+
+			contextIDLoadBuffers.Add(key, ids);
+		}
+
+		public virtual void LoadContextProperties() { }
 	}
 }

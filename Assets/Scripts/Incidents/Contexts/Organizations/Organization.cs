@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Organization : IFactionAffiliated
+	public class Organization : IncidentContext, IFactionAffiliated
 	{
 		public Faction AffiliatedFaction { get; set; }
 		public Character Leader => hierarchy.First().First().official;
@@ -40,7 +40,7 @@ namespace Game.Incidents
 		{
 			if(gameEvent.context.GetType() == typeof(Character) && Contains((Character)gameEvent.context, out var position))
 			{
-				position.SelectNewOfficial(AffiliatedFaction, Leader.Race);
+				position.SelectNewOfficial(this, AffiliatedFaction, Leader.Race);
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace Game.Incidents
 				random -= weights[i];
 				if(random <= 0)
 				{
-					hierarchy[i].AddPosition(AffiliatedFaction, Leader.Race);
+					hierarchy[i].AddPosition(this, AffiliatedFaction, Leader.Race);
 					return;
 				}
 			}
@@ -100,8 +100,30 @@ namespace Game.Incidents
 
 		private void AddTier(Race race)
 		{
-			var newTier = new OrganizationTier(AffiliatedFaction, race, organizationType, hierarchy.Count, maxTiers);
+			var newTier = new OrganizationTier(this, AffiliatedFaction, race, organizationType, hierarchy.Count, maxTiers);
 			hierarchy.Add(newTier);
+		}
+
+		public override void UpdateContext()
+		{
+			
+		}
+
+		public override void DeployContext()
+		{
+			
+		}
+
+		public override void Die()
+		{
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+		}
+
+		public override void LoadContextProperties()
+		{
+			AffiliatedFaction = SaveUtilities.ConvertIDToContext<Faction>(contextIDLoadBuffers["AffiliatedFaction"][0]);
+
+			contextIDLoadBuffers.Clear();
 		}
 	}
 }

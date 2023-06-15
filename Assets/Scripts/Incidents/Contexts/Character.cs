@@ -13,10 +13,19 @@ namespace Game.Incidents
 {
 	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated
 	{
-		public Character() { }
+		public Character() 
+		{
+			Parents = new List<Character>();
+			Spouses = new List<Character>();
+			Siblings = new List<Character>();
+			Children = new List<Character>();
+			//Race = new Race(new RacePreset());
+			//CharacterName = new CharacterName("FORMAT");
+			Inventory = new Inventory();
+		}
 		public Character(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
 			int religiousPriority, int militaryPriority, int influence, int wealth, int strength, int dexterity,
-			int constitution, int intelligence, int wisdom, int charisma, bool worldPlayer, List<Character> parents = null, Inventory inventory = null)
+			int constitution, int intelligence, int wisdom, int charisma, bool majorCharacter, List<Character> parents = null, Inventory inventory = null)
 		{
 			Age = age;
 			Race = race;
@@ -34,11 +43,12 @@ namespace Game.Incidents
 			Intelligence = intelligence;
 			Wisdom = wisdom;
 			Charisma = charisma;
-			WorldPlayer = worldPlayer;
+			MajorCharacter = majorCharacter;
 			Spouses = new List<Character>();
 			Inventory = inventory == null ? new Inventory() : inventory;
 			Parents = parents == null ? new List<Character>() : parents;
 			Siblings = new List<Character>();
+			Children = new List<Character>();
 
 			if(Parents.Count > 0)
 			{
@@ -50,46 +60,60 @@ namespace Game.Incidents
 			}
 		}
 
-		public Character(Gender gender, Race race, Faction faction, bool worldPlayer, List<Character> parents = null) :
+		public Character(Gender gender, Race race, Faction faction, bool majorCharacter, List<Character> parents = null) :
 			this(SimRandom.RandomRange(18, 55), gender, race, faction,
 				SimRandom.RandomRange(0,7), SimRandom.RandomRange(0, 7),
 				SimRandom.RandomRange(0, 7), SimRandom.RandomRange(0, 7),
 				0, 0, SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
 				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
 				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
-				worldPlayer, parents){ }
-		public Character(int age, Gender gender, Race race, Faction faction, bool worldPlayer, List<Character> parents = null) :
+				majorCharacter, parents){ }
+		public Character(int age, Gender gender, Race race, Faction faction, bool majorCharacter, List<Character> parents = null) :
 			this(age, gender, race, faction,
 				SimRandom.RandomRange(0, 7), SimRandom.RandomRange(0, 7),
 				SimRandom.RandomRange(0, 7), SimRandom.RandomRange(0, 7),
 				0, 0, SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
 				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
 				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
-				worldPlayer, parents){ }
+				majorCharacter, parents){ }
 
 		public Character(Gender gender, Race race, Faction faction, int politicalPriority,
-			int economicPriority, int religiousPriority, int militaryPriority, bool worldPlayer, List<Character> parents = null) : 
+			int economicPriority, int religiousPriority, int militaryPriority, bool majorCharacter, List<Character> parents = null) : 
 			this(SimRandom.RandomRange(18, 55), gender, race, faction,
 				politicalPriority, economicPriority,
 				religiousPriority, militaryPriority,
 				0, 0, SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
 				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
 				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
-				worldPlayer, parents){ }
+				majorCharacter, parents){ }
 
 		public Character(int age, Gender gender, Race race, Faction faction, int politicalPriority,
-			int economicPriority, int religiousPriority, int militaryPriority, bool worldPlayer, List<Character> parents = null) :
+			int economicPriority, int religiousPriority, int militaryPriority, bool majorCharacter, List<Character> parents = null) :
 			this(age, gender, race, faction,
 				politicalPriority, economicPriority,
 				religiousPriority, militaryPriority,
 				0, 0, SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
 				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
 				SimRandom.RandomRange(5, 14), SimRandom.RandomRange(5, 14),
-				worldPlayer, parents){ }
+				majorCharacter, parents){ }
 
 		public Character(Character parent, Gender gender = Gender.ANY)
 		{
 
+		}
+
+		public Character(Faction affiliatedFaction)
+		{
+			AffiliatedFaction = affiliatedFaction;
+			Race = affiliatedFaction.MajorityRace;
+			Age = SimRandom.RandomRange(Race.MinAge, Race.MaxAge);
+			Gender = (Gender)(SimRandom.RandomRange(0, 2));
+			CharacterName = affiliatedFaction.namingTheme.GenerateName(Gender);
+			MajorCharacter = false;
+			Parents = new List<Character>();
+			Spouses = new List<Character>();
+			Siblings = new List<Character>();
+			Children = new List<Character>();
 		}
 
 		public override string Name => CharacterName.GetTitledFullName(this);
@@ -98,7 +122,8 @@ namespace Game.Incidents
 		public Gender Gender { get; set; }
 		public Race Race { get; set; }
 		public Faction AffiliatedFaction { get; set; }
-		public OrganizationPosition OfficialPosition { get; set; }
+		public Organization Organization { get; set; }
+		public OrganizationPosition OfficialPosition => GetOfficialPosition();
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
@@ -116,12 +141,13 @@ namespace Game.Incidents
 		public List<Character> Spouses { get; set; }
 		public List<Character> Siblings { get; set; }
 		public List<Character> Children { get; set; }
-		public List<Character> Family => new List<Character>().Union(Parents).Union(Spouses).Union(Siblings).Union(Children).ToList();
+		
+		//public List<Character> Family => new List<Character>().Union(Parents).Union(Spouses).Union(Siblings).Union(Children).ToList();
 
 		public int LawfulChaoticAlignmentAxis { get; set; }
 		public int GoodEvilAlignmentAxis { get; set; }
 
-		public bool WorldPlayer { get; set; }
+		public bool MajorCharacter { get; set; }
 		public bool Possessed { get; set; }
 
 		override public void DeployContext()
@@ -140,7 +166,7 @@ namespace Game.Incidents
 		override public void UpdateContext()
 		{
 			Age += 1;
-			NumIncidents = WorldPlayer ? 1 : 0;
+			NumIncidents = MajorCharacter ? 1 : 0;
 		}
 
 		public Character CreateChild(bool majorPlayer)
@@ -152,6 +178,7 @@ namespace Game.Incidents
 				parents.Add(SimRandom.RandomEntryFromList(Spouses));
 			}
 			var child = new Character(childAge, Enums.Gender.ANY, Race, AffiliatedFaction, majorPlayer, parents);
+			Children.Add(child);
 
 			return child;
 		}
@@ -198,13 +225,41 @@ namespace Game.Incidents
 
 		override public void Die()
 		{
-			if(WorldPlayer)
+			if(MajorCharacter)
 			{
 				IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this });
 			}
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
 		}
-	}
 
-	//add years to wiki and find out why non world players arent dying
+		public override void LoadContextProperties()
+		{
+			Race = SaveUtilities.ConvertIDToContext<Race>(contextIDLoadBuffers["Race"][0]);
+			AffiliatedFaction = SaveUtilities.ConvertIDToContext<Faction>(contextIDLoadBuffers["AffiliatedFaction"][0]);
+			Parents = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Parents"]);
+			Spouses = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Spouses"]);
+			Siblings = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Siblings"]);
+			Children = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Children"]);
+			Inventory?.LoadContextProperties();
+
+			contextIDLoadBuffers.Clear();
+		}
+
+		private OrganizationPosition GetOfficialPosition()
+		{
+			if(Organization == null)
+			{
+				return null;
+			}
+
+			if(Organization.Contains(this, out var position))
+			{
+				return position;
+			}
+			else
+			{
+				return null;
+			}
+		}
+	}
 }

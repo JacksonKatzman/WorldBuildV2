@@ -444,7 +444,7 @@
                               "Value": 14,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
-                            "worldPlayer": true,
+                            "majorCharacter": true,
                             "generateFamily": true,
                             "findFirst": true,
                             "allowCreate": false,
@@ -500,11 +500,11 @@
                                   {
                                     "$id": "54",
                                     "$type": "Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp",
-                                    "propertyName": "WorldPlayer",
+                                    "propertyName": "MajorCharacter",
                                     "evaluator": {
                                       "$id": "55",
                                       "$type": "Game.Incidents.BoolEvaluator, Assembly-CSharp",
-                                      "propertyName": "WorldPlayer",
+                                      "propertyName": "MajorCharacter",
                                       "Comparator": "==",
                                       "expressions": {
                                         "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Assembly-CSharp]], mscorlib",

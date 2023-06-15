@@ -20,7 +20,7 @@ namespace Game.Incidents
 		{
 			get
 			{
-				return Cities.Sum(x => x.Population);
+				return Cities == null ? 0 : Cities.Sum(x => x.Population);
 			}
 			set
 			{
@@ -33,6 +33,7 @@ namespace Game.Incidents
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		virtual public int ControlledTiles => ControlledTileIndices.Count;
 		public int InfluenceForNextTile => ControlledTiles * 2 + 1;
+		[ES3Serializable]
 		public List<City> Cities { get; set; }
 		public City Capitol => Cities.Count > 0? Cities[0] : null;
 		virtual public int NumCities => Cities.Count;
@@ -59,8 +60,6 @@ namespace Game.Incidents
 
 		public Faction() : base()
 		{
-			//need a smart generic way to go through our collections of contexts and remove a context
-			//when we get sent a contextremovedevent
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
@@ -93,6 +92,13 @@ namespace Game.Incidents
 			MilitaryPriority = militaryPriority;
 		}
 
+		public Faction(Race race)
+		{
+			namingTheme = new NamingTheme(race.racePreset.namingTheme);
+			Name = namingTheme.GenerateFactionName();
+			CreateStartingGovernment(race);
+		}
+
 		override public void DeployContext()
 		{
 			if (NumIncidents > 0)
@@ -118,12 +124,14 @@ namespace Game.Incidents
 		{
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+			Government.Die();
 		}
 
 		public void CreateStartingCity(int startingPopulation)
 		{
 			var cells = SimulationUtilities.GetCitylessCellsFromList(ControlledTileIndices);
-			var city = new City(this, new Location(SimRandom.RandomEntryFromList(cells)), startingPopulation, 0);
+			var location = new Location(SimRandom.RandomEntryFromList(cells));
+			var city = new City(this, location, startingPopulation, 0);
 			Cities.Add(city);
 			SimulationManager.Instance.world.AddContext(city);
 		}
@@ -131,6 +139,7 @@ namespace Game.Incidents
 		public void CreateStartingGovernment(Race majorityStartingRace)
 		{
 			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL);
+			EventManager.Instance.Dispatch(new AddContextEvent(Government));
 		}
 
 		public bool AttemptExpandBorder(int numTimes)
@@ -189,6 +198,27 @@ namespace Game.Incidents
 			SimulationManager.Instance.HexGrid.ResetSearchPhases();
 
 			return size != 0;
+		}
+
+		public override void LoadContextProperties()
+		{
+			Government = SaveUtilities.ConvertIDToContext<Organization>(contextIDLoadBuffers["Government"][0]);
+			Cities = SaveUtilities.ConvertIDsToContexts<City>(contextIDLoadBuffers["Cities"]);
+			FactionsAtWarWith = SaveUtilities.ConvertIDsToContexts<IIncidentContext>(contextIDLoadBuffers["FactionsAtWarWith"]);
+			var relationKeys = SaveUtilities.ConvertIDsToContexts<Faction>(contextIDLoadBuffers["FactionRelationKeys"]);
+			var relationValues = contextIDLoadBuffers["FactionRelationValues"];
+
+			if(FactionRelations == null)
+			{
+				FactionRelations = new Dictionary<IIncidentContext, int>();
+			}
+
+			for(int i = 0; i < relationKeys.Count; i++)
+			{
+				FactionRelations.Add(relationKeys[i], relationValues[i]);
+			}
+
+			contextIDLoadBuffers.Clear();
 		}
 
 		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)

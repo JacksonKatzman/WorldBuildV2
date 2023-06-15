@@ -14,7 +14,7 @@ namespace Game.Incidents
 		public int tier;
 
 		public OrganizationTier() { }
-		public OrganizationTier(Faction affiliatedFaction, Race majorityRace, OrganizationType organizationType, int tier, int maxTiers)
+		public OrganizationTier(Organization org, Faction affiliatedFaction, Race majorityRace, OrganizationType organizationType, int tier, int maxTiers)
 		{
 			this.organizationType = organizationType;
 			this.tier = tier;
@@ -26,17 +26,17 @@ namespace Game.Incidents
 				titlePair = affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
 			}
 
-			AddPosition(affiliatedFaction, majorityRace);
+			AddPosition(org, affiliatedFaction, majorityRace);
 		}
 
-		public OrganizationPosition AddPosition(Faction affiliatedFaction, Race majorityRace)
+		public OrganizationPosition AddPosition(Organization org, Faction affiliatedFaction, Race majorityRace)
 		{
 			var position = new OrganizationPosition();
 			position.organizationType = organizationType;
 			position.titlePair = sharedTitle ? titlePair : affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
 			if (tier < 2)
 			{
-				position.SelectNewOfficial(affiliatedFaction, majorityRace);
+				position.SelectNewOfficial(org, affiliatedFaction, majorityRace);
 			}
 
 			Add(position);

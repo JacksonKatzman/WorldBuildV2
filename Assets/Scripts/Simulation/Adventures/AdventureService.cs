@@ -22,9 +22,9 @@ namespace Game.Simulation
 			}
 		}
 
-		public List<AdventureEncounterObject> evergreenEncounters;
-		public List<AdventureEncounterObject> availableEncounters;
-		public List<AdventureEncounterObject> usedEncounters;
+		public List<AdventureEncounterObject> EvergreenEncounters { get; set; }
+		public List<AdventureEncounterObject> AvailableEncounters { get; set; }
+		public List<AdventureEncounterObject> UsedEncounters { get; set; }
 
 		public List<MonsterData> monsterData;
 
@@ -50,7 +50,7 @@ namespace Game.Simulation
 
 			var range = 4; //more complex calc later based on party level etc
 			var cellsInRange = CurrentLocation.GetAllCellsInRange(range);
-			var encountersInRange = availableEncounters.Where(encounter => cellsInRange.Contains(encounter.CurrentLocation.GetHexCell()));
+			var encountersInRange = AvailableEncounters.Where(encounter => cellsInRange.Contains(encounter.CurrentLocation.GetHexCell()));
 
 			var adventureOfferingCount = 5; 
 			var lowerDifficultyThreshold = 0;
@@ -66,7 +66,7 @@ namespace Game.Simulation
 				levelAppropriateEncounters.Remove(chosen);
 			}
 
-			var levelAppropriateEvergreenEncounters = GetLevelAppropriateEncounters(evergreenEncounters, lowerDifficultyThreshold, upperDifficultyThreshold);
+			var levelAppropriateEvergreenEncounters = GetLevelAppropriateEncounters(EvergreenEncounters, lowerDifficultyThreshold, upperDifficultyThreshold);
 			while(selectedEncounters.Count < adventureOfferingCount)
 			{
 				selectedEncounters.Add(SimRandom.RandomEntryFromList(levelAppropriateEvergreenEncounters));
@@ -80,20 +80,32 @@ namespace Game.Simulation
 
 		public void AddAvailableEncounter(AdventureEncounterObject encounter)
 		{
-			availableEncounters.Add(encounter);
+			AvailableEncounters.Add(encounter);
+		}
+
+		public void Save(string mapName)
+		{
+			ES3.Save("AvailableEncounters", AvailableEncounters, SaveUtilities.GetAdventureSavePath(mapName));
+			ES3.Save("UsedEncounters", UsedEncounters, SaveUtilities.GetAdventureSavePath(mapName));
+		}
+
+		public void Load(string mapName)
+		{
+			AvailableEncounters = ES3.Load<List<AdventureEncounterObject>>("AvailableEncounters", SaveUtilities.GetAdventureSavePath(mapName));
+			UsedEncounters = ES3.Load<List<AdventureEncounterObject>>("UsedEncounters", SaveUtilities.GetAdventureSavePath(mapName));
 		}
 
 		private void Setup()
 		{
-			evergreenEncounters = new List<AdventureEncounterObject>();
-			availableEncounters = new List<AdventureEncounterObject>();
-			usedEncounters = new List<AdventureEncounterObject>();
+			EvergreenEncounters = new List<AdventureEncounterObject>();
+			AvailableEncounters = new List<AdventureEncounterObject>();
+			UsedEncounters = new List<AdventureEncounterObject>();
 			monsterData = new List<MonsterData>();
 
 			var encountersPath = "ScriptableObjects/Encounters";
 
-			evergreenEncounters.AddRange(Resources.LoadAll(encountersPath, typeof(AdventureEncounterObject)).Cast<AdventureEncounterObject>().ToList());
-			OutputLogger.Log(string.Format("{0} encounters loaded.", evergreenEncounters.Count));
+			EvergreenEncounters.AddRange(Resources.LoadAll(encountersPath, typeof(AdventureEncounterObject)).Cast<AdventureEncounterObject>().ToList());
+			OutputLogger.Log(string.Format("{0} encounters loaded.", EvergreenEncounters.Count));
 
 			var monstersPath = "ScriptableObjects/Monsters";
 			monsterData.AddRange(Resources.LoadAll(monstersPath, typeof(MonsterData)).Cast<MonsterData>().ToList());

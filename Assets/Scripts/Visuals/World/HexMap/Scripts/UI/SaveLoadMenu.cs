@@ -22,7 +22,7 @@ namespace Game.Terrain
 
 		//public HexGrid hexGrid;
 
-		public SimulationManager simulationManager;
+		public SimulationManager SimulationManager => SimulationManager.Instance;
 
 		bool saveMode;
 
@@ -115,12 +115,12 @@ namespace Game.Terrain
 
 		void Save(string mapName)
 		{
-			simulationManager.SaveWorld(mapName);
+			SimulationManager.SaveWorld(mapName);
 		}
 
 		void Load(string mapName)
 		{
-			simulationManager.LoadWorld(mapName);
+			SimulationManager.LoadWorld(mapName);
 		}
 	}
 }

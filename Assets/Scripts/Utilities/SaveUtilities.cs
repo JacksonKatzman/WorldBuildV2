@@ -2,6 +2,8 @@
 using System.IO;
 using Game.Terrain;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using Game.Simulation;
 
 namespace Game.Utilities
 {
@@ -18,7 +20,7 @@ namespace Game.Utilities
 			// ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
 			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
 			TypeNameHandling = TypeNameHandling.All,
-			MissingMemberHandling = MissingMemberHandling.Ignore
+			MissingMemberHandling = MissingMemberHandling.Ignore,
 		};
 
 		public static string ROOT = Path.Combine(Application.persistentDataPath, "GameData");
@@ -35,7 +37,7 @@ namespace Game.Utilities
 
 		public static string GetHexMapData(string mapName)
 		{
-			return Path.Combine(ROOT, mapName, "HexMapData", mapName + ".map");
+			return Path.Combine(GetMapRootPath(mapName), mapName + ".map");
 		}
 
 		public static string GetSimCellsPath(string mapName)
@@ -43,10 +45,28 @@ namespace Game.Utilities
 			return Path.Combine(ROOT, mapName, "SimCells");
 		}
 
-		public static void CreateMapDirectories(string mapName)
+		public static string GetWorldPath(string mapName)
 		{
-			Directory.CreateDirectory(GetHexMapDataPath(mapName));
-			Directory.CreateDirectory(GetSimCellsPath(mapName));
+			return Path.Combine(ROOT, mapName, "World.es3");
+		}
+
+		public static string GetIncidentLogPath(string mapName)
+		{
+			return Path.Combine(ROOT, mapName, "IncidentLog.es3");
+		}
+
+		public static string GetAdventureSavePath(string mapName)
+		{
+			return Path.Combine(ROOT, mapName, "Adventures.es3");
+		}
+
+		public static void GetOrCreateMapDirectory(string mapName)
+		{
+			string[] directoriesAtRoot = Directory.GetDirectories(SaveUtilities.ROOT, mapName);
+			if (directoriesAtRoot == null || directoriesAtRoot.Length == 0)
+			{
+				Directory.CreateDirectory(GetMapRootPath(mapName));
+			}
 		}
 
 		public static void SerializeSave<T>(T item, string path)
@@ -55,7 +75,21 @@ namespace Game.Utilities
 			File.WriteAllText(path, output);
 		}
 
-		public static T SerializeLoad<T>(string path)
+		public static T SerializeLoad<T>(string path, string fileName)
+		{
+			var files = Directory.GetFiles(path, fileName);
+			var file = files[0];
+
+			var text = File.ReadAllText(file);
+			if (text.Length > 0)
+			{
+				return JsonConvert.DeserializeObject<T>(text, SERIALIZER_SETTINGS);
+			}
+
+			return default;
+		}
+
+		public static T SerializeLoadAll<T>(string path)
 		{
 			var files = Directory.GetFiles(path, "*.json");
 			var file = files[0];
@@ -101,6 +135,21 @@ namespace Game.Utilities
 					OutputLogger.LogWarning("Unknown map format " + header);
 				}
 			}
+		}
+
+		public static T ConvertIDToContext<T>(int id)
+		{
+			return SimulationManager.Instance.AllContexts.GetContextByID<T>(id);
+		}
+
+		public static List<T> ConvertIDsToContexts<T>(List<int> ids)
+		{
+			var contexts = new List<T>();
+			foreach (var id in ids)
+			{
+				contexts.Add(SimulationManager.Instance.AllContexts.GetContextByID<T>(id));
+			}
+			return contexts;
 		}
 	}
 }

@@ -192,5 +192,9 @@ namespace Game.Incidents
 		public void UpdateHistoricalData()
 		{
 		}
+
+		public void LoadContextProperties()
+		{
+		}
 	}
 }

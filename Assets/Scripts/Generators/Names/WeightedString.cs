@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Game.Generators.Names
 {
@@ -16,6 +17,7 @@ namespace Game.Generators.Names
 			this.weight = weight;
 		}
 
+		[JsonConstructor]
 		public WeightedString(string value, int weight, bool allowedAtBeginning, bool allowedAtEnd) : this(value, weight)
 		{
 			this.allowedAtBeginning = allowedAtBeginning;

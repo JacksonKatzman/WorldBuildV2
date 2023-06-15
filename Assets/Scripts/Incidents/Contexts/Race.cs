@@ -10,6 +10,8 @@ namespace Game.Incidents
 		public int MaxAge { get; set; }
 		public RacePreset racePreset;
 
+		public Race() { }
+
 		public Race(RacePreset racePreset)
 		{
 			this.racePreset = racePreset;

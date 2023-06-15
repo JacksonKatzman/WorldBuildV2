@@ -148,6 +148,16 @@ namespace Game.Simulation
 
 	}
 
+    public class AddContextEvent : ISimulationEvent
+	{
+        public IIncidentContext context;
+
+        public AddContextEvent(IIncidentContext context)
+        {
+            this.context = context;
+        }
+    }
+
     public class RemoveContextEvent : ISimulationEvent
 	{
         public IIncidentContext context;

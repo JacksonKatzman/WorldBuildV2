@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Game.Simulation;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Game.Incidents
@@ -40,6 +41,7 @@ namespace Game.Incidents
 			}
 
 			ReportLog = fullLog;
+			ReportLog = GenerateLinkedLog();
 		}
 
 		public string GenerateLinkedLog()
@@ -58,6 +60,15 @@ namespace Game.Incidents
 			}
 
 			return textLine;
+		}
+
+		public void LoadContextProperties(Dictionary<string, int> buffer)
+		{
+			Contexts = new Dictionary<string, IIncidentContext>();
+			foreach(var pair in buffer)
+			{
+				Contexts.Add(pair.Key, SimulationManager.Instance.AllContexts.GetContextByID(pair.Value));
+			}
 		}
 	}
 }

@@ -44,6 +44,11 @@ namespace Game.Generators.Names
 
 		private string currentNameFormat;
 
+		public NamingTheme()
+		{
+
+		}
+
 		public NamingTheme(NamingThemePreset preset)
 		{
 			nouns = new ModifiableWeightedCollection();

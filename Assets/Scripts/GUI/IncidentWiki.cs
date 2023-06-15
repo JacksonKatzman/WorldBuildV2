@@ -81,7 +81,7 @@ namespace Game.GUI.Wiki
 		private void AddReportToPage(WikiPage page, IncidentReport report)
 		{
 			page.wikiText.text += report.ReportYear + ": ";
-			page.wikiText.text += report.GenerateLinkedLog();
+			page.wikiText.text += report.ReportLog;
 			page.wikiText.text += "\n";
 		}
 	}

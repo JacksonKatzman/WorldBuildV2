@@ -2,17 +2,18 @@
 using Game.Incidents;
 using Game.Terrain;
 using Game.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using UnityEngine;
 
 namespace Game.Simulation
 {
 	public class World : IncidentContext
 	{
-		[NonSerialized]
-		private HexGrid hexGrid;
+		private HexGrid HexGrid => SimulationManager.Instance.HexGrid;
 
 		public IncidentContextDictionary CurrentContexts { get; private set; }
 		public IncidentContextDictionary AllContexts { get; private set; }
@@ -33,22 +34,19 @@ namespace Game.Simulation
 
 		public int Age { get; set; }
 
+		[JsonIgnore]
 		public List<Character> People => CurrentContexts[typeof(Character)].Cast<Character>().ToList();
+		[JsonIgnore]
 		public List<Faction> Factions => CurrentContexts[typeof(Faction)].Cast<Faction>().ToList();
+		[JsonIgnore]
 		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
+		[JsonIgnore]
 		public int NumPeople => CurrentContexts[typeof(Character)].Count;
 
 		public int nextID;
 
 		public World()
 		{
-			//CurrentContexts = new TypeListDictionary<IIncidentContext>();
-			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
-		}
-
-		public World(HexGrid hexGrid) : this()
-		{
-			this.hexGrid = hexGrid;
 			nextID = ID + 1;
 			Age = 0;
 
@@ -56,6 +54,9 @@ namespace Game.Simulation
 			AllContexts = new IncidentContextDictionary();
 			contextsToAdd = new IncidentContextDictionary();
 			contextsToRemove = new IncidentContextDictionary();
+
+			EventManager.Instance.AddEventHandler<AddContextEvent>(OnAddContextEvent);
+			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
 		public void Initialize(List<FactionPreset> factions)
@@ -135,7 +136,7 @@ namespace Game.Simulation
 				{
 					break;
 				}
-				var ordered = possibleTiles.OrderByDescending(x => hexGrid.GetCell(x).CalculateInhabitability());
+				var ordered = possibleTiles.OrderByDescending(x => HexGrid.GetCell(x).CalculateInhabitability());
 				var chosenLocationIndex = ordered.First();
 				var population = SimRandom.RandomRange((int)(faction.Cities[0].Population * 0.3f), (int)(faction.Cities[0].Population * 0.7f));
 				var createdCity = new City(faction, new Location(chosenLocationIndex), population, 0);
@@ -149,7 +150,7 @@ namespace Game.Simulation
 			foreach(var city in Cities)
 			{
 				var location = city.CurrentLocation.TileIndex;
-				var tile = hexGrid.GetCell(location);
+				var tile = HexGrid.GetCell(location);
 
 				//Change the model based on the population, will use temp stuff for now
 				if (city.Population >= 2000)
@@ -169,7 +170,7 @@ namespace Game.Simulation
 
 			foreach (var index in borderCells)
 			{
-				var cell = hexGrid.GetCell(index);
+				var cell = HexGrid.GetCell(index);
 				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 				{
 					HexCell neighbor = cell.GetNeighbor(d);
@@ -188,19 +189,6 @@ namespace Game.Simulation
 			}
 		}
 
-		public void Save(string mapName)
-		{
-
-		}
-
-		public static World Load(HexGrid hexGrid, string mapName)
-		{
-			var world = new World();
-			world.hexGrid = hexGrid;
-
-			return world;
-		}
-
 		public void AddContext<T>(T context) where T : IIncidentContext
 		{
 			context.ID = GetNextID();
@@ -216,6 +204,11 @@ namespace Game.Simulation
 		public void RemoveContext<T>(T context) where T : IIncidentContext
 		{
 			contextsToRemove[typeof(T)].Add(context);
+		}
+
+		private void OnAddContextEvent(AddContextEvent gameEvent)
+		{
+			AddContext(gameEvent.context);
 		}
 
 		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)
@@ -293,6 +286,18 @@ namespace Game.Simulation
 			var next = nextID;
 			nextID++;
 			return next;
+		}
+
+		public override void LoadContextProperties()
+		{
+			AllContexts.LoadContextProperties();
+			CurrentContexts = new IncidentContextDictionary();
+
+			foreach(var id in contextIDLoadBuffers["CurrentContexts"])
+			{
+				var context = AllContexts.GetContextByID(id);
+				CurrentContexts[context.ContextType].Add(context);
+			}
 		}
 	}
 }

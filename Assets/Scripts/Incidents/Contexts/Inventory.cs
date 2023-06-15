@@ -1,4 +1,5 @@
 ﻿using Game.Generators.Items;
+using Game.Utilities;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,11 @@ namespace Game.Incidents
 		public Inventory(List<Item> items)
 		{
 			Items = items;
+		}
+
+		public override void LoadContextProperties()
+		{
+			SaveUtilities.ConvertIDsToContexts<Item>(contextIDLoadBuffers["Items"]);
 		}
 	}
 }
