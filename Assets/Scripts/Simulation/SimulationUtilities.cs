@@ -18,7 +18,7 @@ namespace Game.Simulation
 		{
 			var grid = SimulationManager.Instance.HexGrid;
 			var claimedList = new List<int>();
-			foreach (var context in SimulationManager.Instance.world.CurrentContexts[typeof(Faction)])
+			foreach (var context in ContextDictionaryProvider.CurrentContexts[typeof(Faction)])
 			{
 				claimedList.AddRange(((Faction)context).ControlledTileIndices);
 			}
@@ -71,7 +71,7 @@ namespace Game.Simulation
 
 		public static bool IsCellIndexUnclaimed(int index)
 		{
-			foreach (var faction in SimulationManager.Instance.world.CurrentContexts[typeof(Faction)])
+			foreach (var faction in ContextDictionaryProvider.CurrentContexts[typeof(Faction)])
 			{
 				var context = faction as Faction;
 				if (context.ControlledTileIndices.Contains(index))
@@ -93,7 +93,7 @@ namespace Game.Simulation
 		public static List<int> GetClaimedCells()
 		{
 			var claimedList = new List<int>();
-			foreach (var pair in SimulationManager.Instance.world.CurrentContexts)
+			foreach (var pair in ContextDictionaryProvider.CurrentContexts)
 			{
 				if (pair.Key.IsAssignableFrom(typeof(ILocationAffiliated)))
 				{
@@ -110,7 +110,7 @@ namespace Game.Simulation
 		public static List<int> GetCellsWithCities()
 		{
 			var claimedList = new List<int>();
-			foreach (var city in SimulationManager.Instance.world.CurrentContexts[typeof(City)])
+			foreach (var city in ContextDictionaryProvider.CurrentContexts[typeof(City)])
 			{
 				claimedList.Add(((City)city).CurrentLocation.TileIndex);
 			}

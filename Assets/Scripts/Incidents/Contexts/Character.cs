@@ -191,13 +191,13 @@ namespace Game.Incidents
 				{
 					var father = new Character(Gender.MALE, Race, AffiliatedFaction, false);
 					Parents.Add(father);
-					SimulationManager.Instance.world.AddContext(father);
+					ContextDictionaryProvider.AddContext(father);
 				}
 				if(Parents.Count(x => x.Gender == Gender.FEMALE) < 1)
 				{
 					var mother = new Character(Gender.FEMALE, Race, AffiliatedFaction, false);
 					Parents.Add(mother);
-					SimulationManager.Instance.world.AddContext(mother);
+					ContextDictionaryProvider.AddContext(mother);
 				}
 			}
 			if(canGenerateSpouse && Spouses.Count == 0)
@@ -207,7 +207,7 @@ namespace Game.Incidents
 					var gender = Gender == Gender.MALE ? Gender.FEMALE : Gender.MALE;
 					var spouse = new Character(gender, Race, AffiliatedFaction, false);
 					Spouses.Add(spouse);
-					SimulationManager.Instance.world.AddContext(spouse);
+					ContextDictionaryProvider.AddContext(spouse);
 				}
 			}
 			if (Siblings.Count == 0)
@@ -218,7 +218,7 @@ namespace Game.Incidents
 				{
 					var sibling = new Character(Gender.ANY, Race, AffiliatedFaction, false, Parents);
 					Siblings.Add(sibling);
-					SimulationManager.Instance.world.AddContext(sibling);
+					ContextDictionaryProvider.AddContext(sibling);
 				}
 			}
 		}

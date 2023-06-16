@@ -1,3 +1,4 @@
+using Game.Simulation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace ES3Types
 		{
 			var instance = (Game.Simulation.World)obj;
 			
-			writer.WriteProperty("nextID", instance.nextID, ES3Type_int.Instance);
+			writer.WriteProperty("nextID", ContextDictionaryProvider.NextID, ES3Type_int.Instance);
 			//writer.WritePrivateProperty("CurrentContexts", instance);
 			writer.WritePrivateProperty("AllContexts", instance);
 			writer.WriteProperty("ID", instance.ID, ES3Type_int.Instance);
@@ -42,7 +43,7 @@ namespace ES3Types
 				{
 					
 					case "nextID":
-						instance.nextID = reader.Read<System.Int32>(ES3Type_int.Instance);
+						ContextDictionaryProvider.SetNextID(reader.Read<System.Int32>(ES3Type_int.Instance));
 						break;
 					case "CurrentContexts":
 						instance.AddContextIdBuffer("CurrentContexts", reader.Read<System.Collections.Generic.List<System.Int32>>());

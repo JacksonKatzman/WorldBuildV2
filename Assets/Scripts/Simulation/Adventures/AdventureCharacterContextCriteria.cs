@@ -16,7 +16,7 @@ namespace Game.Simulation
 
 		public override void RetrieveContext()
 		{
-			Context = SimRandom.RandomEntryFromList(SimulationManager.Instance.CurrentContexts[typeof(Character)]);
+			Context = SimRandom.RandomEntryFromList(ContextDictionaryProvider.CurrentContexts[typeof(Character)]);
 		}
 
 		public override void SpawnPopup()

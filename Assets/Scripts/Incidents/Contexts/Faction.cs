@@ -133,7 +133,7 @@ namespace Game.Incidents
 			var location = new Location(SimRandom.RandomEntryFromList(cells));
 			var city = new City(this, location, startingPopulation, 0);
 			Cities.Add(city);
-			SimulationManager.Instance.world.AddContext(city);
+			ContextDictionaryProvider.AddContext(city);
 		}
 
 		public void CreateStartingGovernment(Race majorityStartingRace)
@@ -255,7 +255,7 @@ namespace Game.Incidents
 				return result;
 			}
 
-			foreach(var f in world.CurrentContexts[typeof(Faction)])
+			foreach(var f in ContextDictionaryProvider.CurrentContexts[typeof(Faction)])
 			{
 				var faction = (Faction)f;
 

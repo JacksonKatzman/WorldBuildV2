@@ -85,7 +85,7 @@ namespace Game.Incidents
 
 		private void AssignLocationValue(int id)
 		{
-			var matches = SimulationManager.Instance.CurrentContexts[typeof(Location)].Where(x => ((Location)x).TileIndex == id).ToList();
+			var matches = ContextDictionaryProvider.CurrentContexts[typeof(Location)].Where(x => ((Location)x).TileIndex == id).ToList();
 			if (matches.Count > 0)
 			{
 				value = (Location)matches[0];
@@ -93,7 +93,7 @@ namespace Game.Incidents
 			else
 			{
 				value = new Location(id);
-				SimulationManager.Instance.world.AddContext(value);
+				ContextDictionaryProvider.AddContext(value);
 			}
 		}
 
