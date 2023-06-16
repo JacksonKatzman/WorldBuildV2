@@ -179,7 +179,7 @@ namespace Game.Incidents
 				.Where(x => !x.IsGenericTypeDefinition)                             // Excludes Generics
 				.Where(x => type.IsAssignableFrom(x));           // Excludes classes not inheriting from IIncidentContext
 
-			OutputLogger.Log("Type looked for:" + type.ToString());
+			//OutputLogger.Log("Type looked for:" + type.ToString());
 			var qList = q.ToList();
 
 			return qList;
