@@ -45,9 +45,9 @@ namespace Game.Incidents
 			Characters = new List<Character>();
 			Inventory = new Inventory();
 
-			if (SimulationManager.Instance.world.CurrentContexts.GetContextByID(location.ID) == null)
+			if (ContextDictionaryProvider.CurrentContexts.GetContextByID(location.ID) == null)
 			{
-				SimulationManager.Instance.world.AddContext(location);
+				ContextDictionaryProvider.AddContext(location);
 			}
 		}
 
@@ -66,7 +66,7 @@ namespace Game.Incidents
 			for(var i = 0; i < amount; i++)
 			{
 				var character = new Character(AffiliatedFaction);
-				SimulationManager.Instance.world.AddContextImmediate(character);
+				ContextDictionaryProvider.AddContextImmediate(character);
 			}
 		}
 

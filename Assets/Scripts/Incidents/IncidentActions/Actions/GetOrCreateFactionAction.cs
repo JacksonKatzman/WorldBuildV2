@@ -28,7 +28,7 @@ namespace Game.Incidents
 
         protected override Faction MakeNew()
 		{
-            var race = (Race)SimRandom.RandomEntryFromList(SimulationManager.Instance.world.CurrentContexts[typeof(Race)]);
+            var race = (Race)SimRandom.RandomEntryFromList(ContextDictionaryProvider.CurrentContexts[typeof(Race)]);
             var newFaction = new Faction(population, influence, wealth, politicalPriority, economicPriority, religiousPriority, militaryPriority, race);
 
             if(createdByCharacter)

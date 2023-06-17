@@ -61,7 +61,7 @@ namespace Game.Incidents
 		{
 			if (madeNew)
 			{
-				SimulationManager.Instance.world.AddContext(actionField.GetTypedFieldValue());
+				ContextDictionaryProvider.AddContext(actionField.GetTypedFieldValue());
 			}
 		}
 

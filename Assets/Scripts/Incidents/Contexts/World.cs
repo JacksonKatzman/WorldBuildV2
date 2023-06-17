@@ -3,7 +3,6 @@ using Game.Incidents;
 using Game.Terrain;
 using Game.Utilities;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -54,9 +53,6 @@ namespace Game.Simulation
 			AllContexts = new IncidentContextDictionary();
 			contextsToAdd = new IncidentContextDictionary();
 			contextsToRemove = new IncidentContextDictionary();
-
-			EventManager.Instance.AddEventHandler<AddContextEvent>(OnAddContextEvent);
-			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
 		public void Initialize(List<FactionPreset> factions)
@@ -66,8 +62,8 @@ namespace Game.Simulation
 
 		public void AdvanceTime()
 		{
-			DelayedRemoveContexts();
-			DelayedAddContexts();
+			ContextDictionaryProvider.DelayedRemoveContexts();
+			ContextDictionaryProvider.DelayedAddContexts();
 
 			UpdateContext();
 			foreach(var contextList in CurrentContexts.Values)
@@ -140,8 +136,8 @@ namespace Game.Simulation
 				var chosenLocationIndex = ordered.First();
 				var population = SimRandom.RandomRange((int)(faction.Cities[0].Population * 0.3f), (int)(faction.Cities[0].Population * 0.7f));
 				var createdCity = new City(faction, new Location(chosenLocationIndex), population, 0);
-				AddContext(createdCity);
-				DelayedAddContexts();
+				ContextDictionaryProvider.AddContext(createdCity);
+				ContextDictionaryProvider.DelayedAddContexts();
 			}
 		}
 
@@ -189,58 +185,6 @@ namespace Game.Simulation
 			}
 		}
 
-		public void AddContext<T>(T context) where T : IIncidentContext
-		{
-			context.ID = GetNextID();
-			contextsToAdd[typeof(T)].Add(context);
-		}
-
-		public void AddContextImmediate<T>(T context) where T : IIncidentContext
-		{
-			AddContext(context);
-			DelayedAddContexts();
-		}
-
-		public void RemoveContext<T>(T context) where T : IIncidentContext
-		{
-			contextsToRemove[typeof(T)].Add(context);
-		}
-
-		private void OnAddContextEvent(AddContextEvent gameEvent)
-		{
-			AddContext(gameEvent.context);
-		}
-
-		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)
-		{
-			RemoveContext(gameEvent.context);
-		}
-
-		private void DelayedAddContexts()
-		{
-			foreach (var contextList in contextsToAdd.Values)
-			{
-				foreach (var context in contextList)
-				{
-					CurrentContexts[context.ContextType].Add(context);
-					AllContexts[context.ContextType].Add(context);
-				}
-				contextList.Clear();
-			}
-		}
-
-		private void DelayedRemoveContexts()
-		{
-			foreach (var contextList in contextsToRemove.Values)
-			{
-				foreach (var context in contextList)
-				{
-					CurrentContexts[context.ContextType].Remove(context);
-				}
-				contextList.Clear();
-			}
-		}
-
 		private void CreateRacesAndFactions(List<FactionPreset> presets)
 		{
 			var uniqueRacePresets = new Dictionary<RacePreset, int>();
@@ -259,11 +203,11 @@ namespace Game.Simulation
 			foreach(var racePresetPair in uniqueRacePresets)
 			{
 				var race = new Race(racePresetPair.Key);
-				AddContext(race);
+				ContextDictionaryProvider.AddContext(race);
 				for (var i = 0; i < racePresetPair.Value; i++)
 				{
 					var faction = new Faction(1, 1000, race);
-					AddContext(faction);
+					ContextDictionaryProvider.AddContext(faction);
 				}
 			}
 		}

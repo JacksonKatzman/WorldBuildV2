@@ -44,6 +44,8 @@ namespace Game.Simulation
 
 		public void CreateWorld(List<FactionPreset> factions)
 		{
+			ContextDictionaryProvider.SetContextsProviders(() => CurrentContexts, () => AllContexts);
+
 			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
 			world = new World();
 			world.Initialize(factions);
@@ -71,6 +73,8 @@ namespace Game.Simulation
 
 		public void LoadWorld(string mapName)
 		{
+			ContextDictionaryProvider.SetContextsProviders(() => CurrentContexts, () => AllContexts);
+
 			if (string.IsNullOrEmpty(mapName))
 			{
 				mapName = "TEST";

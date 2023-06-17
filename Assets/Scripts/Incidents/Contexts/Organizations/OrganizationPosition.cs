@@ -24,7 +24,7 @@ namespace Game.Incidents
 			official = SimRandom.RandomRange(0, 5) < 4 && previousOfficial != null ? official.CreateChild(true) : new Character(35, Enums.Gender.ANY, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, true);
 			official.GenerateFamily(true, true);
 			official.Organization = org;
-			SimulationManager.Instance.world?.AddContext(official);
+			ContextDictionaryProvider.AddContext(official);
 			var report = previousOfficial == null ? "{0} takes power." : "{0} succeeds {1}.";
 			IncidentService.Instance.ReportStaticIncident(report, new List<IIncidentContext>() { official, previousOfficial });
 		}

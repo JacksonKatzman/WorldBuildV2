@@ -112,11 +112,11 @@ namespace Game.Incidents
 			List<IIncidentContext> possibleMatches;
 			if (AllowSelf)
 			{
-				possibleMatches = SimulationManager.Instance.CurrentContexts[typeof(T)].Where(x => criteriaContainer.Evaluate(x, context) == true).ToList();
+				possibleMatches = ContextDictionaryProvider.CurrentContexts[typeof(T)].Where(x => criteriaContainer.Evaluate(x, context) == true).ToList();
 			}
 			else
 			{
-				possibleMatches = SimulationManager.Instance.CurrentContexts[typeof(T)].Where(x => x != context && criteriaContainer.Evaluate(x, context) == true).ToList();
+				possibleMatches = ContextDictionaryProvider.CurrentContexts[typeof(T)].Where(x => x != context && criteriaContainer.Evaluate(x, context) == true).ToList();
 			}
 
 			return possibleMatches.Count > 0 ? SimRandom.RandomEntryFromList(possibleMatches) : null;
@@ -126,12 +126,12 @@ namespace Game.Incidents
 		{
 			if (AllowSelf)
 			{
-				var possibleValues = SimulationManager.Instance.CurrentContexts[typeof(T)];
+				var possibleValues = ContextDictionaryProvider.CurrentContexts[typeof(T)];
 				return SimRandom.RandomEntryFromList(possibleValues);
 			}
 			else
 			{
-				var possibleValues = SimulationManager.Instance.CurrentContexts[typeof(T)].Where(x => x != context).ToList();
+				var possibleValues = ContextDictionaryProvider.CurrentContexts[typeof(T)].Where(x => x != context).ToList();
 				return SimRandom.RandomEntryFromList(possibleValues);
 			}
 		}
@@ -179,7 +179,7 @@ namespace Game.Incidents
 				.Where(x => !x.IsGenericTypeDefinition)                             // Excludes Generics
 				.Where(x => type.IsAssignableFrom(x));           // Excludes classes not inheriting from IIncidentContext
 
-			OutputLogger.Log("Type looked for:" + type.ToString());
+			//OutputLogger.Log("Type looked for:" + type.ToString());
 			var qList = q.ToList();
 
 			return qList;
