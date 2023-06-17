@@ -16,6 +16,11 @@ namespace Game.Incidents
 			var parentValue = GetContext(compareTo.actionField.GetFieldValue());
 			var contextValue = GetContext(context);
 
+			if(parentValue == null || contextValue == null)
+			{
+				return false;
+			}
+
 			return Comparators[Comparator].Invoke(parentValue, contextValue);
 		}
 
