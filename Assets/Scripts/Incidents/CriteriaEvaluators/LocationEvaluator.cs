@@ -8,7 +8,7 @@ namespace Game.Incidents
 		public LocationEvaluator(string propertyName, Type contextType) : base(propertyName, contextType) { }
 		protected override Location GetContext(IIncidentContext context)
 		{
-			if (context.ContextType.IsAssignableFrom(typeof(ILocationAffiliated)))
+			if (typeof(ILocationAffiliated).IsAssignableFrom(context.ContextType))
 			{
 				return ((ILocationAffiliated)context).CurrentLocation;
 			}
