@@ -8,8 +8,8 @@
 		{
 			var giver = ((IInventoryAffiliated)givingInventory.actionField.GetFieldValue());
 			var receiver = ((IInventoryAffiliated)receivingInventory.actionField.GetFieldValue());
-			receiver.Inventory.Items.AddRange(giver.Inventory.Items);
-			giver.Inventory.Items.Clear();
+			receiver.CurrentInventory.Items.AddRange(giver.CurrentInventory.Items);
+			giver.CurrentInventory.Items.Clear();
 		}
 	}
 }

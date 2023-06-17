@@ -41,7 +41,7 @@ namespace ES3Types
 			writer.WriteProperty("Intelligence", instance.Intelligence, ES3Type_int.Instance);
 			writer.WriteProperty("Wisdom", instance.Wisdom, ES3Type_int.Instance);
 			writer.WriteProperty("Charisma", instance.Charisma, ES3Type_int.Instance);
-			writer.WriteProperty("Inventory", instance.Inventory, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Incidents.Inventory)));
+			writer.WriteProperty("Inventory", instance.CurrentInventory, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Incidents.Inventory)));
 
 			writer.WriteProperty("Parents", instance.Parents.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("Spouses", instance.Spouses.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
@@ -118,7 +118,7 @@ namespace ES3Types
 						instance.Charisma = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
 					case "Inventory":
-						instance.Inventory = reader.Read<Game.Incidents.Inventory>();
+						instance.CurrentInventory = reader.Read<Game.Incidents.Inventory>();
 						break;
 					case "Parents":
 						instance.AddContextIdBuffer("Parents", reader.Read<System.Collections.Generic.List<System.Int32>>());

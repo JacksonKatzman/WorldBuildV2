@@ -11,7 +11,7 @@ namespace Game.Incidents
 	{
 		public MonsterData dataBlock;
 		public override string Name => CharacterName.fullName;
-		public Inventory Inventory { get; private set; }
+		public Inventory CurrentInventory { get; set; }
 		public CharacterName CharacterName { get; set; }
 
 		public int LawfulChaoticAlignmentAxis { get; set; }
@@ -53,7 +53,7 @@ namespace Game.Incidents
 		{
 			AffiliatedFaction = SaveUtilities.ConvertIDToContext<Faction>(contextIDLoadBuffers["AffiliatedFaction"][0]);
 
-			Inventory.LoadContextProperties();
+			CurrentInventory.LoadContextProperties();
 
 			contextIDLoadBuffers.Clear();
 		}

@@ -21,7 +21,7 @@ namespace Game.Incidents
 			Children = new List<Character>();
 			//Race = new Race(new RacePreset());
 			//CharacterName = new CharacterName("FORMAT");
-			Inventory = new Inventory();
+			CurrentInventory = new Inventory();
 		}
 		public Character(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
 			int religiousPriority, int militaryPriority, int influence, int wealth, int strength, int dexterity,
@@ -45,7 +45,7 @@ namespace Game.Incidents
 			Charisma = charisma;
 			MajorCharacter = majorCharacter;
 			Spouses = new List<Character>();
-			Inventory = inventory == null ? new Inventory() : inventory;
+			CurrentInventory = inventory == null ? new Inventory() : inventory;
 			Parents = parents == null ? new List<Character>() : parents;
 			Siblings = new List<Character>();
 			Children = new List<Character>();
@@ -136,7 +136,7 @@ namespace Game.Incidents
 		public int Intelligence { get; set; }
 		public int Wisdom { get; set; }
 		public int Charisma { get; set; }
-		public Inventory Inventory { get; set; }
+		public Inventory CurrentInventory { get; set; }
 		public List<Character> Parents { get; set; }
 		public List<Character> Spouses { get; set; }
 		public List<Character> Siblings { get; set; }
@@ -240,7 +240,7 @@ namespace Game.Incidents
 			Spouses = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Spouses"]);
 			Siblings = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Siblings"]);
 			Children = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Children"]);
-			Inventory?.LoadContextProperties();
+			CurrentInventory?.LoadContextProperties();
 
 			contextIDLoadBuffers.Clear();
 		}

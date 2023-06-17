@@ -20,7 +20,7 @@ namespace Game.Incidents
 		protected override Item MakeNew()
 		{
 			var newItem = (Item)Activator.CreateInstance(itemType);
-			((IInventoryAffiliated)inventoryToAddTo.actionField.GetFieldValue()).Inventory.Items.Add(newItem);
+			((IInventoryAffiliated)inventoryToAddTo.actionField.GetFieldValue()).CurrentInventory.Items.Add(newItem);
 
 			if(createdByCharacter)
 			{
