@@ -15,9 +15,11 @@ namespace Game.Incidents
 
         protected bool EvaluateByContains(Dictionary<IIncidentContext, T> dictionary, IIncidentContext context)
 		{
+            var combinedExpressions = CombineExpressions(context);
+
             foreach (var value in dictionary.Values)
             {
-                if (Comparators[Comparator].Invoke(value, CombineExpressions(context)))
+                if (Comparators[Comparator].Invoke(value, combinedExpressions))
                 {
                     return true;
                 }
