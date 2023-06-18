@@ -6,9 +6,9 @@ namespace Game.Generators.Items
 {
 	public class Weapon : Item, IEquipable
 	{
-		public WeaponType type;
-		public int flatBonus;
-		public ItemGrade itemGrade;
+		public WeaponType WeaponType { get; set; }
+		public int FlatBonus { get; set; }
+		public ItemGrade ItemGrade { get; set; }
 
 		public Weapon()
 		{
