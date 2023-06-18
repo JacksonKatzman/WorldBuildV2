@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Simulation;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace Game.Incidents
             var property = context.GetType().GetProperty(propertyName);
             var propertyValue = (T)property.GetValue(context);
             var combinedExpressions = CombineExpressions(context);
-            IncidentService.Instance.currentExpressionValues.Add(NameID, new ExpressionValue(combinedExpressions));
+            ContextDictionaryProvider.CurrentExpressionValues.Add(NameID, new ExpressionValue(combinedExpressions));
             var calculatedValue = Operators[Operation].Invoke(propertyValue, combinedExpressions);
             if(clamped)
 			{
