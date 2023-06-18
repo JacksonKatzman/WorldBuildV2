@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Enums;
 using Game.Generators.Items;
 using Game.Incidents;
 using Game.Simulation;
@@ -205,6 +206,46 @@ public class ActionFieldCriteriaEvaluatorTests : Editor
 
         evaluator.Comparator = "==";
         evaluation = evaluator.Evaluate(city, propertyName, null);
+
+        Assert.That(evaluation == false);
+    }
+
+    [Test]
+    public void TypeEvaluator()
+	{
+        var propertyName = "FactionType";
+        var faction = new Faction() { ID = 1 };
+        ContextDictionaryProvider.AddContextImmediate(faction);
+
+        var evaluator = new TypeEvaluator(propertyName, typeof(Faction));
+        evaluator.Comparator = "==";
+        evaluator.comparedType = typeof(Faction);
+
+        var evaluation = evaluator.Evaluate(faction, propertyName);
+
+        Assert.That(evaluation == true);
+
+        evaluator.comparedType = typeof(Character);
+        evaluation = evaluator.Evaluate(faction, propertyName);
+
+        Assert.That(evaluation == false);
+    }
+
+    [Test]
+    public void EnumEvaluator()
+	{
+        var propertyName = "ItemGrade";
+        var armor = new Armor() { ItemGrade = Game.Enums.ItemGrade.NORMAL };
+        ContextDictionaryProvider.AddContextImmediate(armor);
+
+        var evaluator = new EnumEvaluator<ItemGrade>(propertyName, typeof(Armor));
+        evaluator.allowedValues = new List<ItemGrade>() { ItemGrade.NORMAL, ItemGrade.AWFUL };
+        var evaluation = evaluator.Evaluate(armor, propertyName);
+
+        Assert.That(evaluation == true);
+
+        evaluator.allowedValues.Remove(ItemGrade.NORMAL);
+        evaluation = evaluator.Evaluate(armor, propertyName);
 
         Assert.That(evaluation == false);
     }
