@@ -11,7 +11,6 @@ public class ActionFieldCriteriaEvaluatorTests : Editor
     [SetUp]
     public void SetUp()
     {
-
         var current = new IncidentContextDictionary();
         var all = new IncidentContextDictionary();
         ContextDictionaryProvider.SetContextsProviders(() => current, () => all);
