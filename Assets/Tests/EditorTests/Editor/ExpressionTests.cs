@@ -213,4 +213,34 @@ public class ExpressionTests : Editor
 		Assert.That(ExpressionHelpers.TypeComparators["!="].Invoke(type_1, type_1) == false);
 		Assert.That(ExpressionHelpers.TypeComparators["!="].Invoke(type_1, type_2) == true);
 	}
+
+	[Test]
+	public void IncidentWeightCalculate()
+	{
+		var expression_1 = new Expression<int>() { constValue = 2 };
+		expression_1.ExpressionType = ExpressionType.Const;
+
+		var incidentWeight = new IncidentWeight<Faction>();
+		incidentWeight.baseWeight = 5;
+		incidentWeight.Operation = "+";
+
+		var faction = new Faction();
+
+		var value = incidentWeight.CalculateWeight(faction);
+		var expected = 5;
+
+		Assert.That(value == expected);
+
+		incidentWeight.expressions.Add(expression_1);
+		value = incidentWeight.CalculateWeight(faction);
+		expected = 7;
+
+		Assert.That(value == expected);
+
+		expression_1.constValue = -10;
+		value = incidentWeight.CalculateWeight(faction);
+		expected = 1;
+
+		Assert.That(value == expected);
+	}
 }
