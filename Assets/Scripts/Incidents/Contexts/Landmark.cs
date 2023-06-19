@@ -12,19 +12,19 @@ namespace Game.Incidents
 
 		public override Type ContextType => typeof(Landmark);
 
-		public Inventory Inventory { get; set; }
+		public Inventory CurrentInventory { get; set; }
 
 		public Landmark() { }
 		public Landmark(Location location)
 		{
 			CurrentLocation = location;
-			Inventory = new Inventory();
+			CurrentInventory = new Inventory();
 		}
 
 		public override void LoadContextProperties()
 		{
 			CurrentLocation = SaveUtilities.ConvertIDToContext<Location>(contextIDLoadBuffers["CurrentLocation"][0]);
-			Inventory.LoadContextProperties();
+			CurrentInventory.LoadContextProperties();
 
 			contextIDLoadBuffers.Clear();
 		}

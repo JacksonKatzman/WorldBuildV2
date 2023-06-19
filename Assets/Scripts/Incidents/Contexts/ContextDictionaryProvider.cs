@@ -1,5 +1,6 @@
 ﻿using Game.Incidents;
 using System;
+using System.Collections.Generic;
 
 namespace Game.Simulation
 {
@@ -7,6 +8,7 @@ namespace Game.Simulation
 	{
 		public static IncidentContextDictionary CurrentContexts => GetCurrentContexts.Invoke();
 		public static IncidentContextDictionary AllContexts => GetAllContexts.Invoke();
+		public static Dictionary<string, ExpressionValue> CurrentExpressionValues { get; set; }
 		public static int NextID => nextID;
 
 		private static Func<IncidentContextDictionary> GetCurrentContexts;

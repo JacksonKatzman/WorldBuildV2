@@ -13,8 +13,6 @@ namespace Game.Incidents
 	{
 		private static IncidentService instance;
 
-		public Dictionary<string, ExpressionValue> currentExpressionValues;
-
 		private List<IIncident> incidents;
 		private List<DelayedIncidentContext> delayedContexts;
 		private List<IIncidentContext> followUpContexts;
@@ -72,7 +70,7 @@ namespace Game.Incidents
 					CurrentIncident = SimRandom.RandomEntryFromWeightedDictionary(possibleIncidents);
 					completed = CurrentIncident.PerformIncident(incidentContext, ref report);
 					OutputLogger.Log("Attempted to run incident: " + CurrentIncident.IncidentName + " Success: " + completed);
-					currentExpressionValues.Clear();
+					ContextDictionaryProvider.CurrentExpressionValues.Clear();
 				}
 
 				if (completed)
@@ -182,6 +180,16 @@ namespace Game.Incidents
 
 		private void Setup()
 		{
+			nextIncidentID = 0;
+			delayedContexts = new List<DelayedIncidentContext>();
+			followUpContexts = new List<IIncidentContext>();
+			reports = new List<IncidentReport>();
+
+			ContextDictionaryProvider.CurrentExpressionValues = new Dictionary<string, ExpressionValue>();
+		}
+
+		public void CompileIncidents()
+		{
 			incidents = new List<IIncident>();
 			var files = Directory.GetFiles(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH, "*.json");
 			foreach (string file in files)
@@ -193,13 +201,6 @@ namespace Game.Incidents
 					incidents.Add(item);
 				}
 			}
-
-			nextIncidentID = 0;
-			delayedContexts = new List<DelayedIncidentContext>();
-			followUpContexts = new List<IIncidentContext>();
-			reports = new List<IncidentReport>();
-
-			currentExpressionValues = new Dictionary<string, ExpressionValue>();
 		}
 	}
 }

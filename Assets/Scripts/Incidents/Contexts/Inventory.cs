@@ -5,10 +5,11 @@ using System.Collections.Generic;
 
 namespace Game.Incidents
 {
-	public class Inventory : InertIncidentContext
+	public class Inventory : InertIncidentContext, IInventoryAffiliated
 	{
 		public override Type ContextType => typeof(Inventory);
 		public List<Item> Items { get; set; }
+		public Inventory CurrentInventory => this;
 
 		public Inventory() 
 		{

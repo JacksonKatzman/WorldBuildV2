@@ -11,7 +11,7 @@ namespace Game.Incidents
 		{
 			if ((typeof(IInventoryAffiliated)).IsAssignableFrom(context.ContextType))
 			{
-				return ((IInventoryAffiliated)context).Inventory;
+				return ((IInventoryAffiliated)context).CurrentInventory;
 			}
 			else
 			{

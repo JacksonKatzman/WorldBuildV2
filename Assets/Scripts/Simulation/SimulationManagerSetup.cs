@@ -32,6 +32,8 @@ namespace Game.Simulation
 			simMan.WorldChunksX = worldChunksX;
 			simMan.WorldChunksZ = worldChunksZ;
 
+			IncidentService.Instance.CompileIncidents();
+
 			simMan.CreateWorld(factions);
 		}
 	}

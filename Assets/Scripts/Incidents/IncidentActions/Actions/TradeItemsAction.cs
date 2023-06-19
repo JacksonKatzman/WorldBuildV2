@@ -12,10 +12,10 @@ namespace Game.Incidents
 			var giver = ((IInventoryAffiliated)givingInventory.actionField.GetFieldValue());
 			var receiver = ((IInventoryAffiliated)receivingInventory.actionField.GetFieldValue());
 			var item = itemField.GetTypedFieldValue();
-			if(giver.Inventory.Items.Contains(item))
+			if(giver.CurrentInventory.Items.Contains(item))
 			{
-				giver.Inventory.Items.Remove(item);
-				receiver.Inventory.Items.Add(item);
+				giver.CurrentInventory.Items.Remove(item);
+				receiver.CurrentInventory.Items.Add(item);
 			}
 		}
 	}

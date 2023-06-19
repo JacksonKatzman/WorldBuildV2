@@ -23,13 +23,13 @@ namespace Game.Incidents
 			}
 		}
 		public int Wealth { get; set; }
-		public int NumItems => Inventory.Items.Count;
+		public int NumItems => CurrentInventory.Items.Count;
 		public bool IsOnBorder => SimulationUtilities.FindBorderWithinFaction(AffiliatedFaction).Contains(CurrentLocation.TileIndex);
 		public List<Resource> Resources { get; set; }
 		public List<Landmark> Landmarks { get; set; }
 		public List<Character> Characters { get; set; }
 
-		public Inventory Inventory { get; set; }
+		public Inventory CurrentInventory { get; set; }
 		private float populationFloat;
 
 		public City() { }
@@ -43,7 +43,7 @@ namespace Game.Incidents
 			Resources = new List<Resource>();
 			Landmarks = new List<Landmark>();
 			Characters = new List<Character>();
-			Inventory = new Inventory();
+			CurrentInventory = new Inventory();
 
 			if (ContextDictionaryProvider.CurrentContexts.GetContextByID(location.ID) == null)
 			{
@@ -77,7 +77,7 @@ namespace Game.Incidents
 			Resources = SaveUtilities.ConvertIDsToContexts<Resource>(contextIDLoadBuffers["Resources"]);
 			Landmarks = SaveUtilities.ConvertIDsToContexts<Landmark>(contextIDLoadBuffers["Landmarks"]);
 			Characters = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Characters"]);
-			Inventory.LoadContextProperties();
+			CurrentInventory.LoadContextProperties();
 
 			contextIDLoadBuffers.Clear();
 		}

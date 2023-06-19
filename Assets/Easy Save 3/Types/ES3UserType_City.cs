@@ -25,7 +25,7 @@ namespace ES3Types
 			writer.WriteProperty("Resources", instance.Resources.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("Landmarks", instance.Landmarks.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("Characters", instance.Characters.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
-			writer.WriteProperty("Inventory", instance.Inventory, ES3UserType_Inventory.Instance);
+			writer.WriteProperty("Inventory", instance.CurrentInventory, ES3UserType_Inventory.Instance);
 			writer.WriteProperty("NumIncidents", instance.NumIncidents, ES3Type_int.Instance);
 			writer.WriteProperty("Name", instance.Name, ES3Type_string.Instance);
 			writer.WriteProperty("ID", instance.ID, ES3Type_int.Instance);
@@ -61,7 +61,7 @@ namespace ES3Types
 						instance.AddContextIdBuffer("Characters", reader.Read<System.Collections.Generic.List<System.Int32>>());
 						break;
 					case "Inventory":
-						instance.Inventory = reader.Read<Game.Incidents.Inventory>(ES3UserType_Inventory.Instance);
+						instance.CurrentInventory = reader.Read<Game.Incidents.Inventory>(ES3UserType_Inventory.Instance);
 						break;
 					case "NumIncidents":
 						instance.NumIncidents = reader.Read<System.Int32>(ES3Type_int.Instance);

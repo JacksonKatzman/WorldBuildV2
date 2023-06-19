@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Simulation;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +81,7 @@ namespace Game.Incidents
 			}
             else if(ExpressionType == ExpressionType.From_Previous)
 			{
-                return (T)IncidentService.Instance.currentExpressionValues[previousCalculatedID].Value;
+                return (T)ContextDictionaryProvider.CurrentExpressionValues[previousCalculatedID].Value;
 			}
             else
 			{
