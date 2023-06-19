@@ -180,6 +180,16 @@ namespace Game.Incidents
 
 		private void Setup()
 		{
+			nextIncidentID = 0;
+			delayedContexts = new List<DelayedIncidentContext>();
+			followUpContexts = new List<IIncidentContext>();
+			reports = new List<IncidentReport>();
+
+			ContextDictionaryProvider.CurrentExpressionValues = new Dictionary<string, ExpressionValue>();
+		}
+
+		public void CompileIncidents()
+		{
 			incidents = new List<IIncident>();
 			var files = Directory.GetFiles(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH, "*.json");
 			foreach (string file in files)
@@ -191,13 +201,6 @@ namespace Game.Incidents
 					incidents.Add(item);
 				}
 			}
-
-			nextIncidentID = 0;
-			delayedContexts = new List<DelayedIncidentContext>();
-			followUpContexts = new List<IIncidentContext>();
-			reports = new List<IncidentReport>();
-
-			ContextDictionaryProvider.CurrentExpressionValues = new Dictionary<string, ExpressionValue>();
 		}
 	}
 }
