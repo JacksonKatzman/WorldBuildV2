@@ -1,0 +1,13 @@
+{
+  "$id": "1",
+  "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib]], mscorlib",
+  "MAD": {
+    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+    "$values": [
+      "huffy",
+      "sore",
+      "angry",
+      "mad"
+    ]
+  }
+}
