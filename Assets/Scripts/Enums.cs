@@ -33,6 +33,8 @@ namespace Game.Enums
 	public enum HexEdgeType { Flat, Slope, Cliff };
 	public enum LandmarkType { NONE, TOWER, STATUE };
 
+	public enum FlavorType { SYNONYM, REASON };
+
 	public static class EnumHelpers
 	{
 		internal static IEnumerable<T> ToEnumerableOf<T>(this Enum theEnum)
