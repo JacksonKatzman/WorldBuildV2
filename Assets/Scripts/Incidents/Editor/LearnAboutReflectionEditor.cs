@@ -7,8 +7,11 @@ using System.Reflection;
 using System.Collections.Generic;
 using Game.Simulation;
 using System.Data;
-using System.IO;	
+using System.IO;
 using Game.Generators.Names;
+using Game.Utilities;
+using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace Game.Incidents
 {
@@ -30,18 +33,15 @@ namespace Game.Incidents
 				test.TestName();
 			}
 
-			if (GUILayout.Button("Govt Test"))
+			if (GUILayout.Button("Flavor Test"))
 			{
-				var govt = new Organization(null, null, Enums.OrganizationType.POLITICAL);
-				for(int i = 0; i < 40; i++)
-				{
-					govt.UpdateHierarchy();
-				}
-				OutputLogger.Log(string.Format("Number of Tiers: {0}", govt.hierarchy.Count));
-				for(int i = 0; i < govt.hierarchy.Count; i++)
-				{
-					OutputLogger.Log(string.Format("Number of Positions in Tier {0}: {1}", i, govt.hierarchy[i].Count));
-				}
+				var phrase = "{1} {1.5] [2} [3] {4} {R:GOOD} {STROMBOLI}";
+				GenerateFlavor(phrase);
+			}
+
+			if (GUILayout.Button("Thesaurus Test"))
+			{
+				ThesaurusEntryRetriever.GetSynonyms("mad");
 			}
 		}
 		public static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
@@ -55,6 +55,23 @@ namespace Game.Incidents
 				   (z.IsGenericType &&
 				   openGenericType.IsAssignableFrom(z.GetGenericTypeDefinition()))
 				   select x;
+		}
+
+		public string GenerateFlavor(string phrase)
+		{
+			var matches = Regex.Matches(phrase, @"\{[^\n \{\}]+\}");
+			foreach(Match match in matches)
+			{
+				OutputLogger.Log(" %%: " + match.Value);
+			}
+
+			matches = Regex.Matches(phrase, @"\{([^\n \{\}]+):(GOOD|EVIL|LAWFUL|CHAOTIC)\}");
+			foreach (Match match in matches)
+			{
+				OutputLogger.Log(" %%: " + match.Value);
+			}
+
+			return phrase;
 		}
 	}
 
