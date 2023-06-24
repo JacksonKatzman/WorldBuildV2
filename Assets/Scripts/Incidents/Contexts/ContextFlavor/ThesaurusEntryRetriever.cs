@@ -20,12 +20,6 @@ namespace Game.Incidents
 				string responseBody = response.Result.Content.ReadAsStringAsync().Result;
 				var item = JsonConvert.DeserializeObject<ThesaurusObjectRoot>(responseBody);
 				return item;
-				/*
-				if(item.Containers.Count > 0)
-				{
-					ThesaurusProvider.AddEntry(word.ToUpper(), item.Containers[0].Entry);
-				}
-				*/
 			}
 		}
 
