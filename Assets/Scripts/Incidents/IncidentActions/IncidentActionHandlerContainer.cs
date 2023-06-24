@@ -34,7 +34,8 @@ namespace Game.Incidents
 			{
 				if (!action.VerifyAction(context))
 				{
-					OutputLogger.LogWarning("ActionContainer failed to verify action context!");
+					OutputLogger.LogWarning($"ActionContainer failed to verify {context.GetType().Name} : {context.Name} for" +
+						$" {action.incidentAction.GetType().Name} as part of {IncidentService.Instance.CurrentIncident.IncidentName}!");
 					return false;
 				}
 			}

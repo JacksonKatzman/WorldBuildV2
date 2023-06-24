@@ -21,6 +21,11 @@ namespace Game.Incidents
 			var window = GetWindow<IncidentEditorWindow>("Incident Editor");
             window.minSize = new Vector2(900, 650);
             window.maxSize = new Vector2(1200, 900);
+
+            if(FlavorEditorWindow.Instance == null)
+			{
+                FlavorEditorWindow.OpenWindow();
+			}
 		}
 
 		protected override void OnGUI()
