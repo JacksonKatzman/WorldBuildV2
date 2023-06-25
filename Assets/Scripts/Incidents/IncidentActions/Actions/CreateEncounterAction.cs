@@ -11,13 +11,10 @@ namespace Game.Incidents
 	{
 		public ContextualIncidentActionField<Location> location;
 
-		//[SerializeField, OnValueChanged("OnEncounterChanged")]
-		//public AdventureEncounterObject encounter;
-
 		private AdventureEncounterObject Encounter => encounterObject.RetrieveObject();
 
 		[OnValueChanged("OnValueChanged")]
-		public ScriptableObjectRetriever<AdventureEncounterObject> encounterObject;// = new ScriptableObjectRetriever<AdventureEncounterObject>();
+		public ScriptableObjectRetriever<AdventureEncounterObject> encounterObject;
 
 		[ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)]
 		public List<IncidentActionFieldContainer> actionFields;
