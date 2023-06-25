@@ -11,14 +11,19 @@ namespace Game.Incidents
 	{
 		public ContextualIncidentActionField<Location> location;
 
-		[SerializeField, OnValueChanged("OnEncounterChanged")]
-		public AdventureEncounterObject encounter;
+		//[SerializeField, OnValueChanged("OnEncounterChanged")]
+		//public AdventureEncounterObject encounter;
+
+		private AdventureEncounterObject Encounter => encounterObject.RetrieveObject();
+
+		[OnValueChanged("OnValueChanged")]
+		public ScriptableObjectRetriever<AdventureEncounterObject> encounterObject;// = new ScriptableObjectRetriever<AdventureEncounterObject>();
 
 		[ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)]
 		public List<IncidentActionFieldContainer> actionFields;
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			var copy = UnityEngine.Object.Instantiate(encounter);
+			var copy = UnityEngine.Object.Instantiate(Encounter);
 			copy.CurrentLocation = location.GetTypedFieldValue();
 			var historicals = copy.contextCriterium.Where(x => x.IsHistorical).ToList();
 			for(int i = 0; i < historicals.Count; i++)
@@ -32,7 +37,7 @@ namespace Game.Incidents
 		private void OnEncounterChanged()
 		{
 			actionFields = new List<IncidentActionFieldContainer>();
-			foreach(var criteria in encounter.contextCriterium)
+			foreach(var criteria in Encounter.contextCriterium)
 			{
 				if(criteria.IsHistorical)
 				{
@@ -43,6 +48,14 @@ namespace Game.Incidents
 			}
 
 			IncidentEditorWindow.UpdateActionFieldIDs();
+		}
+
+		private void OnValueChanged()
+		{
+			if (encounterObject.onChanged == null)
+			{
+				encounterObject.onChanged += OnEncounterChanged;
+			}
 		}
 	}
 }
