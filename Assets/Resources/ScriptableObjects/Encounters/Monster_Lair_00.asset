@@ -31,12 +31,12 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 1|Game.Simulation.MonsterCriteria, Assembly-CSharp
+    - Name: CriteriaID
+      Entry: 3
+      Data: 0
     - Name: contextTypeName
       Entry: 1
       Data: Monster
-    - Name: contextID
-      Entry: 1
-      Data: '{0}'
     - Name: historical
       Entry: 5
       Data: false
@@ -117,14 +117,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 5|Game.Simulation.AdventureContextCriteria`1[[Game.Incidents.Person,
-        Assembly-CSharp]], Assembly-CSharp
+      Data: 5|Game.Simulation.AdventureCharacterContextCriteria, Assembly-CSharp
+    - Name: CriteriaID
+      Entry: 3
+      Data: 0
     - Name: contextTypeName
       Entry: 1
-      Data: Person
-    - Name: contextID
-      Entry: 1
-      Data: '{1}'
+      Data: Character
     - Name: historical
       Entry: 5
       Data: false
@@ -370,6 +369,9 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 16|Game.Simulation.AdventureNarrationComponent, Assembly-CSharp
+    - Name: ComponentID
+      Entry: 3
+      Data: 0
     - Name: text
       Entry: 6
       Data: 
@@ -379,9 +381,9 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 17|Game.Simulation.AdventureTextComponent, Assembly-CSharp
-    - Name: title
-      Entry: 6
-      Data: 
+    - Name: ComponentID
+      Entry: 3
+      Data: 0
     - Name: text
       Entry: 6
       Data: 
@@ -391,9 +393,9 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 18|Game.Simulation.AdventureTextComponent, Assembly-CSharp
-    - Name: title
-      Entry: 6
-      Data: 
+    - Name: ComponentID
+      Entry: 3
+      Data: 0
     - Name: text
       Entry: 6
       Data: 
@@ -403,6 +405,9 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 19|Game.Simulation.AdventureNarrationComponent, Assembly-CSharp
+    - Name: ComponentID
+      Entry: 3
+      Data: 0
     - Name: text
       Entry: 6
       Data: 
@@ -416,6 +421,7 @@ MonoBehaviour:
       Entry: 8
       Data: 
   encounterTitle: A Lair of Monsters
+  encounterDifficulty: 0
   encounterLocationType: 0
   encounterTypes: 00000000
   allowedBiomes: 0000000001000000020000000300000005000000
