@@ -40,7 +40,7 @@ namespace Game.Incidents
 		{
 			if(gameEvent.context.GetType() == typeof(Character) && Contains((Character)gameEvent.context, out var position))
 			{
-				position.SelectNewOfficial(this, AffiliatedFaction, Leader.Race);
+				position.SelectNewOfficial(this, AffiliatedFaction, Leader.AffiliatedRace);
 			}
 		}
 
@@ -90,12 +90,12 @@ namespace Game.Incidents
 				random -= weights[i];
 				if(random <= 0)
 				{
-					hierarchy[i].AddPosition(this, AffiliatedFaction, Leader.Race);
+					hierarchy[i].AddPosition(this, AffiliatedFaction, Leader.AffiliatedRace);
 					return;
 				}
 			}
 
-			AddTier(Leader.Race);
+			AddTier(Leader.AffiliatedRace);
 		}
 
 		private void AddTier(Race race)

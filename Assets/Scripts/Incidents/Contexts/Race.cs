@@ -3,9 +3,10 @@ using System;
 
 namespace Game.Incidents
 {
-	public class Race : InertIncidentContext
+	public class Race : InertIncidentContext, IRaceAffiliated
 	{
 		public override Type ContextType => typeof(Race);
+		public Race AffiliatedRace => this;
 		public int MinAge { get; set; }
 		public int MaxAge { get; set; }
 		public RacePreset racePreset;

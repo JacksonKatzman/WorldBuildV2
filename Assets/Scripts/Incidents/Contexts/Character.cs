@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated
+	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated
 	{
 		public Character() 
 		{
@@ -28,7 +28,7 @@ namespace Game.Incidents
 			int constitution, int intelligence, int wisdom, int charisma, bool majorCharacter, List<Character> parents = null, Inventory inventory = null)
 		{
 			Age = age;
-			Race = race;
+			AffiliatedRace = race;
 			Gender = gender == Gender.ANY ? (Gender)(SimRandom.RandomRange(0, 2)) : gender;
 			AffiliatedFaction = faction;
 			PoliticalPriority = politicalPriority;
@@ -105,8 +105,8 @@ namespace Game.Incidents
 		public Character(Faction affiliatedFaction)
 		{
 			AffiliatedFaction = affiliatedFaction;
-			Race = affiliatedFaction.MajorityRace;
-			Age = SimRandom.RandomRange(Race.MinAge, Race.MaxAge);
+			AffiliatedRace = affiliatedFaction.MajorityRace;
+			Age = SimRandom.RandomRange(AffiliatedRace.MinAge, AffiliatedRace.MaxAge);
 			Gender = (Gender)(SimRandom.RandomRange(0, 2));
 			CharacterName = affiliatedFaction.namingTheme.GenerateName(Gender);
 			MajorCharacter = false;
@@ -120,7 +120,7 @@ namespace Game.Incidents
 		public CharacterName CharacterName { get; set; }
 		public int Age { get; set; }
 		public Gender Gender { get; set; }
-		public Race Race { get; set; }
+		public Race AffiliatedRace { get; set; }
 		public Faction AffiliatedFaction { get; set; }
 		public Organization Organization { get; set; }
 		public OrganizationPosition OfficialPosition => GetOfficialPosition();
@@ -177,7 +177,7 @@ namespace Game.Incidents
 			{
 				parents.Add(SimRandom.RandomEntryFromList(Spouses));
 			}
-			var child = new Character(childAge, Enums.Gender.ANY, Race, AffiliatedFaction, majorPlayer, parents);
+			var child = new Character(childAge, Enums.Gender.ANY, AffiliatedRace, AffiliatedFaction, majorPlayer, parents);
 			Children.Add(child);
 
 			return child;
@@ -189,13 +189,13 @@ namespace Game.Incidents
 			{
 				if(Parents.Count(x => x.Gender == Gender.MALE) < 1)
 				{
-					var father = new Character(Gender.MALE, Race, AffiliatedFaction, false);
+					var father = new Character(Gender.MALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(father);
 					ContextDictionaryProvider.AddContext(father);
 				}
 				if(Parents.Count(x => x.Gender == Gender.FEMALE) < 1)
 				{
-					var mother = new Character(Gender.FEMALE, Race, AffiliatedFaction, false);
+					var mother = new Character(Gender.FEMALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(mother);
 					ContextDictionaryProvider.AddContext(mother);
 				}
@@ -205,7 +205,7 @@ namespace Game.Incidents
 				if(SimRandom.RandomBool())
 				{
 					var gender = Gender == Gender.MALE ? Gender.FEMALE : Gender.MALE;
-					var spouse = new Character(gender, Race, AffiliatedFaction, false);
+					var spouse = new Character(gender, AffiliatedRace, AffiliatedFaction, false);
 					Spouses.Add(spouse);
 					ContextDictionaryProvider.AddContext(spouse);
 				}
@@ -216,7 +216,7 @@ namespace Game.Incidents
 				var numSiblings = SimRandom.RandomRange(0, 5);
 				for (int i = 0; i < numSiblings; i++)
 				{
-					var sibling = new Character(Gender.ANY, Race, AffiliatedFaction, false, Parents);
+					var sibling = new Character(Gender.ANY, AffiliatedRace, AffiliatedFaction, false, Parents);
 					Siblings.Add(sibling);
 					ContextDictionaryProvider.AddContext(sibling);
 				}
@@ -234,7 +234,7 @@ namespace Game.Incidents
 
 		public override void LoadContextProperties()
 		{
-			Race = SaveUtilities.ConvertIDToContext<Race>(contextIDLoadBuffers["Race"][0]);
+			AffiliatedRace = SaveUtilities.ConvertIDToContext<Race>(contextIDLoadBuffers["Race"][0]);
 			AffiliatedFaction = SaveUtilities.ConvertIDToContext<Faction>(contextIDLoadBuffers["AffiliatedFaction"][0]);
 			Parents = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Parents"]);
 			Spouses = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Spouses"]);

@@ -23,7 +23,7 @@ namespace ES3Types
 			writer.WriteProperty("CharacterName", instance.CharacterName, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Generators.Names.CharacterName)));
 			writer.WriteProperty("Age", instance.Age, ES3Type_int.Instance);
 			writer.WriteProperty("Gender", instance.Gender, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Enums.Gender)));
-			writer.WriteProperty("Race", new List<int>() { instance.Race.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
+			writer.WriteProperty("Race", new List<int>() { instance.AffiliatedRace.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("AffiliatedFaction", new List<int>() { instance.AffiliatedFaction.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			if (instance.Organization != null)
 			{
