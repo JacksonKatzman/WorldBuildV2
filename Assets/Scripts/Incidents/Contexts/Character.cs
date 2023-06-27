@@ -225,6 +225,21 @@ namespace Game.Incidents
 
 		override public void Die()
 		{
+			if(Children.Count > 0)
+			{
+				foreach(var item in CurrentInventory.Items)
+				{
+					SimRandom.RandomEntryFromList(Children).CurrentInventory.Items.Add(item);
+				}
+
+				CurrentInventory.Items.Clear();
+			}
+			else
+			{
+				SimRandom.RandomEntryFromList(AffiliatedFaction.Cities).CurrentInventory.Items.AddRange(CurrentInventory.Items);
+				CurrentInventory.Items.Clear();
+			}
+
 			if(MajorCharacter)
 			{
 				IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this });
