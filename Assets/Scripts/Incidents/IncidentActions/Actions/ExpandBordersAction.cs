@@ -4,11 +4,11 @@ using System;
 
 namespace Game.Incidents
 {
-	public class ExpandBordersAction : ContextualIncidentAction<Faction>
+	public class ExpandBordersAction : GenericIncidentAction
 	{
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			var faction = context as Faction;
+			var faction = (context as IFactionAffiliated).AffiliatedFaction;
 			var completed = faction.AttemptExpandBorder(1);
 			if(completed)
 			{

@@ -232,7 +232,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 6,
+                                            "Value": 1,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -256,7 +256,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 2,
+                                            "Value": 19,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -280,7 +280,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 16,
+                                            "Value": 5,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -361,7 +361,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 12,
+                                            "Value": 7,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -385,7 +385,7 @@
                                             "min": 5,
                                             "max": 10,
                                             "constant": 0,
-                                            "Value": 7,
+                                            "Value": 9,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -565,7 +565,7 @@
                               "min": 0,
                               "max": 20,
                               "constant": 0,
-                              "Value": 2,
+                              "Value": 16,
                               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                             },
                             "subexpressions": null,
@@ -643,7 +643,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 12,
+                                            "Value": 1,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -667,7 +667,7 @@
                                             "min": 5,
                                             "max": 8,
                                             "constant": 0,
-                                            "Value": 5,
+                                            "Value": 6,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -748,7 +748,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 15,
+                                            "Value": 14,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -772,7 +772,7 @@
                                             "min": 8,
                                             "max": 10,
                                             "constant": 0,
-                                            "Value": 9,
+                                            "Value": 8,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -886,7 +886,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 13,
+                                            "Value": 6,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -991,7 +991,7 @@
                                             "min": 0,
                                             "max": 20,
                                             "constant": 0,
-                                            "Value": 15,
+                                            "Value": 7,
                                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                                           },
                                           "subexpressions": null,
@@ -1133,10 +1133,19 @@
                               "ActionFieldIDString": "{20}",
                               "ContextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                             },
+                            "preset": {
+                              "$id": "104",
+                              "$type": "Game.Incidents.ScriptableObjectRetriever`1[[Game.Incidents.LandmarkPreset, Assembly-CSharp]], Assembly-CSharp",
+                              "prefabKey": "City",
+                              "stuff": {
+                                "$id": "105",
+                                "$type": "UnityEditor.GUID, UnityEditor.CoreModule"
+                              }
+                            },
                             "findFirst": false,
                             "allowCreate": true,
                             "actionField": {
-                              "$id": "104",
+                              "$id": "106",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Landmark, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -1169,15 +1178,15 @@
                   "ContextType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                 },
                 {
-                  "$id": "105",
+                  "$id": "107",
                   "$type": "Game.Incidents.IncidentActionBranch, Assembly-CSharp",
                   "weightModifier": {
-                    "$id": "106",
+                    "$id": "108",
                     "$type": "Game.Incidents.IncidentActionBranchWeightModifier, Assembly-CSharp",
                     "advancedMode": false,
                     "baseWeight": 7,
                     "container": {
-                      "$id": "107",
+                      "$id": "109",
                       "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                       "contextType": null,
                       "actionField": null
@@ -1185,7 +1194,7 @@
                     "weight": null
                   },
                   "actionHandler": {
-                    "$id": "108",
+                    "$id": "110",
                     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
                     "incidentLog": null,
                     "Actions": {

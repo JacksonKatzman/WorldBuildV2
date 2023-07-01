@@ -1,0 +1,120 @@
+{
+  "$id": "1",
+  "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "IncidentName": "Character_MilitaryPriorityIncrease",
+  "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Weights": {
+    "$id": "2",
+    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+    "baseWeight": 4,
+    "Operation": null,
+    "expressions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+      "$values": []
+    }
+  },
+  "Criteria": {
+    "$id": "3",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Assembly-CSharp",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
+      "$values": []
+    }
+  },
+  "ActionContainer": {
+    "$id": "4",
+    "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
+    "incidentLog": "{0} gains military accumen.",
+    "Actions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$id": "5",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "6",
+            "$type": "Game.Incidents.ModifyCharacterAction, Assembly-CSharp",
+            "contextToModify": {
+              "$id": "7",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 1,
+              "PreviousField": "{0} - Original Context",
+              "PreviousFieldID": 0,
+              "ActionFieldID": 1,
+              "NameID": "{1}:ModifyCharacterAction:contextToModify",
+              "ActionFieldIDString": "{1}",
+              "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "modifiers": {
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.ContextModifier`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp]], mscorlib",
+              "$values": [
+                {
+                  "$id": "8",
+                  "$type": "Game.Incidents.ContextModifier`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+                  "propertyName": "MilitaryPriority",
+                  "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                  "Calculator": {
+                    "$id": "9",
+                    "$type": "Game.Incidents.IntegerContextModifierCalculator, Assembly-CSharp",
+                    "propertyName": "MilitaryPriority",
+                    "Operation": "+",
+                    "expressions": {
+                      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+                      "$values": [
+                        {
+                          "$id": "10",
+                          "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
+                          "hasNextOperator": false,
+                          "ExpressionType": 0,
+                          "constValue": 1,
+                          "chosenMethod": null,
+                          "chosenProperty": null,
+                          "range": {
+                            "$id": "11",
+                            "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+                            "randomRange": true,
+                            "min": 0,
+                            "max": 20,
+                            "constant": 0,
+                            "Value": 13,
+                            "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                          },
+                          "subexpressions": null,
+                          "previousCalculatedID": null,
+                          "rangeWarning": "Range not implemented for non integers!",
+                          "nextOperator": null,
+                          "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                        }
+                      ]
+                    },
+                    "clamped": true,
+                    "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                    "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "ID": 2,
+                    "NameID": "{EX 2}",
+                    "AllowMultipleExpressions": true
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "Deployers": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Assembly-CSharp]], mscorlib",
+      "$values": []
+    },
+    "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+  }
+}

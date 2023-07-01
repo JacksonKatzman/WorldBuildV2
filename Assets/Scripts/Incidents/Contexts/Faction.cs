@@ -51,7 +51,7 @@ namespace Game.Incidents
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		public Organization Government { get; set; }
-		public Race MajorityRace => Government.Leader.Race;
+		public Race MajorityRace => Government.Leader.AffiliatedRace;
 
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }

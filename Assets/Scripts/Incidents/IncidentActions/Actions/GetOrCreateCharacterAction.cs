@@ -9,9 +9,11 @@ namespace Game.Incidents
 		[ShowIf("@this.allowCreate")]
 		public ContextualIncidentActionField<Character> parent;
 		[ShowIf("@this.allowCreate")]
-		public ContextualIncidentActionField<Race> race;
+		//public ContextualIncidentActionField<Race> race;
+		public InterfacedIncidentActionFieldContainer<IRaceAffiliated> race;
 		[ShowIf("@this.allowCreate")]
-		public ContextualIncidentActionField<Faction> faction;
+		//public ContextualIncidentActionField<Faction> faction;
+		public InterfacedIncidentActionFieldContainer<IFactionAffiliated> faction;
 		[ShowIf("@this.allowCreate")]
 		public Gender gender;
 		[ShowIf("@this.allowCreate")]
@@ -48,7 +50,7 @@ namespace Game.Incidents
 		protected override Character MakeNew()
 		{
 			var parents = parent.GetTypedFieldValue() != null ? new List<Character>() { parent.GetTypedFieldValue() } : null;
-			var newPerson = new Character(age, gender, race.GetTypedFieldValue(), faction.GetTypedFieldValue(), politicalPriority,
+			var newPerson = new Character(age, gender, race.GetTypedFieldValue().AffiliatedRace, faction.GetTypedFieldValue().AffiliatedFaction, politicalPriority,
 				economicPriority, religiousPriority, militaryPriority, influence, wealth, strength, dexterity, constitution,
 				intelligence, wisdom, charisma, majorCharacter, parents);
 
@@ -62,7 +64,7 @@ namespace Game.Incidents
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)
 		{
-			return faction.CalculateField(context) && race.CalculateField(context);
+			return faction.actionField.CalculateField(context) && race.actionField.CalculateField(context);
 		}
 	}
 }
