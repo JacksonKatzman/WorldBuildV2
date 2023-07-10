@@ -26,7 +26,7 @@ namespace Game.GUI.Wiki
 		public Transform tableOfContentsLinkRoot;
 
 		public TMP_Text adventureTitleText;
-		public AdventureTextTitlePairUIComponent background;
+		public AdventureTextUIComponent adventureSummaryUI;
 		private List<IAdventureUIComponent> uiComponents;
 		private List<AdventureComponentUILink> tableOfContents;
 		private int numBranches = 0;
@@ -69,11 +69,11 @@ namespace Game.GUI.Wiki
 			tableOfContents.Clear();
 
 			adventureTitleText.text = adventure.mainEncounter.encounterTitle;
-			background.text.text = adventure.mainEncounter.encounterBlurb;
-			background.text.text += " " + adventure.mainEncounter.encounterSummary;
-			CreateTableOfContentsEntry(-1, "Background");
+			adventureSummaryUI.text.text = adventure.mainEncounter.encounterBlurb;
+			adventureSummaryUI.text.text += " " + adventure.mainEncounter.encounterSummary;
+			CreateTableOfContentsEntry(-1, "Summary");
 
-			background.ReplaceTextPlaceholders(mainEncounter.contextCriterium);
+			adventureSummaryUI.ReplaceTextPlaceholders(mainEncounter.contextCriterium);
 
 			var encounters = adventure.Encounters;
 
@@ -118,7 +118,7 @@ namespace Game.GUI.Wiki
 			}
 			else
 			{
-				SnapTo(background.RectTransform);
+				SnapTo(adventureSummaryUI.RectTransform);
 			}
 		}
 

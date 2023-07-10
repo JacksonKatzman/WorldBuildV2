@@ -6,17 +6,17 @@ using UnityEngine.EventSystems;
 
 namespace Game.GUI.Wiki
 {
-	public class AdventureBranchUIComponent : AdventureUIComponent
+	public class AdventureBranchUIComponent : AdventureUIComponent<AdventureBranchingComponent>
 	{
 		public GameObject buttonPrefab;
 		public Transform buttonRoot;
 		private List<AdventurePathUIComponent> pathButtons;
 
-		public override void BuildUIComponents(IAdventureComponent component)
+		public override void BuildUIComponents(AdventureBranchingComponent component)
 		{
 			pathButtons = new List<AdventurePathUIComponent>();
 
-			var branchingComponent = component as AdventureBranchingComponent;
+			var branchingComponent = component;
 			foreach(var path in branchingComponent.paths)
 			{
 				var pathButton = Instantiate(buttonPrefab, buttonRoot).GetComponent<AdventurePathUIComponent>();

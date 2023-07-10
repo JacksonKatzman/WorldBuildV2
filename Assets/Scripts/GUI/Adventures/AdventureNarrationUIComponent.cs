@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.GUI.Wiki
 {
-	public class AdventureNarrationUIComponent : AdventureSingleTextUIComponent
+	public class AdventureNarrationUIComponent : AdventureSingleTextUIComponent<AdventureNarrationComponent>
 	{
 
 	}

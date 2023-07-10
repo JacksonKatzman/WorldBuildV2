@@ -7,19 +7,24 @@ using UnityEngine.EventSystems;
 
 namespace Game.GUI.Wiki
 {
-	abstract public class AdventureSingleTextUIComponent : AdventureUIComponent
+	abstract public class AdventureSingleTextUIComponent<T> : AdventureUIComponent<T> where T : IAdventureComponent
 	{
 		public TMP_Text text;
 
-		public override void BuildUIComponents(IAdventureComponent component)
+		public override void BuildUIComponents(T component)
 		{
-			var textComponent = component as AdventureTextComponent;
+			var textComponent = component as IAdventureTextComponent;
 
-			text.text = textComponent.text;
+			text.text = textComponent.Text;
 		}
 
 		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
 		{
+			if(string.IsNullOrEmpty(text.text))
+			{
+				return;
+			}
+
 			foreach (var context in contexts)
 			{
 				var currentText = text.text;

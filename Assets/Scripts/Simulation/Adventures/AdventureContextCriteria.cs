@@ -57,6 +57,11 @@ namespace Game.Simulation
 		abstract public void RetrieveContext();
 		public void ReplaceTextPlaceholders(ref string text)
 		{
+			if(string.IsNullOrEmpty(text))
+			{
+				return;
+			}
+
 			foreach(var pair in Replacements)
 			{
 				var idReplacementPattern = $"{CriteriaID}";

@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace Game.GUI.Wiki
 {
-	public abstract class AdventureUIComponent : SerializedMonoBehaviour, IAdventureUIComponent, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+	public abstract class AdventureUIComponent<T> : SerializedMonoBehaviour, IAdventureUIComponent, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler where T : IAdventureComponent
 	{
 		protected static byte FULL_ALPHA = 255;
 		protected static byte FADED_ALPHA = 100;
@@ -52,7 +52,11 @@ namespace Game.GUI.Wiki
 			return new Color32(color.r, color.g, color.b, alpha);
 		}
 
-		abstract public void BuildUIComponents(IAdventureComponent component);
+		public void BuildUIComponents(IAdventureComponent component)
+		{
+			BuildUIComponents((T)component);
+		}
+		abstract public void BuildUIComponents(T component);
 		abstract public void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts);
 
 		abstract public void OnPointerClick(PointerEventData eventData);

@@ -5,7 +5,7 @@ using TMPro;
 
 namespace Game.GUI.Wiki
 {
-	public class AdventureTitleUIComponent : AdventureSingleTextUIComponent
+	public class AdventureTitleUIComponent : AdventureSingleTextUIComponent<AdventureTitleComponent>
 	{
 		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
 		{

@@ -4,9 +4,9 @@ using UnityEngine.EventSystems;
 
 namespace Game.GUI.Wiki
 {
-	public class AdventureCombatUIComponent : AdventureUIComponent
+	public class AdventureCombatUIComponent : AdventureUIComponent<AdventureCombatComponent>
 	{
-		public override void BuildUIComponents(IAdventureComponent component)
+		public override void BuildUIComponents(AdventureCombatComponent component)
 		{
 			//throw new System.NotImplementedException();
 		}

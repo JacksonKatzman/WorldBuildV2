@@ -1,10 +1,11 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Simulation;
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
 namespace Game.GUI.Wiki
 {
-	public class AdventureTextUIComponent : AdventureSingleTextUIComponent
+	public class AdventureTextUIComponent : AdventureSingleTextUIComponent<AdventureTextComponent>
 	{
 
 	}
