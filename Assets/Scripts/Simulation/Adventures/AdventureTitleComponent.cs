@@ -15,9 +15,4 @@ namespace Game.Simulation
 			title = EncounterEditorWindow.UpdateInTextIDs(title, removedIds);
 		}
 	}
-
-	public interface IAdventureTextComponent
-	{
-		public string Text { get; }
-	}
 }

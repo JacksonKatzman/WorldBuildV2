@@ -11,39 +11,13 @@ namespace Game.GUI.Wiki
 	{
 		public TMP_Text text;
 
+		override protected List<TMP_Text> AssociatedTexts => new List<TMP_Text>() { text };
+
 		public override void BuildUIComponents(T component)
 		{
 			var textComponent = component as IAdventureTextComponent;
 
 			text.text = textComponent.Text;
-		}
-
-		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
-		{
-			if(string.IsNullOrEmpty(text.text))
-			{
-				return;
-			}
-
-			foreach (var context in contexts)
-			{
-				var currentText = text.text;
-				context.ReplaceTextPlaceholders(ref currentText);
-				text.text = currentText;
-			}
-
-			AddKeywordLinks(text);
-		}
-
-		public override void OnPointerClick(PointerEventData eventData)
-		{
-			HandleClicks(text);
-		}
-
-		protected override void ToggleElements()
-		{
-			OutputLogger.Log("TOGGLE ELEMENTS");
-			text.color = Completed ? SwapColorAlpha(text.color, FADED_ALPHA) : SwapColorAlpha(text.color, FULL_ALPHA);
 		}
 
 		protected void Update()

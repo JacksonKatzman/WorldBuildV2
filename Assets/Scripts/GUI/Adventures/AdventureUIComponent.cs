@@ -26,15 +26,14 @@ namespace Game.GUI.Wiki
 		public int PathGroup { get; set; }
 		public RectTransform RectTransform => GetComponent<RectTransform>();
 
+		abstract protected List<TMP_Text> AssociatedTexts { get; }
 		virtual public bool Completed { get; set; }
 		public void ToggleCompleted()
 		{
 			Completed = !Completed;
 			ToggleElements();
 		}
-
-		abstract protected void ToggleElements();
-
+		
 		public void OnPointerClick()
 		{
 			OutputLogger.Log("CLICK!");
@@ -57,9 +56,29 @@ namespace Game.GUI.Wiki
 			BuildUIComponents((T)component);
 		}
 		abstract public void BuildUIComponents(T component);
-		abstract public void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts);
+		virtual public void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
+		{
+			foreach (var text in AssociatedTexts)
+			{
+				ReplaceTextPlaceholders(contexts, text);
+			}
+		}
 
-		abstract public void OnPointerClick(PointerEventData eventData);
+		virtual public void OnPointerClick(PointerEventData eventData)
+		{
+			foreach (var text in AssociatedTexts)
+			{
+				HandleClicks(text);
+			}
+		}
+		virtual protected void ToggleElements()
+		{
+			foreach(var text in AssociatedTexts)
+			{
+				ToggleText(text);
+			}
+		}
+
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			hovered = true;
@@ -71,10 +90,32 @@ namespace Game.GUI.Wiki
 			TooltipService.HideTooltip();
 		}
 
+		protected void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts, TMP_Text text)
+		{
+			if (string.IsNullOrEmpty(text.text))
+			{
+				return;
+			}
+
+			foreach (var context in contexts)
+			{
+				var currentText = text.text;
+				context.ReplaceTextPlaceholders(ref currentText);
+				text.text = currentText;
+			}
+
+			AddKeywordLinks(text);
+		}
+
 		protected void AddKeywordLinks(TMP_Text text)
 		{
 			var keywordRegex = new Regex(@"\[([A-Z_]+)\]");
 			text.text = keywordRegex.Replace(text.text, m => string.Format("<link={0}><u><b>{0}</u></b></link>", m.Groups[1].Value));
+		}
+
+		protected void ToggleText(TMP_Text text)
+		{
+			text.color = Completed ? SwapColorAlpha(text.color, FADED_ALPHA) : SwapColorAlpha(text.color, FULL_ALPHA);
 		}
 
 		protected void HandleClicks(TMP_Text text)

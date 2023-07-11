@@ -1,6 +1,7 @@
 ﻿using Game.Simulation;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,6 +12,8 @@ namespace Game.GUI.Wiki
 		public GameObject buttonPrefab;
 		public Transform buttonRoot;
 		private List<AdventurePathUIComponent> pathButtons;
+
+		protected override List<TMP_Text> AssociatedTexts => new List<TMP_Text>();
 
 		public override void BuildUIComponents(AdventureBranchingComponent component)
 		{
