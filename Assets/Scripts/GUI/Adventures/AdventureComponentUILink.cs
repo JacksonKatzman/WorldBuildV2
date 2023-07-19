@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Game.GUI.Adventures;
+using TMPro;
 using UnityEngine;
 
 namespace Game.GUI.Wiki

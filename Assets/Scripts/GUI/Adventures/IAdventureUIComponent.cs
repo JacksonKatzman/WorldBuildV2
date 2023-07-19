@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.GUI.Wiki
+namespace Game.GUI.Adventures
 {
 	public interface IAdventureUIComponent
 	{

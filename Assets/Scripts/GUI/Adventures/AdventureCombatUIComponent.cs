@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.EventSystems;
 
-namespace Game.GUI.Wiki
+namespace Game.GUI.Adventures
 {
 	public class AdventureCombatUIComponent : AdventureUIComponent<AdventureCombatComponent>
 	{
@@ -16,7 +16,7 @@ namespace Game.GUI.Wiki
 		{
 			descriptionText.text = component.description;
 
-			foreach(var participant in component.combatParticipants)
+			foreach (var participant in component.combatParticipants)
 			{
 				var id = "{" + participant.combatantID + "}";
 				var entry = string.Format("<indent=1em>\u2022 {0} {1}. </indent> \n", participant.amount, id);

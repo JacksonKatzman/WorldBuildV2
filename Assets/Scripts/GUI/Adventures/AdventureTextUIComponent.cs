@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
-namespace Game.GUI.Wiki
+namespace Game.GUI.Adventures
 {
 	public class AdventureTextUIComponent : AdventureSingleTextUIComponent<AdventureTextComponent>
 	{

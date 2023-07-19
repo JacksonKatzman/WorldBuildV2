@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 
-namespace Game.GUI.Wiki
+namespace Game.GUI.Adventures
 {
 	public class AdventureStructureUIComponent : AdventureUIComponent<AdventureStructureComponent>
 	{
@@ -18,7 +18,12 @@ namespace Game.GUI.Wiki
 
 		public override void BuildUIComponents(AdventureStructureComponent component)
 		{
-			throw new System.NotImplementedException();
+			structureNameText.text = component.structureName;
+			structureDescription.text = component.structureDescription;
+			ceilingDescription.text = $"<b>Ceiling:</b> {component.ceilingDescription}";
+			floorsAndWallsDescription.text = $"<b>Floors and Walls:</b> {component.floorsAndWallsDescription}";
+			doorsDescription.text = $"<b>Doors:</b> {component.doorsDescription}";
+			lightingDescription.text = $"<b>Lighting:</b> {component.lightingDescription}";
 		}
 	}
 }

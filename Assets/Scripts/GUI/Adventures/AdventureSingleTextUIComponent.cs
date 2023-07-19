@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.GUI.Wiki
+namespace Game.GUI.Adventures
 {
 	abstract public class AdventureSingleTextUIComponent<T> : AdventureUIComponent<T> where T : IAdventureComponent
 	{
@@ -22,7 +22,7 @@ namespace Game.GUI.Wiki
 
 		protected void Update()
 		{
-			if(hovered)
+			if (hovered)
 			{
 				HandleTooltips(text);
 			}

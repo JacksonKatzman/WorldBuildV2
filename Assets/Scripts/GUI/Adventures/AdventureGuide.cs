@@ -1,4 +1,5 @@
-﻿using Game.Incidents;
+﻿using Game.GUI.Wiki;
+using Game.Incidents;
 using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
@@ -9,7 +10,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Game.GUI.Wiki
+namespace Game.GUI.Adventures
 {
 	public class AdventureGuide : SerializedMonoBehaviour
 	{
@@ -56,13 +57,13 @@ namespace Game.GUI.Wiki
 
 		public void SetUpAdventure(Adventure adventure)
 		{
-			if(uiComponents == null)
+			if (uiComponents == null)
 			{
 				uiComponents = new List<IAdventureUIComponent>();
 			}
 			uiComponents.Clear();
 
-			if(tableOfContents == null)
+			if (tableOfContents == null)
 			{
 				tableOfContents = new List<AdventureComponentUILink>();
 			}
@@ -77,11 +78,11 @@ namespace Game.GUI.Wiki
 
 			var encounters = adventure.Encounters;
 
-			foreach(var encounter in encounters)
+			foreach (var encounter in encounters)
 			{
-				foreach(var component in encounter.components)
+				foreach (var component in encounter.components)
 				{
-					if(component.GetType() == typeof(AdventureBranchingComponent))
+					if (component.GetType() == typeof(AdventureBranchingComponent))
 					{
 						var branchingComponent = component as AdventureBranchingComponent;
 						numBranches++;
@@ -91,7 +92,7 @@ namespace Game.GUI.Wiki
 						{
 							numPaths++;
 
-							foreach(var c in path.components)
+							foreach (var c in path.components)
 							{
 								var uic = BuildUIComponent(c, numBranches, numPaths);
 								uic.ReplaceTextPlaceholders(encounter.contextCriterium);
