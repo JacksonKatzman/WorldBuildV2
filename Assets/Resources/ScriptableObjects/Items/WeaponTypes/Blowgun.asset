@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e0fb06157a1924481e14c30910b4d7, type: 3}
   m_Name: Blowgun
   m_EditorClassIdentifier: 
-  name: 
-  type: 0
+  name: Blowgun
+  weight: 0
   value:
     amount: 0
     coinType: 0
+  category: 0
   damageValue:
     numDice: 0
     maxRoll: 0
     plusFlat: 0
     damageType: 0
-  weight: 0
   properties: 
