@@ -50,6 +50,16 @@ namespace Game.Simulation
 			return default(T);
 		}
 
+		public List<T> GetContextsByType<T>()
+		{
+			if(this.ContainsKey(typeof(T)))
+			{
+				var list = this[typeof(T)];
+				return list as List<T>;
+			}
+			return new List<T>();
+		}
+
 		public void LoadContextProperties()
 		{
 			foreach (var list in this.Values)
