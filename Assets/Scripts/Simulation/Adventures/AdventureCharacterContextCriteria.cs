@@ -7,11 +7,11 @@ namespace Game.Simulation
 {
 	public class AdventureCharacterContextCriteria : AdventureContextCriteria<Character>
 	{
-		public override Dictionary<string, Func<Character, string>> Replacements => replacements;
-		private static Dictionary<string, Func<Character, string>> replacements = new Dictionary<string, Func<Character, string>>
+		public override Dictionary<string, Func<Character, int, string>> Replacements => replacements;
+		private static readonly Dictionary<string, Func<Character, int, string>> replacements = new Dictionary<string, Func<Character, int, string>>
 		{
-			{"{##}", (person) => string.Format("<i><link=\"{0}\">{1}</link></i>", person.ID, person.Name) },
-			{"[##]", (person) => person.Gender == Enums.Gender.MALE ? "he" : "she" }
+			{"{##}", (person, criteriaID) => string.Format("<i><link=\"{0}\">{1}</link></i>", criteriaID, person.Name) },
+			{"[##]", (person, criteriaID) => person.Gender == Enums.Gender.MALE ? "he" : "she" }
 		};
 
 		public override void RetrieveContext()

@@ -41,7 +41,7 @@ namespace Game.Simulation
 		[SerializeField, HorizontalGroup, PropertyOrder(-1)]
 		public bool historical;
 
-		abstract public Dictionary<string, Func<T, string>> Replacements { get; }
+		abstract public Dictionary<string, Func<T, int, string>> Replacements { get; }
 		abstract public void SpawnPopup();
 
 		public AdventureContextCriteria()
@@ -66,7 +66,7 @@ namespace Game.Simulation
 			{
 				var idReplacementPattern = $"{CriteriaID}";
 				var toReplace = Regex.Replace(pair.Key, "##", idReplacementPattern);
-				var replaceWith = pair.Value(GetTypedContext());
+				var replaceWith = pair.Value(GetTypedContext(), CriteriaID);
 				text = text.Replace(@toReplace, replaceWith);
 			}
 

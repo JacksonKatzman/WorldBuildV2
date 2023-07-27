@@ -29,13 +29,13 @@ namespace Game.Simulation
 		public List<CreatureType> allowedTypes;
 		[ValueDropdown("GetCreatureAlignments", IsUniqueList = true, DropdownTitle = "Allowed Alignments"), ShowIf("@this.findBySearch == true")]
 		public List<CreatureAlignment> allowedAlignments;
-		override public Dictionary<string, Func<Monster, string>> Replacements => replacements;
+		override public Dictionary<string, Func<Monster, int, string>> Replacements => replacements;
 
-		private static Dictionary<string, Func<Monster, string>> replacements = new Dictionary<string, Func<Monster, string>>
+		private static readonly Dictionary<string, Func<Monster, int, string>> replacements = new Dictionary<string, Func<Monster, int, string>>
 		{
-			{"{##}", (monster) => string.Format("<i><link=\"{0}\">{1}</link></i>", monster.ID, monster.monsterData.name.ToLower()) },
-			{"-##-", (monster) => monster.monsterData.groupingName },
-			{"<##>", (monster) => SimRandom.RandomEntryFromList(monster.monsterData.sounds) }
+			{"{##}", (monster, criteriaID) => string.Format("<i><link=\"{0}\">{1}</link></i>", criteriaID, monster.monsterData.name.ToLower()) },
+			{"-##-", (monster, criteriaID) => monster.monsterData.groupingName },
+			{"<##>", (monster, criteriaID) => SimRandom.RandomEntryFromList(monster.monsterData.sounds) }
 		};
 
 		public MonsterCriteria() : base()
