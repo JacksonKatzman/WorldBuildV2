@@ -236,7 +236,7 @@ namespace Assets.Scripts.Editor
 								creatureStats.savingThrows = new SerializableStatBlock(SavingThrowHelper(line, "Str"), SavingThrowHelper(line, "Dex"), SavingThrowHelper(line, "Con"), SavingThrowHelper(line, "Int"), SavingThrowHelper(line, "Wis"), SavingThrowHelper(line, "Cha"), 0);
 							}
 						}
-
+						/*
 						if (abilitiesIndex != -1)
 						{
 							creatureStats.abilities = new List<string>();
@@ -278,6 +278,7 @@ namespace Assets.Scripts.Editor
 								}
 							}
 						}
+						*/
 					}
 				}
 			}
