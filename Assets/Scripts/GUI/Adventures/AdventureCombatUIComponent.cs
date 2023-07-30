@@ -19,9 +19,11 @@ namespace Game.GUI.Adventures
 			foreach (var participant in component.combatParticipants)
 			{
 				var id = "{" + participant.combatantID + "}";
-				var entry = string.Format("<indent=1em>\u2022 {0} {1}. </indent> \n", participant.amount, id);
+				var entry = string.Format("<indent=1em><b>\u2022 {0} {1}. </b></indent> \n", participant.amount, id);
 				participantsText.text += entry;
 			}
 		}
 	}
+
+	//Next steps are building the popup ui for the treasures and the popup/tool tip for skill checks/saves
 }

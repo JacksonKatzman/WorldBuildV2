@@ -19,7 +19,7 @@ namespace Game.GUI.Adventures
 			foreach (var treasure in component.treasures)
 			{
 				var id = "{" + treasure.treasureID + "}";
-				var entry = string.Format("<indent=1em>\u2022 {0} {1}. </indent> \n", treasure.amount, id);
+				var entry = string.Format("<indent=1em><b>\u2022 {0} {1}. </b></indent> \n", treasure.amount, id);
 				treasureListText.text += entry;
 			}
 
@@ -31,7 +31,7 @@ namespace Game.GUI.Adventures
 
 			if(coins != string.Empty)
 			{
-				var entry = string.Format("<indent=1em>\u2022 {0}. </indent>", coins);
+				var entry = string.Format("<indent=1em><b>\u2022 {0}. </b></indent>", coins);
 				treasureListText.text += entry;
 			}
 		}
