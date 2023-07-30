@@ -10,7 +10,7 @@ namespace Game.GUI.Popups
 	[CreateAssetMenu(fileName = nameof(PopupDefinition), menuName = "ScriptableObjects/Popups/" + nameof(PopupDefinition), order = 1)]
 	public class PopupDefinition : SerializedScriptableObject
 	{
-		[ShowInInspector, ReadOnly]
+		[SerializeField, ShowInInspector, ReadOnly]
 		private int popupType;
 		[SerializeField, ValueDropdown("ShowValues"), OnValueChanged("SetPopupType")]
 		private string popupTypeString;
