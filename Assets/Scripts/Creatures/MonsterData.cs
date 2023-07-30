@@ -24,6 +24,8 @@ namespace Game.Creatures
 		public float challengeRating;
 		//xp
 		public float experienceYield;
+		//prof
+		public int proficiencyBonus;
 		//ac
 		public int armorValue;
 		//hp
@@ -39,6 +41,8 @@ namespace Game.Creatures
 		public SerializableStatBlock stats;
 		//saving throws
 		public SerializableStatBlock savingThrows;
+		//damage vulnerabilities
+		public List<DamageType> damageVulnerabilities;
 		//damage resistances
 		public List<DamageType> damageResistances;
 		//damage immunities
@@ -54,11 +58,11 @@ namespace Game.Creatures
 		//languages
 		public List<string> languages;
 		//abilities
-		public List<string> abilities;
+		public List<CreatureAbility> abilities;
 		//actions
-		public List<string> actions;
+		public List<CreatureAction> actions;
 		//actions
-		public List<string> legendaryActions;
+		public List<CreatureAction> legendaryActions;
 	}
 
 	[Serializable]
@@ -66,5 +70,21 @@ namespace Game.Creatures
 	{
 		public SensesType senseType;
 		public int distance;
+	}
+
+	[Serializable]
+	public struct CreatureAbility
+	{
+		public string abilityName;
+		[TextArea(2,8)]
+		public string abilityDescription;
+	}
+
+	[Serializable]
+	public struct CreatureAction
+	{
+		public string actionName;
+		[TextArea(2, 8)]
+		public string actionDescription;
 	}
 }
