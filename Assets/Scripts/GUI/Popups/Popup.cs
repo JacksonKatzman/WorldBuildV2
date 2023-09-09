@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.GUI.Popups
 {
-	abstract public class Popup : MonoBehaviour, IPopup
+	abstract public class Popup : SerializedMonoBehaviour, IPopup
 	{
 		public abstract Type PopupConfigType { get; }
 		public void ClosePopup()
@@ -14,5 +15,13 @@ namespace Game.GUI.Popups
 
 		abstract public void Setup(IPopupConfig config);
 		abstract public bool CompareTo(IPopupConfig config);
+
+		protected void ToggleListOfGameObjects(List<GameObject> objects, bool toggle)
+		{
+			foreach(var obj in objects)
+			{
+				obj.SetActive(toggle);
+			}
+		}
 	}
 }

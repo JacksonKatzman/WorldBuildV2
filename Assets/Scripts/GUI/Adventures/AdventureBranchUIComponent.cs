@@ -1,23 +1,27 @@
-﻿using Game.Simulation;
+﻿using Game.GUI.Wiki;
+using Game.Simulation;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.GUI.Wiki
+namespace Game.GUI.Adventures
 {
-	public class AdventureBranchUIComponent : AdventureUIComponent
+	public class AdventureBranchUIComponent : AdventureUIComponent<AdventureBranchingComponent>
 	{
 		public GameObject buttonPrefab;
 		public Transform buttonRoot;
 		private List<AdventurePathUIComponent> pathButtons;
 
-		public override void BuildUIComponents(IAdventureComponent component)
+		protected override List<TMP_Text> AssociatedTexts => new List<TMP_Text>();
+
+		public override void BuildUIComponents(AdventureBranchingComponent component)
 		{
 			pathButtons = new List<AdventurePathUIComponent>();
 
-			var branchingComponent = component as AdventureBranchingComponent;
-			foreach(var path in branchingComponent.paths)
+			var branchingComponent = component;
+			foreach (var path in branchingComponent.paths)
 			{
 				var pathButton = Instantiate(buttonPrefab, buttonRoot).GetComponent<AdventurePathUIComponent>();
 				pathButton.Setup(path.components[0].ComponentID, path.pathTitle);
@@ -27,12 +31,12 @@ namespace Game.GUI.Wiki
 
 		public override void OnPointerClick(PointerEventData eventData)
 		{
-			
+
 		}
 
 		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
 		{
-			foreach(var button in pathButtons)
+			foreach (var button in pathButtons)
 			{
 				button.ReplaceTextPlaceholders(contexts);
 			}

@@ -13,5 +13,15 @@ namespace Game.Generators.Items
 		public Weapon()
 		{
 		}
+
+		public Weapon(WeaponType weaponType)
+		{
+			this.WeaponType = weaponType;
+		}
+
+		public override void RollStats(int points)
+		{
+			
+		}
 	}
 }

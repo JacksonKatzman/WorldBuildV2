@@ -3,9 +3,9 @@ using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using TMPro;
 
-namespace Game.GUI.Wiki
+namespace Game.GUI.Adventures
 {
-	public class AdventureTitleUIComponent : AdventureSingleTextUIComponent
+	public class AdventureTitleUIComponent : AdventureSingleTextUIComponent<AdventureTitleComponent>
 	{
 		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
 		{

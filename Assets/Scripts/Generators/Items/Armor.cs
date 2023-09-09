@@ -12,5 +12,15 @@ namespace Game.Generators.Items
 		public Armor()
 		{
 		}
+
+		public Armor(ArmorType armorType)
+		{
+			this.ArmorType = armorType;
+		}
+
+		public override void RollStats(int points)
+		{
+			
+		}
 	}
 }

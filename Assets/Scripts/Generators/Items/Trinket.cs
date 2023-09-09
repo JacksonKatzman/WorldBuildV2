@@ -7,5 +7,10 @@
 		{
 
 		}
+
+		public override void RollStats(int points)
+		{
+			
+		}
 	}
 }

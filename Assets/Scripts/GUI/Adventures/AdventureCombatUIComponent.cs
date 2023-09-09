@@ -1,29 +1,29 @@
 ﻿using Game.Simulation;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine.EventSystems;
 
-namespace Game.GUI.Wiki
+namespace Game.GUI.Adventures
 {
-	public class AdventureCombatUIComponent : AdventureUIComponent
+	public class AdventureCombatUIComponent : AdventureUIComponent<AdventureCombatComponent>
 	{
-		public override void BuildUIComponents(IAdventureComponent component)
-		{
-			//throw new System.NotImplementedException();
-		}
+		public TMP_Text participantsText;
+		public TMP_Text descriptionText;
 
-		public override void OnPointerClick(PointerEventData eventData)
-		{
-			//throw new System.NotImplementedException();
-		}
+		protected override List<TMP_Text> AssociatedTexts => new List<TMP_Text>() { participantsText, descriptionText };
 
-		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
+		public override void BuildUIComponents(AdventureCombatComponent component)
 		{
-			//throw new System.NotImplementedException();
-		}
+			descriptionText.text = component.description;
 
-		protected override void ToggleElements()
-		{
-			//throw new System.NotImplementedException();
+			foreach (var participant in component.combatParticipants)
+			{
+				var id = "{" + participant.combatantID + "}";
+				var entry = string.Format("<indent=1em><b>\u2022 {0} {1}. </b></indent> \n", participant.amount, id);
+				participantsText.text += entry;
+			}
 		}
 	}
+
+	//Next steps are building the popup ui for the treasures and the popup/tool tip for skill checks/saves
 }

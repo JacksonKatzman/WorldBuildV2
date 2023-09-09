@@ -70,12 +70,6 @@ namespace Game.Simulation
 		[TextArea(10, 15), PropertyOrder(0)]
 		public string encounterSummary;
 
-		[TextArea(15, 20), PropertyOrder(0)]
-		public string encounterApproach;
-
-		[PropertyOrder(0), ListDrawerSettings(CustomAddFunction = "AddAct")]
-		public List<AdventureEncounterAct> encounterActs;
-
 		[ListDrawerSettings(HideRemoveButton = true, HideAddButton = true)]
 		public List<IAdventureComponent> components;
 
@@ -83,7 +77,6 @@ namespace Game.Simulation
 		{
 			encounterTypes = new List<EncounterType>();
 			allowedBiomes = new List<BiomeTerrainType>();
-			encounterActs = new List<AdventureEncounterAct>();
 			contextCriterium = new List<IAdventureContextCriteria>();
 		}
 
@@ -95,11 +88,6 @@ namespace Game.Simulation
 		private IEnumerable<BiomeTerrainType> GetBiomeTerrainTypes()
 		{
 			return Enum.GetValues(typeof(BiomeTerrainType)).Cast<BiomeTerrainType>();
-		}
-
-		private void AddAct()
-		{
-			encounterActs.Add(new AdventureEncounterAct());
 		}
 	}
 }

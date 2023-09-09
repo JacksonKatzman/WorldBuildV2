@@ -1,12 +1,16 @@
 ﻿using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Game.Simulation
 {
 	public class AdventureCombatComponent : AdventureComponent
 	{
 		public List<CombatParticipant> combatParticipants;
+
+		[TextArea(15, 20), PropertyOrder(0)]
+		public string description;
 
 		public AdventureCombatComponent()
 		{

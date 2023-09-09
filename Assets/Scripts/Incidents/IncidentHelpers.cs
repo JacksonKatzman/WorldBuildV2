@@ -24,5 +24,15 @@ namespace Game.Incidents
 			.Where(p => type.IsAssignableFrom(p));
 			return types.ToList();
 		}
+
+		public static IEnumerable<Type> GetFilteredTypeList(Type type)
+		{
+			var q = type.Assembly.GetTypes()
+				.Where(x => !x.IsAbstract)                                          // Excludes BaseClass
+				.Where(x => !x.IsGenericTypeDefinition)                             // Excludes Generics
+				.Where(x => type.IsAssignableFrom(x));
+
+			return q;
+		}
 	}
 }
