@@ -25,4 +25,10 @@ namespace Game.Incidents
 			SaveUtilities.ConvertIDsToContexts<Item>(contextIDLoadBuffers["Items"]);
 		}
 	}
+	
+	//the issue is caused by the fact that when we go searchinf for an Inventory, it adds that type to the context dict
+	//and then the iteration cant continue when it looks for the next type in that collection
+	//but i doubt i want to add every inventory to that list... so might need a better way to access inventories
+
+	//its actually likely the Item type being added not the inventory
 }

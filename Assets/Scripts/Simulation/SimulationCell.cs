@@ -45,12 +45,5 @@ namespace Game.Simulation
 		{
 			SaveUtilities.SerializeSave(this, Path.Combine(SaveUtilities.GetSimCellsPath(mapName), "SimCells.json"));
 		}
-
-		public static SimulationCellContainer Load(HexGrid hexGrid, string mapName)
-		{
-			var container = SaveUtilities.SerializeLoad<SimulationCellContainer>(SaveUtilities.GetSimCellsPath(mapName));
-			container.SimulationCells.ForEach(x => x.hexCell = hexGrid.cells[x.Index]);
-			return container;
-		}
 	}
 }

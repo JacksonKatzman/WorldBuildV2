@@ -85,7 +85,7 @@ namespace Game.GUI.Popups
 			var chaSavingThrow = BuildInlineStatText("Cha", data.savingThrows.charisma, false);
 			var totalText = $"{strSavingThrow}{dexSavingThrow}{conSavingThrow}{intSavingThrow}{wisSavingThrow}{chaSavingThrow}";
 
-			if(totalText == string.Empty)
+			if (totalText == string.Empty)
 			{
 				savingThrowsText.gameObject.SetActive(false);
 			}
@@ -116,7 +116,7 @@ namespace Game.GUI.Popups
 			ToggleListOfGameObjects(abilitiesObjects, abilitiesText.text != string.Empty);
 
 			actionsText.text = string.Empty;
-			foreach(var creatureAction in data.actions)
+			foreach (var creatureAction in data.actions)
 			{
 				actionsText.text += $"<i><b>{creatureAction.actionName}.</b></i> {creatureAction.actionDescription} \n";
 			}
@@ -158,7 +158,7 @@ namespace Game.GUI.Popups
 				ToggleListOfGameObjects(conditionImmunitiesObjects, false);
 			}
 
-			if(data.damageVulnerabilities.Count == 0 && data.damageResistances.Count == 0
+			if (data.damageVulnerabilities.Count == 0 && data.damageResistances.Count == 0
 				&& data.damageImmunities.Count == 0 && data.conditionImmunities.Count == 0)
 			{
 				vulnerabilityDivider.SetActive(false);
@@ -192,10 +192,10 @@ namespace Game.GUI.Popups
 		private string BuildStringFromList(List<string> stringList)
 		{
 			var text = string.Empty;
-			for(int i = 0; i < stringList.Count; i++)
+			for (int i = 0; i < stringList.Count; i++)
 			{
 				text += stringList[i];
-				if(i != stringList.Count - 1)
+				if (i != stringList.Count - 1)
 				{
 					text += ", ";
 				}
@@ -211,7 +211,7 @@ namespace Game.GUI.Popups
 
 		private string BuildInlineStatText(string statName, int stat, bool addComma)
 		{
-			if(stat == 0)
+			if (stat == 0)
 			{
 				return string.Empty;
 			}
@@ -222,7 +222,7 @@ namespace Game.GUI.Popups
 
 		private string BuildModifierText(int modifier, bool optional = false)
 		{
-			if(optional && modifier == 0)
+			if (optional && modifier == 0)
 			{
 				return string.Empty;
 			}
