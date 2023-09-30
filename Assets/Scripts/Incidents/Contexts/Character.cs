@@ -129,10 +129,6 @@ namespace Game.Incidents
 		public Faction AffiliatedFaction { get; set; }
 		public Organization Organization { get; set; }
 		public OrganizationPosition OfficialPosition => GetOfficialPosition();
-		public int PoliticalPriority { get; set; }
-		public int EconomicPriority { get; set; }
-		public int ReligiousPriority { get; set; }
-		public int MilitaryPriority { get; set; }
 
 		//IMPORTANT! : Need to update the read/write saving for this class to account for new properties
 		public Dictionary<OrganizationType, int> Priorities { get; set; }

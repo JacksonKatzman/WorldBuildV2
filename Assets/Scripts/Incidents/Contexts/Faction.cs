@@ -39,11 +39,13 @@ namespace Game.Incidents
 		public City Capitol => Cities.Count > 0? Cities[0] : null;
 		virtual public int NumCities => Cities.Count;
 
-		//these need to interact with the dictionary or hoave all of their uses converted over to use the dict directly.
+		//these need to interact with the dictionary or have all of their uses converted over to use the dict directly.
+		/*
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
 		public int MilitaryPriority { get; set; }
+		*/
 		public Dictionary<OrganizationType, int> Priorities { get; set; }
 		public OrganizationType PriorityAlignment => GetHighestPriority();
 		public int LawfulChaoticAlignmentAxis { get; set; }
