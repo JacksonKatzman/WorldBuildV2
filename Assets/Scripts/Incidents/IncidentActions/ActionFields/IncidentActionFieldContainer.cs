@@ -12,6 +12,10 @@ namespace Game.Incidents
 	{
 		[ValueDropdown("GetFilteredTypeList"), OnValueChanged("SetContextType"), LabelText("Context Type"), ShowIf("@this.showTypeDropdown == true")]
 		public Type contextType;
+
+		[ShowIf("@this.showTypeDropdown != true"), ReadOnly]
+		public string fieldName;
+
 		[ShowIf("@this.actionField != null")]
 		public IIncidentActionField actionField;
 
@@ -20,9 +24,10 @@ namespace Game.Incidents
 
 		private bool showTypeDropdown = true;
 
-		public void ForceSetContextType(Type type)
+		public void ForceSetContextType(Type type, string fieldName = "")
 		{
 			contextType = type;
+			this.fieldName = fieldName;
 			showTypeDropdown = false;
 			SetContextType();
 		}
