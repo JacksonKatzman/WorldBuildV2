@@ -31,10 +31,15 @@ namespace Game.Incidents
 			AffiliatedRace = race;
 			Gender = gender == Gender.ANY ? (Gender)(SimRandom.RandomRange(0, 2)) : gender;
 			AffiliatedFaction = faction;
-			PoliticalPriority = politicalPriority;
-			EconomicPriority = economicPriority;
-			ReligiousPriority = religiousPriority;
-			MilitaryPriority = militaryPriority;
+			//PoliticalPriority = politicalPriority;
+			//EconomicPriority = economicPriority;
+			//ReligiousPriority = religiousPriority;
+			//MilitaryPriority = militaryPriority;
+			Priorities = new Dictionary<OrganizationType, int>();
+			Priorities[OrganizationType.POLITICAL] = politicalPriority;
+			Priorities[OrganizationType.ECONOMIC] = economicPriority;
+			Priorities[OrganizationType.RELIGIOUS] = religiousPriority;
+			Priorities[OrganizationType.MILITARY] = militaryPriority;
 			Influence = influence;
 			Wealth = wealth;
 			Strength = strength;
@@ -128,6 +133,9 @@ namespace Game.Incidents
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
 		public int MilitaryPriority { get; set; }
+
+		//IMPORTANT! : Need to update the read/write saving for this class to account for new properties
+		public Dictionary<OrganizationType, int> Priorities { get; set; }
 		public int Influence { get; set; }
 		public int Wealth { get; set; }
 		public int Strength { get; set; }
@@ -141,9 +149,10 @@ namespace Game.Incidents
 		public List<Character> Spouses { get; set; }
 		public List<Character> Siblings { get; set; }
 		public List<Character> Children { get; set; }
-		
+
 		//public List<Character> Family => new List<Character>().Union(Parents).Union(Spouses).Union(Siblings).Union(Children).ToList();
 
+		public OrganizationType PriorityAlignment => GetHighestPriority();
 		public int LawfulChaoticAlignmentAxis { get; set; }
 		public int GoodEvilAlignmentAxis { get; set; }
 
@@ -275,6 +284,11 @@ namespace Game.Incidents
 			{
 				return null;
 			}
+		}
+
+		private OrganizationType GetHighestPriority()
+		{
+			return Priorities.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
 		}
 	}
 }

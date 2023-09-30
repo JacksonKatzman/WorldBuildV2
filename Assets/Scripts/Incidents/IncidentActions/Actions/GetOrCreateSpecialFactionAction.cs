@@ -1,4 +1,5 @@
-﻿using Game.Generators.Names;
+﻿using Game.Enums;
+using Game.Generators.Names;
 using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
@@ -18,10 +19,12 @@ namespace Game.Incidents
             specialFaction.Population = population;
             specialFaction.Influence = influence;
             specialFaction.Wealth = wealth;
-            specialFaction.PoliticalPriority = politicalPriority;
-            specialFaction.EconomicPriority = economicPriority;
-            specialFaction.ReligiousPriority = religiousPriority;
-            specialFaction.MilitaryPriority = militaryPriority;
+
+            specialFaction.Priorities = new Dictionary<OrganizationType, int>();
+            specialFaction.Priorities[OrganizationType.POLITICAL] = politicalPriority;
+            specialFaction.Priorities[OrganizationType.ECONOMIC] = economicPriority;
+            specialFaction.Priorities[OrganizationType.RELIGIOUS] = religiousPriority;
+            specialFaction.Priorities[OrganizationType.MILITARY] = militaryPriority;
 
             if (createdByCharacter)
             {

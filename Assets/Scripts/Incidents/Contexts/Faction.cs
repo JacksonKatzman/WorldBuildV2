@@ -1,4 +1,5 @@
-﻿using Game.Generators.Names;
+﻿using Game.Enums;
+using Game.Generators.Names;
 using Game.Incidents;
 using Game.Simulation;
 using Game.Terrain;
@@ -37,10 +38,14 @@ namespace Game.Incidents
 		public List<City> Cities { get; set; }
 		public City Capitol => Cities.Count > 0? Cities[0] : null;
 		virtual public int NumCities => Cities.Count;
+
+		//these need to interact with the dictionary or hoave all of their uses converted over to use the dict directly.
 		public int PoliticalPriority { get; set; }
 		public int EconomicPriority { get; set; }
 		public int ReligiousPriority { get; set; }
 		public int MilitaryPriority { get; set; }
+		public Dictionary<OrganizationType, int> Priorities { get; set; }
+		public OrganizationType PriorityAlignment => GetHighestPriority();
 		public int LawfulChaoticAlignmentAxis { get; set; }
 		public int GoodEvilAlignmentAxis { get; set; }
 		public List<IIncidentContext> FactionsWithinInteractionRange => GetFactionsWithinInteractionRange();
@@ -76,20 +81,27 @@ namespace Game.Incidents
 			CreateStartingCity(startingPopulation);
 			CreateStartingGovernment(startingMajorityRace);
 
-			PoliticalPriority = SimRandom.RandomRange(1, 4);
-			ReligiousPriority = SimRandom.RandomRange(1, 4);
-			EconomicPriority = SimRandom.RandomRange(1, 4);
-			MilitaryPriority = SimRandom.RandomRange(1, 4);
+			//PoliticalPriority = SimRandom.RandomRange(1, 4);
+			//ReligiousPriority = SimRandom.RandomRange(1, 4);
+			//EconomicPriority = SimRandom.RandomRange(1, 4);
+			//MilitaryPriority = SimRandom.RandomRange(1, 4);
+
+			Priorities = new Dictionary<OrganizationType, int>();
+			Priorities[OrganizationType.POLITICAL] = SimRandom.RandomRange(1, 4);
+			Priorities[OrganizationType.ECONOMIC] = SimRandom.RandomRange(1, 4);
+			Priorities[OrganizationType.RELIGIOUS] = SimRandom.RandomRange(1, 4);
+			Priorities[OrganizationType.MILITARY] = SimRandom.RandomRange(1, 4);
 		}
 
 		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles = 1) : this(startingTiles, population, race)
 		{
 			Influence = influence;
 			Wealth = wealth;
-			PoliticalPriority = politicalPriority;
-			EconomicPriority = economicPriority;
-			ReligiousPriority = religiousPriority;
-			MilitaryPriority = militaryPriority;
+			Priorities = new Dictionary<OrganizationType, int>();
+			Priorities[OrganizationType.POLITICAL] = politicalPriority;
+			Priorities[OrganizationType.ECONOMIC] = economicPriority;
+			Priorities[OrganizationType.RELIGIOUS] = religiousPriority;
+			Priorities[OrganizationType.MILITARY] = militaryPriority;
 		}
 
 		public Faction(Race race)
@@ -182,7 +194,7 @@ namespace Game.Incidents
 					size++;
 				}
 
-				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+				for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
 				{
 					HexCell neighbor = current.GetNeighbor(d);
 					if (neighbor && neighbor.SearchPhase < searchFrontierPhase)
@@ -247,7 +259,7 @@ namespace Game.Incidents
 		private List<IIncidentContext> GetFactionsWithinInteractionRange()
 		{
 			var world = SimulationManager.Instance.world;
-			var range = ((ControlledTiles / 6) + PoliticalPriority) * 5;
+			var range = ((ControlledTiles / 6) + Priorities[OrganizationType.POLITICAL]) * 5;
 			var result = new List<IIncidentContext>();
 
 			if(Capitol == null)
@@ -290,7 +302,7 @@ namespace Game.Incidents
 
 			if(MilitaryPower < (Population/10))
 			{
-				MilitaryPower += MilitaryPriority / 2;
+				MilitaryPower += Priorities[OrganizationType.MILITARY] / 2;
 			}
 		}
 
@@ -307,6 +319,11 @@ namespace Game.Incidents
 		private bool CheckDestroyed()
 		{
 			return NumCities <= 0;
+		}
+
+		private OrganizationType GetHighestPriority()
+		{
+			return Priorities.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
 		}
 	}
 }

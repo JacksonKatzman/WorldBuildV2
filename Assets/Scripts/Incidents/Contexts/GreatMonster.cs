@@ -14,6 +14,7 @@ namespace Game.Incidents
 		public Inventory CurrentInventory { get; set; }
 		public CharacterName CharacterName { get; set; }
 
+		public OrganizationType PriorityAlignment => OrganizationType.MILITARY;
 		public int LawfulChaoticAlignmentAxis { get; set; }
 		public int GoodEvilAlignmentAxis { get; set; }
 
