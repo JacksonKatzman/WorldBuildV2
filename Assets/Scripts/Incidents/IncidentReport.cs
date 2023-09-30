@@ -67,7 +67,7 @@ namespace Game.Incidents
 			Contexts = new Dictionary<string, IIncidentContext>();
 			foreach(var pair in buffer)
 			{
-				Contexts.Add(pair.Key, SimulationManager.Instance.AllContexts.GetContextByID(pair.Value));
+					Contexts.Add(pair.Key, SimulationManager.Instance.AllContexts.GetContextByID(pair.Value));
 			}
 		}
 	}
