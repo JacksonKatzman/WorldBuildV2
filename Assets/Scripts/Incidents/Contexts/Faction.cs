@@ -40,12 +40,26 @@ namespace Game.Incidents
 		virtual public int NumCities => Cities.Count;
 
 		//these need to interact with the dictionary or have all of their uses converted over to use the dict directly.
-		/*
-		public int PoliticalPriority { get; set; }
-		public int EconomicPriority { get; set; }
-		public int ReligiousPriority { get; set; }
-		public int MilitaryPriority { get; set; }
-		*/
+		public int PoliticalPriority
+		{
+			get { return Priorities[OrganizationType.POLITICAL]; }
+			set { Priorities[OrganizationType.POLITICAL] = value; }
+		}
+		public int EconomicPriority
+		{
+			get { return Priorities[OrganizationType.ECONOMIC]; }
+			set { Priorities[OrganizationType.ECONOMIC] = value; }
+		}
+		public int ReligiousPriority
+		{
+			get { return Priorities[OrganizationType.RELIGIOUS]; }
+			set { Priorities[OrganizationType.RELIGIOUS] = value; }
+		}
+		public int MilitaryPriority
+		{
+			get { return Priorities[OrganizationType.MILITARY]; }
+			set { Priorities[OrganizationType.MILITARY] = value; }
+		}
 		public Dictionary<OrganizationType, int> Priorities { get; set; }
 		public OrganizationType PriorityAlignment => GetHighestPriority();
 		public int LawfulChaoticAlignmentAxis { get; set; }
