@@ -35,16 +35,18 @@ namespace Game.Incidents
 		{
 			//need to grab the flavor from somewhere and add it to the report, perhaps as a list of flavors that lives in the report
 			//also need to asign a flavor id to the flavor grabbed and ensure its unique and updates when you add or remove GetFlavorActions
-			IFlavorTemplate template;
+			string flavorString = "";
 			if (manualMode)
 			{
-				template = FlavorService.Instance.GetFlavorTemplateByType(flavorType, perm, goodEvilAxisAlignment, lawfulChaoticAxisAlignment);
+				flavorString = FlavorService.Instance.GetFlavorStringByType(flavorType, perm, goodEvilAxisAlignment, lawfulChaoticAxisAlignment);
 			}
 			else
 			{
 				var cont = alignmentContext.GetTypedFieldValue();
-				template = FlavorService.Instance.GetFlavorTemplateByType(flavorType, cont.PriorityAlignment, cont.GoodEvilAlignmentAxis, cont.LawfulChaoticAlignmentAxis);
+				flavorString = FlavorService.Instance.GetFlavorStringByType(flavorType, cont.PriorityAlignment, cont.GoodEvilAlignmentAxis, cont.LawfulChaoticAlignmentAxis);
 			}
+
+			report.AddFlavor(FlavorActionIdString, flavorString);
 		}
 
 		private IEnumerable<Type> GetFilteredFlavorTypeList()

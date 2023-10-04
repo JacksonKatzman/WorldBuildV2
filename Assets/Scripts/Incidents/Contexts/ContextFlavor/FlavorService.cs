@@ -59,10 +59,10 @@ namespace Game.Incidents
 			return phrase;
 		}
 
-		public IFlavorTemplate GetFlavorTemplateByType(Type type, OrganizationType priority, int goodEvilAxisAlignment, int lawfulChaoticAxisAlignment)
+		public string GetFlavorStringByType(Type type, OrganizationType priority, int goodEvilAxisAlignment, int lawfulChaoticAxisAlignment)
 		{
 			//temp
-			return new ExampleFlavorTemplate();
+			return "SAMPLE FLAVOR";
 		}
 
 		private string GenerateSynonyms(string phrase)
