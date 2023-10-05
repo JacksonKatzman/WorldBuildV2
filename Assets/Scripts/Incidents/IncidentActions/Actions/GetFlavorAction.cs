@@ -64,8 +64,6 @@ namespace Game.Incidents
 			actionFields.Clear();
 			IncidentEditorWindow.UpdateActionFieldIDs();
 
-			//var contextFields = flavorType.GetFields().Where(x => typeof(IIncidentContext).IsAssignableFrom(x.FieldType)).ToList();
-			var test = flavorType.GetFields().ToList();
 			var contextFields = flavorType.GetFields().Where(x => x.FieldType.GetGenericTypeDefinition() == typeof(IndexedObject<>) && typeof(IIncidentContext).IsAssignableFrom(x.FieldType.GetGenericArguments().First()));
 			foreach(var fieldInfo in contextFields)
 			{
@@ -75,12 +73,6 @@ namespace Game.Incidents
 			}
 
 			IncidentEditorWindow.UpdateActionFieldIDs();
-			/*
-			var dataType = new Type[] { incidentContextType };
-			var genericBase = typeof(IncidentWeight<>);
-			var combinedType = genericBase.MakeGenericType(dataType);
-			weight = (IIncidentWeight)Activator.CreateInstance(combinedType);
-			*/
 		}
 	}
 }
