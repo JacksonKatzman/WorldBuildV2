@@ -24,29 +24,47 @@ namespace Game.Incidents
 		[ShowIf("@this.manualMode == true")]
 		public OrganizationType perm;
 
-		[ShowIf("@this.manualMode == true"), PropertyRange(-10,10)]
+		[ShowIf("@this.manualMode == true"), PropertyRange(-10, 10)]
 		public int goodEvilAxisAlignment;
 
 		[ShowIf("@this.manualMode == true"), PropertyRange(-10, 10)]
 		public int lawfulChaoticAxisAlignment;
 
 		public List<IncidentActionFieldContainer> actionFields;
+		private Dictionary<string, IncidentActionFieldContainer> pairings;
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			//need to grab the flavor from somewhere and add it to the report, perhaps as a list of flavors that lives in the report
-			//also need to asign a flavor id to the flavor grabbed and ensure its unique and updates when you add or remove GetFlavorActions
-			string flavorString = "";
 			if (manualMode)
 			{
-				flavorString = FlavorService.Instance.GetFlavorStringByType(flavorType, perm, goodEvilAxisAlignment, lawfulChaoticAxisAlignment);
+				AddFlavor(flavorType, perm, goodEvilAxisAlignment, lawfulChaoticAxisAlignment, ref report);
 			}
 			else
 			{
 				var cont = alignmentContext.GetTypedFieldValue();
-				flavorString = FlavorService.Instance.GetFlavorStringByType(flavorType, cont.PriorityAlignment, cont.GoodEvilAlignmentAxis, cont.LawfulChaoticAlignmentAxis);
+				AddFlavor(flavorType, cont.PriorityAlignment, cont.GoodEvilAlignmentAxis, cont.LawfulChaoticAlignmentAxis, ref report);
 			}
+		}
 
-			report.AddFlavor(FlavorActionIdString, flavorString);
+		private void AddFlavor(Type type, OrganizationType priority, int goodEvilAxisAlignment, int lawfulChaoticAxisAlignment, ref IncidentReport report)
+		{
+			string templateString = "";
+			if (FlavorService.Instance.GetFlavorTemplateByType(type, priority, goodEvilAxisAlignment, lawfulChaoticAxisAlignment, out var template))
+			{
+				templateString = string.Copy(template.flavor);
+				foreach (var pair in pairings)
+				{
+					templateString = templateString.Replace(pair.Key, "[" + pair.Value.actionField.ActionFieldID + "]");
+				}
+
+				templateString.Replace("[", "{");
+				templateString.Replace("]", "}");
+
+				report.AddFlavor(FlavorActionIdString, templateString);
+			}
+			else
+			{
+				OutputLogger.LogError("Matching flavor template missing!");
+			}
 		}
 
 		private IEnumerable<Type> GetFilteredFlavorTypeList()
@@ -64,12 +82,25 @@ namespace Game.Incidents
 			actionFields.Clear();
 			IncidentEditorWindow.UpdateActionFieldIDs();
 
-			var contextFields = flavorType.GetFields().Where(x => x.FieldType.GetGenericTypeDefinition() == typeof(IndexedObject<>) && typeof(IIncidentContext).IsAssignableFrom(x.FieldType.GetGenericArguments().First()));
-			foreach(var fieldInfo in contextFields)
+			if(pairings == null)
 			{
+				pairings = new Dictionary<string, IncidentActionFieldContainer>();
+			}
+			else
+			{
+				pairings.Clear();
+			}
+
+			var contextFields = flavorType.GetFields().Where(x => x.FieldType.IsGenericType &&  x.FieldType.GetGenericTypeDefinition() == typeof(IndexedObject<>) && typeof(IIncidentContext).IsAssignableFrom(x.FieldType.GetGenericArguments().First())).ToList();
+			for(var i = 0; i < contextFields.Count; i++)
+			{
+				var fieldInfo = contextFields[i];
 				var actionFieldContainer = new IncidentActionFieldContainer();
 				actionFieldContainer.ForceSetContextType(fieldInfo.FieldType.GetGenericArguments().First(), fieldInfo.Name);
 				actionFields.Add(actionFieldContainer);
+
+				var pairingKey = "{" + i + "}";
+				pairings.Add(pairingKey, actionFieldContainer);
 			}
 
 			IncidentEditorWindow.UpdateActionFieldIDs();

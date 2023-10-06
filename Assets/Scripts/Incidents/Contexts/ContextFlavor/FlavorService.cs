@@ -63,24 +63,27 @@ namespace Game.Incidents
 			return phrase;
 		}
 
-		public string GetFlavorStringByType(Type type, OrganizationType priority, int goodEvilAxisAlignment, int lawfulChaoticAxisAlignment)
+		public bool GetFlavorTemplateByType(Type type, OrganizationType priority, int goodEvilAxisAlignment, int lawfulChaoticAxisAlignment, out AbstractFlavorTemplate template)
 		{
+			template = null;
+
 			flavorTemplateDictionary.TryGetValue(type, out var collection);
 			if(collection != null)
 			{
 				var matches = collection.GetMatches(priority, goodEvilAxisAlignment, lawfulChaoticAxisAlignment);
 				if(matches.Count > 0)
 				{
-					return SimRandom.RandomEntryFromList(matches).flavor;
+					template = SimRandom.RandomEntryFromList(matches);
+					return true;
 				}
 				else
 				{
-					return "ERROR: NO MATCHING FLAVOR FOUND!";
+					return false;
 				}
 			}
 			else
 			{
-				return "ERROR: NO MATCHING FLAVOR FOUND!";
+				return false;
 			}
 		}
 
