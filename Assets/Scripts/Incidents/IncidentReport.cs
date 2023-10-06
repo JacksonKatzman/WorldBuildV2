@@ -1,4 +1,5 @@
 ﻿using Game.Simulation;
+using Game.Utilities;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -77,6 +78,79 @@ namespace Game.Incidents
 				textLine = textLine.Replace(matchString, linkString);
 			}
 
+			matches = Regex.Matches(textLine, @"\{SUBP:(\d+)\}");
+
+			foreach (Match match in matches)
+			{
+				var matchString = match.Value;
+				var matchId = match.Groups[1].Value;
+				var keyString = "{" + matchId + "}";
+				var linkedContext = Contexts[keyString];
+
+				var pronounString = "SUBJECT-PRONOUN";
+				if(linkedContext.GetType() == typeof(Character))
+				{
+					var character = linkedContext as Character;
+					pronounString = StaticFlavorCollections.subjectGenderPronouns[character.Gender];
+				}
+				else
+				{
+					pronounString = "it";
+				}
+
+				var linkString = string.Format("<link=\"{0}\">{1}</link>", linkedContext.ID, pronounString);
+				textLine = textLine.Replace(matchString, linkString);
+			}
+
+			matches = Regex.Matches(textLine, @"\{OBJP:(\d+)\}");
+
+			foreach (Match match in matches)
+			{
+				var matchString = match.Value;
+				var matchId = match.Groups[1].Value;
+				var keyString = "{" + matchId + "}";
+				var linkedContext = Contexts[keyString];
+
+				var pronounString = "OBJECT-PRONOUN";
+				if (linkedContext.GetType() == typeof(Character))
+				{
+					var character = linkedContext as Character;
+					pronounString = StaticFlavorCollections.objectGenderPronouns[character.Gender];
+				}
+				else
+				{
+					pronounString = "it";
+				}
+
+				var linkString = string.Format("<link=\"{0}\">{1}</link>", linkedContext.ID, pronounString);
+				textLine = textLine.Replace(matchString, linkString);
+			}
+
+			matches = Regex.Matches(textLine, @"\{POSP:(\d+)\}");
+
+			foreach (Match match in matches)
+			{
+				var matchString = match.Value;
+				var matchId = match.Groups[1].Value;
+				var keyString = "{" + matchId + "}";
+				var linkedContext = Contexts[keyString];
+
+				var pronounString = "POS-PRONOUN";
+				if (linkedContext.GetType() == typeof(Character))
+				{
+					var character = linkedContext as Character;
+					pronounString = StaticFlavorCollections.possessiveGenderPronouns[character.Gender];
+				}
+				else
+				{
+					pronounString = "its";
+				}
+
+				var linkString = string.Format("<link=\"{0}\">{1}</link>", linkedContext.ID, pronounString);
+				textLine = textLine.Replace(matchString, linkString);
+			}
+
+			textLine = textLine.CapitalizeAfterLink();
 			return textLine;
 		}
 
@@ -85,7 +159,7 @@ namespace Game.Incidents
 			Contexts = new Dictionary<string, IIncidentContext>();
 			foreach(var pair in buffer)
 			{
-					Contexts.Add(pair.Key, SimulationManager.Instance.AllContexts.GetContextByID(pair.Value));
+				Contexts.Add(pair.Key, SimulationManager.Instance.AllContexts.GetContextByID(pair.Value));
 			}
 		}
 	}
