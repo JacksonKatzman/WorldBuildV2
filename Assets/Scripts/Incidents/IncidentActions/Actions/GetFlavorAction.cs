@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Game.Incidents
 {
@@ -16,6 +17,7 @@ namespace Game.Incidents
 		[ValueDropdown("GetFilteredFlavorTypeList"), OnValueChanged("SetFlavorType"), LabelText("Flavor Type"), PropertySpace(SpaceAfter = 20)]
 		public Type flavorType;
 
+		[OnValueChanged("ToggleManualMode")]
 		public bool manualMode;
 
 		[ShowIf("@this.manualMode == false")]
@@ -31,7 +33,9 @@ namespace Game.Incidents
 		public int lawfulChaoticAxisAlignment;
 
 		public List<IncidentActionFieldContainer> actionFields;
-		private Dictionary<string, IncidentActionFieldContainer> pairings;
+
+		[HideInInspector]
+		public Dictionary<string, IncidentActionFieldContainer> pairings;
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
 			if (manualMode)
@@ -56,8 +60,8 @@ namespace Game.Incidents
 					templateString = templateString.Replace(pair.Key, "[" + pair.Value.actionField.ActionFieldID + "]");
 				}
 
-				templateString.Replace("[", "{");
-				templateString.Replace("]", "}");
+				templateString = templateString.Replace('[', '{');
+				templateString = templateString.Replace(']', '}');
 
 				report.AddFlavor(FlavorActionIdString, templateString);
 			}
@@ -75,6 +79,7 @@ namespace Game.Incidents
 				.Where(x => typeof(IFlavorTemplate).IsAssignableFrom(x));
 			return q;
 		}
+
 		private void SetFlavorType()
 		{
 			OutputLogger.Log("Set Flavor Type");
@@ -104,6 +109,11 @@ namespace Game.Incidents
 			}
 
 			IncidentEditorWindow.UpdateActionFieldIDs();
+		}
+
+		private void ToggleManualMode()
+		{
+			alignmentContext.enabled = !manualMode;
 		}
 	}
 }
