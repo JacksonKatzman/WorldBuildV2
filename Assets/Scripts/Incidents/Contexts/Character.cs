@@ -259,9 +259,14 @@ namespace Game.Incidents
 
 				CurrentInventory.Items.Clear();
 			}
-			else
+			else if(AffiliatedFaction.Cities.Count > 0)
 			{
 				SimRandom.RandomEntryFromList(AffiliatedFaction.Cities).CurrentInventory.Items.AddRange(CurrentInventory.Items);
+				CurrentInventory.Items.Clear();
+			}
+			else
+			{
+				SimulationManager.Instance.world.LostItems.AddRange(CurrentInventory.Items);
 				CurrentInventory.Items.Clear();
 			}
 
