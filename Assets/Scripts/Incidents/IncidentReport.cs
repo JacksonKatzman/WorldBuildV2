@@ -21,6 +21,7 @@ namespace Game.Incidents
 			IncidentID = incidentID;
 			ParentID = parentID;
 			ReportYear = year;
+			flavors = new Dictionary<string, string>();
 		}
 
 		public void AddLog(string log)
