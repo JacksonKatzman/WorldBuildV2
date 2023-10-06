@@ -29,10 +29,11 @@ namespace ES3Types
 			{
 				writer.WriteProperty("Organization", new List<int>() { instance.Organization.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			}
-			writer.WriteProperty("PoliticalPriority", instance.PoliticalPriority, ES3Type_int.Instance);
-			writer.WriteProperty("EconomicPriority", instance.EconomicPriority, ES3Type_int.Instance);
-			writer.WriteProperty("ReligiousPriority", instance.ReligiousPriority, ES3Type_int.Instance);
-			writer.WriteProperty("MilitaryPriority", instance.MilitaryPriority, ES3Type_int.Instance);
+			writer.WriteProperty("Priorities", instance.Priorities, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.Dictionary<Game.Enums.OrganizationType, System.Int32>)));
+			//writer.WriteProperty("PoliticalPriority", instance.PoliticalPriority, ES3Type_int.Instance);
+			//writer.WriteProperty("EconomicPriority", instance.EconomicPriority, ES3Type_int.Instance);
+			//writer.WriteProperty("ReligiousPriority", instance.ReligiousPriority, ES3Type_int.Instance);
+			//writer.WriteProperty("MilitaryPriority", instance.MilitaryPriority, ES3Type_int.Instance);
 			writer.WriteProperty("Influence", instance.Influence, ES3Type_int.Instance);
 			writer.WriteProperty("Wealth", instance.Wealth, ES3Type_int.Instance);
 			writer.WriteProperty("Strength", instance.Strength, ES3Type_int.Instance);
@@ -81,6 +82,10 @@ namespace ES3Types
 					case "Organization":
 						instance.AddContextIdBuffer("Organization", reader.Read<System.Collections.Generic.List<System.Int32>>());
 						break;
+					case "Priorities":
+						instance.Priorities = reader.Read<System.Collections.Generic.Dictionary<Game.Enums.OrganizationType, System.Int32>>();
+						break;
+						/*
 					case "PoliticalPriority":
 						instance.PoliticalPriority = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
@@ -93,6 +98,7 @@ namespace ES3Types
 					case "MilitaryPriority":
 						instance.MilitaryPriority = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
+						*/
 					case "Influence":
 						instance.Influence = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;

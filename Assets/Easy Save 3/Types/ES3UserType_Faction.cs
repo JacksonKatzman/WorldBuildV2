@@ -24,10 +24,13 @@ namespace ES3Types
 			writer.WriteProperty("FactionRelationKeys", instance.FactionRelations.Keys.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("FactionRelationValues", instance.FactionRelations.Values.ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("Cities", instance.Cities.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
+			writer.WriteProperty("Priorities", instance.Priorities, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.Dictionary<Game.Enums.OrganizationType, System.Int32>)));
+			/*
 			writer.WriteProperty("PoliticalPriority", instance.PoliticalPriority, ES3Type_int.Instance);
 			writer.WriteProperty("EconomicPriority", instance.EconomicPriority, ES3Type_int.Instance);
 			writer.WriteProperty("ReligiousPriority", instance.ReligiousPriority, ES3Type_int.Instance);
 			writer.WriteProperty("MilitaryPriority", instance.MilitaryPriority, ES3Type_int.Instance);
+			*/
 			writer.WriteProperty("LawfulChaoticAlignmentAxis", instance.LawfulChaoticAlignmentAxis, ES3Type_int.Instance);
 			writer.WriteProperty("GoodEvilAlignmentAxis", instance.GoodEvilAlignmentAxis, ES3Type_int.Instance);
 			writer.WriteProperty("FactionsAtWarWith", instance.FactionsAtWarWith.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
@@ -65,6 +68,10 @@ namespace ES3Types
 					case "Cities":
 						instance.AddContextIdBuffer("Cities", reader.Read<System.Collections.Generic.List<System.Int32>>());
 						break;
+					case "Priorities":
+						instance.Priorities = reader.Read<System.Collections.Generic.Dictionary<Game.Enums.OrganizationType, System.Int32>>();
+						break;
+						/*
 					case "PoliticalPriority":
 						instance.PoliticalPriority = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
@@ -77,6 +84,7 @@ namespace ES3Types
 					case "MilitaryPriority":
 						instance.MilitaryPriority = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;
+						*/
 					case "LawfulChaoticAlignmentAxis":
 						instance.LawfulChaoticAlignmentAxis = reader.Read<System.Int32>(ES3Type_int.Instance);
 						break;

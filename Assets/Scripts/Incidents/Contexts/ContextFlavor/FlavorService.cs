@@ -4,6 +4,7 @@ using Game.Utilities;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Game.Incidents
@@ -15,8 +16,10 @@ namespace Game.Incidents
 		public NamingThemePreset monsterPreset;
 
 		//need to init with all of the flavor stuff like reasons
-		public Dictionary<CreatureAlignment, List<string>> alignedReasons;
 		public Dictionary<FlavorType, List<string>> flavorLists;
+		public List<FlavorTemplateCollection> flavorTemplateCollections;
+
+		private Dictionary<Type, FlavorTemplateCollection> flavorTemplateDictionary;
 
 		public NamingTheme GenerateMonsterFactionNamingTheme()
 		{
@@ -34,29 +37,36 @@ namespace Game.Incidents
 		public string GenerateFlavor(string phrase)
 		{
 			phrase = GenerateSynonyms(phrase);
-			phrase = GenerateReasons(phrase);
 			return phrase;
 		}
 
-		//unsure exactly where i left off with this part - we can now use synonyms but i need a way to cleanly
-		//regex which matches to make instead of having separate fns for each and checking them all
-		public string GenerateFlavor_2(string phrase)
+		/*
+		Ideas for flavor tags/types to add for the future:
+		{BodyPart}, {Color}, 
+		*/
+
+		public bool GetFlavorTemplateByType(Type type, OrganizationType priority, int goodEvilAxisAlignment, int lawfulChaoticAxisAlignment, out AbstractFlavorTemplate template)
 		{
-			var matches = Regex.Matches(phrase, @"\{([^\n \{\}]+):(GOOD|EVIL|LAWFUL|CHAOTIC)\}");
-			foreach (Match match in matches)
+			template = null;
+
+			flavorTemplateDictionary.TryGetValue(type, out var collection);
+			if(collection != null)
 			{
-				var flavorTypeString = match.Groups[1].Value.ToString();
-				if (Enum.TryParse<FlavorType>(flavorTypeString, out FlavorType flavorType))
+				var matches = collection.GetMatches(priority, goodEvilAxisAlignment, lawfulChaoticAxisAlignment);
+				if(matches.Count > 0)
 				{
-					var alignmentString = match.Groups[2].Value.ToString();
-					if(Enum.TryParse<CreatureAlignment>(alignmentString, out CreatureAlignment alignment))
-					{
-						phrase = GenerateAlignmentBasedFlavor(flavorType, alignment, match.Value, phrase);
-					}
+					template = SimRandom.RandomEntryFromList(matches);
+					return true;
+				}
+				else
+				{
+					return false;
 				}
 			}
-
-			return phrase;
+			else
+			{
+				return false;
+			}
 		}
 
 		private string GenerateSynonyms(string phrase)
@@ -76,28 +86,16 @@ namespace Game.Incidents
 			return phrase;
 		}
 
-		private string GenerateAlignmentBasedFlavor(FlavorType flavorType, CreatureAlignment alignment, string match, string phrase)
+		private void LoadFlavorTemplates()
 		{
-			var tempDict = new Dictionary<FlavorType, Dictionary<CreatureAlignment, List<string>>>();
-			var flavor = SimRandom.RandomEntryFromList(tempDict[flavorType][alignment]);
-			return StringUtilities.ReplaceFirstOccurence(phrase, match, flavor);
-		}
-
-		private string GenerateReasons(string phrase)
-		{
-			var matches = Regex.Matches(phrase, @"\{REASON:(GOOD|EVIL|LAWFUL|CHAOTIC)\}");
-
-			foreach (Match match in matches)
+			flavorTemplateDictionary = new Dictionary<Type, FlavorTemplateCollection>();
+			foreach(var collection in flavorTemplateCollections)
 			{
-				var groupType = match.Groups[1].Value.ToString();
-				if(Enum.TryParse<CreatureAlignment>(groupType, out CreatureAlignment result))
+				if(collection.flavorTemplates != null && collection.flavorTemplates.Count > 0)
 				{
-					var matchString = match.Value;
-					var replaceString = SimRandom.RandomEntryFromList(alignedReasons[result]);
-					phrase = StringUtilities.ReplaceFirstOccurence(phrase, matchString, replaceString);
+					flavorTemplateDictionary.Add(collection.flavorTemplates.First().GetType(), collection);
 				}
 			}
-			return phrase;
 		}
 
 		public void Init()
@@ -109,6 +107,7 @@ namespace Game.Incidents
 			else
 			{
 				Instance = this;
+				LoadFlavorTemplates();
 			}
 		}
 	}

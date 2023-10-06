@@ -10,10 +10,13 @@ namespace Game.Incidents
 	{
 		[TextArea(4,10)]
 		public string incidentLog;
+
 		[ShowInInspector, ListDrawerSettings(CustomAddFunction = "AddNewActionContainer", CustomRemoveIndexFunction = "RemoveActionContainer"), HideReferenceObjectPicker]
 		public List<IncidentActionHandler> Actions { get; set; }
+
 		[ShowInInspector, ListDrawerSettings(CustomAddFunction = "AddNewContextDeployer"), HideReferenceObjectPicker]
 		public List<IContextDeployer> Deployers { get; set; }
+
 		public Type ContextType { get; set; }
 
 		private IIncidentContext providedContext;
@@ -77,6 +80,8 @@ namespace Game.Incidents
 			{
 				container.UpdateActionFieldIDs(ref startingValue);
 			}
+
+			UpdateFlavorIDs();
 		}
 
 		public void GetContextDictionary(ref IncidentReport report)
@@ -123,6 +128,16 @@ namespace Game.Incidents
 			}
 		}
 
+		public void UpdateFlavorIDs()
+		{
+			var flavorActions = Actions.Where(x => x.incidentAction.GetType() == typeof(GetFlavorAction)).ToList();
+			for(int i = 0; i < flavorActions.Count; i++)
+			{
+				var flavorAction = flavorActions[i].incidentAction as GetFlavorAction;
+				flavorAction.FlavorActionId = i;
+			}
+		}
+
 		private void AddNewActionContainer()
 		{
 			Actions.Add(new IncidentActionHandler());
@@ -133,6 +148,7 @@ namespace Game.Incidents
 			IncidentEditorWindow.removedIDs.AddRange(Actions[i].incidentAction.GetAllActionFieldIDs());
 			Actions.RemoveAt(i);
 			IncidentEditorWindow.UpdateActionFieldIDs();
+			UpdateFlavorIDs();
 		}
 
 		private void AddNewContextDeployer()

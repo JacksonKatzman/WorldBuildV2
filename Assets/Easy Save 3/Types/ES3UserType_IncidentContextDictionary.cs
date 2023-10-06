@@ -29,7 +29,16 @@ namespace ES3Types
 			var Values = reader.ReadProperty<List<Game.Incidents.IIncidentContext>[]>();
 
 			for (int i = 0; i < Keys.Length; i++)
-				instance.Add(Keys[i], Values[i]);
+			{
+				if(instance.ContainsKey(Keys[i]))
+				{
+					instance[Keys[i]] = Values[i];
+				}
+				else
+				{
+					instance.Add(Keys[i], Values[i]);
+				}
+			}
 
 			return instance;
 		}

@@ -49,8 +49,8 @@ public class StandardCriteriaEvaluatorTests : Editor
     [Test]
     public void IntegerEvaluator()
     {
-        var propertyName = "PoliticalPriority";
-        var faction = new Faction() { ID = 1, PoliticalPriority = 10 };
+        var propertyName = "GoodEvilAlignmentAxis";
+        var faction = new Faction() { ID = 1, GoodEvilAlignmentAxis = 10 };
         ContextDictionaryProvider.AddContextImmediate(faction);
 
         var evaluator = new IntegerEvaluator(propertyName, typeof(Faction));
@@ -62,7 +62,7 @@ public class StandardCriteriaEvaluatorTests : Editor
 
         Assert.That(evaluation == true);
 
-        faction.PoliticalPriority += 1;
+        faction.GoodEvilAlignmentAxis += 1;
         evaluation = evaluator.Evaluate(faction, propertyName);
 
         Assert.That(evaluation == false);

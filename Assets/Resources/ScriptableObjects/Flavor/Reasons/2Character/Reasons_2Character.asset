@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f921cadaa06568428a34a13decd8889, type: 3}
-  m_Name: Test
+  m_Script: {fileID: 11500000, guid: cb973a72828974540a3d21ea946549d6, type: 3}
+  m_Name: Reasons_2Character
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,6 +21,5 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  landmarkPrefabs:
-  - {fileID: 1000010049943836, guid: f2967fed6444e43559e32916c2465d27, type: 3}
-  - {fileID: 1000012481183398, guid: cb7be9a74fd6e4cbdb5be2ac7319e699, type: 3}
+  flavorTemplates:
+  - {fileID: 11400000, guid: a346a1a2a50fdc94181d452765719075, type: 2}

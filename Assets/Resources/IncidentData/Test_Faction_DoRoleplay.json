@@ -24,10 +24,103 @@
   "ActionContainer": {
     "$id": "4",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
-    "incidentLog": "{0} did some roleplay related incident.",
+    "incidentLog": "{0} did some roleplay related incident. {F:0}",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
-      "$values": []
+      "$values": [
+        {
+          "$id": "5",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "6",
+            "$type": "Game.Incidents.GetFlavorAction, Assembly-CSharp",
+            "flavorType": "Game.Incidents.CharacterFlavorPrimarySecondary, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "manualMode": true,
+            "alignmentContext": {
+              "$id": "7",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IAlignmentAffiliated, Assembly-CSharp]], Assembly-CSharp",
+              "contextType": null,
+              "fieldName": null,
+              "actionField": null,
+              "enabled": false
+            },
+            "perm": 4,
+            "goodEvilAxisAlignment": 0,
+            "lawfulChaoticAxisAlignment": 0,
+            "actionFields": {
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp]], mscorlib",
+              "$values": [
+                {
+                  "$id": "8",
+                  "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
+                  "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "fieldName": "primaryCharacter",
+                  "actionField": {
+                    "$id": "9",
+                    "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+                    "parentType": null,
+                    "AllowSelf": false,
+                    "AllowNull": false,
+                    "criteria": {
+                      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                      "$values": []
+                    },
+                    "value": null,
+                    "delayedValue": null,
+                    "Method": 2,
+                    "PreviousField": null,
+                    "PreviousFieldID": -1,
+                    "ActionFieldID": 1,
+                    "NameID": "{1}:GetFlavorAction:actionFields",
+                    "ActionFieldIDString": "{1}",
+                    "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  },
+                  "enabled": true
+                },
+                {
+                  "$id": "10",
+                  "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
+                  "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "fieldName": "secondaryCharacter",
+                  "actionField": {
+                    "$id": "11",
+                    "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+                    "parentType": null,
+                    "AllowSelf": false,
+                    "AllowNull": false,
+                    "criteria": {
+                      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                      "$values": []
+                    },
+                    "value": null,
+                    "delayedValue": null,
+                    "Method": 2,
+                    "PreviousField": null,
+                    "PreviousFieldID": -1,
+                    "ActionFieldID": 2,
+                    "NameID": "{2}:GetFlavorAction:actionFields",
+                    "ActionFieldIDString": "{2}",
+                    "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  },
+                  "enabled": true
+                }
+              ]
+            },
+            "pairings": {
+              "$id": "12",
+              "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp]], mscorlib",
+              "{0}": {
+                "$ref": "8"
+              },
+              "{1}": {
+                "$ref": "10"
+              }
+            },
+            "FlavorActionId": 0,
+            "FlavorActionIdString": "{F:0}"
+          }
+        }
+      ]
     },
     "Deployers": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Assembly-CSharp]], mscorlib",

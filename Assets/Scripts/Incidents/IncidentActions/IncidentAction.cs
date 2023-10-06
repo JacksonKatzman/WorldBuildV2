@@ -40,7 +40,7 @@ namespace Game.Incidents
 			foreach(var c in matchingContainers)
 			{
 				var container = c.GetValue(this) as IncidentActionFieldContainer;
-				if(!container.actionField.CalculateField(context))
+				if(container.enabled && !container.actionField.CalculateField(context))
 				{
 					return false;
 				}
@@ -174,7 +174,10 @@ namespace Game.Incidents
 			foreach(var c in matchingContainers)
 			{
 				var container = c.GetValue(this) as IncidentActionFieldContainer;
-				report.Contexts.Add(container.actionField.ActionFieldIDString, container.actionField.GetFieldValue());
+				if (container.enabled)
+				{
+					report.Contexts.Add(container.actionField.ActionFieldIDString, container.actionField.GetFieldValue());
+				}
 			}
 		}
 

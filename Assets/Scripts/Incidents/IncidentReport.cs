@@ -13,6 +13,7 @@ namespace Game.Incidents
 		public int ReportYear { get; set; }
 		public string ReportLog { get; set; }
 		private Stack<string> logs;
+		private Dictionary<string, string> flavors;
 
 		public IncidentReport() { }
 		public IncidentReport(int incidentID, int parentID, int year)
@@ -20,6 +21,7 @@ namespace Game.Incidents
 			IncidentID = incidentID;
 			ParentID = parentID;
 			ReportYear = year;
+			flavors = new Dictionary<string, string>();
 		}
 
 		public void AddLog(string log)
@@ -30,6 +32,16 @@ namespace Game.Incidents
 			}
 
 			logs.Push(log);
+		}
+
+		public void AddFlavor(string key, string value)
+		{
+			if(flavors == null)
+			{
+				flavors = new Dictionary<string, string>();
+			}
+
+			flavors.Add(key, value);
 		}
 
 		public void CreateFullLog()
@@ -47,6 +59,12 @@ namespace Game.Incidents
 		public string GenerateLinkedLog()
 		{
 			var textLine = string.Copy(ReportLog);
+
+			foreach(var pair in flavors)
+			{
+				textLine = textLine.Replace(pair.Key, pair.Value);
+			}
+
 			textLine = FlavorService.Instance.GenerateFlavor(textLine);
 
 			var matches = Regex.Matches(textLine, @"\{(\d+)\}");
@@ -67,7 +85,7 @@ namespace Game.Incidents
 			Contexts = new Dictionary<string, IIncidentContext>();
 			foreach(var pair in buffer)
 			{
-				Contexts.Add(pair.Key, SimulationManager.Instance.AllContexts.GetContextByID(pair.Value));
+					Contexts.Add(pair.Key, SimulationManager.Instance.AllContexts.GetContextByID(pair.Value));
 			}
 		}
 	}

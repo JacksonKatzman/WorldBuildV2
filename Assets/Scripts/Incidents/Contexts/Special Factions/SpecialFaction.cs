@@ -1,4 +1,5 @@
-﻿using Game.Utilities;
+﻿using Game.Enums;
+using Game.Utilities;
 using System;
 using System.Collections.Generic;
 
@@ -48,10 +49,11 @@ namespace Game.Incidents
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<IIncidentContext>();
 
-			PoliticalPriority = SimRandom.RandomRange(1, 4);
-			ReligiousPriority = SimRandom.RandomRange(1, 4);
-			EconomicPriority = SimRandom.RandomRange(1, 4);
-			MilitaryPriority = SimRandom.RandomRange(1, 4);
+			Priorities = new Dictionary<OrganizationType, int>();
+			Priorities[OrganizationType.POLITICAL] = SimRandom.RandomRange(1, 4);
+			Priorities[OrganizationType.ECONOMIC] = SimRandom.RandomRange(1, 4);
+			Priorities[OrganizationType.RELIGIOUS] = SimRandom.RandomRange(1, 4);
+			Priorities[OrganizationType.MILITARY] = SimRandom.RandomRange(1, 4);
 		}
 
 		override public void UpdateContext()
