@@ -22,6 +22,9 @@ namespace Game.Incidents
 		[HideInInspector, JsonIgnore]
 		public Action onSetContextType;
 
+		[HideInInspector]
+		public bool enabled = true;
+
 		private bool showTypeDropdown = true;
 
 		public void ForceSetContextType(Type type, string fieldName = "")
