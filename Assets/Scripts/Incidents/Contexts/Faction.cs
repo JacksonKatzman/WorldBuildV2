@@ -84,7 +84,7 @@ namespace Game.Incidents
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
-		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace) : this()
+		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace, Character creator = null) : this()
 		{
 			AttemptExpandBorder(startingTiles);
 			FactionRelations = new Dictionary<IIncidentContext, int>();
@@ -95,7 +95,7 @@ namespace Game.Incidents
 			Name = namingTheme.GenerateFactionName();
 
 			CreateStartingCity(startingPopulation);
-			CreateStartingGovernment(startingMajorityRace);
+			CreateStartingGovernment(startingMajorityRace, creator);
 
 			//PoliticalPriority = SimRandom.RandomRange(1, 4);
 			//ReligiousPriority = SimRandom.RandomRange(1, 4);
@@ -109,7 +109,7 @@ namespace Game.Incidents
 			Priorities[OrganizationType.MILITARY] = SimRandom.RandomRange(1, 4);
 		}
 
-		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles = 1) : this(startingTiles, population, race)
+		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles = 1, Character creator = null) : this(startingTiles, population, race, creator)
 		{
 			Influence = influence;
 			Wealth = wealth;
@@ -164,9 +164,9 @@ namespace Game.Incidents
 			ContextDictionaryProvider.AddContext(city);
 		}
 
-		public void CreateStartingGovernment(Race majorityStartingRace)
+		public void CreateStartingGovernment(Race majorityStartingRace, Character creator = null)
 		{
-			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL);
+			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL, creator);
 			EventManager.Instance.Dispatch(new AddContextEvent(Government));
 		}
 

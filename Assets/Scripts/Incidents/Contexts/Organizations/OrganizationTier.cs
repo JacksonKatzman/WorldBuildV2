@@ -26,15 +26,21 @@ namespace Game.Incidents
 				titlePair = affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
 			}
 
-			AddPosition(org, affiliatedFaction, majorityRace);
+			//commented out here to allow for adding already created characters as leaders
+			//AddPosition(org, affiliatedFaction, majorityRace);
 		}
 
-		public OrganizationPosition AddPosition(Organization org, Faction affiliatedFaction, Race majorityRace)
+		public OrganizationPosition AddPosition(Organization org, Faction affiliatedFaction, Race majorityRace, Character official = null)
 		{
 			var position = new OrganizationPosition();
 			position.organizationType = organizationType;
 			position.titlePair = sharedTitle ? titlePair : affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
-			if (tier < 2)
+
+			if(official != null)
+			{
+				position.official = official;
+			}
+			else if (tier < 2)
 			{
 				position.SelectNewOfficial(org, affiliatedFaction, majorityRace);
 			}

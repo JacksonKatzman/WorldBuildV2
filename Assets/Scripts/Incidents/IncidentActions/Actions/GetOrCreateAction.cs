@@ -6,6 +6,7 @@ namespace Game.Incidents
 	abstract public class GetOrCreateAction<T> : GenericIncidentAction where T : IIncidentContext
 	{
 		public bool findFirst = true;
+		[OnValueChanged("OnAllowCreateValueChanged")]
 		public bool allowCreate = true;
 		protected bool madeNew;
 		protected bool OnlyCreate => !findFirst && allowCreate;
@@ -68,6 +69,11 @@ namespace Game.Incidents
 		virtual protected bool VersionSpecificVerify(IIncidentContext context)
 		{
 			return true;
+		}
+
+		virtual protected void OnAllowCreateValueChanged()
+		{
+
 		}
 
 		abstract protected T MakeNew();

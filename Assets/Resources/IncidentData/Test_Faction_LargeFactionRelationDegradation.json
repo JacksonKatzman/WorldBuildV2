@@ -46,7 +46,7 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 2,
+                    "Value": 15,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
@@ -70,7 +70,7 @@
   "ActionContainer": {
     "$id": "8",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
-    "incidentLog": "Relations between {0} and {2} degrade heavily.",
+    "incidentLog": "Relations between {0} and {1} degrade heavily.",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
       "$values": [
@@ -87,7 +87,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 17,
+              "Value": 10,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "influence": {
@@ -97,7 +97,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 15,
+              "Value": 0,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -107,7 +107,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 10,
+              "Value": 19,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "politicalPriority": {
@@ -117,7 +117,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 0,
+              "Value": 15,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "economicPriority": {
@@ -127,7 +127,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 19,
+              "Value": 13,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "religiousPriority": {
@@ -137,7 +137,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 15,
+              "Value": 2,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "militaryPriority": {
@@ -147,29 +147,16 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 13,
+              "Value": 9,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
-            "createdByCharacter": false,
             "creator": {
               "$id": "18",
-              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
-              "parentType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "AllowSelf": false,
-              "AllowNull": false,
-              "criteria": {
-                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
-                "$values": []
-              },
-              "value": null,
-              "delayedValue": null,
-              "Method": 0,
-              "PreviousField": "{1}:GetOrCreateFactionAction:creator",
-              "PreviousFieldID": 1,
-              "ActionFieldID": 1,
-              "NameID": "{1}:GetOrCreateFactionAction:creator",
-              "ActionFieldIDString": "{1}",
-              "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Assembly-CSharp]], Assembly-CSharp",
+              "contextType": null,
+              "fieldName": null,
+              "actionField": null,
+              "enabled": false
             },
             "findFirst": true,
             "allowCreate": false,
@@ -189,6 +176,7 @@
                     "evaluator": {
                       "$id": "21",
                       "$type": "Game.Incidents.ActionFieldListContainsEvaluator, Assembly-CSharp",
+                      "warning": "This evaluator finds items that exist within the chosen List within the parent ({0}) context.",
                       "propertyName": "FactionsWithinInteractionRange",
                       "Comparator": "==",
                       "Type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
@@ -204,11 +192,12 @@
               "Method": 0,
               "PreviousField": "{1}:GetOrCreateFactionAction:creator",
               "PreviousFieldID": 1,
-              "ActionFieldID": 2,
-              "NameID": "{2}:GetOrCreateFactionAction:actionField",
-              "ActionFieldIDString": "{2}",
+              "ActionFieldID": 1,
+              "NameID": "{1}:GetOrCreateFactionAction:actionField",
+              "ActionFieldIDString": "{1}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-            }
+            },
+            "ResultID": "{1}"
           }
         },
         {
@@ -232,9 +221,9 @@
               "Method": 1,
               "PreviousField": "{0} - Original Context",
               "PreviousFieldID": 0,
-              "ActionFieldID": 3,
-              "NameID": "{3}:ChangeFactionRelationsAction:affectedFaction",
-              "ActionFieldIDString": "{3}",
+              "ActionFieldID": 2,
+              "NameID": "{2}:ChangeFactionRelationsAction:affectedFaction",
+              "ActionFieldIDString": "{2}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "otherFaction": {
@@ -250,11 +239,11 @@
               "value": null,
               "delayedValue": null,
               "Method": 1,
-              "PreviousField": "{2}:GetOrCreateFactionAction:actionField",
-              "PreviousFieldID": 2,
-              "ActionFieldID": 4,
-              "NameID": "{4}:ChangeFactionRelationsAction:otherFaction",
-              "ActionFieldIDString": "{4}",
+              "PreviousField": "{1}:GetOrCreateFactionAction:actionField",
+              "PreviousFieldID": 1,
+              "ActionFieldID": 3,
+              "NameID": "{3}:ChangeFactionRelationsAction:otherFaction",
+              "ActionFieldIDString": "{3}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "amount": {
@@ -264,7 +253,7 @@
               "min": -40,
               "max": -25,
               "constant": 0,
-              "Value": -38,
+              "Value": -27,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "set": false,

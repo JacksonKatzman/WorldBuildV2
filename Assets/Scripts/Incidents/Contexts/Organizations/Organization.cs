@@ -26,14 +26,14 @@ namespace Game.Incidents
 		private int maxTiers = 7;
 
 		public Organization() { }
-		public Organization(Faction faction, Race majorityStartingRace, OrganizationType organizationType)
+		public Organization(Faction faction, Race majorityStartingRace, OrganizationType organizationType, Character creator = null)
 		{
 			AffiliatedFaction = faction;
 			this.organizationType = organizationType;
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 
 			hierarchy = new List<OrganizationTier>();
-			AddTier(majorityStartingRace);
+			AddTier(majorityStartingRace, creator);
 		}
 
 		public void OnRemoveContextEvent(RemoveContextEvent gameEvent)
@@ -98,9 +98,10 @@ namespace Game.Incidents
 			AddTier(Leader.AffiliatedRace);
 		}
 
-		private void AddTier(Race race)
+		private void AddTier(Race race, Character official = null)
 		{
 			var newTier = new OrganizationTier(this, AffiliatedFaction, race, organizationType, hierarchy.Count, maxTiers);
+			newTier.AddPosition(this, AffiliatedFaction, race, official);
 			hierarchy.Add(newTier);
 		}
 

@@ -15,7 +15,7 @@ namespace Game.Incidents
         protected override Faction MakeNew()
 		{
             var specialFactionType = factionType == null ? SpecialFaction.CalculateFactionType(politicalPriority, economicPriority, religiousPriority, militaryPriority) : factionType;
-            var specialFaction = (Faction)Activator.CreateInstance(specialFactionType);
+            var specialFaction = (SpecialFaction)Activator.CreateInstance(specialFactionType);
             specialFaction.Population = population;
             specialFaction.Influence = influence;
             specialFaction.Wealth = wealth;
@@ -26,14 +26,9 @@ namespace Game.Incidents
             specialFaction.Priorities[OrganizationType.RELIGIOUS] = religiousPriority;
             specialFaction.Priorities[OrganizationType.MILITARY] = militaryPriority;
 
-            if (createdByCharacter)
-            {
-                specialFaction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
-            }
-            else
-            {
-                specialFaction.namingTheme = FlavorService.Instance.GenerateMonsterFactionNamingTheme();
-            }
+            specialFaction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
+            //need to set the leader of the special faction here
+            //also need to assign them a base of operations, probably a landmark somehow
 
             return specialFaction;
         }

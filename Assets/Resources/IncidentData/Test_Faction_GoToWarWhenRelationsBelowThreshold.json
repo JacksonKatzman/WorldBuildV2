@@ -46,7 +46,7 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 16,
+                    "Value": 15,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
@@ -152,7 +152,7 @@
   "ActionContainer": {
     "$id": "16",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
-    "incidentLog": "{0} declares war on {2}!",
+    "incidentLog": "{0} declares war on {1}!",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
       "$values": [
@@ -169,7 +169,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 5,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "influence": {
@@ -179,7 +179,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 5,
+              "Value": 19,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -189,7 +189,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 0,
+              "Value": 5,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "politicalPriority": {
@@ -199,7 +199,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 15,
+              "Value": 7,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "economicPriority": {
@@ -209,7 +209,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 12,
+              "Value": 17,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "religiousPriority": {
@@ -219,7 +219,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 6,
+              "Value": 16,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "militaryPriority": {
@@ -229,29 +229,16 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 3,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
-            "createdByCharacter": false,
             "creator": {
               "$id": "26",
-              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
-              "parentType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "AllowSelf": false,
-              "AllowNull": false,
-              "criteria": {
-                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
-                "$values": []
-              },
-              "value": null,
-              "delayedValue": null,
-              "Method": 0,
-              "PreviousField": "{1}:GetOrCreateFactionAction:creator",
-              "PreviousFieldID": 1,
-              "ActionFieldID": 1,
-              "NameID": "{1}:GetOrCreateFactionAction:creator",
-              "ActionFieldIDString": "{1}",
-              "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Assembly-CSharp]], Assembly-CSharp",
+              "contextType": null,
+              "fieldName": null,
+              "actionField": null,
+              "enabled": false
             },
             "findFirst": true,
             "allowCreate": false,
@@ -287,12 +274,12 @@
               "Method": 0,
               "PreviousField": "{1}:GetOrCreateFactionAction:creator",
               "PreviousFieldID": 1,
-              "ActionFieldID": 2,
-              "NameID": "{2}:GetOrCreateFactionAction:actionField",
-              "ActionFieldIDString": "{2}",
+              "ActionFieldID": 1,
+              "NameID": "{1}:GetOrCreateFactionAction:actionField",
+              "ActionFieldIDString": "{1}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
-            "ResultID": "{2}"
+            "ResultID": "{1}"
           }
         },
         {
@@ -316,9 +303,9 @@
               "Method": 1,
               "PreviousField": "{0} - Original Context",
               "PreviousFieldID": 0,
-              "ActionFieldID": 3,
-              "NameID": "{3}:ChangeWarStateAction:factionOne",
-              "ActionFieldIDString": "{3}",
+              "ActionFieldID": 2,
+              "NameID": "{2}:ChangeWarStateAction:factionOne",
+              "ActionFieldIDString": "{2}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "factionTwo": {
@@ -334,11 +321,11 @@
               "value": null,
               "delayedValue": null,
               "Method": 1,
-              "PreviousField": "{2}:GetOrCreateFactionAction:actionField",
-              "PreviousFieldID": 2,
-              "ActionFieldID": 4,
-              "NameID": "{4}:ChangeWarStateAction:factionTwo",
-              "ActionFieldIDString": "{4}",
+              "PreviousField": "{1}:GetOrCreateFactionAction:actionField",
+              "PreviousFieldID": 1,
+              "ActionFieldID": 3,
+              "NameID": "{3}:ChangeWarStateAction:factionTwo",
+              "ActionFieldIDString": "{3}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "atWar": true
@@ -393,8 +380,8 @@
               "value": null,
               "delayedValue": null,
               "Method": 1,
-              "PreviousField": "{2}:GetOrCreateFactionAction:actionField",
-              "PreviousFieldID": 2,
+              "PreviousField": "{1}:GetOrCreateFactionAction:actionField",
+              "PreviousFieldID": 1,
               "ActionFieldID": 0,
               "NameID": null,
               "ActionFieldIDString": "None",
