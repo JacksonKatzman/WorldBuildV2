@@ -9,28 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e596015906dd184d95ee4f6d594a3d6, type: 3}
-  m_Name: ObjectData
+  m_Script: {fileID: 11500000, guid: 72722e132307ffc41a80452df201ea66, type: 3}
+  m_Name: LandmarkPresets
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: efd2ca06c3ed27a459fa82f1b13e1e8f, type: 2}
-    - {fileID: 11400000, guid: a615993b81f131d469b6196fc707de43, type: 2}
+    - {fileID: 11400000, guid: 4dc79fb25f2514d43aeeb97f4336ca57, type: 2}
+    - {fileID: 11400000, guid: 6e2abe25118d87d4bab5ebfd2b4edb82, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: collections
+    - Name: objects
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.Type, mscorlib],[Game.Incidents.SerializedObjectCollection,
-        Assembly-CSharp]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Sirenix.OdinInspector.SerializedScriptableObject,
+        Sirenix.Serialization]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[System.Type, mscorlib]],
-        mscorlib
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
     - Name: 
       Entry: 8
       Data: 
@@ -41,14 +41,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 7
-      Data: 2|System.RuntimeType, mscorlib
-    - Name: 
       Entry: 1
-      Data: Game.Simulation.AdventureEncounterObject, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: Debug_Preset
     - Name: $v
       Entry: 10
       Data: 0
@@ -59,14 +53,8 @@ MonoBehaviour:
       Entry: 7
       Data: 
     - Name: $k
-      Entry: 7
-      Data: 3|System.RuntimeType, mscorlib
-    - Name: 
       Entry: 1
-      Data: Game.Incidents.LandmarkPreset, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: City
     - Name: $v
       Entry: 10
       Data: 1
