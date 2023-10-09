@@ -167,6 +167,7 @@ namespace Game.Incidents
 		public List<Character> Children { get; set; }
 
 		//public List<Character> Family => new List<Character>().Union(Parents).Union(Spouses).Union(Siblings).Union(Children).ToList();
+		public List<Character> Family => CharacterExtensions.GetExtendedFamily(this);
 
 		public OrganizationType PriorityAlignment => GetHighestPriority();
 		public int LawfulChaoticAlignmentAxis { get; set; }
