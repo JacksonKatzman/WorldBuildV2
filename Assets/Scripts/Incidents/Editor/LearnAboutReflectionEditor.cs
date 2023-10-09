@@ -49,6 +49,21 @@ namespace Game.Incidents
 			{
 				XMLTest();
 			}
+
+			if (GUILayout.Button("Recursion Test"))
+			{
+				var randomCharacter = SimRandom.RandomEntryFromList(SimulationManager.Instance.world.People);
+				var family = CharacterExtensions.GetExtendedFamily(randomCharacter);
+				if (family.Count > 0)
+				{
+					var member = SimRandom.RandomEntryFromList(family);
+					var contexts = new Dictionary<string, IIncidentContext>();
+					contexts.Add("{0}", randomCharacter);
+					contexts.Add("{1}", member);
+					var title = StaticFlavorCollections.HandleCharacterRelationshipTitles("{RELATE:0/1}", contexts);
+					OutputLogger.Log(title);
+				}
+			}
 		}
 		public static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
 		{
