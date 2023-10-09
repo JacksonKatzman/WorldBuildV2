@@ -217,12 +217,14 @@ namespace Game.Incidents
 				{
 					var father = new Character(Gender.MALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(father);
+					father.Children.Add(this);
 					ContextDictionaryProvider.AddContext(father);
 				}
 				if(Parents.Count(x => x.Gender == Gender.FEMALE) < 1)
 				{
 					var mother = new Character(Gender.FEMALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(mother);
+					mother.Children.Add(this);
 					ContextDictionaryProvider.AddContext(mother);
 				}
 			}
@@ -233,6 +235,7 @@ namespace Game.Incidents
 					var gender = Gender == Gender.MALE ? Gender.FEMALE : Gender.MALE;
 					var spouse = new Character(gender, AffiliatedRace, AffiliatedFaction, false);
 					Spouses.Add(spouse);
+					spouse.Spouses.Add(this);
 					ContextDictionaryProvider.AddContext(spouse);
 				}
 			}
@@ -244,6 +247,7 @@ namespace Game.Incidents
 				{
 					var sibling = new Character(Gender.ANY, AffiliatedRace, AffiliatedFaction, false, Parents);
 					Siblings.Add(sibling);
+					sibling.Siblings.Add(this);
 					ContextDictionaryProvider.AddContext(sibling);
 				}
 			}
