@@ -12,6 +12,8 @@ namespace Game.Incidents
 	{
         [ValueDropdown("GetFilteredTypeList"), LabelText("Special Faction Type")]
         public Type factionType;
+
+        InterfacedIncidentActionFieldContainer<ILocationAffiliated> location;
         protected override Faction MakeNew()
 		{
             var specialFactionType = factionType == null ? SpecialFaction.CalculateFactionType(politicalPriority, economicPriority, religiousPriority, militaryPriority) : factionType;
@@ -29,6 +31,7 @@ namespace Game.Incidents
             specialFaction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
             //need to set the leader of the special faction here
             //also need to assign them a base of operations, probably a landmark somehow
+            specialFaction.SetLocation(location.GetTypedFieldValue());
 
             return specialFaction;
         }

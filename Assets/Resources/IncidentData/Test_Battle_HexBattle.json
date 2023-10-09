@@ -41,6 +41,7 @@
                   "$id": "7",
                   "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                   "contextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "fieldName": null,
                   "actionField": {
                     "$id": "8",
                     "$type": "Game.Incidents.LocationActionField, Assembly-CSharp",
@@ -83,7 +84,8 @@
                     "NameID": "{3}:GetContextsAction:actionFields",
                     "ActionFieldIDString": "{3}",
                     "ContextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-                  }
+                  },
+                  "enabled": true
                 }
               ]
             }
@@ -110,6 +112,7 @@
                       "$id": "14",
                       "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                       "contextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "fieldName": null,
                       "actionField": {
                         "$id": "15",
                         "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
@@ -129,7 +132,8 @@
                         "NameID": null,
                         "ActionFieldIDString": "None",
                         "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-                      }
+                      },
+                      "enabled": true
                     },
                     "weight": {
                       "$id": "16",
@@ -521,6 +525,7 @@
                       "$id": "48",
                       "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                       "contextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "fieldName": null,
                       "actionField": {
                         "$id": "49",
                         "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
@@ -540,7 +545,8 @@
                         "NameID": null,
                         "ActionFieldIDString": "None",
                         "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-                      }
+                      },
+                      "enabled": true
                     },
                     "weight": {
                       "$id": "50",
@@ -817,7 +823,9 @@
                       "$id": "74",
                       "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                       "contextType": null,
-                      "actionField": null
+                      "fieldName": null,
+                      "actionField": null,
+                      "enabled": true
                     },
                     "weight": null
                   },
@@ -1073,7 +1081,9 @@
                       "$id": "98",
                       "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                       "contextType": null,
-                      "actionField": null
+                      "fieldName": null,
+                      "actionField": null,
+                      "enabled": true
                     },
                     "weight": null
                   },
@@ -1091,11 +1101,34 @@
                             "$id": "101",
                             "$type": "Game.Incidents.GetOrCreateLandmarkAction, Assembly-CSharp",
                             "location": {
-                              "$id": "102",
-                              "$type": "Game.Incidents.LocationActionField, Assembly-CSharp",
-                              "relatedFaction": {
-                                "$id": "103",
-                                "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+                              "$id": "104",
+                              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ILocationAffiliated, Assembly-CSharp]], Assembly-CSharp",
+                              "contextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                              "fieldName": null,
+                              "actionField": {
+                                "$id": "105",
+                                "$type": "Game.Incidents.LocationActionField, Assembly-CSharp",
+                                "relatedFaction": {
+                                  "$id": "106",
+                                  "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+                                  "parentType": null,
+                                  "AllowSelf": false,
+                                  "AllowNull": false,
+                                  "criteria": {
+                                    "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                                    "$values": []
+                                  },
+                                  "value": null,
+                                  "delayedValue": null,
+                                  "Method": 0,
+                                  "PreviousField": null,
+                                  "PreviousFieldID": -1,
+                                  "ActionFieldID": -1,
+                                  "NameID": null,
+                                  "ActionFieldIDString": "{-1}",
+                                  "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                                },
+                                "minDistanceFromCities": 0,
                                 "parentType": null,
                                 "AllowSelf": false,
                                 "AllowNull": false,
@@ -1105,47 +1138,28 @@
                                 },
                                 "value": null,
                                 "delayedValue": null,
-                                "Method": 0,
-                                "PreviousField": null,
-                                "PreviousFieldID": -1,
-                                "ActionFieldID": 0,
-                                "NameID": null,
-                                "ActionFieldIDString": "None",
-                                "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                                "LocationFindMethod": 0,
+                                "FactionCellLocationMethod": 0,
+                                "Method": 1,
+                                "PreviousField": "{3}:GetContextsAction:actionFields",
+                                "PreviousFieldID": 3,
+                                "ActionFieldID": 21,
+                                "NameID": "{21}:GetOrCreateLandmarkAction:location2",
+                                "ActionFieldIDString": "{21}",
+                                "ContextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                               },
-                              "minDistanceFromCities": 0,
-                              "parentType": null,
-                              "AllowSelf": false,
-                              "AllowNull": false,
-                              "criteria": {
-                                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
-                                "$values": []
-                              },
-                              "value": null,
-                              "delayedValue": null,
-                              "LocationFindMethod": 0,
-                              "FactionCellLocationMethod": 0,
-                              "Method": 1,
-                              "PreviousField": "{3}:GetContextsAction:actionFields",
-                              "PreviousFieldID": 3,
-                              "ActionFieldID": 20,
-                              "NameID": "{20}:GetOrCreateLandmarkAction:location",
-                              "ActionFieldIDString": "{20}",
-                              "ContextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                              "enabled": true
                             },
                             "preset": {
-                              "$id": "104",
+                              "$id": "107",
                               "$type": "Game.Incidents.ScriptableObjectRetriever`1[[Game.Incidents.LandmarkPreset, Assembly-CSharp]], Assembly-CSharp",
                               "prefabKey": "City",
-                              "stuff": {
-                                "$id": "105",
-                                "$type": "UnityEditor.GUID, UnityEditor.CoreModule"
-                              }
+                              "onChanged": null
                             },
                             "findFirst": false,
                             "allowCreate": true,
                             "actionField": {
-                              "$id": "106",
+                              "$id": "108",
                               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Landmark, Assembly-CSharp]], Assembly-CSharp",
                               "parentType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                               "AllowSelf": false,
@@ -1178,23 +1192,25 @@
                   "ContextType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                 },
                 {
-                  "$id": "107",
+                  "$id": "109",
                   "$type": "Game.Incidents.IncidentActionBranch, Assembly-CSharp",
                   "weightModifier": {
-                    "$id": "108",
+                    "$id": "110",
                     "$type": "Game.Incidents.IncidentActionBranchWeightModifier, Assembly-CSharp",
                     "advancedMode": false,
                     "baseWeight": 7,
                     "container": {
-                      "$id": "109",
+                      "$id": "111",
                       "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                       "contextType": null,
-                      "actionField": null
+                      "fieldName": null,
+                      "actionField": null,
+                      "enabled": true
                     },
                     "weight": null
                   },
                   "actionHandler": {
-                    "$id": "110",
+                    "$id": "112",
                     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
                     "incidentLog": null,
                     "Actions": {

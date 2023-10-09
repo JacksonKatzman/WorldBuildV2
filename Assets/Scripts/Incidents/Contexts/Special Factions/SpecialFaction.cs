@@ -23,6 +23,9 @@ namespace Game.Incidents
 				populationFloat = (float)value;
 			}
 		}
+
+		public ILocationAffiliated Location { get; set; }
+
 		public override int ControlledTiles => 1;
 		public override int NumCities => 0;
 
@@ -41,6 +44,12 @@ namespace Game.Incidents
 				}
 			}
 			return container.factionType;
+		}
+
+		public void SetLocation(ILocationAffiliated location)
+		{
+			Location = location;
+			//also use this to set the tile they control to the location
 		}
 
 		public SpecialFaction()
