@@ -66,7 +66,7 @@ namespace Game.Incidents
 				textLine = textLine.Replace(pair.Key, pair.Value);
 			}
 
-			textLine = FlavorService.Instance.GenerateFlavor(textLine);
+			//textLine = FlavorService.Instance.GenerateFlavor(textLine);
 
 			var matches = Regex.Matches(textLine, @"\{(\d+)\}");
 

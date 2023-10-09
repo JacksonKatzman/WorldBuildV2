@@ -34,12 +34,6 @@ namespace Game.Incidents
 			return theme;
 		}
 
-		public string GenerateFlavor(string phrase)
-		{
-			phrase = GenerateSynonyms(phrase);
-			return phrase;
-		}
-
 		/*
 		Ideas for flavor tags/types to add for the future:
 		{BodyPart}, {Color}, 
@@ -68,7 +62,7 @@ namespace Game.Incidents
 				return false;
 			}
 		}
-
+/*
 		private string GenerateSynonyms(string phrase)
 		{
 			var matches = Regex.Matches(phrase, @"\{SYNONYM:([^\n \{\}]+)\}");
@@ -85,6 +79,7 @@ namespace Game.Incidents
 			}
 			return phrase;
 		}
+*/
 
 		private void LoadFlavorTemplates()
 		{

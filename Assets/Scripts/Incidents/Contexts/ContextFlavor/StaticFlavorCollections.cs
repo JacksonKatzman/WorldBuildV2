@@ -1,4 +1,5 @@
 ﻿using Game.Enums;
+using Game.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -12,11 +13,12 @@ namespace Game.Incidents
 		public static string SUBJECT_PRONOUN_STRING = "SUBP";
 		public static string POSSESSIVE_PRONOUN_STRING = "POSP";
 		public static string CHARACTER_RELATIONSHIP_STRING = "RELATE";
+		public static string SYNONYM_STRING = "SYNONYM";
 
 		public static Dictionary<string, Func<string, Dictionary<string, IIncidentContext>, string>> flavorFunctions = new Dictionary<string, Func<string, Dictionary<string, IIncidentContext>, string>>()
 		{
 			{OBJECT_PRONOUN_STRING, HandleObjectGenderPronouns}, {SUBJECT_PRONOUN_STRING, HandleSubjectGenderPronouns}, {POSSESSIVE_PRONOUN_STRING, HandlePossessiveGenderPronouns},
-			{CHARACTER_RELATIONSHIP_STRING, HandleCharacterRelationshipTitles}
+			{CHARACTER_RELATIONSHIP_STRING, HandleCharacterRelationshipTitles}, {SYNONYM_STRING, GenerateSynonyms}
 		};
 
 		public static string InjectFlavor(string input, Dictionary<string, IIncidentContext> contexts)
@@ -33,6 +35,24 @@ namespace Game.Incidents
 				}
 			}
 
+			return textLine;
+		}
+
+		public static string GenerateSynonyms(string input, Dictionary<string, IIncidentContext> contexts)
+		{
+			var textLine = string.Copy(input);
+			var matches = Regex.Matches(textLine, @"\{" + SYNONYM_STRING + @":([^\n \{\}]+)\}");
+
+			foreach (Match match in matches)
+			{
+				var groupType = match.Groups[1].Value.ToString();
+				if (ThesaurusProvider.Thesaurus.TryGetValue(match.Value, out List<string> synonyms))
+				{
+					var matchString = match.Value;
+					var replaceString = SimRandom.RandomEntryFromList(synonyms);
+					textLine = StringUtilities.ReplaceFirstOccurence(textLine, matchString, replaceString);
+				}
+			}
 			return textLine;
 		}
 
