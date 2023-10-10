@@ -1,4 +1,5 @@
 ﻿using Game.Enums;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 namespace Game.Creatures
 {
 	[CreateAssetMenu(fileName = nameof(MonsterData), menuName = "ScriptableObjects/Creatures/" + nameof(MonsterData), order = 1)]
-	public class MonsterData : ScriptableObject
+	public class MonsterData : SerializedScriptableObject
 	{
 		public string name;
 		public string Name => name;

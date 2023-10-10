@@ -13,7 +13,7 @@ namespace Game.Incidents
         [ValueDropdown("GetFilteredTypeList"), LabelText("Special Faction Type")]
         public Type factionType;
 
-        InterfacedIncidentActionFieldContainer<ILocationAffiliated> location;
+        public InterfacedIncidentActionFieldContainer<ILocationAffiliated> location;
         protected override Faction MakeNew()
 		{
             var specialFactionType = factionType == null ? SpecialFaction.CalculateFactionType(politicalPriority, economicPriority, religiousPriority, militaryPriority) : factionType;
@@ -28,11 +28,6 @@ namespace Game.Incidents
             specialFaction.Priorities[OrganizationType.RELIGIOUS] = religiousPriority;
             specialFaction.Priorities[OrganizationType.MILITARY] = militaryPriority;
 
-            specialFaction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
-            //need to set the leader of the special faction here
-            //also need to assign them a base of operations, probably a landmark somehow
-            specialFaction.SetLocation(location.GetTypedFieldValue());
-
             return specialFaction;
         }
 
@@ -40,8 +35,28 @@ namespace Game.Incidents
         {
             if (madeNew)
             {
-                ContextDictionaryProvider.AddContext(actionField.GetTypedFieldValue());
+                var faction = actionField.GetTypedFieldValue() as SpecialFaction;
+                var creatorsFaction = creator.GetTypedFieldValue() as IFactionAffiliated;
+                if(creatorsFaction.AffiliatedFaction != null)
+				{
+                    faction.namingTheme = new NamingTheme(creatorsFaction.AffiliatedFaction.namingTheme);
+                }
+                else
+				{
+                    //replace this with something better later
+                    faction.namingTheme = FlavorService.Instance.GenerateMonsterFactionNamingTheme();
+                }
+                //need to set the leader of the special faction here
+                //also need to assign them a base of operations, probably a landmark somehow
+                faction.SetLocation(location.GetTypedFieldValue());
+                faction.SetCreator(creator.GetTypedFieldValue());
+                ContextDictionaryProvider.AddContext(faction as Faction);
             }
+        }
+
+        protected override bool VersionSpecificVerify(IIncidentContext context)
+        {
+            return location.actionField.CalculateField(context) && base.VersionSpecificVerify(context);
         }
 
         private IEnumerable<Type> GetFilteredTypeList()

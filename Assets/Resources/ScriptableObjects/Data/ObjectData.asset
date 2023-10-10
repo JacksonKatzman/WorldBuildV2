@@ -18,6 +18,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: efd2ca06c3ed27a459fa82f1b13e1e8f, type: 2}
     - {fileID: 11400000, guid: a615993b81f131d469b6196fc707de43, type: 2}
+    - {fileID: 11400000, guid: 72bab6d98cf05b7448022e76ed1d18ec, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -36,7 +37,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 
@@ -70,6 +71,24 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 4|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Game.Creatures.MonsterData, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 2
     - Name: 
       Entry: 8
       Data: 

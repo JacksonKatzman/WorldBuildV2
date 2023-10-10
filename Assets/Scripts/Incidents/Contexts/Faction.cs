@@ -15,7 +15,14 @@ namespace Game.Incidents
 	[Serializable]
 	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated
 	{
-		public Faction AffiliatedFaction => this;
+		public Faction AffiliatedFaction
+		{
+			get => this;
+			set
+			{
+				OutputLogger.LogWarning("You cannot set the affiliated faction of a faction.");
+			}
+		}
 		public Type FactionType => ContextType;
 		virtual public int Population
 		{

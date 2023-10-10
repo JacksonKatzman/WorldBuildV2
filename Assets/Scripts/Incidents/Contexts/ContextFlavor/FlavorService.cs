@@ -14,6 +14,7 @@ namespace Game.Incidents
 		public static FlavorService Instance { get; private set; }
 
 		public NamingThemePreset monsterPreset;
+		public NamingTheme genericMonsterNamingTheme;
 
 		//need to init with all of the flavor stuff like reasons
 		public Dictionary<FlavorType, List<string>> flavorLists;
@@ -102,6 +103,7 @@ namespace Game.Incidents
 			else
 			{
 				Instance = this;
+				genericMonsterNamingTheme = GenerateMonsterFactionNamingTheme();
 				LoadFlavorTemplates();
 			}
 		}

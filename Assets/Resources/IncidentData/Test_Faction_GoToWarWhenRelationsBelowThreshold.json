@@ -233,8 +233,8 @@
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "creator": {
-              "$id": "26",
-              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Assembly-CSharp]], Assembly-CSharp",
+              "$id": "27",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ISentient, Assembly-CSharp]], Assembly-CSharp",
               "contextType": null,
               "fieldName": null,
               "actionField": null,
@@ -243,7 +243,7 @@
             "findFirst": true,
             "allowCreate": false,
             "actionField": {
-              "$id": "27",
+              "$id": "28",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
               "parentType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -252,11 +252,11 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
                 "$values": [
                   {
-                    "$id": "28",
+                    "$id": "29",
                     "$type": "Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp",
                     "propertyName": "FactionRelations",
                     "evaluator": {
-                      "$id": "29",
+                      "$id": "30",
                       "$type": "Game.Incidents.ActionFieldIntDictionaryEvaluator, Assembly-CSharp",
                       "value": -100,
                       "propertyName": "FactionRelations",
@@ -283,13 +283,13 @@
           }
         },
         {
-          "$id": "30",
+          "$id": "31",
           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
           "incidentAction": {
-            "$id": "31",
+            "$id": "32",
             "$type": "Game.Incidents.ChangeWarStateAction, Assembly-CSharp",
             "factionOne": {
-              "$id": "32",
+              "$id": "33",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
               "parentType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -309,7 +309,7 @@
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "factionTwo": {
-              "$id": "33",
+              "$id": "34",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
               "parentType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -337,7 +337,7 @@
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Assembly-CSharp]], mscorlib",
       "$values": [
         {
-          "$id": "34",
+          "$id": "35",
           "$type": "Game.Incidents.ContextDeployer, Assembly-CSharp",
           "delayTime": 0,
           "deploymentCriteria": {
@@ -345,10 +345,10 @@
             "$values": []
           },
           "incidentContext": {
-            "$id": "35",
+            "$id": "36",
             "$type": "Game.Incidents.FactionBattleContext, Assembly-CSharp",
             "attacker": {
-              "$id": "36",
+              "$id": "37",
               "$type": "Game.Incidents.DeployedContextActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
               "parentType": "Game.Incidents.ContextDeployer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -368,7 +368,7 @@
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "defender": {
-              "$id": "37",
+              "$id": "38",
               "$type": "Game.Incidents.DeployedContextActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
               "parentType": "Game.Incidents.ContextDeployer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,

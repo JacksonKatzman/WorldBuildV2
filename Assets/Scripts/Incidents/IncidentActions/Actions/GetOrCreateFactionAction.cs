@@ -22,7 +22,7 @@ namespace Game.Incidents
         [ShowIf("@this.allowCreate")]
         public IntegerRange militaryPriority;
         [ShowIf("@this.allowCreate")]
-        public InterfacedIncidentActionFieldContainer<IFactionAffiliated> creator;
+        public InterfacedIncidentActionFieldContainer<ISentient> creator;
 
         protected override Faction MakeNew()
 		{
@@ -32,8 +32,6 @@ namespace Game.Incidents
 
             var newFaction = new Faction(population, influence, wealth, politicalPriority, economicPriority, religiousPriority, militaryPriority, race, 1, factionCreator);
 
-            newFaction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
-
             return newFaction;
         }
 
@@ -42,22 +40,22 @@ namespace Game.Incidents
             if (madeNew)
             {
                 var faction = actionField.GetTypedFieldValue();
+                faction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
                 faction.AttemptExpandBorder(1);
+                ContextDictionaryProvider.AddContext(faction);
             }
             
             base.Complete();
 		}
 
-        virtual protected void OnAllowCreateValueChanged()
+        override protected void OnAllowCreateValueChanged()
         {
             creator.enabled = allowCreate;
         }
 
         protected override bool VersionSpecificVerify(IIncidentContext context)
         {
-            //existed for when I had the choice of having a character create a faction, now its required
-            //return createdByCharacter ? creator.CalculateField(context) : base.VersionSpecificVerify(context);
-            return base.VersionSpecificVerify(context);
+            return creator.actionField.CalculateField(context) && base.VersionSpecificVerify(context);
         }
     }
 }

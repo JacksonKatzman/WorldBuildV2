@@ -1,4 +1,5 @@
 ﻿using Game.Enums;
+using Game.Simulation;
 using Game.Utilities;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Game.Incidents
 		}
 
 		public ILocationAffiliated Location { get; set; }
+		public ISentient Creator { get; set; }
 
 		public override int ControlledTiles => 1;
 		public override int NumCities => 0;
@@ -52,6 +54,12 @@ namespace Game.Incidents
 			//also use this to set the tile they control to the location
 		}
 
+		public void SetCreator(ISentient creator)
+		{
+			Creator = creator;
+			Creator.AffiliatedFaction = this;
+		}
+
 		public SpecialFaction()
 		{
 			FactionRelations = new Dictionary<IIncidentContext, int>();
@@ -68,6 +76,34 @@ namespace Game.Incidents
 		override public void UpdateContext()
 		{
 			NumIncidents = 0;
+		}
+
+		override public void DeployContext()
+		{
+			NumIncidents = 0;
+			if (NumIncidents > 0)
+			{
+				IncidentService.Instance.PerformIncidents((Faction)this);
+			}
+
+			if (CheckDestroyed())
+			{
+				Die();
+			}
+		}
+		override public void Die()
+		{
+			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+		}
+
+		private bool CheckDestroyed()
+		{
+			return false;
+		}
+
+		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)
+		{
 		}
 
 		private static int CalculateScores(SpecialFactionBiasContainer container, int political, int economic, int religious, int military)

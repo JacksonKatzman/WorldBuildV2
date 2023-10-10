@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated
+	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated, ISentient
 	{
 		public Character() 
 		{

@@ -3,6 +3,7 @@ using Game.Enums;
 using Game.GUI.Popups;
 using Game.Incidents;
 using Game.Utilities;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -29,8 +30,11 @@ namespace Game.Simulation
 		public List<CreatureType> allowedTypes;
 		[ValueDropdown("GetCreatureAlignments", IsUniqueList = true, DropdownTitle = "Allowed Alignments"), ShowIf("@this.findBySearch == true")]
 		public List<CreatureAlignment> allowedAlignments;
+
+		[JsonIgnore]
 		override public Dictionary<string, Func<Monster, int, string>> Replacements => replacements;
 
+		[NonSerialized, JsonIgnore]
 		private static readonly Dictionary<string, Func<Monster, int, string>> replacements = new Dictionary<string, Func<Monster, int, string>>
 		{
 			{"{##}", (monster, criteriaID) => string.Format("<i><link=\"{0}\">{1}</link></i>", criteriaID, monster.monsterData.name.ToLower()) },
