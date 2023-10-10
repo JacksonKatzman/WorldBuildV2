@@ -32,6 +32,7 @@ namespace ES3Types
 			}
 
 			writer.WriteProperty("CurrentContexts", currentContexts, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
+			writer.WriteProperty("LostItems", instance.LostItems.Select(x => x.ID).ToList(), ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 		}
 
 		protected override void ReadObject<T>(ES3Reader reader, object obj)
@@ -56,6 +57,9 @@ namespace ES3Types
 						break;
 					case "Age":
 						instance.Age = reader.Read<System.Int32>(ES3Type_int.Instance);
+						break;
+					case "LostItems":
+						instance.AddContextIdBuffer("LostItems", reader.Read<System.Collections.Generic.List<System.Int32>>());
 						break;
 					default:
 						reader.Skip();

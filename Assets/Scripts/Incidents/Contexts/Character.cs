@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated
+	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated, ISentient
 	{
 		public Character() 
 		{
@@ -167,6 +167,7 @@ namespace Game.Incidents
 		public List<Character> Children { get; set; }
 
 		//public List<Character> Family => new List<Character>().Union(Parents).Union(Spouses).Union(Siblings).Union(Children).ToList();
+		public List<Character> Family => CharacterExtensions.GetExtendedFamily(this);
 
 		public OrganizationType PriorityAlignment => GetHighestPriority();
 		public int LawfulChaoticAlignmentAxis { get; set; }
@@ -216,12 +217,14 @@ namespace Game.Incidents
 				{
 					var father = new Character(Gender.MALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(father);
+					father.Children.Add(this);
 					ContextDictionaryProvider.AddContext(father);
 				}
 				if(Parents.Count(x => x.Gender == Gender.FEMALE) < 1)
 				{
 					var mother = new Character(Gender.FEMALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(mother);
+					mother.Children.Add(this);
 					ContextDictionaryProvider.AddContext(mother);
 				}
 			}
@@ -232,6 +235,7 @@ namespace Game.Incidents
 					var gender = Gender == Gender.MALE ? Gender.FEMALE : Gender.MALE;
 					var spouse = new Character(gender, AffiliatedRace, AffiliatedFaction, false);
 					Spouses.Add(spouse);
+					spouse.Spouses.Add(this);
 					ContextDictionaryProvider.AddContext(spouse);
 				}
 			}
@@ -243,6 +247,7 @@ namespace Game.Incidents
 				{
 					var sibling = new Character(Gender.ANY, AffiliatedRace, AffiliatedFaction, false, Parents);
 					Siblings.Add(sibling);
+					sibling.Siblings.Add(this);
 					ContextDictionaryProvider.AddContext(sibling);
 				}
 			}
@@ -259,9 +264,14 @@ namespace Game.Incidents
 
 				CurrentInventory.Items.Clear();
 			}
-			else
+			else if(AffiliatedFaction.Cities.Count > 0)
 			{
 				SimRandom.RandomEntryFromList(AffiliatedFaction.Cities).CurrentInventory.Items.AddRange(CurrentInventory.Items);
+				CurrentInventory.Items.Clear();
+			}
+			else
+			{
+				SimulationManager.Instance.world.LostItems.AddRange(CurrentInventory.Items);
 				CurrentInventory.Items.Clear();
 			}
 

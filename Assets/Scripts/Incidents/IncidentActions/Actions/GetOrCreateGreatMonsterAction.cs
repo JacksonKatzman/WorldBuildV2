@@ -9,7 +9,7 @@ namespace Game.Incidents
 		public bool useSpecificMonster;
 
 		[ShowIf("@this.useSpecificMonster")]
-		public MonsterData monster;
+		public ScriptableObjectRetriever<MonsterData> monsterData;
 		[ShowIf("@!this.useSpecificMonster")]
 		public MonsterCriteria criteria = new MonsterCriteria();
 
@@ -23,19 +23,51 @@ namespace Game.Incidents
 		private MonsterData retrievedMonsterData;
 		protected override GreatMonster MakeNew()
 		{
-			var monsterToCreate = useSpecificMonster ? monster : retrievedMonsterData;
-			var createdMonster = transformCharacter ? new GreatMonster(monsterToCreate, personToTransform.GetTypedFieldValue()) : new GreatMonster(monsterToCreate);
-			createdMonster.AffiliatedFaction = faction.GetTypedFieldValue();
-			createdMonster.CharacterName = createdMonster.AffiliatedFaction.namingTheme.GenerateName(Enums.Gender.ANY);
+			var monsterToCreate = useSpecificMonster ? monsterData.RetrieveObject() : retrievedMonsterData;
+			var createdMonster = transformCharacter ? new GreatMonster(monsterToCreate) : new GreatMonster(monsterToCreate);
 			
 			return createdMonster;
+		}
+
+		protected override void Complete()
+		{
+			if (madeNew)
+			{
+				var createdMonster = actionField.GetTypedFieldValue();
+
+				createdMonster.AffiliatedFaction = faction.GetTypedFieldValue();
+
+				if (transformCharacter)
+				{
+					createdMonster.TransformFrom(personToTransform.GetTypedFieldValue());
+				}
+				else
+				{
+					if(createdMonster.AffiliatedFaction == null)
+					{
+						createdMonster.CharacterName = FlavorService.Instance.genericMonsterNamingTheme.GenerateName(Enums.Gender.ANY);
+					}
+					else
+					{
+						createdMonster.CharacterName = createdMonster.AffiliatedFaction.namingTheme.GenerateName(Enums.Gender.ANY);
+					}
+				}
+				ContextDictionaryProvider.AddContext(createdMonster);
+			}
 		}
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)
 		{
 			if (OnlyCreate)
 			{
-				retrievedMonsterData = criteria.GetMonsterData();
+				if (!useSpecificMonster)
+				{
+					retrievedMonsterData = criteria.GetMonsterData();
+				}
+				else
+				{
+					retrievedMonsterData = monsterData.RetrieveObject();
+				}
 
 				if (retrievedMonsterData == null)
 				{

@@ -14,6 +14,7 @@ namespace Game.Incidents
 		public static FlavorService Instance { get; private set; }
 
 		public NamingThemePreset monsterPreset;
+		public NamingTheme genericMonsterNamingTheme;
 
 		//need to init with all of the flavor stuff like reasons
 		public Dictionary<FlavorType, List<string>> flavorLists;
@@ -32,12 +33,6 @@ namespace Game.Incidents
 			theme.endVowels.RandomizeWeights(1, 10);
 
 			return theme;
-		}
-
-		public string GenerateFlavor(string phrase)
-		{
-			phrase = GenerateSynonyms(phrase);
-			return phrase;
 		}
 
 		/*
@@ -68,7 +63,7 @@ namespace Game.Incidents
 				return false;
 			}
 		}
-
+/*
 		private string GenerateSynonyms(string phrase)
 		{
 			var matches = Regex.Matches(phrase, @"\{SYNONYM:([^\n \{\}]+)\}");
@@ -85,6 +80,7 @@ namespace Game.Incidents
 			}
 			return phrase;
 		}
+*/
 
 		private void LoadFlavorTemplates()
 		{
@@ -107,6 +103,7 @@ namespace Game.Incidents
 			else
 			{
 				Instance = this;
+				genericMonsterNamingTheme = GenerateMonsterFactionNamingTheme();
 				LoadFlavorTemplates();
 			}
 		}

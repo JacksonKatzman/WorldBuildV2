@@ -12,10 +12,12 @@ namespace Game.Incidents
 	{
         [ValueDropdown("GetFilteredTypeList"), LabelText("Special Faction Type")]
         public Type factionType;
+
+        public InterfacedIncidentActionFieldContainer<ILocationAffiliated> location;
         protected override Faction MakeNew()
 		{
             var specialFactionType = factionType == null ? SpecialFaction.CalculateFactionType(politicalPriority, economicPriority, religiousPriority, militaryPriority) : factionType;
-            var specialFaction = (Faction)Activator.CreateInstance(specialFactionType);
+            var specialFaction = (SpecialFaction)Activator.CreateInstance(specialFactionType);
             specialFaction.Population = population;
             specialFaction.Influence = influence;
             specialFaction.Wealth = wealth;
@@ -26,15 +28,6 @@ namespace Game.Incidents
             specialFaction.Priorities[OrganizationType.RELIGIOUS] = religiousPriority;
             specialFaction.Priorities[OrganizationType.MILITARY] = militaryPriority;
 
-            if (createdByCharacter)
-            {
-                specialFaction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
-            }
-            else
-            {
-                specialFaction.namingTheme = FlavorService.Instance.GenerateMonsterFactionNamingTheme();
-            }
-
             return specialFaction;
         }
 
@@ -42,8 +35,28 @@ namespace Game.Incidents
         {
             if (madeNew)
             {
-                ContextDictionaryProvider.AddContext(actionField.GetTypedFieldValue());
+                var faction = actionField.GetTypedFieldValue() as SpecialFaction;
+                var creatorsFaction = creator.GetTypedFieldValue() as IFactionAffiliated;
+                if(creatorsFaction.AffiliatedFaction != null)
+				{
+                    faction.namingTheme = new NamingTheme(creatorsFaction.AffiliatedFaction.namingTheme);
+                }
+                else
+				{
+                    //replace this with something better later
+                    faction.namingTheme = FlavorService.Instance.GenerateMonsterFactionNamingTheme();
+                }
+                //need to set the leader of the special faction here
+                //also need to assign them a base of operations, probably a landmark somehow
+                faction.SetLocation(location.GetTypedFieldValue());
+                faction.SetCreator(creator.GetTypedFieldValue());
+                ContextDictionaryProvider.AddContext(faction as Faction);
             }
+        }
+
+        protected override bool VersionSpecificVerify(IIncidentContext context)
+        {
+            return location.actionField.CalculateField(context) && base.VersionSpecificVerify(context);
         }
 
         private IEnumerable<Type> GetFilteredTypeList()

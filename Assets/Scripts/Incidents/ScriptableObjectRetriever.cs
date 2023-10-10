@@ -20,9 +20,9 @@ namespace Game.Incidents
 
 		public T RetrieveObject()
 		{
-			if (SerializedObjectContainerService.Instance.container.objects.TryGetValue(typeof(T), out var dict))
+			if (SerializedObjectCollectionService.Instance.container.collections.TryGetValue(typeof(T), out var collection))
 			{
-				if (dict.TryGetValue(prefabKey, out var value))
+				if (collection.objects.TryGetValue(prefabKey, out var value))
 				{
 					return (T)value;
 				}
@@ -41,9 +41,9 @@ namespace Game.Incidents
 
 		private IEnumerable<string> GetKeys()
 		{
-			if(SerializedObjectContainerService.Instance.container.objects.TryGetValue(typeof(T), out var dict))
+			if(SerializedObjectCollectionService.Instance.container.collections.TryGetValue(typeof(T), out var collection))
 			{
-				return dict.Keys;
+				return collection.objects.Keys;
 			}
 			else
 			{

@@ -19,6 +19,8 @@ namespace Game.Incidents
 		private int nextIncidentID;
 
 		public List<IncidentReport> reports;
+		[JsonIgnore]
+		public List<IncidentReport> staticReports;
 
 		public IIncident CurrentIncident { get; set; }
 
@@ -90,6 +92,9 @@ namespace Game.Incidents
 
 				followUpContexts.Clear();
 			}
+
+			reports.AddRange(staticReports);
+			staticReports.Clear();
 		}
 
 		public void ReportStaticIncident(string log, List<IIncidentContext> contexts)
@@ -99,7 +104,7 @@ namespace Game.Incidents
 			report.AddContexts(contexts);
 			nextIncidentID++;
 			report.CreateFullLog();
-			reports.Add(report);
+			staticReports.Add(report);
 		}
 
 		public void PerformDelayedContexts()
@@ -185,6 +190,7 @@ namespace Game.Incidents
 			delayedContexts = new List<DelayedIncidentContext>();
 			followUpContexts = new List<IIncidentContext>();
 			reports = new List<IncidentReport>();
+			staticReports = new List<IncidentReport>();
 
 			ContextDictionaryProvider.CurrentExpressionValues = new Dictionary<string, ExpressionValue>();
 		}

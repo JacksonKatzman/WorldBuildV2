@@ -1,4 +1,5 @@
 ﻿using Game.Simulation;
+using Game.Utilities;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -65,7 +66,7 @@ namespace Game.Incidents
 				textLine = textLine.Replace(pair.Key, pair.Value);
 			}
 
-			textLine = FlavorService.Instance.GenerateFlavor(textLine);
+			//textLine = FlavorService.Instance.GenerateFlavor(textLine);
 
 			var matches = Regex.Matches(textLine, @"\{(\d+)\}");
 
@@ -77,6 +78,9 @@ namespace Game.Incidents
 				textLine = textLine.Replace(matchString, linkString);
 			}
 
+			textLine = StaticFlavorCollections.InjectFlavor(textLine, Contexts);
+
+			textLine = textLine.CapitalizeAfterLink();
 			return textLine;
 		}
 
@@ -85,7 +89,7 @@ namespace Game.Incidents
 			Contexts = new Dictionary<string, IIncidentContext>();
 			foreach(var pair in buffer)
 			{
-					Contexts.Add(pair.Key, SimulationManager.Instance.AllContexts.GetContextByID(pair.Value));
+				Contexts.Add(pair.Key, SimulationManager.Instance.AllContexts.GetContextByID(pair.Value));
 			}
 		}
 	}

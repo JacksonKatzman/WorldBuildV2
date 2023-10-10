@@ -1,0 +1,538 @@
+{
+  "$id": "1",
+  "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "IncidentName": "Character_SummonsDemon_Dies",
+  "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Weights": {
+    "$id": "2",
+    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+    "baseWeight": 1,
+    "Operation": "-",
+    "expressions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$id": "3",
+          "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
+          "hasNextOperator": false,
+          "ExpressionType": 4,
+          "constValue": 0,
+          "chosenMethod": null,
+          "chosenProperty": null,
+          "range": {
+            "$id": "4",
+            "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+            "randomRange": true,
+            "min": 0,
+            "max": 20,
+            "constant": 0,
+            "Value": 9,
+            "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+          },
+          "subexpressions": {
+            "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+            "$values": [
+              {
+                "$id": "5",
+                "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
+                "hasNextOperator": true,
+                "ExpressionType": 2,
+                "constValue": 0,
+                "chosenMethod": null,
+                "chosenProperty": "GoodEvilAlignmentAxis",
+                "range": {
+                  "$id": "6",
+                  "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+                  "randomRange": true,
+                  "min": 0,
+                  "max": 20,
+                  "constant": 0,
+                  "Value": 15,
+                  "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                },
+                "subexpressions": null,
+                "previousCalculatedID": null,
+                "rangeWarning": "Range not implemented for non integers!",
+                "nextOperator": "/",
+                "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              },
+              {
+                "$id": "7",
+                "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
+                "hasNextOperator": false,
+                "ExpressionType": 0,
+                "constValue": 4,
+                "chosenMethod": null,
+                "chosenProperty": null,
+                "range": {
+                  "$id": "8",
+                  "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+                  "randomRange": true,
+                  "min": 0,
+                  "max": 20,
+                  "constant": 0,
+                  "Value": 15,
+                  "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                },
+                "subexpressions": null,
+                "previousCalculatedID": null,
+                "rangeWarning": "Range not implemented for non integers!",
+                "nextOperator": null,
+                "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              }
+            ]
+          },
+          "previousCalculatedID": null,
+          "rangeWarning": "Range not implemented for non integers!",
+          "nextOperator": null,
+          "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+        }
+      ]
+    }
+  },
+  "Criteria": {
+    "$id": "9",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Assembly-CSharp",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
+      "$values": []
+    }
+  },
+  "ActionContainer": {
+    "$id": "10",
+    "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
+    "incidentLog": "{0} summons the powerful demon {6} {F:0}. {6} immediately kills {OBJP:0} before disappearing into the night.",
+    "Actions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
+      "$values": [
+        {
+          "$id": "11",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "12",
+            "$type": "Game.Incidents.GetOrCreateSpecialFactionAction, Assembly-CSharp",
+            "factionType": "Game.Incidents.DemonCult, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "location": {
+              "$id": "13",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ILocationAffiliated, Assembly-CSharp]], Assembly-CSharp",
+              "contextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "fieldName": null,
+              "actionField": {
+                "$id": "14",
+                "$type": "Game.Incidents.LocationActionField, Assembly-CSharp",
+                "relatedFaction": {
+                  "$id": "15",
+                  "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+                  "parentType": null,
+                  "AllowSelf": false,
+                  "AllowNull": false,
+                  "criteria": {
+                    "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                    "$values": []
+                  },
+                  "value": null,
+                  "delayedValue": null,
+                  "Method": 0,
+                  "PreviousField": null,
+                  "PreviousFieldID": -1,
+                  "ActionFieldID": -1,
+                  "NameID": null,
+                  "ActionFieldIDString": "{-1}",
+                  "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                },
+                "minDistanceFromCities": 0,
+                "parentType": null,
+                "AllowSelf": false,
+                "AllowNull": false,
+                "criteria": {
+                  "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                  "$values": []
+                },
+                "value": null,
+                "delayedValue": null,
+                "LocationFindMethod": 0,
+                "FactionCellLocationMethod": 0,
+                "Method": 0,
+                "PreviousField": null,
+                "PreviousFieldID": -1,
+                "ActionFieldID": 2,
+                "NameID": "{2}:GetOrCreateSpecialFactionAction:location",
+                "ActionFieldIDString": "{2}",
+                "ContextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              },
+              "enabled": true
+            },
+            "population": {
+              "$id": "16",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 2,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "influence": {
+              "$id": "17",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 2,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "wealth": {
+              "$id": "18",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 13,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "politicalPriority": {
+              "$id": "19",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 16,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "economicPriority": {
+              "$id": "20",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 15,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "religiousPriority": {
+              "$id": "21",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 19,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "militaryPriority": {
+              "$id": "22",
+              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 7,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "creator": {
+              "$id": "23",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ISentient, Assembly-CSharp]], Assembly-CSharp",
+              "contextType": "Game.Incidents.GreatMonster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "fieldName": null,
+              "actionField": {
+                "$id": "24",
+                "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.GreatMonster, Assembly-CSharp]], Assembly-CSharp",
+                "parentType": null,
+                "AllowSelf": false,
+                "AllowNull": false,
+                "criteria": {
+                  "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                  "$values": []
+                },
+                "value": null,
+                "delayedValue": null,
+                "Method": 1,
+                "PreviousField": "{6}:GetOrCreateGreatMonsterAction:actionField",
+                "PreviousFieldID": 6,
+                "ActionFieldID": 3,
+                "NameID": "{3}:GetOrCreateSpecialFactionAction:creator",
+                "ActionFieldIDString": "{3}",
+                "ContextType": "Game.Incidents.GreatMonster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              },
+              "enabled": true
+            },
+            "findFirst": false,
+            "allowCreate": true,
+            "actionField": {
+              "$id": "25",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
+              "ActionFieldID": 1,
+              "NameID": "{1}:GetOrCreateSpecialFactionAction:actionField",
+              "ActionFieldIDString": "{1}",
+              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "ResultID": "{1}"
+          }
+        },
+        {
+          "$id": "26",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "27",
+            "$type": "Game.Incidents.GetOrCreateGreatMonsterAction, Assembly-CSharp",
+            "useSpecificMonster": true,
+            "monsterData": {
+              "$id": "28",
+              "$type": "Game.Incidents.ScriptableObjectRetriever`1[[Game.Creatures.MonsterData, Assembly-CSharp]], Assembly-CSharp",
+              "prefabKey": "Worg",
+              "onChanged": null
+            },
+            "criteria": {
+              "$id": "29",
+              "$type": "Game.Simulation.MonsterCriteria, Assembly-CSharp",
+              "findBySearch": false,
+              "data": null,
+              "isLegendary": false,
+              "isLandDwelling": false,
+              "allowedSizes": {
+                "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "allowedTypes": {
+                "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureType, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "allowedAlignments": {
+                "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "historical": false,
+              "ContextType": "Game.Incidents.Monster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "Context": {
+                "$id": "30",
+                "$type": "Game.Incidents.Monster, Assembly-CSharp",
+                "monsterData": null,
+                "ContextType": "Game.Incidents.Monster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "NumIncidents": 0,
+                "Name": null,
+                "ID": 0,
+                "ParentID": -1
+              },
+              "TypedContext": {
+                "$ref": "30"
+              },
+              "IsHistorical": false,
+              "CriteriaID": 0
+            },
+            "faction": {
+              "$id": "31",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 1,
+              "PreviousField": "{1}:GetOrCreateSpecialFactionAction:actionField",
+              "PreviousFieldID": 1,
+              "ActionFieldID": 4,
+              "NameID": "{4}:GetOrCreateGreatMonsterAction:faction",
+              "ActionFieldIDString": "{4}",
+              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "transformCharacter": false,
+            "personToTransform": {
+              "$id": "32",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
+              "ActionFieldID": 5,
+              "NameID": "{5}:GetOrCreateGreatMonsterAction:personToTransform",
+              "ActionFieldIDString": "{5}",
+              "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "findFirst": false,
+            "allowCreate": true,
+            "actionField": {
+              "$id": "33",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.GreatMonster, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
+              "ActionFieldID": 6,
+              "NameID": "{6}:GetOrCreateGreatMonsterAction:actionField",
+              "ActionFieldIDString": "{6}",
+              "ContextType": "Game.Incidents.GreatMonster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "ResultID": "{6}"
+          }
+        },
+        {
+          "$id": "34",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "35",
+            "$type": "Game.Incidents.KillCharacterAction, Assembly-CSharp",
+            "person": {
+              "$id": "36",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ISentient, Assembly-CSharp]], Assembly-CSharp",
+              "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "fieldName": null,
+              "actionField": {
+                "$id": "37",
+                "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+                "parentType": null,
+                "AllowSelf": false,
+                "AllowNull": false,
+                "criteria": {
+                  "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                  "$values": []
+                },
+                "value": null,
+                "delayedValue": null,
+                "Method": 1,
+                "PreviousField": "{0} - Original Context",
+                "PreviousFieldID": 0,
+                "ActionFieldID": 7,
+                "NameID": "{7}:KillCharacterAction:person",
+                "ActionFieldIDString": "{7}",
+                "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              },
+              "enabled": true
+            }
+          }
+        },
+        {
+          "$id": "38",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "39",
+            "$type": "Game.Incidents.GetFlavorAction, Assembly-CSharp",
+            "flavorType": "Game.Incidents.CharacterFlavorPrimarySecondary, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "manualMode": true,
+            "alignmentContext": {
+              "$id": "40",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IAlignmentAffiliated, Assembly-CSharp]], Assembly-CSharp",
+              "contextType": null,
+              "fieldName": null,
+              "actionField": null,
+              "enabled": false
+            },
+            "perm": 0,
+            "goodEvilAxisAlignment": 0,
+            "lawfulChaoticAxisAlignment": 0,
+            "actionFields": {
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp]], mscorlib",
+              "$values": [
+                {
+                  "$id": "41",
+                  "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
+                  "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "fieldName": "primaryCharacter",
+                  "actionField": {
+                    "$id": "42",
+                    "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+                    "parentType": null,
+                    "AllowSelf": false,
+                    "AllowNull": false,
+                    "criteria": {
+                      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                      "$values": []
+                    },
+                    "value": null,
+                    "delayedValue": null,
+                    "Method": 2,
+                    "PreviousField": null,
+                    "PreviousFieldID": -1,
+                    "ActionFieldID": 8,
+                    "NameID": "{8}:GetFlavorAction:actionFields",
+                    "ActionFieldIDString": "{8}",
+                    "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  },
+                  "enabled": true
+                },
+                {
+                  "$id": "43",
+                  "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
+                  "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "fieldName": "secondaryCharacter",
+                  "actionField": {
+                    "$id": "44",
+                    "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+                    "parentType": null,
+                    "AllowSelf": false,
+                    "AllowNull": false,
+                    "criteria": {
+                      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                      "$values": []
+                    },
+                    "value": null,
+                    "delayedValue": null,
+                    "Method": 2,
+                    "PreviousField": null,
+                    "PreviousFieldID": -1,
+                    "ActionFieldID": 9,
+                    "NameID": "{9}:GetFlavorAction:actionFields",
+                    "ActionFieldIDString": "{9}",
+                    "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  },
+                  "enabled": true
+                }
+              ]
+            },
+            "pairings": {
+              "$id": "45",
+              "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp]], mscorlib",
+              "{0}": {
+                "$ref": "41"
+              },
+              "{1}": {
+                "$ref": "43"
+              }
+            },
+            "FlavorActionId": 0,
+            "FlavorActionIdString": "{F:0}"
+          }
+        }
+      ]
+    },
+    "Deployers": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Assembly-CSharp]], mscorlib",
+      "$values": []
+    },
+    "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+  }
+}

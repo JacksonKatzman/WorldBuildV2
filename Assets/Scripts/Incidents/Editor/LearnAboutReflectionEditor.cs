@@ -12,6 +12,7 @@ using Game.Generators.Names;
 using Game.Utilities;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace Game.Incidents
 {
@@ -43,6 +44,26 @@ namespace Game.Incidents
 			{
 				ThesaurusEntryRetriever.GetSynonyms("mad");
 			}
+
+			if (GUILayout.Button("XML Test"))
+			{
+				XMLTest();
+			}
+
+			if (GUILayout.Button("Recursion Test"))
+			{
+				var randomCharacter = SimRandom.RandomEntryFromList(SimulationManager.Instance.world.People);
+				var family = CharacterExtensions.GetExtendedFamily(randomCharacter);
+				if (family.Count > 0)
+				{
+					var member = SimRandom.RandomEntryFromList(family);
+					var contexts = new Dictionary<string, IIncidentContext>();
+					contexts.Add("{0}", randomCharacter);
+					contexts.Add("{1}", member);
+					var title = StaticFlavorCollections.HandleCharacterRelationshipTitles("{RELATE:0/1}", contexts);
+					OutputLogger.Log(title);
+				}
+			}
 		}
 		public static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
 		{
@@ -72,6 +93,16 @@ namespace Game.Incidents
 			}
 
 			return phrase;
+		}
+
+		public void XMLTest()
+		{
+			XElement word = XElement.Parse(@"<p><ent>Abandon</ent><br/>
+<hw>A*bandon </hw> <pr> (oops)</pr>, <pos>v. t.</pos> <vmorph>[<pos>imp. oops2; p. p.</pos> <conjf>Abandoned</conjf> <pr>(-doops3;nd)</pr>; <pos>p. pr. oops4; vb. n.</pos> <conjf>Abandoning</conjf>.]</vmorph> <ety>[OF. <ets>abandoner</ets>, F. <ets>abandonner</ets>; <ets>a</ets> (L. <ets>ad</ets>) + <ets>bandon</ets> permission, authority, LL. <ets>bandum</ets>, <ets>bannum</ets>, public proclamation, interdiction, <ets>bannire</ets> to proclaim, summon: of Germanic origin; cf. Goth. <ets>bandwjan</ets> to show by signs, to designate OHG. <ets>ban</ets> proclamation. The word meant to proclaim, put under a ban, put under control; hence, as in OE., to compel, subject, or to leave in the control of another, and hence, to give up. See <er>Ban</er>.]</ety> <sn>1.</sn> <def>To cast or drive out; to banish; to expel; to reject.</def> <mark>[Obs.]</mark><br/>
+		  [<source> 1913 Webster </source>] </p> ");
+
+			List<XElement> stuff = word.Elements("ent").ToList();
+			OutputLogger.Log(stuff[0].ToString());
 		}
 	}
 

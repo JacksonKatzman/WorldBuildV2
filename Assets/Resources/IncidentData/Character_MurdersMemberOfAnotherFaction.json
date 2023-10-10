@@ -46,7 +46,7 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 4,
+                    "Value": 17,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
@@ -82,8 +82,9 @@
             "$type": "Game.Incidents.KillCharacterAction, Assembly-CSharp",
             "person": {
               "$id": "11",
-              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ICharacter, Assembly-CSharp]], Assembly-CSharp",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ISentient, Assembly-CSharp]], Assembly-CSharp",
               "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "fieldName": null,
               "actionField": {
                 "$id": "12",
                 "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
@@ -104,6 +105,7 @@
                           "$id": "15",
                           "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Assembly-CSharp]], Assembly-CSharp",
                           "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                          "fieldName": null,
                           "actionField": {
                             "$id": "16",
                             "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
@@ -123,7 +125,8 @@
                             "NameID": null,
                             "ActionFieldIDString": "{-1}",
                             "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-                          }
+                          },
+                          "enabled": true
                         },
                         "propertyName": "AffiliatedFaction",
                         "Comparator": "!=",
@@ -144,7 +147,8 @@
                 "NameID": "{1}:KillCharacterAction:person",
                 "ActionFieldIDString": "{1}",
                 "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-              }
+              },
+              "enabled": true
             }
           }
         },
@@ -174,6 +178,7 @@
                         "$id": "22",
                         "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Assembly-CSharp]], Assembly-CSharp",
                         "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        "fieldName": null,
                         "actionField": {
                           "$id": "23",
                           "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
@@ -193,7 +198,8 @@
                           "NameID": null,
                           "ActionFieldIDString": "{-1}",
                           "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-                        }
+                        },
+                        "enabled": true
                       },
                       "propertyName": "AffiliatedFaction",
                       "Comparator": "==",
@@ -235,6 +241,7 @@
                         "$id": "27",
                         "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Assembly-CSharp]], Assembly-CSharp",
                         "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        "fieldName": null,
                         "actionField": {
                           "$id": "28",
                           "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
@@ -254,7 +261,8 @@
                           "NameID": null,
                           "ActionFieldIDString": "{-1}",
                           "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-                        }
+                        },
+                        "enabled": true
                       },
                       "propertyName": "AffiliatedFaction",
                       "Comparator": "==",
@@ -348,7 +356,7 @@
                             "min": 0,
                             "max": 20,
                             "constant": 0,
-                            "Value": 9,
+                            "Value": 4,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,

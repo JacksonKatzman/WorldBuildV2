@@ -24,7 +24,7 @@ namespace Game.Incidents
 
             if(FlavorEditorWindow.Instance == null)
 			{
-                FlavorEditorWindow.OpenWindow();
+               // FlavorEditorWindow.OpenWindow();
 			}
 		}
 

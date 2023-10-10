@@ -2,6 +2,6 @@
 {
 	public interface IFactionAffiliated
 	{
-		Faction AffiliatedFaction { get; }
+		Faction AffiliatedFaction { get; set; }
 	}
 }

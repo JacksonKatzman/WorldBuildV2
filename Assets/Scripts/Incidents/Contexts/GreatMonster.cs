@@ -7,7 +7,7 @@ using System;
 
 namespace Game.Incidents
 {
-	public class GreatMonster : IncidentContext, IInventoryAffiliated, IAlignmentAffiliated, IFactionAffiliated
+	public class GreatMonster : IncidentContext, IInventoryAffiliated, IAlignmentAffiliated, IFactionAffiliated, ISentient
 	{
 		public MonsterData dataBlock;
 		public override string Name => CharacterName.fullName;
@@ -29,10 +29,10 @@ namespace Game.Incidents
 			this.dataBlock = dataBlock;
 		}
 
-		public GreatMonster(MonsterData dataBlock, Character person) : this(dataBlock)
+		public void TransformFrom(Character character)
 		{
-			Name = person.Name;
-			person.Die();
+			CharacterName = character.CharacterName;
+			character.Die();
 		}
 
 		public override void DeployContext()

@@ -1,4 +1,5 @@
 ﻿using Game.Factions;
+using Game.Generators.Items;
 using Game.Incidents;
 using Game.Terrain;
 using Game.Utilities;
@@ -42,6 +43,8 @@ namespace Game.Simulation
 		[JsonIgnore]
 		public int NumPeople => CurrentContexts[typeof(Character)].Count;
 
+		public List<Item> LostItems;
+
 		public int nextID;
 
 		public World()
@@ -53,6 +56,7 @@ namespace Game.Simulation
 			AllContexts = new IncidentContextDictionary();
 			contextsToAdd = new IncidentContextDictionary();
 			contextsToRemove = new IncidentContextDictionary();
+			LostItems = new List<Item>();
 		}
 
 		public void Initialize(List<FactionPreset> factions)
@@ -242,6 +246,8 @@ namespace Game.Simulation
 				var context = AllContexts.GetContextByID(id);
 				CurrentContexts[context.ContextType].Add(context);
 			}
+
+			LostItems = SaveUtilities.ConvertIDsToContexts<Item>(contextIDLoadBuffers["LostItems"]);
 		}
 	}
 }
