@@ -15,6 +15,10 @@
 /[Aa]ssets/Resources/*.txt
 /[Aa]ssets/Resources/*.csv
 /[Aa]ssets/Resources/*.txt.meta
+/[Aa]ssets/Resources/*.xml
+/[Aa]ssets/Resources/*.xml.meta
+/[Aa]ssets/Resources/RawData/Dictionary/gcide_xml-0.53/*.xml
+/[Aa]ssets/Resources/RawData/Dictionary/gcide_xml-0.53/*.xml.meta
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -80,3 +84,4 @@ crashlytics-build.properties
 /[Aa]ssets/MapMagic/*
 Assets/Resources/factionCSV.csv.meta
 Assets/Resources/incidentLog.txt.meta
+*.meta
