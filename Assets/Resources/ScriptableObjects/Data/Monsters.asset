@@ -23,13 +23,22 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: objectType
+      Entry: 7
+      Data: 0|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Game.Creatures.MonsterData, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: objects
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Sirenix.OdinInspector.SerializedScriptableObject,
+      Data: 1|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Sirenix.OdinInspector.SerializedScriptableObject,
         Sirenix.Serialization]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 2|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -67,3 +76,4 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  resourcePath: 
