@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da592df85a22c1143bbfc083ccdc9877, type: 3}
-  m_Name: CityPreset
+  m_Name: Mine_Preset
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,6 +21,4 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  models:
-  - {fileID: 4000013750885840, guid: f2967fed6444e43559e32916c2465d27, type: 3}
-  - {fileID: 4000011263270592, guid: cb7be9a74fd6e4cbdb5be2ac7319e699, type: 3}
+  models: []
