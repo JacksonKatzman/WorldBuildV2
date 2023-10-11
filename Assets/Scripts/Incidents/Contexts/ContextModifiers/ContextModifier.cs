@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Enums;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace Game.Incidents
 
         virtual protected bool IsValidPropertyType(Type type)
         {
-            return type == typeof(int) || type == typeof(float) || type == typeof(bool);
+            return type == typeof(int) || type == typeof(float) || type == typeof(bool) || type == typeof(List<CharacterTag>);
         }
 
         private IEnumerable<string> GetPropertyNames()
@@ -84,6 +85,10 @@ namespace Game.Incidents
             {
                 Calculator = new BooleanContextModifierCalculator(propertyName, ContextType);
             }
+            else if(PrimitiveType == typeof(List<CharacterTag>))
+			{
+                Calculator = new CharacterTagCalculator(propertyName);
+			}
             IncidentEditorWindow.UpdateActionFieldIDs();
         }
     }
