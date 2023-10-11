@@ -20,6 +20,16 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: objectType
+      Entry: 7
+      Data: 0|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Game.Incidents.FlavorTemplate_CharChar, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
   flavorTemplates:
   - {fileID: 11400000, guid: a346a1a2a50fdc94181d452765719075, type: 2}
+  resourcePath: Reasons/2Character
