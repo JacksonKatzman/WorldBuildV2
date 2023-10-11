@@ -4,6 +4,7 @@ using Game.Generators.Names;
 using Game.Simulation;
 using Game.Utilities;
 using System;
+using System.Collections.Generic;
 
 namespace Game.Incidents
 {
@@ -17,14 +18,17 @@ namespace Game.Incidents
 		public OrganizationType PriorityAlignment => OrganizationType.MILITARY;
 		public int LawfulChaoticAlignmentAxis { get; set; }
 		public int GoodEvilAlignmentAxis { get; set; }
-
+		public List<CharacterTag> CharacterTags { get; set; }
 		public Faction AffiliatedFaction { get; set; }
 
 		public CreatureSize CreatureSize => dataBlock.size;
 		public CreatureType CreatureType => dataBlock.type;
 
-		public GreatMonster() { }
-		public GreatMonster(MonsterData dataBlock)
+		public GreatMonster() 
+		{
+			CharacterTags = new List<CharacterTag>();
+		}
+		public GreatMonster(MonsterData dataBlock) : base()
 		{
 			this.dataBlock = dataBlock;
 		}

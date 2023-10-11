@@ -54,6 +54,7 @@ namespace Game.Incidents
 			Parents = parents == null ? new List<Character>() : parents;
 			Siblings = new List<Character>();
 			Children = new List<Character>();
+			CharacterTags = new List<CharacterTag>();
 
 			if(Parents.Count > 0)
 			{
@@ -119,6 +120,7 @@ namespace Game.Incidents
 			Spouses = new List<Character>();
 			Siblings = new List<Character>();
 			Children = new List<Character>();
+			CharacterTags = new List<CharacterTag>();
 		}
 
 		public override string Name => CharacterName.GetTitledFullName(this);
@@ -165,6 +167,7 @@ namespace Game.Incidents
 		public List<Character> Spouses { get; set; }
 		public List<Character> Siblings { get; set; }
 		public List<Character> Children { get; set; }
+		public List<CharacterTag> CharacterTags { get; set; }
 
 		//public List<Character> Family => new List<Character>().Union(Parents).Union(Spouses).Union(Siblings).Union(Children).ToList();
 		public List<Character> Family => CharacterExtensions.GetExtendedFamily(this);

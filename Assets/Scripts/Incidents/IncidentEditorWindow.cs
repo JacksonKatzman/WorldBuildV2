@@ -105,7 +105,7 @@ namespace Game.Incidents
         [Button("Save"), ShowIfGroup("ContextTypeChosen"), PropertyOrder(10)]
         public void OnSaveButtonPressed()
 		{
-            if (ContextTypeChosen)// && actionHandler.Actions.Count > 0)
+            if (ContextTypeChosen && !string.IsNullOrEmpty(incidentName))// && actionHandler.Actions.Count > 0)
             {
                 var incident = new Incident(incidentName, ContextType, criteria, actionHandler, weight);
 
