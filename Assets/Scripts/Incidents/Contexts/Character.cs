@@ -131,6 +131,7 @@ namespace Game.Incidents
 		public Faction AffiliatedFaction { get; set; }
 		public Organization Organization { get; set; }
 		public OrganizationPosition OfficialPosition => GetOfficialPosition();
+		public bool HasOrganizationPosition => OfficialPosition != null;
 		public int PoliticalPriority
 		{
 			get { return Priorities[OrganizationType.POLITICAL]; }

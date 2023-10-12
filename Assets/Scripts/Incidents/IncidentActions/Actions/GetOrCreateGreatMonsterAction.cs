@@ -6,8 +6,9 @@ namespace Game.Incidents
 {
 	public class GetOrCreateGreatMonsterAction : GetOrCreateAction<GreatMonster>
 	{
-		public MonsterCriteria criteria = new MonsterCriteria();
-
+		[ShowIf("@this.allowCreate")]
+		public MonsterCriteria criteria;
+		[ShowIf("@this.allowCreate")]
 		public ContextualIncidentActionField<Faction> faction;
 
 		[ShowIf("@this.OnlyCreate")]
@@ -53,7 +54,7 @@ namespace Game.Incidents
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)
 		{
-			if (OnlyCreate)
+			if (allowCreate)
 			{
 				retrievedMonsterData = criteria.RetrieveMonsterData();
 

@@ -52,7 +52,7 @@ namespace Game.Simulation
 		public override void RetrieveContext()
 		{
 			Context = new Monster();
-			((Monster)Context).monsterData = findBySearch? GetMonsterData() : monsterData.RetrieveObject();
+			((Monster)Context).monsterData = findBySearch? GetMonsterData() : monsterData?.RetrieveObject();
 		}
 
 		public MonsterData RetrieveMonsterData()

@@ -167,4 +167,16 @@ namespace Game.Simulation
 			this.context = context;
 		}
 	}
+
+    public class AffiliatedFactionChangedEvent : ISimulationEvent
+	{
+        public IFactionAffiliated affiliate;
+        public IFactionAffiliated newFaction;
+
+		public AffiliatedFactionChangedEvent(IFactionAffiliated affiliate, IFactionAffiliated newFaction)
+		{
+			this.affiliate = affiliate;
+			this.newFaction = newFaction;
+		}
+	}
 }

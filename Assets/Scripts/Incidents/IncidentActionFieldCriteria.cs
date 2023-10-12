@@ -39,7 +39,7 @@ namespace Game.Incidents
 			{
 				evaluator = new ActionFieldIntDictionaryEvaluator(propertyName, ContextType);
 			}
-			else if(PrimitiveType == typeof(List<IIncidentContext>))
+			else if(ContextType == IncidentEditorWindow.ContextType && PrimitiveType == typeof(List<IIncidentContext>))
 			{
 				evaluator = new ActionFieldListContainsEvaluator(propertyName, ContextType);
 			}

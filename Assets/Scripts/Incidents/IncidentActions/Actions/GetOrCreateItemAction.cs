@@ -21,7 +21,7 @@ namespace Game.Incidents
 		{
 			var newItem = (Item)Activator.CreateInstance(itemType);
 			newItem.RollStats(100);
-			((IInventoryAffiliated)inventoryToAddTo.actionField.GetFieldValue()).CurrentInventory.Items.Add(newItem);
+			//((IInventoryAffiliated)inventoryToAddTo.actionField.GetFieldValue()).CurrentInventory.Items.Add(newItem);
 
 			if(createdByCharacter)
 			{
@@ -33,6 +33,22 @@ namespace Game.Incidents
 			}
 
 			return newItem;
+		}
+
+		override protected void Complete()
+		{
+			var inventory = (IInventoryAffiliated)inventoryToAddTo.actionField.GetFieldValue();
+			var item = actionField.GetTypedFieldValue();
+
+			if (madeNew)
+			{
+				ContextDictionaryProvider.AddContext(actionField.GetTypedFieldValue());
+				inventory.CurrentInventory.Items.Add(item);
+			}
+			else if(inventory != null)
+			{
+				inventory.CurrentInventory.Items.Add(item);
+			}
 		}
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)
