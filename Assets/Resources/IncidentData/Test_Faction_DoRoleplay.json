@@ -34,7 +34,7 @@
           "incidentAction": {
             "$id": "6",
             "$type": "Game.Incidents.GetFlavorAction, Assembly-CSharp",
-            "flavorType": "Game.Incidents.CharacterFlavorPrimarySecondary, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "flavorType": "Game.Incidents.FlavorTemplate_CharChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "manualMode": true,
             "alignmentContext": {
               "$id": "7",

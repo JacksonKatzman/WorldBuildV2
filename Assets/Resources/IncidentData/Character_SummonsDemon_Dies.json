@@ -26,7 +26,7 @@
             "min": 0,
             "max": 20,
             "constant": 0,
-            "Value": 9,
+            "Value": 0,
             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
           },
           "subexpressions": {
@@ -47,7 +47,7 @@
                   "min": 0,
                   "max": 20,
                   "constant": 0,
-                  "Value": 15,
+                  "Value": 17,
                   "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 },
                 "subexpressions": null,
@@ -101,7 +101,7 @@
   "ActionContainer": {
     "$id": "10",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
-    "incidentLog": "{0} summons the powerful demon {6} {F:0}. {6} immediately kills {OBJP:0} before disappearing into the night.",
+    "incidentLog": "{0} summons the demon {3} {F:0}.",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
       "$values": [
@@ -110,18 +110,1310 @@
           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
           "incidentAction": {
             "$id": "12",
+            "$type": "Game.Incidents.GetOrCreateGreatMonsterAction, Assembly-CSharp",
+            "criteria": {
+              "$id": "13",
+              "$type": "Game.Simulation.MonsterCriteria, Assembly-CSharp",
+              "findBySearch": false,
+              "monsterData": {
+                "$id": "14",
+                "$type": "Game.Incidents.ScriptableObjectRetriever`1[[Game.Creatures.MonsterData, Assembly-CSharp]], Assembly-CSharp",
+                "prefabKey": "Worg",
+                "onChanged": null
+              },
+              "isLegendary": false,
+              "isLandDwelling": false,
+              "allowedSizes": {
+                "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "allowedTypes": {
+                "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureType, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "allowedAlignments": {
+                "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "historical": false,
+              "ContextType": "Game.Incidents.Monster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "Context": {
+                "$id": "15",
+                "$type": "Game.Incidents.Monster, Assembly-CSharp",
+                "monsterData": {
+                  "$id": "16",
+                  "$type": "Game.Creatures.MonsterData, Assembly-CSharp",
+                  "name": "Worg",
+                  "legendary": false,
+                  "landDwelling": true,
+                  "size": 3,
+                  "type": 10,
+                  "alignment": 5,
+                  "challengeRating": 0.5,
+                  "experienceYield": 100.0,
+                  "proficiencyBonus": 0,
+                  "armorValue": 13,
+                  "health": 26,
+                  "speed": 50,
+                  "climbSpeed": 0,
+                  "swimSpeed": 0,
+                  "flySpeed": 0,
+                  "passivePerception": 14,
+                  "stats": {
+                    "$id": "17",
+                    "$type": "Game.Creatures.SerializableStatBlock, Assembly-CSharp",
+                    "strength": 16,
+                    "dexterity": 13,
+                    "constitution": 13,
+                    "intelligence": 7,
+                    "wisdom": 11,
+                    "charisma": 8,
+                    "luck": 0
+                  },
+                  "savingThrows": {
+                    "$id": "18",
+                    "$type": "Game.Creatures.SerializableStatBlock, Assembly-CSharp",
+                    "strength": 0,
+                    "dexterity": 0,
+                    "constitution": 0,
+                    "intelligence": 0,
+                    "wisdom": 0,
+                    "charisma": 0,
+                    "luck": 0
+                  },
+                  "damageVulnerabilities": {
+                    "$type": "System.Collections.Generic.List`1[[Game.Enums.DamageType, Assembly-CSharp]], mscorlib",
+                    "$values": [
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9,
+                      0,
+                      9
+                    ]
+                  },
+                  "damageResistances": {
+                    "$type": "System.Collections.Generic.List`1[[Game.Enums.DamageType, Assembly-CSharp]], mscorlib",
+                    "$values": [
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8,
+                      8
+                    ]
+                  },
+                  "damageImmunities": {
+                    "$type": "System.Collections.Generic.List`1[[Game.Enums.DamageType, Assembly-CSharp]], mscorlib",
+                    "$values": [
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4,
+                      7,
+                      4
+                    ]
+                  },
+                  "conditionImmunities": {
+                    "$type": "System.Collections.Generic.List`1[[Game.Enums.ConditionType, Assembly-CSharp]], mscorlib",
+                    "$values": [
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4,
+                      11,
+                      13,
+                      4
+                    ]
+                  },
+                  "skills": {
+                    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+                    "$values": [
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4",
+                      "Perception +4"
+                    ]
+                  },
+                  "senses": {
+                    "$type": "System.Collections.Generic.List`1[[Game.Creatures.SenseRange, Assembly-CSharp]], mscorlib",
+                    "$values": [
+                      {
+                        "$id": "19",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "20",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "21",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "22",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "23",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "24",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "25",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "26",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "27",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "28",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "29",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "30",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "31",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "32",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "33",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "34",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "35",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "36",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "37",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "38",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "39",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "40",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "41",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "42",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "43",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "44",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "45",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "46",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "47",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "48",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "49",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "50",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "51",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "52",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "53",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      },
+                      {
+                        "$id": "54",
+                        "$type": "Game.Creatures.SenseRange, Assembly-CSharp",
+                        "senseType": 1,
+                        "distance": 60
+                      }
+                    ]
+                  },
+                  "groupingName": "pack",
+                  "sounds": {
+                    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+                    "$values": [
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl",
+                      "howl"
+                    ]
+                  },
+                  "languages": {
+                    "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+                    "$values": [
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg",
+                      "Goblin",
+                      "Worg"
+                    ]
+                  },
+                  "abilities": {
+                    "$type": "System.Collections.Generic.List`1[[Game.Creatures.CreatureAbility, Assembly-CSharp]], mscorlib",
+                    "$values": [
+                      {
+                        "$id": "55",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "56",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "57",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "58",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "59",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "60",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "61",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "62",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "63",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "64",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "65",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "66",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "67",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "68",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "69",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "70",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "71",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "72",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "73",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "74",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "75",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "76",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "77",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "78",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "79",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "80",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "81",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "82",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "83",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "84",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "85",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "86",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "87",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "88",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "89",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      },
+                      {
+                        "$id": "90",
+                        "$type": "Game.Creatures.CreatureAbility, Assembly-CSharp",
+                        "abilityName": "Keen Hearing and Smell",
+                        "abilityDescription": "The worg has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+                      }
+                    ]
+                  },
+                  "actions": {
+                    "$type": "System.Collections.Generic.List`1[[Game.Creatures.CreatureAction, Assembly-CSharp]], mscorlib",
+                    "$values": [
+                      {
+                        "$id": "91",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "92",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "93",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "94",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "95",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "96",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "97",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "98",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "99",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "100",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "101",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "102",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "103",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "104",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "105",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "106",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "107",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "108",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "109",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "110",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "111",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "112",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "113",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "114",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "115",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "116",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "117",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "118",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "119",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "120",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "121",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "122",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "123",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "124",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "125",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      },
+                      {
+                        "$id": "126",
+                        "$type": "Game.Creatures.CreatureAction, Assembly-CSharp",
+                        "actionName": "Bite",
+                        "actionDescription": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+                      }
+                    ]
+                  },
+                  "legendaryActions": {
+                    "$type": "System.Collections.Generic.List`1[[Game.Creatures.CreatureAction, Assembly-CSharp]], mscorlib",
+                    "$values": []
+                  },
+                  "Name": "Worg",
+                  "hideFlags": 0
+                },
+                "ContextType": "Game.Incidents.Monster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                "NumIncidents": 0,
+                "Name": null,
+                "ID": 0,
+                "ParentID": -1
+              },
+              "TypedContext": {
+                "$ref": "15"
+              },
+              "IsHistorical": false,
+              "CriteriaID": 0
+            },
+            "faction": {
+              "$id": "127",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 1,
+              "PreviousField": "{4}:GetOrCreateSpecialFactionAction:actionField",
+              "PreviousFieldID": 4,
+              "ActionFieldID": 1,
+              "NameID": "{1}:GetOrCreateGreatMonsterAction:faction",
+              "ActionFieldIDString": "{1}",
+              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "transformCharacter": false,
+            "personToTransform": {
+              "$id": "128",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
+              "ActionFieldID": 2,
+              "NameID": "{2}:GetOrCreateGreatMonsterAction:personToTransform",
+              "ActionFieldIDString": "{2}",
+              "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "findFirst": false,
+            "allowCreate": true,
+            "actionField": {
+              "$id": "129",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.GreatMonster, Assembly-CSharp]], Assembly-CSharp",
+              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
+              "ActionFieldID": 3,
+              "NameID": "{3}:GetOrCreateGreatMonsterAction:actionField",
+              "ActionFieldIDString": "{3}",
+              "ContextType": "Game.Incidents.GreatMonster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "ResultID": "{3}"
+          }
+        },
+        {
+          "$id": "130",
+          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "incidentAction": {
+            "$id": "131",
             "$type": "Game.Incidents.GetOrCreateSpecialFactionAction, Assembly-CSharp",
             "factionType": "Game.Incidents.DemonCult, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "location": {
-              "$id": "13",
+              "$id": "132",
               "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ILocationAffiliated, Assembly-CSharp]], Assembly-CSharp",
               "contextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "fieldName": null,
               "actionField": {
-                "$id": "14",
+                "$id": "133",
                 "$type": "Game.Incidents.LocationActionField, Assembly-CSharp",
                 "relatedFaction": {
-                  "$id": "15",
+                  "$id": "134",
                   "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
                   "parentType": null,
                   "AllowSelf": false,
@@ -155,90 +1447,90 @@
                 "Method": 0,
                 "PreviousField": null,
                 "PreviousFieldID": -1,
-                "ActionFieldID": 2,
-                "NameID": "{2}:GetOrCreateSpecialFactionAction:location",
-                "ActionFieldIDString": "{2}",
+                "ActionFieldID": 5,
+                "NameID": "{5}:GetOrCreateSpecialFactionAction:location",
+                "ActionFieldIDString": "{5}",
                 "ContextType": "Game.Incidents.Location, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
               },
               "enabled": true
             },
             "population": {
-              "$id": "16",
+              "$id": "135",
               "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
               "randomRange": true,
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 2,
+              "Value": 12,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "influence": {
-              "$id": "17",
+              "$id": "136",
               "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
               "randomRange": true,
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 2,
+              "Value": 14,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
-              "$id": "18",
+              "$id": "137",
               "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
               "randomRange": true,
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 13,
+              "Value": 14,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "politicalPriority": {
-              "$id": "19",
+              "$id": "138",
               "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
               "randomRange": true,
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 16,
+              "Value": 12,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "economicPriority": {
-              "$id": "20",
+              "$id": "139",
               "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
               "randomRange": true,
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 15,
+              "Value": 3,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "religiousPriority": {
-              "$id": "21",
+              "$id": "140",
               "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
               "randomRange": true,
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 19,
+              "Value": 6,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "militaryPriority": {
-              "$id": "22",
+              "$id": "141",
               "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
               "randomRange": true,
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 7,
+              "Value": 17,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "creator": {
-              "$id": "23",
+              "$id": "142",
               "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ISentient, Assembly-CSharp]], Assembly-CSharp",
               "contextType": "Game.Incidents.GreatMonster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "fieldName": null,
               "actionField": {
-                "$id": "24",
+                "$id": "143",
                 "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.GreatMonster, Assembly-CSharp]], Assembly-CSharp",
                 "parentType": null,
                 "AllowSelf": false,
@@ -250,11 +1542,11 @@
                 "value": null,
                 "delayedValue": null,
                 "Method": 1,
-                "PreviousField": "{6}:GetOrCreateGreatMonsterAction:actionField",
-                "PreviousFieldID": 6,
-                "ActionFieldID": 3,
-                "NameID": "{3}:GetOrCreateSpecialFactionAction:creator",
-                "ActionFieldIDString": "{3}",
+                "PreviousField": "{3}:GetOrCreateGreatMonsterAction:actionField",
+                "PreviousFieldID": 3,
+                "ActionFieldID": 6,
+                "NameID": "{6}:GetOrCreateSpecialFactionAction:creator",
+                "ActionFieldIDString": "{6}",
                 "ContextType": "Game.Incidents.GreatMonster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
               },
               "enabled": true
@@ -262,7 +1554,7 @@
             "findFirst": false,
             "allowCreate": true,
             "actionField": {
-              "$id": "25",
+              "$id": "144",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
               "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -276,194 +1568,43 @@
               "Method": 0,
               "PreviousField": null,
               "PreviousFieldID": -1,
-              "ActionFieldID": 1,
-              "NameID": "{1}:GetOrCreateSpecialFactionAction:actionField",
-              "ActionFieldIDString": "{1}",
-              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-            },
-            "ResultID": "{1}"
-          }
-        },
-        {
-          "$id": "26",
-          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
-          "incidentAction": {
-            "$id": "27",
-            "$type": "Game.Incidents.GetOrCreateGreatMonsterAction, Assembly-CSharp",
-            "useSpecificMonster": true,
-            "monsterData": {
-              "$id": "28",
-              "$type": "Game.Incidents.ScriptableObjectRetriever`1[[Game.Creatures.MonsterData, Assembly-CSharp]], Assembly-CSharp",
-              "prefabKey": "Worg",
-              "onChanged": null
-            },
-            "criteria": {
-              "$id": "29",
-              "$type": "Game.Simulation.MonsterCriteria, Assembly-CSharp",
-              "findBySearch": false,
-              "data": null,
-              "isLegendary": false,
-              "isLandDwelling": false,
-              "allowedSizes": {
-                "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Assembly-CSharp]], mscorlib",
-                "$values": []
-              },
-              "allowedTypes": {
-                "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureType, Assembly-CSharp]], mscorlib",
-                "$values": []
-              },
-              "allowedAlignments": {
-                "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Assembly-CSharp]], mscorlib",
-                "$values": []
-              },
-              "historical": false,
-              "ContextType": "Game.Incidents.Monster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "Context": {
-                "$id": "30",
-                "$type": "Game.Incidents.Monster, Assembly-CSharp",
-                "monsterData": null,
-                "ContextType": "Game.Incidents.Monster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                "NumIncidents": 0,
-                "Name": null,
-                "ID": 0,
-                "ParentID": -1
-              },
-              "TypedContext": {
-                "$ref": "30"
-              },
-              "IsHistorical": false,
-              "CriteriaID": 0
-            },
-            "faction": {
-              "$id": "31",
-              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
-              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "AllowSelf": false,
-              "AllowNull": false,
-              "criteria": {
-                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
-                "$values": []
-              },
-              "value": null,
-              "delayedValue": null,
-              "Method": 1,
-              "PreviousField": "{1}:GetOrCreateSpecialFactionAction:actionField",
-              "PreviousFieldID": 1,
               "ActionFieldID": 4,
-              "NameID": "{4}:GetOrCreateGreatMonsterAction:faction",
+              "NameID": "{4}:GetOrCreateSpecialFactionAction:actionField",
               "ActionFieldIDString": "{4}",
               "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
-            "transformCharacter": false,
-            "personToTransform": {
-              "$id": "32",
-              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
-              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "AllowSelf": false,
-              "AllowNull": false,
-              "criteria": {
-                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
-                "$values": []
-              },
-              "value": null,
-              "delayedValue": null,
-              "Method": 0,
-              "PreviousField": null,
-              "PreviousFieldID": -1,
-              "ActionFieldID": 5,
-              "NameID": "{5}:GetOrCreateGreatMonsterAction:personToTransform",
-              "ActionFieldIDString": "{5}",
-              "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-            },
-            "findFirst": false,
-            "allowCreate": true,
-            "actionField": {
-              "$id": "33",
-              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.GreatMonster, Assembly-CSharp]], Assembly-CSharp",
-              "parentType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "AllowSelf": false,
-              "AllowNull": false,
-              "criteria": {
-                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
-                "$values": []
-              },
-              "value": null,
-              "delayedValue": null,
-              "Method": 0,
-              "PreviousField": null,
-              "PreviousFieldID": -1,
-              "ActionFieldID": 6,
-              "NameID": "{6}:GetOrCreateGreatMonsterAction:actionField",
-              "ActionFieldIDString": "{6}",
-              "ContextType": "Game.Incidents.GreatMonster, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-            },
-            "ResultID": "{6}"
+            "ResultID": "{4}"
           }
         },
         {
-          "$id": "34",
+          "$id": "145",
           "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
           "incidentAction": {
-            "$id": "35",
-            "$type": "Game.Incidents.KillCharacterAction, Assembly-CSharp",
-            "person": {
-              "$id": "36",
-              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ISentient, Assembly-CSharp]], Assembly-CSharp",
-              "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "fieldName": null,
-              "actionField": {
-                "$id": "37",
-                "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
-                "parentType": null,
-                "AllowSelf": false,
-                "AllowNull": false,
-                "criteria": {
-                  "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
-                  "$values": []
-                },
-                "value": null,
-                "delayedValue": null,
-                "Method": 1,
-                "PreviousField": "{0} - Original Context",
-                "PreviousFieldID": 0,
-                "ActionFieldID": 7,
-                "NameID": "{7}:KillCharacterAction:person",
-                "ActionFieldIDString": "{7}",
-                "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-              },
-              "enabled": true
-            }
-          }
-        },
-        {
-          "$id": "38",
-          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
-          "incidentAction": {
-            "$id": "39",
+            "$id": "146",
             "$type": "Game.Incidents.GetFlavorAction, Assembly-CSharp",
-            "flavorType": "Game.Incidents.CharacterFlavorPrimarySecondary, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "flavorType": "Game.Incidents.FlavorTemplate_CharChar, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "manualMode": true,
             "alignmentContext": {
-              "$id": "40",
+              "$id": "147",
               "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IAlignmentAffiliated, Assembly-CSharp]], Assembly-CSharp",
               "contextType": null,
               "fieldName": null,
               "actionField": null,
               "enabled": false
             },
-            "perm": 0,
+            "perm": 4,
             "goodEvilAxisAlignment": 0,
             "lawfulChaoticAxisAlignment": 0,
             "actionFields": {
               "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp]], mscorlib",
               "$values": [
                 {
-                  "$id": "41",
+                  "$id": "148",
                   "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                   "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                   "fieldName": "primaryCharacter",
                   "actionField": {
-                    "$id": "42",
+                    "$id": "149",
                     "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
                     "parentType": null,
                     "AllowSelf": false,
@@ -474,23 +1615,23 @@
                     },
                     "value": null,
                     "delayedValue": null,
-                    "Method": 2,
-                    "PreviousField": null,
-                    "PreviousFieldID": -1,
-                    "ActionFieldID": 8,
-                    "NameID": "{8}:GetFlavorAction:actionFields",
-                    "ActionFieldIDString": "{8}",
+                    "Method": 1,
+                    "PreviousField": "{0} - Original Context",
+                    "PreviousFieldID": 0,
+                    "ActionFieldID": 7,
+                    "NameID": "{7}:GetFlavorAction:actionFields",
+                    "ActionFieldIDString": "{7}",
                     "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                   },
                   "enabled": true
                 },
                 {
-                  "$id": "43",
+                  "$id": "150",
                   "$type": "Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp",
                   "contextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                   "fieldName": "secondaryCharacter",
                   "actionField": {
-                    "$id": "44",
+                    "$id": "151",
                     "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
                     "parentType": null,
                     "AllowSelf": false,
@@ -501,12 +1642,12 @@
                     },
                     "value": null,
                     "delayedValue": null,
-                    "Method": 2,
-                    "PreviousField": null,
-                    "PreviousFieldID": -1,
-                    "ActionFieldID": 9,
-                    "NameID": "{9}:GetFlavorAction:actionFields",
-                    "ActionFieldIDString": "{9}",
+                    "Method": 1,
+                    "PreviousField": "{0} - Original Context",
+                    "PreviousFieldID": 0,
+                    "ActionFieldID": 8,
+                    "NameID": "{8}:GetFlavorAction:actionFields",
+                    "ActionFieldIDString": "{8}",
                     "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                   },
                   "enabled": true
@@ -514,13 +1655,13 @@
               ]
             },
             "pairings": {
-              "$id": "45",
+              "$id": "152",
               "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Game.Incidents.IncidentActionFieldContainer, Assembly-CSharp]], mscorlib",
               "{0}": {
-                "$ref": "41"
+                "$ref": "148"
               },
               "{1}": {
-                "$ref": "43"
+                "$ref": "150"
               }
             },
             "FlavorActionId": 0,

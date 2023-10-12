@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28395b76686476c4bb3b2237cd359d37, type: 3}
-  m_Name: Test_Reason
+  m_Script: {fileID: 11500000, guid: 54a09ca6ee6a30f4dba2c2b8a6da80d0, type: 3}
+  m_Name: Test_CharChar
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -50,4 +50,4 @@ MonoBehaviour:
   permType: 4
   lawfulChaoticThreshold: 0
   goodEvilThreshold: 0
-  flavor: '{0} TEST REASON {1}.'
+  flavor: because {0} interacts with {1}

@@ -18,7 +18,7 @@ namespace Game.Simulation
 		public bool findBySearch;
 
 		[ShowIf("@this.findBySearch == false")]
-		public MonsterData data;
+		public ScriptableObjectRetriever<MonsterData> monsterData;
 		[ShowIf("@this.findBySearch == true")]
 		public bool isLegendary;
 		[ShowIf("@this.findBySearch == true")]
@@ -52,7 +52,12 @@ namespace Game.Simulation
 		public override void RetrieveContext()
 		{
 			Context = new Monster();
-			((Monster)Context).monsterData = findBySearch? GetMonsterData() : data;
+			((Monster)Context).monsterData = findBySearch? GetMonsterData() : monsterData.RetrieveObject();
+		}
+
+		public MonsterData RetrieveMonsterData()
+		{
+			return findBySearch ? GetMonsterData() : monsterData.RetrieveObject();
 		}
 
 		public override void SpawnPopup()
@@ -65,7 +70,7 @@ namespace Game.Simulation
 			PopupService.Instance.ShowPopup(config);
 		}
 
-		public MonsterData GetMonsterData()
+		private MonsterData GetMonsterData()
 		{
 			var candidates = AdventureService.Instance.monsterData
 				.Where(x => x.legendary == isLegendary)
