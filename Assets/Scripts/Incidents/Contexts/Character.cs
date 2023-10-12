@@ -171,6 +171,7 @@ namespace Game.Incidents
 
 		//public List<Character> Family => new List<Character>().Union(Parents).Union(Spouses).Union(Siblings).Union(Children).ToList();
 		public List<Character> Family => CharacterExtensions.GetExtendedFamily(this);
+		public int LivingFamilyMembers => CountLivingFamilyMembers();
 
 		public OrganizationType PriorityAlignment => GetHighestPriority();
 		public int LawfulChaoticAlignmentAxis { get; set; }
@@ -318,6 +319,12 @@ namespace Game.Incidents
 		private OrganizationType GetHighestPriority()
 		{
 			return Priorities.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+		}
+
+		private int CountLivingFamilyMembers()
+		{
+			var family = Family;
+			return family.Where(x => x != this && ContextDictionaryProvider.CurrentContexts[typeof(Character)].Contains(x)).Count();
 		}
 	}
 }
