@@ -16,7 +16,6 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 94ecb6baa9424c9468b53dd52f0d9be3, type: 2}
     - {fileID: 11400000, guid: 3c6f5cc7d9c894a488ec7dc31164ec44, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -45,9 +44,19 @@ MonoBehaviour:
     - Name: findBySearch
       Entry: 5
       Data: false
-    - Name: data
-      Entry: 10
-      Data: 0
+    - Name: monsterData
+      Entry: 7
+      Data: 2|Game.Incidents.ScriptableObjectRetriever`1[[Game.Creatures.MonsterData,
+        Assembly-CSharp]], Assembly-CSharp
+    - Name: prefabKey
+      Entry: 1
+      Data: Worg
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: isLegendary
       Entry: 5
       Data: false
@@ -56,7 +65,7 @@ MonoBehaviour:
       Data: true
     - Name: allowedSizes
       Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Assembly-CSharp]],
+      Data: 3|System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -87,7 +96,7 @@ MonoBehaviour:
       Data: 
     - Name: allowedTypes
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[Game.Enums.CreatureType, Assembly-CSharp]],
+      Data: 4|System.Collections.Generic.List`1[[Game.Enums.CreatureType, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -142,7 +151,7 @@ MonoBehaviour:
       Data: 
     - Name: allowedAlignments
       Entry: 7
-      Data: 4|System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Assembly-CSharp]],
+      Data: 5|System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -188,7 +197,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 5|Game.Simulation.TreasureCriteria, Assembly-CSharp
+      Data: 6|Game.Simulation.TreasureCriteria, Assembly-CSharp
     - Name: CriteriaID
       Entry: 3
       Data: 1
@@ -203,13 +212,13 @@ MonoBehaviour:
       Data: false
     - Name: data
       Entry: 10
-      Data: 1
+      Data: 0
     - Name: type
       Entry: 6
       Data: 
     - Name: pointRange
       Entry: 7
-      Data: 6|Game.Incidents.IntegerRange, Assembly-CSharp
+      Data: 7|Game.Incidents.IntegerRange, Assembly-CSharp
     - Name: randomRange
       Entry: 5
       Data: true
@@ -236,14 +245,14 @@ MonoBehaviour:
       Data: 
     - Name: components
       Entry: 7
-      Data: 7|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+      Data: 8|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
       Data: 5
     - Name: 
       Entry: 7
-      Data: 8|Game.Simulation.AdventureTitleComponent, Assembly-CSharp
+      Data: 9|Game.Simulation.AdventureTitleComponent, Assembly-CSharp
     - Name: ComponentID
       Entry: 3
       Data: 0
@@ -255,7 +264,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 9|Game.Simulation.AdventureTextComponent, Assembly-CSharp
+      Data: 10|Game.Simulation.AdventureTextComponent, Assembly-CSharp
     - Name: ComponentID
       Entry: 3
       Data: 1
@@ -270,7 +279,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 10|Game.Simulation.AdventureNarrationComponent, Assembly-CSharp
+      Data: 11|Game.Simulation.AdventureNarrationComponent, Assembly-CSharp
     - Name: ComponentID
       Entry: 3
       Data: 2
@@ -287,20 +296,20 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 11|Game.Simulation.AdventureCombatComponent, Assembly-CSharp
+      Data: 12|Game.Simulation.AdventureCombatComponent, Assembly-CSharp
     - Name: ComponentID
       Entry: 3
       Data: 3
     - Name: combatParticipants
       Entry: 7
-      Data: 12|System.Collections.Generic.List`1[[Game.Simulation.CombatParticipant,
+      Data: 13|System.Collections.Generic.List`1[[Game.Simulation.CombatParticipant,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 13|Game.Simulation.CombatParticipant, Assembly-CSharp
+      Data: 14|Game.Simulation.CombatParticipant, Assembly-CSharp
     - Name: combatantID
       Entry: 3
       Data: 0
@@ -328,7 +337,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 14|Game.Simulation.AdventureStructureComponent, Assembly-CSharp
+      Data: 15|Game.Simulation.AdventureStructureComponent, Assembly-CSharp
     - Name: ComponentID
       Entry: 3
       Data: 4
