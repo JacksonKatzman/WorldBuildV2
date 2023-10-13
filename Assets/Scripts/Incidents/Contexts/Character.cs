@@ -64,6 +64,8 @@ namespace Game.Incidents
 			{
 				CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender);
 			}
+
+			EventManager.Instance.AddEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
 		}
 
 		public Character(Gender gender, Race race, Faction faction, bool majorCharacter, List<Character> parents = null) :
@@ -284,6 +286,7 @@ namespace Game.Incidents
 			{
 				IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this });
 			}
+			EventManager.Instance.RemoveEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
 		}
 
@@ -313,6 +316,7 @@ namespace Game.Incidents
 			}
 			else
 			{
+				Organization = null;
 				return null;
 			}
 		}
@@ -326,6 +330,14 @@ namespace Game.Incidents
 		{
 			var family = Family;
 			return family.Where(x => x != this && ContextDictionaryProvider.CurrentContexts[typeof(Character)].Contains(x)).Count();
+		}
+
+		private void OnFactionChangeEvent(AffiliatedFactionChangedEvent gameEvent)
+		{
+			if (gameEvent.affiliate == this)
+			{
+				Organization = null;
+			}
 		}
 	}
 }
