@@ -5,11 +5,72 @@ using System.Collections.Generic;
 
 namespace Game.Incidents
 {
+	public class FactionItemList : List<Item>
+	{
+		private Faction faction;
+		public FactionItemList(List<Item> items, Faction faction) : base(items)
+		{
+			this.faction = faction;
+		}
+
+		public new FactionItemList Add(Item item)
+		{
+			base.Add(item);
+			SimRandom.RandomEntryFromList(faction.Cities).CurrentInventory.Items.Add(item);
+			return this;
+		}
+
+		public new FactionItemList AddRange(IEnumerable<Item> items)
+		{
+			foreach (var item in items)
+			{
+				Add(item);
+			}
+			return this;
+		}
+
+		public new FactionItemList Remove(Item item)
+		{
+			base.Remove(item);
+			foreach (var city in faction.Cities)
+			{
+				if (city.CurrentInventory.Items.Contains(item))
+				{
+					city.CurrentInventory.Items.Remove(item);
+				}
+			}
+			return this;
+		}
+	}
+	public class FactionInventory : Inventory
+	{
+		private Faction faction;
+		private FactionItemList itemList;
+
+		override public List<Item> Items
+		{
+			get
+			{
+				var items = new List<Item>();
+				foreach (var city in faction.Cities)
+				{
+					items.AddRange(city.CurrentInventory.Items);
+				}
+				itemList = new FactionItemList(items, faction);
+				return itemList;
+			}
+		}
+
+		public FactionInventory(Faction faction)
+		{
+			this.faction = faction;
+		}
+	}
 	public class Inventory : InertIncidentContext, IInventoryAffiliated
 	{
 		public override Type ContextType => typeof(Inventory);
-		public List<Item> Items { get; set; }
-		public Inventory CurrentInventory => this;
+		virtual public List<Item> Items { get; private set; }
+		virtual public Inventory CurrentInventory => this;
 
 		public Inventory() 
 		{

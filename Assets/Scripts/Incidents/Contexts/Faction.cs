@@ -1,4 +1,5 @@
 ﻿using Game.Enums;
+using Game.Generators.Items;
 using Game.Generators.Names;
 using Game.Incidents;
 using Game.Simulation;
@@ -13,7 +14,7 @@ using UnityEngine;
 namespace Game.Incidents
 {
 	[Serializable]
-	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated
+	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated, IInventoryAffiliated
 	{
 		public Faction AffiliatedFaction
 		{
@@ -79,7 +80,21 @@ namespace Game.Incidents
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		public Organization Government { get; set; }
+		public Inventory CurrentInventory
+		{
+			get
+			{
+				if(inventory == null)
+				{
+					inventory = new FactionInventory(this);
+				}
+				return inventory;
+			}
+		}
+		private FactionInventory inventory;
+
 		public Race MajorityRace => Government.Leader.AffiliatedRace;
+		virtual public bool IsSpecialFaction => false;
 
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
