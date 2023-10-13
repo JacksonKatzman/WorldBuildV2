@@ -14,14 +14,15 @@ namespace Game.Incidents
 		public override Type ContextType => typeof(Landmark);
 
 		public Inventory CurrentInventory { get; set; }
-		//public LandmarkType LandmarkType { get; private set; }
+
+		public LandmarkPreset Preset { get; private set; }
 
 		public Landmark() { }
 		public Landmark(Location location, LandmarkPreset landmarkType)
 		{
 			CurrentLocation = location;
 			CurrentInventory = new Inventory();
-			//LandmarkType = landmarkType;
+			Preset = landmarkType;
 		}
 
 		public override void LoadContextProperties()
