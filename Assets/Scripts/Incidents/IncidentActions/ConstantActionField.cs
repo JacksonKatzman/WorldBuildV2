@@ -21,7 +21,7 @@ namespace Game.Incidents
 			ActionFieldID = 0;
 			NameID = ActionFieldIDString + " - Original Context";
 		}
-		public ConstantActionField(IIncidentContext context) : this(context.ContextType)
+		public ConstantActionField(IIncidentContext context) : this(context.GetType())
 		{
 			this.context = context;
 		}

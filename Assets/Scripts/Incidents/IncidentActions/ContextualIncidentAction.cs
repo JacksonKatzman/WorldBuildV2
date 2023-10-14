@@ -13,7 +13,7 @@ namespace Game.Incidents
 			{
 				if (value != null)
 				{
-					if (value.ContextType == ContextType)
+					if (value.GetType() == ContextType)
 					{
 						context = value;
 					}

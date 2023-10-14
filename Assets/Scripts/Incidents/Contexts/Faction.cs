@@ -273,7 +273,7 @@ namespace Game.Incidents
 
 		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)
 		{
-			if(gameEvent.context.ContextType == typeof(Faction))
+			if(gameEvent.context.GetType() == typeof(Faction))
 			{
 				//remove factions from collections
 				if(FactionRelations.Keys.Contains(gameEvent.context))
@@ -285,7 +285,7 @@ namespace Game.Incidents
 					FactionsAtWarWith.Remove(gameEvent.context);
 				}
 			}
-			if(gameEvent.context.ContextType == typeof(City))
+			if(gameEvent.context.GetType() == typeof(City))
 			{
 				if(Cities != null && Cities.Contains((City)gameEvent.context))
 				{

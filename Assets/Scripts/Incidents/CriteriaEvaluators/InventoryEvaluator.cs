@@ -9,7 +9,7 @@ namespace Game.Incidents
 
 		protected override Inventory GetContext(IIncidentContext context)
 		{
-			if ((typeof(IInventoryAffiliated)).IsAssignableFrom(context.ContextType))
+			if ((typeof(IInventoryAffiliated)).IsAssignableFrom(context.GetType()))
 			{
 				return ((IInventoryAffiliated)context).CurrentInventory;
 			}

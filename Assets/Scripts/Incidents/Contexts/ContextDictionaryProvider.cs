@@ -75,26 +75,26 @@ namespace Game.Simulation
 
 		public static void DelayedAddContexts()
 		{
-			foreach (var contextList in contextsToAdd.Values)
+			foreach (var pair in contextsToAdd)
 			{
-				foreach (var context in contextList)
+				foreach (var context in pair.Value)
 				{
-					CurrentContexts[context.ContextType].Add(context);
-					AllContexts[context.ContextType].Add(context);
+					CurrentContexts[pair.Key].Add(context);
+					AllContexts[pair.Key].Add(context);
 				}
-				contextList.Clear();
+				pair.Value.Clear();
 			}
 		}
 
 		public static void DelayedRemoveContexts()
 		{
-			foreach (var contextList in contextsToRemove.Values)
+			foreach (var pair in contextsToRemove)
 			{
-				foreach (var context in contextList)
+				foreach (var context in pair.Value)
 				{
-					CurrentContexts[context.ContextType].Remove(context);
+					CurrentContexts[pair.Key].Remove(context);
 				}
-				contextList.Clear();
+				pair.Value.Clear();
 			}
 		}
 

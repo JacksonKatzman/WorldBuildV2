@@ -100,7 +100,7 @@ namespace Game.Incidents
 			}
 
 			//This is to get DeployedContextActionFields from a DeployedContext
-			var deployedContextFields = ActionFieldReflection.GetGenericFieldsByType(providedContext.ContextType, typeof(DeployedContextActionField<>)).ToList();
+			var deployedContextFields = ActionFieldReflection.GetGenericFieldsByType(providedContext.GetType(), typeof(DeployedContextActionField<>)).ToList();
 			for(int i = 0; i < deployedContextFields.Count; i++)
 			{
 				if(actionFieldID == i+1)
