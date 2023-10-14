@@ -126,7 +126,7 @@ namespace Game.Incidents
 			}
 			return false;
 		}
-
+#if UNITY_EDITOR
 		private List<string> GetActionFieldIdentifiers()
 		{
 			var ids = new List<string>();
@@ -141,8 +141,8 @@ namespace Game.Incidents
 			criteria = new IncidentCriteria(actionField.ContextType);
 			previousFieldID = actionField.ActionFieldID;
 		}
+#endif
 	}
-
 	public interface IDeployableContext : IIncidentContext
 	{
 		bool CalculateFields(IIncidentContext context);

@@ -55,7 +55,7 @@ namespace Game.Incidents
 
 			return false;
 		}
-
+#if UNITY_EDITOR
 		private void SetAction()
 		{
 			incidentAction.UpdateEditor();
@@ -66,5 +66,6 @@ namespace Game.Incidents
 		{
 			return IncidentActionHelpers.GetFilteredTypeList(IncidentEditorWindow.ContextType);
 		}
+#endif
 	}
 }

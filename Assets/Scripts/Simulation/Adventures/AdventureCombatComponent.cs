@@ -25,10 +25,12 @@ namespace Game.Simulation
 		public int combatantID;
 		public int amount;
 
+#if UNITY_EDITOR
 		private IEnumerable<int> GetCombatantIDs()
 		{
 			var ids = EncounterEditorWindow.contextCriterium.Where(x => x.GetType() == typeof(MonsterCriteria)).Select(x => x.CriteriaID);
 			return ids;
 		}
+#endif
 	}
 }

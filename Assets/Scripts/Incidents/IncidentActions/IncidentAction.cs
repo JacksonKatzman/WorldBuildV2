@@ -53,6 +53,7 @@ namespace Game.Incidents
 
 		virtual public void UpdateEditor()
 		{
+#if UNITY_EDITOR
 			var matchingFields = GetContexualActionFields();
 
 			foreach (var field in matchingFields)
@@ -92,10 +93,12 @@ namespace Game.Incidents
 					field.SetValue(this, Activator.CreateInstance(field.FieldType));
 				}
 			}
+#endif
 		}
 
 		virtual public void UpdateActionFieldIDs(ref int startingValue)
 		{
+#if UNITY_EDITOR
 			UpdateEditor();
 
 			var matchingFields = GetContexualActionFields();
@@ -147,6 +150,7 @@ namespace Game.Incidents
 					startingValue++;
 				}
 			}
+#endif
 		}
 
 		virtual public void AddContext(ref IncidentReport report)

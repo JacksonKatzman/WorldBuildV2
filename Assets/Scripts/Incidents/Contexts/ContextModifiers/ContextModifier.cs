@@ -59,7 +59,7 @@ namespace Game.Incidents
         {
             return type == typeof(int) || type == typeof(float) || type == typeof(bool) || type == typeof(List<CharacterTag>);
         }
-
+#if UNITY_EDITOR
         private IEnumerable<string> GetPropertyNames()
         {
             if (properties == null || properties.Count == 0)
@@ -91,5 +91,6 @@ namespace Game.Incidents
 			}
             IncidentEditorWindow.UpdateActionFieldIDs();
         }
+#endif
     }
 }

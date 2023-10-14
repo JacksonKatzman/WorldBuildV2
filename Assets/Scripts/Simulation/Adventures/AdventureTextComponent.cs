@@ -13,7 +13,9 @@ namespace Game.Simulation
 
 		override public void UpdateContextIDs(List<int> removedIds = null)
 		{
+#if UNITY_EDITOR
 			text = EncounterEditorWindow.UpdateInTextIDs(text, removedIds);
+#endif
 		}
 	}
 }

@@ -80,7 +80,7 @@ namespace Game.Incidents
                 || type == typeof(Dictionary<IIncidentContext, int>)
                 || type == typeof(Dictionary<IIncidentContext, float>)
                 || type == typeof(Dictionary<IIncidentContext, bool>)
-                || (type == typeof(List<IIncidentContext>) && IncidentEditorWindow.ContextType == ContextType)
+                || (type == typeof(List<IIncidentContext>)) // && IncidentEditorWindow.ContextType == ContextType)
                 || type == typeof(List<CharacterTag>);
 
         }

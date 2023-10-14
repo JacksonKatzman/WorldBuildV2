@@ -1,4 +1,5 @@
-﻿using Game.Enums;
+﻿#if UNITY_EDITOR
+using Game.Enums;
 using Game.Incidents;
 using Game.Terrain;
 using Game.Utilities;
@@ -251,3 +252,4 @@ namespace Game.Simulation
         }
     }
 }
+#endif

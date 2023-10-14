@@ -10,7 +10,7 @@ namespace Game.Incidents
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
 		}
-
+#if UNITY_EDITOR
 		private void AddNewActionFieldContainer()
 		{
 			actionFields.Add(new IncidentActionFieldContainer());
@@ -21,5 +21,6 @@ namespace Game.Incidents
 			actionFields.RemoveAt(i);
 			IncidentEditorWindow.UpdateActionFieldIDs();
 		}
+#endif
 	}
 }

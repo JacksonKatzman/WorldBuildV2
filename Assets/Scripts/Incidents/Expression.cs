@@ -148,7 +148,7 @@ namespace Game.Incidents
                 validProperties.ForEach(x => properties.Add(x.Name, x.PropertyType));
             }
         }
-
+#if UNITY_EDITOR
         private IEnumerable<string> GetPropertyNames()
         {
             if (properties == null || properties.Count == 0)
@@ -173,7 +173,8 @@ namespace Game.Incidents
 		{
             return ExpressionHelpers.GetOperatorNames<T>();
 		}
-	}
+#endif
+    }
 
     public class ExpressionValue
 	{

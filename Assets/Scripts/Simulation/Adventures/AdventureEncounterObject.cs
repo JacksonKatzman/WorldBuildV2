@@ -2,12 +2,10 @@
 using Game.Incidents;
 using Game.Terrain;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Game.Simulation
 {

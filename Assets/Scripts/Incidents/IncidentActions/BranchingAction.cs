@@ -79,10 +79,11 @@ namespace Game.Incidents
 			contextField = null;
 			return false;
 		}
-
+#if UNITY_EDITOR
 		private void AddBranch()
 		{
 			branches.Add(new IncidentActionBranch(IncidentEditorWindow.ContextType));
 		}
+#endif
 	}
 }

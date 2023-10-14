@@ -68,6 +68,7 @@ namespace Game.Incidents
 
 		public void UpdateActionFieldIDs(ref int startingValue)
 		{
+#if UNITY_EDITOR
 			IncidentEditorWindow.handlerContainers.Add(this);
 			if (startingValue == 0)
 			{
@@ -82,6 +83,7 @@ namespace Game.Incidents
 			}
 
 			UpdateFlavorIDs();
+#endif
 		}
 
 		public void GetContextDictionary(ref IncidentReport report)
@@ -137,7 +139,7 @@ namespace Game.Incidents
 				flavorAction.FlavorActionId = i;
 			}
 		}
-
+#if UNITY_EDITOR
 		private void AddNewActionContainer()
 		{
 			Actions.Add(new IncidentActionHandler());
@@ -155,5 +157,6 @@ namespace Game.Incidents
 		{
 			Deployers.Add(new ContextDeployer());
 		}
+#endif
 	}
 }

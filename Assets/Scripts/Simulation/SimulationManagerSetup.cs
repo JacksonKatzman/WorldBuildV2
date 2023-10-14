@@ -36,5 +36,10 @@ namespace Game.Simulation
 
 			simMan.CreateWorld(factions);
 		}
+
+		public void TestRun()
+		{
+			SimulationManager.Instance.DebugRun();
+		}
 	}
 }

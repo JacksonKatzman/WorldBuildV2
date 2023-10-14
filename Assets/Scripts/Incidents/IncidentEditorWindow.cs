@@ -1,4 +1,5 @@
-﻿using Game.Utilities;
+﻿#if UNITY_EDITOR
+using Game.Utilities;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -265,3 +266,4 @@ namespace Game.Incidents
         public bool ContextTypeChosen => incidentContextType != null;
     }
 }
+#endif

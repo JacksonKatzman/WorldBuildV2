@@ -20,12 +20,14 @@ namespace Game.Simulation
 
 		override public void UpdateContextIDs(List<int> removedIds = null)
 		{
+#if UNITY_EDITOR
 			structureName = EncounterEditorWindow.UpdateInTextIDs(structureName, removedIds);
 			structureDescription = EncounterEditorWindow.UpdateInTextIDs(structureDescription, removedIds);
 			ceilingDescription = EncounterEditorWindow.UpdateInTextIDs(ceilingDescription, removedIds);
 			floorsAndWallsDescription = EncounterEditorWindow.UpdateInTextIDs(floorsAndWallsDescription, removedIds);
 			doorsDescription = EncounterEditorWindow.UpdateInTextIDs(doorsDescription, removedIds);
 			lightingDescription = EncounterEditorWindow.UpdateInTextIDs(lightingDescription, removedIds);
+#endif
 		}
 	}
 }

@@ -52,8 +52,9 @@ namespace Game.Incidents
 			var path = Path.Combine(Application.dataPath + SaveUtilities.THESAURUS_DATA_PATH + THESAURUS_FILE_NAME);
 			string output = JsonConvert.SerializeObject(thesaurus, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);
 			File.WriteAllText(path, output);
-
+#if UNITY_EDITOR
 			AssetDatabase.Refresh();
+#endif
 		}
 
 		public static bool AddEntry(string key, List<string> entries)

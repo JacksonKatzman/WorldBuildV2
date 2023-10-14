@@ -93,10 +93,13 @@ namespace Game.Simulation
 
 		public void DebugRun()
 		{
+			var startTime = Time.realtimeSinceStartup;
 			for(int i = 0; i < 100; i++)
 			{
 				world.AdvanceTime();
 			}
+			var simTime = Time.realtimeSinceStartup - startTime;
+			OutputLogger.Log("TIME TO SIM: " + simTime);
 
 			world.BeginPostGeneration();
 
@@ -113,6 +116,8 @@ namespace Game.Simulation
 
 			table.ToCSV(Application.dataPath + "/Resources/" + "factionCSV" + ".csv");
 			IncidentService.Instance.WriteIncidentLogToDisk();
+			var fullTime = Time.realtimeSinceStartup - startTime;
+			OutputLogger.Log("FULL TIME: " + fullTime);
 		}
 	}
 }
