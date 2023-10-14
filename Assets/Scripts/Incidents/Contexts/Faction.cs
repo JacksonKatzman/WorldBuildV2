@@ -173,7 +173,7 @@ namespace Game.Incidents
 		override public void Die()
 		{
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
-			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 			Government.Die();
 		}
 
@@ -183,13 +183,13 @@ namespace Game.Incidents
 			var location = new Location(SimRandom.RandomEntryFromList(cells));
 			var city = new City(this, location, startingPopulation, 0);
 			Cities.Add(city);
-			ContextDictionaryProvider.AddContext(city);
+			EventManager.Instance.Dispatch(new AddContextEvent(city));
 		}
 
 		public void CreateStartingGovernment(Race majorityStartingRace, Character creator = null)
 		{
 			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL, creator);
-			EventManager.Instance.Dispatch(new AddContextEvent(Government));
+			EventManager.Instance.Dispatch(new AddContextEvent(Government, typeof(Organization)));
 		}
 
 		public bool AttemptExpandBorder(int numTimes)

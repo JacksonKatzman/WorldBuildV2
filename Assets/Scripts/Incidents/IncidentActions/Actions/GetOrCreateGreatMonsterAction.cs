@@ -48,7 +48,7 @@ namespace Game.Incidents
 						createdMonster.CharacterName = createdMonster.AffiliatedFaction.namingTheme.GenerateName(Enums.Gender.ANY);
 					}
 				}
-				ContextDictionaryProvider.AddContext(createdMonster);
+				EventManager.Instance.Dispatch(new AddContextEvent(createdMonster));
 			}
 		}
 

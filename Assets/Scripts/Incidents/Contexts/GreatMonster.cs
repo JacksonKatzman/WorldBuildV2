@@ -46,7 +46,7 @@ namespace Game.Incidents
 
 		public override void Die()
 		{
-			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 		}
 
 		public override void UpdateContext()

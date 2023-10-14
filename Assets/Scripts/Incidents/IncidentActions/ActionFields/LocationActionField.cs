@@ -93,7 +93,7 @@ namespace Game.Incidents
 			else
 			{
 				value = new Location(id);
-				ContextDictionaryProvider.AddContext(value);
+				EventManager.Instance.Dispatch(new AddContextEvent(value));
 			}
 		}
 

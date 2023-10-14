@@ -35,9 +35,11 @@ namespace Game.Simulation
 			SetAllContextsProvider(funcAll);
 
 			EventManager.Instance.RemoveEventHandler<AddContextEvent>(OnAddContextEvent);
+			EventManager.Instance.RemoveEventHandler<AddContextImmediateEvent>(OnAddContextImmediateEvent);
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 
 			EventManager.Instance.AddEventHandler<AddContextEvent>(OnAddContextEvent);
+			EventManager.Instance.AddEventHandler<AddContextImmediateEvent>(OnAddContextImmediateEvent);
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
@@ -46,31 +48,46 @@ namespace Game.Simulation
 			nextID = id;
 		}
 
-		public static void AddContext<T>(T context) where T : IIncidentContext
+		private static void AddContext<T>(T context, Type type) where T : IIncidentContext
 		{
 			context.ID = GetNextID();
-			contextsToAdd[typeof(T)].Add(context);
+			contextsToAdd[type].Add(context);
 		}
 
-		public static void AddContextImmediate<T>(T context) where T : IIncidentContext
+		private static void AddContext<T>(T context) where T : IIncidentContext
 		{
-			AddContext(context);
+			AddContext(context, context.GetType());
+		}
+
+		private static void AddContextImmediate<T>(T context, Type type) where T : IIncidentContext
+		{
+			AddContext(context, type);
 			DelayedAddContexts();
 		}
 
-		public static void RemoveContext<T>(T context) where T : IIncidentContext
+		private static void AddContextImmediate<T>(T context) where T : IIncidentContext
 		{
-			contextsToRemove[typeof(T)].Add(context);
+			AddContextImmediate(context, context.GetType());
+		}
+
+		private static void RemoveContext<T>(T context, Type type) where T : IIncidentContext
+		{
+			contextsToRemove[type].Add(context);
 		}
 
 		private static void OnAddContextEvent(AddContextEvent gameEvent)
 		{
-			AddContext(gameEvent.context);
+			AddContext(gameEvent.context, gameEvent.contextType);
+		}
+
+		private static void OnAddContextImmediateEvent(AddContextImmediateEvent gameEvent)
+		{
+			AddContextImmediate(gameEvent.context, gameEvent.contextType);
 		}
 
 		private static void OnRemoveContextEvent(RemoveContextEvent gameEvent)
 		{
-			RemoveContext(gameEvent.context);
+			RemoveContext(gameEvent.context, gameEvent.contextType);
 		}
 
 		public static void DelayedAddContexts()

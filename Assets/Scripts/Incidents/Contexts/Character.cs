@@ -225,14 +225,14 @@ namespace Game.Incidents
 					var father = new Character(Gender.MALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(father);
 					father.Children.Add(this);
-					ContextDictionaryProvider.AddContext(father);
+					EventManager.Instance.Dispatch(new AddContextEvent(father));
 				}
 				if(Parents.Count(x => x.Gender == Gender.FEMALE) < 1)
 				{
 					var mother = new Character(Gender.FEMALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(mother);
 					mother.Children.Add(this);
-					ContextDictionaryProvider.AddContext(mother);
+					EventManager.Instance.Dispatch(new AddContextEvent(mother));
 				}
 			}
 			if(canGenerateSpouse && Spouses.Count == 0)
@@ -243,7 +243,7 @@ namespace Game.Incidents
 					var spouse = new Character(gender, AffiliatedRace, AffiliatedFaction, false);
 					Spouses.Add(spouse);
 					spouse.Spouses.Add(this);
-					ContextDictionaryProvider.AddContext(spouse);
+					EventManager.Instance.Dispatch(new AddContextEvent(spouse));
 				}
 			}
 			if (Siblings.Count == 0)
@@ -255,7 +255,7 @@ namespace Game.Incidents
 					var sibling = new Character(Gender.ANY, AffiliatedRace, AffiliatedFaction, false, Parents);
 					Siblings.Add(sibling);
 					sibling.Siblings.Add(this);
-					ContextDictionaryProvider.AddContext(sibling);
+					EventManager.Instance.Dispatch(new AddContextEvent(sibling));
 				}
 			}
 		}
@@ -287,7 +287,7 @@ namespace Game.Incidents
 				IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this });
 			}
 			EventManager.Instance.RemoveEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
-			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 		}
 
 		public override void LoadContextProperties()

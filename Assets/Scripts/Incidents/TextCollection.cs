@@ -25,18 +25,6 @@ namespace Game.Incidents
 				var asset = Resources.Load<TextAsset>(title);
 				texts.Add(asset);
 			}
-			/*
-			var files = Directory.GetFiles(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH, "*.json");
-			foreach (string file in files)
-			{
-				var text = File.ReadAllText(file);
-				if (text.Length > 0)
-				{
-					var item = JsonConvert.DeserializeObject<Incident>(text, SaveUtilities.SERIALIZER_SETTINGS);
-					incidents.Add(item);
-				}
-			}
-			*/
 		}
 	}
 }
