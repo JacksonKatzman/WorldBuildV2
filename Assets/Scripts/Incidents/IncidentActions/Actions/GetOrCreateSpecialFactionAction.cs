@@ -50,7 +50,7 @@ namespace Game.Incidents
                 //also need to assign them a base of operations, probably a landmark somehow
                 faction.SetLocation(location.GetTypedFieldValue());
                 faction.SetCreator(creator.GetTypedFieldValue());
-                ContextDictionaryProvider.AddContext(faction as Faction);
+                ContextDictionaryProvider.AddContext<Faction>(faction as Faction);
             }
         }
 

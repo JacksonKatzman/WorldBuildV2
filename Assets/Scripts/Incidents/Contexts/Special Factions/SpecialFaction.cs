@@ -30,6 +30,7 @@ namespace Game.Incidents
 
 		public override int ControlledTiles => 1;
 		public override int NumCities => 0;
+		public override bool IsSpecialFaction => true;
 
 		private float populationFloat;
 
@@ -52,6 +53,8 @@ namespace Game.Incidents
 		{
 			Location = location;
 			//also use this to set the tile they control to the location
+			ControlledTileIndices = new List<int>();
+			ControlledTileIndices.Add(location.CurrentLocation.TileIndex);
 		}
 
 		public void SetCreator(ISentient creator)
