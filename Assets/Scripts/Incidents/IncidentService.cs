@@ -166,7 +166,7 @@ namespace Game.Incidents
 		}
 		private Dictionary<int, List<IIncident>> GetIncidentsWithMatchingCriteria(List<IIncident> incidents, IIncidentContext context)
 		{
-			var items = incidents.Where(x => x.Criteria.Evaluate(context) == true).ToList();
+			var items = incidents.Where(x => x.Criteria.Evaluate(context) == true && x.WorldCriteria.Evaluate(context) == true).ToList();
 			Dictionary<int, List<IIncident>> sortedItems = new Dictionary<int, List<IIncident>>();
 			foreach(var item in items)
 			{

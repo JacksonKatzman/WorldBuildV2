@@ -1,4 +1,5 @@
 ﻿using Game.Enums;
+using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,22 @@ using System.Linq;
 
 namespace Game.Incidents
 {
+    public class WorldCriteria : IncidentCriteria
+	{
+        public override Type ContextType => typeof(World);
+
+        public WorldCriteria() : base() { }
+
+		public override bool Evaluate(IIncidentContext context, IIncidentContext parentContext = null)
+		{
+			return base.Evaluate(SimulationManager.Instance.world, parentContext);
+		}
+    }
 	public class IncidentCriteria : IIncidentCriteria
     {
-        public Type ContextType { get; set; }
+        virtual public Type ContextType { get; set; }
         public Type PrimitiveType { get; set; }
-        private Dictionary<string, Type> properties;
+        protected Dictionary<string, Type> properties;
 
         [ValueDropdown("GetPropertyNames"), OnValueChanged("SetPrimitiveType"), HorizontalGroup("Group 1")]
         public string propertyName;
@@ -43,7 +55,7 @@ namespace Game.Incidents
             return evaluator.Evaluate(context, propertyName, parentContext);
         }
 
-        private void GetPropertyList()
+        virtual protected void GetPropertyList()
         {
             if (properties == null)
             {

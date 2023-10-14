@@ -42,6 +42,8 @@ namespace Game.Simulation
 		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
 		[JsonIgnore]
 		public int NumPeople => CurrentContexts[typeof(Character)].Count;
+		public int NumSpecialFactions => Factions.Where(x => x.IsSpecialFaction).Count();
+		public bool RoomForSpecialFaction => NumSpecialFactions < 5;
 
 		public List<Item> LostItems;
 
@@ -101,7 +103,10 @@ namespace Game.Simulation
 		{
 			foreach(var faction in Factions)
 			{
-				GenerateAdditionalCities(faction);
+				if (!faction.IsSpecialFaction)
+				{
+					GenerateAdditionalCities(faction);
+				}
 
 				//Create villages and add farm land
 

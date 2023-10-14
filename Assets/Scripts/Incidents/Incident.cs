@@ -11,29 +11,30 @@ namespace Game.Incidents
 		public Type ContextType { get; set; }
 		public IIncidentWeight Weights { get; set; }
 		public IncidentCriteriaContainer Criteria { get; set; }
+		public IncidentCriteriaContainer WorldCriteria { get; set; }
 
 		public IncidentActionHandlerContainer ActionContainer { get; set; }
 
 		[JsonConstructor]
-		public Incident(Type contextType, IncidentCriteriaContainer criteria, IncidentActionHandlerContainer actions, IIncidentWeight weight)
+		public Incident(Type contextType, IncidentCriteriaContainer criteria, IncidentCriteriaContainer worldCriteria, IncidentActionHandlerContainer actions, IIncidentWeight weight)
 		{
 			ContextType = contextType;
 			Criteria = criteria;
+			WorldCriteria = worldCriteria;
 			ActionContainer = actions;
 			Weights = weight;
-			/*
-			var dataType = new Type[] { ContextType };
-			var genericBase = typeof(IncidentWeight<>);
-			var combinedType = genericBase.MakeGenericType(dataType);
-			Weights= (IIncidentWeight)Activator.CreateInstance(combinedType, weight);
-			*/
+			if(WorldCriteria == null)
+			{
+				WorldCriteria = new IncidentCriteriaContainer(new List<IIncidentCriteria>());
+			}
 		}
 
-		public Incident(string incidentName, Type contextType, List<IIncidentCriteria> criteria, IncidentActionHandlerContainer container, IIncidentWeight weight)
+		public Incident(string incidentName, Type contextType, List<IIncidentCriteria> criteria, List<IIncidentCriteria> worldCriteria, IncidentActionHandlerContainer container, IIncidentWeight weight)
 		{
 			IncidentName = incidentName;
 			ContextType = contextType;
 			Criteria = new IncidentCriteriaContainer(criteria);
+			WorldCriteria = new IncidentCriteriaContainer(worldCriteria);
 			ActionContainer = container;
 			Weights = weight;
 		}
