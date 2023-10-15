@@ -43,8 +43,9 @@ namespace Game.Incidents
 					actionFields.Add(container);
 				}
 			}
-
+#if UNITY_EDITOR
 			IncidentEditorWindow.UpdateActionFieldIDs();
+#endif
 		}
 
 		private void OnValueChanged()

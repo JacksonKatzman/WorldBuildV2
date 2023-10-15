@@ -1,4 +1,5 @@
-﻿using Game.Enums;
+﻿#if UNITY_EDITOR
+using Game.Enums;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using System;
@@ -152,3 +153,4 @@ namespace Game.Incidents
 		}
     }
 }
+#endif

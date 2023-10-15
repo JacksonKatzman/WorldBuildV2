@@ -1,4 +1,5 @@
-﻿using Game.Utilities;
+﻿#if UNITY_EDITOR
+using Game.Utilities;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -68,6 +69,9 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewCriteriaItem"), HideReferenceObjectPicker]
         public List<IIncidentCriteria> criteria;
 
+        [ShowIfGroup("ContextTypeChosen"), ListDrawerSettings(CustomAddFunction = "AddNewWorldCriteriaItem"), HideReferenceObjectPicker]
+        public List<IIncidentCriteria> worldCriteria;
+
         [ShowIfGroup("ContextTypeChosen"), HideReferenceObjectPicker, ShowInInspector]
         static public IncidentActionHandlerContainer actionHandler;
 
@@ -92,6 +96,7 @@ namespace Game.Incidents
             incidentName = savedIncidentName;
             weight = loadedIncident.Weights;
             criteria = loadedIncident.Criteria.criteria;
+            worldCriteria = loadedIncident.WorldCriteria == null ? new List<IIncidentCriteria>() : loadedIncident.WorldCriteria.criteria;
             actionHandler = loadedIncident.ActionContainer;
             UpdateActionFieldIDs();
             modeChosen = true;
@@ -105,9 +110,9 @@ namespace Game.Incidents
         [Button("Save"), ShowIfGroup("ContextTypeChosen"), PropertyOrder(10)]
         public void OnSaveButtonPressed()
 		{
-            if (ContextTypeChosen)// && actionHandler.Actions.Count > 0)
+            if (ContextTypeChosen && !string.IsNullOrEmpty(incidentName))// && actionHandler.Actions.Count > 0)
             {
-                var incident = new Incident(incidentName, ContextType, criteria, actionHandler, weight);
+                var incident = new Incident(incidentName, ContextType, criteria, worldCriteria, actionHandler, weight);
 
                 var path = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + incidentName + ".json");
                 string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);
@@ -216,6 +221,7 @@ namespace Game.Incidents
 		{
             ContextType = incidentContextType;
             criteria = new List<IIncidentCriteria>();
+            worldCriteria = new List<IIncidentCriteria>();
             actionHandler = new IncidentActionHandlerContainer(ContextType);
             CreateIncidentWeight();
 		}
@@ -231,6 +237,11 @@ namespace Game.Incidents
         private void AddNewCriteriaItem()
         {
             criteria.Add(new IncidentCriteria(ContextType));
+        }
+
+        private void AddNewWorldCriteriaItem()
+        {
+            worldCriteria.Add(new WorldCriteria());
         }
 
         private static void GetPropertyList()
@@ -255,3 +266,4 @@ namespace Game.Incidents
         public bool ContextTypeChosen => incidentContextType != null;
     }
 }
+#endif

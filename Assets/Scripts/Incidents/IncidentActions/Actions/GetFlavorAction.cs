@@ -70,7 +70,7 @@ namespace Game.Incidents
 				OutputLogger.LogError("Matching flavor template missing!");
 			}
 		}
-
+#if UNITY_EDITOR
 		private IEnumerable<Type> GetFilteredFlavorTypeList()
 		{
 			var q = typeof(IFlavorTemplate).Assembly.GetTypes()
@@ -115,5 +115,6 @@ namespace Game.Incidents
 		{
 			alignmentContext.enabled = !manualMode;
 		}
+#endif
 	}
 }

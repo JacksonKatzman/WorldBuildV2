@@ -47,7 +47,7 @@ namespace Game.Incidents
 
 			if (ContextDictionaryProvider.CurrentContexts.GetContextByID(location.ID) == null)
 			{
-				ContextDictionaryProvider.AddContext(location);
+				EventManager.Instance.Dispatch(new AddContextEvent(location));
 			}
 		}
 
@@ -66,7 +66,7 @@ namespace Game.Incidents
 			for(var i = 0; i < amount; i++)
 			{
 				var character = new Character(AffiliatedFaction);
-				ContextDictionaryProvider.AddContextImmediate(character);
+				EventManager.Instance.Dispatch(new AddContextImmediateEvent(character));
 			}
 		}
 

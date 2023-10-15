@@ -151,20 +151,48 @@ namespace Game.Simulation
     public class AddContextEvent : ISimulationEvent
 	{
         public IIncidentContext context;
+        public Type contextType;
 
-        public AddContextEvent(IIncidentContext context)
+        public AddContextEvent(IIncidentContext context, Type type = null)
         {
             this.context = context;
+            this.contextType = type == null ? context.GetType() : type;
+        }
+    }
+
+    public class AddContextImmediateEvent : ISimulationEvent
+    {
+        public IIncidentContext context;
+        public Type contextType;
+
+        public AddContextImmediateEvent(IIncidentContext context, Type type = null)
+        {
+            this.context = context;
+            this.contextType = type == null ? context.GetType() : type;
         }
     }
 
     public class RemoveContextEvent : ISimulationEvent
 	{
         public IIncidentContext context;
+        public Type contextType;
 
-		public RemoveContextEvent(IIncidentContext context)
+		public RemoveContextEvent(IIncidentContext context, Type type = null)
 		{
 			this.context = context;
+            this.contextType = type == null ? context.GetType() : type;
+        }
+	}
+
+    public class AffiliatedFactionChangedEvent : ISimulationEvent
+	{
+        public IFactionAffiliated affiliate;
+        public IFactionAffiliated newFaction;
+
+		public AffiliatedFactionChangedEvent(IFactionAffiliated affiliate, IFactionAffiliated newFaction)
+		{
+			this.affiliate = affiliate;
+			this.newFaction = newFaction;
 		}
 	}
 }

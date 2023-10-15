@@ -11,7 +11,9 @@ namespace Game.Simulation
 		public AdventurePathComponent()
 		{
 			components = new ObservableCollection<IAdventureComponent>();
+#if UNITY_EDITOR
 			components.CollectionChanged += EncounterEditorWindow.UpdateComponentIDs;
+#endif
 		}
 
 		public override void UpdateComponentID(ref int nextID, List<int> removedIds = null)

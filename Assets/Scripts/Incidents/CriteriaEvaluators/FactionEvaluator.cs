@@ -9,7 +9,7 @@ namespace Game.Incidents
 
 		protected override Faction GetContext(IIncidentContext context)
 		{
-			if ((typeof(IFactionAffiliated)).IsAssignableFrom(context.ContextType))
+			if ((typeof(IFactionAffiliated)).IsAssignableFrom(context.GetType()))
 			{
 				return ((IFactionAffiliated)context).AffiliatedFaction;
 			}

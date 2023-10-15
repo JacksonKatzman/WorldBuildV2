@@ -68,6 +68,7 @@ namespace Game.Incidents
 
 		public void UpdateActionFieldIDs(ref int startingValue)
 		{
+#if UNITY_EDITOR
 			IncidentEditorWindow.handlerContainers.Add(this);
 			if (startingValue == 0)
 			{
@@ -82,6 +83,7 @@ namespace Game.Incidents
 			}
 
 			UpdateFlavorIDs();
+#endif
 		}
 
 		public void GetContextDictionary(ref IncidentReport report)
@@ -100,7 +102,7 @@ namespace Game.Incidents
 			}
 
 			//This is to get DeployedContextActionFields from a DeployedContext
-			var deployedContextFields = ActionFieldReflection.GetGenericFieldsByType(providedContext.ContextType, typeof(DeployedContextActionField<>)).ToList();
+			var deployedContextFields = ActionFieldReflection.GetGenericFieldsByType(providedContext.GetType(), typeof(DeployedContextActionField<>)).ToList();
 			for(int i = 0; i < deployedContextFields.Count; i++)
 			{
 				if(actionFieldID == i+1)
@@ -137,7 +139,7 @@ namespace Game.Incidents
 				flavorAction.FlavorActionId = i;
 			}
 		}
-
+#if UNITY_EDITOR
 		private void AddNewActionContainer()
 		{
 			Actions.Add(new IncidentActionHandler());
@@ -155,5 +157,6 @@ namespace Game.Incidents
 		{
 			Deployers.Add(new ContextDeployer());
 		}
+#endif
 	}
 }

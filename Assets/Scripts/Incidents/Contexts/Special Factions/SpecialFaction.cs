@@ -30,6 +30,7 @@ namespace Game.Incidents
 
 		public override int ControlledTiles => 1;
 		public override int NumCities => 0;
+		public override bool IsSpecialFaction => true;
 
 		private float populationFloat;
 
@@ -52,6 +53,8 @@ namespace Game.Incidents
 		{
 			Location = location;
 			//also use this to set the tile they control to the location
+			ControlledTileIndices = new List<int>();
+			ControlledTileIndices.Add(location.CurrentLocation.TileIndex);
 		}
 
 		public void SetCreator(ISentient creator)
@@ -94,7 +97,7 @@ namespace Game.Incidents
 		override public void Die()
 		{
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
-			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this, typeof(Faction)));
 		}
 
 		private bool CheckDestroyed()

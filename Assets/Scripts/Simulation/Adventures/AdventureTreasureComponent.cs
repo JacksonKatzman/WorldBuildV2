@@ -26,11 +26,12 @@ namespace Game.Simulation
 		[ValueDropdown("GetTreasureIDs")]
 		public int treasureID;
 		public int amount;
-
+#if UNITY_EDITOR
 		private IEnumerable<int> GetTreasureIDs()
 		{
 			var ids = EncounterEditorWindow.contextCriterium.Where(x => x.GetType() == typeof(TreasureCriteria)).Select(x => x.CriteriaID);
 			return ids;
 		}
+#endif
 	}
 }

@@ -6,13 +6,9 @@ namespace Game.Incidents
 {
 	public class GetOrCreateGreatMonsterAction : GetOrCreateAction<GreatMonster>
 	{
-		public bool useSpecificMonster;
-
-		[ShowIf("@this.useSpecificMonster")]
-		public ScriptableObjectRetriever<MonsterData> monsterData;
-		[ShowIf("@!this.useSpecificMonster")]
-		public MonsterCriteria criteria = new MonsterCriteria();
-
+		[ShowIf("@this.allowCreate")]
+		public MonsterCriteria criteria;
+		[ShowIf("@this.allowCreate")]
 		public ContextualIncidentActionField<Faction> faction;
 
 		[ShowIf("@this.OnlyCreate")]
@@ -23,7 +19,7 @@ namespace Game.Incidents
 		private MonsterData retrievedMonsterData;
 		protected override GreatMonster MakeNew()
 		{
-			var monsterToCreate = useSpecificMonster ? monsterData.RetrieveObject() : retrievedMonsterData;
+			var monsterToCreate = retrievedMonsterData;
 			var createdMonster = transformCharacter ? new GreatMonster(monsterToCreate) : new GreatMonster(monsterToCreate);
 			
 			return createdMonster;
@@ -43,7 +39,7 @@ namespace Game.Incidents
 				}
 				else
 				{
-					if(createdMonster.AffiliatedFaction == null)
+					if(createdMonster.AffiliatedFaction == null || createdMonster.AffiliatedFaction.namingTheme == null)
 					{
 						createdMonster.CharacterName = FlavorService.Instance.genericMonsterNamingTheme.GenerateName(Enums.Gender.ANY);
 					}
@@ -52,22 +48,15 @@ namespace Game.Incidents
 						createdMonster.CharacterName = createdMonster.AffiliatedFaction.namingTheme.GenerateName(Enums.Gender.ANY);
 					}
 				}
-				ContextDictionaryProvider.AddContext(createdMonster);
+				EventManager.Instance.Dispatch(new AddContextEvent(createdMonster));
 			}
 		}
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)
 		{
-			if (OnlyCreate)
+			if (allowCreate)
 			{
-				if (!useSpecificMonster)
-				{
-					retrievedMonsterData = criteria.GetMonsterData();
-				}
-				else
-				{
-					retrievedMonsterData = monsterData.RetrieveObject();
-				}
+				retrievedMonsterData = criteria.RetrieveMonsterData();
 
 				if (retrievedMonsterData == null)
 				{

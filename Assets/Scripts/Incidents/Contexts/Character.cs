@@ -54,6 +54,7 @@ namespace Game.Incidents
 			Parents = parents == null ? new List<Character>() : parents;
 			Siblings = new List<Character>();
 			Children = new List<Character>();
+			CharacterTags = new List<CharacterTag>();
 
 			if(Parents.Count > 0)
 			{
@@ -63,6 +64,8 @@ namespace Game.Incidents
 			{
 				CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender);
 			}
+
+			EventManager.Instance.AddEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
 		}
 
 		public Character(Gender gender, Race race, Faction faction, bool majorCharacter, List<Character> parents = null) :
@@ -119,6 +122,7 @@ namespace Game.Incidents
 			Spouses = new List<Character>();
 			Siblings = new List<Character>();
 			Children = new List<Character>();
+			CharacterTags = new List<CharacterTag>();
 		}
 
 		public override string Name => CharacterName.GetTitledFullName(this);
@@ -129,6 +133,7 @@ namespace Game.Incidents
 		public Faction AffiliatedFaction { get; set; }
 		public Organization Organization { get; set; }
 		public OrganizationPosition OfficialPosition => GetOfficialPosition();
+		public bool HasOrganizationPosition => OfficialPosition != null;
 		public int PoliticalPriority
 		{
 			get { return Priorities[OrganizationType.POLITICAL]; }
@@ -165,9 +170,11 @@ namespace Game.Incidents
 		public List<Character> Spouses { get; set; }
 		public List<Character> Siblings { get; set; }
 		public List<Character> Children { get; set; }
+		public List<CharacterTag> CharacterTags { get; set; }
 
 		//public List<Character> Family => new List<Character>().Union(Parents).Union(Spouses).Union(Siblings).Union(Children).ToList();
 		public List<Character> Family => CharacterExtensions.GetExtendedFamily(this);
+		public int LivingFamilyMembers => CountLivingFamilyMembers();
 
 		public OrganizationType PriorityAlignment => GetHighestPriority();
 		public int LawfulChaoticAlignmentAxis { get; set; }
@@ -218,14 +225,14 @@ namespace Game.Incidents
 					var father = new Character(Gender.MALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(father);
 					father.Children.Add(this);
-					ContextDictionaryProvider.AddContext(father);
+					EventManager.Instance.Dispatch(new AddContextEvent(father));
 				}
 				if(Parents.Count(x => x.Gender == Gender.FEMALE) < 1)
 				{
 					var mother = new Character(Gender.FEMALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(mother);
 					mother.Children.Add(this);
-					ContextDictionaryProvider.AddContext(mother);
+					EventManager.Instance.Dispatch(new AddContextEvent(mother));
 				}
 			}
 			if(canGenerateSpouse && Spouses.Count == 0)
@@ -236,7 +243,7 @@ namespace Game.Incidents
 					var spouse = new Character(gender, AffiliatedRace, AffiliatedFaction, false);
 					Spouses.Add(spouse);
 					spouse.Spouses.Add(this);
-					ContextDictionaryProvider.AddContext(spouse);
+					EventManager.Instance.Dispatch(new AddContextEvent(spouse));
 				}
 			}
 			if (Siblings.Count == 0)
@@ -248,7 +255,7 @@ namespace Game.Incidents
 					var sibling = new Character(Gender.ANY, AffiliatedRace, AffiliatedFaction, false, Parents);
 					Siblings.Add(sibling);
 					sibling.Siblings.Add(this);
-					ContextDictionaryProvider.AddContext(sibling);
+					EventManager.Instance.Dispatch(new AddContextEvent(sibling));
 				}
 			}
 		}
@@ -279,7 +286,8 @@ namespace Game.Incidents
 			{
 				IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this });
 			}
-			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+			EventManager.Instance.RemoveEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 		}
 
 		public override void LoadContextProperties()
@@ -308,6 +316,7 @@ namespace Game.Incidents
 			}
 			else
 			{
+				Organization = null;
 				return null;
 			}
 		}
@@ -315,6 +324,20 @@ namespace Game.Incidents
 		private OrganizationType GetHighestPriority()
 		{
 			return Priorities.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+		}
+
+		private int CountLivingFamilyMembers()
+		{
+			var family = Family;
+			return family.Where(x => x != this && ContextDictionaryProvider.CurrentContexts[typeof(Character)].Contains(x)).Count();
+		}
+
+		private void OnFactionChangeEvent(AffiliatedFactionChangedEvent gameEvent)
+		{
+			if (gameEvent.affiliate == this)
+			{
+				Organization = null;
+			}
 		}
 	}
 }

@@ -37,7 +37,7 @@ namespace Game.Incidents
             {
                 var faction = actionField.GetTypedFieldValue() as SpecialFaction;
                 var creatorsFaction = creator.GetTypedFieldValue() as IFactionAffiliated;
-                if(creatorsFaction.AffiliatedFaction != null)
+                if(creatorsFaction.AffiliatedFaction != null && creatorsFaction.AffiliatedFaction.namingTheme != null)
 				{
                     faction.namingTheme = new NamingTheme(creatorsFaction.AffiliatedFaction.namingTheme);
                 }
@@ -50,7 +50,7 @@ namespace Game.Incidents
                 //also need to assign them a base of operations, probably a landmark somehow
                 faction.SetLocation(location.GetTypedFieldValue());
                 faction.SetCreator(creator.GetTypedFieldValue());
-                ContextDictionaryProvider.AddContext(faction as Faction);
+                EventManager.Instance.Dispatch(new AddContextEvent(faction, typeof(Faction)));
             }
         }
 

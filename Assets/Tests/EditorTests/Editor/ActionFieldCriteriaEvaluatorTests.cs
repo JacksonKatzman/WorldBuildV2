@@ -89,7 +89,7 @@ public class ActionFieldCriteriaEvaluatorTests : Editor
 	{
         var propertyName = "AffiliatedFaction";
         var faction = new Faction() { ID = 1 };
-        ContextDictionaryProvider.AddContextImmediate(faction);
+        EventManager.Instance.Dispatch(new AddContextImmediateEvent(faction));
 
         var character = new Character() { AffiliatedFaction = faction };
         var city = new City() { AffiliatedFaction = faction };
@@ -136,7 +136,7 @@ public class ActionFieldCriteriaEvaluatorTests : Editor
     {
         var propertyName = "CurrentInventory";
         var inventory = new Inventory() { ID = 1 };
-        ContextDictionaryProvider.AddContextImmediate(inventory);
+        EventManager.Instance.Dispatch(new AddContextImmediateEvent(inventory));
 
         var character = new Character() { CurrentInventory = inventory};
         var city = new City() { CurrentInventory = inventory };
@@ -177,7 +177,7 @@ public class ActionFieldCriteriaEvaluatorTests : Editor
     {
         var propertyName = "CurrentLocation";
         var location = new Location() { TileIndex = 1 };
-        ContextDictionaryProvider.AddContextImmediate(location);
+        EventManager.Instance.Dispatch(new AddContextImmediateEvent(location));
 
         var landmark = new Landmark() { CurrentLocation = location };
         var city = new City() { CurrentLocation = new Location { TileIndex = 9 } };
@@ -214,7 +214,7 @@ public class ActionFieldCriteriaEvaluatorTests : Editor
 	{
         var propertyName = "FactionType";
         var faction = new Faction() { ID = 1 };
-        ContextDictionaryProvider.AddContextImmediate(faction);
+        EventManager.Instance.Dispatch(new AddContextImmediateEvent(faction));
 
         var evaluator = new TypeEvaluator(propertyName, typeof(Faction));
         evaluator.Comparator = "==";
@@ -235,7 +235,7 @@ public class ActionFieldCriteriaEvaluatorTests : Editor
 	{
         var propertyName = "ItemGrade";
         var armor = new Armor() { ItemGrade = Game.Enums.ItemGrade.NORMAL };
-        ContextDictionaryProvider.AddContextImmediate(armor);
+        EventManager.Instance.Dispatch(new AddContextImmediateEvent(armor));
 
         var evaluator = new EnumEvaluator<ItemGrade>(propertyName, typeof(Armor));
         evaluator.allowedValues = new List<ItemGrade>() { ItemGrade.NORMAL, ItemGrade.AWFUL };

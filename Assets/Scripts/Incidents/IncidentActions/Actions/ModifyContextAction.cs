@@ -26,6 +26,7 @@ namespace Game.Incidents
 
 		public override void UpdateActionFieldIDs(ref int startingValue)
 		{
+#if UNITY_EDITOR
 			base.UpdateActionFieldIDs(ref startingValue);
 			foreach(var mod in modifiers)
 			{
@@ -33,6 +34,7 @@ namespace Game.Incidents
 				IncidentEditorWindow.calculators.Add(mod.Calculator);
 				startingValue++;
 			}
+#endif
 		}
 
 		public override void UpdateEditor()
@@ -43,7 +45,7 @@ namespace Game.Incidents
 				modifiers = new List<ContextModifier<T>>();
 			}
 		}
-
+#if UNITY_EDITOR
 		private void AddNewModifier()
 		{
             modifiers.Add(new ContextModifier<T>());
@@ -54,5 +56,6 @@ namespace Game.Incidents
 			modifiers.RemoveAt(index);
 			IncidentEditorWindow.UpdateActionFieldIDs();
 		}
+#endif
 	}
 }

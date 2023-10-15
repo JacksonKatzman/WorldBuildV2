@@ -42,6 +42,8 @@ namespace Game.Simulation
 		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
 		[JsonIgnore]
 		public int NumPeople => CurrentContexts[typeof(Character)].Count;
+		public int NumSpecialFactions => Factions.Where(x => x.IsSpecialFaction).Count();
+		public bool RoomForSpecialFaction => NumSpecialFactions < 5;
 
 		public List<Item> LostItems;
 
@@ -101,7 +103,10 @@ namespace Game.Simulation
 		{
 			foreach(var faction in Factions)
 			{
-				GenerateAdditionalCities(faction);
+				if (!faction.IsSpecialFaction)
+				{
+					GenerateAdditionalCities(faction);
+				}
 
 				//Create villages and add farm land
 
@@ -140,8 +145,7 @@ namespace Game.Simulation
 				var chosenLocationIndex = ordered.First();
 				var population = SimRandom.RandomRange((int)(faction.Cities[0].Population * 0.3f), (int)(faction.Cities[0].Population * 0.7f));
 				var createdCity = new City(faction, new Location(chosenLocationIndex), population, 0);
-				ContextDictionaryProvider.AddContext(createdCity);
-				ContextDictionaryProvider.DelayedAddContexts();
+				EventManager.Instance.Dispatch(new AddContextImmediateEvent(createdCity));
 			}
 		}
 
@@ -207,11 +211,11 @@ namespace Game.Simulation
 			foreach(var racePresetPair in uniqueRacePresets)
 			{
 				var race = new Race(racePresetPair.Key);
-				ContextDictionaryProvider.AddContext(race);
+				EventManager.Instance.Dispatch(new AddContextEvent(race));
 				for (var i = 0; i < racePresetPair.Value; i++)
 				{
 					var faction = new Faction(1, 1000, race);
-					ContextDictionaryProvider.AddContext(faction);
+					EventManager.Instance.Dispatch(new AddContextEvent(faction));
 				}
 			}
 		}

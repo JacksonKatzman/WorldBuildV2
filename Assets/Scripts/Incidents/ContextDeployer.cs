@@ -126,7 +126,7 @@ namespace Game.Incidents
 			}
 			return false;
 		}
-
+#if UNITY_EDITOR
 		private List<string> GetActionFieldIdentifiers()
 		{
 			var ids = new List<string>();
@@ -141,8 +141,8 @@ namespace Game.Incidents
 			criteria = new IncidentCriteria(actionField.ContextType);
 			previousFieldID = actionField.ActionFieldID;
 		}
+#endif
 	}
-
 	public interface IDeployableContext : IIncidentContext
 	{
 		bool CalculateFields(IIncidentContext context);
@@ -161,7 +161,7 @@ namespace Game.Incidents
 
 		public bool CalculateFields(IIncidentContext context)
 		{
-			var fields = ContextType.GetFields();
+			var fields = GetType().GetFields();
 			var matchingFields = fields.Where(x => x.FieldType.IsGenericType && x.FieldType.GetGenericTypeDefinition() == typeof(DeployedContextActionField<>)).ToList();
 
 			foreach (var field in matchingFields)

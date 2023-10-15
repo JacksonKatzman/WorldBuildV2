@@ -31,6 +31,7 @@ namespace Game.Incidents
 			AffiliatedFaction = faction;
 			this.organizationType = organizationType;
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
+			EventManager.Instance.AddEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
 
 			hierarchy = new List<OrganizationTier>();
 			AddTier(majorityStartingRace, creator);
@@ -39,6 +40,14 @@ namespace Game.Incidents
 		public void OnRemoveContextEvent(RemoveContextEvent gameEvent)
 		{
 			if(gameEvent.context.GetType() == typeof(Character) && Contains((Character)gameEvent.context, out var position))
+			{
+				position.SelectNewOfficial(this, AffiliatedFaction, Leader.AffiliatedRace);
+			}
+		}
+
+		public void OnFactionChangeEvent(AffiliatedFactionChangedEvent gameEvent)
+		{
+			if (gameEvent.affiliate.GetType() == typeof(Character) && Contains((Character)gameEvent.affiliate, out var position))
 			{
 				position.SelectNewOfficial(this, AffiliatedFaction, Leader.AffiliatedRace);
 			}
@@ -117,7 +126,7 @@ namespace Game.Incidents
 
 		public override void Die()
 		{
-			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 		}
 
 		public override void LoadContextProperties()

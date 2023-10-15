@@ -48,7 +48,9 @@ namespace Game.Incidents
 				var combinedType = genericBase.MakeGenericType(dataType);
 				actionField = (IIncidentActionField)Activator.CreateInstance(combinedType);
 			}
+#if UNITY_EDITOR
 			IncidentEditorWindow.UpdateActionFieldIDs();
+#endif
 
 			onSetContextType?.Invoke();
 		}

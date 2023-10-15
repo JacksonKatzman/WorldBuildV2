@@ -62,7 +62,8 @@ namespace Game.Incidents
 		{
 			if (madeNew)
 			{
-				ContextDictionaryProvider.AddContext(actionField.GetTypedFieldValue());
+				//ContextDictionaryProvider.AddContext(actionField.GetTypedFieldValue());
+				EventManager.Instance.Dispatch(new AddContextEvent(actionField.GetTypedFieldValue()));
 			}
 		}
 

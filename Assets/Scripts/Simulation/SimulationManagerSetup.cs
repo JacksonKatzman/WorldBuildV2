@@ -31,10 +31,18 @@ namespace Game.Simulation
 			simMan.MapGenerator = mapGenerator;
 			simMan.WorldChunksX = worldChunksX;
 			simMan.WorldChunksZ = worldChunksZ;
+		}
 
+		private void Start()
+		{
 			IncidentService.Instance.CompileIncidents();
 
-			simMan.CreateWorld(factions);
+			SimulationManager.Instance.CreateWorld(factions);
+		}
+
+		public void TestRun()
+		{
+			SimulationManager.Instance.DebugRun();
 		}
 	}
 }

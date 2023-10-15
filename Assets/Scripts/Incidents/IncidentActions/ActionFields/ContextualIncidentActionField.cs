@@ -148,7 +148,7 @@ namespace Game.Incidents
 				criteria = new List<IncidentActionFieldCriteria>();
 			}
 		}
-
+#if UNITY_EDITOR
 		private void AddNewCriteriaItem()
 		{
 			criteria.Add(new IncidentActionFieldCriteria(typeof(T)));
@@ -171,7 +171,7 @@ namespace Game.Incidents
 		{
 			return PreviousFieldID == -1 ? Color.red : Color.green;
 		}
-
+#endif
 		private List<Type> GetAllMatchingContextTypes(Type type)
 		{
 			var q = type.Assembly.GetTypes()

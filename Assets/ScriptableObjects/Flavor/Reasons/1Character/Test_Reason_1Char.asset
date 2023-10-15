@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac42bf5f700fe6d46bdbc9ec9f02bf0b, type: 3}
+  m_Name: Test_Reason_1Char
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: primaryCharacter
+      Entry: 7
+      Data: 0|Game.Incidents.IndexedObject`1[[Game.Incidents.Character, Assembly-CSharp]],
+        Assembly-CSharp
+    - Name: obj
+      Entry: 6
+      Data: 
+    - Name: index
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+  permType: 4
+  lawfulChaoticThreshold: 0
+  goodEvilThreshold: 0
+  flavor: because {SUBP:0} felt like it

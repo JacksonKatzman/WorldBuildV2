@@ -102,13 +102,29 @@ namespace Game.Simulation
 			UsedEncounters = new List<AdventureEncounterObject>();
 			monsterData = new List<MonsterData>();
 
-			var encountersPath = "ScriptableObjects/Encounters";
+			//var encountersPath = "ScriptableObjects/Encounters";
 
-			EvergreenEncounters.AddRange(Resources.LoadAll(encountersPath, typeof(AdventureEncounterObject)).Cast<AdventureEncounterObject>().ToList());
+			//EvergreenEncounters.AddRange(Resources.LoadAll(encountersPath, typeof(AdventureEncounterObject)).Cast<AdventureEncounterObject>().ToList());
+			if (AssetService.Instance.objectData.collections.ContainsKey(typeof(AdventureEncounterObject)))
+			{
+				var values = AssetService.Instance.objectData.collections[typeof(AdventureEncounterObject)].objects.Values.ToList();
+				foreach(var obj in values)
+				{
+					EvergreenEncounters.Add(obj as AdventureEncounterObject);
+				}
+			}
 			OutputLogger.Log(string.Format("{0} encounters loaded.", EvergreenEncounters.Count));
 
-			var monstersPath = "ScriptableObjects/Monsters";
-			monsterData.AddRange(Resources.LoadAll(monstersPath, typeof(MonsterData)).Cast<MonsterData>().ToList());
+			//var monstersPath = "ScriptableObjects/Monsters";
+			//monsterData.AddRange(Resources.LoadAll(monstersPath, typeof(MonsterData)).Cast<MonsterData>().ToList());
+			if (AssetService.Instance.objectData.collections.ContainsKey(typeof(MonsterData)))
+			{
+				var values = AssetService.Instance.objectData.collections[typeof(MonsterData)].objects.Values.ToList();
+				foreach(var obj in values)
+				{
+					monsterData.Add(obj as MonsterData);
+				}
+			}
 			OutputLogger.Log(string.Format("{0} monsters loaded.", monsterData.Count));
 		}
 	}

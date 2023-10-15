@@ -125,6 +125,7 @@ namespace Game.GUI.Adventures
 			if (linkIndex >= 0)
 			{
 				var linkID = text.textInfo.linkInfo[linkIndex].GetLinkID();
+
 				if (InfoService.Keywords.TryGetValue(linkID, out var value))
 				{
 					OutputLogger.Log("* Opening Popup for: " + value.keyword);

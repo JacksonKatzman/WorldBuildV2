@@ -1,0 +1,313 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72722e132307ffc41a80452df201ea66, type: 3}
+  m_Name: LandmarkPresets
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 939a0dfee6ec4af499adfca758948f3b, type: 2}
+    - {fileID: 11400000, guid: 64803f3bf974e6e45a1b1d3346c6501f, type: 2}
+    - {fileID: 11400000, guid: e6069fc272b952d47823001c44ab2658, type: 2}
+    - {fileID: 11400000, guid: 5a9862ffbf4efb243a40689607aa1101, type: 2}
+    - {fileID: 11400000, guid: 6e2abe25118d87d4bab5ebfd2b4edb82, type: 2}
+    - {fileID: 11400000, guid: 2a3b4ef1990c56b47bb2fccf31a7808a, type: 2}
+    - {fileID: 11400000, guid: b4ba02ab526eda840b924a6a024aa990, type: 2}
+    - {fileID: 11400000, guid: c6713bb09e853c040a0662491c43f1c5, type: 2}
+    - {fileID: 11400000, guid: d1bca84ea39183346a3d1ced7c1836cc, type: 2}
+    - {fileID: 11400000, guid: 11cfee22c889b584eabbc08c7b55589a, type: 2}
+    - {fileID: 11400000, guid: cd8924d1066909a4caf5762cf47faf32, type: 2}
+    - {fileID: 11400000, guid: 551c6c004e2336a459495aba8519a49f, type: 2}
+    - {fileID: 11400000, guid: 648fbb35d8cdb314695ecbbfe11c08ea, type: 2}
+    - {fileID: 11400000, guid: 31621728760b6c14195c30622073efa2, type: 2}
+    - {fileID: 11400000, guid: 5c9cf1cf490799146bf566b668336543, type: 2}
+    - {fileID: 11400000, guid: 9bd9f51f591ad7e4c9add57cdea9fa94, type: 2}
+    - {fileID: 11400000, guid: 66fba112ce6f5d646847c2bf017c0202, type: 2}
+    - {fileID: 11400000, guid: 7495241c673f15f44888c0f1c81947b3, type: 2}
+    - {fileID: 11400000, guid: cfa8eb1d7aad2784e96c3b8837a6ba9e, type: 2}
+    - {fileID: 11400000, guid: 23542b214e2574a43a6719f503880346, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: objectType
+      Entry: 7
+      Data: 0|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Game.Incidents.LandmarkPreset, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: objects
+      Entry: 7
+      Data: 1|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Sirenix.OdinInspector.SerializedScriptableObject,
+        Sirenix.Serialization]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 2|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 20
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Bandit_Hideout_Preset
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Ancient_Temple_Preset
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Battle_Monument_Preset
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Burial_Site_Preset
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: City
+    - Name: $v
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Cloister_Preset
+    - Name: $v
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Fortress_Preset
+    - Name: $v
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Ghost_Town_Preset
+    - Name: $v
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Magic_Academy_Preset
+    - Name: $v
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Magical_Locus_Preset
+    - Name: $v
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Mausoleum_Preset
+    - Name: $v
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Meteor_Crater_Preset
+    - Name: $v
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Mine_Preset
+    - Name: $v
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Monster_Lair_Preset
+    - Name: $v
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Otherworldly_Realm_Preset
+    - Name: $v
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Quarry_Preset
+    - Name: $v
+      Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Statue_Preset
+    - Name: $v
+      Entry: 10
+      Data: 16
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Stedding_Preset
+    - Name: $v
+      Entry: 10
+      Data: 17
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Waygate_Preset
+    - Name: $v
+      Entry: 10
+      Data: 18
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Wizard_Tower_Preset
+    - Name: $v
+      Entry: 10
+      Data: 19
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  resourcePath: LandmarkPresets

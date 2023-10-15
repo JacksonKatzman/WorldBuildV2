@@ -93,7 +93,7 @@ namespace Game.Incidents
 			else
 			{
 				value = new Location(id);
-				ContextDictionaryProvider.AddContext(value);
+				EventManager.Instance.Dispatch(new AddContextEvent(value));
 			}
 		}
 
@@ -145,12 +145,13 @@ namespace Game.Incidents
 				return -1;
 			}
 		}
-
+#if UNITY_EDITOR
 		private IEnumerable<string> GetFactionProperties()
 		{
 			var contextType = IncidentEditorWindow.ContextType;
 			var properties = contextType.GetProperties().Where(x => x.PropertyType == typeof(Faction)).Select(x => x.Name).ToList();
 			return properties;
 		}
+#endif
 	}
 }

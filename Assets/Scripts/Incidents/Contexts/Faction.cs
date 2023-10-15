@@ -1,4 +1,5 @@
 ﻿using Game.Enums;
+using Game.Generators.Items;
 using Game.Generators.Names;
 using Game.Incidents;
 using Game.Simulation;
@@ -13,7 +14,7 @@ using UnityEngine;
 namespace Game.Incidents
 {
 	[Serializable]
-	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated
+	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated, IInventoryAffiliated
 	{
 		public Faction AffiliatedFaction
 		{
@@ -79,7 +80,21 @@ namespace Game.Incidents
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		public Organization Government { get; set; }
+		public Inventory CurrentInventory
+		{
+			get
+			{
+				if(inventory == null)
+				{
+					inventory = new FactionInventory(this);
+				}
+				return inventory;
+			}
+		}
+		private FactionInventory inventory;
+
 		public Race MajorityRace => Government.Leader.AffiliatedRace;
+		virtual public bool IsSpecialFaction => false;
 
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
@@ -158,7 +173,7 @@ namespace Game.Incidents
 		override public void Die()
 		{
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
-			EventManager.Instance.Dispatch(new RemoveContextEvent(this));
+			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 			Government.Die();
 		}
 
@@ -168,13 +183,13 @@ namespace Game.Incidents
 			var location = new Location(SimRandom.RandomEntryFromList(cells));
 			var city = new City(this, location, startingPopulation, 0);
 			Cities.Add(city);
-			ContextDictionaryProvider.AddContext(city);
+			EventManager.Instance.Dispatch(new AddContextEvent(city));
 		}
 
 		public void CreateStartingGovernment(Race majorityStartingRace, Character creator = null)
 		{
 			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL, creator);
-			EventManager.Instance.Dispatch(new AddContextEvent(Government));
+			EventManager.Instance.Dispatch(new AddContextEvent(Government, typeof(Organization)));
 		}
 
 		public bool AttemptExpandBorder(int numTimes)
@@ -258,7 +273,7 @@ namespace Game.Incidents
 
 		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)
 		{
-			if(gameEvent.context.ContextType == typeof(Faction))
+			if(gameEvent.context.GetType() == typeof(Faction))
 			{
 				//remove factions from collections
 				if(FactionRelations.Keys.Contains(gameEvent.context))
@@ -270,7 +285,7 @@ namespace Game.Incidents
 					FactionsAtWarWith.Remove(gameEvent.context);
 				}
 			}
-			if(gameEvent.context.ContextType == typeof(City))
+			if(gameEvent.context.GetType() == typeof(City))
 			{
 				if(Cities != null && Cities.Contains((City)gameEvent.context))
 				{

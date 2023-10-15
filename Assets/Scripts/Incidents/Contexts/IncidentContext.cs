@@ -92,7 +92,7 @@ namespace Game.Incidents
 
 		private List<PropertyInfo> GetPropertyList()
 		{
-			var propertyInfo = ContextType.GetProperties();
+			var propertyInfo = GetType().GetProperties();
 			var interfacePropertyInfo = typeof(IIncidentContext).GetProperties();
 
 			return propertyInfo.Where(x => !interfacePropertyInfo.Any(y => x.Name == y.Name)).ToList();

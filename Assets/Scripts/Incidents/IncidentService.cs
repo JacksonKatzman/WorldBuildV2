@@ -166,7 +166,7 @@ namespace Game.Incidents
 		}
 		private Dictionary<int, List<IIncident>> GetIncidentsWithMatchingCriteria(List<IIncident> incidents, IIncidentContext context)
 		{
-			var items = incidents.Where(x => x.Criteria.Evaluate(context) == true).ToList();
+			var items = incidents.Where(x => x.Criteria.Evaluate(context) == true && x.WorldCriteria.Evaluate(context) == true).ToList();
 			Dictionary<int, List<IIncident>> sortedItems = new Dictionary<int, List<IIncident>>();
 			foreach(var item in items)
 			{
@@ -198,13 +198,12 @@ namespace Game.Incidents
 		public void CompileIncidents()
 		{
 			incidents = new List<IIncident>();
-			var files = Directory.GetFiles(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH, "*.json");
-			foreach (string file in files)
+
+			foreach(var asset in AssetService.Instance.incidents.texts)
 			{
-				var text = File.ReadAllText(file);
-				if (text.Length > 0)
+				if (asset.text.Length > 0)
 				{
-					var item = JsonConvert.DeserializeObject<Incident>(text, SaveUtilities.SERIALIZER_SETTINGS);
+					var item = JsonConvert.DeserializeObject<Incident>(asset.text, SaveUtilities.SERIALIZER_SETTINGS);
 					incidents.Add(item);
 				}
 			}
