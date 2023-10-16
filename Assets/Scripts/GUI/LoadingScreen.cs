@@ -90,5 +90,12 @@ namespace Game.GUI
 				yield return new WaitForSeconds(statusCycleTime);
 			}
 		}
+
+		private void OnDestroy()
+		{
+			StopAllCoroutines();
+			EventManager.Instance.RemoveEventHandler<ShowLoadingScreenEvent>(OnShowLoadingScreenEvent);
+			EventManager.Instance.RemoveEventHandler<HideLoadingScreenEvent>(OnHideLoadingScreenEvent);
+		}
 	}
 }
