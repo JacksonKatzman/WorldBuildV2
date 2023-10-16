@@ -14,6 +14,9 @@ namespace Game.Simulation
 		public HexMapGenerator mapGenerator;
 
 		[SerializeField]
+		public SimulationOptions options;
+
+		[SerializeField]
 		public FlavorService flavorService;
 
 		[SerializeField]
@@ -37,7 +40,7 @@ namespace Game.Simulation
 		{
 			IncidentService.Instance.CompileIncidents();
 
-			SimulationManager.Instance.CreateWorld(factions);
+			SimulationManager.Instance.CreateWorld(factions, options);
 
 			HexMapCamera.CenterPosition();
 		}
@@ -45,6 +48,11 @@ namespace Game.Simulation
 		public void TestRun()
 		{
 			SimulationManager.Instance.AsyncRun();
+		}
+
+		private void OnDestroy()
+		{
+			SimulationManager.Instance.cancellationTokenSource.Cancel();
 		}
 	}
 }

@@ -7,6 +7,7 @@ using System.Data;
 using System.IO;
 using UnityEngine;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Game.Simulation
 {
@@ -20,6 +21,8 @@ namespace Game.Simulation
 		public int WorldChunksZ { get; set; }
 
 		public World world;
+
+		public CancellationTokenSource cancellationTokenSource;
 
 		private static SimulationManager instance;
 		public static SimulationManager Instance
@@ -36,6 +39,7 @@ namespace Game.Simulation
 
 		private SimulationManager()
 		{
+			cancellationTokenSource = new CancellationTokenSource();
 			OutputLogger.Log("Sim Manager Made!");
 		}
 
@@ -43,13 +47,13 @@ namespace Game.Simulation
 		public IncidentContextDictionary CurrentContexts => world.CurrentContexts;
 		public IncidentContextDictionary AllContexts => world.AllContexts;
 
-		public void CreateWorld(List<FactionPreset> factions)
+		public void CreateWorld(List<FactionPreset> factions, SimulationOptions options)
 		{
 			ContextDictionaryProvider.SetContextsProviders(() => CurrentContexts, () => AllContexts);
 
 			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
 			world = new World();
-			world.Initialize(factions);
+			world.Initialize(factions, options);
 			var test = AdventureService.Instance;
 		}
 
@@ -97,7 +101,8 @@ namespace Game.Simulation
 			EventManager.Instance.Dispatch(new ShowLoadingScreenEvent("Generating World"));
 
 			var startTime = Time.realtimeSinceStartup;
-			await Task.Run(() => RunSimulation());
+			//await Task.Run(() => RunSimulation());
+			await RunSimulationWithCancellation(cancellationTokenSource.Token);
 			var simTime = Time.realtimeSinceStartup - startTime;
 			OutputLogger.Log("TIME TO SIM: " + simTime);
 
@@ -106,9 +111,19 @@ namespace Game.Simulation
 			world.BeginPostGeneration();
 		}
 
+		public async Task RunSimulationWithCancellation(CancellationToken token)
+		{
+			int yearsPassed = 0;
+			while(!token.IsCancellationRequested && yearsPassed < world.simulationOptions.simulatedYears)
+			{
+				await Task.Run(() => world.AdvanceTime());
+				yearsPassed++;
+			}
+		}
+
 		private void RunSimulation()
 		{
-			for(int i = 0; i < 100; i++)
+			for(int i = 0; i < world.simulationOptions.simulatedYears; i++)
 			{
 				world.AdvanceTime();
 			}
@@ -130,6 +145,11 @@ namespace Game.Simulation
 			table.ToCSV(Application.dataPath + "/Resources/" + "factionCSV" + ".csv");
 			IncidentService.Instance.WriteIncidentLogToDisk();
 			*/
+		}
+
+		~SimulationManager()
+		{
+
 		}
 	}
 }
