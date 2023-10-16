@@ -13,19 +13,21 @@ using Game.Utilities;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using Game.Terrain;
 
 namespace Game.Incidents
 {
 	[CustomEditor(typeof(LearnAboutReflection))]
 	public class LearnAboutReflectionEditor : Editor
 	{
+		private bool loadingOn = false;
 		public override void OnInspectorGUI()
 		{
 			DrawDefaultInspector();
 
 			if (GUILayout.Button("In game test!"))
 			{
-				SimulationManager.Instance.DebugRun();
+				SimulationManager.Instance.AsyncRun();
 			}
 
 			if (GUILayout.Button("Name Test"))
@@ -63,6 +65,24 @@ namespace Game.Incidents
 					var title = StaticFlavorCollections.HandleCharacterRelationshipTitles("{RELATE:0/1}", contexts);
 					OutputLogger.Log(title);
 				}
+			}
+
+			if(GUILayout.Button("Test Loading Screen"))
+			{
+				loadingOn = !loadingOn;
+				if (loadingOn)
+				{
+					EventManager.Instance.Dispatch(new ShowLoadingScreenEvent("Testing Loading!"));
+				}
+				else
+				{
+					EventManager.Instance.Dispatch(new HideLoadingScreenEvent());
+				}
+			}
+
+			if (GUILayout.Button("Center Camera"))
+			{
+				HexMapCamera.CenterPosition();
 			}
 		}
 		public static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
