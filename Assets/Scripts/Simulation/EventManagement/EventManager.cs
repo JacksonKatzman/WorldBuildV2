@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Game.Simulation
 {
-    public class EventManager
+	public class EventManager
     {
         private static EventManager instance;
         public static EventManager Instance

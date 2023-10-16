@@ -38,11 +38,13 @@ namespace Game.Simulation
 			IncidentService.Instance.CompileIncidents();
 
 			SimulationManager.Instance.CreateWorld(factions);
+
+			HexMapCamera.CenterPosition();
 		}
 
 		public void TestRun()
 		{
-			SimulationManager.Instance.DebugRun();
+			SimulationManager.Instance.AsyncRun();
 		}
 	}
 }

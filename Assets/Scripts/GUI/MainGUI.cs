@@ -7,6 +7,11 @@ namespace Game.GUI
 		[SerializeField]
 		private CanvasGroup wikiCanvas;
 
+		private void Awake()
+		{
+			
+		}
+
 		public void ToggleWiki()
 		{
 			ToggleCanvasGroup(wikiCanvas);

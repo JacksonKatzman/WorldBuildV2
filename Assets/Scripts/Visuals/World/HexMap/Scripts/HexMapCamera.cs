@@ -36,6 +36,11 @@ namespace Game.Terrain
 			instance.AdjustPosition(0f, 0f);
 		}
 
+		public static void CenterPosition()
+		{
+			instance.CenterCamera();
+		}
+
 		void Awake()
 		{
 			swivel = transform.GetChild(0);
@@ -118,6 +123,23 @@ namespace Game.Terrain
 			position.z = Mathf.Clamp(position.z, 0f, zMax);
 
 			return position;
+		}
+
+		void CenterCamera()
+		{
+			var center = GetCenterPosition();
+			var currentPosition = transform.localPosition;
+			transform.localPosition = new Vector3(center.x - currentPosition.x, currentPosition.y, center.z - currentPosition.z);
+			var zoomDelta = (stick.transform.localPosition.z - center.y);
+			var modDelta = zoomDelta / (stickMaxZoom - stickMinZoom);
+			AdjustZoom(-1 * modDelta);
+		}
+
+		Vector3 GetCenterPosition()
+		{
+			float xHalf = ((grid.cellCountX - 0.5f) * (2f * HexMetrics.innerRadius))/2;
+			float zHalf = ((grid.cellCountZ - 1) * (1.5f * HexMetrics.outerRadius))/2;
+			return new Vector3(xHalf, (stickMinZoom + stickMaxZoom)/2, zHalf);
 		}
 	}
 }
