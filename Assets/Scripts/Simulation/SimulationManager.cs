@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using UnityEngine;
+using System.Threading.Tasks;
 
 namespace Game.Simulation
 {
@@ -91,18 +92,30 @@ namespace Game.Simulation
 			OutputLogger.Log("World Loaded!");
 		}
 
-		public void DebugRun()
+		public async void AsyncRun()
 		{
+			EventManager.Instance.Dispatch(new ShowLoadingScreenEvent("Generating World"));
+
 			var startTime = Time.realtimeSinceStartup;
+			await Task.Run(() => RunSimulation());
+			var simTime = Time.realtimeSinceStartup - startTime;
+			OutputLogger.Log("TIME TO SIM: " + simTime);
+
+			EventManager.Instance.Dispatch(new HideLoadingScreenEvent());
+
+			world.BeginPostGeneration();
+		}
+
+		private void RunSimulation()
+		{
 			for(int i = 0; i < 100; i++)
 			{
 				world.AdvanceTime();
 			}
-			var simTime = Time.realtimeSinceStartup - startTime;
-			OutputLogger.Log("TIME TO SIM: " + simTime);
 
-			world.BeginPostGeneration();
+			//world.BeginPostGeneration();
 
+			/*
 			var table = world.GetDataTable();
 
 			foreach(var contextList in world.AllContexts.Values)
@@ -116,8 +129,7 @@ namespace Game.Simulation
 
 			table.ToCSV(Application.dataPath + "/Resources/" + "factionCSV" + ".csv");
 			IncidentService.Instance.WriteIncidentLogToDisk();
-			var fullTime = Time.realtimeSinceStartup - startTime;
-			OutputLogger.Log("FULL TIME: " + fullTime);
+			*/
 		}
 	}
 }

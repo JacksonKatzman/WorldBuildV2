@@ -44,7 +44,7 @@ namespace Game.Incidents
                 else
 				{
                     //replace this with something better later
-                    faction.namingTheme = FlavorService.Instance.GenerateMonsterFactionNamingTheme();
+                    faction.namingTheme = FlavorService.Instance.genericMonsterNamingTheme;
                 }
                 //need to set the leader of the special faction here
                 //also need to assign them a base of operations, probably a landmark somehow
