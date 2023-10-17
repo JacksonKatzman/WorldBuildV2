@@ -28,7 +28,7 @@ MonoBehaviour:
       Data: 0|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Game.Creatures.MonsterData, Assembly-CSharp
+      Data: Game.Data.MonsterData, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

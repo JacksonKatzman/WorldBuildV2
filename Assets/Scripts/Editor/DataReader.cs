@@ -330,7 +330,7 @@ namespace Game.Data
 							var maxRoll = int.Parse(damageSplit[1]);
 							var damageType = (DamageType)Enum.Parse(typeof(DamageType), split[4].ToUpper());
 
-							weaponStats.damageValue = new Combat.DamageValue(numDice, maxRoll, 0, damageType);
+							weaponStats.damageValue = new Game.Data.DamageValue(numDice, maxRoll, 0, damageType);
 							weaponStats.weight = float.Parse(split[5]);
 							var propertiesString = "";
 							for (int i = 7; i < split.Length; i++)

@@ -1,7 +1,7 @@
 ﻿using Game.Enums;
 using Game.Utilities;
 
-namespace Game.Combat
+namespace Game.Data
 {
 	[System.Serializable]
 	public class DamageValue
