@@ -1,4 +1,5 @@
 ﻿using Game.Incidents;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Game.Simulation
 	{
 		public Type ContextType => typeof(T);
 
+		[JsonIgnore]
 		public IIncidentContext Context
 		{
 			get
@@ -29,6 +31,7 @@ namespace Game.Simulation
 			}
 		}
 
+		[JsonIgnore]
 		public T TypedContext => (T)Context;
 
 		private IIncidentContext context;
