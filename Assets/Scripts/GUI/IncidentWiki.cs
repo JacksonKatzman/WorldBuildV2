@@ -20,7 +20,6 @@ namespace Game.GUI.Wiki
 		{
 			if(!initialized)
 			{
-				//PopulatePage(0);
 				OpenPage(0);
 
 				initialized = true;
@@ -67,7 +66,6 @@ namespace Game.GUI.Wiki
 
 		public bool BuildPage(int id)
 		{
-			//var context = id == 0 ? SimulationManager.Instance.world : SimulationManager.Instance.AllContexts.GetContextByID(id);
 			if (!pages.ContainsKey(id))
 			{
 				//make a new page
@@ -90,7 +88,6 @@ namespace Game.GUI.Wiki
 			{
 				var page = pages[id];
 				page.wikiTitle.text = context.Name;
-				//page.title = context.Name;
 
 				if (id == 0)
 				{
@@ -125,7 +122,6 @@ namespace Game.GUI.Wiki
 				PopulatePage(id);
 			}
 
-			//pages[id].FillFields();
 			currentTab.SwitchToPage(pages[id]);
 		}
 
@@ -140,12 +136,6 @@ namespace Game.GUI.Wiki
 			page.wikiText.text += report.ReportYear + ": ";
 			page.wikiText.text += report.ReportLog;
 			page.wikiText.text += "\n";
-			
-			/*
-			page.fullText += report.ReportYear + ": ";
-			page.fullText += report.ReportLog;
-			page.fullText += "\n";
-			*/
 		}
 	}
 }

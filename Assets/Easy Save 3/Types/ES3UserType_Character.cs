@@ -25,9 +25,9 @@ namespace ES3Types
 			writer.WriteProperty("Gender", instance.Gender, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Enums.Gender)));
 			writer.WriteProperty("Race", new List<int>() { instance.AffiliatedRace.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			writer.WriteProperty("AffiliatedFaction", new List<int>() { instance.AffiliatedFaction.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
-			if (instance.Organization != null)
+			if (instance.AffiliatedOrganization != null)
 			{
-				writer.WriteProperty("Organization", new List<int>() { instance.Organization.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
+				writer.WriteProperty("Organization", new List<int>() { instance.AffiliatedOrganization.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
 			}
 			writer.WriteProperty("Priorities", instance.Priorities, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.Dictionary<Game.Enums.OrganizationType, System.Int32>)));
 			//writer.WriteProperty("PoliticalPriority", instance.PoliticalPriority, ES3Type_int.Instance);
