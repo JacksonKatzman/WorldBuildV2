@@ -184,7 +184,7 @@ namespace Game.Incidents
 			return sortedItems;
 		}
 
-		private void Setup()
+		public void Setup()
 		{
 			nextIncidentID = 0;
 			delayedContexts = new List<DelayedIncidentContext>();

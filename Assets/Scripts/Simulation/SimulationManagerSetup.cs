@@ -1,5 +1,6 @@
 ﻿using Game.Incidents;
 using Game.Terrain;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,22 +26,30 @@ namespace Game.Simulation
 		[SerializeField]
 		public List<FactionPreset> factions;
 
+		[Button("Create New World")]
+		public void CreateNewWorld()
+		{
+			var simMan = SimulationManager.Instance;
+			simMan.MapGenerator = mapGenerator;
+			simMan.WorldChunksX = worldChunksX;
+			simMan.WorldChunksZ = worldChunksZ;
+
+			SimulationManager.Instance.CreateWorld(factions, options);
+		}
+
 		private void Awake()
 		{
 			var simMan = SimulationManager.Instance;
 			simMan.HexGrid = hexGrid;
 			hexGrid.Initalize();
 			flavorService.Init();
-			simMan.MapGenerator = mapGenerator;
-			simMan.WorldChunksX = worldChunksX;
-			simMan.WorldChunksZ = worldChunksZ;
 		}
 
 		private void Start()
 		{
 			IncidentService.Instance.CompileIncidents();
 
-			SimulationManager.Instance.CreateWorld(factions, options);
+			CreateNewWorld();
 
 			HexMapCamera.CenterPosition();
 		}

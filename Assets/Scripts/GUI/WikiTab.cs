@@ -59,7 +59,12 @@ namespace Game.GUI.Wiki
 
 			pageHistory.AddLast(incidentWikiPage);
 			currentPage = pageHistory.Last;
-			currentPage.Value.gameObject.SetActive(true);
+			//currentPage.Value.gameObject.SetActive(true);
+		}
+
+		public void ToggleView(bool on)
+		{
+			currentPage.Value.gameObject.SetActive(on);
 		}
 	}
 }

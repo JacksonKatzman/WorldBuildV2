@@ -1,4 +1,5 @@
-﻿using Game.Factions;
+﻿using Cysharp.Threading.Tasks;
+using Game.Factions;
 using Game.Generators.Items;
 using Game.Incidents;
 using Game.Terrain;
@@ -93,7 +94,7 @@ namespace Game.Simulation
 			CreateRacesAndFactions(factions);
 		}
 
-		public void AdvanceTime()
+		public async UniTask AdvanceTime()
 		{
 			ContextDictionaryProvider.DelayedRemoveContexts();
 			ContextDictionaryProvider.DelayedAddContexts();
@@ -124,6 +125,8 @@ namespace Game.Simulation
 					context.UpdateHistoricalData();
 				}
 			}
+
+			await UniTask.Yield();
 		}
 
 		public void BeginPostGeneration()

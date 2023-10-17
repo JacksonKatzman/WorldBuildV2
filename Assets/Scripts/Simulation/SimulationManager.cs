@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using UnityEngine;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using System.Threading;
 
 namespace Game.Simulation
@@ -49,6 +49,8 @@ namespace Game.Simulation
 
 		public void CreateWorld(List<FactionPreset> factions, SimulationOptions options)
 		{
+			IncidentService.Instance.Setup();
+			UserInterfaceService.Instance.incidentWiki.Clear();
 			ContextDictionaryProvider.SetContextsProviders(() => CurrentContexts, () => AllContexts);
 
 			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
@@ -96,28 +98,38 @@ namespace Game.Simulation
 			OutputLogger.Log("World Loaded!");
 		}
 
-		public async void AsyncRun()
+		public async UniTask AsyncRun()
 		{
 			EventManager.Instance.Dispatch(new ShowLoadingScreenEvent("Generating World"));
 
 			var startTime = Time.realtimeSinceStartup;
 			//await Task.Run(() => RunSimulation());
 			await RunSimulationWithCancellation(cancellationTokenSource.Token);
+			await CompileWikiWithCancellation(cancellationTokenSource.Token);
 			var simTime = Time.realtimeSinceStartup - startTime;
 			OutputLogger.Log("TIME TO SIM: " + simTime);
+			//UserInterfaceService.Instance.incidentWiki.InitializeWiki();
 
 			EventManager.Instance.Dispatch(new HideLoadingScreenEvent());
 
 			world.BeginPostGeneration();
 		}
 
-		public async Task RunSimulationWithCancellation(CancellationToken token)
+		public async UniTask RunSimulationWithCancellation(CancellationToken token)
 		{
 			int yearsPassed = 0;
 			while(!token.IsCancellationRequested && yearsPassed < world.simulationOptions.simulatedYears)
 			{
-				await Task.Run(() => world.AdvanceTime());
+				await world.AdvanceTime();
 				yearsPassed++;
+			}
+		}
+
+		public async UniTask CompileWikiWithCancellation(CancellationToken token)
+		{
+			while (!token.IsCancellationRequested && !UserInterfaceService.Instance.incidentWiki.initialized)
+			{
+				await UserInterfaceService.Instance.incidentWiki.InitializeWiki();
 			}
 		}
 
