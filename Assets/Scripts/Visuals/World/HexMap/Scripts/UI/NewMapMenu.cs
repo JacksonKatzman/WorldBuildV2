@@ -54,6 +54,7 @@ namespace Game.Terrain
 				hexGrid.CreateMap(x, z);
 			}
 			HexMapCamera.ValidatePosition();
+			HexMapCamera.CenterPosition();
 			Close();
 		}
 	}

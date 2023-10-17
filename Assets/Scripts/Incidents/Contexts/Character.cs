@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated, ISentient
+	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated, IOrganizationAffiliated, ISentient
 	{
 		public Character() 
 		{
@@ -131,7 +131,7 @@ namespace Game.Incidents
 		public Gender Gender { get; set; }
 		public Race AffiliatedRace { get; set; }
 		public Faction AffiliatedFaction { get; set; }
-		public Organization Organization { get; set; }
+		public Organization AffiliatedOrganization { get; set; }
 		public OrganizationPosition OfficialPosition => GetOfficialPosition();
 		public bool HasOrganizationPosition => OfficialPosition != null;
 		public int PoliticalPriority
@@ -305,18 +305,18 @@ namespace Game.Incidents
 
 		private OrganizationPosition GetOfficialPosition()
 		{
-			if(Organization == null)
+			if(AffiliatedOrganization == null)
 			{
 				return null;
 			}
 
-			if(Organization.Contains(this, out var position))
+			if(AffiliatedOrganization.Contains(this, out var position))
 			{
 				return position;
 			}
 			else
 			{
-				Organization = null;
+				AffiliatedOrganization = null;
 				return null;
 			}
 		}
@@ -336,7 +336,7 @@ namespace Game.Incidents
 		{
 			if (gameEvent.affiliate == this)
 			{
-				Organization = null;
+				AffiliatedOrganization = null;
 			}
 		}
 	}

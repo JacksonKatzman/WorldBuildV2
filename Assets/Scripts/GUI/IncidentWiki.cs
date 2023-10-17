@@ -1,4 +1,5 @@
-﻿using Game.Incidents;
+﻿using Cysharp.Threading.Tasks;
+using Game.Incidents;
 using Game.Simulation;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,41 @@ namespace Game.GUI.Wiki
 {
 	public class IncidentWiki : Wiki
 	{
-		private bool initialized;
+		[HideInInspector]
+		public bool initialized;
 
-		public void InitializeWiki()
+		public async UniTask InitializeWiki()
 		{
 			if(!initialized)
 			{
-				currentTab = MakeTab();
-				tabs.Add(currentTab);
 				OpenPage(0);
 
 				initialized = true;
+				await UniTask.Yield();
 			}
+		}
+
+		public void Clear()
+		{
+			foreach(var pair in pages)
+			{
+				if (pair.Value.contextID != 0)
+				{
+					Destroy(pair.Value);
+				}
+			}
+
+			pages.Clear();
+
+			foreach(var tab in tabs)
+			{
+				Destroy(tab);
+			}
+
+			tabs.Clear();
+			currentTab = MakeTab();
+			tabs.Add(currentTab);
+			initialized = false;
 		}
 
 		protected override void OnLinkClick(string linkID)
@@ -40,46 +64,75 @@ namespace Game.GUI.Wiki
 			}
 		}
 
-		override public void OpenPage(int id)
+		public bool BuildPage(int id)
 		{
-			if(!pages.ContainsKey(id))
+			if (!pages.ContainsKey(id))
 			{
-				//Get the context in question
-				var context = id == 0 ? SimulationManager.Instance.world : SimulationManager.Instance.AllContexts.GetContextByID(id);
-				if (context != null)
-				{
-					//make a new page
-					var page = Instantiate(wikiPagePrefab, pageRoot).GetComponent<WikiPage>();
-					page.contextID = id;
-					page.wikiTitle.text = context.Name;
+				//make a new page
+				var page = Instantiate(wikiPagePrefab, pageRoot).GetComponent<WikiPage>();
+				page.contextID = id;
 
-					if (id == 0)
+				pages.Add(id, page);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		public bool PopulatePage(int id)
+		{
+			var context = id == 0 ? SimulationManager.Instance.world : SimulationManager.Instance.AllContexts.GetContextByID(id);
+			if (context != null && pages.ContainsKey(id))
+			{
+				var page = pages[id];
+				page.wikiTitle.text = context.Name;
+
+				if (id == 0)
+				{
+					foreach (var item in IncidentService.Instance.reports)
 					{
-						foreach (var item in IncidentService.Instance.reports)
+						AddReportToPage(page, item);
+					}
+				}
+				else
+				{
+					foreach (var item in IncidentService.Instance.reports)
+					{
+						if (item.Contexts.Values.Contains(context))
 						{
 							AddReportToPage(page, item);
 						}
 					}
-					else
-					{
-						foreach (var item in IncidentService.Instance.reports)
-						{
-							if (item.Contexts.Values.Contains(context))
-							{
-								AddReportToPage(page, item);
-							}
-						}
-					}
-
-					pages.Add(id, page);
 				}
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		override public void OpenPage(int id)
+		{
+			if(!pages.ContainsKey(id))
+			{
+				BuildPage(id);
+				PopulatePage(id);
 			}
 
 			currentTab.SwitchToPage(pages[id]);
 		}
 
+		public void ToggleView(bool on)
+		{
+			currentTab.ToggleView(on);
+		}
+
 		private void AddReportToPage(WikiPage page, IncidentReport report)
 		{
+			
 			page.wikiText.text += report.ReportYear + ": ";
 			page.wikiText.text += report.ReportLog;
 			page.wikiText.text += "\n";

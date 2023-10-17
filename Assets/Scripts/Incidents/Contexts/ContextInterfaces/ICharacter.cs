@@ -13,7 +13,7 @@ namespace Game.Incidents
 		public Gender Gender { get; set; }
 		public Race AffiliatedRace { get; set; }
 		public Faction AffiliatedFaction { get; set; }
-		public Organization Organization { get; set; }
+		public Organization AffiliatedOrganization { get; set; }
 		public OrganizationPosition OfficialPosition { get; }
 		void Die();
 	}

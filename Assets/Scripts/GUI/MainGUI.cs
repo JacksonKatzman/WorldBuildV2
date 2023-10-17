@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Incidents;
+using UnityEngine;
 
 namespace Game.GUI
 {
@@ -14,6 +15,7 @@ namespace Game.GUI
 
 		public void ToggleWiki()
 		{
+			UserInterfaceService.Instance.incidentWiki.ToggleView(wikiCanvas.alpha == 0 ? true : false);
 			ToggleCanvasGroup(wikiCanvas);
 		}
 

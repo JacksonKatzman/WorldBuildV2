@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Game.Terrain;
+using Cysharp.Threading.Tasks;
 
 namespace Game.Incidents
 {
@@ -45,11 +46,6 @@ namespace Game.Incidents
 			if (GUILayout.Button("Thesaurus Test"))
 			{
 				ThesaurusEntryRetriever.GetSynonyms("mad");
-			}
-
-			if (GUILayout.Button("XML Test"))
-			{
-				XMLTest();
 			}
 
 			if (GUILayout.Button("Recursion Test"))
@@ -85,6 +81,7 @@ namespace Game.Incidents
 				HexMapCamera.CenterPosition();
 			}
 		}
+
 		public static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
 		{
 			return from x in assembly.GetTypes()

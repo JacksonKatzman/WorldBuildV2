@@ -1,4 +1,5 @@
-﻿using Game.Factions;
+﻿using Cysharp.Threading.Tasks;
+using Game.Factions;
 using Game.Generators.Items;
 using Game.Incidents;
 using Game.Terrain;
@@ -11,6 +12,27 @@ using UnityEngine;
 
 namespace Game.Simulation
 {
+	public static class WorldExtensions
+	{
+		public static float SimulationCompletionPercentage(this World world)
+		{
+			return (world.Age / world.simulationOptions.simulatedYears);
+		}
+		public static bool ShouldIncreaseSpecialFactions(this World world)
+		{
+			return SimulationCompletionPercentage(world) >= (world.NumSpecialFactions / world.simulationOptions.targetSpecialFactions);
+		}
+
+		public static bool ShouldIncreaseFactions(this World world)
+		{
+			return SimulationCompletionPercentage(world) >= (world.NumSpecialFactions / world.simulationOptions.targetSpecialFactions);
+		}
+
+		public static bool ShouldIncreaseCharacters(this World world)
+		{
+			return SimulationCompletionPercentage(world) >= (world.NumPeople / world.simulationOptions.targetCharacters);
+		}
+	}
 	public class World : IncidentContext
 	{
 		private HexGrid HexGrid => SimulationManager.Instance.HexGrid;
@@ -41,11 +63,16 @@ namespace Game.Simulation
 		[JsonIgnore]
 		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
 		[JsonIgnore]
-		public int NumPeople => CurrentContexts[typeof(Character)].Count;
+		public int NumPeople => People.Count;
+		public bool RoomForPeople => this.ShouldIncreaseCharacters();
+		public int NumFactions => Factions.Count;
+		public bool RoomForFactions => this.ShouldIncreaseFactions();
 		public int NumSpecialFactions => Factions.Where(x => x.IsSpecialFaction).Count();
-		public bool RoomForSpecialFaction => NumSpecialFactions < 5;
+		public bool RoomForSpecialFaction => this.ShouldIncreaseSpecialFactions();
 
 		public List<Item> LostItems;
+
+		public SimulationOptions simulationOptions;
 
 		public int nextID;
 
@@ -61,12 +88,13 @@ namespace Game.Simulation
 			LostItems = new List<Item>();
 		}
 
-		public void Initialize(List<FactionPreset> factions)
+		public void Initialize(List<FactionPreset> factions, SimulationOptions options)
 		{
+			simulationOptions = options;
 			CreateRacesAndFactions(factions);
 		}
 
-		public void AdvanceTime()
+		public async UniTask AdvanceTime()
 		{
 			ContextDictionaryProvider.DelayedRemoveContexts();
 			ContextDictionaryProvider.DelayedAddContexts();
@@ -97,6 +125,8 @@ namespace Game.Simulation
 					context.UpdateHistoricalData();
 				}
 			}
+
+			await UniTask.Yield();
 		}
 
 		public void BeginPostGeneration()
