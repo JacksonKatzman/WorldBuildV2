@@ -1,10 +1,11 @@
-﻿using Game.Enums;
+﻿using Game.Data;
+using Game.Enums;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Creatures
+namespace Game.Data
 {
 	[CreateAssetMenu(fileName = nameof(MonsterData), menuName = "ScriptableObjects/Creatures/" + nameof(MonsterData), order = 1)]
 	public class MonsterData : SerializedScriptableObject
@@ -77,7 +78,7 @@ namespace Game.Creatures
 	public struct CreatureAbility
 	{
 		public string abilityName;
-		[TextArea(2,8)]
+		[TextArea(2, 8)]
 		public string abilityDescription;
 	}
 

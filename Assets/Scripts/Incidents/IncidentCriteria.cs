@@ -1,4 +1,5 @@
-﻿using Game.Enums;
+﻿using Game.Debug;
+using Game.Enums;
 using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace Game.Incidents
 {
-    public class WorldCriteria : IncidentCriteria
+	public class WorldCriteria : IncidentCriteria
 	{
         public override Type ContextType => typeof(World);
 

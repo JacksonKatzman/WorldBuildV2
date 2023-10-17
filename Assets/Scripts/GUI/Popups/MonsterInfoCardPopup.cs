@@ -1,4 +1,4 @@
-﻿using Game.Creatures;
+﻿using Game.Data;
 using Game.Enums;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;

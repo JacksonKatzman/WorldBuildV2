@@ -1,4 +1,6 @@
-﻿namespace Game.Incidents
+﻿using Game.Data;
+
+namespace Game.Incidents
 {
 	public class ChangeFactionRelationsAction : GenericIncidentAction
 	{

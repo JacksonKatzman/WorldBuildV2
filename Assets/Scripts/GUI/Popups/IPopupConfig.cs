@@ -1,5 +1,4 @@
-﻿using Game.Creatures;
-using Game.Utilities;
+﻿using Game.Data;
 
 namespace Game.GUI.Popups
 {
@@ -14,7 +13,7 @@ namespace Game.GUI.Popups
 
 	public class MonsterInfoCardPopupConfig : PopupConfig
 	{
-		override public int PopupType => Game.Utilities.PopupType.MONSTER_INFO_CARD;
+		override public int PopupType => Data.PopupType.MONSTER_INFO_CARD;
 		public MonsterData MonsterData { get; set; }
 	}
 }

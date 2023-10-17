@@ -5,25 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Game.Simulation
+namespace Game.Data
 {
 	public class IncidentContextDictionary : TypeListDictionary<IIncidentContext>
 	{
 		public IncidentContextDictionary()
 		{
 			var types = GetRequiredTypes();
-			foreach(var type in types)
+			foreach (var type in types)
 			{
-				this.Add(type, new List<IIncidentContext>());
+				Add(type, new List<IIncidentContext>());
 			}
 		}
 		public IIncidentContext GetContextByID(int id)
 		{
-			foreach(var list in this.Values)
+			foreach (var list in Values)
 			{
-				foreach(var item in list)
+				foreach (var item in list)
 				{
-					if(item.ID == id)
+					if (item.ID == id)
 					{
 						return item;
 					}
@@ -35,7 +35,7 @@ namespace Game.Simulation
 
 		public T GetContextByID<T>(int id)
 		{
-			if(this.ContainsKey(typeof(T)))
+			if (ContainsKey(typeof(T)))
 			{
 				var list = this[typeof(T)];
 				foreach (var item in list)
@@ -47,12 +47,12 @@ namespace Game.Simulation
 				}
 			}
 
-			return default(T);
+			return default;
 		}
 
 		public List<T> GetContextsByType<T>()
 		{
-			if(this.ContainsKey(typeof(T)))
+			if (ContainsKey(typeof(T)))
 			{
 				var list = this[typeof(T)];
 				return list as List<T>;
@@ -62,7 +62,7 @@ namespace Game.Simulation
 
 		public void LoadContextProperties()
 		{
-			foreach (var list in this.Values)
+			foreach (var list in Values)
 			{
 				foreach (var item in list)
 				{

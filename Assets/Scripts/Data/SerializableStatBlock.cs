@@ -1,7 +1,7 @@
 ﻿using Game.Enums;
 using System.Collections.Generic;
 
-namespace Game.Creatures
+namespace Game.Data
 {
 	[System.Serializable]
 	public class SerializableStatBlock

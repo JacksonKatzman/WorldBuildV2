@@ -8,6 +8,8 @@ using System.IO;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using Game.Data;
+using Game.Debug;
 
 namespace Game.Simulation
 {

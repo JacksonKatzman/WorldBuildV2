@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Debug;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEditor;

@@ -1,4 +1,5 @@
-﻿using Game.Simulation;
+﻿using Game.Data;
+using Game.Simulation;
 using System;
 using System.Collections.Generic;
 using System.Data;

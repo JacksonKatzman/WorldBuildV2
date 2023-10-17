@@ -1,4 +1,4 @@
-﻿namespace Game.Utilities
+﻿namespace Game.Data
 {
 	public class PopupType : IPopupTypeConstantSource
 	{

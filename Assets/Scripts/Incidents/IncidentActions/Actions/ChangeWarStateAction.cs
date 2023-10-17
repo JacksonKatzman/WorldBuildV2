@@ -1,4 +1,6 @@
-﻿namespace Game.Incidents
+﻿using Game.Debug;
+
+namespace Game.Incidents
 {
 	public class ChangeWarStateAction : GenericIncidentAction
 	{

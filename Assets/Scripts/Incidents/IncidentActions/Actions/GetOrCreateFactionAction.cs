@@ -1,4 +1,5 @@
-﻿using Game.Generators.Names;
+﻿using Game.Data;
+using Game.Generators.Names;
 using Game.Simulation;
 using Game.Utilities;
 using Sirenix.OdinInspector;

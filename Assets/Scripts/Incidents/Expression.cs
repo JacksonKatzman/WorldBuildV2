@@ -1,4 +1,5 @@
-﻿using Game.Simulation;
+﻿using Game.Data;
+using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-    public enum ExpressionType { Const, Method, Property, Range, Subexpression, From_Previous };
+	public enum ExpressionType { Const, Method, Property, Range, Subexpression, From_Previous };
 
     [HideReferenceObjectPicker]
 	public class Expression<T>

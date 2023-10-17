@@ -1,4 +1,5 @@
-﻿using Game.Generators.Names;
+﻿using Game.Debug;
+using Game.Generators.Names;
 using UnityEngine;
 
 namespace Game.Incidents

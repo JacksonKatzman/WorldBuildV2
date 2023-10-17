@@ -1,4 +1,4 @@
-﻿using Game.Creatures;
+﻿using Game.Data;
 using System;
 
 namespace Game.Incidents

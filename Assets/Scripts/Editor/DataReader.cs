@@ -1,4 +1,5 @@
-﻿using Game.Creatures;
+﻿using Game.Data;
+using Game.Debug;
 using Game.Enums;
 using Game.Generators.Items;
 using System;
@@ -7,7 +8,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Editor
+namespace Game.Data
 {
 	public class DataReader : EditorWindow
 	{
@@ -19,7 +20,7 @@ namespace Assets.Scripts.Editor
 
 		private void OnGUI()
 		{
-			if(GUILayout.Button("Build Creatures"))
+			if (GUILayout.Button("Build Creatures"))
 			{
 				BuildCreatures();
 			}
@@ -31,19 +32,19 @@ namespace Assets.Scripts.Editor
 
 		private int SavingThrowHelper(string input, string lookingFor)
 		{
-			if(!input.Contains(lookingFor))
+			if (!input.Contains(lookingFor))
 			{
 				return 0;
 			}
 
 			var split = input.Replace("Saving Throws ", "").Split(',');
-			foreach(var s in split)
+			foreach (var s in split)
 			{
-				if(s.Contains(lookingFor))
+				if (s.Contains(lookingFor))
 				{
 					var toParse = s.Replace(lookingFor, "").Replace(" ", "").Replace("+", "");
 					int toReturn;
-					if(Int32.TryParse(toParse, out toReturn))
+					if (int.TryParse(toParse, out toReturn))
 					{
 						return toReturn;
 					}
@@ -57,13 +58,13 @@ namespace Assets.Scripts.Editor
 		{
 			var rawCreatureData = Resources.LoadAll("RawData/Creatures");
 			var existingCreatures = Resources.LoadAll("ScriptableObjects/Creatures");
-			var creatureDictionary = new Dictionary<string, Game.Creatures.MonsterData>();
+			var creatureDictionary = new Dictionary<string, MonsterData>();
 
 			if (existingCreatures != null)
 			{
 				foreach (var c in existingCreatures)
 				{
-					creatureDictionary.Add(((Game.Creatures.MonsterData)c).Name, ((Game.Creatures.MonsterData)c));
+					creatureDictionary.Add(((MonsterData)c).Name, (MonsterData)c);
 				}
 			}
 			if (rawCreatureData != null)
@@ -73,24 +74,24 @@ namespace Assets.Scripts.Editor
 					var trimmed = ((TextAsset)data).text.Replace("\r", "");
 					var creatureDatas = trimmed.Split('@');
 
-					foreach(var creature in creatureDatas)
+					foreach (var creature in creatureDatas)
 					{
 						var creatureLines = creature.Split('\n');
 						var dataLines = new List<string>();
-						foreach(var line in creatureLines)
+						foreach (var line in creatureLines)
 						{
-							if(line != string.Empty)
+							if (line != string.Empty)
 							{
 								dataLines.Add(line);
 							}
 						}
 
-						if(dataLines.Count == 0 || creatureDictionary.ContainsKey(dataLines[0]))
+						if (dataLines.Count == 0 || creatureDictionary.ContainsKey(dataLines[0]))
 						{
 							continue;
 						}
 
-						var creatureStats = (Game.Creatures.MonsterData)ScriptableObject.CreateInstance(typeof(Game.Creatures.MonsterData));
+						var creatureStats = (MonsterData)CreateInstance(typeof(MonsterData));
 
 						var assetName = dataLines[0].Replace('/', '-');
 						AssetDatabase.CreateAsset(creatureStats, "Assets/Resources/ScriptableObjects/Creatures/" + assetName + ".asset");
@@ -104,7 +105,7 @@ namespace Assets.Scripts.Editor
 						var split1 = dataLines[1].Split(',');
 						var split2 = split1[0].Split(' ');
 						var align = split1[1].Trim(' ').Replace(' ', '_').ToUpper();
-						if(align == "NEUTRAL")
+						if (align == "NEUTRAL")
 						{
 							align = "TRUE_NEUTRAL";
 						}
@@ -112,17 +113,17 @@ namespace Assets.Scripts.Editor
 						creatureStats.size = (CreatureSize)Enum.Parse(typeof(CreatureSize), split2[0].ToUpper());
 						creatureStats.type = (CreatureType)Enum.Parse(typeof(CreatureType), split2[1].ToUpper());
 						creatureStats.alignment = (CreatureAlignment)Enum.Parse(typeof(CreatureAlignment), align.ToUpper());
-						creatureStats.stats = new SerializableStatBlock(Int32.Parse(dataLines[6].Split(' ')[0]), Int32.Parse(dataLines[8].Split(' ')[0]),
-							Int32.Parse(dataLines[10].Split(' ')[0]), Int32.Parse(dataLines[12].Split(' ')[0]),
-							Int32.Parse(dataLines[14].Split(' ')[0]), Int32.Parse(dataLines[16].Split(' ')[0]), 10);
+						creatureStats.stats = new SerializableStatBlock(int.Parse(dataLines[6].Split(' ')[0]), int.Parse(dataLines[8].Split(' ')[0]),
+							int.Parse(dataLines[10].Split(' ')[0]), int.Parse(dataLines[12].Split(' ')[0]),
+							int.Parse(dataLines[14].Split(' ')[0]), int.Parse(dataLines[16].Split(' ')[0]), 10);
 
 						var abilitiesIndex = -1;
 						var actionsIndex = -1;
 						var legendaryIndex = -1;
 
-						foreach(var line in dataLines)
+						foreach (var line in dataLines)
 						{
-							if(line.StartsWith("Challenge"))
+							if (line.StartsWith("Challenge"))
 							{
 								var clippedLine = line.Replace("Challenge ", "");
 								var splits = clippedLine.Split(' ');
@@ -131,7 +132,7 @@ namespace Assets.Scripts.Editor
 
 								abilitiesIndex = dataLines.IndexOf(line);
 							}
-							if(line.StartsWith("ACTIONS"))
+							if (line.StartsWith("ACTIONS"))
 							{
 								actionsIndex = dataLines.IndexOf(line);
 							}
@@ -152,7 +153,7 @@ namespace Assets.Scripts.Editor
 							if (line.StartsWith("Speed"))
 							{
 								//creatureStats.speed = line.Replace("Speed ", "");
-								creatureStats.landDwelling = (!line.Contains("swim") || line.Contains("fly"));
+								creatureStats.landDwelling = !line.Contains("swim") || line.Contains("fly");
 							}
 							if (line.StartsWith("Senses"))
 							{
@@ -231,7 +232,7 @@ namespace Assets.Scripts.Editor
 								}
 							}
 
-							if(line.StartsWith("Saving Throws"))
+							if (line.StartsWith("Saving Throws"))
 							{
 								creatureStats.savingThrows = new SerializableStatBlock(SavingThrowHelper(line, "Str"), SavingThrowHelper(line, "Dex"), SavingThrowHelper(line, "Con"), SavingThrowHelper(line, "Int"), SavingThrowHelper(line, "Wis"), SavingThrowHelper(line, "Cha"), 0);
 							}
@@ -283,7 +284,7 @@ namespace Assets.Scripts.Editor
 				}
 			}
 			AssetDatabase.SaveAssets();
-			Debug.Log("creatures built");
+			OutputLogger.Log("creatures built");
 		}
 
 		public static void BuildWeaponStats()
@@ -296,43 +297,43 @@ namespace Assets.Scripts.Editor
 			{
 				foreach (var c in existingWeapons)
 				{
-					weaponDictionary.Add(((WeaponType)c).Name, ((WeaponType)c));
+					weaponDictionary.Add(((WeaponType)c).Name, (WeaponType)c);
 				}
 			}
 			if (rawWeaponData != null)
 			{
-				foreach(var rwd in rawWeaponData)
+				foreach (var rwd in rawWeaponData)
 				{
 					var cleaned = ((TextAsset)rwd).text.Trim(' ').Replace("\t", "").Replace(' ', '@');
 					var initialSplit = cleaned.Split('\n');
 					WeaponCategory weaponType = WeaponCategory.SIMPLE_MELEE;
 
-					foreach(var line in initialSplit)
+					foreach (var line in initialSplit)
 					{
 						var split = line.Split('@');
-						if(line.Contains("Weapons"))
+						if (line.Contains("Weapons"))
 						{
 							weaponType = (WeaponCategory)Enum.Parse(typeof(WeaponCategory), (split[0] + "_" + split[1]).ToUpper());
 						}
 						else
 						{
-							var weaponStats = (WeaponType)ScriptableObject.CreateInstance(typeof(WeaponType));
+							var weaponStats = (WeaponType)CreateInstance(typeof(WeaponType));
 
 							var assetName = split[0];
 							AssetDatabase.CreateAsset(weaponStats, "Assets/Resources/ScriptableObjects/Items/WeaponTypes/" + assetName + ".asset");
 
 							weaponStats.name = assetName.Replace('-', ' ');
-							weaponStats.value = new ItemValue(Int32.Parse(split[1]), (CoinType)Enum.Parse(typeof(CoinType), split[2].ToUpper()));
+							weaponStats.value = new ItemValue(int.Parse(split[1]), (CoinType)Enum.Parse(typeof(CoinType), split[2].ToUpper()));
 
 							var damageSplit = split[3].Split('d');
-							var numDice = Int32.Parse(damageSplit[0]);
-							var maxRoll = Int32.Parse(damageSplit[1]);
+							var numDice = int.Parse(damageSplit[0]);
+							var maxRoll = int.Parse(damageSplit[1]);
 							var damageType = (DamageType)Enum.Parse(typeof(DamageType), split[4].ToUpper());
 
-							weaponStats.damageValue = new Game.Combat.DamageValue(numDice, maxRoll, 0, damageType);
+							weaponStats.damageValue = new Combat.DamageValue(numDice, maxRoll, 0, damageType);
 							weaponStats.weight = float.Parse(split[5]);
 							var propertiesString = "";
-							for(int i = 7; i < split.Length; i++)
+							for (int i = 7; i < split.Length; i++)
 							{
 								propertiesString += split[i];
 							}
