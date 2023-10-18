@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  name: Worg
   legendary: 0
   landDwelling: 0
   size: 0
@@ -59,7 +59,7 @@ MonoBehaviour:
   conditionImmunities: 
   skills: []
   senses: []
-  groupingName: 
+  groupingName: pack
   sounds: []
   languages: []
   abilities: []
