@@ -1,38 +1,38 @@
 {
   "$id": "1",
-  "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "$type": "Game.Incidents.Incident, Auto-asmdef-SecondPass",
   "IncidentName": "Character_TestInjury",
-  "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
   "Weights": {
     "$id": "2",
-    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Character, Assembly-CSharp]], Assembly-CSharp",
+    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
     "baseWeight": 1,
     "Operation": null,
     "expressions": {
-      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
       "$values": []
     }
   },
   "Criteria": {
     "$id": "3",
-    "$type": "Game.Incidents.IncidentCriteriaContainer, Assembly-CSharp",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Auto-asmdef-SecondPass",
     "criteria": {
-      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Auto-asmdef-SecondPass]], mscorlib",
       "$values": []
     }
   },
   "ActionContainer": {
     "$id": "4",
-    "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
+    "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
     "incidentLog": "{0} falls off {POSP:0} horse. {SUBP:0} injures {POSP:0} foot.",
     "Actions": {
-      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass]], mscorlib",
       "$values": []
     },
     "Deployers": {
-      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Assembly-CSharp]], mscorlib",
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Auto-asmdef-SecondPass]], mscorlib",
       "$values": []
     },
-    "ContextType": "Game.Incidents.Character, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+    "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
   }
 }
