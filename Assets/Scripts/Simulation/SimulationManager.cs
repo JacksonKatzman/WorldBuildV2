@@ -137,10 +137,12 @@ namespace Game.Simulation
 
 		private void RunSimulation()
 		{
+			/*
 			for(int i = 0; i < world.simulationOptions.simulatedYears; i++)
 			{
 				world.AdvanceTime();
 			}
+			*/
 
 			//world.BeginPostGeneration();
 
@@ -159,11 +161,6 @@ namespace Game.Simulation
 			table.ToCSV(Application.dataPath + "/Resources/" + "factionCSV" + ".csv");
 			IncidentService.Instance.WriteIncidentLogToDisk();
 			*/
-		}
-
-		~SimulationManager()
-		{
-
 		}
 	}
 }
