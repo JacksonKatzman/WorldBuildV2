@@ -33,6 +33,11 @@ namespace Game.Simulation
 		{
 			return SimulationCompletionPercentage(world) >= (world.NumPeople / world.simulationOptions.targetCharacters);
 		}
+
+		public static bool ShouldIncreaseGreatMonsters(this World world)
+		{
+			return SimulationCompletionPercentage(world) >= (world.NumGreatMonsters / world.simulationOptions.targetGreatMonsters);
+		}
 	}
 	public class World : IncidentContext
 	{
@@ -70,6 +75,8 @@ namespace Game.Simulation
 		public bool RoomForFactions => this.ShouldIncreaseFactions();
 		public int NumSpecialFactions => Factions.Where(x => x.IsSpecialFaction).Count();
 		public bool RoomForSpecialFaction => this.ShouldIncreaseSpecialFactions();
+		public int NumGreatMonsters => CurrentContexts[typeof(GreatMonster)].Cast<GreatMonster>().ToList().Count;
+		public bool RoomForGreatMonsters => this.ShouldIncreaseGreatMonsters();
 
 		public List<Item> LostItems;
 

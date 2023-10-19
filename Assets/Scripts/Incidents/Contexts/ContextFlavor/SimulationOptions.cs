@@ -8,5 +8,6 @@ namespace Game.Incidents
 		public int targetFactions = 10;
 		public int targetSpecialFactions = 15;
 		public int targetCharacters = 120;
+		public int targetGreatMonsters = 50;
 	}
 }
