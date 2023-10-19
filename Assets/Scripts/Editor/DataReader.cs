@@ -2,9 +2,12 @@
 using Game.Debug;
 using Game.Enums;
 using Game.Generators.Items;
+using Game.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -22,7 +25,8 @@ namespace Game.Data
 		{
 			if (GUILayout.Button("Build Creatures"))
 			{
-				BuildCreatures();
+				//BuildCreatures();
+				NewBuildMonsters();
 			}
 			if (GUILayout.Button("Build Weapon Stats"))
 			{
@@ -52,6 +56,142 @@ namespace Game.Data
 			}
 
 			return 0;
+		}
+
+		private static Dictionary<string, CreatureSize> creatureSizes = new Dictionary<string, CreatureSize>()
+		{
+			{"T", CreatureSize.TINY}, {"S", CreatureSize.SMALL}, {"M", CreatureSize.MEDIUM},
+			{"L", CreatureSize.LARGE}, {"H", CreatureSize.HUGE}, {"G", CreatureSize.GARGANTUAN}
+		};
+
+		private static Dictionary<string, CreatureType> creatureTypes = new Dictionary<string, CreatureType>()
+		{
+			{"ABERRATION", CreatureType.ABERRATION}, {"BEAST", CreatureType.BEAST}, {"CELESTIAL", CreatureType.CELESTIAL},
+			{"CONSTRUCT", CreatureType.CONSTRUCT}, {"DRAGON", CreatureType.DRAGON}, {"FEY", CreatureType.FEY},
+			{"FIEND", CreatureType.FIEND}, {"GIANT", CreatureType.GIANT}, {"HUMANOID", CreatureType.HUMANOID},
+			{"MONSTROSITY", CreatureType.MONSTROSITY}, {"OOZE", CreatureType.OOZE}, {"PLANT", CreatureType.PLANT},
+			{"UNDEAD", CreatureType.UNDEAD}
+		};
+
+		private static Dictionary<string, CreatureAlignment> creatureAlignments = new Dictionary<string, CreatureAlignment>()
+		{
+			{"ANY ALIGNMENT", CreatureAlignment.ANY_ALIGNMENT}, {"CHAOTIC", CreatureAlignment.CHAOTIC}, {"CHAOTIC EVIL", CreatureAlignment.CHAOTIC_EVIL},
+			{"CHAOTIC GOOD", CreatureAlignment.CHAOTIC_GOOD}, {"CHAOTIC NEUTRAL", CreatureAlignment.CHAOTIC_NEUTRAL}, {"EVIL", CreatureAlignment.EVIL},
+			{"GOOD", CreatureAlignment.GOOD}, {"LAWFUL", CreatureAlignment.LAWFUL}, {"LAWFUL EVIL", CreatureAlignment.LAWFUL_EVIL},
+			{"LAWFUL GOOD", CreatureAlignment.LAWFUL_GOOD}, {"LAWFUL NEUTRAL", CreatureAlignment.LAWFUL_NEUTRAL}, {"NEUTRAL EVIL", CreatureAlignment.NEUTRAL_EVIL},
+			{"NEUTRAL GOOD", CreatureAlignment.NEUTRAL_GOOD}, {"NEUTRAL", CreatureAlignment.TRUE_NEUTRAL}, {"UNALIGNED", CreatureAlignment.UNALIGNED}
+		};
+
+		private void NewBuildMonsters()
+		{
+			XDocument root = XDocument.Load("Assets/Resources/RawData/Monster Manual Bestiary.xml");
+			var element = root.Descendants("monster").First();
+			//foreach(var element in elements)
+			//{
+			var monsterName = element.Element("name").Value;
+			var creatureStats = (MonsterData)CreateInstance(typeof(MonsterData));
+			//AssetDatabase.CreateAsset(creatureStats, "Assets/Resources/ScriptableObjects/Creatures/" + monsterName + ".asset");
+
+			//Name
+			creatureStats.name = monsterName;
+			if(creatureSizes.TryGetValue(element.Element("size").Value, out var size))
+			{
+				creatureStats.size = size;
+			}
+			else
+			{
+				creatureStats.size = CreatureSize.TINY;
+			}
+
+			//Type
+			var preSplitType = element.Element("type").Value;
+			var postSplitTypeStrings = preSplitType.Split(',');
+			var typeString = postSplitTypeStrings[0].ToUpper();
+			if (typeString.Contains("HUMANOID"))
+			{
+				creatureStats.type = CreatureType.HUMANOID;
+			}
+			else
+			{
+				if (creatureTypes.TryGetValue(typeString, out var type))
+				{
+					creatureStats.type = type;
+				}
+				else
+				{
+					creatureStats.type = CreatureType.ABERRATION;
+				}
+			}
+
+			//Alignment
+			if (creatureAlignments.TryGetValue(element.Element("alignment").Value.ToUpper(), out var alignment))
+			{
+				creatureStats.alignment = alignment;
+			}
+			else
+			{
+				creatureStats.alignment = CreatureAlignment.ANY_ALIGNMENT;
+			}
+
+			//Armor
+			var preSplitArmor = element.Element("ac").Value;
+			var postSplitArmorStrings = preSplitArmor.Split(new char[] { ' ' }, 2);
+			if(Int32.TryParse(postSplitArmorStrings[0], out var ac))
+			{
+				creatureStats.armorValue = ac;
+			}
+
+			if(postSplitArmorStrings.Length > 1)
+			{
+				creatureStats.armorType = postSplitArmorStrings[1];
+			}
+
+			//Hp
+			var preSplitHealth = element.Element("hp").Value;
+			var postSplitHealthStrings = preSplitHealth.Split(new char[] { ' ' }, 2);
+			if(Int32.TryParse(postSplitHealthStrings[0], out var hp))
+			{
+				creatureStats.health = hp;
+			}
+
+			//Speeds
+			var speedString = element.Element("speed").Value;
+			var speedMatches = Regex.Matches(speedString, @"(\w+ ||\W)(\d+) ft\.");
+			foreach(Match speedMatch in speedMatches)
+			{
+				var firstGroup = speedMatch.Groups[1].Value;
+				var secondGroup = speedMatch.Groups[2].Value;
+
+				if(firstGroup == "climb ")
+				{
+					creatureStats.climbSpeed = GuaranteedIntParse(secondGroup);
+				}
+				else if(firstGroup == "swim ")
+				{
+					creatureStats.swimSpeed = GuaranteedIntParse(secondGroup);
+				}
+				else if(firstGroup == "fly ")
+				{
+					creatureStats.flySpeed = GuaranteedIntParse(secondGroup);
+				}
+				else
+				{
+					creatureStats.speed = GuaranteedIntParse(secondGroup);
+				}
+			}
+			//}
+		}
+
+		private int GuaranteedIntParse(string toParse)
+		{
+			if(Int32.TryParse(toParse, out var parsed))
+			{
+				return parsed;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 
 		private void BuildCreatures()

@@ -30,6 +30,8 @@ namespace Game.Data
 		public int proficiencyBonus;
 		//ac
 		public int armorValue;
+		//ac type
+		public string armorType;
 		//hp
 		public int health;
 		//speed
