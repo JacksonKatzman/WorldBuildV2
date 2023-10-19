@@ -15,6 +15,8 @@ namespace Game.Incidents
 	{
 		protected override bool ShowStandardCriteria => false;
 		protected override bool ShowMethodChoice => true;
+		[ValueDropdown("GetBiomeTerrainTypes", IsUniqueList = true, DropdownTitle = "Allowed Sizes"), ShowIf("@this.Method == ActionFieldRetrievalMethod.Criteria")]
+		public List<BiomeTerrainType> allowedBiomes = new List<BiomeTerrainType>();
 		[ShowInInspector, PropertyOrder(-2), ShowIf("@this.Method == ActionFieldRetrievalMethod.Criteria")]
 		public LocationFindMethod LocationFindMethod { get; set; }
 
@@ -100,18 +102,18 @@ namespace Game.Incidents
 
 		private int FindRandom()
 		{
-			return SimulationUtilities.GetRandomCellIndex();
+			return SimulationUtilities.GetRandomCellIndex(allowedBiomes);
 		}
 
 		private int FindRandomUnclaimed()
 		{
-			SimulationUtilities.GetRandomUnclaimedCellIndex(out var index);
+			SimulationUtilities.GetRandomUnclaimedCellIndex(out var index, allowedBiomes);
 			return index;
 		}
 
 		private int FindRandomEmpty()
 		{
-			SimulationUtilities.GetRandomEmptyCellIndex(out var index);
+			SimulationUtilities.GetRandomEmptyCellIndex(out var index, allowedBiomes);
 			return index;
 		}
 
@@ -122,19 +124,19 @@ namespace Game.Incidents
 
 			if(FactionCellLocationMethod == FactionCellLocationMethod.Within)
 			{
-				possibleIndices = SimulationUtilities.FindCitylessCellWithinFaction(faction, minDistanceFromCities);
+				possibleIndices = SimulationUtilities.FindCitylessCellWithinFaction(faction, minDistanceFromCities, allowedBiomes);
 			}
 			else if(FactionCellLocationMethod == FactionCellLocationMethod.Border_Within)
 			{
-				possibleIndices = SimulationUtilities.FindCitylessBorderWithinFaction(faction);
+				possibleIndices = SimulationUtilities.FindCitylessBorderWithinFaction(faction, allowedBiomes);
 			}
 			else if(FactionCellLocationMethod == FactionCellLocationMethod.Border_Without)
 			{
-				possibleIndices = SimulationUtilities.FindBorderOutsideFaction(faction);
+				possibleIndices = SimulationUtilities.FindBorderOutsideFaction(faction, allowedBiomes);
 			}
 			else
 			{
-				possibleIndices = SimulationUtilities.FindSharedBorderFaction(faction);
+				possibleIndices = SimulationUtilities.FindSharedBorderFaction(faction, allowedBiomes);
 			}
 
 			if (possibleIndices.Count > 0)
@@ -146,6 +148,11 @@ namespace Game.Incidents
 				return -1;
 			}
 		}
+		private IEnumerable<BiomeTerrainType> GetBiomeTerrainTypes()
+		{
+			return Enum.GetValues(typeof(BiomeTerrainType)).Cast<BiomeTerrainType>();
+		}
+
 #if UNITY_EDITOR
 		private IEnumerable<string> GetFactionProperties()
 		{
