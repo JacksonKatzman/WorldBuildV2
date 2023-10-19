@@ -105,12 +105,11 @@ namespace Game.Simulation
 			EventManager.Instance.Dispatch(new ShowLoadingScreenEvent("Generating World"));
 
 			var startTime = Time.realtimeSinceStartup;
-			//await Task.Run(() => RunSimulation());
+
 			await RunSimulationWithCancellation(cancellationTokenSource.Token);
 			await CompileWikiWithCancellation(cancellationTokenSource.Token);
 			var simTime = Time.realtimeSinceStartup - startTime;
 			OutputLogger.Log("TIME TO SIM: " + simTime);
-			//UserInterfaceService.Instance.incidentWiki.InitializeWiki();
 
 			EventManager.Instance.Dispatch(new HideLoadingScreenEvent());
 

@@ -93,7 +93,10 @@ namespace Game.GUI.Wiki
 				{
 					foreach (var item in IncidentService.Instance.reports)
 					{
-						AddReportToPage(page, item);
+						if (item.IsMajorIncident)
+						{
+							AddReportToPage(page, item);
+						}
 					}
 				}
 				else

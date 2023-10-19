@@ -10,6 +10,7 @@ namespace Game.Incidents
 		public int IncidentID { get; set; }
 		public int ParentID { get; set; }
 		public Dictionary<string, IIncidentContext> Contexts { get; set; }
+		public bool IsMajorIncident { get; set; }
 
 		public int ReportYear { get; set; }
 		public string ReportLog { get; set; }

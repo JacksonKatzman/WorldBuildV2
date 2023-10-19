@@ -26,7 +26,7 @@ namespace Game.Incidents
 			official.AffiliatedOrganization = org;
 			EventManager.Instance.Dispatch(new AddContextEvent(official));
 			var report = previousOfficial == null ? "{0} takes power." : "{0} succeeds {1}.";
-			IncidentService.Instance.ReportStaticIncident(report, new List<IIncidentContext>() { official, previousOfficial });
+			IncidentService.Instance.ReportStaticIncident(report, new List<IIncidentContext>() { official, previousOfficial }, true);
 		}
 	}
 }

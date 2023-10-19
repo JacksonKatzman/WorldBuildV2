@@ -98,13 +98,14 @@ namespace Game.Incidents
 			staticReports.Clear();
 		}
 
-		public void ReportStaticIncident(string log, List<IIncidentContext> contexts)
+		public void ReportStaticIncident(string log, List<IIncidentContext> contexts, bool isMajorIncident)
 		{
 			var report = new StaticIncidentReport(nextIncidentID, -1, SimulationManager.Instance.world.Age);
 			report.AddLog(log);
 			report.AddContexts(contexts);
 			nextIncidentID++;
 			report.CreateFullLog();
+			report.IsMajorIncident = isMajorIncident;
 			staticReports.Add(report);
 		}
 

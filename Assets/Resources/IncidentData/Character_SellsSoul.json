@@ -26,7 +26,7 @@
             "min": 0,
             "max": 20,
             "constant": 0,
-            "Value": 15,
+            "Value": 16,
             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
           },
           "subexpressions": {
@@ -71,7 +71,7 @@
                   "min": 0,
                   "max": 20,
                   "constant": 0,
-                  "Value": 19,
+                  "Value": 10,
                   "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 },
                 "subexpressions": null,
@@ -149,6 +149,7 @@
       "$values": []
     }
   },
+  "IsMajorIncident": true,
   "ActionContainer": {
     "$id": "15",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
@@ -183,24 +184,11 @@
               },
               "historical": false,
               "ContextType": "Game.Incidents.Monster, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-              "Context": {
-                "$id": "19",
-                "$type": "Game.Incidents.Monster, Auto-asmdef-SecondPass",
-                "monsterData": null,
-                "ContextType": "Game.Incidents.Monster, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                "NumIncidents": 0,
-                "Name": null,
-                "ID": 0,
-                "ParentID": -1
-              },
-              "TypedContext": {
-                "$ref": "19"
-              },
               "IsHistorical": false,
               "CriteriaID": 0
             },
             "faction": {
-              "$id": "20",
+              "$id": "19",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
               "parentType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -221,7 +209,7 @@
             },
             "transformCharacter": false,
             "personToTransform": {
-              "$id": "21",
+              "$id": "20",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
               "parentType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -243,7 +231,7 @@
             "findFirst": true,
             "allowCreate": false,
             "actionField": {
-              "$id": "22",
+              "$id": "21",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.GreatMonster, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
               "parentType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -252,19 +240,19 @@
                 "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
                 "$values": [
                   {
-                    "$id": "23",
+                    "$id": "22",
                     "$type": "Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass",
                     "propertyName": "AffiliatedFaction",
                     "evaluator": {
-                      "$id": "24",
+                      "$id": "23",
                       "$type": "Game.Incidents.FactionEvaluator, Auto-asmdef-SecondPass",
                       "compareTo": {
-                        "$id": "25",
+                        "$id": "24",
                         "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
                         "contextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                         "fieldName": null,
                         "actionField": {
-                          "$id": "26",
+                          "$id": "25",
                           "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
                           "parentType": null,
                           "AllowSelf": false,
@@ -309,13 +297,13 @@
           }
         },
         {
-          "$id": "27",
+          "$id": "26",
           "$type": "Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass",
           "incidentAction": {
-            "$id": "28",
+            "$id": "27",
             "$type": "Game.Incidents.ModifyCharacterAction, Auto-asmdef-SecondPass",
             "contextToModify": {
-              "$id": "29",
+              "$id": "28",
               "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
               "parentType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
@@ -338,13 +326,13 @@
               "$type": "System.Collections.Generic.List`1[[Game.Incidents.ContextModifier`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass]], mscorlib",
               "$values": [
                 {
-                  "$id": "30",
+                  "$id": "29",
                   "$type": "Game.Incidents.ContextModifier`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
                   "propertyName": "CharacterTags",
                   "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                   "PrimitiveType": "System.Collections.Generic.List`1[[Game.Enums.CharacterTag, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                   "Calculator": {
-                    "$id": "31",
+                    "$id": "30",
                     "$type": "Game.Incidents.CharacterTagCalculator, Auto-asmdef-SecondPass",
                     "propertyName": "CharacterTags",
                     "addTag": true,
