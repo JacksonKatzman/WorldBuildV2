@@ -291,6 +291,10 @@ namespace Game.Incidents
 				if(Cities != null && Cities.Contains((City)gameEvent.context))
 				{
 					Cities.Remove((City)gameEvent.context);
+					if (CheckDestroyed())
+					{
+						Die();
+					}
 				}
 			}
 		}

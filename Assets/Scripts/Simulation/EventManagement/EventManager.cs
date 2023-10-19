@@ -33,7 +33,7 @@ namespace Game.Simulation
 
             if (handlers.TryGetValue(simEvent.GetType(), out handlerList))
             {
-                for (int index = 0, maxIndex = handlerList.Count; index < maxIndex; index++)
+                for (int index = 0; index < handlerList.Count; index++)
                 {
                     if (handlerList[index] != null)
                     {
