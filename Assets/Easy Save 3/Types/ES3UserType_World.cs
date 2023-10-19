@@ -1,3 +1,4 @@
+using Game.Data;
 using Game.Simulation;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace ES3Types
 						instance.AddContextIdBuffer("CurrentContexts", reader.Read<System.Collections.Generic.List<System.Int32>>());
 						break;
 					case "AllContexts":
-						instance = (Game.Simulation.World)reader.SetPrivateProperty("AllContexts", reader.Read<Game.Simulation.IncidentContextDictionary>(), instance);
+						instance = (Game.Simulation.World)reader.SetPrivateProperty("AllContexts", reader.Read<IncidentContextDictionary>(), instance);
 						break;
 					case "ID":
 						instance.ID = reader.Read<System.Int32>(ES3Type_int.Instance);

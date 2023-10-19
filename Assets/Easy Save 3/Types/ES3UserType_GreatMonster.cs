@@ -1,3 +1,4 @@
+using Game.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace ES3Types
 				{
 					
 					case "dataBlock":
-						instance.dataBlock = reader.Read<Game.Creatures.MonsterData>();
+						instance.dataBlock = reader.Read<MonsterData>();
 						break;
 					case "Inventory":
 					instance = (Game.Incidents.GreatMonster)reader.SetPrivateProperty("Inventory", reader.Read<Game.Incidents.Inventory>(), instance);

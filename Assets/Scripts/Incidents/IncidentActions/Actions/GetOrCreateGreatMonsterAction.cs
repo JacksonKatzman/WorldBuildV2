@@ -1,4 +1,4 @@
-﻿using Game.Creatures;
+﻿using Game.Data;
 using Game.Simulation;
 using Sirenix.OdinInspector;
 

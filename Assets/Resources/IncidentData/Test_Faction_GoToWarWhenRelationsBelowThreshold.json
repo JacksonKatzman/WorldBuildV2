@@ -1,39 +1,39 @@
 {
   "$id": "1",
-  "$type": "Game.Incidents.Incident, Assembly-CSharp",
+  "$type": "Game.Incidents.Incident, Auto-asmdef-SecondPass",
   "IncidentName": "Test_Faction_GoToWarWhenRelationsBelowThreshold",
-  "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
   "Weights": {
     "$id": "2",
-    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
+    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
     "baseWeight": 13,
     "Operation": null,
     "expressions": {
-      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
       "$values": []
     }
   },
   "Criteria": {
     "$id": "3",
-    "$type": "Game.Incidents.IncidentCriteriaContainer, Assembly-CSharp",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Auto-asmdef-SecondPass",
     "criteria": {
-      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Assembly-CSharp]], mscorlib",
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Auto-asmdef-SecondPass]], mscorlib",
       "$values": [
         {
           "$id": "4",
-          "$type": "Game.Incidents.IncidentCriteria, Assembly-CSharp",
+          "$type": "Game.Incidents.IncidentCriteria, Auto-asmdef-SecondPass",
           "propertyName": "FactionRelations",
           "evaluator": {
             "$id": "5",
-            "$type": "Game.Incidents.IntegerValueDictionaryEvaluator, Assembly-CSharp",
+            "$type": "Game.Incidents.IntegerValueDictionaryEvaluator, Auto-asmdef-SecondPass",
             "propertyName": "FactionRelations",
             "Comparator": "<=",
             "expressions": {
-              "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp]], mscorlib",
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
               "$values": [
                 {
                   "$id": "6",
-                  "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Assembly-CSharp",
+                  "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
                   "hasNextOperator": false,
                   "ExpressionType": 0,
                   "constValue": -100,
@@ -41,7 +41,7 @@
                   "chosenProperty": null,
                   "range": {
                     "$id": "7",
-                    "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+                    "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
                     "randomRange": true,
                     "min": 0,
                     "max": 20,
@@ -53,32 +53,32 @@
                   "previousCalculatedID": null,
                   "rangeWarning": "Range not implemented for non integers!",
                   "nextOperator": null,
-                  "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                 }
               ]
             },
             "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-            "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "AllowMultipleExpressions": true
           },
-          "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-          "PrimitiveType": "System.Collections.Generic.Dictionary`2[[Game.Incidents.IIncidentContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+          "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "PrimitiveType": "System.Collections.Generic.Dictionary`2[[Game.Incidents.IIncidentContext, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
         },
         {
           "$id": "8",
-          "$type": "Game.Incidents.IncidentCriteria, Assembly-CSharp",
+          "$type": "Game.Incidents.IncidentCriteria, Auto-asmdef-SecondPass",
           "propertyName": "AtWar",
           "evaluator": {
             "$id": "9",
-            "$type": "Game.Incidents.BoolEvaluator, Assembly-CSharp",
+            "$type": "Game.Incidents.BoolEvaluator, Auto-asmdef-SecondPass",
             "propertyName": "AtWar",
             "Comparator": "==",
             "expressions": {
-              "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Assembly-CSharp]], mscorlib",
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
               "$values": [
                 {
                   "$id": "10",
-                  "$type": "Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Assembly-CSharp",
+                  "$type": "Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Auto-asmdef-SecondPass",
                   "hasNextOperator": false,
                   "ExpressionType": 0,
                   "constValue": false,
@@ -86,7 +86,7 @@
                   "chosenProperty": null,
                   "range": {
                     "$id": "11",
-                    "$type": "Game.Incidents.BoolRange, Assembly-CSharp",
+                    "$type": "Game.Incidents.BoolRange, Auto-asmdef-SecondPass",
                     "Value": false,
                     "GetValueType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
@@ -94,32 +94,32 @@
                   "previousCalculatedID": null,
                   "rangeWarning": "Range not implemented for non integers!",
                   "nextOperator": null,
-                  "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                 }
               ]
             },
             "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-            "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "AllowMultipleExpressions": true
           },
-          "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
           "PrimitiveType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
         },
         {
           "$id": "12",
-          "$type": "Game.Incidents.IncidentCriteria, Assembly-CSharp",
+          "$type": "Game.Incidents.IncidentCriteria, Auto-asmdef-SecondPass",
           "propertyName": "CanTakeMilitaryAction",
           "evaluator": {
             "$id": "13",
-            "$type": "Game.Incidents.BoolEvaluator, Assembly-CSharp",
+            "$type": "Game.Incidents.BoolEvaluator, Auto-asmdef-SecondPass",
             "propertyName": "CanTakeMilitaryAction",
             "Comparator": "==",
             "expressions": {
-              "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Assembly-CSharp]], mscorlib",
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
               "$values": [
                 {
                   "$id": "14",
-                  "$type": "Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Assembly-CSharp",
+                  "$type": "Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Auto-asmdef-SecondPass",
                   "hasNextOperator": false,
                   "ExpressionType": 0,
                   "constValue": true,
@@ -127,7 +127,7 @@
                   "chosenProperty": null,
                   "range": {
                     "$id": "15",
-                    "$type": "Game.Incidents.BoolRange, Assembly-CSharp",
+                    "$type": "Game.Incidents.BoolRange, Auto-asmdef-SecondPass",
                     "Value": false,
                     "GetValueType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
@@ -135,15 +135,15 @@
                   "previousCalculatedID": null,
                   "rangeWarning": "Range not implemented for non integers!",
                   "nextOperator": null,
-                  "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                 }
               ]
             },
             "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-            "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "AllowMultipleExpressions": true
           },
-          "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+          "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
           "PrimitiveType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
         }
       ]
@@ -151,20 +151,20 @@
   },
   "ActionContainer": {
     "$id": "16",
-    "$type": "Game.Incidents.IncidentActionHandlerContainer, Assembly-CSharp",
+    "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
     "incidentLog": "{0} declares war on {1}!",
     "Actions": {
-      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Assembly-CSharp]], mscorlib",
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass]], mscorlib",
       "$values": [
         {
           "$id": "17",
-          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "$type": "Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass",
           "incidentAction": {
             "$id": "18",
-            "$type": "Game.Incidents.GetOrCreateFactionAction, Assembly-CSharp",
+            "$type": "Game.Incidents.GetOrCreateFactionAction, Auto-asmdef-SecondPass",
             "population": {
               "$id": "19",
-              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
               "randomRange": true,
               "min": 0,
               "max": 20,
@@ -174,7 +174,7 @@
             },
             "influence": {
               "$id": "20",
-              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
               "randomRange": true,
               "min": 0,
               "max": 20,
@@ -184,7 +184,7 @@
             },
             "wealth": {
               "$id": "21",
-              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
               "randomRange": true,
               "min": 0,
               "max": 20,
@@ -194,7 +194,7 @@
             },
             "politicalPriority": {
               "$id": "22",
-              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
               "randomRange": true,
               "min": 0,
               "max": 20,
@@ -204,7 +204,7 @@
             },
             "economicPriority": {
               "$id": "23",
-              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
               "randomRange": true,
               "min": 0,
               "max": 20,
@@ -214,7 +214,7 @@
             },
             "religiousPriority": {
               "$id": "24",
-              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
               "randomRange": true,
               "min": 0,
               "max": 20,
@@ -224,7 +224,7 @@
             },
             "militaryPriority": {
               "$id": "25",
-              "$type": "Game.Incidents.IntegerRange, Assembly-CSharp",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
               "randomRange": true,
               "min": 0,
               "max": 20,
@@ -234,7 +234,7 @@
             },
             "creator": {
               "$id": "27",
-              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ISentient, Assembly-CSharp]], Assembly-CSharp",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ISentient, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
               "contextType": null,
               "fieldName": null,
               "actionField": null,
@@ -244,28 +244,28 @@
             "allowCreate": false,
             "actionField": {
               "$id": "28",
-              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
-              "parentType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
               "AllowNull": false,
               "criteria": {
-                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
                 "$values": [
                   {
                     "$id": "29",
-                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp",
+                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass",
                     "propertyName": "FactionRelations",
                     "evaluator": {
                       "$id": "30",
-                      "$type": "Game.Incidents.ActionFieldIntDictionaryEvaluator, Assembly-CSharp",
+                      "$type": "Game.Incidents.ActionFieldIntDictionaryEvaluator, Auto-asmdef-SecondPass",
                       "value": -100,
                       "propertyName": "FactionRelations",
                       "Comparator": "<=",
-                      "Type": "System.Collections.Generic.Dictionary`2[[Game.Incidents.IIncidentContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-                      "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                      "Type": "System.Collections.Generic.Dictionary`2[[Game.Incidents.IIncidentContext, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                      "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
                     },
-                    "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-                    "PrimitiveType": "System.Collections.Generic.Dictionary`2[[Game.Incidents.IIncidentContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                    "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "PrimitiveType": "System.Collections.Generic.Dictionary`2[[Game.Incidents.IIncidentContext, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   }
                 ]
               },
@@ -277,25 +277,25 @@
               "ActionFieldID": 1,
               "NameID": "{1}:GetOrCreateFactionAction:actionField",
               "ActionFieldIDString": "{1}",
-              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "ResultID": "{1}"
           }
         },
         {
           "$id": "31",
-          "$type": "Game.Incidents.IncidentActionHandler, Assembly-CSharp",
+          "$type": "Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass",
           "incidentAction": {
             "$id": "32",
-            "$type": "Game.Incidents.ChangeWarStateAction, Assembly-CSharp",
+            "$type": "Game.Incidents.ChangeWarStateAction, Auto-asmdef-SecondPass",
             "factionOne": {
               "$id": "33",
-              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
-              "parentType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
               "AllowNull": false,
               "criteria": {
-                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
                 "$values": []
               },
               "value": null,
@@ -306,16 +306,16 @@
               "ActionFieldID": 2,
               "NameID": "{2}:ChangeWarStateAction:factionOne",
               "ActionFieldIDString": "{2}",
-              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "factionTwo": {
               "$id": "34",
-              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
-              "parentType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
               "AllowNull": false,
               "criteria": {
-                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
                 "$values": []
               },
               "value": null,
@@ -326,7 +326,7 @@
               "ActionFieldID": 3,
               "NameID": "{3}:ChangeWarStateAction:factionTwo",
               "ActionFieldIDString": "{3}",
-              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "atWar": true
           }
@@ -334,27 +334,27 @@
       ]
     },
     "Deployers": {
-      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Assembly-CSharp]], mscorlib",
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Auto-asmdef-SecondPass]], mscorlib",
       "$values": [
         {
           "$id": "35",
-          "$type": "Game.Incidents.ContextDeployer, Assembly-CSharp",
+          "$type": "Game.Incidents.ContextDeployer, Auto-asmdef-SecondPass",
           "delayTime": 0,
           "deploymentCriteria": {
-            "$type": "System.Collections.Generic.List`1[[Game.Incidents.DeploymentCriterium, Assembly-CSharp]], mscorlib",
+            "$type": "System.Collections.Generic.List`1[[Game.Incidents.DeploymentCriterium, Auto-asmdef-SecondPass]], mscorlib",
             "$values": []
           },
           "incidentContext": {
             "$id": "36",
-            "$type": "Game.Incidents.FactionBattleContext, Assembly-CSharp",
+            "$type": "Game.Incidents.FactionBattleContext, Auto-asmdef-SecondPass",
             "attacker": {
               "$id": "37",
-              "$type": "Game.Incidents.DeployedContextActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
-              "parentType": "Game.Incidents.ContextDeployer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "$type": "Game.Incidents.DeployedContextActionField`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.ContextDeployer, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
               "AllowNull": false,
               "criteria": {
-                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
                 "$values": []
               },
               "value": null,
@@ -365,16 +365,16 @@
               "ActionFieldID": 0,
               "NameID": null,
               "ActionFieldIDString": "None",
-              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
             "defender": {
               "$id": "38",
-              "$type": "Game.Incidents.DeployedContextActionField`1[[Game.Incidents.Faction, Assembly-CSharp]], Assembly-CSharp",
-              "parentType": "Game.Incidents.ContextDeployer, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "$type": "Game.Incidents.DeployedContextActionField`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.ContextDeployer, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
               "AllowSelf": false,
               "AllowNull": false,
               "criteria": {
-                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Assembly-CSharp]], mscorlib",
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
                 "$values": []
               },
               "value": null,
@@ -385,9 +385,9 @@
               "ActionFieldID": 0,
               "NameID": null,
               "ActionFieldIDString": "None",
-              "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
             },
-            "ContextType": "Game.Incidents.FactionBattleContext, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "ContextType": "Game.Incidents.FactionBattleContext, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "NumIncidents": 1,
             "ID": 0,
             "ParentID": 0,
@@ -396,6 +396,6 @@
         }
       ]
     },
-    "ContextType": "Game.Incidents.Faction, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+    "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
   }
 }

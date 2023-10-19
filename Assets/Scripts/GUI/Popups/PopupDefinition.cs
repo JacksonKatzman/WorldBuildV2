@@ -1,4 +1,4 @@
-﻿using Game.Utilities;
+﻿using Game.Data;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;

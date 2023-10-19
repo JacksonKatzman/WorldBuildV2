@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Game.Simulation
+namespace Game.Data
 {
 	public class TypeListDictionary<T> : Dictionary<Type, List<T>>
 	{
@@ -9,18 +9,18 @@ namespace Game.Simulation
 		{
 			get
 			{
-				if(!this.ContainsKey(key))
+				if (!ContainsKey(key))
 				{
-					this.Add(key, new List<T>());
+					Add(key, new List<T>());
 				}
 
 				return base[key];
 			}
 			set
 			{
-				if (!this.ContainsKey(key))
+				if (!ContainsKey(key))
 				{
-					this.Add(key, new List<T>());
+					Add(key, new List<T>());
 				}
 
 				base[key] = value;

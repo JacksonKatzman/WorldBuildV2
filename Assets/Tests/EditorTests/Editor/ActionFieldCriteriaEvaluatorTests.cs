@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Data;
 using Game.Enums;
 using Game.Generators.Items;
 using Game.Incidents;

@@ -1,4 +1,6 @@
-﻿using Game.Utilities;
+﻿using Game.Data;
+using Game.Incidents;
+using Game.Utilities;
 using Sirenix.OdinInspector;
 using System;
 
@@ -28,7 +30,10 @@ namespace Game.Incidents
 			return SimRandom.RandomRange(min, max);
 		}
 	}
+}
 
+namespace Game.Incidents
+{
 	public class FloatRange : ValueRange<float>
 	{
 		public override float Value => 0.0f;
@@ -39,14 +44,14 @@ namespace Game.Incidents
 		public override bool Value => false;
 	}
 
-	public interface IValueRange 
+	public interface IValueRange
 	{
 		Type GetValueType { get; }
 	}
 
 	public class ValueRange<T> : IValueRange
 	{
-		virtual public T Value => default(T);
+		virtual public T Value => default;
 		public Type GetValueType => typeof(T);
 	}
 
@@ -55,15 +60,15 @@ namespace Game.Incidents
 		public static IValueRange CreateValueRange<T>()
 		{
 			var type = typeof(T);
-			if(type == typeof(int))
+			if (type == typeof(int))
 			{
 				return new IntegerRange();
 			}
-			else if(type == typeof(float))
+			else if (type == typeof(float))
 			{
 				return new FloatRange();
 			}
-			else if(type == typeof(bool))
+			else if (type == typeof(bool))
 			{
 				return new BoolRange();
 			}

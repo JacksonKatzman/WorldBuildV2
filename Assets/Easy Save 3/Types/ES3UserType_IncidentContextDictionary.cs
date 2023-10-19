@@ -1,3 +1,4 @@
+using Game.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +12,19 @@ namespace ES3Types
 	{
 		public static ES3Type Instance = null;
 
-		public ES3UserType_IncidentContextDictionary() : base(typeof(Game.Simulation.IncidentContextDictionary)){ Instance = this; priority = 1; }
+		public ES3UserType_IncidentContextDictionary() : base(typeof(IncidentContextDictionary)){ Instance = this; priority = 1; }
 
 
 		public override void Write(object obj, ES3Writer writer)
 		{
-			var instance = (Game.Simulation.IncidentContextDictionary)obj;
+			var instance = (IncidentContextDictionary)obj;
 			writer.WriteProperty("Keys", instance.Keys.ToArray());
 			writer.WriteProperty("Values", instance.Values.ToArray());
 		}
 
 		public override object Read<T>(ES3Reader reader)
 		{
-			var instance = new Game.Simulation.IncidentContextDictionary();
+			var instance = new Game.Data.IncidentContextDictionary();
 
 			var Keys = reader.ReadProperty<Type[]>();
 			var Values = reader.ReadProperty<List<Game.Incidents.IIncidentContext>[]>();
@@ -73,7 +74,7 @@ namespace ES3Types
 	{
 		public static ES3Type Instance;
 
-		public ES3UserType_IncidentContextDictionaryArray() : base(typeof(Game.Simulation.IncidentContextDictionary[]), ES3UserType_IncidentContextDictionary.Instance)
+		public ES3UserType_IncidentContextDictionaryArray() : base(typeof(IncidentContextDictionary[]), ES3UserType_IncidentContextDictionary.Instance)
 		{
 			Instance = this;
 		}

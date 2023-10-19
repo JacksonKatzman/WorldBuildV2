@@ -1,4 +1,4 @@
-﻿namespace Game.Incidents
+﻿namespace Game.Data
 {
 	public interface IYearData { }
 

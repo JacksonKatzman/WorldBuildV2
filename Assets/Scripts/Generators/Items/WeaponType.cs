@@ -1,4 +1,4 @@
-﻿using Game.Combat;
+﻿using Game.Data;
 using Game.Enums;
 using UnityEngine;
 

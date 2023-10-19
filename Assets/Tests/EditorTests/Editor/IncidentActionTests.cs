@@ -1,4 +1,5 @@
 using System.Collections;
+using Game.Data;
 using Game.Simulation;
 using NUnit.Framework;
 using UnityEditor;
