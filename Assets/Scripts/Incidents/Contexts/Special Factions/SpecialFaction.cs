@@ -74,6 +74,8 @@ namespace Game.Incidents
 			Priorities[OrganizationType.ECONOMIC] = SimRandom.RandomRange(1, 4);
 			Priorities[OrganizationType.RELIGIOUS] = SimRandom.RandomRange(1, 4);
 			Priorities[OrganizationType.MILITARY] = SimRandom.RandomRange(1, 4);
+
+			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
 		override public void UpdateContext()
@@ -105,7 +107,7 @@ namespace Game.Incidents
 			return false;
 		}
 
-		private void OnRemoveContextEvent(RemoveContextEvent gameEvent)
+		protected virtual void OnRemoveContextEvent(RemoveContextEvent gameEvent)
 		{
 		}
 
