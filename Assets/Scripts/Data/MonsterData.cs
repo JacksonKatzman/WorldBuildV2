@@ -67,6 +67,7 @@ namespace Game.Data
 		public List<CreatureAction> actions;
 		//actions
 		public List<CreatureAction> legendaryActions;
+		public Gender requiredGender = Gender.ANY;
 	}
 
 	[Serializable]

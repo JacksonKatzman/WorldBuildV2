@@ -22,7 +22,7 @@ namespace Game.Simulation
 		[ShowIf("@this.findBySearch == true")]
 		public bool isLegendary;
 		[ShowIf("@this.findBySearch == true")]
-		public bool isLandDwelling;
+		public bool isLandDwelling = true;
 
 		[ValueDropdown("GetCreatureSizes", IsUniqueList = true, DropdownTitle = "Allowed Sizes"), ShowIf("@this.findBySearch == true")]
 		public List<CreatureSize> allowedSizes;
@@ -72,13 +72,21 @@ namespace Game.Simulation
 
 		private MonsterData GetMonsterData()
 		{
+			/*
 			var candidates = AdventureService.Instance.monsterData
 				.Where(x => x.legendary == isLegendary)
 				.Where(x => x.landDwelling == isLandDwelling)
-				.Where(x => allowedSizes.Contains(x.size))
-				.Where(x => allowedTypes.Contains(x.type))
-				.Where(x => allowedAlignments.Contains(x.alignment))
+				.Where(x => allowedSizes.Count > 0 ? allowedSizes.Contains(x.size) : true)
+				.Where(x => allowedTypes.Count > 0 ? allowedTypes.Contains(x.type) : true)
+				.Where(x => allowedAlignments.Count > 0 ? allowedAlignments.Contains(x.alignment) : true)
 				.ToList();
+			*/
+			var candidates = AdventureService.Instance.monsterData
+				.Where(x => x.legendary == isLegendary).ToList();
+			candidates = candidates.Where(x => x.landDwelling == isLandDwelling).ToList();
+			candidates = candidates.Where(x => allowedSizes.Count > 0 ? allowedSizes.Contains(x.size) : true).ToList();
+			candidates = candidates.Where(x => allowedTypes.Count > 0 ? allowedTypes.Contains(x.type) : true).ToList();
+			candidates = candidates.Where(x => allowedAlignments.Count > 0 ? allowedAlignments.Contains(x.alignment) : true).ToList();
 
 			return SimRandom.RandomEntryFromList(candidates);
 		}

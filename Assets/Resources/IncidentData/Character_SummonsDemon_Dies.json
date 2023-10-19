@@ -26,7 +26,7 @@
             "min": 0,
             "max": 20,
             "constant": 0,
-            "Value": 14,
+            "Value": 11,
             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
           },
           "subexpressions": {
@@ -47,7 +47,7 @@
                   "min": 0,
                   "max": 20,
                   "constant": 0,
-                  "Value": 2,
+                  "Value": 19,
                   "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 },
                 "subexpressions": null,
@@ -71,7 +71,7 @@
                   "min": 0,
                   "max": 20,
                   "constant": 0,
-                  "Value": 6,
+                  "Value": 5,
                   "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                 },
                 "subexpressions": null,
@@ -165,7 +165,7 @@
             "criteria": {
               "$id": "18",
               "$type": "Game.Simulation.MonsterCriteria, Auto-asmdef-SecondPass",
-              "findBySearch": false,
+              "findBySearch": true,
               "monsterData": {
                 "$id": "19",
                 "$type": "Game.Incidents.ScriptableObjectRetriever`1[[Game.Data.MonsterData, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
@@ -173,14 +173,20 @@
                 "onChanged": null
               },
               "isLegendary": false,
-              "isLandDwelling": false,
+              "isLandDwelling": true,
               "allowedSizes": {
                 "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Auto-asmdef-SecondPass]], mscorlib",
-                "$values": []
+                "$values": [
+                  3,
+                  4,
+                  5
+                ]
               },
               "allowedTypes": {
                 "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureType, Auto-asmdef-SecondPass]], mscorlib",
-                "$values": []
+                "$values": [
+                  7
+                ]
               },
               "allowedAlignments": {
                 "$type": "System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Auto-asmdef-SecondPass]], mscorlib",
@@ -325,7 +331,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 1,
+              "Value": 6,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "influence": {
@@ -335,7 +341,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 7,
+              "Value": 9,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -345,7 +351,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 5,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "politicalPriority": {
@@ -355,7 +361,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 2,
+              "Value": 7,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "economicPriority": {
@@ -365,7 +371,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 17,
+              "Value": 6,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "religiousPriority": {
@@ -375,7 +381,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 15,
+              "Value": 14,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "militaryPriority": {
@@ -385,7 +391,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 10,
+              "Value": 16,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "creator": {

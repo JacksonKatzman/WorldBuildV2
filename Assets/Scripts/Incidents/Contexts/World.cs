@@ -161,6 +161,11 @@ namespace Game.Simulation
 
 		public void GenerateAdditionalCities(Faction faction)
 		{
+			if(faction.IsSpecialFaction)
+			{
+				return;
+			}
+
 			var totalTiles = faction.ControlledTiles;
 			var tilesToBeOccupied = totalTiles * (SimRandom.RandomFloat01() / 2);
 			tilesToBeOccupied -= faction.NumCities;
