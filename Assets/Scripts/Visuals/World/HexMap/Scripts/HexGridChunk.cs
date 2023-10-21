@@ -82,10 +82,12 @@ namespace Game.Terrain
 				{
 					features.AddFeature(cell, cell.Position);
 				}
+				/*
 				if (cell.HasLandmark)
 				{
 					features.AddSpecialFeature(cell, cell.Position);
 				}
+				*/
 			}
 		}
 

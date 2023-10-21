@@ -1,4 +1,5 @@
-﻿using Game.Utilities;
+﻿using Game.Incidents;
+using Game.Utilities;
 using UnityEngine;
 
 namespace Game.Terrain
@@ -63,68 +64,83 @@ namespace Game.Terrain
 
 		public void AddFeature(HexCell cell, Vector3 position)
 		{
-			if (cell.HasLandmark)
-			{
-				return;
-			}
-
+			Transform prefab;
 			HexHash hash = HexMetrics.SampleHashGrid(position);
-			Transform prefab = PickPrefab(
-				assetCollection.urbanCollections, cell.UrbanLevel, hash.a, hash.d
-			);
-			Transform otherPrefab = PickPrefab(
-				assetCollection.ruralCollections, cell.FarmLevel, hash.b, hash.d
-			);
-			float usedHash = hash.a;
-			if (prefab)
+			if (cell.HasLandmark && cell.LandmarkPositionAllocated == false)
 			{
-				if (otherPrefab && hash.b < hash.a)
+				SerializedObjectCollection collection = AssetService.Instance.objectData.collections[typeof(LandmarkPreset)];
+				LandmarkPreset preset = collection.objects[cell.LandmarkType] as LandmarkPreset;
+				prefab = SimRandom.RandomEntryFromList(preset.models);
+				cell.LandmarkPositionAllocated = true;
+			}
+			else
+			{
+				prefab = PickPrefab(
+					assetCollection.urbanCollections, cell.UrbanLevel, hash.a, hash.d
+				);
+				Transform otherPrefab = PickPrefab(
+					assetCollection.ruralCollections, cell.FarmLevel, hash.b, hash.d
+				);
+				float usedHash = hash.a;
+				if (prefab)
+				{
+					if (otherPrefab && hash.b < hash.a)
+					{
+						prefab = otherPrefab;
+						usedHash = hash.b;
+					}
+				}
+				else if (otherPrefab)
 				{
 					prefab = otherPrefab;
 					usedHash = hash.b;
 				}
-			}
-			else if (otherPrefab)
-			{
-				prefab = otherPrefab;
-				usedHash = hash.b;
-			}
-			otherPrefab = PickPrefab(
-				assetCollection.plantCollections, cell.PlantLevel, hash.c, hash.d
-			);
-			if (prefab)
-			{
-				if (otherPrefab && hash.c < usedHash)
+				otherPrefab = PickPrefab(
+					assetCollection.plantCollections, cell.PlantLevel, hash.c, hash.d
+				);
+				if (prefab)
+				{
+					if (otherPrefab && hash.c < usedHash)
+					{
+						prefab = otherPrefab;
+					}
+				}
+				else if (otherPrefab)
 				{
 					prefab = otherPrefab;
 				}
-			}
-			else if (otherPrefab)
-			{
-				prefab = otherPrefab;
-			}
-			else
-			{
-				return;
+				else
+				{
+					return;
+				}
 			}
 
-			Transform instance = Instantiate(prefab);
-			position.y += instance.localScale.y * 0.5f;
-			instance.localPosition = HexMetrics.Perturb(position);
-			instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
-			instance.SetParent(container, false);
+			if (prefab)
+			{
+				Transform instance = Instantiate(prefab);
+				position.y += instance.localScale.y * 0.5f;
+				instance.localPosition = HexMetrics.Perturb(position);
+				instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
+				instance.SetParent(container, false);
+			}
 		}
 
 		public void AddSpecialFeature(HexCell cell, Vector3 position)
 		{
-			HexHash hash = HexMetrics.SampleHashGrid(position);
-			//make a way to set the landmark type in the cell itself
-			var landmarkPrefabList = assetCollection.landmarkCollections[cell.LandmarkType];
-			var landmarkPrefab = SimRandom.RandomEntryFromList(landmarkPrefabList);
-			Transform instance = Instantiate(landmarkPrefab);
-			instance.localPosition = HexMetrics.Perturb(position);
-			instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
-			instance.SetParent(container, false);
+			if (!string.IsNullOrEmpty(cell.LandmarkType))
+			{
+				HexHash hash = HexMetrics.SampleHashGrid(position);
+				//make a way to set the landmark type in the cell itself
+				//var landmarkPrefabList = assetCollection.landmarkCollections[cell.LandmarkType];
+				SerializedObjectCollection collection = AssetService.Instance.objectData.collections[typeof(LandmarkPreset)];
+				LandmarkPreset preset = collection.objects[cell.LandmarkType] as LandmarkPreset;
+				var model = SimRandom.RandomEntryFromList(preset.models);
+				//var landmarkPrefab = SimRandom.RandomEntryFromList(landmarkPrefabList);
+				Transform instance = Instantiate(model);
+				instance.localPosition = HexMetrics.Perturb(position);
+				instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
+				instance.SetParent(container, false);
+			}
 		}
 
 		public void AddWall(

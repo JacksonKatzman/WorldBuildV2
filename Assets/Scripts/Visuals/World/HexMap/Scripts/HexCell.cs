@@ -236,7 +236,7 @@ namespace Game.Terrain
 			{
 				return plantLevel;
 			}
-			private set
+			set
 			{
 				if (plantLevel != value)
 				{
@@ -246,7 +246,7 @@ namespace Game.Terrain
 			}
 		}
 
-		public LandmarkType LandmarkType
+		public string LandmarkType
 		{
 			get
 			{
@@ -260,7 +260,7 @@ namespace Game.Terrain
 				if (landmarkType != value)// && !HasRiver)
 				{
 					landmarkType = value;
-					RemoveRoads();
+					//RemoveRoads();
 					RefreshSelfOnly();
 				}
 			}
@@ -270,7 +270,7 @@ namespace Game.Terrain
 		{
 			get
 			{
-				return landmarkType != LandmarkType.NONE;
+				return !string.IsNullOrEmpty(landmarkType);
 			}
 		}
 
@@ -377,6 +377,7 @@ namespace Game.Terrain
 		public HexCell NextWithSamePriority { get; set; }
 
 		public HexCellShaderData ShaderData { get; set; }
+		public bool LandmarkPositionAllocated { get; set; }
 
 		BiomeTerrainType terrainType;
 
@@ -387,7 +388,7 @@ namespace Game.Terrain
 
 		int urbanLevel, farmLevel, plantLevel;
 
-		LandmarkType landmarkType = LandmarkType.NONE;
+		string landmarkType = string.Empty;
 
 		int distance;
 
@@ -525,12 +526,12 @@ namespace Game.Terrain
 			}
 			hasOutgoingRiver = true;
 			outgoingRiver = direction;
-			landmarkType = 0;
+			landmarkType = string.Empty;
 
 			neighbor.RemoveIncomingRiver();
 			neighbor.hasIncomingRiver = true;
 			neighbor.incomingRiver = direction.Opposite();
-			neighbor.landmarkType = 0;
+			neighbor.landmarkType = string.Empty;
 
 			SetRoad((int)direction, false);
 		}
@@ -618,6 +619,7 @@ namespace Game.Terrain
 
 		void Refresh()
 		{
+			LandmarkPositionAllocated = false;
 			if (chunk)
 			{
 				chunk.Refresh();
@@ -638,6 +640,7 @@ namespace Game.Terrain
 
 		void RefreshSelfOnly()
 		{
+			LandmarkPositionAllocated = false;
 			chunk.Refresh();
 			if (Unit)
 			{
@@ -654,7 +657,7 @@ namespace Game.Terrain
 			writer.Write((byte)urbanLevel);
 			writer.Write((byte)farmLevel);
 			//writer.Write((byte)plantLevel);
-			writer.Write((byte)((int)landmarkType));
+			writer.Write((landmarkType));
 			writer.Write(walled);
 
 			if (hasIncomingRiver)
@@ -702,7 +705,7 @@ namespace Game.Terrain
 			urbanLevel = reader.ReadByte();
 			farmLevel = reader.ReadByte();
 			//plantLevel = reader.ReadByte();
-			landmarkType = (LandmarkType)reader.ReadByte();
+			landmarkType = (string)reader.ReadString();
 			walled = reader.ReadBoolean();
 
 			byte riverData = reader.ReadByte();
