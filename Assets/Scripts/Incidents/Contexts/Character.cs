@@ -190,16 +190,21 @@ namespace Game.Incidents
 				IncidentService.Instance.PerformIncidents(this);
 			}
 
-			if(this.CheckDestroyed())
-			{
-				Die();
-			}
+			CheckForDeath();
 		}
 
 		override public void UpdateContext()
 		{
 			Age += 1;
 			NumIncidents = MajorCharacter ? 1 : 0;
+		}
+
+		public override void CheckForDeath()
+		{
+			if (this.CheckDestroyed())
+			{
+				Die();
+			}
 		}
 
 		public Character CreateChild(bool majorPlayer)

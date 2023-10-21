@@ -113,8 +113,9 @@ namespace Game.Simulation
 
 			EventManager.Instance.Dispatch(new HideLoadingScreenEvent());
 
+			UniTask.ReturnToMainThread();
+			world.PostSimulationCleanup();
 			world.BeginPostGeneration();
-			//UniTask.ReturnToMainThread();
 		}
 
 		public async UniTask RunSimulationWithCancellation(CancellationToken token)

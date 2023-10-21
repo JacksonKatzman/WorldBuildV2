@@ -1,5 +1,6 @@
 ﻿using Game.Simulation;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace Game.Incidents
@@ -19,6 +20,11 @@ namespace Game.Incidents
 		}
 
 		override public void UpdateContext()
+		{
+
+		}
+
+		public override void CheckForDeath()
 		{
 
 		}

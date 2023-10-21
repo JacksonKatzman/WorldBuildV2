@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using UnityEngine;
+using HexDirection = Game.Terrain.HexDirection;
 
 namespace Game.Incidents
 {
@@ -42,7 +43,7 @@ namespace Game.Incidents
 		public int MilitaryPower { get; set; }
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		virtual public int ControlledTiles => ControlledTileIndices.Count;
-		public int InfluenceForNextTile => ControlledTiles * 2 + 1;
+		public int InfluenceForNextTile => (ControlledTiles * 2)/3 + 1;
 		[ES3Serializable]
 		public List<City> Cities { get; set; }
 		public City Capitol => Cities.Count > 0? Cities[0] : null;
@@ -157,10 +158,7 @@ namespace Game.Incidents
 				IncidentService.Instance.PerformIncidents((Faction)this);
 			}
 
-			if (CheckDestroyed())
-			{
-				Die();
-			}
+			CheckForDeath();
 		}
 		override public void UpdateContext()
 		{
@@ -169,6 +167,14 @@ namespace Game.Incidents
 			UpdateInfluence();
 			UpdatePERMS();
 			UpdateNumIncidents();
+		}
+
+		public override void CheckForDeath()
+		{
+			if (CheckDestroyed())
+			{
+				Die();
+			}
 		}
 
 		override public void Die()
@@ -323,9 +329,38 @@ namespace Game.Incidents
 			return result;
 		}
 
+		public void ClaimTerritoryBetweenCities()
+		{
+			var faction = this;
+			var cityHexes = new List<HexCell>();
+			foreach (var city in faction.Cities)
+			{
+				cityHexes.Add(city.CurrentLocation.GetHexCell());
+			}
+
+			var centroid = SimulationUtilities.GetCentroid(cityHexes);
+
+			var totalDistance = 0;
+			foreach (var city in faction.Cities)
+			{
+				totalDistance += city.CurrentLocation.GetHexCell().coordinates.DistanceTo(centroid.coordinates);
+			}
+			var averageDistance = totalDistance / faction.Cities.Count;
+
+			var hexes = SimulationUtilities.GetAllCellsInRange(centroid, averageDistance);
+			var claimedCells = SimulationUtilities.GetClaimedCells();
+			foreach (var hex in hexes)
+			{
+				if (!claimedCells.Contains(hex.Index))
+				{
+					faction.ControlledTileIndices.Add(hex.Index);
+				}
+			}
+		}
+
 		private void UpdateInfluence()
 		{
-			Influence += 3;
+			Influence += (5 + PoliticalPriority);
 		}
 
 		private void UpdateWealth()

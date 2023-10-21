@@ -11,6 +11,7 @@ namespace Game.Incidents
 		public override Type ContextType => typeof(City);
 		public Location CurrentLocation { get; set; }
 		public Faction AffiliatedFaction { get; set; }
+		public override string Name => "City " + ID;
 		virtual public int Population
 		{
 			get

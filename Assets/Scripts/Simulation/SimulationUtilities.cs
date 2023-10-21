@@ -211,6 +211,27 @@ namespace Game.Simulation
 			return possibleIndices;
 		}
 
+		public static List<int> FindSharedBorderFaction(Faction faction, Faction otherFaction, List<BiomeTerrainType> biomeTypes = null)
+		{
+			var outsideIndices = FindBorderOutsideFaction(faction, biomeTypes);
+			var possibleIndices = new List<int>();
+			var claimedCells = GetClaimedCells();
+
+			foreach (var cell in outsideIndices)
+			{
+				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(SimulationManager.Instance.HexGrid.cells[cell].TerrainType))
+				{
+					continue;
+				}
+				if (otherFaction.ControlledTileIndices.Contains(cell))
+				{
+					possibleIndices.Add(cell);
+				}
+			}
+
+			return possibleIndices;
+		}
+
 		public static List<int> FindCitylessCellWithinFaction(Faction faction, int minDistanceFromCities = 1, List<BiomeTerrainType> biomeTypes = null)
 		{
 			List<int> possibleIndices = new List<int>();
@@ -305,6 +326,106 @@ namespace Game.Simulation
 			SimulationManager.Instance.HexGrid.ResetSearchPhases();
 
 			return cellsInRange;
+		}
+
+		public static HexCell GetCentroid(List<int> cellIds)
+		{
+			var points = new List<HexCell>();
+			foreach (var id in cellIds)
+			{
+				points.Add(SimulationManager.Instance.HexGrid.GetCell(id));
+			}
+			return GetCentroid(points);
+		}
+
+		public static HexCell GetCentroid(List<HexCell> points)
+		{
+			var x = 0;
+			var z = 0;
+			foreach(var point in points)
+			{
+				x += point.coordinates.X;
+				z += point.coordinates.Z;
+			}
+
+			int xCoord = x / points.Count;
+			int zCoord = z / points.Count;
+
+			return SimulationManager.Instance.HexGrid.cells.First(cell => cell.coordinates.X == xCoord && cell.coordinates.Z == zCoord);
+		}
+
+		public static List<HexCell> GetConvexHull(List<int> cellIds)
+		{
+			var points = new List<HexCell>();
+			foreach (var id in cellIds)
+			{
+				points.Add(SimulationManager.Instance.HexGrid.GetCell(id));
+			}
+			return GetConvexHull(points);
+		}
+
+		public static List<HexCell> GetConvexHull(List<HexCell> points)
+		{
+			var result = new HashSet<HexCell>();
+			int leftMostIndex = 0;
+			for (int i = 1; i < points.Count; i++)
+			{
+				if (points[leftMostIndex].coordinates.X > points[i].coordinates.X)
+					leftMostIndex = i;
+			}
+			result.Add(points[leftMostIndex]);
+			List<HexCell> collinearPoints = new List<HexCell>();
+			HexCell current = points[leftMostIndex];
+			while (true)
+			{
+				HexCell nextTarget = points[0];
+				for (int i = 1; i < points.Count; i++)
+				{
+					if (points[i] == current)
+						continue;
+					float x1, x2, y1, y2;
+					x1 = current.coordinates.X - nextTarget.coordinates.X;
+					x2 = current.coordinates.X - points[i].coordinates.X;
+
+					y1 = current.coordinates.Z - nextTarget.coordinates.Z;
+					y2 = current.coordinates.Z - points[i].coordinates.Z;
+
+					float val = (y2 * x1) - (y1 * x2);
+					if (val > 0)
+					{
+						nextTarget = points[i];
+						collinearPoints = new List<HexCell>();
+					}
+					else if (val == 0)
+					{
+						//if (Vector2.Distance(current.position, nextTarget.position) < Vector2.Distance(current.position, points[i].position))
+						if(current.coordinates.DistanceTo(nextTarget.coordinates) < current.coordinates.DistanceTo(points[i].coordinates))
+						{
+							collinearPoints.Add(nextTarget);
+							nextTarget = points[i];
+						}
+						else
+							collinearPoints.Add(points[i]);
+					}
+				}
+
+				foreach (HexCell t in collinearPoints)
+					result.Add(t);
+				if (nextTarget == points[leftMostIndex])
+					break;
+				result.Add(nextTarget);
+				current = nextTarget;
+			}
+
+			/*
+			List<Vector2> convertedResult = new List<Vector2>();
+			foreach (Transform transform in result)
+			{
+				convertedResult.Add(new Vector2(transform.position.x, transform.position.y));
+			}
+			polygon = new Polygon(convertedResult);
+			*/
+			return result.ToList();
 		}
 	}
 }

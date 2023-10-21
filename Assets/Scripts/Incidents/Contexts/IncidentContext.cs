@@ -43,6 +43,7 @@ namespace Game.Incidents
 		abstract public void UpdateContext();
 
 		abstract public void DeployContext();
+		abstract public void CheckForDeath();
 
 		abstract public void Die();
 

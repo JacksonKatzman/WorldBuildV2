@@ -21,17 +21,24 @@
 			{
 				loser.Cities.Remove(c);
 			}
-
-			if (!gainer.ControlledTileIndices.Contains(tileIndex))
+			if (loser.Cities.Count > 0)
 			{
-				gainer.ControlledTileIndices.Add(tileIndex);
+				if (!gainer.ControlledTileIndices.Contains(tileIndex))
+				{
+					gainer.ControlledTileIndices.Add(tileIndex);
+				}
+				if (loser.ControlledTileIndices.Contains(tileIndex))
+				{
+					loser.ControlledTileIndices.Remove(tileIndex);
+				}
 			}
-			if (loser.ControlledTileIndices.Contains(tileIndex))
+			else
 			{
-				loser.ControlledTileIndices.Remove(tileIndex);
+				gainer.ControlledTileIndices.AddRange(loser.ControlledTileIndices);
 			}
 
 			c.AffiliatedFaction = gainer;
+			gainer.ClaimTerritoryBetweenCities();
 			//Might need to notify tile inhabitants later so they can adjust for the change
 		}
 	}

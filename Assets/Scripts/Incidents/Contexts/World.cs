@@ -38,10 +38,15 @@ namespace Game.Simulation
 		{
 			return SimulationCompletionPercentage(world) >= (world.NumGreatMonsters / world.simulationOptions.targetGreatMonsters);
 		}
+
+		public static bool ShouldClaimMoreTerritory(this World world)
+		{
+			return SimulationCompletionPercentage(world) >= (SimulationUtilities.GetClaimedCells().Count / (world.HexGrid.cells.Count() * world.simulationOptions.claimedHexPercentage));
+		}
 	}
 	public class World : IncidentContext
 	{
-		private HexGrid HexGrid => SimulationManager.Instance.HexGrid;
+		public HexGrid HexGrid => SimulationManager.Instance.HexGrid;
 
 		public IncidentContextDictionary CurrentContexts { get; private set; }
 		public IncidentContextDictionary AllContexts { get; private set; }
@@ -77,6 +82,7 @@ namespace Game.Simulation
 		public bool RoomForSpecialFaction => this.ShouldIncreaseSpecialFactions();
 		public int NumGreatMonsters => CurrentContexts[typeof(GreatMonster)].Cast<GreatMonster>().ToList().Count;
 		public bool RoomForGreatMonsters => this.ShouldIncreaseGreatMonsters();
+		public bool CanClaimMoreTerritory => this.ShouldClaimMoreTerritory();
 
 		public List<Item> LostItems;
 
@@ -137,13 +143,27 @@ namespace Game.Simulation
 			await UniTask.Yield();
 		}
 
+		public void PostSimulationCleanup()
+		{
+			foreach (var contextList in CurrentContexts.Values)
+			{
+				foreach (var context in contextList)
+				{
+					context.CheckForDeath();
+				}
+			}
+
+			ContextDictionaryProvider.DelayedRemoveContexts();
+			ContextDictionaryProvider.DelayedAddContexts();
+		}
+
 		public void BeginPostGeneration()
 		{
 			foreach(var faction in Factions)
 			{
 				if (!faction.IsSpecialFaction)
 				{
-					GenerateAdditionalCities(faction);
+					//GenerateAdditionalCities(faction);
 				}
 
 				//Create villages and add farm land
@@ -188,6 +208,7 @@ namespace Game.Simulation
 				var chosenLocationIndex = ordered.First();
 				var population = SimRandom.RandomRange((int)(faction.Cities[0].Population * 0.3f), (int)(faction.Cities[0].Population * 0.7f));
 				var createdCity = new City(faction, new Location(chosenLocationIndex), population, 0);
+				faction.Cities.Add(createdCity);
 				EventManager.Instance.Dispatch(new AddContextImmediateEvent(createdCity));
 			}
 		}
@@ -213,11 +234,14 @@ namespace Game.Simulation
 
 		public void DrawFactionBorders(Faction faction)
 		{
+			//VisualTestCentroidsHullsAndBorders(faction);
+
 			var borderCells = SimulationUtilities.FindBorderWithinFaction(faction);
 
 			foreach (var index in borderCells)
 			{
 				var cell = HexGrid.GetCell(index);
+				cell.hexCellLabel.SetText(faction.Name);
 				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 				{
 					HexCell neighbor = cell.GetNeighbor(d);
@@ -230,10 +254,28 @@ namespace Game.Simulation
 
 					if (!controlledCells.Contains(neighbor.Index))
 					{
-						cell.hexCellLabel.ToggleBorder(d, true);
+						cell.hexCellLabel.ToggleBorder(d, true, Color.white);
 					}
 				}
 			}
+		}
+
+		private void VisualTestCentroidsHullsAndBorders(Faction faction)
+		{
+			var hullPoints = SimulationUtilities.GetConvexHull(faction.ControlledTileIndices);
+			foreach (var cell in hullPoints)
+			{
+				//cell.hexCellLabel.ToggleBorder(d, true, Color.red);
+				foreach (var border in cell.hexCellLabel.hexCellBorderImages.Values)
+				{
+					if (border.enabled)
+					{
+						border.color = Color.red;
+					}
+				}
+			}
+
+			faction.ClaimTerritoryBetweenCities();
 		}
 
 		private void CreateRacesAndFactions(List<FactionPreset> presets)
@@ -295,6 +337,11 @@ namespace Game.Simulation
 			}
 
 			LostItems = SaveUtilities.ConvertIDsToContexts<Item>(contextIDLoadBuffers["LostItems"]);
+		}
+
+		public override void CheckForDeath()
+		{
+			
 		}
 	}
 }

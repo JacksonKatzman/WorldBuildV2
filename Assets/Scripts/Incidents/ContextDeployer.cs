@@ -179,6 +179,11 @@ namespace Game.Incidents
 
 		public void DeployContext() { }
 
+		public void CheckForDeath()
+		{
+
+		}
+
 		public void Die()
 		{
 		}
