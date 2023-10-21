@@ -36,6 +36,25 @@ namespace Game.Terrain
 			{BiomeTerrainType.Deep_Ocean, new Vector2Int(1,0)}
 		};
 
+		public static Dictionary<BiomeTerrainType, List<BiomeTerrainType>> BiomeMatches = new Dictionary<BiomeTerrainType, List<BiomeTerrainType>>
+		{
+			{BiomeTerrainType.Swamp, new List<BiomeTerrainType>() { BiomeTerrainType.Swamp } },
+			{BiomeTerrainType.Grassland, new List<BiomeTerrainType>() { BiomeTerrainType.Grassland, BiomeTerrainType.Shrubland, BiomeTerrainType.Tundra } },
+			{BiomeTerrainType.Forest, new List<BiomeTerrainType>() { BiomeTerrainType.Forest, BiomeTerrainType.Rainforest, BiomeTerrainType.Taiga } },
+			{BiomeTerrainType.Rainforest, new List<BiomeTerrainType>() { BiomeTerrainType.Rainforest, BiomeTerrainType.Forest, BiomeTerrainType.Swamp } },
+			{BiomeTerrainType.Desert, new List<BiomeTerrainType>() { BiomeTerrainType.Desert, BiomeTerrainType.Shrubland, BiomeTerrainType.Badlands } },
+			{BiomeTerrainType.Taiga, new List<BiomeTerrainType>() { BiomeTerrainType.Taiga, BiomeTerrainType.Polar } },
+			{BiomeTerrainType.Tundra, new List<BiomeTerrainType>() { BiomeTerrainType.Tundra, BiomeTerrainType.Shrubland, BiomeTerrainType.Polar } },
+			{BiomeTerrainType.Shrubland, new List<BiomeTerrainType>() { BiomeTerrainType.Shrubland, BiomeTerrainType.Grassland } },
+			{BiomeTerrainType.Badlands, new List<BiomeTerrainType>() { BiomeTerrainType.Badlands, BiomeTerrainType.Desert } },
+			{BiomeTerrainType.Polar, new List<BiomeTerrainType>() { BiomeTerrainType.Polar, BiomeTerrainType.Tundra, BiomeTerrainType.Taiga } },
+			{BiomeTerrainType.Reef, new List<BiomeTerrainType>() { BiomeTerrainType.Reef, BiomeTerrainType.Ocean, BiomeTerrainType.Deep_Ocean } },
+			{BiomeTerrainType.Ocean, new List<BiomeTerrainType>() { BiomeTerrainType.Ocean, BiomeTerrainType.Reef, BiomeTerrainType.Deep_Ocean } },
+			{BiomeTerrainType.Deep_Ocean, new List<BiomeTerrainType>() { BiomeTerrainType.Deep_Ocean, BiomeTerrainType.Reef, BiomeTerrainType.Ocean } }
+		};
+
+		public static List<BiomeTerrainType> t = new List<BiomeTerrainType>() { BiomeTerrainType.Swamp };
+
 		public static BiomeTerrainType CalculateTerrainType(HexCell cell, float temperature, float moistureLevel, int elevationMaximum, int waterLevel)
 		{
 			if (!cell.IsUnderwater)
