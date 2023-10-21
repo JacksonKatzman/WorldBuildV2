@@ -254,7 +254,10 @@ namespace Game.Terrain
 			}
 			set
 			{
-				if (landmarkType != value && !HasRiver)
+				//temprary remove the river check
+				//will need to rewrite the logic that places objects so that
+				//we can have landmarks and other things on river tiles
+				if (landmarkType != value)// && !HasRiver)
 				{
 					landmarkType = value;
 					RemoveRoads();
