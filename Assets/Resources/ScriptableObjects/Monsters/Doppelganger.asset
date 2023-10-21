@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Doppelganger
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 10
+  alignment: 9
+  challengeRating: 3
+  experienceYield: 700
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 14
   armorType: 
-  health: 0
-  speed: 0
+  health: 52
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 11
+    dexterity: 18
+    constitution: 14
+    intelligence: 11
+    wisdom: 12
+    charisma: 14
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,35 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Deception +6
+  - Insight +3
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The doppelganger makes two melee attacks.
+
+'
+  - actionName: Slam
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 7 (1d6 + 4) bludgeoning damage.
+
+'
+  - actionName: Read Thoughts
+    actionDescription: 'The doppelganger magically reads the surface thoughts of
+      one creature within 60 ft. of it. The effect can penetrate barriers, but 3
+      ft. of wood or dirt, 2 ft. of stone, 2 inches of metal, or a thin sheet of
+      lead blocks it. While the target is in range, the doppelganger can continue
+      reading its thoughts, as long as the doppelganger''s concentration isn''t broken
+      (as if concentrating on a spell). While reading the target''s mind, the doppelganger
+      has advantage on Wisdom (Insight) and Charisma (Deception, Intimidation, and
+      Persuasion) checks against the target.
+
+'
   legendaryActions: []
   requiredGender: 2

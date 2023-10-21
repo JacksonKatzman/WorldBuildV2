@@ -21,49 +21,77 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Oni
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 8
+  alignment: 2
+  challengeRating: 7
+  experienceYield: 2900
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 16
+  armorType: (chain mail)
+  health: 110
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 30
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 19
+    dexterity: 11
+    constitution: 16
+    intelligence: 14
+    wisdom: 12
+    charisma: 15
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 3
+    constitution: 6
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 4
+    charisma: 5
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Arcana +5
+  - Deception +8
+  - Perception +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Giant
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The oni makes two attacks, either with its claws or its glaive.
+
+'
+  - actionName: Claw (Oni Form Only)
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 8 (1d8 + 4) slashing damage.
+
+'
+  - actionName: Glaive
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 10 ft., one target.
+      Hit: 15 (2d10 + 4) slashing damage, or 9 (1d10 + 4) slashing damage in Small
+      or Medium form.
+
+'
+  - actionName: Change Shape
+    actionDescription: 'The oni magically polymorphs into a Small or Medium humanoid,
+      into a Large giant, or back into its true form. Other than its size, its statistics
+      are the same in each form. The only equipment that is transformed is its glaive,
+      which shrinks so that it can be wielded in humanoid form. If the oni dies,
+      it reverts to its true form, and its glaive reverts to its normal size.
+
+'
   legendaryActions: []
   requiredGender: 2

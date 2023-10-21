@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Air Elemental
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 5
+  alignment: 4
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 15
   armorType: 
-  health: 0
+  health: 90
   speed: 0
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 90
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 14
+    dexterity: 20
+    constitution: 14
+    intelligence: 6
+    wisdom: 10
+    charisma: 6
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,39 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 090000000a0000000200000001000000000000000d000000
+  damageImmunities: 03000000
+  conditionImmunities: 0e000000040000000700000008000000090000000a0000000b0000000d000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Auran
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The elemental makes two slam attacks.
+
+'
+  - actionName: Slam
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 5 ft., one target.
+      Hit: 14 (2d8 + 5) bludgeoning damage.
+
+'
+  - actionName: Whirlwind (Recharge 4-6)
+    actionDescription: 'Each creature in the elemental''s space must make a DC 13
+      Strength saving throw. On a failure, a target takes 15 (3d8 + 2) bludgeoning
+      damage and is flung up 20 feet away from the elemental in a random direction
+      and knocked prone. If a thrown target strikes an object, such as a wall or
+      floor, the target takes 3 (1d6) bludgeoning damage for every 10 feet it was
+      thrown. If the target is thrown at another creature, that creature must succeed
+      on a DC 13 Dexterity saving throw or take the same damage and be knocked prone.
+
+      If
+      the saving throw is successful, the target takes half the bludgeoning damage
+      and isn''t flung away or knocked prone.
+
+'
   legendaryActions: []
   requiredGender: 2

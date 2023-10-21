@@ -21,49 +21,76 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Djinni
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 5
+  alignment: 6
+  challengeRating: 11
+  experienceYield: 7200
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 161
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 90
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 21
+    dexterity: 15
+    constitution: 22
+    intelligence: 15
+    wisdom: 16
+    charisma: 20
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
+    dexterity: 6
     constitution: 0
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 7
+    charisma: 9
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 090000000a000000
   conditionImmunities: 
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Auran
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The djinni makes three scimitar attacks.
+
+'
+  - actionName: Scimitar
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 5 ft., one target.
+      Hit: 12 (2d6 + 5) slashing damage plus 3 (1d6) lightning or thunder damage
+      (djinni''s choice).
+
+'
+  - actionName: Create Whirlwind
+    actionDescription: 'A 5-foot-radius, 30-foot-tall cylinder of swirling air magically
+      forms on a point the djinni can see within 120 feet of it. The whirlwind lasts
+      as long as the djinni maintains concentration (as if concentrating on a spell).
+      Any creature but the djinni that enters the whirlwind must succeed on a DC
+      18 Strength saving throw or be restrained by it. The djinni can move the whirlwind
+      up to 60 feet as an action, and creatures restrained by the whirlwind move
+      with it. The whirlwind ends if the djinni loses sight of it.
+
+      A creature
+      can use its action to free a creature restrained by the whirlwind, including
+      itself, by succeeding on a DC 18 Strength check. If the check succeeds, the
+      creature is no longer restrained and moves to the nearest space outside the
+      whirlwind.
+
+'
   legendaryActions: []
   requiredGender: 2

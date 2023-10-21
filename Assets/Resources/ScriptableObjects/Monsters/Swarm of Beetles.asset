@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Swarm of Beetles
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 1
+  alignment: 9
+  challengeRating: 0.5
+  experienceYield: 100
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
-  climbSpeed: 0
+  armorValue: 12
+  armorType: (natural armor)
+  health: 22
+  speed: 5
+  climbSpeed: 20
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 8
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 3
+    dexterity: 13
+    constitution: 10
+    intelligence: 1
+    wisdom: 7
+    charisma: 1
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,21 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 020000000100000000000000
   damageImmunities: 
-  conditionImmunities: 
+  conditionImmunities: 01000000030000000400000007000000080000000a0000000b0000000c000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bites
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 0 ft., one target in
+      the swarm''s space. Hit: 10 (4d4) piercing damage, or 5 (2d4) piercing damage
+      if the swarm has half of its hit points or fewer.
+
+'
   legendaryActions: []
   requiredGender: 2

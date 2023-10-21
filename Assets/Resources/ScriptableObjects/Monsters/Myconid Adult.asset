@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Myconid Adult
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 12
+  alignment: 1
+  challengeRating: 0.5
+  experienceYield: 100
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 12
+  armorType: (natural armor)
+  health: 22
+  speed: 20
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 10
+    dexterity: 10
+    constitution: 12
+    intelligence: 10
+    wisdom: 13
+    charisma: 7
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -64,6 +64,26 @@ MonoBehaviour:
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Fist
+    actionDescription: 'Melee Weapon Attack: +2 to hit, reach 5 ft., one target.
+      Hit: 5 (2d4) bludgeoning damage plus 5 (2d4) poison damage.
+
+'
+  - actionName: Pacifying Spores (3/Day)
+    actionDescription: 'The myconid ejects spores at one creature it can see within
+      5 feet of it. The target must succeed on a DC 11 Constitution saving throw
+      or be stunned for 1 minute. The target can repeat the saving throw at the end
+      of each of its turns, ending the effect on itself on a success.
+
+'
+  - actionName: Rapport Spores
+    actionDescription: 'A 20-foot radius of spores extends from the myconid. These
+      spores can go around corners and affect only creatures with an Intelligence
+      of 2 or higher that aren''t undead, constructs, or elementals. Affected creatures
+      can communicate telepathically with one another while they are within 30 feet
+      of each other. The effect lasts for 1 hour.
+
+'
   legendaryActions: []
   requiredGender: 2

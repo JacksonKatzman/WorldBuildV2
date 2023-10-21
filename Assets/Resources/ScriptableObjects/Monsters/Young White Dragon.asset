@@ -21,49 +21,74 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Young White Dragon
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 4
+  alignment: 8
+  challengeRating: 6
+  experienceYield: 2300
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 133
+  speed: 20
   climbSpeed: 0
-  swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  swimSpeed: 40
+  flySpeed: 80
+  passivePerception: 16
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 10
+    constitution: 18
+    intelligence: 6
+    wisdom: 11
+    charisma: 12
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 3
+    constitution: 7
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 3
+    charisma: 4
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 06000000
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +6
+  - Stealth +3
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Draconic
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The dragon makes three attacks: one with its bite and two
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 10 ft., one target.
+      Hit: 15 (2d10 + 4) piercing damage plus 4 (1d8) cold damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) slashing damage.
+
+'
+  - actionName: Cold Breath (Recharge 5-6)
+    actionDescription: 'The dragon exhales an icy blast in a 30-foot cone. Each creature
+      in that area must make a DC 15 Constitution saving throw, taking 45 (10d8)
+      cold damage on a failed save, or half as much damage on a successful one.
+
+'
   legendaryActions: []
   requiredGender: 2

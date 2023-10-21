@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Galeb Duhr
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 5
+  alignment: 4
+  challengeRating: 6
+  experienceYield: 2300
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 16
+  armorType: (natural armor)
+  health: 85
+  speed: 60
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 20
+    dexterity: 14
+    constitution: 20
+    intelligence: 11
+    wisdom: 12
+    charisma: 11
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,30 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 0200000001000000000000000d000000
+  damageImmunities: 03000000
+  conditionImmunities: 0e000000070000000900000008000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Terran
   abilities: []
-  actions: []
+  actions:
+  - actionName: Slam
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 5 ft ., one target.
+      Hit: 12 (2d6 + 5) bludgeoning damage.
+
+'
+  - actionName: Animate Boulders (1/Day)
+    actionDescription: 'The galeb duhr magically animates up to two boulders it can
+      see within 60 ft. of it. A boulder has statistics like those of a galeb duhr,
+      except it has Intelligence 1 and Charisma 1, it can''t be charmed or frightened,
+      and it lacks this action option. A boulder remains animated as long as the
+      galeb duhr maintains concentration, up to 1 minute (as if concentrating on
+      a spell) .
+
+'
   legendaryActions: []
   requiredGender: 2

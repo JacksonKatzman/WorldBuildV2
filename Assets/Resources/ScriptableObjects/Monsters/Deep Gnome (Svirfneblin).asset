@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Deep Gnome (Svirfneblin)
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 1
+  type: 9
+  alignment: 3
+  challengeRating: 0.5
+  experienceYield: 100
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (chain shirt)
+  health: 16
+  speed: 20
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 15
+    dexterity: 14
+    constitution: 14
+    intelligence: 12
+    wisdom: 10
+    charisma: 9
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,30 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Investigation +3
+  - Perception +2
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Gnomish
+  - Terran
+  - Undercommon
   abilities: []
-  actions: []
+  actions:
+  - actionName: War Pick
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 6 (1d8 + 2) piercing damage.
+
+'
+  - actionName: Poisoned Dart
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 30/120 ft., one creature.
+      Hit: 4 (1d4 + 2) piercing damage, and the target must succeed on a DC 12 Constitution
+      saving throw or be poisoned for 1 minute. The target can repeat the saving
+      throw at the end of each of its turns, ending the effect on itself on a success
+
+'
   legendaryActions: []
   requiredGender: 2

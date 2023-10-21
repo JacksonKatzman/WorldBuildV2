@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Giant Poisonous Snake
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 1
+  alignment: 9
+  challengeRating: 0.25
+  experienceYield: 50
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 14
   armorType: 
-  health: 0
-  speed: 0
+  health: 11
+  speed: 30
   climbSpeed: 0
-  swimSpeed: 0
+  swimSpeed: 30
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 10
+    dexterity: 18
+    constitution: 13
+    intelligence: 2
+    wisdom: 10
+    charisma: 3
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,20 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +2
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 10 ft., one target.
+      Hit: 6 (1d4 + 4) piercing damage, and the target must make a DC 11 Constitution
+      saving throw, taking 10 (3d6) poison damage on a failed save, or half as much
+      damage on a successful one.
+
+'
   legendaryActions: []
   requiredGender: 2

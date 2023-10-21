@@ -110,27 +110,26 @@ namespace Game.Incidents
 
 		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace, Character creator = null) : this()
 		{
-			AttemptExpandBorder(startingTiles);
 			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<IIncidentContext>();
-			
-			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
-			Name = namingTheme.GenerateFactionName();
-
-			CreateStartingCity(startingPopulation);
-			CreateStartingGovernment(startingMajorityRace, creator);
-
-			//PoliticalPriority = SimRandom.RandomRange(1, 4);
-			//ReligiousPriority = SimRandom.RandomRange(1, 4);
-			//EconomicPriority = SimRandom.RandomRange(1, 4);
-			//MilitaryPriority = SimRandom.RandomRange(1, 4);
 
 			Priorities = new Dictionary<OrganizationType, int>();
 			Priorities[OrganizationType.POLITICAL] = SimRandom.RandomRange(1, 4);
 			Priorities[OrganizationType.ECONOMIC] = SimRandom.RandomRange(1, 4);
 			Priorities[OrganizationType.RELIGIOUS] = SimRandom.RandomRange(1, 4);
 			Priorities[OrganizationType.MILITARY] = SimRandom.RandomRange(1, 4);
+
+			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
+			Name = namingTheme.GenerateFactionName();
+
+			ClaimFirstCell(startingPopulation);
+			if(startingTiles > 1)
+			{
+				AttemptExpandBorder(startingTiles - 1);
+			}
+
+			CreateStartingGovernment(startingMajorityRace, creator);
 		}
 
 		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles = 1, Character creator = null) : this(startingTiles, population, race, creator)
@@ -182,6 +181,7 @@ namespace Game.Incidents
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 			Government.Die();
+			IncidentService.Instance.ReportStaticIncident(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>{0} is wiped out!", new List<IIncidentContext>() { this }, true);
 		}
 
 		public void CreateStartingCity(int startingPopulation)
@@ -190,31 +190,37 @@ namespace Game.Incidents
 			var location = new Location(SimRandom.RandomEntryFromList(cells));
 			var city = new City(this, location, startingPopulation, 0);
 			Cities.Add(city);
-			EventManager.Instance.Dispatch(new AddContextEvent(city));
+			EventManager.Instance.Dispatch(new AddContextEvent(city, true));
 		}
 
 		public void CreateStartingGovernment(Race majorityStartingRace, Character creator = null)
 		{
 			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL, creator);
-			EventManager.Instance.Dispatch(new AddContextEvent(Government, typeof(Organization)));
+			EventManager.Instance.Dispatch(new AddContextEvent(Government, typeof(Organization), true));
 		}
 
-		public bool AttemptExpandBorder(int numTimes)
+		public bool ClaimFirstCell(int startingPopulation)
 		{
-			HexCellPriorityQueue searchFrontier = new HexCellPriorityQueue();
-			int searchFrontierPhase = 1;
-			int size = 0;
-
 			if (ControlledTileIndices == null)
 			{
 				ControlledTileIndices = new List<int>();
 			}
 			if (ControlledTileIndices.Count == 0)
 			{
-				if (SimulationUtilities.GetRandomUnclaimedCellIndex(out var index))
+				//var possibleTiles = SimulationUtilities.GetAllCellsWithDistanceFromCity(10, 15);
+				var possibleTiles = SimulationUtilities.SecondTry(8);
+				if (possibleTiles.Count > 0)
+				{
+					var tile = SimRandom.RandomEntryFromList(possibleTiles);
+					ControlledTileIndices.Add(tile.Index);
+					CreateStartingCity(startingPopulation);
+					return true;
+				}
+				else if (SimulationUtilities.GetRandomUnclaimedCellIndex(out var index))
 				{
 					ControlledTileIndices.Add(index);
-					size++;
+					CreateStartingCity(startingPopulation);
+					return true;
 				}
 				else
 				{
@@ -222,6 +228,14 @@ namespace Game.Incidents
 					return false;
 				}
 			}
+			return false;
+		}
+
+		public bool AttemptExpandBorder(int numTimes)
+		{
+			HexCellPriorityQueue searchFrontier = new HexCellPriorityQueue();
+			int searchFrontierPhase = 1;
+			int size = 0;
 
 			HexCell firstCell = SimulationManager.Instance.HexGrid.GetCell(ControlledTileIndices[0]);
 			firstCell.SearchPhase = searchFrontierPhase;
@@ -233,7 +247,7 @@ namespace Game.Incidents
 			while (size < numTimes && searchFrontier.Count > 0)
 			{
 				HexCell current = searchFrontier.Dequeue();
-				if (SimulationUtilities.IsCellIndexUnclaimed(current.Index))
+				if (SimulationUtilities.IsCellUnclaimed(current.Index))
 				{
 					ControlledTileIndices.Add(current.Index);
 					size++;

@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Orog
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 8
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 18
+  armorType: (plate)
+  health: 42
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 12
+    constitution: 18
+    intelligence: 12
+    wisdom: 11
+    charisma: 12
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,30 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Intimidation +5
+  - Survival +2
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Orc
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The orog makes two greataxe attacks.
+
+'
+  - actionName: Greataxe
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 10 (1d12 + 4) slashing damage.
+
+'
+  - actionName: Javelin
+    actionDescription: 'Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or
+      range 30/120 ft., one target. Hit: 7 (1d6 + 4) piercing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Gorgon
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 9
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 19
+  armorType: (natural armor)
+  health: 114
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 20
+    dexterity: 11
+    constitution: 18
+    intelligence: 2
+    wisdom: 12
+    charisma: 7
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,32 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +4
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Gore
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 5 ft., one target.
+      Hit: 18 (2d12 + 5) piercing damage.
+
+'
+  - actionName: Hooves
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 5 ft., one target.
+      Hit: 16 (2d10 + 5) bludgeoning damage.
+
+'
+  - actionName: Petrifying Breath (Recharge 5-6)
+    actionDescription: 'The gorgon exhales petrifying gas in a 30-foot cone. Each
+      creature in that area must succeed on a DC 13 Constitution saving throw. On
+      a failed save, a target begins to turn to stone and is restrained. The restrained
+      target must repeat the saving throw at the end of its next turn. On a success,
+      the effect ends on the target. On a failure, the target is petrified until
+      freed by the greater restoration spell or other magic.
+
+'
   legendaryActions: []
   requiredGender: 2

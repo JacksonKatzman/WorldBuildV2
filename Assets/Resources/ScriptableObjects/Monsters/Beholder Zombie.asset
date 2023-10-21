@@ -21,49 +21,85 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Beholder Zombie
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 13
+  alignment: 5
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 93
   speed: 0
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 20
+  passivePerception: 9
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 10
+    dexterity: 8
+    constitution: 16
+    intelligence: 3
+    wisdom: 8
+    charisma: 5
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
     constitution: 0
     intelligence: 0
-    wisdom: 0
+    wisdom: 2
     charisma: 0
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageImmunities: 03000000
+  conditionImmunities: 090000000a000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - understands Deep Speech and Undercommon but can't speak
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 14 (4d6) piercing damage.
+
+'
+  - actionName: Eye Ray
+    actionDescription: 'The zombie uses a random magical eye ray, choosing a target
+      that it can see within 60 feet of it.
+
+      1. Paralyzing Ray. The targeted
+      creature must succeed on a DC 14 Constitution saving throw or be paralyzed
+      for 1 minute. The target can repeat the saving throw at the end of each of
+      its turns, ending the effect on itself on a success.
+
+      2. Fear Ray. The
+      targeted creature must succeed on a DC 14 Wisdom saving throw or be frightened
+      for 1 minute. The target can repeat the saving throw at the end of each of
+      its turns, ending the effect on itself on a success.
+
+      3. Enervation Ray.
+      The targeted creature must make a DC 14 Constitution saving throw, taking 36
+      (8d8) necrotic damage on a failed save, or half as much damage on a successful
+      one.
+
+      4. Disintegration Ray. If the target is a creature, it must succeed
+      on a DC 14 Dexterity saving throw or take 45 (10d8) force damage. If this damage
+      reduces the creature to 0 hit points, its body becomes a pile of fine gray
+      dust.
+
+      If the target is a Large or smaller nonmagical object or creation
+      of magical force, it is disintegrated without a saving throw. If the target
+      is a Huge or larger nonmagical object or creation of magical force, this ray
+      disintegrates a 10-foot cube of it.
+
+'
   legendaryActions: []
   requiredGender: 2

@@ -21,49 +21,70 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Drow Elite Warrior
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 5
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 18
+  armorType: (studded leather, shield)
+  health: 71
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 13
+    dexterity: 18
+    constitution: 14
+    intelligence: 11
+    wisdom: 13
+    charisma: 12
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 7
+    constitution: 5
     intelligence: 0
-    wisdom: 0
+    wisdom: 4
     charisma: 0
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +4
+  - Stealth +10
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Elvish
+  - Undercommon
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The drow makes two shortsword attacks.
+
+'
+  - actionName: Shortsword
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 7 (1d6 + 4) piercing damage plus 10 (3d6) poison damage.
+
+'
+  - actionName: Hand Crossbow
+    actionDescription: 'Ranged Weapon Attack: +7 to hit, range 30/120 ft., one target.
+      Hit: 7 (1d6 + 4) piercing damage, and the target must succeed on a DC 13 Constitution
+      saving throw or be poisoned for 1 hour. If the saving throw fails by 5 or more,
+      the target is also unconscious while poisoned in this way. The target wakes
+      up if it takes damage or if another creature takes an action to shake it awake.
+
+'
   legendaryActions: []
   requiredGender: 2

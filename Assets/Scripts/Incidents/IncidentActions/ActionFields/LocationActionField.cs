@@ -101,7 +101,7 @@ namespace Game.Incidents
 			else
 			{
 				value = new Location(id);
-				EventManager.Instance.Dispatch(new AddContextEvent(value));
+				EventManager.Instance.Dispatch(new AddContextEvent(value, false));
 			}
 		}
 

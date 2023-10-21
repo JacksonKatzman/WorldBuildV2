@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Avatar of Death
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 5
   challengeRating: 0
   experienceYield: 0
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 20
   armorType: 
   health: 0
-  speed: 0
+  speed: 60
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 16
+    dexterity: 16
+    constitution: 16
+    intelligence: 16
+    wisdom: 16
+    charisma: 16
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -56,14 +56,21 @@ MonoBehaviour:
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageImmunities: 0800000003000000
+  conditionImmunities: 01000000030000000700000008000000090000000d000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - all languages known to its summoner
   abilities: []
-  actions: []
+  actions:
+  - actionName: Reaping Scythe
+    actionDescription: 'The avatar sweeps its spectral scythe through a creature
+      within 5 feet of it, dealing 7 (1d8 + 3) slashing damage plus 4 (1d8) necrotic
+      damage.
+
+'
   legendaryActions: []
   requiredGender: 2

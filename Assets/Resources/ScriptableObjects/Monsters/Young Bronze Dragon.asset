@@ -21,49 +21,83 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Young Bronze Dragon
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
+  landDwelling: 1
+  size: 3
+  type: 4
   alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  challengeRating: 8
+  experienceYield: 3900
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 142
+  speed: 40
   climbSpeed: 0
-  swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  swimSpeed: 40
+  flySpeed: 80
+  passivePerception: 17
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 21
+    dexterity: 10
+    constitution: 19
+    intelligence: 14
+    wisdom: 13
+    charisma: 17
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 3
+    constitution: 7
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 4
+    charisma: 6
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 09000000
   conditionImmunities: 
-  skills: []
+  skills:
+  - Insight +4
+  - Perception +7
+  - Stealth +3
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Draconic
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The dragon makes three attacks: one with its bite and two
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 10 ft., one target.
+      Hit: 16 (2d10 + 5) piercing damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 5 ft., one target.
+      Hit: 12 (2d6 + 5) slashing damage.
+
+'
+  - actionName: Breath Weapons (Recharge 5-6)
+    actionDescription: 'The dragon uses one of the following breath weapons.
+
+      Lightning
+      Breath. The dragon exhales lightning in a 60-foot line that is 5 feet wide.
+      Each creature in that line must make a DC 15 Dexterity saving throw, taking
+      55 (10d10) lightning damage on a failed save, or half as much damage on a successful
+      one.
+
+      Repulsion Breath. The dragon exhales repulsion energy in a 30-foot
+      cone. Each creature in that area must succeed on a DC 15 Strength saving throw.
+      On a failed save, the creature is pushed 40 feet away from the dragon.
+
+'
   legendaryActions: []
   requiredGender: 2

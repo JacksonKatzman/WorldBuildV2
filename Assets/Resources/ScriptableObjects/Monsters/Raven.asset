@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Raven
   legendary: 0
-  landDwelling: 0
+  landDwelling: 1
   size: 0
-  type: 0
-  alignment: 0
+  type: 1
+  alignment: 9
   challengeRating: 0
-  experienceYield: 0
+  experienceYield: 10
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 1
+  speed: 10
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 50
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 2
+    dexterity: 14
+    constitution: 8
+    intelligence: 2
+    wisdom: 12
+    charisma: 6
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,18 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +3
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Beak
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 1 piercing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Yuan-ti Malison Type 2
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 10
+  alignment: 5
+  challengeRating: 3
+  experienceYield: 700
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 66
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 16
+    dexterity: 14
+    constitution: 13
+    intelligence: 14
+    wisdom: 12
+    charisma: 16
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -56,14 +56,28 @@ MonoBehaviour:
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
+  skills:
+  - Deception +5
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Abyssal
+  - Common
+  - Draconic
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack (Yuan_ti Form Only)
+    actionDescription: 'The yuan_ti makes two bite attacks using its snake arms.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one creature.
+      Hit: 5 (1d4 + 3) piercing damage plus 7 (2d6) poison damage.
+
+'
   legendaryActions: []
   requiredGender: 2

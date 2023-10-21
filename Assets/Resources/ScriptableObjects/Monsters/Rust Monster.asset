@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Rust Monster
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 10
+  alignment: 9
+  challengeRating: 0.5
+  experienceYield: 100
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 14
+  armorType: (natural armor)
+  health: 27
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 13
+    dexterity: 12
+    constitution: 13
+    intelligence: 2
+    wisdom: 13
+    charisma: 6
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -64,6 +64,25 @@ MonoBehaviour:
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 5 (1d8 + 1) piercing damage.
+
+'
+  - actionName: Antennae
+    actionDescription: 'The rust monster corrodes a nonmagical ferrous metal object
+      it can see within 5 feet of it. If the object isn''t being worn or carried,
+      the touch destroys a 1-foot cube of it. If the object is being worn or carried
+      by a creature, the creature can make a DC 11 Dexterity saving throw to avoid
+      the rust monster''s touch.
+
+      If the object touched is either metal armor
+      or a metal shield being worn or carried, its takes a permanent and cumulative
+      -1 penalty to the AC it offers. Armor reduced to an AC of 10 or a shield that
+      drops to a +0 bonus is destroyed. If the object touched is a held metal weapon,
+      it rusts as described in the Rust Metal trait.
+
+'
   legendaryActions: []
   requiredGender: 2

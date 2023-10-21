@@ -21,49 +21,93 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Yochlol
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 7
+  alignment: 8
+  challengeRating: 10
+  experienceYield: 5900
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
-  climbSpeed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 136
+  speed: 30
+  climbSpeed: 30
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 15
+    dexterity: 14
+    constitution: 18
+    intelligence: 13
+    wisdom: 15
+    charisma: 15
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
+    dexterity: 6
     constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
+    intelligence: 5
+    wisdom: 6
+    charisma: 6
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageResistances: 0600000005000000090000000200000001000000000000000d000000
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
+  skills:
+  - Deception +10
+  - Insight +6
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Abyssal
+  - Elvish
+  - Undercommon
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The yochlol makes two melee attacks.
+
+'
+  - actionName: Slam (Bite in Spider Form)
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft. (10 ft. in demon
+      form), one target. Hit: 5 (1d6 + 2) bludgeoning (piercing in spider form) damage
+      plus 21 (6d6) poison damage.
+
+'
+  - actionName: Mist Form
+    actionDescription: 'The yochlol transforms into toxic mist or reverts to its
+      true form. Any equipment it is wearing or carrying is also transformed. It
+      reverts to its true form if it dies.
+
+      While in mist form, the yochlol
+      is incapacitated and can''t speak. It has a flying speed of 30 feet, can hover,
+      and can pass through any space that isn''t airtight. It has advantage on Strength,
+      Dexterity, and Constitution saving throws, and it is immune to nonmagical damage.
+
+      While
+      in mist form, the yochlol can enter a creature''s space and stop there. Each
+      time that creature starts its turn with the yochlol in its space, the creature
+      must succeed on a DC 14 Constitution saving throw or be poisoned until the
+      start of its next turn. While poisoned in this way, the target is incapacitated.
+
+'
+  - actionName: 'Variant: Summon Demon (1/Day)'
+    actionDescription: 'The demon chooses what to summon and attempts a magical summoning.
+
+      A
+      yochlol has a 50 percent chance of summoning one yochlol.
+
+      A summoned
+      demon appears in an unoccupied space within 60 feet of its summoner, acts as
+      an ally of its summoner, and can''t summon other demons. It remains for 1 minute,
+      until it or its summoner dies, or until its summoner dismisses it as an action.
+
+'
   legendaryActions: []
   requiredGender: 2

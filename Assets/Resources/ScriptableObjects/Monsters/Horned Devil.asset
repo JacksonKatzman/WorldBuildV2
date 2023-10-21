@@ -21,49 +21,78 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Horned Devil
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 7
+  alignment: 2
+  challengeRating: 11
+  experienceYield: 7200
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 178
+  speed: 20
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 22
+    dexterity: 17
+    constitution: 21
+    intelligence: 12
+    wisdom: 16
+    charisma: 17
+    luck: 10
   savingThrows:
-    strength: 0
-    dexterity: 0
+    strength: 10
+    dexterity: 7
     constitution: 0
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 7
+    charisma: 7
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 060000000200000001000000000000000d000000
+  damageImmunities: 0500000003000000
+  conditionImmunities: 09000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Infernal
+  - telepathy 120 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The devil makes three melee attacks: two with its fork and
+      one with its tail. It can use Hurl Flame in place of any melee attack.
+
+'
+  - actionName: Fork
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 10 ft., one target.
+      Hit: 15 (2d8 + 6) piercing damage.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 10 ft., one target.
+      Hit: 10 (1d8 + 6) piercing damage. If the target is a creature other than an
+      undead or a construct, it must succeed on a DC 17 Constitution saving throw
+      or lose 10 (3d6) hit points at the start of each of its turns due to an infernal
+      wound. Each time the devil hits the wounded target with this attack, the damage
+      dealt by the wound increases by 10 (3d6). Any creature can take an action to
+      stanch the wound with a successful DC 12 Wisdom (Medicine) check. The wound
+      also closes if the target receives magical healing.
+
+'
+  - actionName: Hurl Flame
+    actionDescription: 'Ranged Spell Attack: +7 to hit, range 150 ft., one target.
+      Hit: 14 (4d6) fire damage. If the target is a flammable object that isn''t
+      being worn or carried, it also catches fire.
+
+'
   legendaryActions: []
   requiredGender: 2

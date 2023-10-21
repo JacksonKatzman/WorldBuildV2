@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Troll
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 8
+  alignment: 8
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 84
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 13
+    constitution: 20
+    intelligence: 7
+    wisdom: 9
+    charisma: 7
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,29 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +2
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Giant
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The troll makes three attacks: one with its bite and two
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 7 (1d6 + 4) piercing damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) slashing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

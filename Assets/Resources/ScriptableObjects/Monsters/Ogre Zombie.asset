@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Ogre Zombie
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 13
+  alignment: 5
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 8
   armorType: 
-  health: 0
-  speed: 0
+  health: 85
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 8
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 19
+    dexterity: 6
+    constitution: 18
+    intelligence: 3
+    wisdom: 6
+    charisma: 5
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -56,14 +56,20 @@ MonoBehaviour:
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - understands Common and Giant but can't speak
   abilities: []
-  actions: []
+  actions:
+  - actionName: Morningstar
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 13 (2d8 + 4) bludgeoning damage.
+
+'
   legendaryActions: []
   requiredGender: 2

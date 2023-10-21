@@ -21,49 +21,73 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Vampire Spawn
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 5
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 82
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 16
+    dexterity: 16
+    constitution: 16
+    intelligence: 11
+    wisdom: 10
+    charisma: 12
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
+    dexterity: 6
     constitution: 0
     intelligence: 0
-    wisdom: 0
+    wisdom: 3
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 080000000200000001000000000000000d000000
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +3
+  - Stealth +6
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - the languages it knew in life
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The vampire makes two attacks, only one of which can be a
+      bite attack.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one willing
+      creature, or a creature that is grappled by the vampire, incapacitated, or
+      restrained. Hit: 6 (1d6 + 3) piercing damage plus 7 (2d6) necrotic damage.
+      The target''s hit point maximum is reduced by an amount equal to the necrotic
+      damage taken, and the vampire regains hit points equal to that amount. The
+      reduction lasts until the target finishes a long rest. The target dies if this
+      effect reduces its hit point maximum to 0.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one creature.
+      Hit: 8 (2d4 + 3) slashing damage. Instead of dealing damage, the vampire can
+      grapple the target (escape DC 13).
+
+'
   legendaryActions: []
   requiredGender: 2

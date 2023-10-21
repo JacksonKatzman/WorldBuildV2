@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Lamia
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 8
+  challengeRating: 4
+  experienceYield: 1100
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 13
+  armorType: (natural armor)
+  health: 97
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 16
+    dexterity: 13
+    constitution: 15
+    intelligence: 14
+    wisdom: 15
+    charisma: 16
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,38 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Deception +7
+  - Insight +4
+  - Stealth +3
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Abyssal
+  - Common
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The lamia makes two attacks: one with its claws and one with
+      its dagger or Intoxicating Touch.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 14 (2d10 + 3) slashing damage.
+
+'
+  - actionName: Dagger
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 5 (1d4 + 3) piercing damage.
+
+'
+  - actionName: Intoxicating Touch
+    actionDescription: 'Melee Spell Attack: +5 to hit, reach 5 ft., one creature.
+      Hit: The target is magically cursed for 1 hour. Until the curse ends, the target
+      has disadvantage on Wisdom saving throws and all ability checks.
+
+'
   legendaryActions: []
   requiredGender: 2

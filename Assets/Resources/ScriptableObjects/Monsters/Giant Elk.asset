@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Giant Elk
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 4
+  type: 1
+  alignment: 9
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 42
+  speed: 60
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 19
+    dexterity: 16
+    constitution: 14
+    intelligence: 7
+    wisdom: 14
+    charisma: 10
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,27 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Giant Elk
+  - understands Common
+  - Elvish
+  - and Sylvan but can't speak
   abilities: []
-  actions: []
+  actions:
+  - actionName: Ram
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 10 ft., one target.
+      Hit: 11 (2d6 + 4) bludgeoning damage.
+
+'
+  - actionName: Hooves
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one prone creature.
+      Hit: 22 (4d8 + 4) bludgeoning damage.
+
+'
   legendaryActions: []
   requiredGender: 2

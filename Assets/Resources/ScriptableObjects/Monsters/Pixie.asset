@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Pixie
   legendary: 0
-  landDwelling: 0
+  landDwelling: 1
   size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  type: 6
+  alignment: 3
+  challengeRating: 0.25
+  experienceYield: 50
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 15
   armorType: 
-  health: 0
-  speed: 0
+  health: 1
+  speed: 10
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 30
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 2
+    dexterity: 20
+    constitution: 8
+    intelligence: 10
+    wisdom: 14
+    charisma: 15
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,21 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +4
+  - Stealth +7
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Sylvan
   abilities: []
-  actions: []
+  actions:
+  - actionName: Superior Invisibility
+    actionDescription: 'The pixie magically turns invisible until its concentration
+      ends (as if concentrating on a spell). Any equipment the pixie wears or carries
+      is invisible with it.
+
+'
   legendaryActions: []
   requiredGender: 2

@@ -21,49 +21,81 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Dragon Turtle
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 5
+  type: 4
+  alignment: 4
+  challengeRating: 17
+  experienceYield: 18000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 20
+  armorType: (natural armor)
+  health: 341
+  speed: 20
   climbSpeed: 0
-  swimSpeed: 0
+  swimSpeed: 40
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 25
+    dexterity: 10
+    constitution: 20
+    intelligence: 10
+    wisdom: 12
+    charisma: 12
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 6
+    constitution: 11
     intelligence: 0
-    wisdom: 0
+    wisdom: 7
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 05000000
   damageImmunities: 
   conditionImmunities: 
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Aquan
+  - Draconic
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The dragon turtle makes three attacks: one with its bite
+      and two with its claws. It can make one tail attack in place of its two claw
+      attacks.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +13 to hit, reach 15 ft., one target.
+      Hit: 26 (3d12 + 7) piercing damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +13 to hit, reach 10 ft., one target.
+      Hit: 16 (2d8 + 7) slashing damage.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack: +13 to hit, reach 15 ft., one target.
+      Hit: 26 (3d12 + 7) bludgeoning damage. If the target is a creature, it must
+      succeed on a DC 20 Strength saving throw or be pushed up to 10 feet away from
+      the dragon turtle and knocked prone.
+
+'
+  - actionName: Steam Breath (Recharge 5-6)
+    actionDescription: 'The dragon turtle exhales scalding steam in a 60-foot cone.
+      Each creature in that area must make a DC 18 Constitution saving throw, taking
+      52 (15d6) fire damage on a failed save, or half as much damage on a successful
+      one. Being underwater doesn''t grant resistance against this damage.
+
+'
   legendaryActions: []
   requiredGender: 2

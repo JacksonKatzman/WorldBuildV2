@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Gray Slaad
   legendary: 0
-  landDwelling: 0
-  size: 0
+  landDwelling: 1
+  size: 2
   type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  alignment: 7
+  challengeRating: 9
+  experienceYield: 5000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 127
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 16
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 17
+    dexterity: 17
+    constitution: 16
+    intelligence: 13
+    wisdom: 8
+    charisma: 14
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,39 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 040000000600000005000000090000000a000000
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Arcana +5
+  - Perception +6
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Slaad
+  - telepathy 60 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The slaad makes three attacks: one with its bite and two
+      with its claws or greatsword.
+
+'
+  - actionName: Bite (Slaad Form Only)
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 6 (1d6 + 3) piercing damage.
+
+'
+  - actionName: Claws (Slaad Form Only)
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 8 (1d10 + 3) slashing damage.
+
+'
+  - actionName: Greatsword
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 10 (2d6 + 3) slashing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

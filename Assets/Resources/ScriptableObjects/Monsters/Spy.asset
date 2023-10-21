@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Spy
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 10
+  challengeRating: 1
+  experienceYield: 200
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 27
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 16
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 10
+    dexterity: 15
+    constitution: 10
+    intelligence: 12
+    wisdom: 14
+    charisma: 16
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,34 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Deception +5
+  - Insight +4
+  - Investigation +5
+  - Perception +6
+  - Persuasion +5
+  - Hand +4
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - any two languages
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The spy makes two melee attacks.
+
+'
+  - actionName: Shortsword
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
+  - actionName: Hand Crossbow
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

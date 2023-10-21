@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Roper
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 5
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
-  climbSpeed: 0
+  armorValue: 20
+  armorType: (natural armor)
+  health: 93
+  speed: 10
+  climbSpeed: 10
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 16
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 8
+    constitution: 17
+    intelligence: 7
+    wisdom: 16
+    charisma: 6
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,36 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +6
+  - Stealth +5
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The roper makes four attacks with its tendrils, uses Reel,
+      and makes one attack with its bite.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 22 (4d8 + 4) piercing damage.
+
+'
+  - actionName: Tendril
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 50 ft., one creature.
+      Hit: The target is grappled (escape DC 15). Until the grapple ends, the target
+      is restrained and has disadvantage on Strength checks and Strength saving throws,
+      and the roper can''t use the same tendril on another target.
+
+'
+  - actionName: Reel
+    actionDescription: 'The roper pulls each creature grappled by it up to 25 ft.
+      straight toward it.
+
+'
   legendaryActions: []
   requiredGender: 2

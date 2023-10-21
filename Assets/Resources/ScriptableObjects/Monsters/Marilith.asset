@@ -21,49 +21,87 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Marilith
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 7
+  alignment: 8
+  challengeRating: 16
+  experienceYield: 15000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 189
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 20
+    constitution: 20
+    intelligence: 18
+    wisdom: 16
+    charisma: 20
+    luck: 10
   savingThrows:
-    strength: 0
+    strength: 9
     dexterity: 0
-    constitution: 0
+    constitution: 10
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 8
+    charisma: 10
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 0600000005000000090000000200000001000000000000000d000000
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Abyssal
+  - telepathy 120 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The marilith can make seven attacks: six with its longswords
+      and one with its tail.
+
+'
+  - actionName: Longsword
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 5 ft., one target.
+      Hit: 13 (2d8 + 4) slashing damage.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 10 ft., one creature.
+      Hit: 15 (2d10 + 4) bludgeoning damage. If the target is Medium or smaller,
+      it is grappled (escape DC 19). Until this grapple ends, the target is restrained,
+      the marilith can automatically hit the target with its tail, and the marilith
+      can''t make tail attacks against other targets.
+
+'
+  - actionName: Teleport
+    actionDescription: 'The marilith magically teleports, along with any equipment
+      it is wearing or carrying, up to 120 feet to an unoccupied space it can see.
+
+'
+  - actionName: 'Variant: Summon Demon (1/Day)'
+    actionDescription: 'The demon chooses what to summon and attempts a magical summoning.
+
+      A
+      marilith has a 50 percent chance of summoning 1d6 vrocks, 1d4 hezrous, 1d3
+      glabrezus, 1d2 nalfeshnees, or one marilith.
+
+      A summoned demon appears
+      in an unoccupied space within 60 feet of its summoner, acts as an ally of its
+      summoner, and can''t summon other demons. It remains for 1 minute, until it
+      or its summoner dies, or until its summoner dismisses it as an action.
+
+'
   legendaryActions: []
   requiredGender: 2

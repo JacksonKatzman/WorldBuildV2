@@ -21,49 +21,84 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Cambion
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 7
+  alignment: 10
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 19
+  armorType: (scale mail)
+  health: 82
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 18
+    constitution: 16
+    intelligence: 14
+    wisdom: 12
+    charisma: 16
+    luck: 10
   savingThrows:
-    strength: 0
+    strength: 7
     dexterity: 0
-    constitution: 0
-    intelligence: 0
+    constitution: 6
+    intelligence: 5
     wisdom: 0
-    charisma: 0
+    charisma: 6
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 060000000500000009000000030000000200000001000000000000000d000000
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Deception +6
+  - Intimidation +6
+  - Perception +4
+  - Stealth +7
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Abyssal
+  - Common
+  - Infernal
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The cambion makes two melee attacks or uses its Fire Ray
+      twice.
+
+'
+  - actionName: Spear
+    actionDescription: 'Melee or Ranged Weapon Attack: +7 to hit, reach 5 ft. or
+      range 20/60 ft ., one target. Hit: 7 (1d6 + 4) piercing damage, or 8 (1d8 +
+      4) piercing damage if used with two hands to make a melee attack, plus 3 (1d6)
+      fire damage.
+
+'
+  - actionName: Fire Ray
+    actionDescription: 'Ranged Spell Attack: +7 to hit, range 120 ft., one target.
+      Hit: 10 (3d6) fire damage.
+
+'
+  - actionName: Fiendish Charm
+    actionDescription: 'One humanoid the cambion can see within 30 ft. of it must
+      succeed on a DC 14 Wisdom saving throw or be magically charmed for 1 day. The
+      charmed target obeys the cambion''s spoken commands. If the target suffers
+      any harm from the cambion or another creature or receives a suicidal command
+      from the cambion, the target can repeat the saving throw, ending the effect
+      on itself on a success. If a target''s saving throw is successful, or if the
+      effect ends for it, the creature is immune to the cambion''s Fiendish Charm
+      for the next 24 hours.
+
+'
   legendaryActions: []
   requiredGender: 2

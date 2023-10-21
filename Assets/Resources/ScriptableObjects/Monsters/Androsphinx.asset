@@ -21,49 +21,102 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
-  legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  monsterName: Androsphinx
+  legendary: 1
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 1
+  challengeRating: 17
+  experienceYield: 18000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 199
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 20
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 22
+    dexterity: 10
+    constitution: 20
+    intelligence: 16
+    wisdom: 18
+    charisma: 23
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
+    dexterity: 6
+    constitution: 11
+    intelligence: 9
+    wisdom: 10
     charisma: 0
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageImmunities: 0c0000000200000001000000000000000d000000
+  conditionImmunities: 0100000003000000
+  skills:
+  - Arcana +9
+  - Perception +10
+  - Religion +15
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Sphinx
   abilities: []
-  actions: []
-  legendaryActions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The sphinx makes two claw attacks.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +12 to hit, reach 5 ft., one target.
+      Hit: 17 (2d10 + 6) slashing damage.
+
+'
+  - actionName: Roar (3/Day)
+    actionDescription: 'The sphinx emits a magical roar. Each time it roars before
+      finishing a long rest, the roar is louder and the effect is different, as detailed
+      below. Each creature within 500 feet of the sphinx and able to hear the roar
+      must make a saving throw.
+
+
+      First Roar. Each creature that fails a DC
+      18 Wisdom saving throw is frightened for 1 minute. A frightened creature can
+      repeat the saving throw at the end of each of its turns, ending the effect
+      on itself on a success.
+
+
+      Second Roar. Each creature that fails a DC
+      18 Wisdom saving throw is deafened and frightened for 1 minute. A frightened
+      creature is paralyzed and can repeat the saving throw at the end of each of
+      its turns, ending the effect on itself on a success.
+
+
+      Third Roar. Each
+      creature makes a DC 18 Constitution saving throw. On a failed save, a creature
+      takes 44 (8d10) thunder damage and is knocked prone. On a successful save,
+      the creature takes half as much damage and isn''t knocked prone.
+
+'
+  legendaryActions:
+  - actionName: Claw Attack
+    actionDescription: 'The sphinx makes one claw attack.
+
+'
+  - actionName: Teleport (Costs 2 Actions)
+    actionDescription: 'The sphinx magically teleports, along with any equipment
+      it is wearing or carrying, up to 120 feet to an unoccupied space it can see.
+
+'
+  - actionName: Cast a Spell (Costs 3 Actions)
+    actionDescription: 'The sphinx casts a spell from its list of prepared spells,
+      using a spell slot as normal.
+
+'
   requiredGender: 2

@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Gargoyle
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 5
+  alignment: 8
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 52
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 15
+    dexterity: 11
+    constitution: 16
+    intelligence: 6
+    wisdom: 11
+    charisma: 7
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,31 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 0200000001000000000000000d000000
+  damageImmunities: 03000000
+  conditionImmunities: 0e0000000800000009000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Terran
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The gargoyle makes two attacks: one with its bite and one
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) slashing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

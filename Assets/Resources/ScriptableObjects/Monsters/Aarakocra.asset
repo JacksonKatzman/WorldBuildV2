@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: Aarakocra
+  monsterName: Aarakocra
   legendary: 0
   landDwelling: 1
   size: 2

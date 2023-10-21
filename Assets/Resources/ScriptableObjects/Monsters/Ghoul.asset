@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Ghoul
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 8
+  challengeRating: 1
+  experienceYield: 200
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 22
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 13
+    dexterity: 15
+    constitution: 10
+    intelligence: 7
+    wisdom: 10
+    charisma: 6
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -57,13 +57,27 @@ MonoBehaviour:
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
-  conditionImmunities: 
+  conditionImmunities: 09000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +2 to hit, reach 5 ft., one creature.
+      Hit: 9 (2d6 + 2) piercing damage.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 7 (2d4 + 2) slashing damage. If the target is a creature other than an
+      elf or undead, it must succeed on a DC 10 Constitution saving throw or be paralyzed
+      for 1 minute. The target can repeat the saving throw at the end of each of
+      its turns, ending the effect on itself on a success.
+
+'
   legendaryActions: []
   requiredGender: 2

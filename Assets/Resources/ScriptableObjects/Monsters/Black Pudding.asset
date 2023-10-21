@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Black Pudding
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 11
+  alignment: 9
+  challengeRating: 4
+  experienceYield: 1100
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 7
   armorType: 
-  health: 0
-  speed: 0
-  climbSpeed: 0
+  health: 85
+  speed: 20
+  climbSpeed: 20
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 8
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 16
+    dexterity: 5
+    constitution: 16
+    intelligence: 1
+    wisdom: 6
+    charisma: 1
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -56,14 +56,22 @@ MonoBehaviour:
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageImmunities: 04000000060000000900000000000000
+  conditionImmunities: 0000000001000000020000000e000000030000000a000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Pseudopod
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 6 (1d6 + 3) bludgeoning damage plus 18 (4d8) acid damage. In addition,
+      nonmagical armor worn by the target is partly dissolved and takes a permanent
+      and cumulative -1 penalty to the AC it offers. The armor is destroyed if the
+      penalty reduces its AC to 10.
+
+'
   legendaryActions: []
   requiredGender: 2

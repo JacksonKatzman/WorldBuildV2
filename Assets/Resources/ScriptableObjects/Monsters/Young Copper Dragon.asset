@@ -21,49 +21,87 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Young Copper Dragon
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 4
+  alignment: 6
+  challengeRating: 7
+  experienceYield: 2900
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
-  climbSpeed: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 119
+  speed: 40
+  climbSpeed: 40
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 80
+  passivePerception: 17
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 19
+    dexterity: 12
+    constitution: 17
+    intelligence: 16
+    wisdom: 13
+    charisma: 15
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 4
+    constitution: 6
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 4
+    charisma: 5
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 04000000
   conditionImmunities: 
-  skills: []
+  skills:
+  - Deception +5
+  - Perception +7
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Draconic
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The dragon makes three attacks: one with its bite and two
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 10 ft., one target.
+      Hit: 15 (2d10 + 4) piercing damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) slashing damage.
+
+'
+  - actionName: Breath Weapons (Recharge 5-6)
+    actionDescription: 'The dragon uses one of the following breath weapons.
+
+      Acid
+      Breath. The dragon exhales acid in an 40-foot line that is 5 feet wide. Each
+      creature in that line must make a DC 14 Dexterity saving throw, taking 40 (9d8)
+      acid damage on a failed save, or half as much damage on a successful one.
+
+      Slowing
+      Breath. The dragon exhales gas in a 30-foot cone. Each creature in that area
+      must succeed on a DC 14 Constitution saving throw. On a failed save, the creature
+      can''t use reactions, its speed is halved, and it can''t make more than one
+      attack on its turn. In addition, the creature can use either an action or a
+      bonus action on its turn, but not both. These effects last for 1 minute. The
+      creature can repeat the saving throw at the end of each of its turns, ending
+      the effect on itself with a successful save.
+
+'
   legendaryActions: []
   requiredGender: 2

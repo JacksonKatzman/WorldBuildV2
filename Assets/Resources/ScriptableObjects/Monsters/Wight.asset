@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Wight
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 5
+  challengeRating: 3
+  experienceYield: 700
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 14
+  armorType: (studded leather)
+  health: 45
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 15
+    dexterity: 14
+    constitution: 16
+    intelligence: 10
+    wisdom: 13
+    charisma: 15
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -56,14 +56,46 @@ MonoBehaviour:
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageImmunities: 080000000200000001000000000000000d000000
+  conditionImmunities: 09000000
+  skills:
+  - Perception +3
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - the languages it knew in life
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The wight makes two longsword attacks or two longbow attacks.
+      It can use its Life Drain in place of one longsword attack.
+
+'
+  - actionName: Life Drain
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one creature.
+      Hit: 5 (1d6 + 2) necrotic damage. The target must succeed on a DC 13 Constitution
+      saving throw or its hit point maximum is reduced by an amount equal to the
+      damage taken. This reduction lasts until the target finishes a long rest. The
+      target dies if this effect reduces its hit point maximum to 0.
+
+      A humanoid
+      slain by this attack rises 24 hours later as a zombie under the wight''s control,
+      unless the humanoid is restored to life or its body is destroyed. The wight
+      can have no more than twelve zombies under its control at one time.
+
+'
+  - actionName: Longsword
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 6 (1d8 + 2) slashing damage, or 7 (1d10 + 2) slashing damage if used with
+      two hands.
+
+'
+  - actionName: Longbow
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 150/600 ft., one target.
+      Hit: 6 (1d8 + 2) piercing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

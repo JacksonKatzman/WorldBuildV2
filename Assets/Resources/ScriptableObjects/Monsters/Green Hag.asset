@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Green Hag
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 6
+  alignment: 5
+  challengeRating: 3
+  experienceYield: 700
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 82
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 12
+    constitution: 16
+    intelligence: 13
+    wisdom: 14
+    charisma: 14
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,45 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Arcana +3
+  - Deception +4
+  - Perception +4
+  - Stealth +3
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Draconic
+  - Sylvan
   abilities: []
-  actions: []
+  actions:
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 13 (2d8 + 4) slashing damage.
+
+'
+  - actionName: Illusory Appearance
+    actionDescription: 'The hag covers herself and anything she is wearing or carrying
+      with a magical illusion that makes her look like another creature of her general
+      size and humanoid shape. The illusion ends if the hag takes a bonus action
+      to end it or if she dies.
+
+      The changes wrought by this effect fail to
+      hold up to physical inspection. For example, the hag could appear to have smooth
+      skin, but someone touching her would feel her rough flesh. Otherwise, a creature
+      must take an action to visually inspect the illusion and succeed on a DC 20
+      Intelligence (Investigation) check to discern that the hag is disguised.
+
+'
+  - actionName: Invisible Passage
+    actionDescription: 'The hag magically turns invisible until she attacks or casts
+      a spell, or until her concentration ends (as if concentrating on a spell).
+      While invisible, she leaves no physical evidence of her passage, so she can
+      be tracked only by magic. Any equipment she wears or carries is invisible with
+      her.
+
+'
   legendaryActions: []
   requiredGender: 2

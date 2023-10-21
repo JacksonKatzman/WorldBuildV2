@@ -21,49 +21,62 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Githzerai Monk
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 1
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 14
   armorType: 
-  health: 0
-  speed: 0
+  health: 38
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 12
+    dexterity: 15
+    constitution: 12
+    intelligence: 13
+    wisdom: 14
+    charisma: 10
+    luck: 10
   savingThrows:
-    strength: 0
-    dexterity: 0
+    strength: 3
+    dexterity: 4
     constitution: 0
-    intelligence: 0
-    wisdom: 0
+    intelligence: 3
+    wisdom: 4
     charisma: 0
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Insight +4
+  - Perception +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Gith
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The githzerai makes two unarmed strikes.
+
+'
+  - actionName: Unarmed Strike
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 6 (1d8 + 2) bludgeoning damage plus 9 (2d8) psychic damage. This is a
+      magic weapon attack.
+
+'
   legendaryActions: []
   requiredGender: 2

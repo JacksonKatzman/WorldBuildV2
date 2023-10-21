@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Quaggoth
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 7
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
-  climbSpeed: 0
+  armorValue: 13
+  armorType: (natural armor)
+  health: 45
+  speed: 30
+  climbSpeed: 30
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 17
+    dexterity: 12
+    constitution: 16
+    intelligence: 6
+    wisdom: 12
+    charisma: 7
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -56,14 +56,25 @@ MonoBehaviour:
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
+  skills:
+  - Athletics +5
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Undercommon
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The quaggoth makes two claw attacks.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 6 (1d6 + 3) slashing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

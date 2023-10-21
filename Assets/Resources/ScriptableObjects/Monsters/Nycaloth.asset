@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Nycaloth
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 7
+  alignment: 5
+  challengeRating: 9
+  experienceYield: 5000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 123
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 20
+    dexterity: 11
+    constitution: 19
+    intelligence: 12
+    wisdom: 10
+    charisma: 15
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,60 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageResistances: 0600000005000000090000000200000001000000000000000d000000
+  damageImmunities: 0400000003000000
+  conditionImmunities: 09000000
+  skills:
+  - Intimidation +6
+  - Perception +4
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Abyssal
+  - Infernal
+  - telepathy 60 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The nycaloth makes two melee attacks, or it makes one melee
+      attack and teleports before or after the attack.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 5 ft., one target.
+      Hit: 12 (2d6 + 5) slashing damage. If the target is a creature, it must succeed
+      on a DC 16 Constitution saving throw or take 5 (2d4) slashing damage at the
+      start of each of its turns due to a fiendish wound. Each time the nycaloth
+      hits the wounded target with this attack, the damage dealt by the wound increases
+      by 5 (2d4). Any creature can take an action to stanch the wound with a successful
+      DC 13 Wisdom (Medicine) check. The wound also closes if the target receives
+      magical healing.
+
+'
+  - actionName: Greataxe
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 5 ft., one target.
+      Hit: 18 (2d12 + 5) slashing damage.
+
+'
+  - actionName: Teleport
+    actionDescription: 'The nycaloth magically teleports, along with any equipment
+      it is wearing or carrying, up to 60 feet to an unoccupied space it can see.
+
+'
+  - actionName: 'Variant: Summon Yugoloth (1/Day)'
+    actionDescription: 'The yugoloth chooses what to summon and attempts a magical
+      summoning.
+
+      A nycaloth has a 50 percent chance of summoning 1d4 mezzoloths
+      or one nycaloth.
+
+      A summoned yugoloth appears in an unoccupied space
+      within 60 feet of its summoner, does as it pleases, and can''t summon other
+      yugoloths. The summoned yugoloth remains for 1 minute, until it or its summoner
+      dies, or until its summoner takes a bonus action to dismiss it.
+
+'
   legendaryActions: []
   requiredGender: 2

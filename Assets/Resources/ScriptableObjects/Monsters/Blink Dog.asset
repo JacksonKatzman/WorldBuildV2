@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Blink Dog
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
+  landDwelling: 1
+  size: 2
+  type: 6
   alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  challengeRating: 0.25
+  experienceYield: 50
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 13
   armorType: 
-  health: 0
-  speed: 0
+  health: 22
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 12
+    dexterity: 17
+    constitution: 12
+    intelligence: 10
+    wisdom: 13
+    charisma: 11
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,27 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +3
+  - Stealth +5
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Blink Dog
+  - understands Sylvan but can't speak it
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 4 (1d6 + 1) piercing damage.
+
+'
+  - actionName: Teleport (Recharge 4-6)
+    actionDescription: 'The dog magically teleports, along with any equipment it
+      is wearing or carrying, up to 40 ft. to an unoccupied space it can see. Before
+      or after teleporting, the dog can make one bite attack.
+
+'
   legendaryActions: []
   requiredGender: 2

@@ -21,49 +21,96 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Vrock
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 7
+  alignment: 8
+  challengeRating: 6
+  experienceYield: 2300
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 104
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 17
+    dexterity: 15
+    constitution: 18
+    intelligence: 8
+    wisdom: 13
+    charisma: 8
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
+    dexterity: 5
     constitution: 0
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 4
+    charisma: 2
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 0600000005000000090000000200000001000000000000000d000000
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Abyssal
+  - telepathy 120 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The vrock makes two attacks: one with its beak and one with
+      its talons.
+
+'
+  - actionName: Beak
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 10 (2d6 + 3) piercing damage.
+
+'
+  - actionName: Talons
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 14 (2d10 + 3) slashing damage.
+
+'
+  - actionName: Spores (Recharge 6)
+    actionDescription: 'A 15-foot-radius cloud of toxic spores extends out from the
+      vrock. The spores spread around corners. Each creature in that area must succeed
+      on a DC 14 Constitution saving throw or become poisoned. While poisoned in
+      this way, a target takes 5 (1d10) poison damage at the start of each of its
+      turns. A target can repeat the saving throw at the end of each of its turns,
+      ending the effect on itself on a success. Emptying a vial of holy water on
+      the target also ends the effect on it.
+
+'
+  - actionName: Stunning Screech (1/Day)
+    actionDescription: 'The vrock emits a horrific screech. Each creature within
+      20 feet of it that can hear it and that isn''t a demon must succeed on a DC
+      14 Constitution saving throw or be stunned until the end of the vrock''s next
+      turn .
+
+'
+  - actionName: 'Variant: Summon Demon (1/Day)'
+    actionDescription: 'The demon chooses what to summon and attempts a magical summoning.
+
+      A
+      vrock has a 30 percent chance of summoning 2d4 dretches or one vrock.
+
+      A
+      summoned demon appears in an unoccupied space within 60 feet of its summoner,
+      acts as an ally of its summoner, and can''t summon other demons. It remains
+      for 1 minute, until it or its summoner dies, or until its summoner dismisses
+      it as an action.
+
+'
   legendaryActions: []
   requiredGender: 2

@@ -21,49 +21,80 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Stone Giant
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 4
+  type: 8
+  alignment: 4
+  challengeRating: 7
+  experienceYield: 2900
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 126
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 23
+    dexterity: 15
+    constitution: 20
+    intelligence: 10
+    wisdom: 12
+    charisma: 9
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 5
+    constitution: 8
     intelligence: 0
-    wisdom: 0
+    wisdom: 4
     charisma: 0
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Athletics +12
+  - Perception +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Giant
   abilities: []
-  actions: []
+  actions:
+  - actionName: Fling
+    actionDescription: "The giant tries to throw a Small or Medium creature within
+      10 feet of it. The target must succeed on a DC 17 Dexterity saving throw or
+      be hurled up to 60 feet horizontally in a direction of the giant's choice.
+      and land prone, taking 1d6 bludgeoning damage for every 10 feet it was thrown.
+      \n"
+  - actionName: Rolling Rock
+    actionDescription: 'The giant sends a rock tumbling along the ground in a 30-foot
+      line that is 5 feet wide. Each creature in that line must make a DC 17 Dexterity
+      saving throw, taking 22 (3d10 + 6) bludgeoning damage and falling prone on
+      a failed save
+
+'
+  - actionName: Multiattack
+    actionDescription: 'The giant makes two greatclub attacks.
+
+'
+  - actionName: Greatclub
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 15 ft., one target.
+      Hit: 19 (3d8 + 6) bludgeoning damage.
+
+'
+  - actionName: Rock
+    actionDescription: 'Ranged Weapon Attack: +9 to hit, range 60/240 ft., one target.
+      Hit: 28 (4d10 + 6) bludgeoning damage. If the target is a creature, it must
+      succeed on a DC 17 Strength saving throw or be knocked prone.
+
+'
   legendaryActions: []
   requiredGender: 2

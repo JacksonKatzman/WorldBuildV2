@@ -21,49 +21,99 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Vampire Spellcaster
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 2
+  challengeRating: 15
+  experienceYield: 13000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 16
+  armorType: (natural armor)
+  health: 144
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 17
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 18
+    constitution: 18
+    intelligence: 17
+    wisdom: 15
+    charisma: 18
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
+    dexterity: 9
     constitution: 0
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 7
+    charisma: 9
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 080000000200000001000000000000000d000000
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +7
+  - Stealth +9
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - the languages it knew in life
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack (Vampire Form Only)
+    actionDescription: 'The vampire makes two attacks, only one of which can be a
+      bite attack.
+
+'
+  - actionName: Unarmed Strike (Vampire Form Only)
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 5 ft., one creature.
+      Hit: 8 (1d8 + 4) bludgeoning damage. Instead of dealing damage, the vampire
+      can grapple the target (escape DC 18).
+
+'
+  - actionName: Bite (Bat or Vampire Form Only)
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 5 ft., one willing
+      creature, or a creature that is grappled by the vampire, incapacitated, or
+      restrained. Hit: 7 (1d6 + 4) piercing damage plus 10 (3d6) necrotic damage.
+      The target''s hit point maximum is reduced by an amount equal to the necrotic
+      damage taken, and the vampire regains hit points equal to that amount. The
+      reduction lasts until the target finishes a long rest. The target dies if this
+      effect reduces its hit point maximum to 0. A humanoid slain in this way and
+      then buried in the ground rises the following night as a vampire spawn under
+      the vampire''s control.
+
+'
+  - actionName: Charm
+    actionDescription: 'The vampire targets one humanoid it can see within 30 ft.
+      of it. If the target can see the vampire, the target must succeed on a DC 17
+      Wisdom saving throw against this magic or be charmed by the vampire. The charmed
+      target regards the vampire as a trusted friend to be heeded and protected.
+      Although the target isn''t under the vampire''s control, it takes the vampire''s
+      requests or actions in the most favorable way it can, and it is a willing target
+      for the vampire''s bit attack.
+
+      Each time the vampire or the vampire''s
+      companions do anything harmful to the target, it can repeat the saving throw,
+      ending the effect on itself on a success. Otherwise, the effect lasts 24 hours
+      or until the vampire is destroyed, is on a different plane of existence than
+      the target, or takes a bonus action to end the effect.
+
+'
+  - actionName: Children of the Night (1/Day)
+    actionDescription: 'The vampire magically calls 2d4 swarms of bats or rats, provided
+      that the sun isn''t up. While outdoors, the vampire can call 3d6 wolves instead.
+      The called creatures arrive in 1d4 rounds, acting as allies of the vampire
+      and obeying its spoken commands. The beasts remain for 1 hour, until the vampire
+      dies, or until the vampire dismisses them as a bonus action.
+
+'
   legendaryActions: []
   requiredGender: 2

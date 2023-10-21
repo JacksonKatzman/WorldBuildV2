@@ -21,49 +21,72 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Sahuagin Baron
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 2
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 16
+  armorType: (breastplate)
+  health: 76
+  speed: 30
   climbSpeed: 0
-  swimSpeed: 0
+  swimSpeed: 50
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 17
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 19
+    dexterity: 15
+    constitution: 16
+    intelligence: 14
+    wisdom: 13
+    charisma: 17
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
+    dexterity: 5
+    constitution: 6
+    intelligence: 5
+    wisdom: 4
     charisma: 0
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +7
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Sahuagin
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The sahuagin makes three attacks: one with his bite and two
+      with his claws or trident.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 9 (2d4 + 4) piercing damage.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) slashing damage.
+
+'
+  - actionName: Trident
+    actionDescription: 'Melee or Ranged Weapon Attack: +7 to hit, reach 5 ft. or
+      range 20/60 ft., one target. Hit: 11 (2d6 + 4) piercing damage, or 13 (2d8
+      + 4) piercing damage if used with two hands to make a melee attack.
+
+'
   legendaryActions: []
   requiredGender: 2

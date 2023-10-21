@@ -788,7 +788,7 @@ namespace Game.Terrain
 		HexCollection CreateNewHexCollection()
 		{
 			var hexCollection = new HexCollection();
-			EventManager.Instance.Dispatch(new AddContextEvent(hexCollection));
+			EventManager.Instance.Dispatch(new AddContextEvent(hexCollection, true));
 			return hexCollection;
 		}
 

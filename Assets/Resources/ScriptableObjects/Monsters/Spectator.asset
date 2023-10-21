@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Spectator
   legendary: 0
-  landDwelling: 0
-  size: 0
+  landDwelling: 1
+  size: 2
   type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  alignment: 1
+  challengeRating: 3
+  experienceYield: 700
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
+  armorValue: 14
+  armorType: (natural armor)
+  health: 39
   speed: 0
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 30
+  passivePerception: 16
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 8
+    dexterity: 14
+    constitution: 14
+    intelligence: 13
+    wisdom: 14
+    charisma: 11
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -57,13 +57,54 @@ MonoBehaviour:
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  conditionImmunities: 0a000000
+  skills:
+  - Perception +6
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Deep Speech
+  - Undercommon
+  - telepathy 120 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +1 to hit, reach 5 ft., one target.
+      Hit: 2 (1d6 - 1) piercing damage.
+
+'
+  - actionName: Eye Rays
+    actionDescription: 'The spectator shoots up to two of the following magical eye
+      rays at one or two creatures it can see within 90 ft. of it. It can use each
+      ray only once on a turn.
+
+      1. Confusion Ray. The target must succeed on
+      a DC 13 Wisdom saving throw, or it can''t take reactions until the end of its
+      next turn. On its turn, the target can''t move, and it uses its action to make
+      a melee or ranged attack against a randomly determined creature within range.
+      If the target can''t attack, it does nothing on its turn.
+
+      2. Paralyzing
+      Ray. The target must succeed on a DC 13 Constitution saving throw or be paralyzed
+      for 1 minute. The target can repeat the saving throw at the end of each of
+      its turns, ending the effect on itself on a success.
+
+      3. Fear Ray. The
+      target must succeed on a DC 13 Wisdom saving throw or be frightened for 1 minute.
+      The target can repeat the saving throw at the end of each of its turns, with
+      disadvantage if the spectator is visible to the target, ending the effect on
+      itself on a success.
+
+      4. Wounding Ray. The target must make a DC 13 Constitution
+      saving throw, taking 16 (3d10) necrotic damage on a failed save, or half as
+      much damage on a successful one.
+
+'
+  - actionName: Create Food and Water
+    actionDescription: 'The spectator magically creates enough food and water to
+      sustain itself for 24 hours.
+
+'
   legendaryActions: []
   requiredGender: 2

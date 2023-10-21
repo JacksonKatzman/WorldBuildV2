@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Ankheg
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 9
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 14
+  armorType: (natural armor, 11 while prone)
+  health: 39
+  speed: 10
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 17
+    dexterity: 11
+    constitution: 13
+    intelligence: 1
+    wisdom: 13
+    charisma: 6
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -64,6 +64,21 @@ MonoBehaviour:
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 10 (2d6 + 3) slashing damage plus 3 (1d6) acid damage. If the target is
+      a Large or smaller creature, it is grappled (escape DC 13). Until this grapple
+      ends, the ankheg can bite only the grappled creature and has advantage on attack
+      rolls to do so.
+
+'
+  - actionName: Acid Spray (Recharge 6)
+    actionDescription: 'The ankheg spits acid in a line that is 30 ft. long and 5
+      ft. wide, provided that it has no creature grappled. Each creature in that
+      line must make a DC 13 Dexterity saving throw, taking 10 (3d6) acid damage
+      on a failed save, or half as much damage on a successful one.
+
+'
   legendaryActions: []
   requiredGender: 2

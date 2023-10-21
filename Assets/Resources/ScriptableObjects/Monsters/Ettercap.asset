@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Ettercap
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 10
+  alignment: 5
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
-  climbSpeed: 0
+  armorValue: 13
+  armorType: (natural armor)
+  health: 44
+  speed: 30
+  climbSpeed: 30
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 14
+    dexterity: 15
+    constitution: 13
+    intelligence: 7
+    wisdom: 12
+    charisma: 8
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,50 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +3
+  - Stealth +4
+  - Survival +3
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The ettercap makes two attacks: one with its bite and one
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one creature.
+      Hit: 6 (1d8 + 2) piercing damage plus 4 (1d8) poison damage. The target must
+      succeed on a DC 11 Constitution saving throw or be poisoned for 1 minute. The
+      creature can repeat the saving throw at the end of each of its turns, ending
+      the effect on itself on a success.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 7 (2d4 + 2) slashing damage.
+
+'
+  - actionName: Web (Recharge 5-6)
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 30/60 ft., one Large
+      or smaller creature. Hit: The creature is restrained by webbing. As an action,
+      the restrained creature can make a DC 11 Strength check, escaping from the
+      webbing on a success. The effect ends if the webbing is destroyed. The webbing
+      has AC 10, 5 hit points, is vulnerable to fire damage and immune to bludgeoning
+      damage.
+
+'
+  - actionName: 'Variant: Web Garrote'
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one Medium or
+      Small creature against which the ettercap has advantage on the attack roll.
+      Hit: 4 (1d4 + 2) bludgeoning damage, and the target is grappled (escape DC
+      12). Until this grapple ends, the target can''t breathe, and the ettercap has
+      advantage on attack rolls against it.
+
+'
   legendaryActions: []
   requiredGender: 2

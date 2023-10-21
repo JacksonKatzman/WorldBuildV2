@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Will-o'-Wisp
   legendary: 0
-  landDwelling: 0
+  landDwelling: 1
   size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  type: 13
+  alignment: 8
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 19
   armorType: 
-  health: 0
+  health: 22
   speed: 0
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 50
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 1
+    dexterity: 28
+    constitution: 10
+    intelligence: 13
+    wisdom: 14
+    charisma: 11
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,27 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 040000000600000005000000080000000a0000000200000001000000000000000d000000
+  damageImmunities: 0900000003000000
+  conditionImmunities: 0e0000000400000007000000090000000a0000000b0000000d000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - the languages it knew in life
   abilities: []
-  actions: []
+  actions:
+  - actionName: Shock
+    actionDescription: 'Melee Spell Attack: +4 to hit, reach 5 ft., one creature.
+      Hit: 9 (2d8) lightning damage.
+
+'
+  - actionName: Invisibility
+    actionDescription: 'The will-o''-wisp and its light magically become invisible
+      until it attacks or uses its Consume Life, or until its concentration ends
+      (as if concentrating on a spell).
+
+'
   legendaryActions: []
   requiredGender: 2

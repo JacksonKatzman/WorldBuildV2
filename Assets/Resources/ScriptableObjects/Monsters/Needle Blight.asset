@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Needle Blight
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 12
+  alignment: 5
+  challengeRating: 0.25
+  experienceYield: 50
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 12
+  armorType: (natural armor)
+  health: 11
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 9
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 12
+    dexterity: 12
+    constitution: 13
+    intelligence: 4
+    wisdom: 8
+    charisma: 3
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -57,13 +57,24 @@ MonoBehaviour:
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
-  conditionImmunities: 
+  conditionImmunities: 0000000002000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - understands Common but can't speak
   abilities: []
-  actions: []
+  actions:
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 6 (2d4 + 1) piercing damage.
+
+'
+  - actionName: Needles
+    actionDescription: 'Ranged Weapon Attack: +3 to hit, range 30/60 ft., one target.
+      Hit: 8 (2d6 + 1) piercing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

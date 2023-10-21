@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Werewolf
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 8
+  challengeRating: 3
+  experienceYield: 700
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 11
+  armorType: (in humanoid form, 12 in wolf or hybrid form)
+  health: 58
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 15
+    dexterity: 13
+    constitution: 14
+    intelligence: 10
+    wisdom: 11
+    charisma: 10
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -56,14 +56,38 @@ MonoBehaviour:
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 0200000001000000000000000d000000
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common (can't speak in wolf form)
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack (Humanoid or Hybrid Form Only)
+    actionDescription: 'The werewolf makes two attacks: one with its bite and one
+      with its claws or spear.
+
+'
+  - actionName: Bite (Wolf or Hybrid Form Only)
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 6 (1d8 + 2) piercing damage. If the target is a humanoid, it must succeed
+      on a DC 12 Constitution saving throw or be cursed with werewolf lycanthropy.
+
+'
+  - actionName: Claws (Hybrid Form Only)
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one creature.
+      Hit: 7 (2d4 + 2) slashing damage.
+
+'
+  - actionName: Spear (Humanoid Form Only)
+    actionDescription: 'Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or
+      range 20/60 ft., one creature. Hit: 5 (1d6 + 2) piercing damage, or 6 (1d8
+      + 2) piercing damage if used with two hands to make a melee attack.
+
+'
   legendaryActions: []
   requiredGender: 2

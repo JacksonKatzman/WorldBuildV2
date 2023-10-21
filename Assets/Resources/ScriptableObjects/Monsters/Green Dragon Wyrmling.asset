@@ -21,49 +21,64 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Green Dragon Wyrmling
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 4
+  alignment: 2
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 38
+  speed: 30
   climbSpeed: 0
-  swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  swimSpeed: 30
+  flySpeed: 60
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 15
+    dexterity: 12
+    constitution: 13
+    intelligence: 14
+    wisdom: 11
+    charisma: 13
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 3
+    constitution: 3
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 2
+    charisma: 3
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
+  skills:
+  - Perception +4
+  - Stealth +3
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Draconic
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 7 (1d10 + 2) piercing damage plus 3 (1d6) poison damage.
+
+'
+  - actionName: Poison Breath (Recharge 5-6)
+    actionDescription: 'The dragon exhales poisonous gas in a 15-foot cone. Each
+      creature in that area must make a DC 11 Constitution saving throw, taking 21
+      (6d6) poison damage on a failed save, or half as much damage on a successful
+      one.
+
+'
   legendaryActions: []
   requiredGender: 2

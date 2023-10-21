@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Salamander
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 5
+  alignment: 5
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 90
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 14
+    constitution: 15
+    intelligence: 11
+    wisdom: 10
+    charisma: 12
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -54,16 +54,37 @@ MonoBehaviour:
     wisdom: 0
     charisma: 0
     luck: 0
-  damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
+  damageVulnerabilities: 06000000
+  damageResistances: 0200000001000000000000000d000000
+  damageImmunities: 05000000
   conditionImmunities: 
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Ignan
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The salamander makes two attacks: one with its spear and
+      one with its tail.
+
+'
+  - actionName: Spear
+    actionDescription: 'Melee or Ranged Weapon Attack: +7 to hit, reach 5 ft. or
+      range 20 ft./60 ft., one target. Hit: 11 (2d6 + 4) piercing damage, or 13 (2d8
+      + 4) piercing damage if used with two hands to make a melee attack, plus 3
+      (1d6) fire damage.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 10 ft., one target.
+      Hit: 11 (2d6 + 4) bludgeoning damage plus 7 (2d6) fire damage, and the target
+      is grappled (escape DC 14). Until this grapple ends, the target is restrained,
+      the salamander can automatically hit the target with its tail, and the salamander
+      can''t make tail attacks against other targets.
+
+'
   legendaryActions: []
   requiredGender: 2

@@ -17,7 +17,7 @@ namespace Game.Simulation
 	{
 		public static float SimulationCompletionPercentage(this World world)
 		{
-			return (world.Age / world.simulationOptions.simulatedYears);
+			return (((float)world.Age) / ((float)world.simulationOptions.simulatedYears));
 		}
 		public static bool ShouldIncreaseSpecialFactions(this World world)
 		{
@@ -41,7 +41,15 @@ namespace Game.Simulation
 
 		public static bool ShouldClaimMoreTerritory(this World world)
 		{
-			return SimulationCompletionPercentage(world) >= (SimulationUtilities.GetClaimedCells().Count / (world.HexGrid.cells.Count() * world.simulationOptions.claimedHexPercentage));
+			//return SimulationCompletionPercentage(world) >= (SimulationUtilities.GetClaimedCells().Count / (world.HexGrid.cells.Count() * world.simulationOptions.claimedHexPercentage));
+			var claimedCells = SimulationUtilities.GetClaimedCells();
+			var worldCells = world.HexGrid.cells.ToList();
+			var landCells = worldCells.Where(x => !x.IsUnderwater).ToList();
+			var allowedPercentage = world.simulationOptions.claimedHexPercentage;
+			var allowedToBeClaimed = landCells.Count * allowedPercentage;
+			var percentageClaimed = claimedCells.Count / allowedToBeClaimed;
+			var completionPercentage = SimulationCompletionPercentage(world);
+			return completionPercentage >= percentageClaimed;
 		}
 	}
 	public class World : IncidentContext
@@ -102,16 +110,18 @@ namespace Game.Simulation
 			LostItems = new List<Item>();
 		}
 
-		public void Initialize(List<FactionPreset> factions, SimulationOptions options)
+		public void Initialize(SimulationOptions options)
 		{
 			simulationOptions = options;
-			CreateRacesAndFactions(factions);
+			ContextDictionaryProvider.AllowImmediateChanges = true;
+			CreateRacesAndFactions();
 		}
 
 		public async UniTask AdvanceTime()
 		{
 			ContextDictionaryProvider.DelayedRemoveContexts();
 			ContextDictionaryProvider.DelayedAddContexts();
+			ContextDictionaryProvider.AllowImmediateChanges = false;
 
 			UpdateContext();
 			foreach(var contextList in CurrentContexts.Values)
@@ -140,6 +150,7 @@ namespace Game.Simulation
 				}
 			}
 
+			ContextDictionaryProvider.AllowImmediateChanges = true;
 			await UniTask.Yield();
 		}
 
@@ -209,7 +220,7 @@ namespace Game.Simulation
 				var population = SimRandom.RandomRange((int)(faction.Cities[0].Population * 0.3f), (int)(faction.Cities[0].Population * 0.7f));
 				var createdCity = new City(faction, new Location(chosenLocationIndex), population, 0);
 				faction.Cities.Add(createdCity);
-				EventManager.Instance.Dispatch(new AddContextImmediateEvent(createdCity));
+				EventManager.Instance.Dispatch(new AddContextEvent(createdCity, true));
 			}
 		}
 
@@ -221,13 +232,19 @@ namespace Game.Simulation
 				var tile = HexGrid.GetCell(location);
 
 				//Change the model based on the population, will use temp stuff for now
-				if (city.Population >= 2000)
+				if (city.Population >= 2000 || city == city.AffiliatedFaction.Cities[0])
 				{
-					tile.LandmarkType = Enums.LandmarkType.TOWER;
+					tile.LandmarkType = "City";
+					tile.PlantLevel = 0;
+					tile.UrbanLevel = 3;
+					tile.Walled = true;
 				}
 				else
 				{
-					tile.LandmarkType = Enums.LandmarkType.TOWER;
+					//tile.LandmarkType = "City";
+					tile.FarmLevel = 3;
+					tile.UrbanLevel = 1;
+					tile.PlantLevel = 1;
 				}
 			}
 		}
@@ -278,29 +295,30 @@ namespace Game.Simulation
 			faction.ClaimTerritoryBetweenCities();
 		}
 
-		private void CreateRacesAndFactions(List<FactionPreset> presets)
+		private void CreateRacesAndFactions()
 		{
+			var presets = simulationOptions.factions;
 			var uniqueRacePresets = new Dictionary<RacePreset, int>();
 			foreach(var preset in presets)
 			{
-				if(!uniqueRacePresets.Keys.Contains(preset.race))
+				if(!uniqueRacePresets.Keys.Contains(preset.Key.race))
 				{
-					uniqueRacePresets.Add(preset.race, 1);
+					uniqueRacePresets.Add(preset.Key.race, preset.Value);
 				}
 				else
 				{
-					uniqueRacePresets[preset.race] += 1;
+					uniqueRacePresets[preset.Key.race] += preset.Value;
 				}
 			}
 
 			foreach(var racePresetPair in uniqueRacePresets)
 			{
 				var race = new Race(racePresetPair.Key);
-				EventManager.Instance.Dispatch(new AddContextEvent(race));
+				EventManager.Instance.Dispatch(new AddContextEvent(race, true));
 				for (var i = 0; i < racePresetPair.Value; i++)
 				{
 					var faction = new Faction(1, 1000, race);
-					EventManager.Instance.Dispatch(new AddContextEvent(faction));
+					EventManager.Instance.Dispatch(new AddContextEvent(faction, true));
 				}
 			}
 		}

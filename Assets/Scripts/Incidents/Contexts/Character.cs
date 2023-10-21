@@ -230,14 +230,14 @@ namespace Game.Incidents
 					var father = new Character(Gender.MALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(father);
 					father.Children.Add(this);
-					EventManager.Instance.Dispatch(new AddContextEvent(father));
+					EventManager.Instance.Dispatch(new AddContextEvent(father, false));
 				}
 				if(Parents.Count(x => x.Gender == Gender.FEMALE) < 1)
 				{
 					var mother = new Character(Gender.FEMALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(mother);
 					mother.Children.Add(this);
-					EventManager.Instance.Dispatch(new AddContextEvent(mother));
+					EventManager.Instance.Dispatch(new AddContextEvent(mother, false));
 				}
 			}
 			if(canGenerateSpouse && Spouses.Count == 0)
@@ -248,7 +248,7 @@ namespace Game.Incidents
 					var spouse = new Character(gender, AffiliatedRace, AffiliatedFaction, false);
 					Spouses.Add(spouse);
 					spouse.Spouses.Add(this);
-					EventManager.Instance.Dispatch(new AddContextEvent(spouse));
+					EventManager.Instance.Dispatch(new AddContextEvent(spouse, false));
 				}
 			}
 			if (Siblings.Count == 0)
@@ -260,7 +260,7 @@ namespace Game.Incidents
 					var sibling = new Character(Gender.ANY, AffiliatedRace, AffiliatedFaction, false, Parents);
 					Siblings.Add(sibling);
 					sibling.Siblings.Add(this);
-					EventManager.Instance.Dispatch(new AddContextEvent(sibling));
+					EventManager.Instance.Dispatch(new AddContextEvent(sibling, false));
 				}
 			}
 		}

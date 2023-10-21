@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Awakened Shrub
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
+  landDwelling: 1
+  size: 1
+  type: 12
+  alignment: 9
   challengeRating: 0
-  experienceYield: 0
+  experienceYield: 10
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 9
   armorType: 
-  health: 0
-  speed: 0
+  health: 10
+  speed: 20
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 3
+    dexterity: 8
+    constitution: 11
+    intelligence: 10
+    wisdom: 10
+    charisma: 6
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -54,16 +54,22 @@ MonoBehaviour:
     wisdom: 0
     charisma: 0
     luck: 0
-  damageVulnerabilities: 
-  damageResistances: 
+  damageVulnerabilities: 05000000
+  damageResistances: 01000000
   damageImmunities: 
   conditionImmunities: 
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - one language known by its creator
   abilities: []
-  actions: []
+  actions:
+  - actionName: Rake
+    actionDescription: 'Melee Weapon Attack: +1 to hit, reach 5 ft., one target.
+      Hit: 1 (1d4 - 1) slashing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

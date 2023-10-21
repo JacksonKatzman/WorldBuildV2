@@ -10,8 +10,7 @@ namespace Game.Data
 	[CreateAssetMenu(fileName = nameof(MonsterData), menuName = "ScriptableObjects/Creatures/" + nameof(MonsterData), order = 1)]
 	public class MonsterData : SerializedScriptableObject
 	{
-		public string name;
-		public string Name => name;
+		public string monsterName;
 		//legendary
 		public bool legendary;
 		//land dwelling

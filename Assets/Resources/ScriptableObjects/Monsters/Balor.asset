@@ -21,49 +21,87 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Balor
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 4
+  type: 7
+  alignment: 8
+  challengeRating: 19
+  experienceYield: 22000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 19
+  armorType: (natural armor)
+  health: 262
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 80
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 26
+    dexterity: 15
+    constitution: 22
+    intelligence: 20
+    wisdom: 16
+    charisma: 22
+    luck: 10
   savingThrows:
-    strength: 0
+    strength: 14
     dexterity: 0
-    constitution: 0
+    constitution: 12
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 9
+    charisma: 12
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 06000000090000000200000001000000000000000d000000
+  damageImmunities: 0500000003000000
+  conditionImmunities: 09000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Abyssal
+  - telepathy 120 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The balor makes two attacks: one with its longsword and one
+      with its whip.
+
+'
+  - actionName: Longsword
+    actionDescription: 'Melee Weapon Attack: +14 to hit, reach 10 ft., one target.
+      Hit: 21 (3d8 + 8) slashing damage plus 13 (3d8) lightning damage. If the balor
+      scores a critical hit, it rolls damage dice three times, instead of twice.
+
+'
+  - actionName: Whip
+    actionDescription: 'Melee Weapon Attack: +14 to hit, reach 30 ft., one target.
+      Hit: 15 (2d6 + 8) slashing damage plus 10 (3d6) fire damage, and the target
+      must succeed on a DC 20 Strength saving throw or be pulled up to 25 feet toward
+      the balor.
+
+'
+  - actionName: Teleport
+    actionDescription: 'The balor magically teleports, along with any equipment it
+      is wearing or carrying, up to 120 feet to an unoccupied space it can see.
+
+'
+  - actionName: 'Variant: Summon Demon (1/Day)'
+    actionDescription: 'The demon chooses what to summon and attempts a magical summoning.
+
+      A
+      balor has a 50 percent chance of summoning 1d8 vrocks, 1d6 hezrous, 1d4 glabrezus,
+      1d3 nalfeshnees, 1d2 mariliths, or one goristro.
+
+      A summoned demon appears
+      in an unoccupied space within 60 feet of its summoner, acts as an ally of its
+      summoner, and can''t summon other demons. It remains for 1 minute, until it
+      or its summoner dies, or until its summoner dismisses it as an action.
+
+'
   legendaryActions: []
   requiredGender: 2

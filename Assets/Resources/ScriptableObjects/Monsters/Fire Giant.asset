@@ -21,49 +21,66 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Fire Giant
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 4
+  type: 8
+  alignment: 2
+  challengeRating: 9
+  experienceYield: 5000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 18
+  armorType: (plate)
+  health: 162
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 16
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 25
+    dexterity: 9
+    constitution: 23
+    intelligence: 10
+    wisdom: 14
+    charisma: 13
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 3
+    constitution: 10
     intelligence: 0
     wisdom: 0
-    charisma: 0
+    charisma: 5
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 05000000
   conditionImmunities: 
-  skills: []
+  skills:
+  - Athletics +11
+  - Perception +6
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Giant
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The giant makes two greatsword attacks.
+
+'
+  - actionName: Greatsword
+    actionDescription: 'Melee Weapon Attack: +11 to hit, reach 10 ft., one target.
+      Hit: 28 (6d6 + 7) slashing damage.
+
+'
+  - actionName: Rock
+    actionDescription: 'Ranged Weapon Attack: +11 to hit, range 60/240 ft., one target.
+      Hit: 29 (4d10 + 7) bludgeoning damage.
+
+'
   legendaryActions: []
   requiredGender: 2

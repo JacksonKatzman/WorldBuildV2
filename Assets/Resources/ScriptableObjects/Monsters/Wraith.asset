@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Wraith
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 5
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 13
   armorType: 
-  health: 0
+  health: 67
   speed: 0
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 6
+    dexterity: 16
+    constitution: 16
+    intelligence: 12
+    wisdom: 14
+    charisma: 15
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,32 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 040000000600000005000000090000000a0000000200000001000000000000000d000000
+  damageImmunities: 0800000003000000
+  conditionImmunities: 010000000e000000040000000700000008000000090000000a0000000b000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - the languages it knew in life
   abilities: []
-  actions: []
+  actions:
+  - actionName: Life Drain
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one creature.
+      Hit: 21 (4d8 + 3) necrotic damage. The target must succeed on a DC 14 Constitution
+      saving throw or its hit point maximum is reduced by an amount equal to the
+      damage taken. This reduction lasts until the target finishes a long rest. The
+      target dies if this effect reduces its hit point maximum to 0.
+
+'
+  - actionName: Create Specter
+    actionDescription: 'The wraith targets a humanoid within 10 feet of it that has
+      been dead for no longer than 1 minute and died violently. The target''s spirit
+      rises as a specter in the space of its corpse or in the nearest unoccupied
+      space. The specter is under the wraith''s control. The wraith can have no more
+      than seven specters under its control at one time.
+
+'
   legendaryActions: []
   requiredGender: 2

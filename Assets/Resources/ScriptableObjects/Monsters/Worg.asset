@@ -21,30 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: Worg
+  monsterName: Worg
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 5
+  challengeRating: 0.5
+  experienceYield: 100
   proficiencyBonus: 0
-  armorValue: 0
-  health: 0
-  speed: 0
+  armorValue: 13
+  armorType: (natural armor)
+  health: 26
+  speed: 50
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 16
+    dexterity: 13
+    constitution: 13
+    intelligence: 7
+    wisdom: 11
+    charisma: 8
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -57,11 +58,21 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +4
   senses: []
-  groupingName: pack
+  groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Goblin
+  - Worg
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed
+      on a DC 13 Strength saving throw or be knocked prone.
+
+'
   legendaryActions: []
+  requiredGender: 2

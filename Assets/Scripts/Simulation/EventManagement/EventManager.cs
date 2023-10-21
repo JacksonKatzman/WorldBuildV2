@@ -152,14 +152,23 @@ namespace Game.Simulation
 	{
         public IIncidentContext context;
         public Type contextType;
+        public bool immediate;
 
-        public AddContextEvent(IIncidentContext context, Type type = null)
+        public AddContextEvent(IIncidentContext context, Type type = null, bool immediate = false)
         {
             this.context = context;
             this.contextType = type == null ? context.GetType() : type;
+            this.immediate = immediate;
+        }
+
+        public AddContextEvent(IIncidentContext context, bool immediate = false)
+        {
+            this.context = context;
+            this.contextType = context.GetType();
+            this.immediate = immediate;
         }
     }
-
+/*
     public class AddContextImmediateEvent : ISimulationEvent
     {
         public IIncidentContext context;
@@ -171,7 +180,7 @@ namespace Game.Simulation
             this.contextType = type == null ? context.GetType() : type;
         }
     }
-
+*/
     public class RemoveContextEvent : ISimulationEvent
 	{
         public IIncidentContext context;

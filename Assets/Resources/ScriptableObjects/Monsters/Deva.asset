@@ -21,49 +21,82 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Deva
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
+  landDwelling: 1
+  size: 2
+  type: 2
   alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  challengeRating: 10
+  experienceYield: 5900
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 136
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 90
+  passivePerception: 19
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 18
+    constitution: 18
+    intelligence: 17
+    wisdom: 20
+    charisma: 20
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
     constitution: 0
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 9
+    charisma: 9
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 070000000200000001000000000000000d000000
   damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  conditionImmunities: 010000000e00000003000000
+  skills:
+  - Insight +9
+  - Perception +9
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - all
+  - telepathy 120 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The deva makes two melee attacks.
+
+'
+  - actionName: Mace
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 5 ft., one target.
+      Hit: 7 (1d6 + 4) bludgeoning damage plus 18 (4d8) radiant damage.
+
+'
+  - actionName: Healing Touch (3/Day)
+    actionDescription: 'The deva touches another creature. The target magically regains
+      20 (4d8 + 2) hit points and is freed from any curse, disease, poison, blindness,
+      or deafness.
+
+'
+  - actionName: Change Shape
+    actionDescription: 'The deva magically polymorphs into a humanoid or beast that
+      has a challenge rating equal to or less than its own, or back into its true
+      form. It reverts to its true form if it dies. Any equipment it is wearing or
+      carrying is absorbed or borne by the new form (the deva''s choice).
+
+      In
+      a new form, the deva retains its game statistics and ability to speak, but
+      its AC, movement modes, Strength, Dexterity, and special senses are replaced
+      by those of the new form, and it gains any statistics and capabilities (except
+      class features, legendary actions, and lair actions) that the new form has
+      but that it lacks.
+
+'
   legendaryActions: []
   requiredGender: 2

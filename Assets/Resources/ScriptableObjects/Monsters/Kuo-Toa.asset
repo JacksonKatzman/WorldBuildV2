@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Kuo-Toa
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 5
+  challengeRating: 0.25
+  experienceYield: 50
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 13
+  armorType: (natural armor, shield)
+  health: 18
+  speed: 30
   climbSpeed: 0
-  swimSpeed: 0
+  swimSpeed: 30
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 13
+    dexterity: 10
+    constitution: 11
+    intelligence: 11
+    wisdom: 10
+    charisma: 8
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,33 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Undercommon
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 3 (1d4 + 1) piercing damage.
+
+'
+  - actionName: Spear
+    actionDescription: 'Melee or Ranged Weapon Attack: +3 to hit, reach 5 ft. or
+      range 20/60 ft., one target. Hit: 4 (1d6 + 1) piercing damage, or 5 (1d8 +
+      1) piercing damage if used with two hands to make a melee attack.
+
+'
+  - actionName: Net
+    actionDescription: 'Ranged Weapon Attack: +3 to hit, range 5/15 ft., one Large
+      or smaller creature. Hit: The target is restrained. A creature can use its
+      action to make a DC 10 Strength check to free itself or another creature in
+      a net, ending the effect on a success. Dealing 5 slashing damage to the net
+      (AC 10) frees the target without harming it and destroys the net.
+
+'
   legendaryActions: []
   requiredGender: 2

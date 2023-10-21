@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Thug
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 10
+  challengeRating: 0.5
+  experienceYield: 100
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 11
+  armorType: (leather armor)
+  health: 32
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 15
+    dexterity: 11
+    constitution: 14
+    intelligence: 10
+    wisdom: 10
+    charisma: 11
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,28 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Intimidation +2
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - any one language (usually Common)
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The thug makes two melee attacks.
+
+'
+  - actionName: Mace
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one creature.
+      Hit: 5 (1d6 + 2) bludgeoning damage.
+
+'
+  - actionName: Heavy Crossbow
+    actionDescription: 'Ranged Weapon Attack: +2 to hit, range 100/400 ft., one target.
+      Hit: 5 (1d10) piercing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Shambling Mound
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 12
+  alignment: 9
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 136
+  speed: 20
   climbSpeed: 0
-  swimSpeed: 0
+  swimSpeed: 20
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 8
+    constitution: 16
+    intelligence: 5
+    wisdom: 10
+    charisma: 5
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,36 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageResistances: 0600000005000000
+  damageImmunities: 09000000
+  conditionImmunities: 00000000020000000e000000
+  skills:
+  - Stealth +2
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The shambling mound makes two slam attacks. If both attacks
+      hit a Medium or smaller target, the target is grappled (escape DC 14), and
+      the shambling mound uses its Engulf on it.
+
+'
+  - actionName: Slam
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 13 (2d8 + 4) bludgeoning damage.
+
+'
+  - actionName: Engulf
+    actionDescription: 'The shambling mound engulfs a Medium or smaller creature
+      grappled by it. The engulfed target is blinded, restrained, and unable to breathe,
+      and it must succeed on a DC 14 Constitution saving throw at the start of each
+      of the mound''s turns or take 13 (2d8 + 4) bludgeoning damage. If the mound
+      moves, the engulfed target moves with it. The mound can have only one creature
+      engulfed at a time.
+
+'
   legendaryActions: []
   requiredGender: 2

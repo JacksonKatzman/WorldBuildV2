@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Medusa
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 10
+  alignment: 2
+  challengeRating: 6
+  experienceYield: 2300
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 127
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 10
+    dexterity: 15
+    constitution: 16
+    intelligence: 12
+    wisdom: 13
+    charisma: 15
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,36 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Deception +5
+  - Insight +4
+  - Perception +4
+  - Stealth +5
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: "The medusa makes either three melee attacks \u2014  one with
+      its snake hair and two with its shortsword \u2014 or two ranged attacks with
+      its longbow.\n"
+  - actionName: Snake Hair
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one creature.
+      Hit: 4 (1d4 + 2) piercing damage plus 14 (4d6) poison damage.
+
+'
+  - actionName: Shortsword
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
+  - actionName: Longbow
+    actionDescription: 'Ranged Weapon Attack: +5 to hit, range 150/600 ft., one target.
+      Hit: 6 (1d8 + 2) piercing damage plus 7 (2d6) poison damage.
+
+'
   legendaryActions: []
   requiredGender: 2

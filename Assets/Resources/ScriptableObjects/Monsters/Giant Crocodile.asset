@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Giant Crocodile
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 4
+  type: 1
+  alignment: 9
+  challengeRating: 5
+  experienceYield: 1800
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 14
+  armorType: (natural armor)
+  health: 85
+  speed: 30
   climbSpeed: 0
-  swimSpeed: 0
+  swimSpeed: 50
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 21
+    dexterity: 9
+    constitution: 17
+    intelligence: 2
+    wisdom: 10
+    charisma: 7
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,32 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Stealth +5
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The crocodile makes two attacks: one with its bite and one
+      with its tail.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 5 ft., one target.
+      Hit: 21 (3d10 + 5) piercing damage, and the target is grappled (escape DC 16).
+      Until this grapple ends, the target is restrained, and the crocodile can''t
+      bite another target.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 10 ft., one target
+      not grappled by the crocodile. Hit: 14 (2d8 + 5) bludgeoning damage. If the
+      target is a creature, it must succeed on a DC 16 Strength saving throw or be
+      knocked prone.
+
+'
   legendaryActions: []
   requiredGender: 2

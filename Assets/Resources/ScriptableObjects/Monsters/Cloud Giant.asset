@@ -21,49 +21,82 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Cloud Giant
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 4
+  type: 8
+  alignment: 10
+  challengeRating: 9
+  experienceYield: 5000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 14
+  armorType: (natural armor)
+  health: 200
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 17
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 27
+    dexterity: 10
+    constitution: 22
+    intelligence: 12
+    wisdom: 16
+    charisma: 16
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
-    constitution: 0
+    constitution: 10
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 7
+    charisma: 7
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Insight +7
+  - Perception +7
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Giant
   abilities: []
-  actions: []
+  actions:
+  - actionName: Fling
+    actionDescription: 'The giant tries to throw a Small or Medium creature within
+      10 feet of it. The target must succeed on a DC 20 Dexterity saving throw or
+      be hurled up to 60 feet horizontally in a direction of the giant''s choice
+      and land prone, taking 1d8 bludgeoning damage for every 10 feet it was thrown.
+
+'
+  - actionName: Wind Aura
+    actionDescription: 'A magical aura of wind surrounds the giant. The aura is a
+      10-foot-radius sphere that lasts as long as the giant maintains concentration
+      on it (as if concentrating on a spell). While the aura is in effect, the giant
+      gains a +2 bonus to its AC against ranged weapon attacks, and all open flames
+      within the aura are extinguished unless they are magical.
+
+'
+  - actionName: Multiattack
+    actionDescription: 'The giant makes two morningstar attacks.
+
+'
+  - actionName: Morningstar
+    actionDescription: 'Melee Weapon Attack: +12 to hit, reach 10 ft., one target.
+      Hit: 21 (3d8 + 8) piercing damage.
+
+'
+  - actionName: Rock
+    actionDescription: 'Ranged Weapon Attack: +12 to hit, range 60/240 ft., one target.
+      Hit: 30 (4d10 + 8) bludgeoning damage.
+
+'
   legendaryActions: []
   requiredGender: 2

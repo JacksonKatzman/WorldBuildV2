@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Myconid Sovereign
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 12
+  alignment: 1
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 13
+  armorType: (natural armor)
+  health: 60
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 12
+    dexterity: 10
+    constitution: 14
+    intelligence: 13
+    wisdom: 15
+    charisma: 10
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -64,6 +64,46 @@ MonoBehaviour:
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The myconid uses either its Hallucination Spores or its Pacifying
+      Spores, then makes a fist attack.
+
+'
+  - actionName: Fist
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 8 (3d4 + 1) bludgeoning damage plus 7 (3d4) poison damage.
+
+'
+  - actionName: Animating Spores
+    actionDescription: 'The myconid targets one corpse of a humanoid or a Large or
+      smaller beast within 5 feet of it and releases spores at the corpse. In 24
+      hours, the corpse rises as a spore servant. The corpse stays animated for 1d4
+      + 1 weeks or until destroyed, and it can''t be animated again in this way.
+
+'
+  - actionName: Hallucination Spores
+    actionDescription: 'The myconid ejects spores at one creature it can see within
+      5 feet of it. The target must succeed on a DC 12 Constitution saving throw
+      or be poisoned for 1 minute. The poisoned target is incapacitated while it
+      hallucinates. The target can repeat the saving throw at the end of each of
+      its turns, ending the effect on itself on a success.
+
+'
+  - actionName: Pacifying Spores
+    actionDescription: 'The myconid ejects spores at one creature it can see within
+      5 feet of it. The target must succeed on a DC 12 Constitution saving throw
+      or be stunned for 1 minute. The target can repeat the saving throw at the end
+      of each of its turns, ending the effect on itself on a success.
+
+'
+  - actionName: Rapport Spores
+    actionDescription: 'A 30-foot radius of spores extends from the myconid. These
+      spores can go around corners and affect only creatures with an Intelligence
+      of 2 or higher that aren''t undead, constructs, or elementals. Affected creatures
+      can communicate telepathically with one another while they are within 30 feet
+      of each other. The effect lasts for 1 hour.
+
+'
   legendaryActions: []
   requiredGender: 2

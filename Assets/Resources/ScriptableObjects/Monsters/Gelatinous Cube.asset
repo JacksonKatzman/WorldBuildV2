@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Gelatinous Cube
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 11
+  alignment: 9
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 6
   armorType: 
-  health: 0
-  speed: 0
+  health: 84
+  speed: 15
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 8
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 14
+    dexterity: 3
+    constitution: 20
+    intelligence: 1
+    wisdom: 6
+    charisma: 1
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -57,13 +57,39 @@ MonoBehaviour:
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
-  conditionImmunities: 
+  conditionImmunities: 0000000001000000020000000e000000030000000a000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Pseudopod
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one creature.
+      Hit: 10 (3d6) acid damage.
+
+'
+  - actionName: Engulf
+    actionDescription: 'The cube moves up to its speed. While doing so, it can enter
+      Large or smaller creatures'' spaces. Whenever the cube enters a creature''s
+      space, the creature must make a DC 12 Dexterity saving throw.
+
+      On a successful
+      save, the creature can choose to be pushed 5 feet back or to the side of the
+      cube. A creature that chooses not to be pushed suffers the consequences of
+      a failed saving throw.
+
+      On a failed save, the cube enters the creature''s
+      space, and the creature takes 10 (3d6) acid damage and is engulfed. The engulfed
+      creature can''t breathe, is restrained, and takes 21 (6d6) acid damage at the
+      start of each of the cube''s turns. When the cube moves, the engulfed creature
+      moves with it.
+
+      An engulfed creature can try to escape by taking an action
+      to make a DC 12 Strength check. On a success, the creature escapes and enters
+      a space of its choice within 5 feet of the cube.
+
+'
   legendaryActions: []
   requiredGender: 2

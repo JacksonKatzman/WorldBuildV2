@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Wererat
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 2
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 33
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 10
+    dexterity: 15
+    constitution: 12
+    intelligence: 11
+    wisdom: 10
+    charisma: 8
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -56,14 +56,38 @@ MonoBehaviour:
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 0200000001000000000000000d000000
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +2
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common (can't speak in rat form)
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack (Humanoid or Hybrid Form Only)
+    actionDescription: 'The wererat makes two attacks, only one of which can be a
+      bite.
+
+'
+  - actionName: Bite (Rat or Hybrid Form Only).
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 4 (1d4 + 2) piercing damage. If the target is a humanoid, it must succeed
+      on a DC 11 Constitution saving throw or be cursed with wererat lycanthropy.
+
+'
+  - actionName: Shortsword (Humanoid or Hybrid Form Only)
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
+  - actionName: Hand Crossbow (Humanoid or Hybrid Form Only)
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

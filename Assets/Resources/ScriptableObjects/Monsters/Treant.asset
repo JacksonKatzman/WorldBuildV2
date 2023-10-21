@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Treant
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 4
+  type: 12
+  alignment: 6
+  challengeRating: 9
+  experienceYield: 5000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 16
+  armorType: (natural armor)
+  health: 138
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 23
+    dexterity: 8
+    constitution: 21
+    intelligence: 12
+    wisdom: 16
+    charisma: 12
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -54,16 +54,44 @@ MonoBehaviour:
     wisdom: 0
     charisma: 0
     luck: 0
-  damageVulnerabilities: 
-  damageResistances: 
+  damageVulnerabilities: 05000000
+  damageResistances: 0200000001000000
   damageImmunities: 
   conditionImmunities: 
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Druidic
+  - Elvish
+  - Sylvan
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The treant makes two slam attacks.
+
+'
+  - actionName: Slam
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 5 ft., one target.
+      Hit: 16 (3d6 + 6) bludgeoning damage.
+
+'
+  - actionName: Rock
+    actionDescription: 'Ranged Weapon Attack: +10 to hit, range 60/180 ft., one target.
+      Hit: 28 (4d10 + 6) bludgeoning damage.
+
+'
+  - actionName: Animate Trees (1/Day)
+    actionDescription: 'The treant magically animates one or two trees it can see
+      within 60 feet of it. These trees have the same statistics as a treant, except
+      they have Intelligence and Charisma scores of 1, they can''t speak, and they
+      have only the Slam action option. An animated tree acts as an ally of the treant.
+      The tree remains animate for 1 day or until it dies; until the treant dies
+      or is more than 120 feet from the tree; or until the treant takes a bonus action
+      to turn it back into an inanimate tree. The tree then takes root if possible.
+
+'
   legendaryActions: []
   requiredGender: 2

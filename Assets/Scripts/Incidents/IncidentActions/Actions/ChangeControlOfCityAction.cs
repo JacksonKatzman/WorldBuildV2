@@ -1,4 +1,6 @@
-﻿namespace Game.Incidents
+﻿using Game.Debug;
+
+namespace Game.Incidents
 {
 	public class ChangeControlOfCityAction : GenericIncidentAction
 	{
@@ -35,6 +37,7 @@
 			else
 			{
 				gainer.ControlledTileIndices.AddRange(loser.ControlledTileIndices);
+				OutputLogger.Log($">>>>{loser.Name} is wiped out by {gainer.Name}");
 			}
 
 			c.AffiliatedFaction = gainer;

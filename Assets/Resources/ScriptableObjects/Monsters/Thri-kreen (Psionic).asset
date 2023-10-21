@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Thri-kreen (Psionic)
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 7
+  challengeRating: 1
+  experienceYield: 200
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 33
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 12
+    dexterity: 15
+    constitution: 13
+    intelligence: 8
+    wisdom: 12
+    charisma: 7
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,50 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +3
+  - Stealth +4
+  - Survival +3
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Thri-kreen
+  - telepathy 60 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The thri-kreen makes two attacks: one with its bite and one
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one creature.
+      Hit: 4 (1d6 + 1) piercing damage, and the target must succeed on a DC 11 Constitution
+      saving throw or be poisoned for 1 minute. If the saving throw fails by 5 or
+      more, the target is also paralyzed while poisoned in this way. The poisoned
+      target can repeat the saving throw on each of its turns, ending the effect
+      on itself on a success.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 6 (2d4 + 1) slashing damage.
+
+'
+  - actionName: 'Variant: Weapons Multiattack'
+    actionDescription: 'The thri-kreen makes two gythka attacks or two chatkcha attacks.
+
+'
+  - actionName: 'Variant: Gythka'
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 5 (1d8 + 1) slashing damage.
+
+'
+  - actionName: 'Variant: Chatkcha'
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target.
+      Hit: 5 (1d6 + 2) slashing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

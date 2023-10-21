@@ -21,49 +21,94 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Nalfeshnee
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 7
+  alignment: 8
+  challengeRating: 13
+  experienceYield: 10000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 184
+  speed: 20
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 30
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 21
+    dexterity: 10
+    constitution: 22
+    intelligence: 19
+    wisdom: 12
+    charisma: 15
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
+    constitution: 11
+    intelligence: 9
+    wisdom: 6
+    charisma: 7
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 0600000005000000090000000200000001000000000000000d000000
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Abyssal
+  - telepathy 120 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The nalfeshnee uses Horror Nimbus if it can.  It then makes
+      three attacks: one with its bite and two with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 5 ft., one target.
+      Hit: 32 (5d10 + 5) piercing damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 10 ft., one target.
+      Hit: 15 (3d6 + 5) slashing damage.
+
+'
+  - actionName: Horror Nimbus (Recharge 5-6)
+    actionDescription: 'The nalfeshnee magically emits scintillating, multicolored
+      light. Each creature within 15 feet of the nalfeshnee that can see the light
+      must succeed on a DC 15 Wisdom saving throw or be frightened for 1 minute.
+      A creature can repeat the saving throw at the end of each of its turns, ending
+      the effect on itself on a success. If a creature''s saving throw is successful
+      or the effect ends for it, the creature is immune to the nalfeshnee''s Horror
+      Nimbus for the next 24 hours.
+
+'
+  - actionName: Teleport
+    actionDescription: 'The nalfeshnee magically teleports, along with any equipment
+      it is wearing or carrying, up to 120 feet to an unoccupied space it can see.
+
+'
+  - actionName: 'Variant: Summon Demon (1/Day)'
+    actionDescription: 'The demon chooses what to summon and attempts a magical summoning.
+
+      A
+      nalfeshnee has a 50 percent chance of summoning 1d4 vrocks, 1d3 hezrous, 1d2
+      glabrezus, or one nalfeshnee.
+
+      A summoned demon appears in an unoccupied
+      space within 60 feet of its summoner, acts as an ally of its summoner, and
+      can''t summon other demons. It remains for 1 minute, until it or its summoner
+      dies, or until its summoner dismisses it as an action.
+
+'
   legendaryActions: []
   requiredGender: 2

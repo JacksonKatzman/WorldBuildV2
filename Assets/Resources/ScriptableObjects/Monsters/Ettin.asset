@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Ettin
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 8
+  alignment: 8
+  challengeRating: 4
+  experienceYield: 1100
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 12
+  armorType: (natural armor)
+  health: 85
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 21
+    dexterity: 8
+    constitution: 17
+    intelligence: 6
+    wisdom: 10
+    charisma: 8
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,30 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Giant
+  - Orc
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The ettin makes two attacks: one with its battleaxe and one
+      with its morningstar.
+
+'
+  - actionName: Battleaxe
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 14 (2d8 + 5) slashing damage.
+
+'
+  - actionName: Morningstar
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 14 (2d8 + 5) piercing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

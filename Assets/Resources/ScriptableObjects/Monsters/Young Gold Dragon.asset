@@ -21,49 +21,86 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Young Gold Dragon
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
+  landDwelling: 1
+  size: 3
+  type: 4
   alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  challengeRating: 10
+  experienceYield: 5900
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 178
+  speed: 40
   climbSpeed: 0
-  swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  swimSpeed: 40
+  flySpeed: 80
+  passivePerception: 19
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 23
+    dexterity: 14
+    constitution: 21
+    intelligence: 16
+    wisdom: 13
+    charisma: 20
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 6
+    constitution: 9
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 5
+    charisma: 9
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 05000000
   conditionImmunities: 
-  skills: []
+  skills:
+  - Insight +5
+  - Perception +9
+  - Persuasion +9
+  - Stealth +6
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Draconic
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The dragon makes three attacks: one with its bite and two
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 10 ft., one target.
+      Hit: 17 (2d10 + 6) piercing damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 5 ft., one target.
+      Hit: 13 (2d6 + 6) slashing damage.
+
+'
+  - actionName: Breath Weapons (Recharge 5-6)
+    actionDescription: 'The dragon uses one of the following breath weapons.
+
+      Fire
+      Breath. The dragon exhales fire in a 30-foot cone. Each creature in that area
+      must make a DC 17 Dexterity saving throw, taking 55 (10d10) fire damage on
+      a failed save, or half as much damage on a successful one.
+
+      Weakening
+      Breath. The dragon exhales gas in a 30-foot cone. Each creature in that area
+      must succeed on a DC 17 Strength saving throw or have disadvantage on Strength-based
+      attack rolls, Strength checks, and Strength saving throws for 1 minute. A creature
+      can repeat the saving throw at the end of each of its turns, ending the effect
+      on itself on a success.
+
+'
   legendaryActions: []
   requiredGender: 2

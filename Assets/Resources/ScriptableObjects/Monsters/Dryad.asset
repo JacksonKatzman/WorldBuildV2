@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Dryad
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 6
+  alignment: 4
+  challengeRating: 1
+  experienceYield: 200
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 11
+  armorType: (16 with barkskin)
+  health: 22
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 10
+    dexterity: 12
+    constitution: 11
+    intelligence: 14
+    wisdom: 15
+    charisma: 18
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,42 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +4
+  - Stealth +5
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Elvish
+  - Sylvan
   abilities: []
-  actions: []
+  actions:
+  - actionName: Club
+    actionDescription: 'Melee Weapon Attack: +2 to hit (+6 to hit with shillelagh),
+      reach 5 ft., one target. Hit: 2 (1d4) bludgeoning damage, or 8 (1d8 + 4) bludgeoning
+      damage with shillelagh.
+
+'
+  - actionName: Fey Charm
+    actionDescription: 'The dryad targets one humanoid or beast that she can see
+      within 30 feet of her. If the target can see the dryad, it must succeed on
+      a DC 14 Wisdom saving throw or be magically charmed. The charmed creature regards
+      the dryad as a trusted friend to be heeded and protected. Although the target
+      isn''t under the dryad''s control, it takes the dryad''s requests or actions
+      in the most favorable way it can.
+
+      Each time the dryad or its allies
+      do anything harmful to the target, it can repeat the saving throw, ending the
+      effect on itself on a success. Otherwise, the effect lasts 24 hours or until
+      the dryad dies, is on a different plane of existence from the target, or ends
+      the effect as a bonus action. If a target''s saving throw is successful, the
+      target is immune to the dryad''s Fey Charm for the next 24 hours.
+
+      The
+      dryad can have no more than one humanoid and up to three beasts charmed at
+      a time.
+
+'
   legendaryActions: []
   requiredGender: 2

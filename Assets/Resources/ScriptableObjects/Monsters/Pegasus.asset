@@ -21,49 +21,59 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Pegasus
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 2
+  alignment: 6
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 59
+  speed: 60
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 90
+  passivePerception: 16
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 15
+    constitution: 16
+    intelligence: 10
+    wisdom: 15
+    charisma: 13
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
+    dexterity: 4
     constitution: 0
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 4
+    charisma: 3
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +6
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - understands Celestial
+  - Common
+  - Elvish
+  - and Sylvan but can't speak
   abilities: []
-  actions: []
+  actions:
+  - actionName: Hooves
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) bludgeoning damage.
+
+'
   legendaryActions: []
   requiredGender: 2

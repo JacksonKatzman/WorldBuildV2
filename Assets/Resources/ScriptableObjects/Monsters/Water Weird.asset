@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Water Weird
   legendary: 0
   landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  size: 3
+  type: 5
+  alignment: 4
+  challengeRating: 3
+  experienceYield: 700
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 13
   armorType: 
-  health: 0
+  health: 58
   speed: 0
   climbSpeed: 0
-  swimSpeed: 0
+  swimSpeed: 60
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 17
+    dexterity: 16
+    constitution: 13
+    intelligence: 11
+    wisdom: 10
+    charisma: 10
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,24 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 050000000200000001000000000000000d000000
+  damageImmunities: 03000000
+  conditionImmunities: 0e0000000400000007000000090000000b0000000a0000000d000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - understands Aquan but doesn't speak
   abilities: []
-  actions: []
+  actions:
+  - actionName: Constrict
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 10 ft., one creature.
+      Hit: 13 (3d6 + 3) bludgeoning damage. If the target is Medium or smaller, it
+      is grappled (escape DC 13) and pulled 5 ft. toward the water weird. Until this
+      grapple ends, the target is restrained, the water weird tries to drown it,
+      and the water weird can''t constrict another target.
+
+'
   legendaryActions: []
   requiredGender: 2

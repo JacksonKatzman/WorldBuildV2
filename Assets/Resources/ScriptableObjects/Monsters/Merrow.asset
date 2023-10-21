@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Merrow
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 8
+  challengeRating: 2
+  experienceYield: 450
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 13
+  armorType: (natural armor)
+  health: 45
+  speed: 10
   climbSpeed: 0
-  swimSpeed: 0
+  swimSpeed: 40
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 10
+    constitution: 15
+    intelligence: 8
+    wisdom: 10
+    charisma: 9
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -62,8 +62,32 @@ MonoBehaviour:
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Abyssal
+  - Aquan
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The merrow makes two attacks: one with its bite and one with
+      its claws or harpoon.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 8 (1d8 + 4) piercing damage.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 9 (2d4 + 4) slashing damage.
+
+'
+  - actionName: Harpoon
+    actionDescription: 'Melee or Ranged Weapon Attack: +6 to hit, reach 5 ft. or
+      range 20/60 ft., one target. Hit: 11 (2d6 + 4) piercing damage. If the target
+      is a Huge or smaller creature, it must succeed on a Strength contest against
+      the merrow or be pulled up to 20 feet toward the merrow.
+
+'
   legendaryActions: []
   requiredGender: 2

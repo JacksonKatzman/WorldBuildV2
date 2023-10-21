@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Green Slaad
   legendary: 0
-  landDwelling: 0
-  size: 0
+  landDwelling: 1
+  size: 3
   type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  alignment: 7
+  challengeRating: 8
+  experienceYield: 3900
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 16
+  armorType: (natural armor)
+  health: 127
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 15
+    constitution: 16
+    intelligence: 11
+    wisdom: 8
+    charisma: 12
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,45 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 040000000600000005000000090000000a000000
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Arcana +3
+  - Perception +2
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Slaad
+  - telepathy 60 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The slaad makes three attacks: one with its bite and two
+      with its claws or staff. Alternatively, it uses its Hurl Flame twice.
+
+'
+  - actionName: Bite (Slaad Form Only)
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) piercing damage.
+
+'
+  - actionName: Claw (Slaad Form Only)
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 7 (1d6 + 4) slashing damage.
+
+'
+  - actionName: Staff
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) bludgeoning damage.
+
+'
+  - actionName: Hurl Flame
+    actionDescription: 'Ranged Spell Attack: +4 to hit, range 60 ft., one target.
+      Hit: 10 (3d6) fire damage. The fire ignites flammable objects that aren ''t
+      being worn or carried.
+
+'
   legendaryActions: []
   requiredGender: 2

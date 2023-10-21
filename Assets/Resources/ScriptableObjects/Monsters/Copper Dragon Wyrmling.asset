@@ -21,49 +21,75 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Copper Dragon Wyrmling
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 4
+  alignment: 6
+  challengeRating: 1
+  experienceYield: 200
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
-  climbSpeed: 0
+  armorValue: 16
+  armorType: (natural armor)
+  health: 22
+  speed: 30
+  climbSpeed: 30
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 15
+    dexterity: 12
+    constitution: 13
+    intelligence: 14
+    wisdom: 11
+    charisma: 13
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 3
+    constitution: 3
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 2
+    charisma: 3
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 04000000
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +4
+  - Stealth +3
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Draconic
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 7 (1d10 + 2) piercing damage.
+
+'
+  - actionName: Breath Weapons (Recharge 5-6)
+    actionDescription: 'The dragon uses one of the following breath weapons.
+
+      Acid
+      Breath. The dragon exhales acid in an 20-foot line that is 5 feet wide. Each
+      creature in that line must make a DC 11 Dexterity saving throw, taking 18 (4d8)
+      acid damage on a failed save, or half as much damage on a successful one.
+
+      Slowing
+      Breath. The dragon exhales gas in a 1 5-foot cone. Each creature in that area
+      must succeed on a DC 11 Constitution saving throw. On a failed save, the creature
+      can''t use reactions, its speed is halved, and it can''t make more than one
+      attack on its turn. In addition, the creature can use either an action or a
+      bonus action on its turn, but not both. These effects last for 1 minute. The
+      creature can repeat the saving throw at the end of each of its turns, ending
+      the effect on itself with a successful save.
+
+'
   legendaryActions: []
   requiredGender: 2

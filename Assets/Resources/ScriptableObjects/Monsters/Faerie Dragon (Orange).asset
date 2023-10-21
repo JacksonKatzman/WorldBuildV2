@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Faerie Dragon (Orange)
   legendary: 0
-  landDwelling: 0
+  landDwelling: 1
   size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  type: 4
+  alignment: 6
+  challengeRating: 1
+  experienceYield: 200
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 15
   armorType: 
-  health: 0
-  speed: 0
+  health: 14
+  speed: 10
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 3
+    dexterity: 20
+    constitution: 13
+    intelligence: 14
+    wisdom: 12
+    charisma: 16
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,37 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Arcana +4
+  - Perception +3
+  - Stealth +7
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Draconic
+  - Sylvan
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one creature.
+      Hit: 1 piercing damage.
+
+'
+  - actionName: Euphoria Breath (Recharge 5-6)
+    actionDescription: 'The dragon exhales a puff of euphoria gas at one creature
+      within 5 feet of it. The target must succeed on a DC 11 Wisdom saving throw,
+      or for 1 minute, the target can''t take reactions and must roll a d6 at the
+      start of each of its turns to determine its behavior during the turn:
+
+      1-4.
+      The target takes no action or bonus action and uses all of its movement to
+      move in a random direction.
+
+      5-6. The target doesn''t move, and the only
+      thing it can do on its turn is make a DC 11 Wisdom saving throw, ending the
+      effect on itself on a success.
+
+'
   legendaryActions: []
   requiredGender: 2

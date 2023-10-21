@@ -11,6 +11,7 @@ namespace Game.Simulation
 		public static IncidentContextDictionary AllContexts => GetAllContexts.Invoke();
 		public static Dictionary<string, ExpressionValue> CurrentExpressionValues { get; set; }
 		public static int NextID => nextID;
+		public static bool AllowImmediateChanges { get; set; }
 
 		private static Func<IncidentContextDictionary> GetCurrentContexts;
 		private static Func<IncidentContextDictionary> GetAllContexts;
@@ -36,11 +37,9 @@ namespace Game.Simulation
 			SetAllContextsProvider(funcAll);
 
 			EventManager.Instance.RemoveEventHandler<AddContextEvent>(OnAddContextEvent);
-			EventManager.Instance.RemoveEventHandler<AddContextImmediateEvent>(OnAddContextImmediateEvent);
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 
 			EventManager.Instance.AddEventHandler<AddContextEvent>(OnAddContextEvent);
-			EventManager.Instance.AddEventHandler<AddContextImmediateEvent>(OnAddContextImmediateEvent);
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 		}
 
@@ -78,12 +77,14 @@ namespace Game.Simulation
 
 		private static void OnAddContextEvent(AddContextEvent gameEvent)
 		{
-			AddContext(gameEvent.context, gameEvent.contextType);
-		}
-
-		private static void OnAddContextImmediateEvent(AddContextImmediateEvent gameEvent)
-		{
-			AddContextImmediate(gameEvent.context, gameEvent.contextType);
+			if(AllowImmediateChanges && gameEvent.immediate)
+			{
+				AddContextImmediate(gameEvent.context, gameEvent.contextType);
+			}
+			else
+			{
+				AddContext(gameEvent.context, gameEvent.contextType);
+			}
 		}
 
 		private static void OnRemoveContextEvent(RemoveContextEvent gameEvent)

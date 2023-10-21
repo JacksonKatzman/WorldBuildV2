@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Octopus
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
+  landDwelling: 1
+  size: 1
+  type: 1
+  alignment: 9
   challengeRating: 0
-  experienceYield: 0
+  experienceYield: 10
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 3
+  speed: 5
   climbSpeed: 0
-  swimSpeed: 0
+  swimSpeed: 30
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 4
+    dexterity: 15
+    constitution: 11
+    intelligence: 3
+    wisdom: 10
+    charisma: 4
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,27 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +2
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Tentacles
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 1 bludgeoning damage, and the target is grappled (escape DC 10). Until
+      this grapple ends, the octopus can''t use its tentacles on another target.
+
+'
+  - actionName: Ink Cloud (Recharges after a Short or Long Rest)
+    actionDescription: 'A 5-foot-radius cloud of ink extends all around the octopus
+      if it is underwater. The area is heavily obscured for 1 minute, although a
+      significant current can disperse the ink. After releasing the ink, the octopus
+      can use the Dash action as a bonus action.
+
+'
   legendaryActions: []
   requiredGender: 2

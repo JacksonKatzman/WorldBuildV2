@@ -21,49 +21,103 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
-  legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  monsterName: Ancient Red Dragon
+  legendary: 1
+  landDwelling: 1
+  size: 5
+  type: 4
+  alignment: 8
+  challengeRating: 24
+  experienceYield: 62000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
-  climbSpeed: 0
+  armorValue: 22
+  armorType: (natural armor)
+  health: 546
+  speed: 40
+  climbSpeed: 40
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 80
+  passivePerception: 26
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 30
+    dexterity: 10
+    constitution: 29
+    intelligence: 18
+    wisdom: 15
+    charisma: 23
+    luck: 10
   savingThrows:
     strength: 0
-    dexterity: 0
-    constitution: 0
+    dexterity: 7
+    constitution: 16
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 9
+    charisma: 13
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 05000000
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +16
+  - Stealth +7
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Draconic
   abilities: []
-  actions: []
-  legendaryActions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The dragon can use its Frightful Presence. It then makes
+      three attacks: one with its bite and two with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +17 to hit, reach 15 ft., one target.
+      Hit: 21 (2d10 + 10) piercing damage plus 14 (4d6) fire damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +17 to hit, reach 10 ft., one target.
+      Hit: 17 (2d6 + 10) slashing damage.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack: +17 to hit, reach 20 ft., one target.
+      Hit: 19 (2d8 + 10) bludgeoning damage.
+
+'
+  - actionName: Frightful Presence
+    actionDescription: 'Each creature of the dragon''s choice that is within 120
+      feet of the dragon and aware of it must succeed on a DC 21 Wisdom saving throw
+      or become frightened for 1 minute. A creature can repeat the saving throw at
+      the end of each of its turns, ending the effect on itself on a success. If
+      a creature''s saving throw is successful or the effect ends for it, the creature
+      is immune to the dragon''s Frightful Presence for the next 24 hours.
+
+'
+  - actionName: Fire Breath (Recharge 5-6)
+    actionDescription: 'The dragon exhales fire in a 90-foot cone. Each creature
+      in that area must make a DC 24 Dexterity saving throw, taking 91 (26d6) fire
+      damage on a failed save, or half as much damage on a successful one.
+
+'
+  legendaryActions:
+  - actionName: Detect
+    actionDescription: 'The dragon makes a Wisdom (Perception) check.
+
+'
+  - actionName: Tail Attack
+    actionDescription: 'The dragon makes a tail attack.
+
+'
+  - actionName: Wing Attack (Costs 2 Actions)
+    actionDescription: 'The dragon beats its wings. Each creature within 15 ft. of
+      the dragon must succeed on a DC 25 Dexterity saving throw or take 17 (2d6 +
+      10) bludgeoning damage and be knocked prone. The dragon can then fly up to
+      half its flying speed.
+
+'
   requiredGender: 2

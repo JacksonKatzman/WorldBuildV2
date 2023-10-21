@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Merfolk
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 4
+  challengeRating: 0.125
+  experienceYield: 25
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 11
   armorType: 
-  health: 0
-  speed: 0
+  health: 11
+  speed: 10
   climbSpeed: 0
-  swimSpeed: 0
+  swimSpeed: 40
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 10
+    dexterity: 13
+    constitution: 12
+    intelligence: 11
+    wisdom: 11
+    charisma: 12
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,21 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +2
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Aquan
+  - Common
   abilities: []
-  actions: []
+  actions:
+  - actionName: Spear
+    actionDescription: 'Melee or Ranged Weapon Attack: +2 to hit, reach 5 ft. or
+      range 20/60 ft., one target. Hit: 3 (1d6) piercing damage, or 4 (1d8) piercing
+      damage if used with two hands to make a melee attack.
+
+'
   legendaryActions: []
   requiredGender: 2

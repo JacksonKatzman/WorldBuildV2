@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
-  legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  monsterName: Gynosphinx
+  legendary: 1
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 1
+  challengeRating: 11
+  experienceYield: 7200
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 136
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 18
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 15
+    constitution: 16
+    intelligence: 18
+    wisdom: 18
+    charisma: 18
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,44 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageResistances: 0200000001000000000000000d000000
+  damageImmunities: 0c000000
+  conditionImmunities: 0100000003000000
+  skills:
+  - Arcana +12
+  - History +12
+  - Perception +8
+  - Religion +8
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Sphinx
   abilities: []
-  actions: []
-  legendaryActions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The sphinx makes two claw attacks.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 5 ft., one target.
+      Hit: 13 (2d8 + 4) slashing damage.
+
+'
+  legendaryActions:
+  - actionName: Claw Attack
+    actionDescription: 'The sphinx makes one claw attack.
+
+'
+  - actionName: Teleport (Costs 2 Actions)
+    actionDescription: 'The sphinx magically teleports, along with any equipment
+      it is wearing or carrying, up to 120 feet to an unoccupied space it can see.
+
+'
+  - actionName: Cast a Spell (Costs 3 Actions)
+    actionDescription: 'The sphinx casts a spell from its list of prepared spells,
+      using a spell slot as normal.
+
+'
   requiredGender: 2

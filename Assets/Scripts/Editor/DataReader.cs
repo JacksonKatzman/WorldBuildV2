@@ -106,7 +106,8 @@ namespace Game.Data
 			{
 				foreach (var c in existingMonsters)
 				{
-					monsterDictionary.Add(((MonsterData)c).Name, (MonsterData)c);		
+					var monData = (MonsterData)c;
+					monsterDictionary.Add(monData.name, monData);		
 				}
 			}
 
@@ -148,7 +149,7 @@ namespace Game.Data
 				AssetDatabase.CreateAsset(creatureStats, "Assets/Resources/ScriptableObjects/Monsters/" + monsterName + ".asset");
 			}
 
-			creatureStats.name = monsterName;
+			creatureStats.monsterName = monsterName;
 			if (creatureSizes.TryGetValue(element.Element("size").Value, out var size))
 			{
 				creatureStats.size = size;
@@ -478,6 +479,9 @@ namespace Game.Data
 				creatureStats.legendaryActions = actions;
 				creatureStats.legendary = true;
 			}
+
+			EditorUtility.SetDirty(creatureStats);
+			AssetDatabase.SaveAssets();
 		}
 
 		private int GuaranteedIntParse(string toParse)

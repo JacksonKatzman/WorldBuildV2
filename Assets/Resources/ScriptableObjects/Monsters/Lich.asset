@@ -21,49 +21,84 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
-  legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  monsterName: Lich
+  legendary: 1
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 10
+  challengeRating: 21
+  experienceYield: 33000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 135
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 19
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 11
+    dexterity: 16
+    constitution: 16
+    intelligence: 20
+    wisdom: 14
+    charisma: 16
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
+    constitution: 10
+    intelligence: 12
+    wisdom: 9
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageResistances: 060000000900000008000000
+  damageImmunities: 030000000200000001000000000000000d000000
+  conditionImmunities: 010000000e000000030000000700000009000000
+  skills:
+  - Arcana +18
+  - History +12
+  - Insight +9
+  - Perception +9
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common plus up to five other languages
   abilities: []
-  actions: []
-  legendaryActions: []
+  actions:
+  - actionName: Paralyzing Touch
+    actionDescription: 'Melee Spell Attack: +12 to hit, reach 5 ft., one creature.
+      Hit: 10 (3d6) cold damage. The target must succeed on a DC 18 Constitution
+      saving throw or be paralyzed for 1 minute. The target can repeat the saving
+      throw at the end of each of its turns, ending the effect on itself on a success.
+
+'
+  legendaryActions:
+  - actionName: Cantrip
+    actionDescription: 'The lich casts a cantrip.
+
+'
+  - actionName: Paralyzing Touch (Costs 2 Actions)
+    actionDescription: 'The lich uses its Paralyzing Touch.
+
+'
+  - actionName: Frightening Gaze (Costs 2 Actions)
+    actionDescription: 'The lich fixes its gaze on one creature it can see within
+      10 feet of it. The target must succeed on a DC 18 Wisdom saving throw against
+      this magic or become frightened for 1 minute. The frightened target can repeat
+      the saving throw at the end of each of its turns, ending the effect on itself
+      on a success. If a target''s saving throw is successful or the effect ends
+      for it, the target is immune to the lich''s gaze for the next 24 hours.
+
+'
+  - actionName: Disrupt Life (Costs 3 Actions)
+    actionDescription: 'Each non-undead creature within 20 feet of the lich must
+      make a DC 18 Constitution saving throw against this magic, taking 21 (6d6)
+      necrotic damage on a failed save, or half as much damage on a successful one.
+
+'
   requiredGender: 2

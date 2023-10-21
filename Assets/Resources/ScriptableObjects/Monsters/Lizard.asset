@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Lizard
   legendary: 0
-  landDwelling: 0
+  landDwelling: 1
   size: 0
-  type: 0
-  alignment: 0
+  type: 1
+  alignment: 9
   challengeRating: 0
-  experienceYield: 0
+  experienceYield: 10
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 10
   armorType: 
-  health: 0
-  speed: 0
-  climbSpeed: 0
+  health: 2
+  speed: 20
+  climbSpeed: 20
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 9
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 2
+    dexterity: 11
+    constitution: 10
+    intelligence: 1
+    wisdom: 8
+    charisma: 3
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -64,6 +64,11 @@ MonoBehaviour:
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +0 to hit, reach 5 ft., one target.
+      Hit: 1 piercing damage.
+
+'
   legendaryActions: []
   requiredGender: 2

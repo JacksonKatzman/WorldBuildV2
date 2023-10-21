@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Shadow
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 8
+  challengeRating: 0.5
+  experienceYield: 100
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 16
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 6
+    dexterity: 14
+    constitution: 13
+    intelligence: 6
+    wisdom: 10
+    charisma: 8
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -54,16 +54,28 @@ MonoBehaviour:
     wisdom: 0
     charisma: 0
     luck: 0
-  damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  damageVulnerabilities: 07000000
+  damageResistances: 040000000600000005000000090000000a0000000200000001000000000000000d000000
+  damageImmunities: 0800000003000000
+  conditionImmunities: 0e00000003000000040000000700000008000000090000000a0000000b000000
+  skills:
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Strength Drain
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one creature.
+      Hit: 9 (2d6 + 2) necrotic damage, and the target''s Strength score is reduced
+      by 1d4. The target dies if this reduces its Strength to 0. Otherwise, the reduction
+      lasts until the target finishes a short or long rest.
+
+      If a non-evil
+      humanoid dies from this attack, a new shadow rises from the corpse 1d4 hours
+      later.
+
+'
   legendaryActions: []
   requiredGender: 2

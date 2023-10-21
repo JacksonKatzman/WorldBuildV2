@@ -21,49 +21,76 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Banshee
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 8
+  challengeRating: 4
+  experienceYield: 1100
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
+  health: 58
   speed: 0
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 40
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 1
+    dexterity: 14
+    constitution: 10
+    intelligence: 12
+    wisdom: 11
+    charisma: 17
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
     constitution: 0
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 2
+    charisma: 5
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
-  conditionImmunities: 
+  damageResistances: 0400000005000000090000000a0000000200000001000000000000000d000000
+  damageImmunities: 060000000800000003000000
+  conditionImmunities: 010000000e00000003000000040000000700000008000000090000000a0000000b000000
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Elvish
   abilities: []
-  actions: []
+  actions:
+  - actionName: Corrupting Touch
+    actionDescription: 'Melee Spell Attack: +4 to hit, reach 5 ft., one target. Hit:
+      12 (3d6 + 2) necrotic damage.
+
+'
+  - actionName: Horrifying Visage
+    actionDescription: 'Each non-undead creature within 60 ft. of the banshee that
+      can see her must succeed on a DC 13 Wisdom saving throw or be frightened for
+      1 minute. A frightened target can repeat the saving throw at the end of each
+      of its turns, with disadvantage if the banshee is within line of sight, ending
+      the effect on itself on a success. If a target''s saving throw is successful
+      or the effect ends for it, the target is immune to the banshee''s Horrifying
+      Visage for the next 24 hours.
+
+'
+  - actionName: Wail (1/Day)
+    actionDescription: 'The banshee releases a mournful wail, provided that she isn''t
+      in sunlight. This wail has no effect on constructs and undead. All other creatures
+      within 30 ft. of her that can hear her must make a DC 13 Constitution saving
+      throw. On a failure, a creature drops to 0 hit points. On a success, a creature
+      takes 10 (3d6) psychic damage.The woeful banshee is a spiteful creature formed
+      from the spirit of a female elf. Its face is wreathed in a wild tangle of hair,
+      its body clad in wispy rags that flutter and stream around it.
+
+'
   legendaryActions: []
   requiredGender: 2

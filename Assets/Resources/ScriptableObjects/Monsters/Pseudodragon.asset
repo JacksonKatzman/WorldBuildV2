@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Pseudodragon
   legendary: 0
-  landDwelling: 0
+  landDwelling: 1
   size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  type: 4
+  alignment: 3
+  challengeRating: 0.25
+  experienceYield: 50
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 13
   armorType: 
-  health: 0
-  speed: 0
+  health: 7
+  speed: 15
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 60
+  passivePerception: 13
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 6
+    dexterity: 15
+    constitution: 13
+    intelligence: 10
+    wisdom: 12
+    charisma: 10
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,28 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +3
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - understands Common and Draconic but can't speak
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 4 (1d4 + 2) piercing damage.
+
+'
+  - actionName: Sting
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one creature.
+      Hit: 4 (1d4 + 2) piercing damage, and the target must succeed on a DC 11 Constitution
+      saving throw or become poisoned for 1 hour. If the saving throw fails by 5
+      or more, the target falls unconscious for the same duration, or until it takes
+      damage or another creature uses an action to shake it awake.
+
+'
   legendaryActions: []
   requiredGender: 2

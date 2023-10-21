@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Fire Snake
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 5
+  alignment: 5
+  challengeRating: 1
+  experienceYield: 200
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 14
+  armorType: (natural armor)
+  health: 22
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 12
+    dexterity: 14
+    constitution: 11
+    intelligence: 7
+    wisdom: 10
+    charisma: 8
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -54,16 +54,32 @@ MonoBehaviour:
     wisdom: 0
     charisma: 0
     luck: 0
-  damageVulnerabilities: 
-  damageResistances: 
-  damageImmunities: 
+  damageVulnerabilities: 06000000
+  damageResistances: 0200000001000000000000000d000000
+  damageImmunities: 05000000
   conditionImmunities: 
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - understands Ignan but can't speak
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The snake makes two attacks: one with its bite and one with
+      its tail.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 3 (1d4 + 1) piercing damage plus 3 (1d6) fire damage.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 3 (1d4 + 1) bludgeoning damage plus 3 (1d6) fire damage.
+
+'
   legendaryActions: []
   requiredGender: 2

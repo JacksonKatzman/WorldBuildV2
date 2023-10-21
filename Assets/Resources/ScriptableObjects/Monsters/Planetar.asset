@@ -21,49 +21,67 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Planetar
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
+  landDwelling: 1
+  size: 3
+  type: 2
   alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  challengeRating: 16
+  experienceYield: 15000
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 19
+  armorType: (natural armor)
+  health: 200
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 120
+  passivePerception: 21
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 24
+    dexterity: 20
+    constitution: 24
+    intelligence: 19
+    wisdom: 22
+    charisma: 25
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
-    constitution: 0
+    constitution: 12
     intelligence: 0
-    wisdom: 0
-    charisma: 0
+    wisdom: 11
+    charisma: 12
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 070000000200000001000000000000000d000000
   damageImmunities: 
-  conditionImmunities: 
-  skills: []
+  conditionImmunities: 010000000e00000003000000
+  skills:
+  - Perception +11
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - all
+  - telepathy 120 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The planetar makes two melee attacks.
+
+'
+  - actionName: Greatsword
+    actionDescription: 'Melee Weapon Attack: +12 to hit, reach 5 ft., one target.
+      Hit: 21 (4d6 + 7) slashing damage plus 22 (5d8) radiant damage.
+
+'
+  - actionName: Healing Touch (4/Day)
+    actionDescription: 'The planetar touches another creature. The target magically
+      regains 30 (6d8 + 3) hit points and is freed from any curse, disease, poison,
+      blindness, or deafness.
+
+'
   legendaryActions: []
   requiredGender: 2

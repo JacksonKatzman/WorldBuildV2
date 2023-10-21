@@ -21,49 +21,63 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Githzerai Zerth
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 1
+  challengeRating: 6
+  experienceYield: 2300
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 17
   armorType: 
-  health: 0
-  speed: 0
+  health: 84
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 16
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 13
+    dexterity: 18
+    constitution: 15
+    intelligence: 16
+    wisdom: 17
+    charisma: 12
+    luck: 10
   savingThrows:
-    strength: 0
-    dexterity: 0
+    strength: 4
+    dexterity: 7
     constitution: 0
-    intelligence: 0
-    wisdom: 0
+    intelligence: 6
+    wisdom: 6
     charisma: 0
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Arcana +6
+  - Insight +6
+  - Perception +6
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Gith
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The githzerai makes two unarmed strikes.
+
+'
+  - actionName: Unarmed Strike
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) bludgeoning damage plus 13 (3d8) psychic damage. This is
+      a magic weapon attack.
+
+'
   legendaryActions: []
   requiredGender: 2

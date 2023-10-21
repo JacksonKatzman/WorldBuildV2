@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Drow Mage
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 5
+  challengeRating: 7
+  experienceYield: 2900
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 12
+  armorType: (15 with mage armor)
+  health: 45
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 14
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 9
+    dexterity: 14
+    constitution: 10
+    intelligence: 17
+    wisdom: 13
+    charisma: 12
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,32 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Arcana +6
+  - Deception +5
+  - Perception +4
+  - Stealth +5
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Elvish
+  - Undercommon
   abilities: []
-  actions: []
+  actions:
+  - actionName: Staff
+    actionDescription: 'Melee Weapon Attack: +2 to hit, reach 5 ft., one target.
+      Hit: 2 (1d6-1) bludgeoning damage, or 3 (1d8-1) bludgeoning damage if used
+      with two hands, plus 3 (1d6) poison damage.
+
+'
+  - actionName: Summon Demon (1/Day)
+    actionDescription: 'The drow magically summons a quasit, or attempts to summon
+      a shadow demon with a 50 percent chance of success. The summoned demon appears
+      in an unoccupied space within 60 feet of its summoner, acts as an ally of its
+      summoner, and can''t summon other demons. It remains for 10 minutes, until
+      it or its summoner dies, or until its summoner dismisses it as an action.
+
+'
   legendaryActions: []
   requiredGender: 2

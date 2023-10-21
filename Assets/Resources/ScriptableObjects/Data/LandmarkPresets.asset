@@ -20,7 +20,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 64803f3bf974e6e45a1b1d3346c6501f, type: 2}
     - {fileID: 11400000, guid: e6069fc272b952d47823001c44ab2658, type: 2}
     - {fileID: 11400000, guid: 5a9862ffbf4efb243a40689607aa1101, type: 2}
-    - {fileID: 11400000, guid: 6e2abe25118d87d4bab5ebfd2b4edb82, type: 2}
+    - {fileID: 11400000, guid: 28a268348a708c946b541ddf7ab5942a, type: 2}
     - {fileID: 11400000, guid: 2a3b4ef1990c56b47bb2fccf31a7808a, type: 2}
     - {fileID: 11400000, guid: b4ba02ab526eda840b924a6a024aa990, type: 2}
     - {fileID: 11400000, guid: c6713bb09e853c040a0662491c43f1c5, type: 2}
@@ -46,7 +46,7 @@ MonoBehaviour:
       Data: 0|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Game.Incidents.LandmarkPreset, Assembly-CSharp
+      Data: Game.Incidents.LandmarkPreset, Auto-asmdef-SecondPass
     - Name: 
       Entry: 8
       Data: 

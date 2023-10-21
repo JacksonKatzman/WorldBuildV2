@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Giant Rat (Diseased)
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 1
+  type: 1
+  alignment: 9
+  challengeRating: 0.125
+  experienceYield: 25
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 7
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 7
+    dexterity: 15
+    constitution: 11
+    intelligence: 2
+    wisdom: 10
+    charisma: 4
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -64,6 +64,16 @@ MonoBehaviour:
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 4 (1d4 + 2) piercing damage. If the target is a creature, it must succeed
+      on a DC 10 Constitution saving throw or contract a disease. Until the disease
+      is cured, the target can''t regain hit points except by magical means, and
+      the target''s hit point maximum decreases by 3 (1d6) every 24 hours. If the
+      target''s hit point maximum drops to 0 as a result of this disease, the target
+      dies.
+
+'
   legendaryActions: []
   requiredGender: 2

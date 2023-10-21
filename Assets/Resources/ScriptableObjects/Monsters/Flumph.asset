@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Flumph
   legendary: 0
-  landDwelling: 0
-  size: 0
+  landDwelling: 1
+  size: 1
   type: 0
   alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  challengeRating: 0.125
+  experienceYield: 25
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 7
+  speed: 5
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 30
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 6
+    dexterity: 15
+    constitution: 10
+    intelligence: 14
+    wisdom: 14
+    charisma: 11
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -54,16 +54,39 @@ MonoBehaviour:
     wisdom: 0
     charisma: 0
     luck: 0
-  damageVulnerabilities: 
+  damageVulnerabilities: 0c000000
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Arcana +4
+  - History +4
+  - Religion +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - understands Undercommon but can't speak
+  - telepathy 60 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Tendrils
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one creature.
+      Hit: 4 (1d4 + 2) piercing damage plus 2 (1d4) acid damage. At the end of each
+      of its turns, the target must make a DC 10 Constitution saving throw, taking
+      2 (1d4) acid damage on a failure or ending the recurring acid damage on a success.
+      A lesser restoration spell cast on the target also ends the recurring acid
+      damage.
+
+'
+  - actionName: Stench Spray (1/Day)
+    actionDescription: 'Each creature in a 15-foot cone originating from the flumph
+      must succeed on a DC 10 Dexterity saving throw or be coated in a foul-smelling
+      liquid. A coated creature exudes a horrible stench for 1d4 hours. The coated
+      creature is poisoned as long as the stench lasts, and other creatures are poisoned
+      while with in 5 feet of the coated creature. A creature can remove the stench
+      on itself by using a short rest to bathe in water, alcohol, or vinegar.
+
+'
   legendaryActions: []
   requiredGender: 2

@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Duergar
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 2
+  challengeRating: 1
+  experienceYield: 200
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 16
+  armorType: (scale mail, shield)
+  health: 26
+  speed: 25
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 14
+    dexterity: 11
+    constitution: 14
+    intelligence: 11
+    wisdom: 10
+    charisma: 9
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,44 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 03000000
   damageImmunities: 
   conditionImmunities: 
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Dwarvish
+  - Undercommon
   abilities: []
-  actions: []
+  actions:
+  - actionName: Enlarge (Recharges after a Short or Long Rest)
+    actionDescription: 'For 1 minute, the duergar magically increases in size, along
+      with anything it is wearing or carrying. While enlarged, the duergar is Large,
+      doubles its damage dice on Strength-based weapon attacks (included in the attacks),
+      and makes Strength checks and Strength saving throws with advantage. If the
+      duergar lacks the room to become Large, it attains the maximum size possible
+      in the space available.
+
+'
+  - actionName: War Pick
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 6 (1d8 + 2) piercing damage, or 11 (2d8 + 2) piercing damage while enlarged.
+
+'
+  - actionName: Javelin
+    actionDescription: 'Melee or Ranged Weapon Attack: +4 to hit, reach 5 ft. or
+      range 30/120 ft., one target. Hit: 5 (1d6 + 2) piercing damage, or 9 (2d6 +
+      2) piercing damage while enlarged.
+
+'
+  - actionName: Invisibility (Recharges after a Short or Long Rest)
+    actionDescription: 'The duergar magically turns invisible until it attacks, casts
+      a spell, or uses its Enlarge, or until its concentration is broken, up to 1
+      hour (as if concentrating on a spell). Any equipment the duergar wears or carries
+      is invisible with it .
+
+'
   legendaryActions: []
   requiredGender: 2

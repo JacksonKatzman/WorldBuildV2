@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Bugbear Chief
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 8
+  challengeRating: 3
+  experienceYield: 700
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 17
+  armorType: (chain shirt, shield)
+  health: 65
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 17
+    dexterity: 14
+    constitution: 14
+    intelligence: 11
+    wisdom: 12
+    charisma: 11
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,32 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Intimidation +2
+  - Stealth +6
+  - Survival +3
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common
+  - Goblin
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The bugbear makes two melee attacks
+
+'
+  - actionName: Morningstar
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 11 (2d8 + 3) piercing damage.
+
+'
+  - actionName: Javelin
+    actionDescription: 'Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or
+      range 30/120 ft., one target. Hit: 9 (2d6 + 3) piercing damage in melee or
+      5 (1d6 + 3) piercing damage at range.
+
+'
   legendaryActions: []
   requiredGender: 2

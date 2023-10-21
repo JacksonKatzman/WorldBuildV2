@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Darkmantle
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 1
+  type: 10
+  alignment: 9
+  challengeRating: 0.5
+  experienceYield: 100
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 11
   armorType: 
-  health: 0
-  speed: 0
+  health: 22
+  speed: 10
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 30
+  passivePerception: 10
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 16
+    dexterity: 12
+    constitution: 13
+    intelligence: 2
+    wisdom: 10
+    charisma: 5
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -58,12 +58,40 @@ MonoBehaviour:
   damageResistances: 
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Stealth +3
   senses: []
   groupingName: 
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Crush
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one creature.
+      Hit: 6 (1d6 + 3) bludgeoning damage, and the darkmantle attaches to the target.
+      If the target is Medium or smaller and the darkmantle has advantage on the
+      attack roll, it attaches by engulfing the target''s head, and the target is
+      also blinded and unable to breathe while the darkmantle is attached in this
+      way.
+
+      While attached to the target, the darkmantle can attack no other
+      creature except the target but has advantage on its attack rolls. The darkmantle''s
+      speed also becomes 0, it can''t benefit from any bonus to its speed, and it
+      moves with the target.
+
+      A creature can detach the darkmantle by making
+      a successful DC 13 Strength check as an action. On its turn, the darkmantle
+      can detach itself from the target by using 5 feet of movement.
+
+'
+  - actionName: Darkness Aura (1/day)
+    actionDescription: 'A 15-foot radius of magical darkness extends out from the
+      darkmantle, moves with it, and spreads around corners. The darkness lasts as
+      long as the darkmantle maintains concentration, up to 10 minutes (as if concentrating
+      on a spell). Darkvision can''t penetrate this darkness, and no natural light
+      can illuminate it. If any of the darkness overlaps with an area of light created
+      by a spell of 2nd level or lower, the spell creating the light is dispelled.
+
+'
   legendaryActions: []
   requiredGender: 2

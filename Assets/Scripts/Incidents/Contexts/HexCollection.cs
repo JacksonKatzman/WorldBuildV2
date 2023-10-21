@@ -42,7 +42,7 @@ namespace Game.Incidents
 		{
 			//temporary
 			var location = new Location(cellCollection[0]);
-			EventManager.Instance.Dispatch(new AddContextEvent(location));
+			EventManager.Instance.Dispatch(new AddContextEvent(location, true));
 			return location;
 		}
 	}

@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Nightmare
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 7
+  alignment: 5
+  challengeRating: 3
+  experienceYield: 700
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 13
+  armorType: (natural armor)
+  health: 68
+  speed: 60
   climbSpeed: 0
   swimSpeed: 0
-  flySpeed: 0
-  passivePerception: 0
+  flySpeed: 90
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 18
+    dexterity: 15
+    constitution: 16
+    intelligence: 10
+    wisdom: 13
+    charisma: 15
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -56,14 +56,28 @@ MonoBehaviour:
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 05000000
   conditionImmunities: 
   skills: []
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - understands Abyssal
+  - Common
+  - and Infernal but can't speak
   abilities: []
-  actions: []
+  actions:
+  - actionName: Hooves
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 13 (2d8 + 4) bludgeoning damage plus 7 (2d6) fire damage.
+
+'
+  - actionName: Ethereal Stride
+    actionDescription: 'The nightmare and up to three willing creatures within 5
+      feet of it magically enter the Ethereal Plane from the Material Plane, or vice
+      versa.
+
+'
   legendaryActions: []
   requiredGender: 2

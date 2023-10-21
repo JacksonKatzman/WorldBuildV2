@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Blue Slaad
   legendary: 0
-  landDwelling: 0
-  size: 0
+  landDwelling: 1
+  size: 3
   type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  alignment: 7
+  challengeRating: 7
+  experienceYield: 2900
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 123
+  speed: 30
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 11
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 20
+    dexterity: 15
+    constitution: 18
+    intelligence: 7
+    wisdom: 7
+    charisma: 9
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -55,15 +55,39 @@ MonoBehaviour:
     charisma: 0
     luck: 0
   damageVulnerabilities: 
-  damageResistances: 
+  damageResistances: 040000000600000005000000090000000a000000
   damageImmunities: 
   conditionImmunities: 
-  skills: []
+  skills:
+  - Perception +1
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Slaad
+  - telepathy 60 ft.
   abilities: []
-  actions: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The slaad makes three attacks: one with its bite and two
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 5 ft., one target.
+      Hit: 12 (2d6 + 5) piercing damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 5 ft., one target.
+      Hit: 12 (2d6 + 5) slashing damage. If the target is a humanoid, it must succeed
+      on a DC 15 Constitution saving throw or be infected with a disease called chaos
+      phage. While infected, the target can''t regain hit points, and its hit point
+      maximum is reduced by 10 (3d6) every 24 hours. If the disease reduces the target''s
+      hit point maximum to 0, the target instantly transforms into a red slaad or,
+      if it has the ability to cast spells of 3rd level or higher, a green slaad.
+      Only a wish spell can reverse the transformation.
+
+'
   legendaryActions: []
   requiredGender: 2

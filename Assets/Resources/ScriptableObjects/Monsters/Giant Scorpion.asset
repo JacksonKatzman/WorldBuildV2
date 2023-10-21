@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Giant Scorpion
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 3
+  type: 1
+  alignment: 9
+  challengeRating: 3
+  experienceYield: 700
   proficiencyBonus: 0
-  armorValue: 0
-  armorType: 
-  health: 0
-  speed: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 52
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 9
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 15
+    dexterity: 13
+    constitution: 15
+    intelligence: 1
+    wisdom: 9
+    charisma: 3
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -64,6 +64,24 @@ MonoBehaviour:
   sounds: []
   languages: []
   abilities: []
-  actions: []
+  actions:
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 6 (1d8 + 2) bludgeoning damage, and the target is grappled (escape DC
+      12). The scorpion has two claws, each of which can grapple only one target.
+
+'
+  - actionName: Multiattack
+    actionDescription: 'The scorpion makes three attacks: two with its claws and
+      one with its sting.
+
+'
+  - actionName: Sting
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one creature.
+      Hit: 7 (1d10 + 2) piercing damage, and the target must make a DC 12 Constitution
+      saving throw, taking 22 (4d10) poison damage on a failed save, or half as much
+      damage on a successful one.
+
+'
   legendaryActions: []
   requiredGender: 2

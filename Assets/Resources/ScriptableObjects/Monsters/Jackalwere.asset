@@ -21,31 +21,31 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  name: 
+  monsterName: Jackalwere
   legendary: 0
-  landDwelling: 0
-  size: 0
-  type: 0
-  alignment: 0
-  challengeRating: 0
-  experienceYield: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 8
+  challengeRating: 0.5
+  experienceYield: 100
   proficiencyBonus: 0
-  armorValue: 0
+  armorValue: 12
   armorType: 
-  health: 0
-  speed: 0
+  health: 18
+  speed: 40
   climbSpeed: 0
   swimSpeed: 0
   flySpeed: 0
-  passivePerception: 0
+  passivePerception: 12
   stats:
-    strength: 0
-    dexterity: 0
-    constitution: 0
-    intelligence: 0
-    wisdom: 0
-    charisma: 0
-    luck: 0
+    strength: 11
+    dexterity: 15
+    constitution: 11
+    intelligence: 13
+    wisdom: 11
+    charisma: 10
+    luck: 10
   savingThrows:
     strength: 0
     dexterity: 0
@@ -56,14 +56,38 @@ MonoBehaviour:
     luck: 0
   damageVulnerabilities: 
   damageResistances: 
-  damageImmunities: 
+  damageImmunities: 0200000001000000000000000d000000
   conditionImmunities: 
-  skills: []
+  skills:
+  - Deception +4
+  - Perception +2
+  - Stealth +4
   senses: []
   groupingName: 
   sounds: []
-  languages: []
+  languages:
+  - Common (can't speak in jackal form)
   abilities: []
-  actions: []
+  actions:
+  - actionName: Bite (Jackal or Hybrid Form Only)
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 4 (1d4 + 2) piercing damage.
+
+'
+  - actionName: Scimitar (Human or Hybrid Form Only)
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) slashing damage.
+
+'
+  - actionName: Sleep Gaze
+    actionDescription: 'The jackalwere gazes at one creature it can see within 30
+      feet of it. The target must make a DC 10 Wisdom saving throw. On a failed save,
+      the target succumbs to a magical slumber, falling unconscious for 10 minutes
+      or until someone uses an action to shake the target awake. A creature that
+      successfully saves against the effect is immune to this jackalwere''s gaze
+      for the next 24 hours. Undead and creatures immune to being charmed aren''t
+      affected by it.
+
+'
   legendaryActions: []
   requiredGender: 2
