@@ -35,6 +35,12 @@ namespace Game.Incidents
 			}
 		}
 
+		[Button("Clear Dictionary")]
+		private void Clear()
+		{
+			objects.Clear();
+		}
+
 		private IEnumerable<Type> GetFilteredTypeList()
 		{
 			var q = typeof(IIncidentContext).Assembly.GetTypes()

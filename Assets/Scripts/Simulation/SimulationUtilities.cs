@@ -157,12 +157,8 @@ namespace Game.Simulation
 
 		public static bool IsCellUnclaimed(int index)
 		{
-			var grid = SimulationManager.Instance.HexGrid;
-			var cell = grid.GetCell(index);
-			var allCells = grid.cells.ToList();
-			var claimedCells = GetClaimedCellsAsHexCells();
-			var unclaimedCells = allCells.Where(x => !claimedCells.Contains(x));
-			return unclaimedCells.Contains(cell);
+			var claimedCells = GetClaimedCells();
+			return !claimedCells.Contains(index);
 		}
 
 		private static HexCell GetRandomCell(List<BiomeTerrainType> biomeTypes = null)

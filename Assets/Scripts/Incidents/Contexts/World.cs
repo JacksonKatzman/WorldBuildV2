@@ -41,7 +41,9 @@ namespace Game.Simulation
 
 		public static bool ShouldClaimMoreTerritory(this World world)
 		{
+			
 			//return SimulationCompletionPercentage(world) >= (SimulationUtilities.GetClaimedCells().Count / (world.HexGrid.cells.Count() * world.simulationOptions.claimedHexPercentage));
+			
 			var claimedCells = SimulationUtilities.GetClaimedCells();
 			var worldCells = world.HexGrid.cells.ToList();
 			var landCells = worldCells.Where(x => !x.IsUnderwater).ToList();
@@ -50,6 +52,8 @@ namespace Game.Simulation
 			var percentageClaimed = claimedCells.Count / allowedToBeClaimed;
 			var completionPercentage = SimulationCompletionPercentage(world);
 			return completionPercentage >= percentageClaimed;
+			
+			//return true;
 		}
 	}
 	public class World : IncidentContext
@@ -90,7 +94,7 @@ namespace Game.Simulation
 		public bool RoomForSpecialFaction => this.ShouldIncreaseSpecialFactions();
 		public int NumGreatMonsters => CurrentContexts[typeof(GreatMonster)].Cast<GreatMonster>().ToList().Count;
 		public bool RoomForGreatMonsters => this.ShouldIncreaseGreatMonsters();
-		public bool CanClaimMoreTerritory => this.ShouldClaimMoreTerritory();
+		public bool CanClaimMoreTerritory { get; set; }
 
 		public List<Item> LostItems;
 
@@ -122,6 +126,8 @@ namespace Game.Simulation
 			ContextDictionaryProvider.DelayedRemoveContexts();
 			ContextDictionaryProvider.DelayedAddContexts();
 			ContextDictionaryProvider.AllowImmediateChanges = false;
+
+			CanClaimMoreTerritory = this.ShouldClaimMoreTerritory();
 
 			UpdateContext();
 			foreach(var contextList in CurrentContexts.Values)

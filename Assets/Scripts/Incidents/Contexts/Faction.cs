@@ -233,6 +233,7 @@ namespace Game.Incidents
 
 		public bool AttemptExpandBorder(int numTimes)
 		{
+			//return true;
 			HexCellPriorityQueue searchFrontier = new HexCellPriorityQueue();
 			int searchFrontierPhase = 1;
 			int size = 0;
@@ -247,10 +248,15 @@ namespace Game.Incidents
 			while (size < numTimes && searchFrontier.Count > 0)
 			{
 				HexCell current = searchFrontier.Dequeue();
-				if (SimulationUtilities.IsCellUnclaimed(current.Index))
+				var claimedCells = SimulationUtilities.GetClaimedCells();
+				if (!claimedCells.Contains(current.Index))
 				{
 					ControlledTileIndices.Add(current.Index);
 					size++;
+					if(size >= numTimes)
+					{
+						break;
+					}
 				}
 
 				for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
@@ -261,7 +267,11 @@ namespace Game.Incidents
 						neighbor.SearchPhase = searchFrontierPhase;
 						neighbor.Distance = neighbor.coordinates.DistanceTo(center);
 						neighbor.SearchHeuristic = SimRandom.RandomFloat01() < 0.25f ? 1 : 0;
-						searchFrontier.Enqueue(neighbor);
+						var weControl = ControlledTileIndices.Contains(neighbor.Index);
+						if (!claimedCells.Contains(neighbor.Index) || ControlledTileIndices.Contains(neighbor.Index))
+						{
+							searchFrontier.Enqueue(neighbor);
+						}
 					}
 				}
 			}
