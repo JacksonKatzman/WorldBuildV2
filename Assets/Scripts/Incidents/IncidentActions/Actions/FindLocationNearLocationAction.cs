@@ -36,7 +36,11 @@ namespace Game.Incidents
 		public override bool VerifyAction(IIncidentContext context)
 		{
 			locationNearLocation.AllowNull = true;
-			base.VerifyAction(context);
+			var baseVerified = base.VerifyAction(context);
+			if(!baseVerified)
+			{
+				return false;
+			}
 
 			var possibilities = new List<IIncidentContext>();
 			//var possibilities = ContextDictionaryProvider.CurrentContexts[typeToSearchFor].Where(x => ((ILocationAffiliated)x).GetDistanceBetweenLocations(startingLocation.GetTypedFieldValue()) <= maxDistance).ToList();
@@ -57,7 +61,7 @@ namespace Game.Incidents
 			{
 				var locationData = SimRandom.RandomEntryFromList(possibilities) as ILocationAffiliated;
 				locationNearLocation.value = locationData.CurrentLocation;
-				return true;
+				return true && baseVerified;
 			}
 			else
 			{
