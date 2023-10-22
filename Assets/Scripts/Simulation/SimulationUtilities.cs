@@ -181,6 +181,21 @@ namespace Game.Simulation
 			return claimedList;
 		}
 
+		public static List<int> GetClaimedCellsNotClaimedByFaction(Faction f)
+		{
+			var claimedList = new List<int>();
+			foreach (var faction in ContextDictionaryProvider.CurrentContexts[typeof(Faction)])
+			{
+				var context = faction as Faction;
+				if (f != context)
+				{
+					claimedList.AddRange(context.ControlledTileIndices);
+				}
+			}
+
+			return claimedList;
+		}
+
 		public static List<HexCell> GetClaimedCellsAsHexCells()
 		{
 			var cellIndices = GetClaimedCells();

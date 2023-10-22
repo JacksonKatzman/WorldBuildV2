@@ -249,6 +249,7 @@ namespace Game.Incidents
 			{
 				HexCell current = searchFrontier.Dequeue();
 				var claimedCells = SimulationUtilities.GetClaimedCells();
+				var outsideBorder = SimulationUtilities.FindBorderOutsideFaction(this);
 				if (!claimedCells.Contains(current.Index))
 				{
 					ControlledTileIndices.Add(current.Index);
@@ -268,9 +269,12 @@ namespace Game.Incidents
 						neighbor.Distance = neighbor.coordinates.DistanceTo(center);
 						neighbor.SearchHeuristic = SimRandom.RandomFloat01() < 0.25f ? 1 : 0;
 						var weControl = ControlledTileIndices.Contains(neighbor.Index);
-						if (!claimedCells.Contains(neighbor.Index) || ControlledTileIndices.Contains(neighbor.Index))
+						if((outsideBorder.Contains(neighbor.Index) || ControlledTileIndices.Contains(neighbor.Index)) )
 						{
-							searchFrontier.Enqueue(neighbor);
+							if(!SimulationUtilities.GetClaimedCellsNotClaimedByFaction(this).Contains(neighbor.Index) && !neighbor.IsUnderwater)
+							{
+								searchFrontier.Enqueue(neighbor);
+							}
 						}
 					}
 				}
@@ -384,7 +388,7 @@ namespace Game.Incidents
 
 		private void UpdateInfluence()
 		{
-			Influence += (5 + PoliticalPriority);
+			Influence += (5 + PoliticalPriority/3);
 		}
 
 		private void UpdateWealth()

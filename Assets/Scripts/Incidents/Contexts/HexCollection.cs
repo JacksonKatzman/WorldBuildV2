@@ -6,6 +6,7 @@ namespace Game.Incidents
 {
 	public class HexCollection : InertIncidentContext, ITerrainTypeAffiliated, ILocationAffiliated
 	{
+		public override string Name => "Hex Collection " + ID;
 		public List<int> cellCollection;
 		public BiomeTerrainType AffiliatedTerrainType { get; set; }
 		public bool IsMountainous { get; set; }
