@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Imp
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Imp
+  legendary: 0
+  landDwelling: 1
+  size: 0
+  type: 7
+  alignment: 2
+  challengeRating: 1
+  experienceYield: 200
+  proficiencyBonus: 0
+  armorValue: 13
+  armorType: 
+  health: 10
+  speed: 20
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 40
+  passivePerception: 11
+  stats:
+    strength: 6
+    dexterity: 17
+    constitution: 13
+    intelligence: 11
+    wisdom: 12
+    charisma: 14
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 060000000200000001000000000000000d000000
+  damageImmunities: 0500000003000000
+  conditionImmunities: 09000000
+  skills:
+  - Deception +4
+  - Insight +3
+  - Persuasion +4
+  - Stealth +5
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Infernal
+  - Common
+  abilities: []
+  actions:
+  - actionName: Sting (Bite in Beast Form)
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft ., one target.
+      Hit: 5 (1d4 + 3) piercing damage, and the target must make on a DC 11 Constitution
+      saving throw, taking 10 (3d6) poison damage on a failed save, or half as much
+      damage on a successful one.
+
+'
+  - actionName: Invisibility
+    actionDescription: 'The imp magically turns invisible until it attacks, or until
+      its concentration ends (as if concentrating on a spell). Any equipment the
+      imp wears or carries is invisible with it.
+
+'
+  legendaryActions: []
+  requiredGender: 2

@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Flying Sword
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Flying Sword
+  legendary: 0
+  landDwelling: 1
+  size: 1
+  type: 3
+  alignment: 9
+  challengeRating: 0.25
+  experienceYield: 50
+  proficiencyBonus: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 17
+  speed: 0
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 50
+  passivePerception: 7
+  stats:
+    strength: 12
+    dexterity: 15
+    constitution: 11
+    intelligence: 1
+    wisdom: 5
+    charisma: 1
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 4
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 030000000c000000
+  conditionImmunities: 00000000010000000200000003000000070000000800000009000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages: []
+  abilities: []
+  actions:
+  - actionName: Longsword
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 5 (1d8 + 1) slashing damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

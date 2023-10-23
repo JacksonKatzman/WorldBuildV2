@@ -10,8 +10,7 @@ namespace Game.Data
 	[CreateAssetMenu(fileName = nameof(MonsterData), menuName = "ScriptableObjects/Creatures/" + nameof(MonsterData), order = 1)]
 	public class MonsterData : SerializedScriptableObject
 	{
-		public string name;
-		public string Name => name;
+		public string monsterName;
 		//legendary
 		public bool legendary;
 		//land dwelling
@@ -30,6 +29,8 @@ namespace Game.Data
 		public int proficiencyBonus;
 		//ac
 		public int armorValue;
+		//ac type
+		public string armorType;
 		//hp
 		public int health;
 		//speed
@@ -65,6 +66,7 @@ namespace Game.Data
 		public List<CreatureAction> actions;
 		//actions
 		public List<CreatureAction> legendaryActions;
+		public Gender requiredGender = Gender.ANY;
 	}
 
 	[Serializable]

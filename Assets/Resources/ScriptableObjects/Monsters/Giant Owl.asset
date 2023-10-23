@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Giant Owl
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Giant Owl
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 1
+  alignment: 4
+  challengeRating: 0.25
+  experienceYield: 50
+  proficiencyBonus: 0
+  armorValue: 12
+  armorType: 
+  health: 19
+  speed: 5
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 60
+  passivePerception: 15
+  stats:
+    strength: 13
+    dexterity: 15
+    constitution: 12
+    intelligence: 8
+    wisdom: 13
+    charisma: 10
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +5
+  - Stealth +4
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Giant Owl
+  - understands Common
+  - Elvish
+  - and Sylvan but can't speak
+  abilities: []
+  actions:
+  - actionName: Talons
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 8 (2d6 + 1) slashing damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

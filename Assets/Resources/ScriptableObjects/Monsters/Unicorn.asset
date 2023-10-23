@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Unicorn
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Unicorn
+  legendary: 1
+  landDwelling: 1
+  size: 3
+  type: 2
+  alignment: 0
+  challengeRating: 5
+  experienceYield: 1800
+  proficiencyBonus: 0
+  armorValue: 12
+  armorType: 
+  health: 67
+  speed: 50
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 13
+  stats:
+    strength: 18
+    dexterity: 14
+    constitution: 15
+    intelligence: 11
+    wisdom: 17
+    charisma: 16
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 03000000
+  conditionImmunities: 010000000700000009000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Celestial
+  - Elvish
+  - Sylvan
+  - telepathy 60 ft.
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The unicorn makes two attacks: one with its hooves and one
+      with its horn.
+
+'
+  - actionName: Hooves
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft ., one target.
+      Hit: 11 (2d6 + 4) bludgeoning damage.
+
+'
+  - actionName: Horn
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft ., one target.
+      Hit: 8 (1d8 + 4) piercing damage.
+
+'
+  - actionName: Healing Touch (3/Day)
+    actionDescription: 'The unicorn touches another creature with its horn. The target
+      magically regains 11 (2d8 + 2) hit points. In addition, the touch removes all
+      diseases and neutralizes all poisons afflicting the target.
+
+'
+  - actionName: Teleport (1/Day)
+    actionDescription: 'The unicorn magically teleports itself and up to three willing
+      creatures it can see within 5 ft. of it, along with any equipment they are
+      wearing or carrying, to a location the unicorn is familiar with, up to 1 mile
+      away.
+
+'
+  legendaryActions:
+  - actionName: Hooves
+    actionDescription: 'The unicorn makes one attack with its hooves.
+
+'
+  - actionName: Shimmering Shield (Costs 2 Actions)
+    actionDescription: 'The unicorn creates a shimmering, magical field around itself
+      or another creature it can see within 60 ft. of it. The target gains a +2 bonus
+      to AC until the end of the unicorn''s next turn.
+
+'
+  - actionName: Heal Self (Costs 3 Actions)
+    actionDescription: 'The unicorn magically regains 11 (2d8 + 2) hit points.
+
+'
+  requiredGender: 2

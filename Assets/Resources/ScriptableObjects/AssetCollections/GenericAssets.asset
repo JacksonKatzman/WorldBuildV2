@@ -17,7 +17,6 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 4000013750885840, guid: f2967fed6444e43559e32916c2465d27, type: 3}
-    - {fileID: 4000012893891830, guid: cc90e6fbc542a40c080d2c64da7d26ed, type: 3}
     - {fileID: 4000011263270592, guid: cb7be9a74fd6e4cbdb5be2ac7319e699, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -26,12 +25,12 @@ MonoBehaviour:
     SerializationNodes:
     - Name: landmarkCollections
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Game.Enums.LandmarkType, Assembly-CSharp],[System.Collections.Generic.List`1[[UnityEngine.Transform,
+      Data: 0|System.Collections.Generic.Dictionary`2[[Game.Enums.LandmarkType, Auto-asmdef-SecondPass],[System.Collections.Generic.List`1[[UnityEngine.Transform,
         UnityEngine.CoreModule]], mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Game.Enums.LandmarkType,
-        Assembly-CSharp]], mscorlib
+        Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -56,16 +55,13 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 2
     - Name: 
       Entry: 10
       Data: 0
     - Name: 
       Entry: 10
       Data: 1
-    - Name: 
-      Entry: 10
-      Data: 2
     - Name: 
       Entry: 13
       Data: 

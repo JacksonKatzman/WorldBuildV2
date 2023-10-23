@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Quasit
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Quasit
+  legendary: 0
+  landDwelling: 1
+  size: 0
+  type: 7
+  alignment: 8
+  challengeRating: 1
+  experienceYield: 200
+  proficiencyBonus: 0
+  armorValue: 13
+  armorType: 
+  health: 7
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 10
+  stats:
+    strength: 5
+    dexterity: 17
+    constitution: 10
+    intelligence: 7
+    wisdom: 10
+    charisma: 10
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 0600000005000000090000000200000001000000000000000d000000
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
+  skills:
+  - Stealth +5
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Abyssal
+  - Common
+  abilities: []
+  actions:
+  - actionName: Claw (Bite in Beast Form)
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft ., one target.
+      Hit: 5 (1d4 + 3) piercing damage, and the target must succeed on a DC 10 Constitution
+      saving throw or take 5 (2d4) poison damage and become poisoned for 1 minute.
+      The target can repeat the saving throw at the end of each of its turns, ending
+      the effect on itself on a success.
+
+'
+  - actionName: Scare (1/day)
+    actionDescription: 'One creature of the quasit''s choice within 20 ft. of it
+      must succeed on a DC 10 Wisdom saving throw or be frightened for 1 minute.
+      The target can repeat the saving throw at the end of each of its turns, with
+      disadvantage if the quasit is within line of sight, ending the effect on itself
+      on a success.
+
+'
+  - actionName: Invisibility
+    actionDescription: 'The quasit magically turns invisible until it attacks or
+      uses Scare, or until its concentration ends (as if concentrating on a spell).
+      Any equipment the quasit wears or carries is invisible with it.
+
+'
+  legendaryActions: []
+  requiredGender: 2

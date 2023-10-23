@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Nothic
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Nothic
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 0
+  alignment: 5
+  challengeRating: 2
+  experienceYield: 450
+  proficiencyBonus: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 45
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 12
+  stats:
+    strength: 14
+    dexterity: 16
+    constitution: 16
+    intelligence: 13
+    wisdom: 10
+    charisma: 8
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Arcana +3
+  - Insight +4
+  - Perception +2
+  - Stealth +5
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Undercommon
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The nothic makes two claw attacks.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 6 (1d6 + 3) slashing damage.
+
+'
+  - actionName: Rotting Gaze
+    actionDescription: 'The nothic targets one creature it can see within 30 ft.
+      of it. The target must succeed on a DC 12 Constitution saving throw against
+      this magic or take 10 (3d6) necrotic damage.
+
+'
+  - actionName: Weird Insight
+    actionDescription: 'The nothic targets one creature it can see within 30 ft.
+      of it. The target must contest its Charisma (Deception) check against the nothic''s
+      Wisdom (Insight) check. If the nothic wins, it magically learns one fact or
+      secret about the target. The target automatically wins if it is immune to being
+      charmed.
+
+'
+  legendaryActions: []
+  requiredGender: 2

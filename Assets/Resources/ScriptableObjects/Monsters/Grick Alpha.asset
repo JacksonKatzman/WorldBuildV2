@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Grick Alpha
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Grick Alpha
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 4
+  challengeRating: 7
+  experienceYield: 2900
+  proficiencyBonus: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 75
+  speed: 30
+  climbSpeed: 30
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 12
+  stats:
+    strength: 18
+    dexterity: 16
+    constitution: 15
+    intelligence: 4
+    wisdom: 14
+    charisma: 9
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 0200000001000000000000000d000000
+  damageImmunities: 
+  conditionImmunities: 
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages: []
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The grick makes two attacks: one with its tail and one with
+      its tentacles. If it hits with its tentacles, the grick can make one beak attack
+      against the same target.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 10 ft., one target.
+      Hit: 11 (2d6 + 4) bludgeoning damage.
+
+'
+  - actionName: Tentacles
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 10 ft., one target.
+      Hit: 22 (4d8 + 4) slashing damage.
+
+'
+  - actionName: Beak
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 10 ft., one target.
+      Hit: 13 (2d8 + 4) piercing damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

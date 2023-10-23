@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Adult Gold Dragon
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Adult Gold Dragon
+  legendary: 1
+  landDwelling: 1
+  size: 4
+  type: 4
+  alignment: 0
+  challengeRating: 17
+  experienceYield: 18000
+  proficiencyBonus: 0
+  armorValue: 19
+  armorType: (natural armor)
+  health: 256
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 40
+  flySpeed: 80
+  passivePerception: 24
+  stats:
+    strength: 27
+    dexterity: 14
+    constitution: 25
+    intelligence: 16
+    wisdom: 15
+    charisma: 24
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 8
+    constitution: 13
+    intelligence: 0
+    wisdom: 8
+    charisma: 13
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 05000000
+  conditionImmunities: 
+  skills:
+  - Insight +8
+  - Perception +14
+  - Persuasion +13
+  - Stealth +8
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Common
+  - Draconic
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The dragon can use its Frightful Presence. It then makes
+      three attacks: one with its bite and two with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +14 to hit, reach 10 ft., one target.
+      Hit: 19 (2d10 + 8) piercing damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +14 to hit, reach 5 ft., one target.
+      Hit: 15 (2d6 + 8) slashing damage.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack: +14 to hit, reach 15 ft., one target.
+      Hit: 17 (2d8 + 8) bludgeoning damage.
+
+'
+  - actionName: Frightful Presence
+    actionDescription: 'Each creature of the dragon''s choice that is within 120
+      feet of the dragon and aware of it must succeed on a DC 21 Wisdom saving throw
+      or become frightened for 1 minute. A creature can repeat the saving throw at
+      the end of each of its turns, ending the effect on itself on a success. If
+      a creature''s saving throw is successful or the effect ends for it, the creature
+      is immune to the dragon''s Frightful Presence for the next 24 hours.
+
+'
+  - actionName: Breath Weapons (Recharge 5-6)
+    actionDescription: 'The dragon uses one of the following breath weapons.
+
+      Fire
+      Breath. The dragon exhales fire in a 60-foot cone. Each creature in that area
+      must make a DC 21 Dexterity saving throw, taking 66 (12d10) fire damage on
+      a failed save, or half as much damage on a successful one.
+
+      Weakening
+      Breath. The dragon exhales gas in a 60-foot cone. Each creature in that area
+      must succeed on a DC 21 Strength saving throw or have disadvantage on Strength-based
+      attack rolls, Strength checks, and Strength saving throws for 1 minute. A creature
+      can repeat the saving throw at the end of each of its turns, ending the effect
+      on itself on a success.
+
+'
+  legendaryActions:
+  - actionName: Detect
+    actionDescription: 'The dragon makes a Wisdom (Perception) check.
+
+'
+  - actionName: Tail Attack
+    actionDescription: 'The dragon makes a tail attack.
+
+'
+  - actionName: Wing Attack (Costs 2 Actions)
+    actionDescription: 'The dragon beats its wings. Each creature within 10 ft. of
+      the dragon must succeed on a DC 22 Dexterity saving throw or take 15 (2d6 +
+      8) bludgeoning damage and be knocked prone. The dragon can then fly up to half
+      its flying speed.
+
+'
+  requiredGender: 2

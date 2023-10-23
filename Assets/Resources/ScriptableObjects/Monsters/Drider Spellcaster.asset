@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Drider Spellcaster
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Drider Spellcaster
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 8
+  challengeRating: 6
+  experienceYield: 2300
+  proficiencyBonus: 0
+  armorValue: 19
+  armorType: (natural armor)
+  health: 123
+  speed: 30
+  climbSpeed: 30
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 15
+  stats:
+    strength: 16
+    dexterity: 16
+    constitution: 18
+    intelligence: 13
+    wisdom: 16
+    charisma: 12
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +5
+  - Stealth +9
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Elvish
+  - Undercommon
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The drider makes three attacks, either with its longsword
+      or its longbow. It can replace one of those attacks with a bite attack.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one creature.
+      Hit: 2 (1d4) piercing damage plus 9 (2d8) poison damage.
+
+'
+  - actionName: Longsword
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 7 (1d8 + 3) slashing damage, or 8 (1d10 + 3) slashing damage if used with
+      two hands.
+
+'
+  - actionName: Longbow
+    actionDescription: 'Ranged Weapon Attack: +6 to hit, range 150/600 ft., one target.
+      Hit: 7 (1d8 + 3) piercing damage plus 4 (1d8) poison damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

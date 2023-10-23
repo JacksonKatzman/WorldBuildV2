@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Harpy
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Harpy
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 10
+  alignment: 8
+  challengeRating: 1
+  experienceYield: 200
+  proficiencyBonus: 0
+  armorValue: 11
+  armorType: 
+  health: 38
+  speed: 20
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 40
+  passivePerception: 10
+  stats:
+    strength: 12
+    dexterity: 13
+    constitution: 12
+    intelligence: 7
+    wisdom: 10
+    charisma: 13
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Common
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The harpy makes two attacks: one with its claws and one with
+      its club.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 6 (2d4 + 1) slashing damage.
+
+'
+  - actionName: Club
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 3 (1d4 + 1) bludgeoning damage.
+
+'
+  - actionName: Luring Song
+    actionDescription: "The harpy sings a magical melody. Every humanoid and giant
+      within 300 ft. of the harpy that can hear the song must succeed on a DC 11
+      Wisdom saving throw or be charmed until the song ends. The harpy must take
+      a bonus action on its subsequent turns to continue singing. It can stop singing
+      at any time. The song ends if the harpy is incapacitated.\n     While charmed
+      by the harpy, a target is incapacitated and ignores the songs of other harpies.
+      If the charmed target is more than 5 ft. away from the harpy, the must move
+      on its turn toward the harpy by the most direct route. It doesn't avoid opportunity
+      attacks, but before moving into damaging terrain, such as lava or a pit, and
+      whenever it takes damage from a source other than the harpy, a target can repeat
+      the saving throw. A creature can also repeat the saving throw at the end of
+      each of its turns. If a creature's saving throw is successful, the effect ends
+      on it.\n     A target that successfully saves is immune to this harpy's song
+      for the next 24 hours.\n"
+  legendaryActions: []
+  requiredGender: 2

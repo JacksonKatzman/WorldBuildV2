@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Mummy Lord
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Mummy Lord
+  legendary: 1
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 2
+  challengeRating: 15
+  experienceYield: 13000
+  proficiencyBonus: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 97
+  speed: 20
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 14
+  stats:
+    strength: 18
+    dexterity: 10
+    constitution: 17
+    intelligence: 11
+    wisdom: 18
+    charisma: 16
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 8
+    intelligence: 5
+    wisdom: 9
+    charisma: 8
+    luck: 0
+  damageVulnerabilities: 02000000
+  damageResistances: 
+  damageImmunities: 08000000030000000200000001000000000000000d000000
+  conditionImmunities: 010000000e000000030000000700000009000000
+  skills:
+  - History +5
+  - Religion +5
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - the languages it knew in life
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The mummy can use its Dreadful Glare and makes one attack
+      with its rotting fist.
+
+'
+  - actionName: Rotting Fist
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 5 ft., one target.
+      Hit: 14 (3d6 + 4) bludgeoning damage plus 21 (6d6) necrotic damage. If the
+      target is a creature, it must succeed on a DC 16 Constitution saving throw
+      or be cursed with mummy rot. The cursed target can''t regain hit points, and
+      its hit point maximum decreases by 10 (3d6) for every 24 hours that elapse.
+      If the curse reduces the target''s hit point maximum to 0, the target dies,
+      and its body turns to dust. The curse lasts until removed by the remove curse
+      spell or other magic.
+
+'
+  - actionName: Dreadful Glare
+    actionDescription: 'The mummy lord targets one creature it can see within 60
+      feet of it. If the target can see the mummy lord, it must succeed on a DC 16
+      Wisdom saving throw against this magic or become frightened until the end of
+      the mummy''s next turn. If the target fails the saving throw by 5 or more,
+      it is also paralyzed for the same duration. A target that succeeds on the saving
+      throw is immune to the Dreadful Glare of all mummies and mummy lords for the
+      next 24 hours.
+
+'
+  legendaryActions:
+  - actionName: Attack
+    actionDescription: 'The mummy lord makes one attack with its rotting fist or
+      uses its Dreadful Glare.
+
+'
+  - actionName: Blinding Dust
+    actionDescription: 'Blinding dust and sand swirls magically around the mummy
+      lord. Each creature within 5 feet of the mummy lord must succeed on a DC 16
+      Constitution saving throw or be blinded until the end of the creature''s next
+      turn.
+
+'
+  - actionName: Blasphemous Word (Costs 2 Actions)
+    actionDescription: 'The mummy lord utters a blasphemous word. Each non-undead
+      creature within 10 feet of the mummy lord that can hear the magical utterance
+      must succeed on a DC 16 Constitution saving throw or be stunned until the end
+      of the mummy lord''s next turn.
+
+'
+  - actionName: Channel Negative Energy (Costs 2 Actions)
+    actionDescription: 'The mummy lord magically unleashes negative energy. Creatures
+      within 60 feet of the mummy lord, including ones behind barriers and around
+      corners, can''t regain hit points until the end of the mummy lord''s next turn.
+
+'
+  - actionName: Whirlwind of Sand (Costs 2 Actions)
+    actionDescription: 'The mummy lord magically transforms into a whirlwind of sand,
+      moves up to 60 feet, and reverts to its normal form. While in whirlwind form,
+      the mummy lord is immune to all damage, and it can''t be grappled, petrified,
+      knocked prone, restrained, or stunned. Equipment worn or carried by the mummy
+      lord remain in its possession.
+
+'
+  requiredGender: 2

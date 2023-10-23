@@ -27,9 +27,10 @@ namespace Game.Terrain
 			hexCellHighlight.enabled = isOn;
 		}
 
-		public void ToggleBorder(HexDirection direction, bool isOn)
+		public void ToggleBorder(HexDirection direction, bool isOn, Color color)
 		{
 			hexCellBorderImages[direction].enabled = isOn;
+			hexCellBorderImages[direction].color = color;
 		}
 	}
 }

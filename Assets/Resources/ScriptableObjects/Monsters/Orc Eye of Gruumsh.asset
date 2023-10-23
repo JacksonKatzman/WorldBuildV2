@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Orc Eye of Gruumsh
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Orc Eye of Gruumsh
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 8
+  challengeRating: 2
+  experienceYield: 450
+  proficiencyBonus: 0
+  armorValue: 16
+  armorType: (ring mail, shield)
+  health: 45
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 11
+  stats:
+    strength: 16
+    dexterity: 12
+    constitution: 17
+    intelligence: 9
+    wisdom: 13
+    charisma: 12
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Intimidation +3
+  - Religion +1
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Common
+  - Orc
+  abilities: []
+  actions:
+  - actionName: Spear
+    actionDescription: 'Melee or Ranged Weapon Attack: +5 to hit, reach 5 ft. or
+      range 20/60 ft., one target. Hit: 11 (1d6 + 3 plus 1d8) piercing damage, or
+      12 (2d8 + 3) piercing damage if used with two hands to make a melee attack.
+
+'
+  legendaryActions: []
+  requiredGender: 2

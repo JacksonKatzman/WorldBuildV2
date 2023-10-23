@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Gargoyle
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Gargoyle
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 5
+  alignment: 8
+  challengeRating: 2
+  experienceYield: 450
+  proficiencyBonus: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 52
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 60
+  passivePerception: 10
+  stats:
+    strength: 15
+    dexterity: 11
+    constitution: 16
+    intelligence: 6
+    wisdom: 11
+    charisma: 7
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 0200000001000000000000000d000000
+  damageImmunities: 03000000
+  conditionImmunities: 0e0000000800000009000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Terran
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The gargoyle makes two attacks: one with its bite and one
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) slashing damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

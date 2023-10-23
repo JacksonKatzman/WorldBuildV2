@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Demilich
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Demilich
+  legendary: 1
+  landDwelling: 1
+  size: 0
+  type: 13
+  alignment: 5
+  challengeRating: 18
+  experienceYield: 20000
+  proficiencyBonus: 0
+  armorValue: 20
+  armorType: (natural armor)
+  health: 80
+  speed: 0
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 30
+  passivePerception: 13
+  stats:
+    strength: 1
+    dexterity: 20
+    constitution: 10
+    intelligence: 20
+    wisdom: 17
+    charisma: 20
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 6
+    intelligence: 11
+    wisdom: 9
+    charisma: 11
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 020000000100000000000000
+  damageImmunities: 08000000030000000c0000000200000001000000000000000d000000
+  conditionImmunities: 01000000020000000e000000030000000700000008000000090000000a0000000c000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages: []
+  abilities: []
+  actions:
+  - actionName: Howl (Recharge 5-6)
+    actionDescription: 'The demilich emits a bloodcurdling howl. Each creature within
+      30 feet of the demilich that can hear the howl must succeed on a DC 15 Constitution
+      saving throw or drop to 0 hit points. On a successful save, the creature is
+      frightened until the end of its next turn.
+
+'
+  - actionName: Life Drain
+    actionDescription: 'The demilich targets up to three creatures that it can see
+      within 10 feet of it. Each target must succeed on a DC 19 Constitution saving
+      throw or take 21 (6d6) necrotic damage, and the demilich regains hit points
+      equal to the total damage dealt to all targets.
+
+'
+  legendaryActions:
+  - actionName: Flight
+    actionDescription: 'The demilich flies up to half its flying speed.
+
+'
+  - actionName: Cloud of Dust
+    actionDescription: 'The demilich magically swirls its dusty remains. Each creature
+      within 10 feet of the demilich, including around a corner, must succeed on
+      a DC 15 Constitution saving throw or be blinded until the end of the demilich''s
+      next turn. A creature that succeeds on the saving throw is immune to this effect
+      until the end of the demilich''s next turn.
+
+'
+  - actionName: Energy Drain (Costs 2 Actions)
+    actionDescription: 'Each creature with in 30 feet of the demilich must make a
+      DC 15 Constitution saving throw. On a failed save, the creature''s hit point
+      maximum is magically reduced by 10 (3d6). If a creature''s hit point maximum
+      is reduced to 0 by this effect, the creature dies. A creature''s hit point
+      maximum can be restored with the greater restoration spell or similar magic.
+
+'
+  - actionName: Vile Curse (Costs 3 Actions)
+    actionDescription: 'The demilich targets one creature it can see within 30 feet
+      of it. The target must succeed on a DC 15 Wisdom saving throw or be magically
+      cursed. Until the curse ends, the target has disadvantage on attack rolls and
+      saving throws. The target can repeat the saving throw at the end of each of
+      its turns, ending the curse on a success.
+
+'
+  requiredGender: 2

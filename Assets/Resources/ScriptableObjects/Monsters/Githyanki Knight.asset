@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Githyanki Knight
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Githyanki Knight
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 2
+  challengeRating: 8
+  experienceYield: 3900
+  proficiencyBonus: 0
+  armorValue: 18
+  armorType: (plate)
+  health: 91
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 12
+  stats:
+    strength: 16
+    dexterity: 14
+    constitution: 15
+    intelligence: 14
+    wisdom: 14
+    charisma: 15
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 5
+    intelligence: 5
+    wisdom: 5
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Gith
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The githyanki makes two silver greatsword attacks.
+
+'
+  - actionName: Silver Greatsword
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 5 ft., one target.
+      Hit: 13 (2d6 + 6) slashing damage plus 10 (3d6) psychic damage. This is a magic
+      weapon attack. On a critical hit against a target in an astral body (as with
+      the astral projection spell), the githyanki can cut the silvery cord that tethers
+      the target to its material body, instead of dealing damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

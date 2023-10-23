@@ -23,9 +23,6 @@ namespace Game.Simulation
 		[SerializeField]
 		private int worldChunksX = 16, worldChunksZ = 12;
 
-		[SerializeField]
-		public List<FactionPreset> factions;
-
 		[Button("Create New World")]
 		public void CreateNewWorld()
 		{
@@ -34,7 +31,7 @@ namespace Game.Simulation
 			simMan.WorldChunksX = worldChunksX;
 			simMan.WorldChunksZ = worldChunksZ;
 
-			SimulationManager.Instance.CreateWorld(factions, options);
+			SimulationManager.Instance.CreateWorld(options);
 		}
 
 		private void Awake()

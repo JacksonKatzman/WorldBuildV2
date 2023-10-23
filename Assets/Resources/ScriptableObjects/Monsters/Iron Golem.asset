@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Iron Golem
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Iron Golem
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 3
+  alignment: 9
+  challengeRating: 16
+  experienceYield: 15000
+  proficiencyBonus: 0
+  armorValue: 20
+  armorType: (natural armor)
+  health: 210
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 10
+  stats:
+    strength: 24
+    dexterity: 9
+    constitution: 20
+    intelligence: 3
+    wisdom: 11
+    charisma: 1
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 05000000030000000c0000000200000001000000000000000d000000
+  conditionImmunities: 010000000e00000003000000070000000800000009000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - understands the languages of its creator but can't speak
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The golem makes two melee attacks.
+
+'
+  - actionName: Slam
+    actionDescription: 'Melee Weapon Attack: +13 to hit, reach 5 ft., one target.
+      Hit: 20 (3d8 + 7) bludgeoning damage.
+
+'
+  - actionName: Sword
+    actionDescription: 'Melee Weapon Attack: +13 to hit, reach 10 ft., one target.
+      Hit: 23 (3d10 + 7) slashing damage.
+
+'
+  - actionName: Poison Breath (Recharge 5-6)
+    actionDescription: 'The golem exhales poisonous gas in a 15-foot cone. Each creature
+      in that area must make a DC 19 Constitution saving throw, taking 45 (l0d8)
+      poison damage on a failed save, or half as much damage on a successful one.
+
+'
+  legendaryActions: []
+  requiredGender: 2

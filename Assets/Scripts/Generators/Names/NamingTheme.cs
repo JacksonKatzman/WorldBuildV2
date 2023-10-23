@@ -161,6 +161,18 @@ namespace Game.Generators.Names
 			return GenerateName(personName, gender, format);
 		}
 
+		public CharacterName GenerateName(Gender gender, Character withSurname)
+		{
+			var format = string.Copy(currentNameFormat);
+			var personName = new CharacterName(format);
+
+			var surname = withSurname.CharacterName.Surname;
+			personName.surnames.Add(surname);
+			format = StringUtilities.ReplaceLastOccurrence(format, "{S}", surname);
+
+			return GenerateName(personName, gender, format);
+		}
+
 		public string GenerateTownName()
 		{
 			var format = SimRandom.RandomEntryFromWeightedDictionary(townNameFormats);

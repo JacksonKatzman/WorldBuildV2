@@ -54,6 +54,11 @@ namespace Game.Incidents
 			
 		}
 
+		public override void CheckForDeath()
+		{
+			
+		}
+
 		public override void LoadContextProperties()
 		{
 			AffiliatedFaction = SaveUtilities.ConvertIDToContext<Faction>(contextIDLoadBuffers["AffiliatedFaction"][0]);

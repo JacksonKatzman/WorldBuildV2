@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Marid
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Marid
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 5
+  alignment: 7
+  challengeRating: 11
+  experienceYield: 7200
+  proficiencyBonus: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 229
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 90
+  flySpeed: 60
+  passivePerception: 13
+  stats:
+    strength: 22
+    dexterity: 12
+    constitution: 26
+    intelligence: 18
+    wisdom: 17
+    charisma: 18
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 5
+    constitution: 0
+    intelligence: 0
+    wisdom: 7
+    charisma: 8
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 040000000600000009000000
+  damageImmunities: 
+  conditionImmunities: 
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Aquan
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The marid makes two trident attacks.
+
+'
+  - actionName: Trident
+    actionDescription: 'Melee or Ranged Weapon Attack: +10 to hit, reach 5 ft. or
+      range 20/60 ft., one target. Hit: 13 (2d6 + 6) piercing damage, or 15 (2d8
+      + 6) piercing damage if used with two hands to make a melee attack.
+
+'
+  - actionName: Water Jet
+    actionDescription: 'The marid magically shoots water in a 60-foot line that is
+      5 feet wide. Each creature in that line must make a DC 16 Dexterity saving
+      throw. On a failure, a target takes 21 (6d6) bludgeoning damage and, if it
+      is Huge or smaller, is pushed up to 20 feet away from the marid and knocked
+      prone. On a success, a target takes half the bludgeoning damage, but is neither
+      pushed nor knocked prone.
+
+'
+  legendaryActions: []
+  requiredGender: 2

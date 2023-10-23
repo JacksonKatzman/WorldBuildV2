@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Arcanaloth
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Arcanaloth
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 7
+  alignment: 5
+  challengeRating: 12
+  experienceYield: 8400
+  proficiencyBonus: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 104
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 30
+  passivePerception: 17
+  stats:
+    strength: 17
+    dexterity: 12
+    constitution: 14
+    intelligence: 20
+    wisdom: 16
+    charisma: 17
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 5
+    constitution: 0
+    intelligence: 9
+    wisdom: 7
+    charisma: 7
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 0600000005000000090000000200000001000000000000000d000000
+  damageImmunities: 0400000003000000
+  conditionImmunities: 0100000009000000
+  skills:
+  - Arcana +13
+  - Deception +9
+  - Insight +9
+  - Perception +7
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - all
+  - telepathy 120 ft.
+  abilities: []
+  actions:
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 8 (2d4 + 3) slashing damage. The target must make a DC 14 Constitution
+      saving throw, taking 10 (3d6) poison damage on a failed save, or half as much
+      damage on a successful one.
+
+'
+  - actionName: Teleport
+    actionDescription: 'The arcanaloth magically teleports, along with any equipment
+      it is wearing or carrying, up to 60 feet to an unoccupied space it can see.
+
+'
+  - actionName: 'Variant: Summon Yugoloth (1/Day)'
+    actionDescription: 'The yugoloth attempts a magical summoning.
+
+      An arcanaloth
+      has a 40 percent chance of summoning one arcanaloth.
+
+      A summoned yugoloth
+      appears in an unoccupied space within 60 feet of its summoner, does as it pleases,
+      and can''t summon other yugoloths. The summoned yugoloth remains for 1 minute,
+      until it or its summoner dies, or until its summoner takes a bonus action to
+      dismiss it.
+
+'
+  legendaryActions: []
+  requiredGender: 2

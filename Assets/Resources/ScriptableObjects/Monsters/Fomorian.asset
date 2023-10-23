@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Fomorian
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Fomorian
+  legendary: 0
+  landDwelling: 1
+  size: 4
+  type: 8
+  alignment: 8
+  challengeRating: 8
+  experienceYield: 3900
+  proficiencyBonus: 0
+  armorValue: 14
+  armorType: (natural armor)
+  health: 149
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 18
+  stats:
+    strength: 23
+    dexterity: 10
+    constitution: 20
+    intelligence: 9
+    wisdom: 14
+    charisma: 6
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +8
+  - Stealth +3
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Giant
+  - Undercommon
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The fomorian attacks twice with its greatclub or makes one
+      greatclub attack and uses Evil Eye once.
+
+'
+  - actionName: Greatclub
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 15 ft., one target.
+      Hit: 19 (3d8 + 6) bludgeoning damage.
+
+'
+  - actionName: Evil Eye
+    actionDescription: 'The fomorian magically forces a creature it can see within
+      60 feet of it to make a DC 14 Charisma saving throw. The creature takes 27
+      (6d8) psychic damage on a failed save, or half as much damage on a successful
+      one.
+
+'
+  - actionName: Curse of the Evil Eye (Recharges after a Short or Long Rest)
+    actionDescription: 'With a stare, the fomorian uses Evil Eye, but on a failed
+      save, the creature is also cursed with magical deformities. While deformed,
+      the creature has its speed halved and has disadvantage on ability checks, saving
+      throws, and attacks based on Strength or Dexterity.
+
+      The transformed
+      creature can repeat the saving throw whenever it finishes a long rest, ending
+      the effect on a success.
+
+'
+  legendaryActions: []
+  requiredGender: 2

@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Spined Devil
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Spined Devil
+  legendary: 0
+  landDwelling: 1
+  size: 1
+  type: 7
+  alignment: 2
+  challengeRating: 2
+  experienceYield: 450
+  proficiencyBonus: 0
+  armorValue: 13
+  armorType: (natural armor)
+  health: 22
+  speed: 20
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 40
+  passivePerception: 12
+  stats:
+    strength: 10
+    dexterity: 15
+    constitution: 12
+    intelligence: 11
+    wisdom: 14
+    charisma: 8
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 060000000200000001000000000000000d000000
+  damageImmunities: 0500000003000000
+  conditionImmunities: 09000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Infernal
+  - telepathy 120 ft.
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The devil makes two attacks: one with its bite and one with
+      its fork or two with its tail spines.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +2 to hit, reach 5 ft., one target.
+      Hit: 5 (2d4) slashing damage.
+
+'
+  - actionName: Fork
+    actionDescription: 'Melee Weapon Attack: +2 to hit, reach 5 ft., one target.
+      Hit: 3 (1d6) piercing damage.
+
+'
+  - actionName: Tail Spine
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 20/80 ft ., one target.
+      Hit: 4 (1d4 + 2) piercing damage plus 3 (1d6) fire damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

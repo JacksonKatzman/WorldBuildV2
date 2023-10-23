@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Dretch
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Dretch
+  legendary: 0
+  landDwelling: 1
+  size: 1
+  type: 7
+  alignment: 8
+  challengeRating: 0.25
+  experienceYield: 50
+  proficiencyBonus: 0
+  armorValue: 11
+  armorType: (natural armor)
+  health: 18
+  speed: 20
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 9
+  stats:
+    strength: 11
+    dexterity: 11
+    constitution: 12
+    intelligence: 5
+    wisdom: 8
+    charisma: 3
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 060000000500000009000000
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Abyssal
+  - telepathy 60 ft. (works only with creatures that understand Abyssal)
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The dretch makes two attacks: one with its bite and one with
+      its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +2 to hit, reach 5 ft., one target.
+      Hit: 3 (1d6) piercing damage.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +2 to hit, reach 5 ft., one target.
+      Hit: 5 (2d4) slashing damage.
+
+'
+  - actionName: Fetid Cloud (1/Day)
+    actionDescription: 'A 10-foot radius of disgusting green gas extends out from
+      the dretch. The gas spreads around corners, and its area is lightly obscured.
+      It lasts for 1 minute or until a strong wind disperses it. Any creature that
+      starts its turn in that area must succeed on a DC 11 Constitution saving throw
+      or be poisoned until the start of its next turn. While poisoned in this way,
+      the target can take either an action or a bonus action on its turn, not both,
+      and can''t take reactions.
+
+'
+  legendaryActions: []
+  requiredGender: 2

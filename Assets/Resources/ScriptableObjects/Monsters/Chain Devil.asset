@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Chain Devil
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Chain Devil
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 7
+  alignment: 2
+  challengeRating: 11
+  experienceYield: 7200
+  proficiencyBonus: 0
+  armorValue: 16
+  armorType: (natural armor)
+  health: 85
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 8
+  stats:
+    strength: 18
+    dexterity: 15
+    constitution: 18
+    intelligence: 11
+    wisdom: 12
+    charisma: 14
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 7
+    intelligence: 0
+    wisdom: 4
+    charisma: 5
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 060000000200000001000000000000000d000000
+  damageImmunities: 0500000003000000
+  conditionImmunities: 09000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Infernal
+  - telepathy 120 ft.
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The devil makes two attacks with its chains.
+
+'
+  - actionName: Chain
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 10 ft., one target.
+      Hit: 11 (2d6 + 4) slashing damage. The target is grappled (escape DC 14) if
+      the devil isn''t already grappling a creature. Until this grapple ends, the
+      target is restrained and takes 7 (2d6) piercing damage at the start of each
+      of its turns.
+
+'
+  - actionName: Animate Chains (Recharges after a Short or Long Rest)
+    actionDescription: 'Up to four chains the devil can see within 60 feet of it
+      magically sprout razor-edged barbs and animate under the devil''s control,
+      provided that the chains aren''t being worn or carried.
+
+      Each animated
+      chain is an object with AC 20, 20 hit points, resistance to piercing damage,
+      and immunity to psychic and thunder damage. When the devil uses Multiattack
+      on its turn, it can use each animated chain to make one additional chain attack.
+      An animated chain can grapple one creature of its own but can''t make attacks
+      while grappling. An animated chain reverts to its inanimate state if reduced
+      to 0 hit points or if the devil is incapacitated or dies.
+
+'
+  legendaryActions: []
+  requiredGender: 2

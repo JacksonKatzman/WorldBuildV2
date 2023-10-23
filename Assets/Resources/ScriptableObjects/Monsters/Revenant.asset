@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Revenant
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Revenant
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 4
+  challengeRating: 5
+  experienceYield: 1800
+  proficiencyBonus: 0
+  armorValue: 13
+  armorType: (leather armor)
+  health: 136
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 13
+  stats:
+    strength: 18
+    dexterity: 14
+    constitution: 18
+    intelligence: 13
+    wisdom: 16
+    charisma: 18
+    luck: 10
+  savingThrows:
+    strength: 7
+    dexterity: 0
+    constitution: 7
+    intelligence: 0
+    wisdom: 6
+    charisma: 7
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 080000000c000000
+  damageImmunities: 03000000
+  conditionImmunities: 010000000e0000000300000007000000090000000c000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - the languages it knew in life
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The revenant makes two fist attacks.
+
+'
+  - actionName: Fist
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) bludgeoning damage. If the target is a creature against which
+      the revenant has sworn vengeance, the target takes an extra 14 (4d6) bludgeoning
+      damage. Instead of dealing damage, the revenant can grapple the target (escape
+      DC 14) provided the target is Large or smaller.
+
+'
+  - actionName: Vengeful Glare
+    actionDescription: 'The revenant targets one creature it can see within 30 feet
+      of it and against which it has sworn vengeance. The target must make a DC 15
+      Wisdom saving throw. On a failure, the target is paralyzed until the revenant
+      deals damage to it, or until the end of the revenant''s next turn. When the
+      paralysis ends, the target is frightened of the revenant for 1 minute. The
+      frightened target can repeat the saving throw at the end of each of its turns,
+      with disadvantage if it can see the revenant, ending the frightened condition
+      on itself on a success.
+
+'
+  legendaryActions: []
+  requiredGender: 2

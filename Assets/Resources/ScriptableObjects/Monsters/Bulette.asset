@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Bulette
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Bulette
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 9
+  challengeRating: 5
+  experienceYield: 1800
+  proficiencyBonus: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 94
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 16
+  stats:
+    strength: 19
+    dexterity: 11
+    constitution: 21
+    intelligence: 2
+    wisdom: 10
+    charisma: 5
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +6
+  senses: []
+  groupingName: 
+  sounds: []
+  languages: []
+  abilities: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 30 (4d12 + 4) piercing damage.
+
+'
+  - actionName: Deadly Leap
+    actionDescription: 'If the bulette jumps at least 15 ft. as part of its movement,
+      it can then use this action to land on its ft. in a space that contains one
+      or more other creatures. Each of those creatures must succeed on a DC 16 Strength
+      or Dexterity saving throw (target''s choice) or be knocked prone and take 14
+      (3d6 + 4) bludgeoning damage plus 14 (3d6 + 4) slashing damage. On a successful
+      save, the creature takes only half the damage, isn''t knocked prone, and is
+      pushed 5 ft. out of the bulette''s space into an unoccupied space of the creature''s
+      choice. If no unoccupied space is within range, the creature instead falls
+      prone in the bulette''s space.
+
+'
+  legendaryActions: []
+  requiredGender: 2

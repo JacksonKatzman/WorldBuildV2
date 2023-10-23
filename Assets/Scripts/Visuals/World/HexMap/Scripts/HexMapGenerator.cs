@@ -1,6 +1,10 @@
 ﻿using Game.Collections;
 using Game.Debug;
+using Game.Incidents;
+using Game.Simulation;
+//using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Terrain
@@ -173,6 +177,7 @@ namespace Game.Terrain
 			CreateClimate();
 			CreateRivers();
 			SetTerrainType();
+			GenerateHexCollections();
 
 			for (int i = 0; i < cellCount; i++)
 			{
@@ -751,115 +756,76 @@ namespace Game.Terrain
 
 				var biome = Biome.CalculateTerrainType(cell, temperature, moisture, elevationMaximum, waterLevel);
 				cell.TerrainType = biome;
+			}
+		}
 
-				/*
-				if (!cell.IsUnderwater)
+		void GenerateHexCollections()
+		{
+			var tempCollections = new List<HexCollection>();
+			var cellsCopy = new List<HexCell>(grid.cells);
+			foreach(var type in System.Enum.GetValues(typeof(BiomeTerrainType)))
+			{
+				var terrainType = (BiomeTerrainType)type;
+				var matchingCells = cellsCopy.Where(x => MatchTerrainTypes(terrainType, x.TerrainType)).ToList();
+				foreach(var c in matchingCells)
 				{
-					int t = 0;
-					for (; t < temperatureBands.Length; t++)
-					{
-						if (temperature < temperatureBands[t])
-						{
-							break;
-						}
-					}
-					int m = 0;
-					for (; m < moistureBands.Length; m++)
-					{
-						if (moisture < moistureBands[m])
-						{
-							break;
-						}
-					}
-					HexBiome cellBiome = biomes[t * 4 + m];
-
-					if (cellBiome.terrain == 0)
-					{
-						if (cell.Elevation >= rockDesertElevation)
-						{
-							cellBiome.terrain = 3;
-						}
-					}
-					else if (cell.Elevation == elevationMaximum)
-					{
-						cellBiome.terrain = 4;
-					}
-
-					if (cellBiome.terrain == 4)
-					{
-						cellBiome.plant = 0;
-					}
-					else if (cellBiome.plant < 3 && cell.HasRiver)
-					{
-						cellBiome.plant += 1;
-					}
-
-					cell.TerrainTypeIndex = cellBiome.terrain;
-					cell.PlantLevel = cellBiome.plant;
+					cellsCopy.Remove(c);
 				}
-				else
+
+				while(matchingCells.Count > 0)
 				{
-					int terrain;
-					if (cell.Elevation == waterLevel - 1)
-					{
-						int cliffs = 0, slopes = 0;
-						for (
-							HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++
-						)
-						{
-							HexCell neighbor = cell.GetNeighbor(d);
-							if (!neighbor)
-							{
-								continue;
-							}
-							int delta = neighbor.Elevation - cell.WaterLevel;
-							if (delta == 0)
-							{
-								slopes += 1;
-							}
-							else if (delta > 0)
-							{
-								cliffs += 1;
-							}
-						}
-
-						if (cliffs + slopes > 3)
-						{
-							terrain = 1;
-						}
-						else if (cliffs > 0)
-						{
-							terrain = 3;
-						}
-						else if (slopes > 0)
-						{
-							terrain = 0;
-						}
-						else
-						{
-							terrain = 1;
-						}
-					}
-					else if (cell.Elevation >= waterLevel)
-					{
-						terrain = 1;
-					}
-					else if (cell.Elevation < 0)
-					{
-						terrain = 3;
-					}
-					else
-					{
-						terrain = 2;
-					}
-
-					if (terrain == 1 && temperature < temperatureBands[0])
-					{
-						terrain = 2;
-					}
-					cell.TerrainTypeIndex = terrain;
+					var cell = matchingCells.First();
+					matchingCells.Remove(cell);
+					var collection = CreateNewHexCollection();
+					collection.AffiliatedTerrainType = terrainType;
+					CompileCollection(cell, ref matchingCells, ref collection);
+					collection.Initialize(grid);
+					tempCollections.Add(collection);
 				}
-				*/
+			}
+		}
+
+		HexCollection CreateNewHexCollection()
+		{
+			var hexCollection = new HexCollection();
+			EventManager.Instance.Dispatch(new AddContextEvent(hexCollection, true));
+			return hexCollection;
+		}
+
+		void CompileCollection(HexCell cell, ref List<HexCell> matchingCells, ref HexCollection hexCollection)
+		{
+			hexCollection.cellCollection.Add(cell.Index);
+			var matchingNeighbors = new List<HexCell>();
+
+			for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
+			{
+				HexCell neighbor = cell.GetNeighbor(d);
+				if (neighbor && matchingCells.Contains(neighbor))
+				{
+					matchingNeighbors.Add(neighbor);
+				}
+			}
+
+			foreach(var neighbor in matchingNeighbors)
+			{
+				matchingCells.Remove(neighbor);
+			}
+
+			foreach(var neighbor in matchingNeighbors)
+			{
+				CompileCollection(neighbor, ref matchingCells, ref hexCollection);
+			}
+		}
+
+		bool MatchTerrainTypes(BiomeTerrainType key, BiomeTerrainType value)
+		{
+			if(Biome.BiomeMatches.TryGetValue(key, out var list))
+			{
+				return list.Contains(value);
+			}
+			else
+			{
+				return false;
 			}
 		}
 

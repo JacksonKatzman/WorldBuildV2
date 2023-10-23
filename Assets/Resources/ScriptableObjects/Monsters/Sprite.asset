@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Sprite
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Sprite
+  legendary: 0
+  landDwelling: 1
+  size: 0
+  type: 6
+  alignment: 3
+  challengeRating: 0.25
+  experienceYield: 50
+  proficiencyBonus: 0
+  armorValue: 15
+  armorType: (leather armor)
+  health: 2
+  speed: 10
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 40
+  passivePerception: 13
+  stats:
+    strength: 3
+    dexterity: 18
+    constitution: 10
+    intelligence: 14
+    wisdom: 13
+    charisma: 11
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +3
+  - Stealth +8
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Common
+  - Elvish
+  - Sylvan
+  abilities: []
+  actions:
+  - actionName: Longsword
+    actionDescription: 'Melee Weapon Attack: +2 to hit, reach 5 ft., one target.
+      Hit: 1 slashing damage.
+
+'
+  - actionName: Shortbow
+    actionDescription: 'Ranged Weapon Attack: +6 to hit, range 40/160 ft., one target.
+      Hit: 1 piercing damage, and the target must succeed on a DC 10 Constitution
+      saving throw or become poisoned for 1 minute. If its saving throw result is
+      5 or lower, the poisoned target falls unconscious for the same duration, or
+      until it takes damage or another creature takes an action to shake it awake.
+
+'
+  - actionName: Heart Sight
+    actionDescription: 'The sprite touches a creature and magically knows the creature''s
+      current emotional state. If the target fails a DC 10 Charisma saving throw,
+      the sprite also knows the creature''s alignment. Celestials, fiends, and undead
+      automatically fail the saving throw.
+
+'
+  - actionName: Invisibility
+    actionDescription: 'The sprite magically turns invisible until it attacks or
+      casts a spell, or until its concentration ends (as if concentrating on a spell).
+      Any equipment the sprite wears or carries is invisible with it.
+
+'
+  legendaryActions: []
+  requiredGender: 2

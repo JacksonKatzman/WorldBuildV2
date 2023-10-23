@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Roper
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Roper
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 5
+  challengeRating: 5
+  experienceYield: 1800
+  proficiencyBonus: 0
+  armorValue: 20
+  armorType: (natural armor)
+  health: 93
+  speed: 10
+  climbSpeed: 10
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 16
+  stats:
+    strength: 18
+    dexterity: 8
+    constitution: 17
+    intelligence: 7
+    wisdom: 16
+    charisma: 6
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +6
+  - Stealth +5
+  senses: []
+  groupingName: 
+  sounds: []
+  languages: []
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The roper makes four attacks with its tendrils, uses Reel,
+      and makes one attack with its bite.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 22 (4d8 + 4) piercing damage.
+
+'
+  - actionName: Tendril
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 50 ft., one creature.
+      Hit: The target is grappled (escape DC 15). Until the grapple ends, the target
+      is restrained and has disadvantage on Strength checks and Strength saving throws,
+      and the roper can''t use the same tendril on another target.
+
+'
+  - actionName: Reel
+    actionDescription: 'The roper pulls each creature grappled by it up to 25 ft.
+      straight toward it.
+
+'
+  legendaryActions: []
+  requiredGender: 2

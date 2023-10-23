@@ -12,6 +12,7 @@ namespace Game.Incidents
 		int ParentID { get; }
 		void UpdateContext();
 		void DeployContext();
+		void CheckForDeath();
 		void Die();
 		void LoadContextProperties();
 		void UpdateHistoricalData();

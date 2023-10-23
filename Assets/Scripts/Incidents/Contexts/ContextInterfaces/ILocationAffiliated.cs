@@ -13,7 +13,7 @@ namespace Game.Incidents
 	{
 		public static HexCell GetHexCell(this ILocationAffiliated location)
 		{
-			return SimulationManager.Instance.HexGrid.GetCell(location.CurrentLocation.ID);
+			return SimulationManager.Instance.HexGrid.GetCell(location.CurrentLocation.TileIndex);
 		}
 
 		public static int GetDistanceBetweenLocations(this ILocationAffiliated from, ILocationAffiliated to)

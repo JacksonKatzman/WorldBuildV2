@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Lizardfolk Shaman
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Lizardfolk Shaman
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 4
+  challengeRating: 2
+  experienceYield: 450
+  proficiencyBonus: 0
+  armorValue: 13
+  armorType: (natural armor)
+  health: 27
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 30
+  flySpeed: 0
+  passivePerception: 14
+  stats:
+    strength: 15
+    dexterity: 10
+    constitution: 13
+    intelligence: 10
+    wisdom: 15
+    charisma: 8
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +4
+  - Stealth +4
+  - Survival +6
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Draconic
+  abilities: []
+  actions:
+  - actionName: Multiattack (Lizardfolk Form Only)
+    actionDescription: 'The lizardfolk makes two attacks: one with its bite and one
+      with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage, or 7 (1d10 + 2) piercing damage in crocodile
+      form. If the lizardfolk is in crocodile form and the target is a Large or smaller
+      creature, the target is grappled (escape DC 12). Until this grapple ends, the
+      target is restrained, and the lizardfolk can''t bite another target. If the
+      lizardfolk reverts to its true form, the grapple ends.
+
+'
+  - actionName: Claws (Lizardfolk Form Only)
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 4 (1d4 + 2) slashing damage.
+
+'
+  - actionName: Change Shape (Recharges after a Short or Long Rest)
+    actionDescription: 'The lizardfolk magically polymorphs into a crocodile, remaining
+      in that form for up to 1 hour. It can revert to its true form as a bonus action.
+      Its statistics, other than its size, are the same in each form. Any equipment
+      it is wearing or carrying isn''t transformed. It reverts to its true form if
+      it dies.
+
+'
+  legendaryActions: []
+  requiredGender: 2

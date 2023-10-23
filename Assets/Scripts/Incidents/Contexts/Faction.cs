@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using UnityEngine;
+using HexDirection = Game.Terrain.HexDirection;
 
 namespace Game.Incidents
 {
@@ -42,7 +43,7 @@ namespace Game.Incidents
 		public int MilitaryPower { get; set; }
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		virtual public int ControlledTiles => ControlledTileIndices.Count;
-		public int InfluenceForNextTile => ControlledTiles * 2 + 1;
+		public int InfluenceForNextTile => (ControlledTiles * 2)/3 + 1;
 		[ES3Serializable]
 		public List<City> Cities { get; set; }
 		public City Capitol => Cities.Count > 0? Cities[0] : null;
@@ -109,27 +110,27 @@ namespace Game.Incidents
 
 		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace, Character creator = null) : this()
 		{
-			AttemptExpandBorder(startingTiles);
 			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<IIncidentContext>();
-			
-			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
-			Name = namingTheme.GenerateFactionName();
-
-			CreateStartingCity(startingPopulation);
-			CreateStartingGovernment(startingMajorityRace, creator);
-
-			//PoliticalPriority = SimRandom.RandomRange(1, 4);
-			//ReligiousPriority = SimRandom.RandomRange(1, 4);
-			//EconomicPriority = SimRandom.RandomRange(1, 4);
-			//MilitaryPriority = SimRandom.RandomRange(1, 4);
 
 			Priorities = new Dictionary<OrganizationType, int>();
 			Priorities[OrganizationType.POLITICAL] = SimRandom.RandomRange(1, 4);
 			Priorities[OrganizationType.ECONOMIC] = SimRandom.RandomRange(1, 4);
 			Priorities[OrganizationType.RELIGIOUS] = SimRandom.RandomRange(1, 4);
 			Priorities[OrganizationType.MILITARY] = SimRandom.RandomRange(1, 4);
+
+			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
+			//Name = namingTheme.GenerateFactionName();
+			Name = (ContextDictionaryProvider.AllContexts[typeof(Faction)].Count + 1).ToString();
+
+			ClaimFirstCell(startingPopulation);
+			if(startingTiles > 1)
+			{
+				AttemptExpandBorder(startingTiles - 1);
+			}
+
+			CreateStartingGovernment(startingMajorityRace, creator);
 		}
 
 		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles = 1, Character creator = null) : this(startingTiles, population, race, creator)
@@ -157,10 +158,7 @@ namespace Game.Incidents
 				IncidentService.Instance.PerformIncidents((Faction)this);
 			}
 
-			if (CheckDestroyed())
-			{
-				Die();
-			}
+			CheckForDeath();
 		}
 		override public void UpdateContext()
 		{
@@ -171,11 +169,20 @@ namespace Game.Incidents
 			UpdateNumIncidents();
 		}
 
+		public override void CheckForDeath()
+		{
+			if (CheckDestroyed())
+			{
+				Die();
+			}
+		}
+
 		override public void Die()
 		{
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 			Government.Die();
+			IncidentService.Instance.ReportStaticIncident(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>{0} is wiped out!", new List<IIncidentContext>() { this }, true);
 		}
 
 		public void CreateStartingCity(int startingPopulation)
@@ -184,31 +191,37 @@ namespace Game.Incidents
 			var location = new Location(SimRandom.RandomEntryFromList(cells));
 			var city = new City(this, location, startingPopulation, 0);
 			Cities.Add(city);
-			EventManager.Instance.Dispatch(new AddContextEvent(city));
+			EventManager.Instance.Dispatch(new AddContextEvent(city, true));
 		}
 
 		public void CreateStartingGovernment(Race majorityStartingRace, Character creator = null)
 		{
 			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL, creator);
-			EventManager.Instance.Dispatch(new AddContextEvent(Government, typeof(Organization)));
+			EventManager.Instance.Dispatch(new AddContextEvent(Government, typeof(Organization), true));
 		}
 
-		public bool AttemptExpandBorder(int numTimes)
+		public bool ClaimFirstCell(int startingPopulation)
 		{
-			HexCellPriorityQueue searchFrontier = new HexCellPriorityQueue();
-			int searchFrontierPhase = 1;
-			int size = 0;
-
 			if (ControlledTileIndices == null)
 			{
 				ControlledTileIndices = new List<int>();
 			}
 			if (ControlledTileIndices.Count == 0)
 			{
-				if (SimulationUtilities.GetRandomUnclaimedCellIndex(out var index))
+				//var possibleTiles = SimulationUtilities.GetAllCellsWithDistanceFromCity(10, 15);
+				var possibleTiles = SimulationUtilities.SecondTry(8);
+				if (possibleTiles.Count > 0)
+				{
+					var tile = SimRandom.RandomEntryFromList(possibleTiles);
+					ControlledTileIndices.Add(tile.Index);
+					CreateStartingCity(startingPopulation);
+					return true;
+				}
+				else if (SimulationUtilities.GetRandomUnclaimedCellIndex(out var index))
 				{
 					ControlledTileIndices.Add(index);
-					size++;
+					CreateStartingCity(startingPopulation);
+					return true;
 				}
 				else
 				{
@@ -216,6 +229,15 @@ namespace Game.Incidents
 					return false;
 				}
 			}
+			return false;
+		}
+
+		public bool AttemptExpandBorder(int numTimes)
+		{
+			//return true;
+			HexCellPriorityQueue searchFrontier = new HexCellPriorityQueue();
+			int searchFrontierPhase = 1;
+			int size = 0;
 
 			HexCell firstCell = SimulationManager.Instance.HexGrid.GetCell(ControlledTileIndices[0]);
 			firstCell.SearchPhase = searchFrontierPhase;
@@ -227,10 +249,16 @@ namespace Game.Incidents
 			while (size < numTimes && searchFrontier.Count > 0)
 			{
 				HexCell current = searchFrontier.Dequeue();
-				if (SimulationUtilities.IsCellIndexUnclaimed(current.Index))
+				var claimedCells = SimulationUtilities.GetClaimedCells();
+				var outsideBorder = SimulationUtilities.FindBorderOutsideFaction(this);
+				if (!claimedCells.Contains(current.Index))
 				{
 					ControlledTileIndices.Add(current.Index);
 					size++;
+					if(size >= numTimes)
+					{
+						break;
+					}
 				}
 
 				for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
@@ -241,7 +269,14 @@ namespace Game.Incidents
 						neighbor.SearchPhase = searchFrontierPhase;
 						neighbor.Distance = neighbor.coordinates.DistanceTo(center);
 						neighbor.SearchHeuristic = SimRandom.RandomFloat01() < 0.25f ? 1 : 0;
-						searchFrontier.Enqueue(neighbor);
+
+						if((outsideBorder.Contains(neighbor.Index) || ControlledTileIndices.Contains(neighbor.Index)) )
+						{
+							if(CouldCaptureCell(neighbor))
+							{
+								searchFrontier.Enqueue(neighbor);
+							}
+						}
 					}
 				}
 			}
@@ -249,6 +284,30 @@ namespace Game.Incidents
 			SimulationManager.Instance.HexGrid.ResetSearchPhases();
 
 			return size != 0;
+		}
+
+		private bool CouldCaptureCell(HexCell cell)
+		{
+			if (SimulationUtilities.GetClaimedCellsNotClaimedByFaction(this).Contains(cell.Index))
+			{
+				return false;
+			}
+			if (cell.IsUnderwater)
+			{
+				var adjacentLandCount = 0;
+				for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
+				{
+					HexCell neighbor = cell.GetNeighbor(d);
+					if(!neighbor.IsUnderwater)
+					{
+						adjacentLandCount++;
+					}
+				}
+
+				return adjacentLandCount >= 4;
+			}
+
+			return true;
 		}
 
 		public override void LoadContextProperties()
@@ -291,6 +350,10 @@ namespace Game.Incidents
 				if(Cities != null && Cities.Contains((City)gameEvent.context))
 				{
 					Cities.Remove((City)gameEvent.context);
+					if (CheckDestroyed())
+					{
+						Die();
+					}
 				}
 			}
 		}
@@ -319,9 +382,38 @@ namespace Game.Incidents
 			return result;
 		}
 
+		public void ClaimTerritoryBetweenCities()
+		{
+			var faction = this;
+			var cityHexes = new List<HexCell>();
+			foreach (var city in faction.Cities)
+			{
+				cityHexes.Add(city.CurrentLocation.GetHexCell());
+			}
+
+			var centroid = SimulationUtilities.GetCentroid(cityHexes);
+
+			var totalDistance = 0;
+			foreach (var city in faction.Cities)
+			{
+				totalDistance += city.CurrentLocation.GetHexCell().coordinates.DistanceTo(centroid.coordinates);
+			}
+			var averageDistance = totalDistance / faction.Cities.Count;
+
+			var hexes = SimulationUtilities.GetAllCellsInRange(centroid, averageDistance);
+			var claimedCells = SimulationUtilities.GetClaimedCells();
+			foreach (var hex in hexes)
+			{
+				if (!claimedCells.Contains(hex.Index))
+				{
+					faction.ControlledTileIndices.Add(hex.Index);
+				}
+			}
+		}
+
 		private void UpdateInfluence()
 		{
-			Influence += 3;
+			Influence += (5 + PoliticalPriority/3);
 		}
 
 		private void UpdateWealth()

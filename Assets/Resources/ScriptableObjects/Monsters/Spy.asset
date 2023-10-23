@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Spy
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Spy
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 10
+  challengeRating: 1
+  experienceYield: 200
+  proficiencyBonus: 0
+  armorValue: 12
+  armorType: 
+  health: 27
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 16
+  stats:
+    strength: 10
+    dexterity: 15
+    constitution: 10
+    intelligence: 12
+    wisdom: 14
+    charisma: 16
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Deception +5
+  - Insight +4
+  - Investigation +5
+  - Perception +6
+  - Persuasion +5
+  - Hand +4
+  - Stealth +4
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - any two languages
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The spy makes two melee attacks.
+
+'
+  - actionName: Shortsword
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
+  - actionName: Hand Crossbow
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 30/120 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

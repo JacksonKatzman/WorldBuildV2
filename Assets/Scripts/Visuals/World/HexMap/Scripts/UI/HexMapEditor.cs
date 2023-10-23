@@ -274,7 +274,8 @@ namespace Game.Terrain
 				}
 				if (applySpecialIndex)
 				{
-					cell.LandmarkType = (LandmarkType)activeSpecialIndex;
+					//need to later replace with way to get presets from asset service
+					//cell.LandmarkType = (LandmarkType)activeSpecialIndex;
 				}
 				if (applyUrbanLevel)
 				{

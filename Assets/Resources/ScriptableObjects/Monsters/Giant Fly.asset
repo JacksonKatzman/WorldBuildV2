@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Giant Fly
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Giant Fly
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 1
+  alignment: 9
+  challengeRating: 0
+  experienceYield: 10
+  proficiencyBonus: 0
+  armorValue: 11
+  armorType: 
+  health: 19
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 60
+  passivePerception: 10
+  stats:
+    strength: 14
+    dexterity: 13
+    constitution: 13
+    intelligence: 2
+    wisdom: 10
+    charisma: 3
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages: []
+  abilities: []
+  actions: []
+  legendaryActions: []
+  requiredGender: 2

@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Mud Mephit
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Mud Mephit
+  legendary: 0
+  landDwelling: 1
+  size: 1
+  type: 5
+  alignment: 5
+  challengeRating: 0.25
+  experienceYield: 50
+  proficiencyBonus: 0
+  armorValue: 11
+  armorType: 
+  health: 27
+  speed: 20
+  climbSpeed: 0
+  swimSpeed: 20
+  flySpeed: 20
+  passivePerception: 10
+  stats:
+    strength: 8
+    dexterity: 12
+    constitution: 12
+    intelligence: 9
+    wisdom: 11
+    charisma: 7
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
+  skills:
+  - Stealth +3
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Aquan
+  - Terran
+  abilities: []
+  actions:
+  - actionName: Fists
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one creature.
+      Hit: 4 (1d6 + 1) bludgeoning damage.
+
+'
+  - actionName: Mud Breath (Recharge 6)
+    actionDescription: 'The mephit belches viscid mud onto one creature within 5
+      ft. of it. If the target is Medium or smaller, it must succeed on a DC 11 Dexterity
+      saving throw or be restrained for 1 minute. A creature can repeat the saving
+      throw at the end of each of its turns, ending the effect on itself on a success.
+
+'
+  - actionName: 'Variant: Summon Mephits (1/Day)'
+    actionDescription: 'The mephit has a 25 percent chance of summoning 1d4 mephits
+      of its kind. A summoned mephit appears in an unoccupied space within 60 feet
+      of its summoner, acts as an ally of its summoner, and can''t summon other mephits.
+      It remains for 1 minute, until it or its summoner dies, or until its summoner
+      dismisses it as an action.
+
+'
+  legendaryActions: []
+  requiredGender: 2

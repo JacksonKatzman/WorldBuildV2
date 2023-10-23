@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Yuan-ti Malison Type 1
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Yuan-ti Malison Type 1
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 10
+  alignment: 5
+  challengeRating: 3
+  experienceYield: 700
+  proficiencyBonus: 0
+  armorValue: 12
+  armorType: 
+  health: 66
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 11
+  stats:
+    strength: 16
+    dexterity: 14
+    constitution: 13
+    intelligence: 14
+    wisdom: 12
+    charisma: 16
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
+  skills:
+  - Deception +5
+  - Stealth +4
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Abyssal
+  - Common
+  - Draconic
+  abilities: []
+  actions:
+  - actionName: Multiattack (Yuan_ti Form Only)
+    actionDescription: 'The yuan_ti makes two ranged attacks or two melee attacks,
+      but can use its bite only once.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one creature.
+      Hit: 5 (1d4 + 3) piercing damage plus 7 (2d6) poison damage.
+
+'
+  - actionName: Scimitar (Yuan_ti Form Only)
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 6 (1d6 + 3) slashing damage.
+
+'
+  - actionName: Longbow (Yuan_ti Form Only)
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 150/600 ft., one target.
+      Hit: 6 (1d8 + 2) piercing damage plus 7 (2d6) poison damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

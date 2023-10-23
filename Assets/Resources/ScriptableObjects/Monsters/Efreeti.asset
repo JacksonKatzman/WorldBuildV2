@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Efreeti
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Efreeti
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 5
+  alignment: 2
+  challengeRating: 11
+  experienceYield: 7200
+  proficiencyBonus: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 200
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 60
+  passivePerception: 12
+  stats:
+    strength: 22
+    dexterity: 12
+    constitution: 24
+    intelligence: 16
+    wisdom: 15
+    charisma: 16
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 7
+    wisdom: 6
+    charisma: 7
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 05000000
+  conditionImmunities: 
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Ignan
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The efreeti makes two scimitar attacks or uses its Hurl Flame
+      twice.
+
+'
+  - actionName: Scimitar
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 5 ft., one target.
+      Hit: 13 (2d6 + 6) slashing damage plus 7 (2d6) fire damage.
+
+'
+  - actionName: Hurl Flame
+    actionDescription: 'Ranged Spell Attack: +7 to hit, range 120 ft., one target.
+      Hit: 17 (5d6) fire damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

@@ -65,7 +65,7 @@ namespace Game.Incidents
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)
 		{
-			return faction.actionField.CalculateField(context) && race.actionField.CalculateField(context);
+			return faction.actionField.CalculateField(context) && race.actionField.CalculateField(context) && parent.CalculateField(context);
 		}
 	}
 }

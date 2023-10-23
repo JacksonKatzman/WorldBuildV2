@@ -42,8 +42,8 @@ namespace Game.Incidents
             {
                 var faction = actionField.GetTypedFieldValue();
                 faction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
-                faction.AttemptExpandBorder(1);
-                EventManager.Instance.Dispatch(new AddContextEvent(faction));
+                //faction.AttemptExpandBorder(1);
+                EventManager.Instance.Dispatch(new AddContextEvent(faction, false));
             }
             
             base.Complete();

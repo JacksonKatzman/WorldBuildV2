@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Mezzoloth
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Mezzoloth
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 7
+  alignment: 5
+  challengeRating: 5
+  experienceYield: 1800
+  proficiencyBonus: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 75
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 13
+  stats:
+    strength: 18
+    dexterity: 11
+    constitution: 16
+    intelligence: 7
+    wisdom: 10
+    charisma: 11
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 0600000005000000090000000200000001000000000000000d000000
+  damageImmunities: 0400000003000000
+  conditionImmunities: 09000000
+  skills:
+  - Perception +3
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Abyssal
+  - Infernal
+  - telepathy 60 ft.
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The mezzoloth makes two attacks: one with its claws and one
+      with its trident.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 9 (2d4 + 4) slashing damage.
+
+'
+  - actionName: Trident
+    actionDescription: 'Melee or Ranged Weapon Attack: +7 to hit, reach 5 ft. or
+      range 20/60 ft., one target. Hit: 7 (1d6 + 4) piercing damage, or 8 (1d8 +
+      4) piercing damage when held with two claws and used to make a melee attack.
+
+'
+  - actionName: Teleport
+    actionDescription: 'The mezzoloth magically teleports, along with any equipment
+      it is wearing or carrying, up to 60 feet to an unoccupied space it can see.
+
+'
+  - actionName: 'Variant: Summon Yugoloth (1/Day)'
+    actionDescription: 'The yugoloth attempts a magical summoning.
+
+      A mezzoloth
+      has a 30 percent chance of summoning one mezzoloth.
+
+      A summoned yugoloth
+      appears in an unoccupied space within 60 feet of its summoner, does as it pleases,
+      and can''t summon other yugoloths. The summoned yugoloth remains for 1 minute,
+      until it or its summoner dies, or until its summoner takes a bonus action to
+      dismiss it.
+
+'
+  legendaryActions: []
+  requiredGender: 2

@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Goblin
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Goblin
+  legendary: 0
+  landDwelling: 1
+  size: 1
+  type: 9
+  alignment: 5
+  challengeRating: 0.25
+  experienceYield: 50
+  proficiencyBonus: 0
+  armorValue: 15
+  armorType: (leather armor, shield)
+  health: 7
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 9
+  stats:
+    strength: 8
+    dexterity: 14
+    constitution: 10
+    intelligence: 10
+    wisdom: 8
+    charisma: 8
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Stealth +6
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Common
+  - Goblin
+  abilities: []
+  actions:
+  - actionName: Scimitar
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) slashing damage.
+
+'
+  - actionName: Shortbow
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

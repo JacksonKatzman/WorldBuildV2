@@ -124,6 +124,11 @@ namespace Game.Incidents
 			
 		}
 
+		public override void CheckForDeath()
+		{
+
+		}
+
 		public override void Die()
 		{
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));

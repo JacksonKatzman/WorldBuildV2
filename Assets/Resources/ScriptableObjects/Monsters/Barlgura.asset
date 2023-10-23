@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Barlgura
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Barlgura
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 7
+  alignment: 8
+  challengeRating: 5
+  experienceYield: 1800
+  proficiencyBonus: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 68
+  speed: 40
+  climbSpeed: 40
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 15
+  stats:
+    strength: 18
+    dexterity: 15
+    constitution: 16
+    intelligence: 7
+    wisdom: 14
+    charisma: 9
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 5
+    constitution: 6
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 060000000500000009000000
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
+  skills:
+  - Perception +5
+  - Stealth +5
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Abyssal
+  - telepathy 120 ft.
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The barlgura makes three attacks: one with its bite and two
+      with its fists.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) piercing damage.
+
+'
+  - actionName: Fist
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 9 (1d10 + 4) bludgeoning damage.
+
+'
+  - actionName: 'Variant: Summon Demon (1/Day)'
+    actionDescription: 'The demon chooses what to summon and attempts a magical summoning.
+
+      A
+      barlgura has a 30 percent chance of summoning one barlgura.
+
+      A summoned
+      demon appears in an unoccupied space within 60 feet of its summoner, acts as
+      an ally of its summoner, and can''t summon other demons. It remains for 1 minute,
+      until it or its summoner dies, or until its summoner dismisses it as an action.
+
+'
+  legendaryActions: []
+  requiredGender: 2

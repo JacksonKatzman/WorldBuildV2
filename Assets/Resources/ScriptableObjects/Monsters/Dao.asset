@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Dao
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Dao
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 5
+  alignment: 5
+  challengeRating: 11
+  experienceYield: 7200
+  proficiencyBonus: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 187
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 30
+  passivePerception: 11
+  stats:
+    strength: 23
+    dexterity: 12
+    constitution: 24
+    intelligence: 12
+    wisdom: 13
+    charisma: 14
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 5
+    wisdom: 5
+    charisma: 6
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 08000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Terran
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The Dao makes two fist attacks or two maul attacks.
+
+'
+  - actionName: Fist
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 5 ft., one target.
+      Hit: 15 (2d8 + 6) bludgeoning damage.
+
+'
+  - actionName: Maul
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 5 ft., one target.
+      Hit: 20 (4d6 + 6) bludgeoning damage. If the target is a Huge or smaller creature,
+      it must succeed on a DC 18 Strength check or be knocked prone.
+
+'
+  legendaryActions: []
+  requiredGender: 2

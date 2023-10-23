@@ -49,15 +49,16 @@ namespace Game.Simulation
 		public IncidentContextDictionary CurrentContexts => world.CurrentContexts;
 		public IncidentContextDictionary AllContexts => world.AllContexts;
 
-		public void CreateWorld(List<FactionPreset> factions, SimulationOptions options)
+		public void CreateWorld(SimulationOptions options)
 		{
 			IncidentService.Instance.Setup();
 			UserInterfaceService.Instance.incidentWiki.Clear();
 			ContextDictionaryProvider.SetContextsProviders(() => CurrentContexts, () => AllContexts);
+			ContextDictionaryProvider.AllowImmediateChanges = true;
 
-			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
 			world = new World();
-			world.Initialize(factions, options);
+			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
+			world.Initialize(options);
 			var test = AdventureService.Instance;
 		}
 
@@ -83,6 +84,7 @@ namespace Game.Simulation
 		public void LoadWorld(string mapName)
 		{
 			ContextDictionaryProvider.SetContextsProviders(() => CurrentContexts, () => AllContexts);
+			ContextDictionaryProvider.AllowImmediateChanges = true;
 
 			if (string.IsNullOrEmpty(mapName))
 			{
@@ -105,15 +107,16 @@ namespace Game.Simulation
 			EventManager.Instance.Dispatch(new ShowLoadingScreenEvent("Generating World"));
 
 			var startTime = Time.realtimeSinceStartup;
-			//await Task.Run(() => RunSimulation());
+
 			await RunSimulationWithCancellation(cancellationTokenSource.Token);
 			await CompileWikiWithCancellation(cancellationTokenSource.Token);
 			var simTime = Time.realtimeSinceStartup - startTime;
 			OutputLogger.Log("TIME TO SIM: " + simTime);
-			//UserInterfaceService.Instance.incidentWiki.InitializeWiki();
 
 			EventManager.Instance.Dispatch(new HideLoadingScreenEvent());
 
+			UniTask.ReturnToMainThread();
+			world.PostSimulationCleanup();
 			world.BeginPostGeneration();
 		}
 

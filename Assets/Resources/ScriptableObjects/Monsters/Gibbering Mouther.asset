@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Gibbering Mouther
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Gibbering Mouther
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 0
+  alignment: 4
+  challengeRating: 2
+  experienceYield: 450
+  proficiencyBonus: 0
+  armorValue: 9
+  armorType: 
+  health: 67
+  speed: 10
+  climbSpeed: 0
+  swimSpeed: 10
+  flySpeed: 0
+  passivePerception: 10
+  stats:
+    strength: 10
+    dexterity: 8
+    constitution: 16
+    intelligence: 3
+    wisdom: 10
+    charisma: 6
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 0a000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages: []
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The gibbering mouther makes one bite attack and, if it can,
+      uses its Blinding Spittle.
+
+'
+  - actionName: Bites
+    actionDescription: 'Melee Weapon Attack: +2 to hit, reach 5 ft., one creature.
+      Hit: 17 (5d6) piercing damage. If the target is Medium or smaller, it must
+      succeed on a DC 10 Strength saving throw or be knocked prone. If the target
+      is killed by this damage, it is absorbed into the mouther.
+
+'
+  - actionName: Blinding Spittle (Recharge 5-6)
+    actionDescription: 'The mouther spits a chemical glob at a point it can see within
+      15 feet of it. The glob explodes in a blinding flash of light on impact. Each
+      creature within 5 feet of the flash must succeed on a DC 13 Dexterity saving
+      throw or be blinded until the end of the mouther''s next turn.
+
+'
+  legendaryActions: []
+  requiredGender: 2

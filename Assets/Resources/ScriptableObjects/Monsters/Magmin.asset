@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Magmin
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Magmin
+  legendary: 0
+  landDwelling: 1
+  size: 1
+  type: 5
+  alignment: 7
+  challengeRating: 0.5
+  experienceYield: 100
+  proficiencyBonus: 0
+  armorValue: 14
+  armorType: (natural armor)
+  health: 9
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 10
+  stats:
+    strength: 7
+    dexterity: 15
+    constitution: 12
+    intelligence: 8
+    wisdom: 11
+    charisma: 10
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 0200000001000000000000000d000000
+  damageImmunities: 05000000
+  conditionImmunities: 
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Ignan
+  abilities: []
+  actions:
+  - actionName: Touch
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 7 (2d6) fire damage. If the target is a creature or a flammable object,
+      it ignites. Until a target takes an action to douse the fire, the target takes
+      3 (1d6) fire damage at the end of each of its turns.
+
+'
+  legendaryActions: []
+  requiredGender: 2

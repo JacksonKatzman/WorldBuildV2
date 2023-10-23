@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Bone Devil
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Bone Devil
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 7
+  alignment: 2
+  challengeRating: 12
+  experienceYield: 8400
+  proficiencyBonus: 0
+  armorValue: 19
+  armorType: (natural armor)
+  health: 142
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 40
+  passivePerception: 9
+  stats:
+    strength: 18
+    dexterity: 16
+    constitution: 18
+    intelligence: 13
+    wisdom: 14
+    charisma: 16
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 5
+    wisdom: 6
+    charisma: 7
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 060000000200000001000000000000000d000000
+  damageImmunities: 0500000003000000
+  conditionImmunities: 09000000
+  skills:
+  - Deception +7
+  - Insight +6
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Infernal
+  - telepathy 120 ft.
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The devil makes three attacks: two with its claws and one
+      with its sting.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 10 ft., one target.
+      Hit: 8 (1d8 + 4) slashing damage.
+
+'
+  - actionName: Sting
+    actionDescription: 'Melee Weapon Attack: +8 to hit, reach 10 ft., one target.
+      Hit: 13 (2d8 + 4) piercing damage plus 17 (5d6) poison damage, and the target
+      must succeed on a DC 14 Constitution saving throw or become poisoned for 1
+      minute. The target can repeat the saving throw at the end of each of its turns,
+      ending the effect on itself on a success .
+
+'
+  legendaryActions: []
+  requiredGender: 2

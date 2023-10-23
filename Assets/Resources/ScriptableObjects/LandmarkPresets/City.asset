@@ -23,4 +23,3 @@ MonoBehaviour:
     SerializationNodes: []
   models:
   - {fileID: 4000013750885840, guid: f2967fed6444e43559e32916c2465d27, type: 3}
-  - {fileID: 4000011263270592, guid: cb7be9a74fd6e4cbdb5be2ac7319e699, type: 3}

@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Killer Whale
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Killer Whale
+  legendary: 0
+  landDwelling: 0
+  size: 4
+  type: 1
+  alignment: 9
+  challengeRating: 3
+  experienceYield: 700
+  proficiencyBonus: 0
+  armorValue: 12
+  armorType: (natural armor)
+  health: 90
+  speed: 0
+  climbSpeed: 0
+  swimSpeed: 60
+  flySpeed: 0
+  passivePerception: 13
+  stats:
+    strength: 19
+    dexterity: 10
+    constitution: 13
+    intelligence: 3
+    wisdom: 12
+    charisma: 7
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +3
+  senses: []
+  groupingName: 
+  sounds: []
+  languages: []
+  abilities: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 21 (5d6 + 4) piercing damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

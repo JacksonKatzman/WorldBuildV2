@@ -21,8 +21,17 @@
       "$values": []
     }
   },
-  "ActionContainer": {
+  "WorldCriteria": {
     "$id": "4",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Auto-asmdef-SecondPass",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Auto-asmdef-SecondPass]], mscorlib",
+      "$values": []
+    }
+  },
+  "IsMajorIncident": true,
+  "ActionContainer": {
+    "$id": "5",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
     "incidentLog": "{0} falls off {POSP:0} horse. {SUBP:0} injures {POSP:0} foot.",
     "Actions": {

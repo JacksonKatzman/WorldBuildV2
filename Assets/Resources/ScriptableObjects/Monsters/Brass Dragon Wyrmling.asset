@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Brass Dragon Wyrmling
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Brass Dragon Wyrmling
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 4
+  alignment: 6
+  challengeRating: 1
+  experienceYield: 200
+  proficiencyBonus: 0
+  armorValue: 16
+  armorType: (natural armor)
+  health: 16
+  speed: 15
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 60
+  passivePerception: 14
+  stats:
+    strength: 15
+    dexterity: 10
+    constitution: 13
+    intelligence: 10
+    wisdom: 11
+    charisma: 13
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 2
+    constitution: 3
+    intelligence: 0
+    wisdom: 2
+    charisma: 3
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 05000000
+  conditionImmunities: 
+  skills:
+  - Perception +4
+  - Stealth +2
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Draconic
+  abilities: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 7 (1d10 + 2) piercing damage.
+
+'
+  - actionName: Breath Weapons (Recharge 5-6)
+    actionDescription: 'The dragon uses one of the following breath weapons.
+
+      Fire
+      Breath. The dragon exhales fire in an 20-foot line that is 5 feet wide. Each
+      creature in that line must make a DC 11 Dexterity saving throw, taking 14 (4d6)
+      fire damage on a failed save, or half as much damage on a successful one.
+
+      Sleep
+      Breath. The dragon exhales sleep gas in a 15-foot cone. Each creature in that
+      area must succeed on a DC 11 Constitution saving throw or fall unconscious
+      for 1 minute. This effect ends for a creature if the creature takes damage
+      or someone uses an action to wake it.
+
+'
+  legendaryActions: []
+  requiredGender: 2

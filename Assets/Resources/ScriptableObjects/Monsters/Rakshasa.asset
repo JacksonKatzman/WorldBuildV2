@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Rakshasa
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Rakshasa
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 7
+  alignment: 2
+  challengeRating: 13
+  experienceYield: 10000
+  proficiencyBonus: 0
+  armorValue: 16
+  armorType: (natural armor)
+  health: 110
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 13
+  stats:
+    strength: 14
+    dexterity: 17
+    constitution: 18
+    intelligence: 13
+    wisdom: 16
+    charisma: 20
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 01000000
+  damageResistances: 
+  damageImmunities: 0200000001000000000000000d000000
+  conditionImmunities: 
+  skills:
+  - Deception +10
+  - Insight +8
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Common
+  - Infernal
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The rakshasa makes two claw attacks
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 9 (2d6 + 2) slashing damage, and the target is cursed if it is a creature.
+      The magical curse takes effect whenever the target takes a short or long rest,
+      filling the target''s thoughts with horrible images and dreams. The cursed
+      target gains no benefit from finishing a short or long rest. The curse lasts
+      until it is lifted by a remove curse spell or similar magic.
+
+'
+  legendaryActions: []
+  requiredGender: 2

@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Knight
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Knight
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 9
+  alignment: 10
+  challengeRating: 3
+  experienceYield: 700
+  proficiencyBonus: 0
+  armorValue: 18
+  armorType: (plate)
+  health: 52
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 10
+  stats:
+    strength: 16
+    dexterity: 11
+    constitution: 14
+    intelligence: 11
+    wisdom: 11
+    charisma: 15
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 4
+    intelligence: 0
+    wisdom: 2
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - any one language (usually Common)
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The knight makes two melee attacks.
+
+'
+  - actionName: Greatsword
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 10 (2d6 + 3) slashing damage.
+
+'
+  - actionName: Heavy Crossbow
+    actionDescription: 'Ranged Weapon Attack: +2 to hit, range 100/400 ft., one target.
+      Hit: 5 (1d10) piercing damage.
+
+'
+  - actionName: Leadership (Recharges after a Short or Long Rest)
+    actionDescription: 'For 1 minute, the knight can utter a special command or warning
+      whenever a nonhostile creature that it can see within 30 ft. of it makes an
+      attack roll or a saving throw. The creature can add a d4 to its roll provided
+      it can hear and understand the knight. A creature can benefit from only one
+      Leadership die at a time. This effect ends if the knight is incapacitated.
+
+'
+  legendaryActions: []
+  requiredGender: 2

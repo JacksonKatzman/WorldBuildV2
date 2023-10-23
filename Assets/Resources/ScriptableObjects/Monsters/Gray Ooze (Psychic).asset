@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Gray Ooze (Psychic)
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Gray Ooze (Psychic)
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 11
+  alignment: 9
+  challengeRating: 0.5
+  experienceYield: 100
+  proficiencyBonus: 0
+  armorValue: 8
+  armorType: 
+  health: 22
+  speed: 10
+  climbSpeed: 10
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 8
+  stats:
+    strength: 12
+    dexterity: 6
+    constitution: 16
+    intelligence: 6
+    wisdom: 6
+    charisma: 2
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 040000000600000005000000
+  damageImmunities: 
+  conditionImmunities: 0000000001000000020000000e000000030000000a000000
+  skills:
+  - Stealth +2
+  senses: []
+  groupingName: 
+  sounds: []
+  languages: []
+  abilities: []
+  actions:
+  - actionName: Pseudopod
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 4 (1d6 + 1) bludgeoning damage plus 7 (2d6) acid damage, and if the target
+      is wearing nonmagical metal armor, its armor is partly corroded and takes a
+      permanent and cumulative -1 penalty to the AC it offers. The armor is destroyed
+      if the penalty reduces its AC to 10.
+
+'
+  - actionName: Psychic Crush (Recharge 5-6)
+    actionDescription: 'The ooze targets one creature that it can sense within 60
+      feet of it. The target must make a DC 10 Intelligence saving throw, taking
+      10 (3d6) psychic damage on a failed save, or half as much damage on a successful
+      one.
+
+'
+  legendaryActions: []
+  requiredGender: 2

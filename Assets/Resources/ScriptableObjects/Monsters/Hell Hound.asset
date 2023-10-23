@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Hell Hound
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Hell Hound
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 7
+  alignment: 2
+  challengeRating: 3
+  experienceYield: 700
+  proficiencyBonus: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 45
+  speed: 50
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 15
+  stats:
+    strength: 17
+    dexterity: 12
+    constitution: 14
+    intelligence: 6
+    wisdom: 13
+    charisma: 6
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 05000000
+  conditionImmunities: 
+  skills:
+  - Perception +5
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - understands Infernal but can't speak it
+  abilities: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 7 (1d8 + 3) piercing damage plus 7 (2d6) fire damage.
+
+'
+  - actionName: Fire Breath (Recharge 5-6)
+    actionDescription: 'The hound exhales fire in a 15-foot cone. Each creature in
+      that area must make a DC 12 Dexterity saving throw, taking 21 (6d6) fire damage
+      on a failed save, or half as much damage on a successful one.
+
+'
+  legendaryActions: []
+  requiredGender: 2

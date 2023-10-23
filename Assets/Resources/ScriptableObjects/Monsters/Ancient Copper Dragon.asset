@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Ancient Copper Dragon
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Ancient Copper Dragon
+  legendary: 1
+  landDwelling: 1
+  size: 5
+  type: 4
+  alignment: 6
+  challengeRating: 21
+  experienceYield: 33000
+  proficiencyBonus: 0
+  armorValue: 21
+  armorType: (natural armor)
+  health: 350
+  speed: 40
+  climbSpeed: 40
+  swimSpeed: 0
+  flySpeed: 80
+  passivePerception: 27
+  stats:
+    strength: 27
+    dexterity: 12
+    constitution: 25
+    intelligence: 20
+    wisdom: 17
+    charisma: 19
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 8
+    constitution: 14
+    intelligence: 0
+    wisdom: 10
+    charisma: 11
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 04000000
+  conditionImmunities: 
+  skills:
+  - Deception +11
+  - Perception +17
+  - Stealth +8
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Common
+  - Draconic
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The dragon can use its Frightful Presence. It then makes
+      three attacks: one with its bite and two with its claws.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +15 to hit, reach 15 ft., one target.
+      Hit: 19 (2d10 + 8) piercing damage.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +15 to hit, reach 10 ft., one target.
+      Hit: 15 (2d6 + 8) slashing damage.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack: +15 to hit, reach 20 ft., one target.
+      Hit: 17 (2d8 + 8) bludgeoning damage.
+
+'
+  - actionName: Frightful Presence
+    actionDescription: 'Each creature of the dragon''s choice that is within 120
+      feet of the dragon and aware of it must succeed on a DC 19 Wisdom saving throw
+      or become frightened for 1 minute. A creature can repeat the saving throw at
+      the end of each of its turns, ending the effect on itself on a success. If
+      a creature''s saving throw is successful or the effect ends for it, the creature
+      is immune to the dragon''s Frightful Presence for the next 24 hours.
+
+'
+  - actionName: Breath Weapons (Recharge 5-6)
+    actionDescription: 'The dragon uses one of the following breath weapons.
+
+      Acid
+      Breath. The dragon exhales acid in an 90-foot line that is 10 feet wide. Each
+      creature in that line must make a DC 22 Dexterity saving throw, taking 63 (14d8)
+      acid damage on a failed save, or half as much damage on a successful one.
+
+      Slowing
+      Breath. The dragon exhales gas in a 90-foot cone. Each creature in that area
+      must succeed on a DC 22 Constitution saving throw. On a failed save, the creature
+      can''t use reactions, its speed is halved, and it can''t make more than one
+      attack on its turn. In addition, the creature can use either an action or a
+      bonus action on its turn, but not both. These effects last for 1 minute. The
+      creature can repeat the saving throw at the end of each of its turns, ending
+      the effect on itself with a successful save.
+
+'
+  - actionName: Change Shape
+    actionDescription: 'The dragon magically polymorphs into a humanoid or beast
+      that has a challenge rating no higher than its own, or back into its true form.
+      It reverts to its true form if it dies. Any equipment it is wearing or carrying
+      is absorbed or borne by the new form (the dragon''s choice).
+
+      In a new
+      form, the dragon retains its alignment, hit points, Hit Dice, ability to speak,
+      proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom,
+      and Charisma scores, as well as this action. Its statistics and capabilities
+      are otherwise replaced by those of the new form, except any class features
+      or legendary actions of that form.
+
+'
+  legendaryActions:
+  - actionName: Detect
+    actionDescription: 'The dragon makes a Wisdom (Perception) check.
+
+'
+  - actionName: Tail Attack
+    actionDescription: 'The dragon makes a tail attack.
+
+'
+  - actionName: Wing Attack (Costs 2 Actions)
+    actionDescription: 'The dragon beats its wings. Each creature within 15 ft. of
+      the dragon must succeed on a DC 23 Dexterity saving throw or take 15 (2d6 +
+      8) bludgeoning damage and be knocked prone. The dragon can then fly up to half
+      its flying speed.
+
+'
+  requiredGender: 2

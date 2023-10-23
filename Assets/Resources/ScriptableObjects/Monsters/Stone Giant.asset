@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Stone Giant
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Stone Giant
+  legendary: 0
+  landDwelling: 1
+  size: 4
+  type: 8
+  alignment: 4
+  challengeRating: 7
+  experienceYield: 2900
+  proficiencyBonus: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 126
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 14
+  stats:
+    strength: 23
+    dexterity: 15
+    constitution: 20
+    intelligence: 10
+    wisdom: 12
+    charisma: 9
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 5
+    constitution: 8
+    intelligence: 0
+    wisdom: 4
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Athletics +12
+  - Perception +4
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Giant
+  abilities: []
+  actions:
+  - actionName: Fling
+    actionDescription: "The giant tries to throw a Small or Medium creature within
+      10 feet of it. The target must succeed on a DC 17 Dexterity saving throw or
+      be hurled up to 60 feet horizontally in a direction of the giant's choice.
+      and land prone, taking 1d6 bludgeoning damage for every 10 feet it was thrown.
+      \n"
+  - actionName: Rolling Rock
+    actionDescription: 'The giant sends a rock tumbling along the ground in a 30-foot
+      line that is 5 feet wide. Each creature in that line must make a DC 17 Dexterity
+      saving throw, taking 22 (3d10 + 6) bludgeoning damage and falling prone on
+      a failed save
+
+'
+  - actionName: Multiattack
+    actionDescription: 'The giant makes two greatclub attacks.
+
+'
+  - actionName: Greatclub
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 15 ft., one target.
+      Hit: 19 (3d8 + 6) bludgeoning damage.
+
+'
+  - actionName: Rock
+    actionDescription: 'Ranged Weapon Attack: +9 to hit, range 60/240 ft., one target.
+      Hit: 28 (4d10 + 6) bludgeoning damage. If the target is a creature, it must
+      succeed on a DC 17 Strength saving throw or be knocked prone.
+
+'
+  legendaryActions: []
+  requiredGender: 2

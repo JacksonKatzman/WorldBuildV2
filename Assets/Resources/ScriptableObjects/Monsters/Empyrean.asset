@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Empyrean
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Empyrean
+  legendary: 1
+  landDwelling: 1
+  size: 4
+  type: 2
+  alignment: 10
+  challengeRating: 23
+  experienceYield: 50000
+  proficiencyBonus: 0
+  armorValue: 22
+  armorType: (natural armor)
+  health: 313
+  speed: 50
+  climbSpeed: 0
+  swimSpeed: 50
+  flySpeed: 50
+  passivePerception: 16
+  stats:
+    strength: 30
+    dexterity: 21
+    constitution: 30
+    intelligence: 21
+    wisdom: 22
+    charisma: 27
+    luck: 10
+  savingThrows:
+    strength: 17
+    dexterity: 0
+    constitution: 0
+    intelligence: 12
+    wisdom: 13
+    charisma: 15
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 0200000001000000000000000d000000
+  conditionImmunities: 
+  skills:
+  - Insight +13
+  - Persuasion +15
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - all
+  abilities: []
+  actions:
+  - actionName: Maul
+    actionDescription: 'Melee Weapon Attack: +17 to hit, reach 10 ft., one target.
+      Hit: 31 (6d6 + 10) bludgeoning damage. If the target is a creature, it must
+      succeed on a DC 15 Constitution saving throw or be stunned until the end of
+      the empyrean''s next turn.
+
+'
+  - actionName: Bolt
+    actionDescription: 'Ranged Spell Attack: +15 to hit, range 600 ft., one target.
+      Hit: 24 (7d6) damage of one of the following types (empyrean''s choice): acid,
+      cold, fire, force, lightning, radiant, or thunder.
+
+'
+  legendaryActions:
+  - actionName: Attack
+    actionDescription: 'The empyrean makes one attack.
+
+'
+  - actionName: Bolster
+    actionDescription: 'The empyrean bolsters all nonhostile creatures within 120
+      feet of it until the end of its next turn. Bolstered creatures can''t be charmed
+      or frightened, and they gain advantage on ability checks and saving throws
+      until the end of the empyrean''s next turn.
+
+'
+  - actionName: Trembling Strike (Costs 2 Actions)
+    actionDescription: 'The empyrean strikes the ground with its maul, triggering
+      an earth tremor. All other creatures on the ground within 60 feet of the empyrean
+      must succeed on a DC 25 Strength saving throw or be knocked prone.
+
+'
+  requiredGender: 2

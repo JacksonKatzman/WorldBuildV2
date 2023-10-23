@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Chasme
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Chasme
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 7
+  alignment: 8
+  challengeRating: 6
+  experienceYield: 2300
+  proficiencyBonus: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 84
+  speed: 20
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 60
+  passivePerception: 15
+  stats:
+    strength: 15
+    dexterity: 15
+    constitution: 12
+    intelligence: 11
+    wisdom: 14
+    charisma: 10
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 5
+    constitution: 0
+    intelligence: 0
+    wisdom: 5
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 060000000500000009000000
+  damageImmunities: 03000000
+  conditionImmunities: 09000000
+  skills:
+  - Perception +5
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Abyssal
+  - telepathy 120 ft.
+  abilities: []
+  actions:
+  - actionName: Proboscis
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one creature.
+      Hit: 16 (4d6 + 2) piercing damage plus 24 (7d6) necrotic damage, and the target''s
+      hit point maximum is reduced by an amount equal to the necrotic damage taken.
+      If this effect reduces a creature''s hit point maximum to 0, the creature dies.
+      This reduction to a creature''s hit point maximum lasts until the creature
+      finishes a long rest or until it is affected by a spell like greater restoration
+      .
+
+'
+  - actionName: 'Variant: Summon Demon (1/Day)'
+    actionDescription: 'The demon chooses what to summon and attempts a magical summoning.
+
+      A
+      chasme has a 30 percent chance of summoning one chasme.
+
+      A summoned demon
+      appears in an unoccupied space within 60 feet of its summoner, acts as an ally
+      of its summoner, and can''t summon other demons. It remains for 1 minute, until
+      it or its summoner dies, or until its summoner dismisses it as an action.
+
+'
+  legendaryActions: []
+  requiredGender: 2

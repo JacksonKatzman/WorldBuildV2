@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Yeti
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Yeti
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 10
+  alignment: 8
+  challengeRating: 3
+  experienceYield: 700
+  proficiencyBonus: 0
+  armorValue: 12
+  armorType: (natural armor)
+  health: 51
+  speed: 40
+  climbSpeed: 40
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 13
+  stats:
+    strength: 18
+    dexterity: 13
+    constitution: 16
+    intelligence: 8
+    wisdom: 12
+    charisma: 7
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 06000000
+  conditionImmunities: 
+  skills:
+  - Perception +3
+  - Stealth +3
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Yeti
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The yeti can use its Chilling Gaze and makes two claw attacks.
+
+'
+  - actionName: Claw
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 7 (1d6 + 4) slashing damage plus 3 (1d6) cold damage.
+
+'
+  - actionName: Chilling Gaze
+    actionDescription: 'The yeti targets one creature it can see within 30 ft. of
+      it. If the target can see the yeti, the target must succeed on a DC 13 Constitution
+      saving throw against this magic or take 10 (3d6) cold damage and then be paralyzed
+      for 1 minute, unless it is immune to cold damage. The target can repeat the
+      saving throw at the end of each of its turns, ending the effect on itself on
+      a success. If the target''s saving throw is successful, or if the effect ends
+      on it, the target is immune to the Chilling Gaze of all yetis (but not abominable
+      yetis) for 1 hour.
+
+'
+  legendaryActions: []
+  requiredGender: 2

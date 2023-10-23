@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Satyr
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Satyr
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 6
+  alignment: 7
+  challengeRating: 0.5
+  experienceYield: 100
+  proficiencyBonus: 0
+  armorValue: 14
+  armorType: (leather armor)
+  health: 31
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 12
+  stats:
+    strength: 12
+    dexterity: 16
+    constitution: 11
+    intelligence: 12
+    wisdom: 10
+    charisma: 14
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +2
+  - Performance +6
+  - Stealth +5
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Common
+  - Elvish
+  - Sylvan
+  abilities: []
+  actions:
+  - actionName: Ram
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft., one target.
+      Hit: 6 (2d4 + 1) bludgeoning damage.
+
+'
+  - actionName: Shortsword
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 6 (1 d6 + 3) piercing damage.
+
+'
+  - actionName: Shortbow
+    actionDescription: 'Ranged Weapon Attack: +5 to hit, range 80/320 ft., one target.
+      Hit: 6 (1d6 + 3) piercing damage.
+
+'
+  - actionName: 'Variant: Panpipes'
+    actionDescription: 'Gentle Lullaby. The creature falls asleep and is unconscious
+      for 1 minute. The effect ends if the creature takes damage or if someone takes
+      an action to shake the creature awake.
+
+'
+  legendaryActions: []
+  requiredGender: 2

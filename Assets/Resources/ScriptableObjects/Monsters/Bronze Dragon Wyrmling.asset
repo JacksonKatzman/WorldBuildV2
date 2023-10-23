@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Bronze Dragon Wyrmling
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Bronze Dragon Wyrmling
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 4
+  alignment: 0
+  challengeRating: 2
+  experienceYield: 450
+  proficiencyBonus: 0
+  armorValue: 17
+  armorType: (natural armor)
+  health: 32
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 30
+  flySpeed: 60
+  passivePerception: 14
+  stats:
+    strength: 17
+    dexterity: 10
+    constitution: 15
+    intelligence: 12
+    wisdom: 11
+    charisma: 15
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 2
+    constitution: 4
+    intelligence: 0
+    wisdom: 2
+    charisma: 4
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 09000000
+  conditionImmunities: 
+  skills:
+  - Perception +4
+  - Stealth +2
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Draconic
+  abilities: []
+  actions:
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 8 (1d10 + 3) piercing damage.
+
+'
+  - actionName: Breath Weapons (Recharge 5-6)
+    actionDescription: 'The dragon uses one of the following breath weapons.
+
+      Lightning
+      Breath. The dragon exhales lightning in a 40-foot line that is 5 feet wide.
+      Each creature in that line must make a DC 12 Dexterity saving throw, taking
+      16 (3d10) lightning damage on a failed save, or half as much damage on a successful
+      one.
+
+      Repulsion Breath. The dragon exhales repulsion energy in a 30-foot
+      cone. Each creature in that area must succeed on a DC 12 Strength saving throw.
+      On a failed save, the creature is pushed 30 feet away from the dragon.
+
+'
+  legendaryActions: []
+  requiredGender: 2

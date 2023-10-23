@@ -9,12 +9,12 @@ namespace Game.Simulation
 {
 	public static class SimulationUtilities
 	{
-		public static int GetRandomCellIndex()
+		public static int GetRandomCellIndex(List<BiomeTerrainType> biomeTypes = null)
 		{
-			return GetRandomCell().Index;
+			return GetRandomCell(biomeTypes).Index;
 		}
 
-		public static bool GetRandomUnclaimedCellIndex(out int index, bool landTile = true)
+		public static bool GetRandomUnclaimedCellIndex(out int index, List<BiomeTerrainType> biomeTypes = null, bool landTile = true)
 		{
 			var grid = SimulationManager.Instance.HexGrid;
 			var claimedList = new List<int>();
@@ -27,9 +27,10 @@ namespace Game.Simulation
 			{
 				unclaimed = unclaimed.Where(x => !x.IsUnderwater).ToList();
 			}
-			if (unclaimed.Count > 0)
+			var matches = ((biomeTypes != null && biomeTypes.Count > 0) ? unclaimed.Where(x => biomeTypes.Contains(x.TerrainType)) : unclaimed).ToList();
+			if (matches.Count > 0)
 			{
-				index = unclaimed[SimRandom.RandomRange(0, unclaimed.Count)].Index;
+				index = matches[SimRandom.RandomRange(0, matches.Count)].Index;
 				return true;
 			}
 			else
@@ -39,15 +40,86 @@ namespace Game.Simulation
 			}
 		}
 
-		public static bool GetRandomEmptyCellIndex(out int index)
+		public static List<HexCell> GetAllCellsWithDistanceFromCity(int minDistance, int maxDistance, bool onLand = true)
+		{
+			var grid = SimulationManager.Instance.HexGrid;
+			var allCells = grid.cells.ToList();
+			if(onLand)
+			{
+				allCells = allCells.Where(x => !x.IsUnderwater).ToList();
+			}
+			var cityCellsIndices = GetCellsWithCities();
+			var cityCells = new List<HexCell>();
+			var results = new List<HexCell>();
+			foreach(var index in cityCellsIndices)
+			{
+				cityCells.Add(grid.GetCell(index));
+			}
+			foreach(var cell in allCells)
+			{
+				var valid = true;
+				foreach(var cityCell in cityCells)
+				{
+					var distance = cell.coordinates.DistanceTo(cityCell.coordinates);
+					if(distance < minDistance || distance > maxDistance)
+					{
+						valid = false;
+						break;
+					}
+				}
+				if(valid)
+				{
+					results.Add(cell);
+				}
+			}
+
+			return results;
+		}
+
+		public static List<HexCell> SecondTry(int minDistance, bool onLand = true)
+		{
+			var grid = SimulationManager.Instance.HexGrid;
+			var allCells = new HashSet<HexCell>();
+			foreach(var cell in grid.cells)
+			{
+				if(cell.IsUnderwater != onLand)
+				{
+					allCells.Add(cell);
+				}
+			}
+
+			var cityCellsIndices = GetCellsWithCities();
+			var cityCells = new HashSet<HexCell>();
+
+			foreach (var index in cityCellsIndices)
+			{
+				var cityCell = grid.GetCell(index);
+				cityCells.Add(cityCell);
+				var inRange = GetAllCellsInRange(cityCell, minDistance);
+				foreach(var inRangeCell in inRange)
+				{
+					cityCells.Add(inRangeCell);
+				}
+			}
+
+			foreach(var cityCell in cityCells)
+			{
+				allCells.Remove(cityCell);
+			}
+
+			return allCells.ToList();
+		}
+
+		public static bool GetRandomEmptyCellIndex(out int index, List<BiomeTerrainType> biomeTypes = null)
 		{
 			var grid = SimulationManager.Instance.HexGrid;
 			var claimedList = GetClaimedCells();
 
 			var unclaimed = grid.cells.Where(x => !claimedList.Contains(x.Index)).ToList();
-			if (unclaimed.Count > 0)
+			var matches = ((biomeTypes != null && biomeTypes.Count > 0) ? unclaimed.Where(x => biomeTypes.Contains(x.TerrainType)) : unclaimed).ToList();
+			if (matches.Count > 0)
 			{
-				index = unclaimed[SimRandom.RandomRange(0, unclaimed.Count)].Index;
+				index = matches[SimRandom.RandomRange(0, unclaimed.Count)].Index;
 				return true;
 			}
 			else
@@ -83,28 +155,57 @@ namespace Game.Simulation
 			return true;
 		}
 
-		private static HexCell GetRandomCell()
+		public static bool IsCellUnclaimed(int index)
+		{
+			var claimedCells = GetClaimedCells();
+			return !claimedCells.Contains(index);
+		}
+
+		private static HexCell GetRandomCell(List<BiomeTerrainType> biomeTypes = null)
 		{
 			var grid = SimulationManager.Instance.HexGrid;
-			var numCells = grid.cellCountX * grid.cellCountZ;
-			return grid.GetCell(SimRandom.RandomRange(0, numCells));
+			//var numCells = grid.cellCountX * grid.cellCountZ;
+			var matches = ((biomeTypes != null && biomeTypes.Count > 0) ? grid.cells.Where(x => biomeTypes.Contains(x.TerrainType)) : grid.cells).ToList();
+			return matches[SimRandom.RandomRange(0, matches.Count)];
 		}
 
 		public static List<int> GetClaimedCells()
 		{
 			var claimedList = new List<int>();
-			foreach (var pair in ContextDictionaryProvider.CurrentContexts)
+			foreach (var faction in ContextDictionaryProvider.CurrentContexts[typeof(Faction)])
 			{
-				if (pair.Key.IsAssignableFrom(typeof(ILocationAffiliated)))
+				var context = faction as Faction;
+				claimedList.AddRange(context.ControlledTileIndices);
+			}
+
+			return claimedList;
+		}
+
+		public static List<int> GetClaimedCellsNotClaimedByFaction(Faction f)
+		{
+			var claimedList = new List<int>();
+			foreach (var faction in ContextDictionaryProvider.CurrentContexts[typeof(Faction)])
+			{
+				var context = faction as Faction;
+				if (f != context)
 				{
-					foreach (var context in pair.Value)
-					{
-						claimedList.Add(((ILocationAffiliated)context).CurrentLocation.TileIndex);
-					}
+					claimedList.AddRange(context.ControlledTileIndices);
 				}
 			}
 
 			return claimedList;
+		}
+
+		public static List<HexCell> GetClaimedCellsAsHexCells()
+		{
+			var cellIndices = GetClaimedCells();
+			var cells = new List<HexCell>();
+			var grid = SimulationManager.Instance.HexGrid;
+			foreach(var index in cellIndices)
+			{
+				cells.Add(grid.GetCell(index));
+			}
+			return cells;
 		}
 
 		public static List<int> GetCellsWithCities()
@@ -140,7 +241,7 @@ namespace Game.Simulation
 			return possibleIndices;
 		}
 
-		public static List<int> FindCitylessBorderWithinFaction(Faction faction)
+		public static List<int> FindCitylessBorderWithinFaction(Faction faction, List<BiomeTerrainType> biomeTypes = null)
 		{
 			var cityTiles = GetCellsWithCities();
 			var borderTiles = FindBorderWithinFaction(faction);
@@ -148,6 +249,10 @@ namespace Game.Simulation
 
 			foreach (var cell in borderTiles)
 			{
+				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(SimulationManager.Instance.HexGrid.cells[cell].TerrainType))
+				{
+					continue;
+				}
 				if (!cityTiles.Contains(cell))
 				{
 					possibleIndices.Add(cell);
@@ -157,7 +262,7 @@ namespace Game.Simulation
 			return possibleIndices;
 		}
 
-		public static List<int> FindBorderOutsideFaction(Faction faction)
+		public static List<int> FindBorderOutsideFaction(Faction faction, List<BiomeTerrainType> biomeTypes = null)
 		{
 			var insideIndices = FindBorderWithinFaction(faction);
 			var possibleIndices = new HashSet<int>();
@@ -166,6 +271,10 @@ namespace Game.Simulation
 			foreach (var cell in insideIndices)
 			{
 				HexCell hexCell = SimulationManager.Instance.HexGrid.GetCell(cell);
+				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(hexCell.TerrainType))
+				{
+					continue;
+				}
 				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 				{
 					HexCell neighbor = hexCell.GetNeighbor(d);
@@ -179,14 +288,18 @@ namespace Game.Simulation
 			return new List<int>(possibleIndices);
 		}
 
-		public static List<int> FindSharedBorderFaction(Faction faction)
+		public static List<int> FindSharedBorderFaction(Faction faction, List<BiomeTerrainType> biomeTypes = null)
 		{
-			var outsideIndices = FindBorderOutsideFaction(faction);
+			var outsideIndices = FindBorderOutsideFaction(faction, biomeTypes);
 			var possibleIndices = new List<int>();
 			var claimedCells = GetClaimedCells();
 
 			foreach (var cell in outsideIndices)
 			{
+				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(SimulationManager.Instance.HexGrid.cells[cell].TerrainType))
+				{
+					continue;
+				}
 				if (claimedCells.Contains(cell))
 				{
 					possibleIndices.Add(cell);
@@ -196,7 +309,28 @@ namespace Game.Simulation
 			return possibleIndices;
 		}
 
-		public static List<int> FindCitylessCellWithinFaction(Faction faction, int minDistanceFromCities = 1)
+		public static List<int> FindSharedBorderFaction(Faction faction, Faction otherFaction, List<BiomeTerrainType> biomeTypes = null)
+		{
+			var outsideIndices = FindBorderOutsideFaction(faction, biomeTypes);
+			var possibleIndices = new List<int>();
+			var claimedCells = GetClaimedCells();
+
+			foreach (var cell in outsideIndices)
+			{
+				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(SimulationManager.Instance.HexGrid.cells[cell].TerrainType))
+				{
+					continue;
+				}
+				if (otherFaction.ControlledTileIndices.Contains(cell))
+				{
+					possibleIndices.Add(cell);
+				}
+			}
+
+			return possibleIndices;
+		}
+
+		public static List<int> FindCitylessCellWithinFaction(Faction faction, int minDistanceFromCities = 1, List<BiomeTerrainType> biomeTypes = null)
 		{
 			List<int> possibleIndices = new List<int>();
 			var cityTiles = GetCellsWithCities();
@@ -204,6 +338,10 @@ namespace Game.Simulation
 			{
 				var cell = SimulationManager.Instance.HexGrid.cells[index];
 				var valid = true;
+				if(biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(cell.TerrainType))
+				{
+					continue;
+				}
 				foreach (var cityIndex in cityTiles)
 				{
 					var cityCell = SimulationManager.Instance.HexGrid.cells[cityIndex];
@@ -286,6 +424,106 @@ namespace Game.Simulation
 			SimulationManager.Instance.HexGrid.ResetSearchPhases();
 
 			return cellsInRange;
+		}
+
+		public static HexCell GetCentroid(List<int> cellIds)
+		{
+			var points = new List<HexCell>();
+			foreach (var id in cellIds)
+			{
+				points.Add(SimulationManager.Instance.HexGrid.GetCell(id));
+			}
+			return GetCentroid(points);
+		}
+
+		public static HexCell GetCentroid(List<HexCell> points)
+		{
+			var x = 0;
+			var z = 0;
+			foreach(var point in points)
+			{
+				x += point.coordinates.X;
+				z += point.coordinates.Z;
+			}
+
+			int xCoord = x / points.Count;
+			int zCoord = z / points.Count;
+
+			return SimulationManager.Instance.HexGrid.cells.First(cell => cell.coordinates.X == xCoord && cell.coordinates.Z == zCoord);
+		}
+
+		public static List<HexCell> GetConvexHull(List<int> cellIds)
+		{
+			var points = new List<HexCell>();
+			foreach (var id in cellIds)
+			{
+				points.Add(SimulationManager.Instance.HexGrid.GetCell(id));
+			}
+			return GetConvexHull(points);
+		}
+
+		public static List<HexCell> GetConvexHull(List<HexCell> points)
+		{
+			var result = new HashSet<HexCell>();
+			int leftMostIndex = 0;
+			for (int i = 1; i < points.Count; i++)
+			{
+				if (points[leftMostIndex].coordinates.X > points[i].coordinates.X)
+					leftMostIndex = i;
+			}
+			result.Add(points[leftMostIndex]);
+			List<HexCell> collinearPoints = new List<HexCell>();
+			HexCell current = points[leftMostIndex];
+			while (true)
+			{
+				HexCell nextTarget = points[0];
+				for (int i = 1; i < points.Count; i++)
+				{
+					if (points[i] == current)
+						continue;
+					float x1, x2, y1, y2;
+					x1 = current.coordinates.X - nextTarget.coordinates.X;
+					x2 = current.coordinates.X - points[i].coordinates.X;
+
+					y1 = current.coordinates.Z - nextTarget.coordinates.Z;
+					y2 = current.coordinates.Z - points[i].coordinates.Z;
+
+					float val = (y2 * x1) - (y1 * x2);
+					if (val > 0)
+					{
+						nextTarget = points[i];
+						collinearPoints = new List<HexCell>();
+					}
+					else if (val == 0)
+					{
+						//if (Vector2.Distance(current.position, nextTarget.position) < Vector2.Distance(current.position, points[i].position))
+						if(current.coordinates.DistanceTo(nextTarget.coordinates) < current.coordinates.DistanceTo(points[i].coordinates))
+						{
+							collinearPoints.Add(nextTarget);
+							nextTarget = points[i];
+						}
+						else
+							collinearPoints.Add(points[i]);
+					}
+				}
+
+				foreach (HexCell t in collinearPoints)
+					result.Add(t);
+				if (nextTarget == points[leftMostIndex])
+					break;
+				result.Add(nextTarget);
+				current = nextTarget;
+			}
+
+			/*
+			List<Vector2> convertedResult = new List<Vector2>();
+			foreach (Transform transform in result)
+			{
+				convertedResult.Add(new Vector2(transform.position.x, transform.position.y));
+			}
+			polygon = new Polygon(convertedResult);
+			*/
+			return result.ToList();
 		}
 	}
 }

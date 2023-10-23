@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Scorpion
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Scorpion
+  legendary: 0
+  landDwelling: 1
+  size: 0
+  type: 1
+  alignment: 9
+  challengeRating: 0
+  experienceYield: 10
+  proficiencyBonus: 0
+  armorValue: 11
+  armorType: (natural armor)
+  health: 1
+  speed: 10
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 9
+  stats:
+    strength: 2
+    dexterity: 11
+    constitution: 8
+    intelligence: 1
+    wisdom: 8
+    charisma: 2
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages: []
+  abilities: []
+  actions:
+  - actionName: Sting
+    actionDescription: 'Melee Weapon Attack: +2 to hit, reach 5 ft., one creature.
+      Hit: 1 piercing damage, and the target must make a DC 9 Constitution saving
+      throw, taking 4 (1d8) poison damage on a failed save, or half as much damage
+      on a successful one.
+
+'
+  legendaryActions: []
+  requiredGender: 2

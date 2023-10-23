@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Ice Devil
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Ice Devil
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 7
+  alignment: 2
+  challengeRating: 14
+  experienceYield: 11500
+  proficiencyBonus: 0
+  armorValue: 18
+  armorType: (natural armor)
+  health: 180
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 12
+  stats:
+    strength: 21
+    dexterity: 14
+    constitution: 18
+    intelligence: 18
+    wisdom: 15
+    charisma: 18
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 7
+    constitution: 9
+    intelligence: 0
+    wisdom: 7
+    charisma: 9
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 0200000001000000000000000d000000
+  damageImmunities: 0500000003000000
+  conditionImmunities: 09000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Infernal
+  - telepathy 120 ft.
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The devil makes three attacks: one with its bite, one with
+      its claws, and one with its tail.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 5 ft., one target.
+      Hit: 12 (2d6 + 5) piercing damage plus 10 (3d6) cold damage.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +10 to hit, reach 5 ft., one target.
+      Hit: 10 (2d4 + 5) slashing damage plus 10 (3d6) cold damage.
+
+'
+  - actionName: Tail
+    actionDescription: 'Melee Weapon Attack:+10 to hit, reach 10 ft., one target.
+      Hit: 12 (2d6 + 5) bludgeoning damage plus 10 (3d6) cold damage.
+
+'
+  - actionName: Wall of Ice
+    actionDescription: 'The devil magically forms an opaque wall of ice on a solid
+      surface it can see within 60 feet of it. The wall is 1 foot thick and up to
+      30 feet long and 10 feet high, or it''s a hemispherical dome up to 20 feet
+      in diameter.
+
+      When the wall appears, each creature in its space is pushed
+      out of it by the shortest route. The creature chooses which side of the wall
+      to end up on, unless the creature is incapacitated. The creature then makes
+      a DC 17 Dexterity saving throw, taking 35 (10d6) cold damage on a failed save,
+      or half as much damage on a successful one.
+
+      The wall lasts for 1 minute
+      or until the devil is incapacitated or dies. The wall can be damaged and breached;
+      each 10-foot section has AC 5, 30 hit points, vulnerability to fire damage,
+      and immunity to acid, cold, necrotic, poison, and psychic damage. If a section
+      is destroyed, it leaves behind a sheet of frigid air in the space the wall
+      occupied. Whenever a creature finishes moving through the frigid air on a turn,
+      willingly or otherwise, the creature must make a DC 17 Constitution saving
+      throw, taking 17 (5d6) cold damage on a failed save, or half as much damage
+      on a successful one. The frigid air dissipates when the rest of the wall vanishes.
+
+'
+  legendaryActions: []
+  requiredGender: 2

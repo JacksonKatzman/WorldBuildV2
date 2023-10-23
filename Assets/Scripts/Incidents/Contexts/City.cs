@@ -11,6 +11,7 @@ namespace Game.Incidents
 		public override Type ContextType => typeof(City);
 		public Location CurrentLocation { get; set; }
 		public Faction AffiliatedFaction { get; set; }
+		public override string Name => "City " + ID;
 		virtual public int Population
 		{
 			get
@@ -47,7 +48,7 @@ namespace Game.Incidents
 
 			if (ContextDictionaryProvider.CurrentContexts.GetContextByID(location.ID) == null)
 			{
-				EventManager.Instance.Dispatch(new AddContextEvent(location));
+				EventManager.Instance.Dispatch(new AddContextEvent(location, false));
 			}
 		}
 
@@ -66,7 +67,7 @@ namespace Game.Incidents
 			for(var i = 0; i < amount; i++)
 			{
 				var character = new Character(AffiliatedFaction);
-				EventManager.Instance.Dispatch(new AddContextImmediateEvent(character));
+				EventManager.Instance.Dispatch(new AddContextEvent(character, true));
 			}
 		}
 

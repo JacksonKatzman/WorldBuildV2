@@ -31,10 +31,7 @@ namespace Game.Incidents
 			AffiliatedRace = race;
 			Gender = gender == Gender.ANY ? (Gender)(SimRandom.RandomRange(0, 2)) : gender;
 			AffiliatedFaction = faction;
-			//PoliticalPriority = politicalPriority;
-			//EconomicPriority = economicPriority;
-			//ReligiousPriority = religiousPriority;
-			//MilitaryPriority = militaryPriority;
+
 			Priorities = new Dictionary<OrganizationType, int>();
 			Priorities[OrganizationType.POLITICAL] = politicalPriority;
 			Priorities[OrganizationType.ECONOMIC] = economicPriority;
@@ -190,16 +187,21 @@ namespace Game.Incidents
 				IncidentService.Instance.PerformIncidents(this);
 			}
 
-			if(this.CheckDestroyed())
-			{
-				Die();
-			}
+			CheckForDeath();
 		}
 
 		override public void UpdateContext()
 		{
 			Age += 1;
 			NumIncidents = MajorCharacter ? 1 : 0;
+		}
+
+		public override void CheckForDeath()
+		{
+			if (this.CheckDestroyed())
+			{
+				Die();
+			}
 		}
 
 		public Character CreateChild(bool majorPlayer)
@@ -223,16 +225,17 @@ namespace Game.Incidents
 				if(Parents.Count(x => x.Gender == Gender.MALE) < 1)
 				{
 					var father = new Character(Gender.MALE, AffiliatedRace, AffiliatedFaction, false);
+					father.CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender.MALE, this);
 					Parents.Add(father);
 					father.Children.Add(this);
-					EventManager.Instance.Dispatch(new AddContextEvent(father));
+					EventManager.Instance.Dispatch(new AddContextEvent(father, false));
 				}
 				if(Parents.Count(x => x.Gender == Gender.FEMALE) < 1)
 				{
 					var mother = new Character(Gender.FEMALE, AffiliatedRace, AffiliatedFaction, false);
 					Parents.Add(mother);
 					mother.Children.Add(this);
-					EventManager.Instance.Dispatch(new AddContextEvent(mother));
+					EventManager.Instance.Dispatch(new AddContextEvent(mother, false));
 				}
 			}
 			if(canGenerateSpouse && Spouses.Count == 0)
@@ -243,7 +246,7 @@ namespace Game.Incidents
 					var spouse = new Character(gender, AffiliatedRace, AffiliatedFaction, false);
 					Spouses.Add(spouse);
 					spouse.Spouses.Add(this);
-					EventManager.Instance.Dispatch(new AddContextEvent(spouse));
+					EventManager.Instance.Dispatch(new AddContextEvent(spouse, false));
 				}
 			}
 			if (Siblings.Count == 0)
@@ -253,9 +256,10 @@ namespace Game.Incidents
 				for (int i = 0; i < numSiblings; i++)
 				{
 					var sibling = new Character(Gender.ANY, AffiliatedRace, AffiliatedFaction, false, Parents);
+					sibling.CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender.MALE, this);
 					Siblings.Add(sibling);
 					sibling.Siblings.Add(this);
-					EventManager.Instance.Dispatch(new AddContextEvent(sibling));
+					EventManager.Instance.Dispatch(new AddContextEvent(sibling, false));
 				}
 			}
 		}
@@ -284,7 +288,7 @@ namespace Game.Incidents
 
 			if(MajorCharacter)
 			{
-				IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this });
+				IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this }, true);
 			}
 			EventManager.Instance.RemoveEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));

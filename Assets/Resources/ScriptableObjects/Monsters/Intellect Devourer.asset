@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Intellect Devourer
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Intellect Devourer
+  legendary: 0
+  landDwelling: 1
+  size: 0
+  type: 0
+  alignment: 2
+  challengeRating: 2
+  experienceYield: 450
+  proficiencyBonus: 0
+  armorValue: 12
+  armorType: 
+  health: 21
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 12
+  stats:
+    strength: 6
+    dexterity: 14
+    constitution: 13
+    intelligence: 12
+    wisdom: 11
+    charisma: 10
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 0200000001000000000000000d000000
+  damageImmunities: 
+  conditionImmunities: 00000000
+  skills:
+  - Perception +2
+  - Stealth +4
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - understands Deep Speech but can't speak
+  - telepathy 60 ft.
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The intellect devourer makes one attack with its claws and
+      uses Devour Intellect.
+
+'
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 7 (2d4 + 2) slashing damage.
+
+'
+  - actionName: Devour Intellect
+    actionDescription: 'The intellect devourer targets one creature it can see within
+      10 feet of it that has a brain. The target must succeed on a DC 12 Intelligence
+      saving throw against this magic or take 11 (2d10) psychic damage. Also on a
+      failure, roll 3d6: If the total equals or exceeds the target''s Intelligence
+      score, that score is reduced to 0. The target is stunned until it regains at
+      least one point of Intelligence.
+
+'
+  - actionName: Body Thief
+    actionDescription: 'The intellect devourer initiates an Intelligence contest
+      with an incapacitated humanoid within 5 feet of it that isn''t protected by
+      protection from evil and good. If it wins the contest, the intellect devourer
+      magically consumes the target''s brain, teleports into the target''s skull,
+      and takes control of the target''s body. While inside a creature, the intellect
+      devourer has total cover against attacks and other effects originating outside
+      its host. The intellect devourer retains its Intelligence, Wisdom, and Charisma
+      scores, as well as its understanding of Deep Speech, its telepathy, and its
+      traits. It otherwise adopts the target''s statistics. It knows everything the
+      creature knew, including spells and languages.
+
+      If the host body dies,
+      the intellect devourer must leave it. A protection from evil and good spell
+      cast on the body drives the intellect devourer out. The intellect devourer
+      is also forced out if the target regains its devoured brain by means of a wish.
+      By spending 5 feet of its movement, the intellect devourer can voluntarily
+      leave the body, teleporting to the nearest unoccupied space within 5 feet of
+      it. The body then dies, unless its brain is restored within 1 round.
+
+'
+  legendaryActions: []
+  requiredGender: 2

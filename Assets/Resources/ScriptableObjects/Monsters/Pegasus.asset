@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Pegasus
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Pegasus
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 2
+  alignment: 6
+  challengeRating: 2
+  experienceYield: 450
+  proficiencyBonus: 0
+  armorValue: 12
+  armorType: 
+  health: 59
+  speed: 60
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 90
+  passivePerception: 16
+  stats:
+    strength: 18
+    dexterity: 15
+    constitution: 16
+    intelligence: 10
+    wisdom: 15
+    charisma: 13
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 4
+    constitution: 0
+    intelligence: 0
+    wisdom: 4
+    charisma: 3
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +6
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - understands Celestial
+  - Common
+  - Elvish
+  - and Sylvan but can't speak
+  abilities: []
+  actions:
+  - actionName: Hooves
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 11 (2d6 + 4) bludgeoning damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

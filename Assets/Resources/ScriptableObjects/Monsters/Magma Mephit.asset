@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Magma Mephit
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Magma Mephit
+  legendary: 0
+  landDwelling: 1
+  size: 1
+  type: 5
+  alignment: 5
+  challengeRating: 0.5
+  experienceYield: 100
+  proficiencyBonus: 0
+  armorValue: 11
+  armorType: 
+  health: 22
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 30
+  passivePerception: 10
+  stats:
+    strength: 8
+    dexterity: 12
+    constitution: 12
+    intelligence: 7
+    wisdom: 10
+    charisma: 10
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 06000000
+  damageResistances: 
+  damageImmunities: 0500000003000000
+  conditionImmunities: 09000000
+  skills:
+  - Stealth +3
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Ignan
+  - Terran
+  abilities: []
+  actions:
+  - actionName: Claws
+    actionDescription: 'Melee Weapon Attack: +3 to hit, reach 5 ft ., one creature.
+      Hit: 3 (1d4 + 1) slashing damage plus 2 (1d4) fire damage.
+
+'
+  - actionName: Fire Breath (Recharge 6)
+    actionDescription: 'The mephit exhales a 15-foot cone of fire. Each creature
+      in that area must make a DC 11 Dexterity saving throw, taking 7 (2d6) fire
+      damage on a failed save, or half as much damage on a successful one.
+
+'
+  - actionName: 'Variant: Summon Mephits (1/Day)'
+    actionDescription: 'The mephit has a 25 percent chance of summoning 1d4 mephits
+      of its kind. A summoned mephit appears in an unoccupied space within 60 feet
+      of its summoner, acts as an ally of its summoner, and can''t summon other mephits.
+      It remains for 1 minute, until it or its summoner dies, or until its summoner
+      dismisses it as an action.
+
+'
+  legendaryActions: []
+  requiredGender: 2

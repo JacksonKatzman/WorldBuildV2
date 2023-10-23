@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Ettin
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Ettin
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 8
+  alignment: 8
+  challengeRating: 4
+  experienceYield: 1100
+  proficiencyBonus: 0
+  armorValue: 12
+  armorType: (natural armor)
+  health: 85
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 14
+  stats:
+    strength: 21
+    dexterity: 8
+    constitution: 17
+    intelligence: 6
+    wisdom: 10
+    charisma: 8
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Perception +4
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Giant
+  - Orc
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The ettin makes two attacks: one with its battleaxe and one
+      with its morningstar.
+
+'
+  - actionName: Battleaxe
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 14 (2d8 + 5) slashing damage.
+
+'
+  - actionName: Morningstar
+    actionDescription: 'Melee Weapon Attack: +7 to hit, reach 5 ft., one target.
+      Hit: 14 (2d8 + 5) piercing damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

@@ -30,7 +30,7 @@ public class StandardCriteriaEvaluatorTests : Editor
     {
         var propertyName = "FactionsAtWarWith";
         var faction = new Faction() { ID = 1, FactionsAtWarWith = new List<IIncidentContext>() { new Faction() } };
-        EventManager.Instance.Dispatch(new AddContextImmediateEvent(faction));
+        EventManager.Instance.Dispatch(new AddContextEvent(faction, true));
 
         var evaluator = new ListEvaluator(propertyName, typeof(Faction));
         evaluator.Comparator = "==";
@@ -52,7 +52,7 @@ public class StandardCriteriaEvaluatorTests : Editor
     {
         var propertyName = "GoodEvilAlignmentAxis";
         var faction = new Faction() { ID = 1, GoodEvilAlignmentAxis = 10 };
-        EventManager.Instance.Dispatch(new AddContextImmediateEvent(faction));
+        EventManager.Instance.Dispatch(new AddContextEvent(faction, true));
 
         var evaluator = new IntegerEvaluator(propertyName, typeof(Faction));
         evaluator.Comparator = "==";
@@ -74,7 +74,7 @@ public class StandardCriteriaEvaluatorTests : Editor
     {
         var propertyName = "ValueMultiplier";
         var trinket = new Trinket() { ValueMultiplier = 1.0f };
-        EventManager.Instance.Dispatch(new AddContextImmediateEvent(trinket));
+        EventManager.Instance.Dispatch(new AddContextEvent(trinket, true));
 
         var evaluator = new FloatEvaluator(propertyName, typeof(Trinket));
         evaluator.Comparator = "==";
@@ -96,7 +96,7 @@ public class StandardCriteriaEvaluatorTests : Editor
     {
         var propertyName = "AtWar";
         var faction = new Faction() { ID = 1, FactionsAtWarWith = new List<IIncidentContext>() };
-        EventManager.Instance.Dispatch(new AddContextImmediateEvent(faction));
+        EventManager.Instance.Dispatch(new AddContextEvent(faction, true));
 
         var evaluator = new BoolEvaluator(propertyName, typeof(Faction));
         evaluator.Comparator = "==";

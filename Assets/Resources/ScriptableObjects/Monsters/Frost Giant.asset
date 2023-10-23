@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Frost Giant
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Frost Giant
+  legendary: 0
+  landDwelling: 1
+  size: 4
+  type: 8
+  alignment: 5
+  challengeRating: 8
+  experienceYield: 3900
+  proficiencyBonus: 0
+  armorValue: 15
+  armorType: (patchwork armor)
+  health: 138
+  speed: 40
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 13
+  stats:
+    strength: 23
+    dexterity: 9
+    constitution: 21
+    intelligence: 9
+    wisdom: 10
+    charisma: 12
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 8
+    intelligence: 0
+    wisdom: 3
+    charisma: 4
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 06000000
+  conditionImmunities: 
+  skills:
+  - Athletics +9
+  - Perception +3
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Giant
+  abilities: []
+  actions:
+  - actionName: Weighted Net
+    actionDescription: 'Ranged Weapon Attack: +5 to hit, ranged 20/60 ft., one Small,
+      Medium, or Large creature. Hit: The target is restrained until it escapes the
+      net. Any creature can use its action to make a DC 17 Strength check to free
+      itself or another creature in the net, ending the effect on a success. Dealing
+      15 slashing damage to the net (AC 12) destroys the net and frees the target.
+
+'
+  - actionName: Multiattack
+    actionDescription: 'The giant makes two greataxe attacks.
+
+'
+  - actionName: Greataxe
+    actionDescription: 'Melee Weapon Attack: +9 to hit, reach 10 ft., one target.
+      Hit: 25 (3d12 + 6) slashing damage.
+
+'
+  - actionName: Rock
+    actionDescription: 'Ranged Weapon Attack: +9 to hit, range 60/240 ft., one target.
+      Hit: 28 (4d10 + 6) bludgeoning damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

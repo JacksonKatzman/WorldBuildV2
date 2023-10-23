@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Skeleton
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Skeleton
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 2
+  challengeRating: 0.25
+  experienceYield: 50
+  proficiencyBonus: 0
+  armorValue: 13
+  armorType: (armor scraps)
+  health: 13
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 9
+  stats:
+    strength: 10
+    dexterity: 14
+    constitution: 15
+    intelligence: 6
+    wisdom: 8
+    charisma: 5
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 02000000
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 09000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - understands all languages it spoke in life but can't speak
+  abilities: []
+  actions:
+  - actionName: Shortsword
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
+  - actionName: Shortbow
+    actionDescription: 'Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target.
+      Hit: 5 (1d6 + 2) piercing damage.
+
+'
+  legendaryActions: []
+  requiredGender: 2

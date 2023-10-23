@@ -14,6 +14,8 @@ namespace Game.Data
 		public int charisma;
 		public int luck;
 
+		public SerializableStatBlock() { }
+
 		public SerializableStatBlock(int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma, int luck)
 		{
 			this.strength = strength;

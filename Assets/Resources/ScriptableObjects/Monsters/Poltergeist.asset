@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Poltergeist
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Poltergeist
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 13
+  alignment: 8
+  challengeRating: 2
+  experienceYield: 450
+  proficiencyBonus: 0
+  armorValue: 12
+  armorType: 
+  health: 22
+  speed: 0
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 50
+  passivePerception: 10
+  stats:
+    strength: 1
+    dexterity: 14
+    constitution: 11
+    intelligence: 10
+    wisdom: 10
+    charisma: 11
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 040000000600000005000000090000000a0000000200000001000000000000000d000000
+  damageImmunities: 0800000003000000
+  conditionImmunities: 010000000e000000040000000700000008000000090000000a0000000b0000000d000000
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - understands all languages it knew in life but can't speak
+  abilities: []
+  actions:
+  - actionName: Forceful Slam
+    actionDescription: 'Melee Weapon Attack: +4 to hit, reach 5 ft. one creature.
+      Hit: 10 (3d6) force damage.
+
+'
+  - actionName: Telekinetic Thrust
+    actionDescription: 'The poltergeist targets a creature or unattended object within
+      30 feet of it. A creature must be Medium or smaller to be affected by this
+      magic, and an object can weigh up to 150 pounds.
+
+      If the target is a
+      creature, the poltergeist makes a Charisma check contested by the target''s
+      Strength check. If the poltergeist wins the contest, the poltergeist hurls
+      the target up to 30 feet in any direction, including upward. If the target
+      then comes into contact with a hard surface or heavy object, the target takes
+      1d6 damage per 10 feet moved.
+
+      If the target is an object that isn''t
+      being worn or carried, the poltergeist hurls it up to 30 feet in any direction.
+      The poltergeist can use the object as a ranged weapon, attacking one creature
+      along the object''s path (+4 to hit) and dealing 5 (2d4) bludgeoning damage
+      on a hit.
+
+'
+  legendaryActions: []
+  requiredGender: 2

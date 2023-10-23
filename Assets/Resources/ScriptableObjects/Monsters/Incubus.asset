@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Incubus
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Incubus
+  legendary: 0
+  landDwelling: 1
+  size: 2
+  type: 7
+  alignment: 5
+  challengeRating: 4
+  experienceYield: 1100
+  proficiencyBonus: 0
+  armorValue: 15
+  armorType: (natural armor)
+  health: 66
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 60
+  passivePerception: 15
+  stats:
+    strength: 8
+    dexterity: 17
+    constitution: 13
+    intelligence: 15
+    wisdom: 12
+    charisma: 20
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 0
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 060000000500000009000000030000000200000001000000000000000d000000
+  damageImmunities: 
+  conditionImmunities: 
+  skills:
+  - Deception +9
+  - Insight +5
+  - Perception +5
+  - Persuasion +9
+  - Stealth +7
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Abyssal
+  - Common
+  - Infernal
+  - telepathy 60 ft.
+  abilities: []
+  actions:
+  - actionName: Thunderous Stomp (Recharge 6)
+    actionDescription: 'The storm giant stomps the ground, triggering a thunderclap.
+      All other creatures within 15 feet of the giant must succeed on a DC 17 Constitution
+      saving throw or take 33 (6d10) thunder damage and be deafened until the start
+      of the giant''s next turn. On a successful save, a creature takes half as much
+      damage and isn''t deafened. The thunderclap can be heard out to a range of
+      1,200 feet.
+
+'
+  - actionName: Claw (Fiend Form Only)
+    actionDescription: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target.
+      Hit: 6 (1d6 + 3) slashing damage.
+
+'
+  - actionName: Charm
+    actionDescription: 'One humanoid the fiend can see within 30 feet of it must
+      succeed on a DC 15 Wisdom saving throw or be magically charmed for 1 day. The
+      charmed target obeys the fiend''s verbal or telepathic commands. If the target
+      suffers any harm or receives a suicidal command, it can repeat the saving throw,
+      ending the effect on a success. If the target successfully saves against the
+      effect, or if the effect on it ends, the target is immune to this fiend''s
+      Charm for the next 24 hours.
+
+      The fiend can have only one target charmed
+      at a time. If it charms another, the effect on the previous target ends.
+
+'
+  - actionName: Draining Kiss
+    actionDescription: 'The fiend kisses a creature charmed by it or a willing creature.
+      The target must make a DC 15 Constitution saving throw against this magic,
+      taking 32 (5d10 + 5) psychic damage on a failed save, or half as much damage
+      on a successful one. The target''s hit point maximum is reduced by an amount
+      equal to the damage taken. This reduction lasts until the target finishes a
+      long rest. The target dies if this effect reduces its hit point maximum to
+      0.
+
+'
+  - actionName: Etherealness
+    actionDescription: 'The fiend magically enters the Ethereal Plane from the Material
+      Plane, or vice versa.
+
+'
+  legendaryActions: []
+  requiredGender: 2

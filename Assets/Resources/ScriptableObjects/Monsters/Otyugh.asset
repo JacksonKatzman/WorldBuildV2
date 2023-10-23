@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a459e392d5e5a4e96201560a056af0, type: 3}
+  m_Name: Otyugh
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  monsterName: Otyugh
+  legendary: 0
+  landDwelling: 1
+  size: 3
+  type: 0
+  alignment: 4
+  challengeRating: 5
+  experienceYield: 1800
+  proficiencyBonus: 0
+  armorValue: 14
+  armorType: (natural armor)
+  health: 114
+  speed: 30
+  climbSpeed: 0
+  swimSpeed: 0
+  flySpeed: 0
+  passivePerception: 11
+  stats:
+    strength: 16
+    dexterity: 11
+    constitution: 19
+    intelligence: 6
+    wisdom: 13
+    charisma: 6
+    luck: 10
+  savingThrows:
+    strength: 0
+    dexterity: 0
+    constitution: 7
+    intelligence: 0
+    wisdom: 0
+    charisma: 0
+    luck: 0
+  damageVulnerabilities: 
+  damageResistances: 
+  damageImmunities: 
+  conditionImmunities: 
+  skills: []
+  senses: []
+  groupingName: 
+  sounds: []
+  languages:
+  - Otyugh
+  abilities: []
+  actions:
+  - actionName: Multiattack
+    actionDescription: 'The otyugh makes three attacks: one with its bite and two
+      with its tentacles.
+
+'
+  - actionName: Bite
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 5 ft., one target.
+      Hit: 12 (2d8 + 3) piercing damage. If the target is a creature, it must succeed
+      on a DC 15 Constitution saving throw against disease or become poisoned until
+      the disease is cured. Every 24 hours that elapse, the target must repeat the
+      saving throw, reducing its hit point maximum by 5 (1d10) on a failure. The
+      disease is cured on a success. The target dies if the disease reduces its hit
+      point maximum to 0. This reduction to the target''s hit point maximum lasts
+      until the disease is cured.
+
+'
+  - actionName: Tentacle
+    actionDescription: 'Melee Weapon Attack: +6 to hit, reach 10 ft., one target.
+      Hit: 7 (1d8 + 3) bludgeoning damage plus 4 (1d8) piercing damage. If the target
+      is Medium or smaller, it is grappled (escape DC 13) and restrained until the
+      grapple ends. The otyugh has two tentacles, each of which can grapple one target.
+
+'
+  - actionName: Tentacle Slam
+    actionDescription: 'The otyugh slams creatures grappled by it into each other
+      or a solid surface. Each creature must succeed on a DC 14 Constitution saving
+      throw or take 10 (2d6 + 3) bludgeoning damage and be stunned until the end
+      of the otyugh''s next turn. On a successful save, the target takes half the
+      bludgeoning damage and isn''t stunned.
+
+'
+  legendaryActions: []
+  requiredGender: 2
