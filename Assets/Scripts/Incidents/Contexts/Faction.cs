@@ -121,7 +121,8 @@ namespace Game.Incidents
 			Priorities[OrganizationType.MILITARY] = SimRandom.RandomRange(1, 4);
 
 			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
-			Name = namingTheme.GenerateFactionName();
+			//Name = namingTheme.GenerateFactionName();
+			Name = (ContextDictionaryProvider.AllContexts[typeof(Faction)].Count + 1).ToString();
 
 			ClaimFirstCell(startingPopulation);
 			if(startingTiles > 1)
@@ -268,10 +269,10 @@ namespace Game.Incidents
 						neighbor.SearchPhase = searchFrontierPhase;
 						neighbor.Distance = neighbor.coordinates.DistanceTo(center);
 						neighbor.SearchHeuristic = SimRandom.RandomFloat01() < 0.25f ? 1 : 0;
-						var weControl = ControlledTileIndices.Contains(neighbor.Index);
+
 						if((outsideBorder.Contains(neighbor.Index) || ControlledTileIndices.Contains(neighbor.Index)) )
 						{
-							if(!SimulationUtilities.GetClaimedCellsNotClaimedByFaction(this).Contains(neighbor.Index) && !neighbor.IsUnderwater)
+							if(CouldCaptureCell(neighbor))
 							{
 								searchFrontier.Enqueue(neighbor);
 							}
@@ -283,6 +284,30 @@ namespace Game.Incidents
 			SimulationManager.Instance.HexGrid.ResetSearchPhases();
 
 			return size != 0;
+		}
+
+		private bool CouldCaptureCell(HexCell cell)
+		{
+			if (SimulationUtilities.GetClaimedCellsNotClaimedByFaction(this).Contains(cell.Index))
+			{
+				return false;
+			}
+			if (cell.IsUnderwater)
+			{
+				var adjacentLandCount = 0;
+				for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
+				{
+					HexCell neighbor = cell.GetNeighbor(d);
+					if(!neighbor.IsUnderwater)
+					{
+						adjacentLandCount++;
+					}
+				}
+
+				return adjacentLandCount >= 4;
+			}
+
+			return true;
 		}
 
 		public override void LoadContextProperties()

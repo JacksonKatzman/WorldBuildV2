@@ -31,10 +31,7 @@ namespace Game.Incidents
 			AffiliatedRace = race;
 			Gender = gender == Gender.ANY ? (Gender)(SimRandom.RandomRange(0, 2)) : gender;
 			AffiliatedFaction = faction;
-			//PoliticalPriority = politicalPriority;
-			//EconomicPriority = economicPriority;
-			//ReligiousPriority = religiousPriority;
-			//MilitaryPriority = militaryPriority;
+
 			Priorities = new Dictionary<OrganizationType, int>();
 			Priorities[OrganizationType.POLITICAL] = politicalPriority;
 			Priorities[OrganizationType.ECONOMIC] = economicPriority;
@@ -228,6 +225,7 @@ namespace Game.Incidents
 				if(Parents.Count(x => x.Gender == Gender.MALE) < 1)
 				{
 					var father = new Character(Gender.MALE, AffiliatedRace, AffiliatedFaction, false);
+					father.CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender.MALE, this);
 					Parents.Add(father);
 					father.Children.Add(this);
 					EventManager.Instance.Dispatch(new AddContextEvent(father, false));
@@ -258,6 +256,7 @@ namespace Game.Incidents
 				for (int i = 0; i < numSiblings; i++)
 				{
 					var sibling = new Character(Gender.ANY, AffiliatedRace, AffiliatedFaction, false, Parents);
+					sibling.CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender.MALE, this);
 					Siblings.Add(sibling);
 					sibling.Siblings.Add(this);
 					EventManager.Instance.Dispatch(new AddContextEvent(sibling, false));
