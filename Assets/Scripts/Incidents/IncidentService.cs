@@ -72,7 +72,9 @@ namespace Game.Incidents
 				{
 					CurrentIncident = SimRandom.RandomEntryFromWeightedDictionary(possibleIncidents);
 					OutputLogger.Log("Attempting to run incident: " + CurrentIncident.IncidentName);
+					//GameProfiler.BeginProfiling(CurrentIncident.IncidentName, GameProfiler.ProfileFunctionType.DEPLOY);
 					completed = CurrentIncident.PerformIncident(incidentContext, ref report);
+					//GameProfiler.EndProfiling(CurrentIncident.IncidentName);
 					OutputLogger.Log("Attempted to run incident: " + CurrentIncident.IncidentName + " Success: " + completed);
 					ContextDictionaryProvider.CurrentExpressionValues.Clear();
 				}

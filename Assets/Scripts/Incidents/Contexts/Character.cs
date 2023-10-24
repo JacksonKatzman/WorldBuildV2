@@ -237,6 +237,8 @@ namespace Game.Incidents
 					mother.Children.Add(this);
 					EventManager.Instance.Dispatch(new AddContextEvent(mother, false));
 				}
+				Parents[0]?.Spouses.Add(Parents[1]);
+				Parents[1]?.Spouses.Add(Parents[0]);
 			}
 			if(canGenerateSpouse && Spouses.Count == 0)
 			{

@@ -107,11 +107,13 @@ namespace Game.Simulation
 			EventManager.Instance.Dispatch(new ShowLoadingScreenEvent("Generating World"));
 
 			var startTime = Time.realtimeSinceStartup;
+			GameProfiler.UpdateProfiler = true;
 
 			await RunSimulationWithCancellation(cancellationTokenSource.Token);
 			await CompileWikiWithCancellation(cancellationTokenSource.Token);
 			var simTime = Time.realtimeSinceStartup - startTime;
 			OutputLogger.Log("TIME TO SIM: " + simTime);
+			GameProfiler.UpdateProfiler = false;
 
 			EventManager.Instance.Dispatch(new HideLoadingScreenEvent());
 

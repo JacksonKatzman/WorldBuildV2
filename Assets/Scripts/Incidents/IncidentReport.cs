@@ -79,7 +79,9 @@ namespace Game.Incidents
 				textLine = textLine.Replace(matchString, linkString);
 			}
 
+			GameProfiler.BeginProfiling("Flavor Injection", GameProfiler.ProfileFunctionType.DEPLOY);
 			textLine = StaticFlavorCollections.InjectFlavor(textLine, Contexts);
+			GameProfiler.EndProfiling("Flavor Injection");
 
 			textLine = textLine.CapitalizeAfterLink();
 			return textLine;

@@ -104,6 +104,7 @@ namespace Game.Terrain
 					plantMod = 1;
 				}
 
+				cell.PlantLevel = plantMod;
 				return terrainType;
 			}
 			else

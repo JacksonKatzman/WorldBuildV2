@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace Game.Simulation
 {
@@ -123,6 +124,7 @@ namespace Game.Simulation
 
 		public async UniTask AdvanceTime()
 		{
+			//GameProfiler.worldUpdateMarker.Begin();
 			ContextDictionaryProvider.DelayedRemoveContexts();
 			ContextDictionaryProvider.DelayedAddContexts();
 			ContextDictionaryProvider.AllowImmediateChanges = false;
@@ -138,14 +140,20 @@ namespace Game.Simulation
 				}
 			}
 
+			//GameProfiler.BeginProfiling(typeof(World).ToString(), GameProfiler.ProfileFunctionType.DEPLOY);
 			DeployContext();
-			foreach (var contextList in CurrentContexts.Values)
+			foreach (var contextList in CurrentContexts)
 			{
-				foreach (var context in contextList)
+				if(contextList.Key == typeof(Character))
+					GameProfiler.BeginProfiling(contextList.Key.ToString(), GameProfiler.ProfileFunctionType.DEPLOY);
+				foreach (var context in contextList.Value)
 				{
 					context.DeployContext();
 				}
+				if (contextList.Key == typeof(Character))
+					GameProfiler.EndProfiling(contextList.Key.ToString());
 			}
+			//GameProfiler.EndProfiling(typeof(World).ToString());
 
 			UpdateHistoricalData();
 			foreach (var contextList in CurrentContexts.Values)
@@ -155,6 +163,8 @@ namespace Game.Simulation
 					context.UpdateHistoricalData();
 				}
 			}
+
+			//GameProfiler.worldUpdateMarker.End();
 
 			ContextDictionaryProvider.AllowImmediateChanges = true;
 			await UniTask.Yield();
