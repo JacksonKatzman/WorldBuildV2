@@ -8,8 +8,14 @@ namespace Game.Incidents
 	{
 		public static List<Character> GetExtendedFamily(Character c)
 		{
+			GameProfiler.BeginProfiling("GetExtendedFamily", GameProfiler.ProfileFunctionType.DEPLOY);
 			var hashSet = new HashSet<Character>();
 			CompileFamilyTree(c, 0, ref hashSet);
+			if(hashSet.Contains(c))
+			{
+				hashSet.Remove(c);
+			}
+			GameProfiler.EndProfiling("GetExtendedFamily");
 			return hashSet.ToList();
 		}
 		//check siblings - if got it then good
@@ -25,13 +31,15 @@ namespace Game.Incidents
 
 		public static GeneologicalData FindRelationship(Character primaryCharacter, Character secondaryCharacter)
 		{
+			GameProfiler.BeginProfiling("FindRelationship", GameProfiler.ProfileFunctionType.DEPLOY);
 			var possiblePaths = new List<GeneologicalData>();
 			SearchFamilyTree(primaryCharacter, secondaryCharacter, 0, 0, 0, 0, ref possiblePaths);
+			GeneologicalData toReturn;
 
 			if(possiblePaths.Count == 0)
 			{
 				//not related
-				return null;
+				toReturn = null;
 			}
 			else
 			{
@@ -41,8 +49,10 @@ namespace Game.Incidents
 					shortestPath = shortestPath.iterations > possiblePaths[i].iterations ? possiblePaths[i] : shortestPath;
 				}
 
-				return shortestPath;
+				toReturn = shortestPath;
 			}
+			GameProfiler.EndProfiling("FindRelationship");
+			return toReturn;
 		}
 
 		private static void SearchFamilyTree(Character searching, Character searchingFor, int verticallyRemoved, int siblingRemoved, int spouseRemoved, int iterations, ref List<GeneologicalData> data)
@@ -87,7 +97,7 @@ namespace Game.Incidents
 		}
 		private static void CompileFamilyTree(Character searching, int iterations, ref HashSet<Character> data)
 		{
-			if (iterations < 5)
+			if (iterations < 3)
 			{
 				foreach (var spouse in searching.Spouses)
 				{

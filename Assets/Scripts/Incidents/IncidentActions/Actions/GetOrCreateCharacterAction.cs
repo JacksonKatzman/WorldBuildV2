@@ -60,6 +60,11 @@ namespace Game.Incidents
 				newPerson.GenerateFamily(true, true);
 			}
 
+			foreach(var parent in newPerson.Parents)
+			{
+				parent.Children.Add(newPerson);
+			}
+
 			return newPerson;
 		}
 

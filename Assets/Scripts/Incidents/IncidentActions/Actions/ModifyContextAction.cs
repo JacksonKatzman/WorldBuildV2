@@ -18,11 +18,13 @@ namespace Game.Incidents
 
         override public void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-            foreach(var modifier in modifiers)
+			GameProfiler.BeginProfiling("ModifyCharacterAction", GameProfiler.ProfileFunctionType.DEPLOY);
+			foreach (var modifier in modifiers)
 			{
                 modifier.Modify(contextToModify.GetTypedFieldValue());
 			}
-            OutputLogger.Log("Context Modified Via Action.");
+			GameProfiler.EndProfiling("ModifyCharacterAction");
+			OutputLogger.Log("Context Modified Via Action.");
 		}
 
 		public override void UpdateActionFieldIDs(ref int startingValue)
