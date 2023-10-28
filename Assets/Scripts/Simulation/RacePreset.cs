@@ -10,6 +10,8 @@ namespace Game.Simulation
 		public int minAge;
 		public int maxAge;
 
+		public AnimationCurve ageCurve;
+
 		[SerializeField]
 		public NamingThemePreset namingTheme;
 	}

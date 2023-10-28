@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using Unity.Profiling;
 using UnityEngine;
-
 public class GameProfiler : MonoBehaviour
 {
     private class MinMax

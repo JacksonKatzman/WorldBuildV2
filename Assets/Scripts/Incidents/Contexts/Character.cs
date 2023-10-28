@@ -290,7 +290,7 @@ namespace Game.Incidents
 
 			if(MajorCharacter)
 			{
-				IncidentService.Instance.ReportStaticIncident("{0} dies.", new List<IIncidentContext>() { this }, true);
+				IncidentService.Instance.ReportStaticIncident("{0} dies at age " + Age + ".", new List<IIncidentContext>() { this }, true);
 			}
 			EventManager.Instance.RemoveEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
