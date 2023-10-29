@@ -16,7 +16,7 @@ using HexDirection = Game.Terrain.HexDirection;
 namespace Game.Incidents
 {
 	[Serializable]
-	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated, IInventoryAffiliated
+	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated, IInventoryAffiliated, IRaceAffiliated
 	{
 		public Faction AffiliatedFaction
 		{
@@ -101,6 +101,8 @@ namespace Game.Incidents
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
 
+		public Race AffiliatedRace => MajorityRace;
+
 		public NamingTheme namingTheme;
 
 		public Faction() : base()
@@ -115,10 +117,8 @@ namespace Game.Incidents
 			FactionsAtWarWith = new List<IIncidentContext>();
 
 			Priorities = new Dictionary<OrganizationType, int>();
-			Priorities[OrganizationType.POLITICAL] = SimRandom.RandomRange(1, 4);
-			Priorities[OrganizationType.ECONOMIC] = SimRandom.RandomRange(1, 4);
-			Priorities[OrganizationType.RELIGIOUS] = SimRandom.RandomRange(1, 4);
-			Priorities[OrganizationType.MILITARY] = SimRandom.RandomRange(1, 4);
+			
+			AssignRandomPriorities();
 
 			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
 			//Name = namingTheme.GenerateFactionName();
@@ -166,6 +166,7 @@ namespace Game.Incidents
 			UpdatePopulation();
 			UpdateInfluence();
 			UpdatePERMS();
+			UpdateCells();
 			UpdateNumIncidents();
 		}
 
@@ -413,7 +414,20 @@ namespace Game.Incidents
 
 		private void UpdateInfluence()
 		{
-			Influence += (5 + PoliticalPriority/3);
+			//Influence += (5 + PoliticalPriority/3);
+			var leaderPoliticalPriority = Government.Leader.PoliticalPriority;
+			var prioBonus = PriorityAlignment == OrganizationType.POLITICAL ? 2 : 0;
+			Influence += Mathf.Max(1, PoliticalPriority + leaderPoliticalPriority + prioBonus - 3);
+			/*
+			 * Things that affect influence:
+			 * Political
+			 * MilitaryPower
+			 * Wealth
+			 * # Cities
+			 * Religious Sway?
+			 * Leaders Influence?
+			 * Military victories via incidents
+			 */
 		}
 
 		private void UpdateWealth()
@@ -431,15 +445,27 @@ namespace Game.Incidents
 				city.UpdatePopulation();
 			}
 
-			if(MilitaryPower < (Population/10))
+			var bonusCap = (((float)Population) / 5f) * (((float)MilitaryPriority) / 10f);
+			var militaryCap = (Population / 10) + bonusCap;
+			if (MilitaryPower < militaryCap)
 			{
-				MilitaryPower += Priorities[OrganizationType.MILITARY] / 2;
+				MilitaryPower += (int)(militaryCap / (15 - MilitaryPriority));
 			}
 		}
 
 		private void UpdatePERMS()
 		{
 
+		}
+
+		private void UpdateCells()
+		{
+			//var multiplier = Mathf.Abs((PoliticalPriority / 3) - 4) + 1;
+			if(Influence >= InfluenceForNextTile * 2)
+			{
+				Influence -= InfluenceForNextTile;
+				AttemptExpandBorder(1);
+			}
 		}
 
 		private void UpdateNumIncidents()
@@ -455,6 +481,26 @@ namespace Game.Incidents
 		private OrganizationType GetHighestPriority()
 		{
 			return Priorities.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+		}
+
+		private void AssignRandomPriorities()
+		{
+			var values = new List<int> { 4, 3, 2, 1 };
+			var randomValue = SimRandom.RandomEntryFromList(values);
+			Priorities.Add(OrganizationType.POLITICAL, randomValue);
+			values.Remove(randomValue);
+
+			randomValue = SimRandom.RandomEntryFromList(values);
+			Priorities.Add(OrganizationType.ECONOMIC, randomValue);
+			values.Remove(randomValue);
+
+			randomValue = SimRandom.RandomEntryFromList(values);
+			Priorities.Add(OrganizationType.RELIGIOUS, randomValue);
+			values.Remove(randomValue);
+
+			randomValue = SimRandom.RandomEntryFromList(values);
+			Priorities.Add(OrganizationType.MILITARY, randomValue);
+			values.Remove(randomValue);
 		}
 	}
 }
