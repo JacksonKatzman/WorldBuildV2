@@ -168,19 +168,7 @@ namespace Game.Simulation
             this.immediate = immediate;
         }
     }
-/*
-    public class AddContextImmediateEvent : ISimulationEvent
-    {
-        public IIncidentContext context;
-        public Type contextType;
 
-        public AddContextImmediateEvent(IIncidentContext context, Type type = null)
-        {
-            this.context = context;
-            this.contextType = type == null ? context.GetType() : type;
-        }
-    }
-*/
     public class RemoveContextEvent : ISimulationEvent
 	{
         public IIncidentContext context;
@@ -202,6 +190,30 @@ namespace Game.Simulation
 		{
 			this.affiliate = affiliate;
 			this.newFaction = newFaction;
+		}
+	}
+
+    public class WarDeclaredEvent : ISimulationEvent
+	{
+        public IFactionAffiliated attacker;
+        public IFactionAffiliated defender;
+
+		public WarDeclaredEvent(IFactionAffiliated attacker, IFactionAffiliated defender)
+		{
+			this.attacker = attacker;
+			this.defender = defender;
+		}
+	}
+
+    public class PeaceDeclaredEvent : ISimulationEvent
+	{
+        public IFactionAffiliated declarer;
+        public IFactionAffiliated accepter;
+
+		public PeaceDeclaredEvent(IFactionAffiliated declarer, IFactionAffiliated accepter)
+		{
+			this.declarer = declarer;
+			this.accepter = accepter;
 		}
 	}
 }

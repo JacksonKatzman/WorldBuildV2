@@ -108,6 +108,8 @@ namespace Game.Incidents
 		public Faction() : base()
 		{
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
+			EventManager.Instance.AddEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
+			EventManager.Instance.AddEventHandler<PeaceDeclaredEvent>(OnPeaceDeclaredEvent);
 		}
 
 		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace, Character creator = null) : this()
@@ -158,6 +160,16 @@ namespace Game.Incidents
 				IncidentService.Instance.PerformIncidents((Faction)this);
 			}
 
+			foreach(var context in FactionsAtWarWith)
+			{
+				var chance = (1 + ((float)MilitaryPriority) / 3) / 10;
+				if(chance >= SimRandom.RandomFloat01())
+				{
+					var battleContext = new FactionBattleContext(this, (Faction)context, 1);
+					IncidentService.Instance.PerformIncidents(battleContext);
+				}
+			}
+
 			CheckForDeath();
 		}
 		override public void UpdateContext()
@@ -168,6 +180,7 @@ namespace Game.Incidents
 			UpdatePERMS();
 			UpdateCells();
 			UpdateNumIncidents();
+			UpdateWarState();
 		}
 
 		public override void CheckForDeath()
@@ -181,6 +194,8 @@ namespace Game.Incidents
 		override public void Die()
 		{
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
+			EventManager.Instance.RemoveEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
+			EventManager.Instance.RemoveEventHandler<PeaceDeclaredEvent>(OnPeaceDeclaredEvent);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 			Government.Die();
 			IncidentService.Instance.ReportStaticIncident(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>{0} is wiped out!", new List<IIncidentContext>() { this }, true);
@@ -359,6 +374,30 @@ namespace Game.Incidents
 			}
 		}
 
+		private void OnWarDeclaredEvent(WarDeclaredEvent gameEvent)
+		{
+			if(gameEvent.attacker == this)
+			{
+				FactionsAtWarWith.Add(gameEvent.defender.AffiliatedFaction);
+			}
+			else if(gameEvent.defender == this)
+			{
+				FactionsAtWarWith.Add(gameEvent.attacker.AffiliatedFaction);
+			}
+		}
+
+		private void OnPeaceDeclaredEvent(PeaceDeclaredEvent gameEvent)
+		{
+			if(gameEvent.declarer == this && FactionsAtWarWith.Contains(gameEvent.accepter.AffiliatedFaction))
+			{
+				FactionsAtWarWith.Remove(gameEvent.accepter.AffiliatedFaction);
+			}
+			else if(gameEvent.accepter == this && FactionsAtWarWith.Contains(gameEvent.declarer.AffiliatedFaction))
+			{
+				FactionsAtWarWith.Remove(gameEvent.declarer.AffiliatedFaction);
+			}
+		}
+
 		private List<IIncidentContext> GetFactionsWithinInteractionRange()
 		{
 			var world = SimulationManager.Instance.world;
@@ -470,7 +509,34 @@ namespace Game.Incidents
 
 		private void UpdateNumIncidents()
 		{
-			NumIncidents = 1;
+			//var mod = 10 - (PoliticalPriority / 3);
+			//var chance = SimRandom.RandomRange(1, mod);
+			//NumIncidents = chance == 1 ? 1 : 0;
+			var chance = (1 + ((float)PoliticalPriority) / 3) / 10;
+			NumIncidents = chance >= SimRandom.RandomFloat01() ? 1 : 0;
+		}
+
+		private void UpdateWarState()
+		{
+			foreach(var pair in FactionRelations)
+			{
+				if(pair.Value <= (-100 + (2 * MilitaryPriority)))
+				{
+					var chance = 7 / 10;
+					if(chance >= SimRandom.RandomFloat01())
+					{
+						var faction = (Faction)pair.Key;
+						EventManager.Instance.Dispatch(new WarDeclaredEvent(this, faction));
+						IncidentService.Instance.ReportStaticIncident("{0} declares war on {1}", new List<IIncidentContext> { this, faction }, true);
+					}
+				}
+				else if(pair.Value >= (50 + (2 * MilitaryPriority)))
+				{
+					var faction = (Faction)pair.Key;
+					EventManager.Instance.Dispatch(new PeaceDeclaredEvent(this, faction));
+					IncidentService.Instance.ReportStaticIncident("{0} signs a peace treaty with {1}", new List<IIncidentContext> { this, faction }, true);
+				}
+			}
 		}
 
 		private bool CheckDestroyed()
