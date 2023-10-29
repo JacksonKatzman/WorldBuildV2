@@ -333,7 +333,7 @@ namespace Game.Simulation
 				EventManager.Instance.Dispatch(new AddContextEvent(race, true));
 				for (var i = 0; i < racePresetPair.Value; i++)
 				{
-					var faction = new Faction(1, 1000, race);
+					var faction = new Faction(1, 10000, race);
 					EventManager.Instance.Dispatch(new AddContextEvent(faction, true));
 				}
 			}

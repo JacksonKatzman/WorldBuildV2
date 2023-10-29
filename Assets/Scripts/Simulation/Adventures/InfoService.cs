@@ -26,7 +26,7 @@ namespace Game.Simulation
 		public InfoService()
 		{
 			keywords = new Dictionary<string, AdventureKeyword>();
-			var keywordObjects = SerializedObjectCollectionService.Instance.container.collections[typeof(AdventureKeyword)];
+			var keywordObjects = SerializedObjectCollectionService.Instance.Container.collections[typeof(AdventureKeyword)];
 			foreach (var pair in keywordObjects.objects)
 			{
 				keywords.Add(pair.Key, pair.Value as AdventureKeyword);

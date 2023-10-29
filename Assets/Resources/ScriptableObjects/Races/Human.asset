@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Human
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -22,5 +22,47 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   minAge: 16
-  maxAge: 120
+  maxAge: 100
+  ageCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.76828873
+      value: 0.30641845
+      inSlope: 1.3433241
+      outSlope: 1.3433241
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.09426929
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9565983
+      value: 0.97711
+      inSlope: 0.41893175
+      outSlope: 0.41893175
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.56034815
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   namingTheme: {fileID: 11400000, guid: 480ac245d69ad9b428c438b597fe762a, type: 2}

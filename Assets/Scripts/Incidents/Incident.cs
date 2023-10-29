@@ -13,11 +13,13 @@ namespace Game.Incidents
 		public IncidentCriteriaContainer Criteria { get; set; }
 		public IncidentCriteriaContainer WorldCriteria { get; set; }
 		public bool IsMajorIncident { get; set; }
+		public bool IsUnique { get; set; }
 
 		public IncidentActionHandlerContainer ActionContainer { get; set; }
 
 		[JsonConstructor]
-		public Incident(Type contextType, IncidentCriteriaContainer criteria, IncidentCriteriaContainer worldCriteria, IncidentActionHandlerContainer actions, IIncidentWeight weight, bool isMajorIncident)
+		public Incident(Type contextType, IncidentCriteriaContainer criteria, IncidentCriteriaContainer worldCriteria,
+			IncidentActionHandlerContainer actions, IIncidentWeight weight, bool isMajorIncident, bool isUnique)
 		{
 			ContextType = contextType;
 			Criteria = criteria;
@@ -25,13 +27,15 @@ namespace Game.Incidents
 			ActionContainer = actions;
 			Weights = weight;
 			IsMajorIncident = isMajorIncident;
+			IsUnique = isUnique;
 			if(WorldCriteria == null)
 			{
 				WorldCriteria = new IncidentCriteriaContainer(new List<IIncidentCriteria>());
 			}
 		}
 
-		public Incident(string incidentName, Type contextType, List<IIncidentCriteria> criteria, List<IIncidentCriteria> worldCriteria, IncidentActionHandlerContainer container, IIncidentWeight weight, bool isMajorIncident)
+		public Incident(string incidentName, Type contextType, List<IIncidentCriteria> criteria, List<IIncidentCriteria> worldCriteria,
+			IncidentActionHandlerContainer container, IIncidentWeight weight, bool isMajorIncident, bool isUnique)
 		{
 			IncidentName = incidentName;
 			ContextType = contextType;
@@ -40,6 +44,7 @@ namespace Game.Incidents
 			ActionContainer = container;
 			Weights = weight;
 			IsMajorIncident = isMajorIncident;
+			IsUnique = isUnique;
 		}
 
 		public bool PerformIncident(IIncidentContext context, ref IncidentReport report )

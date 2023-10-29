@@ -85,6 +85,11 @@ namespace Game.Incidents
 					report.CreateFullLog();
 					reports.Add(report);
 
+					if(CurrentIncident.IsUnique)
+					{
+						incidents.Remove(CurrentIncident);
+					}
+
 					while(followUpContexts.Count > 0)
 					{
 						var deployedContext = followUpContexts.First();
