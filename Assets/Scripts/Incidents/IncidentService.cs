@@ -82,6 +82,7 @@ namespace Game.Incidents
 				if (completed)
 				{
 					nextIncidentID++;
+					report.ReportHeadline = CurrentIncident.IncidentHeadline;
 					report.CreateFullLog();
 					reports.Add(report);
 

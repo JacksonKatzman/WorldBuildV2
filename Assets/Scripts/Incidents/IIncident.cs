@@ -11,6 +11,7 @@ namespace Game.Incidents
 		IncidentCriteriaContainer WorldCriteria { get; }
 		IncidentActionHandlerContainer ActionContainer { get; }
 		public bool IsUnique { get; set; }
+		public string IncidentHeadline { get; set; }
 		bool PerformIncident(IIncidentContext context, ref IncidentReport report);
 	}
 }
