@@ -22,7 +22,7 @@ namespace Game.Incidents
 
 		public T RetrieveObject()
 		{
-			if (SerializedObjectCollectionService.Instance.container.collections.TryGetValue(typeof(T), out var collection))
+			if (SerializedObjectCollectionService.Instance.Container.collections.TryGetValue(typeof(T), out var collection))
 			{
 				if (collection.objects.TryGetValue(prefabKey, out var value))
 				{
@@ -43,7 +43,7 @@ namespace Game.Incidents
 
 		private IEnumerable<string> GetKeys()
 		{
-			if(SerializedObjectCollectionService.Instance.container.collections.TryGetValue(typeof(T), out var collection))
+			if(SerializedObjectCollectionService.Instance.Container.collections.TryGetValue(typeof(T), out var collection))
 			{
 				return collection.objects.Keys;
 			}
