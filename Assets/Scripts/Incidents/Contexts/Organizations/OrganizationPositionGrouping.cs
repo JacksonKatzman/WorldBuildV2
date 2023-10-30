@@ -63,14 +63,7 @@ namespace Game.Incidents
 
 			primaryPosition.HandleSuccession();
 
-			foreach (var spouse in Spouses)
-			{
-				((Character)spouse).OrganizationPosition = this;
-			}
-			foreach (var child in Children)
-			{
-				((Character)child).OrganizationPosition = this;
-			}
+			Update();
 		}
 
 		public override void Initialize(Organization org)
@@ -94,13 +87,31 @@ namespace Game.Incidents
 			}
 		}
 
+		public void Update()
+		{
+			foreach (var spouse in Spouses)
+			{
+				((Character)spouse).OrganizationPosition = this;
+			}
+			foreach (var child in Children)
+			{
+				((Character)child).OrganizationPosition = this;
+			}
+		}
+
 		private List<ISentient> GetSpouses(ISentient sentient)
 		{
 			var spouses = new List<ISentient>();
 			if(sentient != null && sentient.GetType() == typeof(Character))
 			{
 				var character = sentient as Character;
-				spouses.AddRange(character.Spouses);
+				foreach(var spouse in spouses)
+				{
+					if(spouse.OrganizationPosition == this || spouse.OrganizationPosition == null)
+					{
+						spouses.Add(spouse);
+					}
+				}
 			}
 
 			return spouses;
@@ -114,10 +125,16 @@ namespace Game.Incidents
 				var character = sentient as Character;
 				foreach(var child in character.Children)
 				{
-					children.Add(child);
-					foreach (var childSpouse in child.Spouses)
+					if(child.OrganizationPosition == this || child.OrganizationPosition == null)
 					{
-						children.Add(childSpouse);
+						children.Add(child);
+						foreach (var childSpouse in child.Spouses)
+						{
+							if (childSpouse.OrganizationPosition == this || childSpouse.OrganizationPosition == null)
+							{
+								children.Add(childSpouse);
+							}
+						}
 					}
 				}
 			}

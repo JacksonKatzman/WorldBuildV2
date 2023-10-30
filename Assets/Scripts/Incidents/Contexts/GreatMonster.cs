@@ -21,6 +21,8 @@ namespace Game.Incidents
 		public int GoodEvilAlignmentAxis { get; set; }
 		public List<CharacterTag> CharacterTags { get; set; }
 		public Faction AffiliatedFaction { get; set; }
+		public IOrganizationPosition OrganizationPosition { get; set; }
+		public Organization AffiliatedOrganization => OrganizationPosition.AffiliatedOrganization;
 
 		public CreatureSize CreatureSize => dataBlock.size;
 		public CreatureType CreatureType => dataBlock.type;

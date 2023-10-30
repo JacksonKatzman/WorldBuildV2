@@ -11,8 +11,6 @@ namespace Game.Incidents
 		public CharacterName CharacterName { get; set; }
 		public int Age { get; set; }
 		public Race AffiliatedRace { get; set; }
-		public Organization AffiliatedOrganization { get; set; }
-		public IOrganizationPosition OrganizationPosition { get; }
 	}
 
 	public static class ICharacterExtensions

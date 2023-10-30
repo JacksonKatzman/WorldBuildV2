@@ -7,6 +7,8 @@ namespace Game.Incidents
 	{
 		Gender Gender { get; set; }
 		Faction AffiliatedFaction { get; set; }
+		public Organization AffiliatedOrganization { get; }
+		public IOrganizationPosition OrganizationPosition { get; }
 		public List<CharacterTag> CharacterTags { get; set; }
 		public void Die();
 	}

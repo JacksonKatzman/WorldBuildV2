@@ -57,6 +57,14 @@ namespace Game.Incidents
 			if(Parents.Count > 0)
 			{
 				CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender, parents);
+				foreach(var parent in parents)
+				{
+					parent.Children.Add(this);
+					if(parent.HasOrganizationPosition)
+					{
+						parent.OrganizationPosition.Update();
+					}
+				}
 			}
 			else
 			{
@@ -319,6 +327,21 @@ namespace Game.Incidents
 			contextIDLoadBuffers.Clear();
 		}
 
+		public static void HandleMarriage(Character initiator, Character other)
+		{
+			initiator.Spouses.Add(other);
+			other.Spouses.Add(initiator);
+			other.AffiliatedFaction = initiator.AffiliatedFaction;
+
+			EventManager.Instance.Dispatch(new AffiliatedFactionChangedEvent(other, initiator.AffiliatedFaction));
+
+			if(initiator.OrganizationPosition != null)
+			{
+				//other.OrganizationPosition = initiator.OrganizationPosition;
+				initiator.OrganizationPosition.Update();
+			}
+		}
+
 		private OrganizationType GetHighestPriority()
 		{
 			return Priorities.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
@@ -334,7 +357,7 @@ namespace Game.Incidents
 		{
 			if (gameEvent.affiliate == this)
 			{
-				AffiliatedOrganization = null;
+				OrganizationPosition = null;
 			}
 		}
 	}

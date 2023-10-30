@@ -141,6 +141,11 @@ namespace Game.Incidents
 			}
 		}
 
+		public void Update()
+		{
+
+		}
+
 		public string GetTitle(ISentient sentient)
 		{
 			return titlePair.GetTitle(sentient.Gender);
