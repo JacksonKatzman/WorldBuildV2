@@ -5,17 +5,14 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public interface ICharacter 
+	public interface ICharacter : ISentient
 	{
 		public string Name { get; }
 		public CharacterName CharacterName { get; set; }
 		public int Age { get; set; }
-		public Gender Gender { get; set; }
 		public Race AffiliatedRace { get; set; }
-		public Faction AffiliatedFaction { get; set; }
 		public Organization AffiliatedOrganization { get; set; }
-		public OrganizationPosition OfficialPosition { get; }
-		void Die();
+		public IOrganizationPosition OrganizationPosition { get; }
 	}
 
 	public static class ICharacterExtensions

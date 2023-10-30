@@ -16,7 +16,7 @@ using HexDirection = Game.Terrain.HexDirection;
 namespace Game.Incidents
 {
 	[Serializable]
-	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated, IInventoryAffiliated, IRaceAffiliated
+	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated, IInventoryAffiliated, IRaceAffiliated, IPermsAffiliated
 	{
 		public Faction AffiliatedFaction
 		{
@@ -95,7 +95,7 @@ namespace Game.Incidents
 		}
 		private FactionInventory inventory;
 
-		public Race MajorityRace => Government.Leader.AffiliatedRace;
+		public Race MajorityRace { get; set; }
 		virtual public bool IsSpecialFaction => false;
 
 		[HideInInspector]
@@ -105,7 +105,7 @@ namespace Game.Incidents
 
 		public NamingTheme namingTheme;
 
-		public Faction() : base()
+		public Faction() //: base()
 		{
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.AddEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
@@ -119,6 +119,7 @@ namespace Game.Incidents
 			FactionsAtWarWith = new List<IIncidentContext>();
 
 			Priorities = new Dictionary<OrganizationType, int>();
+			MajorityRace = startingMajorityRace;
 			
 			AssignRandomPriorities();
 
@@ -174,6 +175,7 @@ namespace Game.Incidents
 		}
 		override public void UpdateContext()
 		{
+			Age += 1;
 			UpdateWealth();
 			UpdatePopulation();
 			UpdateInfluence();
@@ -454,7 +456,8 @@ namespace Game.Incidents
 		private void UpdateInfluence()
 		{
 			//Influence += (5 + PoliticalPriority/3);
-			var leaderPoliticalPriority = Government.Leader.PoliticalPriority;
+			var randomLeader = SimRandom.RandomEntryFromList(Government.Leaders) as Character;
+			var leaderPoliticalPriority = randomLeader.PoliticalPriority;
 			var prioBonus = PriorityAlignment == OrganizationType.POLITICAL ? 2 : 0;
 			Influence += Mathf.Max(1, PoliticalPriority + leaderPoliticalPriority + prioBonus - 3);
 			/*

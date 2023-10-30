@@ -1,4 +1,5 @@
-﻿using Game.Enums;
+﻿using Game.Debug;
+using Game.Enums;
 using Game.Simulation;
 using Game.Utilities;
 using System.Collections.Generic;
@@ -7,41 +8,71 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Organization : IncidentContext, IFactionAffiliated
+	public class Organization : IncidentContext, IFactionAffiliated, IOrganizationAffiliated
 	{
 		public Faction AffiliatedFaction { get; set; }
-		public Character Leader => hierarchy.First().First().official;
-		/*Political structure with included title structure
-		 * - Levels of government and titles of those levels should be mutable and addable via incidents
-		 * - A way of adding flavor as to the responsibilites of each level?
-		 * - Only a very few of the levels should be populated with great people in the sim
-		 *		- Things like head of state/church/treasury etc
-		 *		- Perhaps a flavor list of responsibilities that gets generated at random
-		 *	- Need a way of determining at what level to add a new position
-		 *		Weight at n (where n = index of current tier) = ceil((Total Height of subtree + total count of nodes in subtree + 1) * (n+1)^2) - ceil(nodes in current tier * height of subtree^2)
-		 */
+		public int TotalPositions { get; private set; }
+		public int MaxPositionsFilledInSimulation { get; private set; }
 
-		public List<OrganizationTier> hierarchy;
-		public OrganizationType organizationType;
-		private int maxTiers = 7;
+		public OrganizationType OrganizationType => template.organizationType;
+		public List<Race> racesAllowedToHoldOffice;
+		public SubOrganization primaryOrganization;
+		public List<ISentient> Leaders => GetLeaders();
+
+		public Organization AffiliatedOrganization
+		{
+			get
+			{
+				return this;
+			}
+			set
+			{
+				OutputLogger.LogError("Cannot set AffiliatedOrganization of an Organization!");
+			}
+		}
+
+		public OrganizationTemplate template;
 
 		public Organization() { }
-		public Organization(Faction faction, Race majorityStartingRace, OrganizationType organizationType, Character creator = null)
+
+		private Organization(Faction faction, Race majorityStartingRace, Character creator = null)
 		{
 			AffiliatedFaction = faction;
-			this.organizationType = organizationType;
+			racesAllowedToHoldOffice = new List<Race> { majorityStartingRace };
+
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.AddEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
+		}
 
-			hierarchy = new List<OrganizationTier>();
-			AddTier(majorityStartingRace, creator);
+		public Organization(OrganizationTemplate template, Faction faction, Race majorityStartingRace, Character creator = null) : this(faction, majorityStartingRace, creator)
+		{
+			this.template = template;
+			Setup();
+		}
+
+		public Organization(Faction faction, Race majorityStartingRace, OrganizationType organizationType, Character creator = null) : this(faction, majorityStartingRace, creator)
+		{
+			template = SimRandom.RandomEntryFromList(majorityStartingRace.racePreset.organizationTemplates);
+			Setup();
+		}
+
+		private void Setup()
+		{
+			primaryOrganization = new SubOrganization(template.subOrg);
+			primaryOrganization.Initialize(this);
+
+			var totalPositions = 0;
+			GetTotalPositionCount(ref totalPositions);
+			TotalPositions = totalPositions;
+			MaxPositionsFilledInSimulation = template.maxPositionsFilledInSimulation;
+			TryFillNextPosition(out var organizationPosition);
 		}
 
 		public void OnRemoveContextEvent(RemoveContextEvent gameEvent)
 		{
 			if(gameEvent.context.GetType() == typeof(Character) && Contains((Character)gameEvent.context, out var position))
 			{
-				position.SelectNewOfficial(this, AffiliatedFaction, Leader.AffiliatedRace);
+				position.HandleSuccession();
 			}
 		}
 
@@ -49,74 +80,35 @@ namespace Game.Incidents
 		{
 			if (gameEvent.affiliate.GetType() == typeof(Character) && Contains((Character)gameEvent.affiliate, out var position))
 			{
-				position.SelectNewOfficial(this, AffiliatedFaction, Leader.AffiliatedRace);
+				position.HandleSuccession();
 			}
 		}
 
-		public bool Contains(Character person, out OrganizationPosition position)
+		public bool Contains(ISentient sentient, out IOrganizationPosition position)
 		{
-			foreach(var tier in hierarchy)
-			{
-				var found = tier.Where(x => x.official == person);
-				if(found.Count() > 0)
-				{
-					position = found.First();
-					return true;
-				}
-			}
-
-			position = null;
-			return false;
+			return primaryOrganization.Contains(sentient, out position);
 		}
 
-		public void UpdateHierarchy()
+		public bool TryFillNextPosition(out IOrganizationPosition organizationPosition)
 		{
-			int[] weights = new int[hierarchy.Count];
-			var totalWeight = 0;
-			for(int i = 0; i < weights.Length; i++)
+			var filledPositions = 0;
+			GetFilledPositionCount(ref filledPositions);
+			if(filledPositions < MaxPositionsFilledInSimulation && WorldExtensions.CanFillAdditionalOrganizationPosition(World.CurrentWorld, Age, filledPositions))
 			{
-				var totalHeight = weights.Length - i;
-				var totalCount = 0;
-				for(int j = i; j < weights.Length; j++)
-				{
-					totalCount += hierarchy[j].Count;
-				}
-
-				var weight = (int)(((totalHeight + totalCount + 1) * Mathf.Pow(i + 1, 2)) - (hierarchy[i].Count * Mathf.Pow(totalHeight, 2)));
-				weights[i] = weight;
-				totalWeight += weight;
+				primaryOrganization.TryFillNextPosition(out organizationPosition);
+				return true;
 			}
-
-			//to account for an empty possible tier
-			if (hierarchy.Count < maxTiers)
+			else
 			{
-				totalWeight += (int)(2 * Mathf.Pow(weights.Length + 1, 2));
+				organizationPosition = null;
+				return false;
 			}
-
-			var random = SimRandom.RandomRange(0, totalWeight + 1);
-			for(int i = weights.Length - 1; i >= 0; i--)
-			{
-				random -= weights[i];
-				if(random <= 0)
-				{
-					hierarchy[i].AddPosition(this, AffiliatedFaction, Leader.AffiliatedRace);
-					return;
-				}
-			}
-
-			AddTier(Leader.AffiliatedRace);
-		}
-
-		private void AddTier(Race race, Character official = null)
-		{
-			var newTier = new OrganizationTier(this, AffiliatedFaction, race, organizationType, hierarchy.Count, maxTiers);
-			newTier.AddPosition(this, AffiliatedFaction, race, official);
-			hierarchy.Add(newTier);
 		}
 
 		public override void UpdateContext()
 		{
-			
+			Age += 1;
+			TryFillNextPosition(out var organizationPosition);
 		}
 
 		public override void DeployContext()
@@ -139,6 +131,24 @@ namespace Game.Incidents
 			AffiliatedFaction = SaveUtilities.ConvertIDToContext<Faction>(contextIDLoadBuffers["AffiliatedFaction"][0]);
 
 			contextIDLoadBuffers.Clear();
+		}
+
+		private List<ISentient> GetLeaders()
+		{
+			var topTier = primaryOrganization.tiers[0];
+			var sentients = new List<ISentient>();
+			topTier.GetSentients(ref sentients);
+			return sentients;
+		}
+
+		private void GetTotalPositionCount(ref int total)
+		{
+			primaryOrganization.GetPositionCount(ref total, false);
+		}
+
+		private void GetFilledPositionCount(ref int filled)
+		{
+			primaryOrganization.GetPositionCount(ref filled, true);
 		}
 	}
 }

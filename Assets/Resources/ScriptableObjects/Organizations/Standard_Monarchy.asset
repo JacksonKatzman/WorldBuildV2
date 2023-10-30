@@ -1,0 +1,303 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed24bddc164906c4eae954efe07cfeee, type: 3}
+  m_Name: Standard_Monarchy
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: subOrg
+      Entry: 7
+      Data: 0|Game.Incidents.SubOrganization, Auto-asmdef-SecondPass
+    - Name: subOrganizationTitle
+      Entry: 1
+      Data: Monarchy
+    - Name: tiers
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[Game.Incidents.OrganizationTier,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 2|Game.Incidents.OrganizationTier, Auto-asmdef-SecondPass
+    - Name: components
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Game.Incidents.AbstractOrganizationComponent,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 4|Game.Incidents.OrganizationPositionGrouping, Auto-asmdef-SecondPass
+    - Name: primaryPosition
+      Entry: 7
+      Data: 5|Game.Incidents.OrganizationPosition, Auto-asmdef-SecondPass
+    - Name: official
+      Entry: 6
+      Data: 
+    - Name: organizationType
+      Entry: 3
+      Data: 0
+    - Name: titlePair
+      Entry: 7
+      Data: 6|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
+    - Name: maleTitle
+      Entry: 1
+      Data: King {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: King {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: hereditary
+      Entry: 5
+      Data: true
+    - Name: gender
+      Entry: 3
+      Data: 0
+    - Name: maxPositions
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: spouseTitles
+      Entry: 7
+      Data: 7|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
+    - Name: maleTitle
+      Entry: 1
+      Data: Prince-Consort {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Queen {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: childTitles
+      Entry: 7
+      Data: 8|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
+    - Name: maleTitle
+      Entry: 1
+      Data: Prince {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Princess {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: maxGroupings
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|Game.Incidents.OrganizationTier, Auto-asmdef-SecondPass
+    - Name: components
+      Entry: 7
+      Data: 10|System.Collections.Generic.List`1[[Game.Incidents.AbstractOrganizationComponent,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 11|Game.Incidents.OrganizationPositionGrouping, Auto-asmdef-SecondPass
+    - Name: primaryPosition
+      Entry: 7
+      Data: 12|Game.Incidents.OrganizationPosition, Auto-asmdef-SecondPass
+    - Name: official
+      Entry: 6
+      Data: 
+    - Name: organizationType
+      Entry: 3
+      Data: 0
+    - Name: titlePair
+      Entry: 7
+      Data: 13|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
+    - Name: maleTitle
+      Entry: 1
+      Data: Duke {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Dutchess {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: hereditary
+      Entry: 5
+      Data: true
+    - Name: gender
+      Entry: 3
+      Data: 2
+    - Name: maxPositions
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: spouseTitles
+      Entry: 7
+      Data: 14|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
+    - Name: maleTitle
+      Entry: 1
+      Data: Duke {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Dutchess {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: childTitles
+      Entry: 7
+      Data: 15|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
+    - Name: maleTitle
+      Entry: 1
+      Data: Lord {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Lady {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: maxGroupings
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 16|Game.Incidents.OrganizationTier, Auto-asmdef-SecondPass
+    - Name: components
+      Entry: 7
+      Data: 17|System.Collections.Generic.List`1[[Game.Incidents.AbstractOrganizationComponent,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 18|Game.Incidents.OrganizationPositionGrouping, Auto-asmdef-SecondPass
+    - Name: primaryPosition
+      Entry: 7
+      Data: 19|Game.Incidents.OrganizationPosition, Auto-asmdef-SecondPass
+    - Name: official
+      Entry: 6
+      Data: 
+    - Name: organizationType
+      Entry: 3
+      Data: 0
+    - Name: titlePair
+      Entry: 7
+      Data: 20|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
+    - Name: maleTitle
+      Entry: 1
+      Data: Marquess {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Marchioness {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: hereditary
+      Entry: 5
+      Data: true
+    - Name: gender
+      Entry: 3
+      Data: 2
+    - Name: maxPositions
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: spouseTitles
+      Entry: 7
+      Data: 21|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
+    - Name: maleTitle
+      Entry: 1
+      Data: Marquess {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Marchioness {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: childTitles
+      Entry: 7
+      Data: 22|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
+    - Name: maleTitle
+      Entry: 1
+      Data: Lord {0}
+    - Name: femaleTitle
+      Entry: 1
+      Data: Lady {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: maxGroupings
+      Entry: 3
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  organizationTemplateName: Standard Monachy
+  organizationType: 0
+  maxPositionsFilledInSimulation: 5

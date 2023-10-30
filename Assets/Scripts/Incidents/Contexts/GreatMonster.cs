@@ -14,6 +14,7 @@ namespace Game.Incidents
 		public override string Name => CharacterName.fullName;
 		public Inventory CurrentInventory { get; set; }
 		public CharacterName CharacterName { get; set; }
+		public Gender Gender { get; set; }
 
 		public OrganizationType PriorityAlignment => OrganizationType.MILITARY;
 		public int LawfulChaoticAlignmentAxis { get; set; }
@@ -24,11 +25,40 @@ namespace Game.Incidents
 		public CreatureSize CreatureSize => dataBlock.size;
 		public CreatureType CreatureType => dataBlock.type;
 
-		public GreatMonster() 
+		public int PoliticalPriority
+		{
+			get { return Priorities[OrganizationType.POLITICAL]; }
+			set { Priorities[OrganizationType.POLITICAL] = value; }
+		}
+		public int EconomicPriority
+		{
+			get { return Priorities[OrganizationType.ECONOMIC]; }
+			set { Priorities[OrganizationType.ECONOMIC] = value; }
+		}
+		public int ReligiousPriority
+		{
+			get { return Priorities[OrganizationType.RELIGIOUS]; }
+			set { Priorities[OrganizationType.RELIGIOUS] = value; }
+		}
+		public int MilitaryPriority
+		{
+			get { return Priorities[OrganizationType.MILITARY]; }
+			set { Priorities[OrganizationType.MILITARY] = value; }
+		}
+
+		//IMPORTANT! : Need to update the read/write saving for this class to account for new properties
+		public Dictionary<OrganizationType, int> Priorities { get; set; }
+
+		public GreatMonster()// : base()
 		{
 			CharacterTags = new List<CharacterTag>();
+			Priorities = new Dictionary<OrganizationType, int>();
+			Priorities[OrganizationType.POLITICAL] = 0;
+			Priorities[OrganizationType.ECONOMIC] = 0;
+			Priorities[OrganizationType.RELIGIOUS] = 0;
+			Priorities[OrganizationType.MILITARY] = 0;
 		}
-		public GreatMonster(MonsterData dataBlock) : base()
+		public GreatMonster(MonsterData dataBlock) : this()
 		{
 			this.dataBlock = dataBlock;
 		}

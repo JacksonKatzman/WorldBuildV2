@@ -15,11 +15,12 @@ namespace Game.Incidents
 		public static string POSSESSIVE_PRONOUN_STRING = "POSP";
 		public static string CHARACTER_RELATIONSHIP_STRING = "RELATE";
 		public static string SYNONYM_STRING = "SYNONYM";
+		public static string FULL_TITLE_STRING = "TITLED";
 
 		public static Dictionary<string, Func<string, Dictionary<string, IIncidentContext>, string>> flavorFunctions = new Dictionary<string, Func<string, Dictionary<string, IIncidentContext>, string>>()
 		{
 			{OBJECT_PRONOUN_STRING, HandleObjectGenderPronouns}, {SUBJECT_PRONOUN_STRING, HandleSubjectGenderPronouns}, {POSSESSIVE_PRONOUN_STRING, HandlePossessiveGenderPronouns},
-			{CHARACTER_RELATIONSHIP_STRING, HandleCharacterRelationshipTitles}, {SYNONYM_STRING, GenerateSynonyms}
+			{CHARACTER_RELATIONSHIP_STRING, HandleCharacterRelationshipTitles}, {SYNONYM_STRING, GenerateSynonyms}, {FULL_TITLE_STRING, HandleCharacterFullTitles}
 		};
 
 		public static string InjectFlavor(string input, Dictionary<string, IIncidentContext> contexts)
@@ -54,6 +55,36 @@ namespace Game.Incidents
 					textLine = StringUtilities.ReplaceFirstOccurence(textLine, matchString, replaceString);
 				}
 			}
+			return textLine;
+		}
+
+		public static string HandleCharacterFullTitles(string input, Dictionary<string, IIncidentContext> contexts)
+		{
+			var textLine = string.Copy(input);
+			var matches = Regex.Matches(textLine, @"\{" + FULL_TITLE_STRING + @":(\d+)\}");
+
+			foreach (Match match in matches)
+			{
+				var matchString = match.Value;
+				var matchId = match.Groups[1].Value;
+				var keyString = "{" + matchId + "}";
+				var linkedContext = contexts[keyString];
+
+				var titleString = "FULL-TITLE";
+				if (linkedContext.GetType() == typeof(Character))
+				{
+					var character = linkedContext as Character;
+					titleString = character.CharacterName.GetTitledFullName(character);
+				}
+				else
+				{
+					titleString = linkedContext.Name;
+				}
+
+				var linkString = string.Format("<link=\"{0}\">{1}</link>", linkedContext.ID, titleString);
+				textLine = textLine.Replace(matchString, linkString);
+			}
+
 			return textLine;
 		}
 

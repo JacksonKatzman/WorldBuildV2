@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("hierarchy", "organizationType", "AffiliatedFaction", "NumIncidents", "Name", "ID")]
+	[ES3PropertiesAttribute("racesAllowedToHoldOffice", "primaryOrganization", "template", "AffiliatedFaction", "NumIncidents", "Name", "ID")]
 	public class ES3UserType_Organization : ES3ObjectType
 	{
 		public static ES3Type Instance = null;
@@ -17,9 +16,10 @@ namespace ES3Types
 		{
 			var instance = (Game.Incidents.Organization)obj;
 			
-			writer.WriteProperty("hierarchy", instance.hierarchy, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<Game.Incidents.OrganizationTier>)));
-			writer.WriteProperty("organizationType", instance.organizationType, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Enums.OrganizationType)));
-			writer.WriteProperty("AffiliatedFaction", new List<int>() { instance.AffiliatedFaction.ID }, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<System.Int32>)));
+			writer.WriteProperty("racesAllowedToHoldOffice", instance.racesAllowedToHoldOffice, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(System.Collections.Generic.List<Game.Incidents.Race>)));
+			writer.WriteProperty("primaryOrganization", instance.primaryOrganization, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(Game.Incidents.SubOrganization)));
+			writer.WritePropertyByRef("template", instance.template);
+			writer.WriteProperty("AffiliatedFaction", instance.AffiliatedFaction, ES3UserType_Faction.Instance);
 			writer.WriteProperty("NumIncidents", instance.NumIncidents, ES3Type_int.Instance);
 			writer.WriteProperty("Name", instance.Name, ES3Type_string.Instance);
 			writer.WriteProperty("ID", instance.ID, ES3Type_int.Instance);
@@ -33,14 +33,17 @@ namespace ES3Types
 				switch(propertyName)
 				{
 					
-					case "hierarchy":
-						instance.hierarchy = reader.Read<System.Collections.Generic.List<Game.Incidents.OrganizationTier>>();
+					case "racesAllowedToHoldOffice":
+						instance.racesAllowedToHoldOffice = reader.Read<System.Collections.Generic.List<Game.Incidents.Race>>();
 						break;
-					case "organizationType":
-						instance.organizationType = reader.Read<Game.Enums.OrganizationType>();
+					case "primaryOrganization":
+						instance.primaryOrganization = reader.Read<Game.Incidents.SubOrganization>();
+						break;
+					case "template":
+						instance.template = reader.Read<Game.Incidents.OrganizationTemplate>();
 						break;
 					case "AffiliatedFaction":
-						instance.AddContextIdBuffer("AffiliatedFaction", reader.Read<System.Collections.Generic.List<System.Int32>>());
+						instance.AffiliatedFaction = reader.Read<Game.Incidents.Faction>(ES3UserType_Faction.Instance);
 						break;
 					case "NumIncidents":
 						instance.NumIncidents = reader.Read<System.Int32>(ES3Type_int.Instance);

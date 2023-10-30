@@ -1,4 +1,5 @@
-﻿using Game.Enums;
+﻿using Game.Debug;
+using Game.Enums;
 using Game.Generators.Items;
 using Game.Generators.Names;
 using Game.Incidents;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated, IOrganizationAffiliated, ISentient
+	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated, IOrganizationAffiliated
 	{
 		public Character() 
 		{
@@ -25,7 +26,7 @@ namespace Game.Incidents
 		}
 		public Character(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
 			int religiousPriority, int militaryPriority, int influence, int wealth, int strength, int dexterity,
-			int constitution, int intelligence, int wisdom, int charisma, bool majorCharacter, List<Character> parents = null, Inventory inventory = null)
+			int constitution, int intelligence, int wisdom, int charisma, bool majorCharacter, List<Character> parents = null, Inventory inventory = null)// : base()
 		{
 			Age = age;
 			AffiliatedRace = race;
@@ -124,13 +125,22 @@ namespace Game.Incidents
 
 		public override string Name => CharacterName.GetTitledFullName(this);
 		public CharacterName CharacterName { get; set; }
-		public int Age { get; set; }
 		public Gender Gender { get; set; }
 		public Race AffiliatedRace { get; set; }
 		public Faction AffiliatedFaction { get; set; }
-		public Organization AffiliatedOrganization { get; set; }
-		public OrganizationPosition OfficialPosition => GetOfficialPosition();
-		public bool HasOrganizationPosition => OfficialPosition != null;
+		public Organization AffiliatedOrganization
+		{
+			get
+			{
+				return OrganizationPosition.AffiliatedOrganization;
+			}
+			set
+			{
+				OutputLogger.LogWarning("Cannot directly set Character Organization.");
+			}
+		}
+		public IOrganizationPosition OrganizationPosition { get; set; }
+		public bool HasOrganizationPosition => OrganizationPosition != null;
 		public int PoliticalPriority
 		{
 			get { return Priorities[OrganizationType.POLITICAL]; }
@@ -204,7 +214,7 @@ namespace Game.Incidents
 			}
 		}
 
-		public Character CreateChild(bool majorPlayer)
+		public Character CreateChild(bool majorPlayer, Gender gender)
 		{
 			var childAge = SimRandom.RandomRange(14, 35);
 			var parents = new List<Character>() { this };
@@ -212,7 +222,7 @@ namespace Game.Incidents
 			{
 				parents.Add(SimRandom.RandomEntryFromList(Spouses));
 			}
-			var child = new Character(childAge, Enums.Gender.ANY, AffiliatedRace, AffiliatedFaction, majorPlayer, parents);
+			var child = new Character(childAge, gender, AffiliatedRace, AffiliatedFaction, majorPlayer, parents);
 			Children.Add(child);
 
 			return child;
@@ -307,24 +317,6 @@ namespace Game.Incidents
 			CurrentInventory?.LoadContextProperties();
 
 			contextIDLoadBuffers.Clear();
-		}
-
-		private OrganizationPosition GetOfficialPosition()
-		{
-			if(AffiliatedOrganization == null)
-			{
-				return null;
-			}
-
-			if(AffiliatedOrganization.Contains(this, out var position))
-			{
-				return position;
-			}
-			else
-			{
-				AffiliatedOrganization = null;
-				return null;
-			}
 		}
 
 		private OrganizationType GetHighestPriority()

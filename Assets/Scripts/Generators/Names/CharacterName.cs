@@ -25,9 +25,9 @@ namespace Game.Generators.Names
 		public string GetTitledFullName(ICharacter person)
 		{
 			var result = String.Copy(fullName);
-			if (person.OfficialPosition != null)
+			if (person.OrganizationPosition != null)
 			{
-				result = string.Format(person.OfficialPosition.titlePair.GetTitle(person.Gender), result);
+				result = string.Format(person.OrganizationPosition.GetTitle(person), result);
 			}
 			return result;
 		}
