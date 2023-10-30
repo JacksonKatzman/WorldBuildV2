@@ -68,6 +68,12 @@ namespace Game.Incidents
 			return newPerson;
 		}
 
+		protected override void OnAllowCreateValueChanged()
+		{
+			race.enabled = allowCreate;
+			faction.enabled = allowCreate;
+		}
+
 		protected override bool VersionSpecificVerify(IIncidentContext context)
 		{
 			return faction.actionField.CalculateField(context) && race.actionField.CalculateField(context) && parent.CalculateField(context);
