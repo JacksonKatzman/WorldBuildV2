@@ -281,5 +281,11 @@ namespace Game.Incidents
             {"==", (a, b) => a == b },
             {"!=", (a, b) => a != b }
         };
+
+        public static Dictionary<string, Func<Enum, Enum, bool>> EnumComparators = new Dictionary<string, Func<Enum, Enum, bool>>
+        {
+            {"==", (a, b) => Enum.Equals(a,b) },
+            {"!=", (a, b) => !Enum.Equals(a,b) }
+        };
     }
 }
