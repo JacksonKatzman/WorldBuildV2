@@ -20,13 +20,14 @@ namespace Game.Incidents
 			}
 		}
 
-		override public void Initialize(Organization org)
+		override public void Initialize(Organization org, int currentTier)
 		{
 			AffiliatedOrganization = org;
+			OrganizationTier = currentTier;
 
-			foreach(var tier in tiers)
+			for(int i = 0; i < tiers.Count; i++)
 			{
-				tier.Initialize(org);
+				tiers[i].Initialize(org, currentTier + i);
 			}
 		}
 

@@ -59,7 +59,7 @@ namespace Game.Incidents
 		private void Setup()
 		{
 			primaryOrganization = new SubOrganization(template.subOrg);
-			primaryOrganization.Initialize(this);
+			primaryOrganization.Initialize(this, 0);
 
 			var totalPositions = 0;
 			GetTotalPositionCount(ref totalPositions);

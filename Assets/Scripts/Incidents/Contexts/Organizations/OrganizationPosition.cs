@@ -20,7 +20,10 @@ namespace Game.Incidents
 		public int maxPositions;
 		//responsibilities
 
-		public OrganizationPosition() { }
+		public OrganizationPosition()
+		{
+			titlePair = new TitlePair();
+		}
 		public OrganizationPosition(OrganizationType organizationType)
 		{
 			this.organizationType = organizationType;
@@ -63,9 +66,10 @@ namespace Game.Incidents
 			}
 		}
 
-		public override void Initialize(Organization org)
+		public override void Initialize(Organization org, int currentTier)
 		{
 			AffiliatedOrganization = org;
+			OrganizationTier = currentTier;
 		}
 
 		public void SelectNewOfficial(Organization org, Faction affiliatedFaction, Race majorityRace, IOrganizationPosition top)

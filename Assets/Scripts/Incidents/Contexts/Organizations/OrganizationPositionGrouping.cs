@@ -13,7 +13,12 @@ namespace Game.Incidents
 		public List<ISentient> Children => GetChildren(primaryPosition.official);
 		public int maxGroupings;
 
-		public OrganizationPositionGrouping() { }
+		public OrganizationPositionGrouping()
+		{
+			primaryPosition = new OrganizationPosition();
+			spouseTitles = new TitlePair();
+			childTitles = new TitlePair();
+		}
 		public OrganizationPositionGrouping(OrganizationPositionGrouping other)
 		{
 			primaryPosition = new OrganizationPosition(other.primaryPosition);
@@ -66,10 +71,11 @@ namespace Game.Incidents
 			//note to self: married people dont get their titles in time for the logs to reflect it in the marriage log
 		}
 
-		public override void Initialize(Organization org)
+		public override void Initialize(Organization org, int currentTier)
 		{
 			AffiliatedOrganization = org;
-			primaryPosition.Initialize(org);
+			OrganizationTier = currentTier;
+			primaryPosition.Initialize(org, currentTier);
 		}
 
 		public override bool TryFillNextPosition(out IOrganizationPosition filledPosition)

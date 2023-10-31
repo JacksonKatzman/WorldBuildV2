@@ -39,11 +39,11 @@ namespace Game.Incidents
 			}
 		}
 
-		public void Initialize(Organization org)
+		public void Initialize(Organization org, int currentTier)
 		{
 			foreach(var component in components)
 			{
-				component.Initialize(org);
+				component.Initialize(org, currentTier);
 			}
 		}
 
