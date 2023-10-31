@@ -94,13 +94,24 @@ namespace Game.Simulation
 		[JsonIgnore]
 		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
 		[JsonIgnore]
+		public List<GreatMonster> GreatMonsters => CurrentContexts[typeof(GreatMonster)].Cast<GreatMonster>().ToList();
+		[JsonIgnore]
 		public int NumPeople => People.Count;
+		[JsonIgnore]
 		public bool RoomForPeople => this.ShouldIncreaseCharacters();
+		[JsonIgnore]
 		public int NumFactions => Factions.Count;
+		[JsonIgnore]
 		public bool RoomForFactions => this.ShouldIncreaseFactions();
+		[JsonIgnore]
 		public int NumSpecialFactions => Factions.Where(x => x.IsSpecialFaction).Count();
+		[JsonIgnore]
 		public bool RoomForSpecialFaction => this.ShouldIncreaseSpecialFactions();
-		public int NumGreatMonsters => CurrentContexts[typeof(GreatMonster)].Cast<GreatMonster>().ToList().Count;
+		[JsonIgnore]
+		public int NumGreatMonsters => GreatMonsters.Count;
+		[JsonIgnore]
+		public int NumGreatDemons => GreatMonsters.Where(x => x.CreatureType == Enums.CreatureType.FIEND).Count();
+		[JsonIgnore]
 		public bool RoomForGreatMonsters => this.ShouldIncreaseGreatMonsters();
 		public bool CanClaimMoreTerritory { get; set; }
 		public int MaxOrganizationPositions { get; private set; }
