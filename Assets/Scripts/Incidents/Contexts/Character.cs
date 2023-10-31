@@ -141,6 +141,8 @@ namespace Game.Incidents
 		}
 		public IOrganizationPosition OrganizationPosition { get; set; }
 		public bool HasOrganizationPosition => OrganizationPosition != null;
+		public bool HasGovernmentPosition => HasOrganizationPosition && OrganizationPosition.AffiliatedOrganization == AffiliatedFaction.Government;
+		public int OrganizationTier => HasOrganizationPosition ? OrganizationPosition.OrganizationTier : int.MaxValue;
 		public int PoliticalPriority
 		{
 			get { return Priorities[OrganizationType.POLITICAL]; }
@@ -279,6 +281,8 @@ namespace Game.Incidents
 
 		override public void Die()
 		{
+			SetPreviousTitle();
+
 			if(Children.Count > 0)
 			{
 				foreach(var item in CurrentInventory.Items)
@@ -350,7 +354,16 @@ namespace Game.Incidents
 		{
 			if (gameEvent.affiliate == this)
 			{
+				SetPreviousTitle();
 				OrganizationPosition = null;
+			}
+		}
+
+		private void SetPreviousTitle()
+		{
+			if (OrganizationPosition != null)
+			{
+				CharacterName.previousTitle = OrganizationPosition.GetTitle(this);
 			}
 		}
 	}
