@@ -26,12 +26,21 @@ namespace Game.Incidents
 
 		protected override void Complete()
 		{
-			baseOfOperations.GetTypedFieldValue().AffiliatedOrganization = actionField.GetTypedFieldValue();
-			base.Complete();
+			if (madeNew)
+			{
+				baseOfOperations.GetTypedFieldValue().AffiliatedOrganization = actionField.GetTypedFieldValue();
+				base.Complete();
+			}
 		}
 		protected override bool VersionSpecificVerify(IIncidentContext context)
 		{
 			return faction.actionField.CalculateField(context) && creator.actionField.CalculateField(context) && baseOfOperations.CalculateField(context);
+		}
+
+		override protected void OnAllowCreateValueChanged()
+		{
+			faction.enabled = allowCreate;
+			creator.enabled = allowCreate;
 		}
 	}
 }
