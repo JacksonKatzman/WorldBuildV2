@@ -64,6 +64,7 @@ namespace Game.Incidents
 			}
 
 			EventManager.Instance.AddEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
+			EventManager.Instance.AddEventHandler<AffiliatedOrganizationChangedEvent>(OnOrganizationChangeEvent);
 		}
 
 		public Character(Gender gender, Race race, Faction faction, bool majorCharacter, List<Character> parents = null) :
@@ -308,6 +309,7 @@ namespace Game.Incidents
 				IncidentService.Instance.ReportStaticIncident("{0} dies at age " + Age + ".", new List<IIncidentContext>() { this }, true);
 			}
 			EventManager.Instance.RemoveEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
+			EventManager.Instance.RemoveEventHandler<AffiliatedOrganizationChangedEvent>(OnOrganizationChangeEvent);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 		}
 
@@ -356,6 +358,15 @@ namespace Game.Incidents
 			{
 				SetPreviousTitle();
 				OrganizationPosition = null;
+			}
+		}
+
+		private void OnOrganizationChangeEvent(AffiliatedOrganizationChangedEvent gameEvent)
+		{
+			if (gameEvent.affiliate == this)
+			{
+				SetPreviousTitle();
+				OrganizationPosition = gameEvent.newPosition;
 			}
 		}
 
