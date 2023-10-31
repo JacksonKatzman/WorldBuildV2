@@ -78,7 +78,7 @@ namespace Game.Incidents
 		public List<IIncidentContext> FactionsAtWarWith { get; set; }
 
 		public bool AtWar => FactionsAtWarWith.Count > 0;
-		public bool CouldMakePeace => FactionsAtWarWith.Where(x => FactionRelations[x] >= 0).ToList().Count >= 1;
+		public bool CouldMakePeace => CheckCouldMakePeace();
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		public Organization Government { get; set; }
@@ -104,6 +104,19 @@ namespace Game.Incidents
 		public Race AffiliatedRace => MajorityRace;
 
 		public NamingTheme namingTheme;
+
+		private bool CheckCouldMakePeace()
+		{
+			//return FactionsAtWarWith.Where(x => FactionRelations[x] >= 0).ToList().Count >= 1;
+			foreach(var factionAtWarWith in FactionsAtWarWith)
+			{
+				if(FactionRelations[factionAtWarWith] >= 0)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 
 		public Faction() //: base()
 		{
@@ -316,6 +329,10 @@ namespace Game.Incidents
 				for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
 				{
 					HexCell neighbor = cell.GetNeighbor(d);
+					if(neighbor == null)
+					{
+						continue;
+					}
 					if(!neighbor.IsUnderwater)
 					{
 						adjacentLandCount++;
@@ -380,10 +397,18 @@ namespace Game.Incidents
 		{
 			if(gameEvent.attacker == this)
 			{
+				if(!FactionRelations.ContainsKey(gameEvent.defender.AffiliatedFaction))
+				{
+					FactionRelations.Add(gameEvent.defender.AffiliatedFaction, -100);
+				}
 				FactionsAtWarWith.Add(gameEvent.defender.AffiliatedFaction);
 			}
 			else if(gameEvent.defender == this)
 			{
+				if (!FactionRelations.ContainsKey(gameEvent.attacker.AffiliatedFaction))
+				{
+					FactionRelations.Add(gameEvent.attacker.AffiliatedFaction, -100);
+				}
 				FactionsAtWarWith.Add(gameEvent.attacker.AffiliatedFaction);
 			}
 		}
