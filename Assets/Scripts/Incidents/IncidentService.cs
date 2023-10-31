@@ -82,8 +82,14 @@ namespace Game.Incidents
 				if (completed)
 				{
 					nextIncidentID++;
+					report.ReportHeadline = CurrentIncident.IncidentHeadline;
 					report.CreateFullLog();
 					reports.Add(report);
+
+					if(CurrentIncident.IsUnique)
+					{
+						incidents.Remove(CurrentIncident);
+					}
 
 					while(followUpContexts.Count > 0)
 					{

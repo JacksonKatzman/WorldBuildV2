@@ -1,52 +1,94 @@
-﻿using Game.Enums;
-using Game.Generators.Names;
+﻿using Sirenix.OdinInspector;
 using System.Collections.Generic;
 
 namespace Game.Incidents
 {
-	public class OrganizationTier : List<OrganizationPosition>
+	[HideReferenceObjectPicker]
+	public class OrganizationTier
 	{
-		//whether or not all positions in this tier share titles/responsibilities such as high lords
-		private int titlePoints;
-		public bool sharedTitle;
-		public TitlePair titlePair;
-		public OrganizationType organizationType;
-		public int tier;
+		public List<AbstractOrganizationComponent> components = new List<AbstractOrganizationComponent>();
 
 		public OrganizationTier() { }
-		public OrganizationTier(Organization org, Faction affiliatedFaction, Race majorityRace, OrganizationType organizationType, int tier, int maxTiers)
-		{
-			this.organizationType = organizationType;
-			this.tier = tier;
-			titlePoints = maxTiers - tier;
-			//temporary shared title choice - want to make more random in future
-			sharedTitle = tier < 2 ? false : true;
-			if (sharedTitle)
-			{
-				titlePair = affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
-			}
 
-			//commented out here to allow for adding already created characters as leaders
-			//AddPosition(org, affiliatedFaction, majorityRace);
+		public OrganizationTier(OrganizationTier other)
+		{
+			components = new List<AbstractOrganizationComponent>();
+			foreach(var component in other.components)
+			{
+				if(component.GetType() == typeof(SubOrganization))
+				{
+					var subOrg = component as SubOrganization;
+					components.Add(new SubOrganization(subOrg));
+				}
+				else if(component.GetType() == typeof(OrganizationPosition))
+				{
+					var template = component as OrganizationPosition;
+					for (int x = 0; x < template.maxPositions; x++)
+					{
+						components.Add(new OrganizationPosition(template));
+					}
+				}
+				else if (component.GetType() == typeof(OrganizationPositionGrouping))
+				{
+					var template = component as OrganizationPositionGrouping;
+					for (int x = 0; x < template.maxGroupings; x++)
+					{
+						components.Add(new OrganizationPositionGrouping(template));
+					}
+				}
+			}
 		}
 
-		public OrganizationPosition AddPosition(Organization org, Faction affiliatedFaction, Race majorityRace, Character official = null)
+		public void Initialize(Organization org, int currentTier)
 		{
-			var position = new OrganizationPosition();
-			position.organizationType = organizationType;
-			position.titlePair = sharedTitle ? titlePair : affiliatedFaction?.namingTheme.GenerateTitle(organizationType, titlePoints);
-
-			if(official != null)
+			foreach(var component in components)
 			{
-				position.official = official;
+				component.Initialize(org, currentTier);
 			}
-			else if (tier < 2)
+		}
+
+		public bool Contains(ISentient sentient, out IOrganizationPosition position)
+		{
+			foreach (var component in components)
 			{
-				position.SelectNewOfficial(org, affiliatedFaction, majorityRace);
+				if (component.Contains(sentient, out position))
+				{
+					return true;
+				}
 			}
 
-			Add(position);
-			return position;
+			position = null;
+			return false;
+		}
+
+		public bool TryFillNextPosition(out IOrganizationPosition filledPosition)
+		{
+			foreach(var component in components)
+			{
+				if(component.TryFillNextPosition(out filledPosition))
+				{
+					return true;
+				}
+			}
+
+			filledPosition = null;
+			return false;
+		}
+
+		public void GetSentients(ref List<ISentient> sentients)
+		{
+			foreach (var component in components)
+			{
+				component.GetSentients(ref sentients);
+			}
+		}
+
+		public void GetPositionCount(ref int total, bool careAboutFilled)
+		{
+			foreach (var component in components)
+			{
+				component.GetPositionCount(ref total, careAboutFilled);
+			}
 		}
 	}
 }

@@ -4,7 +4,7 @@ namespace Game.Incidents
 {
 	public class SerializedObjectCollectionService
 	{
-		public SerializedObjectCollectionContainer container => AssetService.Instance.objectData;
+		public SerializedObjectCollectionContainer Container { get; private set; }
 
 		private static SerializedObjectCollectionService instance;
 		public static SerializedObjectCollectionService Instance
@@ -14,6 +14,7 @@ namespace Game.Incidents
 				if (instance == null)
 				{
 					instance = new SerializedObjectCollectionService();
+					GetContainer();
 				}
 				return instance;
 			}
@@ -22,6 +23,18 @@ namespace Game.Incidents
 		private SerializedObjectCollectionService()
 		{
 
+		}
+
+		private static void GetContainer()
+		{
+			if(AssetService.Instance != null)
+			{
+				Instance.Container = AssetService.Instance.objectData;
+			}
+			else
+			{
+				Instance.Container = Resources.Load<SerializedObjectCollectionContainer>("ScriptableObjects/Data/ObjectData");
+			}
 		}
 	}
 }

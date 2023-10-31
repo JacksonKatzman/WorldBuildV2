@@ -10,6 +10,7 @@ namespace Game.Generators.Names
 		public List<string> firstNames;
 		public List<string> surnames;
 		public string fullName;
+		public string previousTitle;
 
 		public string FirstName => firstNames[0];
 		public string Surname => surnames[surnames.Count - 1];
@@ -25,9 +26,19 @@ namespace Game.Generators.Names
 		public string GetTitledFullName(ICharacter person)
 		{
 			var result = String.Copy(fullName);
-			if (person.OfficialPosition != null)
+			if (person.OrganizationPosition != null)
 			{
-				result = string.Format(person.OfficialPosition.titlePair.GetTitle(person.Gender), result);
+				result = string.Format(person.OrganizationPosition.GetTitle(person), result);
+			}
+			return result;
+		}
+
+		public string GetPreviousTitledFullName(ICharacter person)
+		{
+			var result = String.Copy(fullName);
+			if (!string.IsNullOrEmpty(previousTitle))
+			{
+				result = string.Format(previousTitle, result);
 			}
 			return result;
 		}

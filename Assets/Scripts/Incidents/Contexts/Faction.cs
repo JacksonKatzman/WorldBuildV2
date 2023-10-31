@@ -16,7 +16,7 @@ using HexDirection = Game.Terrain.HexDirection;
 namespace Game.Incidents
 {
 	[Serializable]
-	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated, IInventoryAffiliated
+	public class Faction : IncidentContext, IFactionAffiliated, IAlignmentAffiliated, IInventoryAffiliated, IRaceAffiliated, IPermsAffiliated
 	{
 		public Faction AffiliatedFaction
 		{
@@ -78,7 +78,7 @@ namespace Game.Incidents
 		public List<IIncidentContext> FactionsAtWarWith { get; set; }
 
 		public bool AtWar => FactionsAtWarWith.Count > 0;
-		public bool CouldMakePeace => FactionsAtWarWith.Where(x => FactionRelations[x] >= 0).ToList().Count >= 1;
+		public bool CouldMakePeace => CheckCouldMakePeace();
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		public Organization Government { get; set; }
@@ -95,17 +95,34 @@ namespace Game.Incidents
 		}
 		private FactionInventory inventory;
 
-		public Race MajorityRace => Government.Leader.AffiliatedRace;
+		public Race MajorityRace { get; set; }
 		virtual public bool IsSpecialFaction => false;
 
 		[HideInInspector]
 		public List<int> ControlledTileIndices { get; set; }
 
+		public Race AffiliatedRace => MajorityRace;
+
 		public NamingTheme namingTheme;
 
-		public Faction() : base()
+		private bool CheckCouldMakePeace()
+		{
+			//return FactionsAtWarWith.Where(x => FactionRelations[x] >= 0).ToList().Count >= 1;
+			foreach(var factionAtWarWith in FactionsAtWarWith)
+			{
+				if(FactionRelations[factionAtWarWith] >= 0)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public Faction() //: base()
 		{
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
+			EventManager.Instance.AddEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
+			EventManager.Instance.AddEventHandler<PeaceDeclaredEvent>(OnPeaceDeclaredEvent);
 		}
 
 		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace, Character creator = null) : this()
@@ -115,10 +132,9 @@ namespace Game.Incidents
 			FactionsAtWarWith = new List<IIncidentContext>();
 
 			Priorities = new Dictionary<OrganizationType, int>();
-			Priorities[OrganizationType.POLITICAL] = SimRandom.RandomRange(1, 4);
-			Priorities[OrganizationType.ECONOMIC] = SimRandom.RandomRange(1, 4);
-			Priorities[OrganizationType.RELIGIOUS] = SimRandom.RandomRange(1, 4);
-			Priorities[OrganizationType.MILITARY] = SimRandom.RandomRange(1, 4);
+			MajorityRace = startingMajorityRace;
+			
+			AssignRandomPriorities();
 
 			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
 			//Name = namingTheme.GenerateFactionName();
@@ -158,15 +174,28 @@ namespace Game.Incidents
 				IncidentService.Instance.PerformIncidents((Faction)this);
 			}
 
+			foreach(var context in FactionsAtWarWith)
+			{
+				var chance = (1 + ((float)MilitaryPriority) / 3) / 10;
+				if(chance >= SimRandom.RandomFloat01())
+				{
+					var battleContext = new FactionBattleContext(this, (Faction)context, 1);
+					IncidentService.Instance.PerformIncidents(battleContext);
+				}
+			}
+
 			CheckForDeath();
 		}
 		override public void UpdateContext()
 		{
+			Age += 1;
 			UpdateWealth();
 			UpdatePopulation();
 			UpdateInfluence();
 			UpdatePERMS();
+			UpdateCells();
 			UpdateNumIncidents();
+			UpdateWarState();
 		}
 
 		public override void CheckForDeath()
@@ -180,6 +209,8 @@ namespace Game.Incidents
 		override public void Die()
 		{
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
+			EventManager.Instance.RemoveEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
+			EventManager.Instance.RemoveEventHandler<PeaceDeclaredEvent>(OnPeaceDeclaredEvent);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 			Government.Die();
 			IncidentService.Instance.ReportStaticIncident(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>{0} is wiped out!", new List<IIncidentContext>() { this }, true);
@@ -298,6 +329,10 @@ namespace Game.Incidents
 				for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
 				{
 					HexCell neighbor = cell.GetNeighbor(d);
+					if(neighbor == null)
+					{
+						continue;
+					}
 					if(!neighbor.IsUnderwater)
 					{
 						adjacentLandCount++;
@@ -358,6 +393,38 @@ namespace Game.Incidents
 			}
 		}
 
+		private void OnWarDeclaredEvent(WarDeclaredEvent gameEvent)
+		{
+			if(gameEvent.attacker == this)
+			{
+				if(!FactionRelations.ContainsKey(gameEvent.defender.AffiliatedFaction))
+				{
+					FactionRelations.Add(gameEvent.defender.AffiliatedFaction, -100);
+				}
+				FactionsAtWarWith.Add(gameEvent.defender.AffiliatedFaction);
+			}
+			else if(gameEvent.defender == this)
+			{
+				if (!FactionRelations.ContainsKey(gameEvent.attacker.AffiliatedFaction))
+				{
+					FactionRelations.Add(gameEvent.attacker.AffiliatedFaction, -100);
+				}
+				FactionsAtWarWith.Add(gameEvent.attacker.AffiliatedFaction);
+			}
+		}
+
+		private void OnPeaceDeclaredEvent(PeaceDeclaredEvent gameEvent)
+		{
+			if(gameEvent.declarer == this && FactionsAtWarWith.Contains(gameEvent.accepter.AffiliatedFaction))
+			{
+				FactionsAtWarWith.Remove(gameEvent.accepter.AffiliatedFaction);
+			}
+			else if(gameEvent.accepter == this && FactionsAtWarWith.Contains(gameEvent.declarer.AffiliatedFaction))
+			{
+				FactionsAtWarWith.Remove(gameEvent.declarer.AffiliatedFaction);
+			}
+		}
+
 		private List<IIncidentContext> GetFactionsWithinInteractionRange()
 		{
 			var world = SimulationManager.Instance.world;
@@ -413,7 +480,21 @@ namespace Game.Incidents
 
 		private void UpdateInfluence()
 		{
-			Influence += (5 + PoliticalPriority/3);
+			//Influence += (5 + PoliticalPriority/3);
+			var randomLeader = SimRandom.RandomEntryFromList(Government.Leaders) as Character;
+			var leaderPoliticalPriority = randomLeader.PoliticalPriority;
+			var prioBonus = PriorityAlignment == OrganizationType.POLITICAL ? 2 : 0;
+			Influence += Mathf.Max(1, PoliticalPriority + leaderPoliticalPriority + prioBonus - 3);
+			/*
+			 * Things that affect influence:
+			 * Political
+			 * MilitaryPower
+			 * Wealth
+			 * # Cities
+			 * Religious Sway?
+			 * Leaders Influence?
+			 * Military victories via incidents
+			 */
 		}
 
 		private void UpdateWealth()
@@ -431,9 +512,11 @@ namespace Game.Incidents
 				city.UpdatePopulation();
 			}
 
-			if(MilitaryPower < (Population/10))
+			var bonusCap = (((float)Population) / 5f) * (((float)MilitaryPriority) / 10f);
+			var militaryCap = (Population / 10) + bonusCap;
+			if (MilitaryPower < militaryCap)
 			{
-				MilitaryPower += Priorities[OrganizationType.MILITARY] / 2;
+				MilitaryPower += (int)(militaryCap / (15 - MilitaryPriority));
 			}
 		}
 
@@ -442,9 +525,46 @@ namespace Game.Incidents
 
 		}
 
+		private void UpdateCells()
+		{
+			//var multiplier = Mathf.Abs((PoliticalPriority / 3) - 4) + 1;
+			if(Influence >= InfluenceForNextTile * 2)
+			{
+				Influence -= InfluenceForNextTile;
+				AttemptExpandBorder(1);
+			}
+		}
+
 		private void UpdateNumIncidents()
 		{
-			NumIncidents = 1;
+			//var mod = 10 - (PoliticalPriority / 3);
+			//var chance = SimRandom.RandomRange(1, mod);
+			//NumIncidents = chance == 1 ? 1 : 0;
+			var chance = (1 + ((float)PoliticalPriority) / 3) / 10;
+			NumIncidents = chance >= SimRandom.RandomFloat01() ? 1 : 0;
+		}
+
+		private void UpdateWarState()
+		{
+			foreach(var pair in FactionRelations)
+			{
+				if(pair.Value <= (-100 + (2 * MilitaryPriority)))
+				{
+					var chance = 7 / 10;
+					if(chance >= SimRandom.RandomFloat01())
+					{
+						var faction = (Faction)pair.Key;
+						EventManager.Instance.Dispatch(new WarDeclaredEvent(this, faction));
+						IncidentService.Instance.ReportStaticIncident("{0} declares war on {1}", new List<IIncidentContext> { this, faction }, true);
+					}
+				}
+				else if(pair.Value >= (50 + (2 * MilitaryPriority)))
+				{
+					var faction = (Faction)pair.Key;
+					EventManager.Instance.Dispatch(new PeaceDeclaredEvent(this, faction));
+					IncidentService.Instance.ReportStaticIncident("{0} signs a peace treaty with {1}", new List<IIncidentContext> { this, faction }, true);
+				}
+			}
 		}
 
 		private bool CheckDestroyed()
@@ -455,6 +575,26 @@ namespace Game.Incidents
 		private OrganizationType GetHighestPriority()
 		{
 			return Priorities.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+		}
+
+		private void AssignRandomPriorities()
+		{
+			var values = new List<int> { 4, 3, 2, 1 };
+			var randomValue = SimRandom.RandomEntryFromList(values);
+			Priorities.Add(OrganizationType.POLITICAL, randomValue);
+			values.Remove(randomValue);
+
+			randomValue = SimRandom.RandomEntryFromList(values);
+			Priorities.Add(OrganizationType.ECONOMIC, randomValue);
+			values.Remove(randomValue);
+
+			randomValue = SimRandom.RandomEntryFromList(values);
+			Priorities.Add(OrganizationType.RELIGIOUS, randomValue);
+			values.Remove(randomValue);
+
+			randomValue = SimRandom.RandomEntryFromList(values);
+			Priorities.Add(OrganizationType.MILITARY, randomValue);
+			values.Remove(randomValue);
 		}
 	}
 }

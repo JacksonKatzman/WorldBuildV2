@@ -1,5 +1,7 @@
 ﻿using Game.Generators.Names;
+using Game.Incidents;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Simulation
@@ -9,6 +11,8 @@ namespace Game.Simulation
 	{
 		public int minAge;
 		public int maxAge;
+
+		public List<OrganizationTemplate> organizationTemplates;
 
 		[SerializeField]
 		public NamingThemePreset namingTheme;

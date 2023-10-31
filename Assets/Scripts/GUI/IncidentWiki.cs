@@ -137,7 +137,7 @@ namespace Game.GUI.Wiki
 		{
 			
 			page.wikiText.text += report.ReportYear + ": ";
-			page.wikiText.text += report.ReportLog;
+			page.wikiText.text += report.ReportHeadline;
 			page.wikiText.text += "\n";
 		}
 	}

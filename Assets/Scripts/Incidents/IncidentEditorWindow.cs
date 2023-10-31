@@ -76,6 +76,12 @@ namespace Game.Incidents
         [ShowIfGroup("ContextTypeChosen")]
         public bool isMajorIncident;
 
+        [ShowIfGroup("ContextTypeChosen")]
+        public bool isUnique;
+
+        [ShowIfGroup("ContextTypeChosen")]
+        public string incidentHeadline;
+
         [ShowIfGroup("ContextTypeChosen"), HideReferenceObjectPicker, ShowInInspector]
         static public IncidentActionHandlerContainer actionHandler;
 
@@ -103,6 +109,12 @@ namespace Game.Incidents
             worldCriteria = loadedIncident.WorldCriteria == null ? new List<IIncidentCriteria>() : loadedIncident.WorldCriteria.criteria;
             actionHandler = loadedIncident.ActionContainer;
             isMajorIncident = loadedIncident.IsMajorIncident;
+            isUnique = loadedIncident.IsUnique;
+            incidentHeadline = loadedIncident.IncidentHeadline;
+            if(string.IsNullOrEmpty(incidentHeadline))
+			{
+                incidentHeadline = actionHandler.incidentLog;
+			}
             UpdateActionFieldIDs();
             modeChosen = true;
 
@@ -117,7 +129,7 @@ namespace Game.Incidents
 		{
             if (ContextTypeChosen && !string.IsNullOrEmpty(incidentName))// && actionHandler.Actions.Count > 0)
             {
-                var incident = new Incident(incidentName, ContextType, criteria, worldCriteria, actionHandler, weight, isMajorIncident);
+                var incident = new Incident(incidentName, ContextType, criteria, worldCriteria, actionHandler, weight, isMajorIncident, isUnique, incidentHeadline);
 
                 var path = Path.Combine(Application.dataPath + SaveUtilities.INCIDENT_DATA_PATH + incidentName + ".json");
                 string output = JsonConvert.SerializeObject(incident, Formatting.Indented, SaveUtilities.SERIALIZER_SETTINGS);

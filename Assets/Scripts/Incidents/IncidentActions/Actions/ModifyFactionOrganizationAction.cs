@@ -6,7 +6,7 @@
 		public Enums.OrganizationType organizationType;
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			faction.GetTypedFieldValue().Government.UpdateHierarchy();
+			//faction.GetTypedFieldValue().Government.UpdateHierarchy();
 		}
 	}
 }

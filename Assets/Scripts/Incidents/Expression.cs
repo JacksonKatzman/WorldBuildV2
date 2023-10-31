@@ -1,4 +1,5 @@
 ﻿using Game.Data;
+using Game.Debug;
 using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
@@ -9,13 +10,15 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public enum ExpressionType { Const, Method, Property, Range, Subexpression, From_Previous };
+	public enum ExpressionType { Const, Method, Property, Range, Subexpression, From_Previous, Compare_Context };
 
     [HideReferenceObjectPicker]
 	public class Expression<T>
 	{
         private Dictionary<string, MethodInfo> methods;
         private Dictionary<string, Type> properties;
+        [HideInInspector]
+        public string comparedPropertyName;
         public Type ContextType { get; set; }
 
         [HideInInspector]
@@ -39,6 +42,9 @@ namespace Game.Incidents
         [ShowIf("ExpressionType", ExpressionType.Subexpression), ListDrawerSettings(CustomAddFunction = "AddNewExpression"), HideReferenceObjectPicker]
         public List<Expression<T>> subexpressions;
 
+        [ShowIf("ExpressionType", ExpressionType.Compare_Context)]
+        public IIncidentActionField compareTo;
+
         [ValueDropdown("GetCalculatedValues"), ShowIf("ExpressionType", ExpressionType.From_Previous), HideLabel]
         public string previousCalculatedID;
 
@@ -57,9 +63,10 @@ namespace Game.Incidents
             range = ValueRangeFactory.CreateValueRange<T>();
         }
 
-        public Expression(Type contextType) : this()
+        public Expression(Type contextType, string propertyName = "") : this()
 		{
             ContextType = contextType;
+            comparedPropertyName = propertyName;
 		}
 
         public T GetValue(IIncidentContext context, Dictionary<string, Func<T, T, T>> operators)
@@ -84,6 +91,16 @@ namespace Game.Incidents
 			{
                 return (T)ContextDictionaryProvider.CurrentExpressionValues[previousCalculatedID].Value;
 			}
+            else if(ExpressionType == ExpressionType.Compare_Context)
+			{
+                compareTo.CalculateField(context);
+                var fieldValue = compareTo.GetFieldValue();
+                var fieldValueType = fieldValue.GetType();
+                var property = fieldValueType.GetProperty(comparedPropertyName);
+                var value = property.GetValue(fieldValue);
+                var toReturn = (T)value;
+                return toReturn;
+            }
             else
 			{
                 return constValue;
@@ -105,13 +122,36 @@ namespace Game.Incidents
             if(ExpressionType == ExpressionType.Subexpression && subexpressions == null)
 			{
                 subexpressions = new List<Expression<T>>();
-                subexpressions.Add(new Expression<T>(ContextType));
+                subexpressions.Add(new Expression<T>(ContextType, comparedPropertyName));
+            }
+            if(ExpressionType == ExpressionType.Compare_Context)
+			{
+                if (string.IsNullOrEmpty(comparedPropertyName))
+                {
+                    ExpressionType = ExpressionType.Const;
+                    OutputLogger.LogWarning("Cannot compare contexts using this type.");
+                }
+                else
+                {
+                    InitCompareTo();
+                }
+			}
+        }
+
+        private void InitCompareTo()
+		{
+            if (compareTo == null)
+            {
+                var dataType = new Type[] { ContextType };
+                var genericBase = typeof(ContextualIncidentActionField<>);
+                var combinedType = genericBase.MakeGenericType(dataType);
+                compareTo = (IIncidentActionField)Activator.CreateInstance(combinedType, ContextType);
             }
         }
 
         private void AddNewExpression()
 		{
-            subexpressions.Add(new Expression<T>(ContextType));
+            subexpressions.Add(new Expression<T>(ContextType, comparedPropertyName));
             for (int i = 0; i < subexpressions.Count - 1; i++)
             {
                 subexpressions[i].hasNextOperator = true;
@@ -167,7 +207,8 @@ namespace Game.Incidents
 
         private IEnumerable<string> GetMethodNames()
 		{
-            return methods.Keys.ToList();
+            var keys = methods.Keys.ToList();
+            return keys;
 		}
 
         private IEnumerable<string> GetOperators()
@@ -280,6 +321,12 @@ namespace Game.Incidents
         {
             {"==", (a, b) => a == b },
             {"!=", (a, b) => a != b }
+        };
+
+        public static Dictionary<string, Func<Enum, Enum, bool>> EnumComparators = new Dictionary<string, Func<Enum, Enum, bool>>
+        {
+            {"==", (a, b) => Enum.Equals(a,b) },
+            {"!=", (a, b) => !Enum.Equals(a,b) }
         };
     }
 }

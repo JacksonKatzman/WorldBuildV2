@@ -56,9 +56,18 @@ namespace Game.Simulation
 			
 			//return true;
 		}
+
+		public static bool CanFillAdditionalOrganizationPosition(this World world, int age, int currentNumPositions)
+		{
+			var maxAge = world.simulationOptions.simulatedYears;
+			var interval = maxAge / world.MaxOrganizationPositions;
+
+			return age >= (interval * currentNumPositions);
+		}
 	}
 	public class World : IncidentContext
 	{
+		public static World CurrentWorld => SimulationManager.Instance.world;
 		public HexGrid HexGrid => SimulationManager.Instance.HexGrid;
 
 		public IncidentContextDictionary CurrentContexts { get; private set; }
@@ -78,8 +87,6 @@ namespace Game.Simulation
 			}
 		}
 
-		public int Age { get; set; }
-
 		[JsonIgnore]
 		public List<Character> People => CurrentContexts[typeof(Character)].Cast<Character>().ToList();
 		[JsonIgnore]
@@ -87,15 +94,27 @@ namespace Game.Simulation
 		[JsonIgnore]
 		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
 		[JsonIgnore]
+		public List<GreatMonster> GreatMonsters => CurrentContexts[typeof(GreatMonster)].Cast<GreatMonster>().ToList();
+		[JsonIgnore]
 		public int NumPeople => People.Count;
+		[JsonIgnore]
 		public bool RoomForPeople => this.ShouldIncreaseCharacters();
+		[JsonIgnore]
 		public int NumFactions => Factions.Count;
+		[JsonIgnore]
 		public bool RoomForFactions => this.ShouldIncreaseFactions();
+		[JsonIgnore]
 		public int NumSpecialFactions => Factions.Where(x => x.IsSpecialFaction).Count();
+		[JsonIgnore]
 		public bool RoomForSpecialFaction => this.ShouldIncreaseSpecialFactions();
-		public int NumGreatMonsters => CurrentContexts[typeof(GreatMonster)].Cast<GreatMonster>().ToList().Count;
+		[JsonIgnore]
+		public int NumGreatMonsters => GreatMonsters.Count;
+		[JsonIgnore]
+		public int NumGreatDemons => GreatMonsters.Where(x => x.CreatureType == Enums.CreatureType.FIEND).Count();
+		[JsonIgnore]
 		public bool RoomForGreatMonsters => this.ShouldIncreaseGreatMonsters();
 		public bool CanClaimMoreTerritory { get; set; }
+		public int MaxOrganizationPositions { get; private set; }
 
 		public List<Item> LostItems;
 
@@ -107,6 +126,7 @@ namespace Game.Simulation
 		{
 			nextID = ID + 1;
 			Age = 0;
+			MaxOrganizationPositions = 1;
 
 			CurrentContexts = new IncidentContextDictionary();
 			AllContexts = new IncidentContextDictionary();
@@ -155,6 +175,7 @@ namespace Game.Simulation
 			}
 			//GameProfiler.EndProfiling(typeof(World).ToString());
 
+			/*
 			UpdateHistoricalData();
 			foreach (var contextList in CurrentContexts.Values)
 			{
@@ -163,6 +184,7 @@ namespace Game.Simulation
 					context.UpdateHistoricalData();
 				}
 			}
+			*/
 
 			//GameProfiler.worldUpdateMarker.End();
 
@@ -327,16 +349,25 @@ namespace Game.Simulation
 				}
 			}
 
+			var postCreationMaxTotalPositions = int.MaxValue;
+
 			foreach(var racePresetPair in uniqueRacePresets)
 			{
 				var race = new Race(racePresetPair.Key);
 				EventManager.Instance.Dispatch(new AddContextEvent(race, true));
 				for (var i = 0; i < racePresetPair.Value; i++)
 				{
-					var faction = new Faction(1, 1000, race);
+					var faction = new Faction(1, 10000, race);
 					EventManager.Instance.Dispatch(new AddContextEvent(faction, true));
+
+					if(faction.Government.TotalPositions < postCreationMaxTotalPositions)
+					{
+						postCreationMaxTotalPositions = faction.Government.MaxPositionsFilledInSimulation;
+					}
 				}
 			}
+
+			MaxOrganizationPositions = postCreationMaxTotalPositions;
 		}
 
 		override public void UpdateContext()

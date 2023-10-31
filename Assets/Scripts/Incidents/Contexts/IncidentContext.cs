@@ -17,6 +17,7 @@ namespace Game.Incidents
 
 		virtual public int NumIncidents { get; set; }
 		virtual public string Name { get; set; }
+		virtual public int Age { get; set; }
 
 		virtual public int ID { get; set; }
 

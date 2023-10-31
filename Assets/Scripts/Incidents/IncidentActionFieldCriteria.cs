@@ -1,4 +1,5 @@
-﻿using Game.Generators.Items;
+﻿using Game.Enums;
+using Game.Generators.Items;
 using System;
 using System.Collections.Generic;
 
@@ -30,6 +31,10 @@ namespace Game.Incidents
 			else if(PrimitiveType == typeof(Inventory))
 			{
 				evaluator = new InventoryEvaluator(propertyName, ContextType);
+			}
+			else if (PrimitiveType == typeof(Gender))
+			{
+				evaluator = new GenderEvaluator(propertyName, ContextType);
 			}
 			else if(PrimitiveType == typeof(Type))
 			{

@@ -9,7 +9,7 @@ namespace Game.Incidents
 {
 	public class IncidentActionHandlerContainer
 	{
-		[TextArea(4,10)]
+		[TextArea(10,30)]
 		public string incidentLog;
 
 		[ShowInInspector, ListDrawerSettings(CustomAddFunction = "AddNewActionContainer", CustomRemoveIndexFunction = "RemoveActionContainer"), HideReferenceObjectPicker]

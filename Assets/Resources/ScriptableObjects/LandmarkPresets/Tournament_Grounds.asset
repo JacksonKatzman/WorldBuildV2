@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5ec42d30244e843ab6b41a2226010f, type: 3}
-  m_Name: Human
+  m_Script: {fileID: 11500000, guid: da592df85a22c1143bbfc083ccdc9877, type: 3}
+  m_Name: Tournament_Grounds
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,8 +21,4 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  minAge: 16
-  maxAge: 100
-  organizationTemplates:
-  - {fileID: 11400000, guid: 5f938600039c15045bb823509f488ef2, type: 2}
-  namingTheme: {fileID: 11400000, guid: 480ac245d69ad9b428c438b597fe762a, type: 2}
+  models: []

@@ -13,6 +13,7 @@ namespace Game.Incidents
 		public bool IsMajorIncident { get; set; }
 
 		public int ReportYear { get; set; }
+		public string ReportHeadline { get; set; }
 		public string ReportLog { get; set; }
 		private Stack<string> logs;
 		private Dictionary<string, string> flavors;
@@ -55,12 +56,20 @@ namespace Game.Incidents
 			}
 
 			ReportLog = fullLog;
-			ReportLog = GenerateLinkedLog();
+			ReportLog = GenerateLinkedLog(ReportLog);
+			if (string.IsNullOrEmpty(ReportHeadline))
+			{
+				ReportHeadline = ReportLog;
+			}
+			else
+			{
+				ReportHeadline = GenerateLinkedLog(ReportHeadline);
+			}
 		}
 
-		public string GenerateLinkedLog()
+		public string GenerateLinkedLog(string text)
 		{
-			var textLine = string.Copy(ReportLog);
+			var textLine = string.Copy(text);
 
 			foreach(var pair in flavors)
 			{

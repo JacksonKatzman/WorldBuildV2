@@ -1,5 +1,6 @@
 ﻿using Game.Data;
 using Game.Enums;
+using Game.Utilities;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 
@@ -50,22 +51,51 @@ namespace Game.Incidents
 
 		protected override Character MakeNew()
 		{
-			var parents = parent.GetTypedFieldValue() != null ? new List<Character>() { parent.GetTypedFieldValue() } : null;
+			var parents = new List<Character>();
+			var p1 = parent.GetTypedFieldValue();
+			if(p1 != null)
+			{
+				parents.Add(p1);
+				if(p1.Spouses.Count > 0)
+				{
+					parents.Add(SimRandom.RandomEntryFromList(p1.Spouses));
+				}
+			}
+
 			var newPerson = new Character(age, gender, race.GetTypedFieldValue().AffiliatedRace, faction.GetTypedFieldValue().AffiliatedFaction, politicalPriority,
 				economicPriority, religiousPriority, militaryPriority, influence, wealth, strength, dexterity, constitution,
 				intelligence, wisdom, charisma, majorCharacter, parents);
 
 			if(generateFamily)
 			{
-				newPerson.GenerateFamily(true, true);
-			}
-
-			foreach(var parent in newPerson.Parents)
-			{
-				parent.Children.Add(newPerson);
+				var shouldGenerateParents = parents.Count == 0 ? true : false;
+				newPerson.GenerateFamily(shouldGenerateParents, true);
 			}
 
 			return newPerson;
+		}
+
+		override protected void Complete()
+		{
+			if (madeNew)
+			{
+				var character = actionField.GetTypedFieldValue();
+				foreach (var parent in character.Parents)
+				{
+					parent.Children.Add(character);
+					if (parent.HasOrganizationPosition)
+					{
+						parent.OrganizationPosition.Update();
+					}
+				}
+			}
+			base.Complete();
+		}
+
+		protected override void OnAllowCreateValueChanged()
+		{
+			race.enabled = allowCreate;
+			faction.enabled = allowCreate;
 		}
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)

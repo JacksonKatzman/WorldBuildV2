@@ -14,6 +14,17 @@ namespace Game.Incidents
 		public bool ShareABorder => CheckIfSharedBorder();
 		public bool DefenderHasCityOnBorder => CheckIfCityOnBorder();
 
+		public FactionBattleContext() { }
+
+		public FactionBattleContext(IFactionAffiliated attacker, IFactionAffiliated defender, int count)
+		{
+			this.attacker = new DeployedContextActionField<Faction>(typeof(Faction));
+			this.defender = new DeployedContextActionField<Faction>(typeof(Faction));
+			NumIncidents = count;
+			this.attacker.value = attacker.AffiliatedFaction;
+			this.defender.value = defender.AffiliatedFaction;
+		}
+
 		private bool CheckIfSharedBorder()
 		{
 			var outsideAttackerBorder = SimulationUtilities.FindBorderOutsideFaction(attacker.GetTypedFieldValue());

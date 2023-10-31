@@ -220,7 +220,7 @@ namespace Game.Incidents
 			foreach (var c in matchingContainers)
 			{
 				var container = c.GetValue(this) as IncidentActionFieldContainer;
-				if (container.actionField.ActionFieldID == id)
+				if (container.enabled && container.actionField.ActionFieldID == id)
 				{
 					contextField = container.actionField;
 					return true;

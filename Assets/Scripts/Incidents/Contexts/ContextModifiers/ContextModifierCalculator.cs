@@ -77,7 +77,7 @@ namespace Game.Incidents
             this.propertyName = propertyName;
             ContextType = contextType;
             expressions = new List<Expression<T>>();
-            expressions.Add(new Expression<T>(ContextType));
+            expressions.Add(new Expression<T>(ContextType, propertyName));
         }
 
         public void Calculate(IIncidentContext context)
@@ -106,7 +106,7 @@ namespace Game.Incidents
         {
             if (AllowMultipleExpressions)
             {
-                expressions.Add(new Expression<T>(ContextType));
+                expressions.Add(new Expression<T>(ContextType, propertyName));
                 for (int i = 0; i < expressions.Count - 1; i++)
                 {
                     expressions[i].hasNextOperator = true;

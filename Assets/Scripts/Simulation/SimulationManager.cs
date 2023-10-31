@@ -26,6 +26,8 @@ namespace Game.Simulation
 
 		public CancellationTokenSource cancellationTokenSource;
 
+		private StatTracker statTracker;
+
 		private static SimulationManager instance;
 		public static SimulationManager Instance
 		{
@@ -42,6 +44,7 @@ namespace Game.Simulation
 		private SimulationManager()
 		{
 			cancellationTokenSource = new CancellationTokenSource();
+			statTracker = new StatTracker();
 			OutputLogger.Log("Sim Manager Made!");
 		}
 
@@ -116,6 +119,7 @@ namespace Game.Simulation
 			GameProfiler.UpdateProfiler = false;
 
 			EventManager.Instance.Dispatch(new HideLoadingScreenEvent());
+			statTracker.ReportDeathAges();
 
 			UniTask.ReturnToMainThread();
 			world.PostSimulationCleanup();
