@@ -3,7 +3,7 @@
 	public interface IOrganizationPosition
 	{
 		Organization AffiliatedOrganization { get; set; }
-		void HandleSuccession();
+		void HandleSuccession(IOrganizationPosition top = null);
 		void Update();
 		string GetTitle(ISentient sentient);
 	}

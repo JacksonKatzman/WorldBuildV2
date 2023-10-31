@@ -57,14 +57,6 @@ namespace Game.Incidents
 			if(Parents.Count > 0)
 			{
 				CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender, parents);
-				foreach(var parent in parents)
-				{
-					parent.Children.Add(this);
-					if(parent.HasOrganizationPosition)
-					{
-						parent.OrganizationPosition.Update();
-					}
-				}
 			}
 			else
 			{
@@ -190,6 +182,7 @@ namespace Game.Incidents
 		//public List<Character> Family => new List<Character>().Union(Parents).Union(Spouses).Union(Siblings).Union(Children).ToList();
 		public List<Character> Family => CharacterExtensions.GetExtendedFamily(this);
 		public int LivingFamilyMembers => CountLivingFamilyMembers();
+		public int SpouseCount => Spouses.Count;
 
 		public OrganizationType PriorityAlignment => GetHighestPriority();
 		public int LawfulChaoticAlignmentAxis { get; set; }
@@ -260,7 +253,7 @@ namespace Game.Incidents
 			}
 			if(canGenerateSpouse && Spouses.Count == 0)
 			{
-				if(SimRandom.RandomBool())
+				if(SimRandom.RandomRange(1,7) > 6)
 				{
 					var gender = Gender == Gender.MALE ? Gender.FEMALE : Gender.MALE;
 					var spouse = new Character(gender, AffiliatedRace, AffiliatedFaction, false);

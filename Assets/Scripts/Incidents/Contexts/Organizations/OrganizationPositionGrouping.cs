@@ -29,7 +29,6 @@ namespace Game.Incidents
 				pos = this;
 				return true;
 			}
-
 			else
 			{
 				pos = null;
@@ -50,7 +49,7 @@ namespace Game.Incidents
 			primaryPosition.GetSentients(ref sentients);
 		}
 
-		public void HandleSuccession()
+		public void HandleSuccession(IOrganizationPosition top)
 		{
 			foreach(var spouse in Spouses)
 			{
@@ -61,9 +60,10 @@ namespace Game.Incidents
 				((Character)child).OrganizationPosition = null;
 			}
 
-			primaryPosition.HandleSuccession();
+			primaryPosition.HandleSuccession(top);
 
 			Update();
+			//note to self: married people dont get their titles in time for the logs to reflect it in the marriage log
 		}
 
 		public override void Initialize(Organization org)
@@ -76,7 +76,7 @@ namespace Game.Incidents
 		{
 			if (primaryPosition.official == null)
 			{
-				HandleSuccession();
+				HandleSuccession(this);
 				filledPosition = this;
 				return true;
 			}

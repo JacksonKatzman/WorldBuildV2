@@ -70,9 +70,13 @@ namespace Game.Incidents
 
 		public void OnRemoveContextEvent(RemoveContextEvent gameEvent)
 		{
-			if(gameEvent.context.GetType() == typeof(Character) && Contains((Character)gameEvent.context, out var position))
+			if (gameEvent.context.GetType() == typeof(Character))
 			{
-				position.HandleSuccession();
+				var contains = Contains((Character)gameEvent.context, out var position);
+				if(contains)
+				{
+					position.HandleSuccession();
+				}
 			}
 		}
 

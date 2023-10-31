@@ -1,0 +1,950 @@
+{
+  "$id": "1",
+  "$type": "Game.Incidents.Incident, Auto-asmdef-SecondPass",
+  "IncidentName": "Faction_NobleWedding",
+  "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Weights": {
+    "$id": "2",
+    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+    "baseWeight": 2,
+    "Operation": null,
+    "expressions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
+      "$values": []
+    }
+  },
+  "Criteria": {
+    "$id": "3",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Auto-asmdef-SecondPass",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Auto-asmdef-SecondPass]], mscorlib",
+      "$values": []
+    }
+  },
+  "WorldCriteria": {
+    "$id": "4",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Auto-asmdef-SecondPass",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Auto-asmdef-SecondPass]], mscorlib",
+      "$values": []
+    }
+  },
+  "IsMajorIncident": true,
+  "IsUnique": false,
+  "IncidentHeadline": ">>>>>>>>>>>>> {TITLED:2} marries {TITLED:5}.",
+  "ActionContainer": {
+    "$id": "5",
+    "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
+    "incidentLog": "{TITLED:2} marries {TITLED:5}.",
+    "Actions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass]], mscorlib",
+      "$values": [
+        {
+          "$id": "6",
+          "$type": "Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass",
+          "incidentAction": {
+            "$id": "7",
+            "$type": "Game.Incidents.GetOrCreateCharacterAction, Auto-asmdef-SecondPass",
+            "parent": {
+              "$id": "8",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
+              "ActionFieldID": 1,
+              "NameID": "{1}:GetOrCreateCharacterAction:parent",
+              "ActionFieldIDString": "{1}",
+              "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "race": {
+              "$id": "9",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IRaceAffiliated, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "contextType": null,
+              "fieldName": null,
+              "actionField": null,
+              "enabled": false
+            },
+            "faction": {
+              "$id": "10",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "contextType": null,
+              "fieldName": null,
+              "actionField": null,
+              "enabled": false
+            },
+            "gender": 0,
+            "age": {
+              "$id": "11",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 6,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "politicalPriority": {
+              "$id": "12",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 5,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "economicPriority": {
+              "$id": "13",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 17,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "religiousPriority": {
+              "$id": "14",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 18,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "militaryPriority": {
+              "$id": "15",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 12,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "influence": {
+              "$id": "16",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 18,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "wealth": {
+              "$id": "17",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 1,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "strength": {
+              "$id": "18",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 18,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "dexterity": {
+              "$id": "19",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 2,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "constitution": {
+              "$id": "20",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 15,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "intelligence": {
+              "$id": "21",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 19,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "wisdom": {
+              "$id": "22",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 16,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "charisma": {
+              "$id": "23",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 12,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "majorCharacter": true,
+            "generateFamily": true,
+            "findFirst": true,
+            "allowCreate": false,
+            "actionField": {
+              "$id": "24",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                "$values": [
+                  {
+                    "$id": "25",
+                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass",
+                    "propertyName": "AffiliatedFaction",
+                    "evaluator": {
+                      "$id": "26",
+                      "$type": "Game.Incidents.FactionEvaluator, Auto-asmdef-SecondPass",
+                      "compareTo": {
+                        "$id": "27",
+                        "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                        "contextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        "fieldName": null,
+                        "actionField": {
+                          "$id": "28",
+                          "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                          "parentType": null,
+                          "AllowSelf": false,
+                          "AllowNull": false,
+                          "criteria": {
+                            "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                            "$values": []
+                          },
+                          "value": null,
+                          "delayedValue": null,
+                          "Method": 1,
+                          "PreviousField": "{0} - Original Context",
+                          "PreviousFieldID": 0,
+                          "ActionFieldID": -1,
+                          "NameID": null,
+                          "ActionFieldIDString": "{-1}",
+                          "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                        },
+                        "enabled": true
+                      },
+                      "propertyName": "AffiliatedFaction",
+                      "Comparator": "==",
+                      "Type": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                    },
+                    "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "PrimitiveType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  },
+                  {
+                    "$id": "29",
+                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass",
+                    "propertyName": "HasOrganizationPosition",
+                    "evaluator": {
+                      "$id": "30",
+                      "$type": "Game.Incidents.BoolEvaluator, Auto-asmdef-SecondPass",
+                      "propertyName": "HasOrganizationPosition",
+                      "Comparator": "==",
+                      "expressions": {
+                        "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
+                        "$values": [
+                          {
+                            "$id": "31",
+                            "$type": "Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Auto-asmdef-SecondPass",
+                            "hasNextOperator": false,
+                            "ExpressionType": 0,
+                            "constValue": true,
+                            "chosenMethod": null,
+                            "chosenProperty": null,
+                            "range": {
+                              "$id": "32",
+                              "$type": "Game.Incidents.BoolRange, Auto-asmdef-SecondPass",
+                              "Value": false,
+                              "GetValueType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                            },
+                            "subexpressions": null,
+                            "previousCalculatedID": null,
+                            "rangeWarning": "Range not implemented for non integers!",
+                            "nextOperator": null,
+                            "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                          }
+                        ]
+                      },
+                      "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                      "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "AllowMultipleExpressions": true
+                    },
+                    "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "PrimitiveType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                  },
+                  {
+                    "$id": "33",
+                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass",
+                    "propertyName": "SpouseCount",
+                    "evaluator": {
+                      "$id": "34",
+                      "$type": "Game.Incidents.IntegerEvaluator, Auto-asmdef-SecondPass",
+                      "propertyName": "SpouseCount",
+                      "Comparator": "==",
+                      "expressions": {
+                        "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
+                        "$values": [
+                          {
+                            "$id": "35",
+                            "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
+                            "hasNextOperator": false,
+                            "ExpressionType": 0,
+                            "constValue": 0,
+                            "chosenMethod": null,
+                            "chosenProperty": null,
+                            "range": {
+                              "$id": "36",
+                              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+                              "randomRange": true,
+                              "min": 0,
+                              "max": 20,
+                              "constant": 0,
+                              "Value": 16,
+                              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                            },
+                            "subexpressions": null,
+                            "previousCalculatedID": null,
+                            "rangeWarning": "Range not implemented for non integers!",
+                            "nextOperator": null,
+                            "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                          }
+                        ]
+                      },
+                      "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                      "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "AllowMultipleExpressions": true
+                    },
+                    "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                  }
+                ]
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
+              "ActionFieldID": 2,
+              "NameID": "{2}:GetOrCreateCharacterAction:actionField",
+              "ActionFieldIDString": "{2}",
+              "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "ResultID": "{2}"
+          }
+        },
+        {
+          "$id": "37",
+          "$type": "Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass",
+          "incidentAction": {
+            "$id": "38",
+            "$type": "Game.Incidents.GetOrCreateFactionAction, Auto-asmdef-SecondPass",
+            "population": {
+              "$id": "39",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 9,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "influence": {
+              "$id": "40",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 18,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "wealth": {
+              "$id": "41",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 7,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "politicalPriority": {
+              "$id": "42",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 19,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "economicPriority": {
+              "$id": "43",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 1,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "religiousPriority": {
+              "$id": "44",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 5,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "militaryPriority": {
+              "$id": "45",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 13,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "creator": {
+              "$id": "46",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ISentient, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "contextType": null,
+              "fieldName": null,
+              "actionField": null,
+              "enabled": false
+            },
+            "findFirst": true,
+            "allowCreate": false,
+            "actionField": {
+              "$id": "47",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                "$values": [
+                  {
+                    "$id": "48",
+                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass",
+                    "propertyName": "FactionsWithinInteractionRange",
+                    "evaluator": {
+                      "$id": "49",
+                      "$type": "Game.Incidents.ActionFieldListContainsEvaluator, Auto-asmdef-SecondPass",
+                      "warning": "This evaluator finds items that exist within the chosen List within the parent ({0}) context.",
+                      "propertyName": "FactionsWithinInteractionRange",
+                      "Comparator": "==",
+                      "Type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentContext, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                      "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                    },
+                    "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "PrimitiveType": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentContext, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                  }
+                ]
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
+              "ActionFieldID": 3,
+              "NameID": "{3}:GetOrCreateFactionAction:actionField",
+              "ActionFieldIDString": "{3}",
+              "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "ResultID": "{3}"
+          }
+        },
+        {
+          "$id": "50",
+          "$type": "Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass",
+          "incidentAction": {
+            "$id": "51",
+            "$type": "Game.Incidents.GetOrCreateCharacterAction, Auto-asmdef-SecondPass",
+            "parent": {
+              "$id": "52",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
+              "ActionFieldID": 4,
+              "NameID": "{4}:GetOrCreateCharacterAction:parent",
+              "ActionFieldIDString": "{4}",
+              "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "race": {
+              "$id": "53",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IRaceAffiliated, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "contextType": null,
+              "fieldName": null,
+              "actionField": null,
+              "enabled": false
+            },
+            "faction": {
+              "$id": "54",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "contextType": null,
+              "fieldName": null,
+              "actionField": null,
+              "enabled": false
+            },
+            "gender": 0,
+            "age": {
+              "$id": "55",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 14,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "politicalPriority": {
+              "$id": "56",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 1,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "economicPriority": {
+              "$id": "57",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 9,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "religiousPriority": {
+              "$id": "58",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 16,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "militaryPriority": {
+              "$id": "59",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 6,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "influence": {
+              "$id": "60",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 5,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "wealth": {
+              "$id": "61",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 8,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "strength": {
+              "$id": "62",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 7,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "dexterity": {
+              "$id": "63",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 16,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "constitution": {
+              "$id": "64",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 19,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "intelligence": {
+              "$id": "65",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 18,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "wisdom": {
+              "$id": "66",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 8,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "charisma": {
+              "$id": "67",
+              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+              "randomRange": true,
+              "min": 0,
+              "max": 20,
+              "constant": 0,
+              "Value": 1,
+              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+            },
+            "majorCharacter": true,
+            "generateFamily": true,
+            "findFirst": true,
+            "allowCreate": false,
+            "actionField": {
+              "$id": "68",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                "$values": [
+                  {
+                    "$id": "69",
+                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass",
+                    "propertyName": "AffiliatedFaction",
+                    "evaluator": {
+                      "$id": "70",
+                      "$type": "Game.Incidents.FactionEvaluator, Auto-asmdef-SecondPass",
+                      "compareTo": {
+                        "$id": "71",
+                        "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IFactionAffiliated, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                        "contextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        "fieldName": null,
+                        "actionField": {
+                          "$id": "72",
+                          "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Faction, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                          "parentType": null,
+                          "AllowSelf": false,
+                          "AllowNull": false,
+                          "criteria": {
+                            "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                            "$values": []
+                          },
+                          "value": null,
+                          "delayedValue": null,
+                          "Method": 1,
+                          "PreviousField": "{3}:GetOrCreateFactionAction:actionField",
+                          "PreviousFieldID": 3,
+                          "ActionFieldID": -1,
+                          "NameID": null,
+                          "ActionFieldIDString": "{-1}",
+                          "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                        },
+                        "enabled": true
+                      },
+                      "propertyName": "AffiliatedFaction",
+                      "Comparator": "==",
+                      "Type": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                    },
+                    "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "PrimitiveType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  },
+                  {
+                    "$id": "73",
+                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass",
+                    "propertyName": "SpouseCount",
+                    "evaluator": {
+                      "$id": "74",
+                      "$type": "Game.Incidents.IntegerEvaluator, Auto-asmdef-SecondPass",
+                      "propertyName": "SpouseCount",
+                      "Comparator": "==",
+                      "expressions": {
+                        "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
+                        "$values": [
+                          {
+                            "$id": "75",
+                            "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
+                            "hasNextOperator": false,
+                            "ExpressionType": 0,
+                            "constValue": 0,
+                            "chosenMethod": null,
+                            "chosenProperty": null,
+                            "range": {
+                              "$id": "76",
+                              "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
+                              "randomRange": true,
+                              "min": 0,
+                              "max": 20,
+                              "constant": 0,
+                              "Value": 6,
+                              "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                            },
+                            "subexpressions": null,
+                            "previousCalculatedID": null,
+                            "rangeWarning": "Range not implemented for non integers!",
+                            "nextOperator": null,
+                            "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                          }
+                        ]
+                      },
+                      "Type": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                      "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "AllowMultipleExpressions": true
+                    },
+                    "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "PrimitiveType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                  },
+                  {
+                    "$id": "77",
+                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass",
+                    "propertyName": "Gender",
+                    "evaluator": {
+                      "$id": "78",
+                      "$type": "Game.Incidents.GenderEvaluator, Auto-asmdef-SecondPass",
+                      "specialized": true,
+                      "standardEvaluator": {
+                        "$id": "79",
+                        "$type": "Game.Incidents.EnumEvaluator`1[[Game.Enums.Gender, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                        "propertyName": null,
+                        "allowedValues": {
+                          "$type": "System.Collections.Generic.List`1[[Game.Enums.Gender, Auto-asmdef-SecondPass]], mscorlib",
+                          "$values": []
+                        },
+                        "Type": "Game.Enums.Gender, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        "ContextType": null
+                      },
+                      "compareTo": {
+                        "$id": "80",
+                        "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.ISentient, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                        "contextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                        "fieldName": null,
+                        "actionField": {
+                          "$id": "81",
+                          "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                          "parentType": null,
+                          "AllowSelf": false,
+                          "AllowNull": false,
+                          "criteria": {
+                            "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                            "$values": []
+                          },
+                          "value": null,
+                          "delayedValue": null,
+                          "Method": 1,
+                          "PreviousField": "{2}:GetOrCreateCharacterAction:actionField",
+                          "PreviousFieldID": 2,
+                          "ActionFieldID": -1,
+                          "NameID": null,
+                          "ActionFieldIDString": "{-1}",
+                          "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                        },
+                        "enabled": true
+                      },
+                      "propertyName": "Gender",
+                      "Comparator": "!=",
+                      "Type": "Game.Enums.Gender, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                    },
+                    "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "PrimitiveType": "Game.Enums.Gender, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                  },
+                  {
+                    "$id": "82",
+                    "$type": "Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass",
+                    "propertyName": "HasOrganizationPosition",
+                    "evaluator": {
+                      "$id": "83",
+                      "$type": "Game.Incidents.BoolEvaluator, Auto-asmdef-SecondPass",
+                      "propertyName": "HasOrganizationPosition",
+                      "Comparator": "==",
+                      "expressions": {
+                        "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
+                        "$values": [
+                          {
+                            "$id": "84",
+                            "$type": "Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Auto-asmdef-SecondPass",
+                            "hasNextOperator": false,
+                            "ExpressionType": 0,
+                            "constValue": true,
+                            "chosenMethod": null,
+                            "chosenProperty": null,
+                            "range": {
+                              "$id": "85",
+                              "$type": "Game.Incidents.BoolRange, Auto-asmdef-SecondPass",
+                              "Value": false,
+                              "GetValueType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                            },
+                            "subexpressions": null,
+                            "previousCalculatedID": null,
+                            "rangeWarning": "Range not implemented for non integers!",
+                            "nextOperator": null,
+                            "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                          }
+                        ]
+                      },
+                      "Type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                      "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                      "AllowMultipleExpressions": true
+                    },
+                    "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "PrimitiveType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+                  }
+                ]
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 0,
+              "PreviousField": null,
+              "PreviousFieldID": -1,
+              "ActionFieldID": 5,
+              "NameID": "{5}:GetOrCreateCharacterAction:actionField",
+              "ActionFieldIDString": "{5}",
+              "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "ResultID": "{5}"
+          }
+        },
+        {
+          "$id": "86",
+          "$type": "Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass",
+          "incidentAction": {
+            "$id": "87",
+            "$type": "Game.Incidents.MarryCharactersAction, Auto-asmdef-SecondPass",
+            "initiator": {
+              "$id": "88",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "contextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "fieldName": null,
+              "actionField": {
+                "$id": "89",
+                "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                "parentType": null,
+                "AllowSelf": false,
+                "AllowNull": false,
+                "criteria": {
+                  "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                  "$values": []
+                },
+                "value": null,
+                "delayedValue": null,
+                "Method": 1,
+                "PreviousField": "{2}:GetOrCreateCharacterAction:actionField",
+                "PreviousFieldID": 2,
+                "ActionFieldID": 6,
+                "NameID": "{6}:MarryCharactersAction:initiator",
+                "ActionFieldIDString": "{6}",
+                "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              },
+              "enabled": true
+            },
+            "recipient": {
+              "$id": "90",
+              "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "contextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "fieldName": null,
+              "actionField": {
+                "$id": "91",
+                "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                "parentType": null,
+                "AllowSelf": false,
+                "AllowNull": false,
+                "criteria": {
+                  "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                  "$values": []
+                },
+                "value": null,
+                "delayedValue": null,
+                "Method": 1,
+                "PreviousField": "{5}:GetOrCreateCharacterAction:actionField",
+                "PreviousFieldID": 5,
+                "ActionFieldID": 7,
+                "NameID": "{7}:MarryCharactersAction:recipient",
+                "ActionFieldIDString": "{7}",
+                "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+              },
+              "enabled": true
+            }
+          }
+        }
+      ]
+    },
+    "Deployers": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Auto-asmdef-SecondPass]], mscorlib",
+      "$values": []
+    },
+    "ContextType": "Game.Incidents.Faction, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+  }
+}

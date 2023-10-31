@@ -68,7 +68,7 @@ namespace Game.Incidents
 			AffiliatedOrganization = org;
 		}
 
-		public void SelectNewOfficial(Organization org, Faction affiliatedFaction, Race majorityRace)
+		public void SelectNewOfficial(Organization org, Faction affiliatedFaction, Race majorityRace, IOrganizationPosition top)
 		{
 			if(official == null || official.GetType() != typeof(Character))
 			{
@@ -76,6 +76,7 @@ namespace Game.Incidents
 				newLeader.GenerateFamily(true, true);
 				newLeader.OrganizationPosition = this;
 				official = newLeader;
+				EventManager.Instance.Dispatch(new AddContextEvent(newLeader, false));
 				IncidentService.Instance.ReportStaticIncident("{TITLED:0} takes power.", new List<IIncidentContext>() { newLeader as IIncidentContext }, true);
 				return;
 			}
@@ -115,15 +116,15 @@ namespace Game.Incidents
 				EventManager.Instance.Dispatch(new AddContextEvent(newOfficial, false));
 			}
 
-			newOfficial.OrganizationPosition = this;
+			newOfficial.OrganizationPosition = top == null ? this : top;
 			official = newOfficial;
 			var report = previousOfficial == null ? "{TITLED:0} takes power." : "{TITLED:0} succeeds {TITLED:1}.";
 			IncidentService.Instance.ReportStaticIncident(report, new List<IIncidentContext>() { newOfficial, previousOfficial }, true);
 		}
 
-		public void HandleSuccession()
+		public void HandleSuccession(IOrganizationPosition top = null)
 		{
-			SelectNewOfficial(AffiliatedOrganization, AffiliatedOrganization.AffiliatedFaction, SimRandom.RandomEntryFromList(AffiliatedOrganization.racesAllowedToHoldOffice));
+			SelectNewOfficial(AffiliatedOrganization, AffiliatedOrganization.AffiliatedFaction, SimRandom.RandomEntryFromList(AffiliatedOrganization.racesAllowedToHoldOffice), top);
 		}
 
 		public override bool TryFillNextPosition(out IOrganizationPosition filledPosition)
