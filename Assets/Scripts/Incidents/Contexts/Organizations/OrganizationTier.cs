@@ -90,5 +90,13 @@ namespace Game.Incidents
 				component.GetPositionCount(ref total, careAboutFilled);
 			}
 		}
+
+		public void Die()
+		{
+			foreach (var component in components)
+			{
+				component.Die();
+			}
+		}
 	}
 }

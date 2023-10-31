@@ -50,7 +50,7 @@ namespace Game.Incidents
 			Setup();
 		}
 
-		public Organization(Faction faction, Race majorityStartingRace, OrganizationType organizationType, Character creator = null) : this(faction, majorityStartingRace, creator)
+		public Organization(Faction faction, Race majorityStartingRace, OrganizationType organizationType, ISentient creator = null) : this(faction, majorityStartingRace, creator)
 		{
 			template = SimRandom.RandomEntryFromList(majorityStartingRace.racePreset.organizationTemplates);
 			Setup();
@@ -127,6 +127,7 @@ namespace Game.Incidents
 
 		public override void Die()
 		{
+			primaryOrganization.Die();
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 		}
 
