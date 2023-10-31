@@ -75,6 +75,23 @@ namespace Game.Incidents
 			return newPerson;
 		}
 
+		override protected void Complete()
+		{
+			if (madeNew)
+			{
+				var character = actionField.GetTypedFieldValue();
+				foreach (var parent in character.Parents)
+				{
+					parent.Children.Add(character);
+					if (parent.HasOrganizationPosition)
+					{
+						parent.OrganizationPosition.Update();
+					}
+				}
+			}
+			base.Complete();
+		}
+
 		protected override void OnAllowCreateValueChanged()
 		{
 			race.enabled = allowCreate;
