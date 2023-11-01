@@ -32,8 +32,6 @@ namespace Game.Enums
 	public enum EncounterType { COMBAT, PUZZLE, ROLEPLAY, CURIOSITY };
 	public enum HexEdgeType { Flat, Slope, Cliff };
 	public enum LandmarkType { NONE, TOWER, STATUE };
-
-	public enum CharacterTag { MAGIC, THIEF, ASSASSIN, SOULLESS }
 	public enum FlavorType { SYNONYM, REASON };
 
 	public static class EnumHelpers

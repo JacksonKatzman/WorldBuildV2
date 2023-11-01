@@ -1,5 +1,4 @@
-﻿using Game.Enums;
-using Game.Simulation;
+﻿using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -8,41 +7,6 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class CharacterTagCalculator : IContextModifierCalculator
-	{
-        public Type PrimitiveType => typeof(List<CharacterTag>);
-
-        public int ID { get; set; }
-
-        public string NameID => "{EX " + ID + "}";
-
-        [HorizontalGroup("Group 1", 150), HideLabel, ReadOnly]
-        public string propertyName;
-
-        [LabelText("Add tag: True to add, false to remove.")]
-        public bool addTag;
-
-        public CharacterTag tag;
-
-		public CharacterTagCalculator(string propertyName)
-		{
-			this.propertyName = propertyName;
-		}
-
-		public void Calculate(IIncidentContext context)
-		{
-            var property = context.GetType().GetProperty(propertyName);
-            var propertyValue = (List<CharacterTag>)property.GetValue(context);
-            if(addTag && !propertyValue.Contains(tag))
-			{
-                propertyValue.Add(tag);
-			}
-            else if(!addTag && propertyValue.Contains(tag))
-			{
-                propertyValue.Remove(tag);
-			}
-        }
-	}
 	public abstract class ContextModifierCalculator<T> : IContextModifierCalculator
     {
         [HideInInspector]
