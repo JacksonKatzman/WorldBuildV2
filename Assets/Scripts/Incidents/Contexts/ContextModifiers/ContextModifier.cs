@@ -57,8 +57,13 @@ namespace Game.Incidents
 
         virtual protected bool IsValidPropertyType(Type type)
         {
-            return type == typeof(int) || type == typeof(float) || type == typeof(bool) || type == typeof(List<CharacterTag>);
+            return type == typeof(int) || type == typeof(float) || type == typeof(bool) || type == typeof(List<CharacterTag>) || IsListContextTag(type);
         }
+        private bool IsListContextTag(Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && typeof(IContextTag).IsAssignableFrom(type.GetGenericArguments()[0]);
+        }
+
 #if UNITY_EDITOR
         private IEnumerable<string> GetPropertyNames()
         {
@@ -85,10 +90,13 @@ namespace Game.Incidents
             {
                 Calculator = new BooleanContextModifierCalculator(propertyName, ContextType);
             }
-            else if(PrimitiveType == typeof(List<CharacterTag>))
+            else if(IsListContextTag(PrimitiveType))
 			{
-                Calculator = new CharacterTagCalculator(propertyName);
-			}
+                var dataType = new Type[] { PrimitiveType.GetGenericArguments()[0] };
+                var genericBase = typeof(ContextTagCalculator<>);
+                var combinedType = genericBase.MakeGenericType(dataType);
+                Calculator = (IContextModifierCalculator)Activator.CreateInstance(combinedType, propertyName, ContextType);
+            }
             IncidentEditorWindow.UpdateActionFieldIDs();
         }
 #endif

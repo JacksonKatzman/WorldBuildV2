@@ -18,6 +18,7 @@ namespace Game.Incidents
 		public Organization AffiliatedOrganization { get; set; }
 
 		public LandmarkPreset Preset { get; private set; }
+		public List<LandmarkTag> LandmarkTags { get; set; }
 
 		public Landmark() 
 		{
@@ -28,6 +29,7 @@ namespace Game.Incidents
 			CurrentLocation = location;
 			CurrentInventory = new Inventory();
 			Preset = landmarkType;
+			LandmarkTags = Preset.landmarkTags;
 		}
 
 		public override void LoadContextProperties()

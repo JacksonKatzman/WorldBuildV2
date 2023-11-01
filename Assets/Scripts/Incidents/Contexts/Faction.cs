@@ -76,6 +76,7 @@ namespace Game.Incidents
 		public int GoodEvilAlignmentAxis { get; set; }
 		public List<IIncidentContext> FactionsWithinInteractionRange => GetFactionsWithinInteractionRange();
 		public List<IIncidentContext> FactionsAtWarWith { get; set; }
+		public List<FactionTag> FactionTags { get; set; }
 
 		public bool AtWar => FactionsAtWarWith.Count > 0;
 		public bool CouldMakePeace => CheckCouldMakePeace();
