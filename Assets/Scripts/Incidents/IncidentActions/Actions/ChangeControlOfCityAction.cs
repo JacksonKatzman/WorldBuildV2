@@ -1,4 +1,5 @@
 ﻿using Game.Debug;
+using Game.Simulation;
 
 namespace Game.Incidents
 {
@@ -13,36 +14,21 @@ namespace Game.Incidents
 			var gainer = cityGainer.GetTypedFieldValue();
 			var loser = cityLoser.GetTypedFieldValue();
 			var c = city.GetTypedFieldValue();
-			var tileIndex = c.CurrentLocation.TileIndex;
 
-			if(!gainer.Cities.Contains(c))
-			{
-				gainer.Cities.Add(c);
-			}
-			if(loser.Cities.Contains(c))
-			{
-				loser.Cities.Remove(c);
-			}
+			EventManager.Instance.Dispatch(new CityChangedControlEvent(gainer, loser, c));
+
 			if (loser.Cities.Count > 0)
 			{
-				if (!gainer.ControlledTileIndices.Contains(tileIndex))
-				{
-					gainer.ControlledTileIndices.Add(tileIndex);
-				}
-				if (loser.ControlledTileIndices.Contains(tileIndex))
-				{
-					loser.ControlledTileIndices.Remove(tileIndex);
-				}
+				EventManager.Instance.Dispatch(new TerritoryChangedControlEvent(gainer, loser, c.CurrentLocation));
 			}
 			else
 			{
-				gainer.ControlledTileIndices.AddRange(loser.ControlledTileIndices);
+				foreach(var index in loser.ControlledTileIndices)
+				{
+					EventManager.Instance.Dispatch(new TerritoryChangedControlEvent(gainer, loser, new Location(index)));
+				}
 				OutputLogger.Log($">>>>{loser.Name} is wiped out by {gainer.Name}");
 			}
-
-			c.AffiliatedFaction = gainer;
-			gainer.ClaimTerritoryBetweenCities();
-			//Might need to notify tile inhabitants later so they can adjust for the change
 		}
 	}
 }

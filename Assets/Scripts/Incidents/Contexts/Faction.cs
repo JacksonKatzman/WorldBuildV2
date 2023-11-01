@@ -77,6 +77,8 @@ namespace Game.Incidents
 		public List<IIncidentContext> FactionsWithinInteractionRange => GetFactionsWithinInteractionRange();
 		public List<IIncidentContext> FactionsAtWarWith { get; set; }
 		public List<FactionTag> FactionTags { get; set; }
+		public List<Landmark> FactionLandmarks => ContextDictionaryProvider.GetCurrentContexts<Landmark>().Where(x => x.AffiliatedFaction == this).ToList();
+		public List<Organization> FactionOrganizations => ContextDictionaryProvider.GetCurrentContexts<Organization>().Where(x => x.AffiliatedFaction == this && x != Government).ToList();
 
 		public bool AtWar => FactionsAtWarWith.Count > 0;
 		public bool CouldMakePeace => CheckCouldMakePeace();
@@ -124,6 +126,8 @@ namespace Game.Incidents
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.AddEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
 			EventManager.Instance.AddEventHandler<PeaceDeclaredEvent>(OnPeaceDeclaredEvent);
+			EventManager.Instance.AddEventHandler<TerritoryChangedControlEvent>(OnTerritoryChangedControl);
+			EventManager.Instance.AddEventHandler<CityChangedControlEvent>(OnCityChangedControl);
 		}
 
 		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace, Character creator = null) : this()
@@ -212,6 +216,8 @@ namespace Game.Incidents
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.RemoveEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
 			EventManager.Instance.RemoveEventHandler<PeaceDeclaredEvent>(OnPeaceDeclaredEvent);
+			EventManager.Instance.RemoveEventHandler<TerritoryChangedControlEvent>(OnTerritoryChangedControl);
+			EventManager.Instance.RemoveEventHandler<CityChangedControlEvent>(OnCityChangedControl);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 			Government.Die();
 			IncidentService.Instance.ReportStaticIncident(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>{0} is wiped out!", new List<IIncidentContext>() { this }, true);
@@ -423,6 +429,42 @@ namespace Game.Incidents
 			else if(gameEvent.accepter == this && FactionsAtWarWith.Contains(gameEvent.declarer.AffiliatedFaction))
 			{
 				FactionsAtWarWith.Remove(gameEvent.declarer.AffiliatedFaction);
+			}
+		}
+
+		private void OnTerritoryChangedControl(TerritoryChangedControlEvent gameEvent)
+		{
+			var gainer = gameEvent.territoryGainer.AffiliatedFaction;
+			var loser = gameEvent.territoryLoser.AffiliatedFaction;
+			var tileIndex = gameEvent.location.CurrentLocation.TileIndex;
+
+			if (gainer == this && !ControlledTileIndices.Contains(tileIndex))
+			{
+				if (SimulationUtilities.FindSharedBorderFaction(gainer).Contains(tileIndex))
+				{
+					ControlledTileIndices.Add(tileIndex);
+				}
+			}
+			if (loser == this && ControlledTileIndices.Contains(tileIndex))
+			{
+				ControlledTileIndices.Remove(tileIndex);
+			}
+		}
+
+		private void OnCityChangedControl(CityChangedControlEvent gameEvent)
+		{
+			var gainer = gameEvent.cityGainer.AffiliatedFaction;
+			var loser = gameEvent.cityLoser.AffiliatedFaction;
+			var city = gameEvent.city;
+
+			if(gainer == this && !Cities.Contains(city))
+			{
+				gainer.Cities.Add(city);
+				city.AffiliatedFaction = this;
+			}
+			if(loser == this && Cities.Contains(city))
+			{
+				Cities.Remove(city);
 			}
 		}
 

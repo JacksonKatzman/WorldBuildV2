@@ -10,5 +10,11 @@ namespace Game.Incidents
 	{
 		public List<LandmarkTag> landmarkTags;
 		public List<Transform> models;
+
+		public LandmarkPreset()
+		{
+			landmarkTags = new List<LandmarkTag>();
+			models = new List<Transform>();
+		}
 	}
 }
