@@ -14,5 +14,6 @@ namespace Game.Incidents
 		public abstract void GetPositionCount(ref int total, bool careAboutFilled);
 		public abstract bool TryFillNextPosition(out IOrganizationPosition filledPosition);
 		public abstract void GetSentients(ref List<ISentient> sentients);
+		public abstract void Die();
 	}
 }

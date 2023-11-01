@@ -155,5 +155,10 @@ namespace Game.Incidents
 		{
 			return titlePair.GetTitle(sentient.Gender);
 		}
+
+		public override void Die()
+		{
+			EventManager.Instance.Dispatch(new AffiliatedOrganizationChangedEvent(official, null));
+		}
 	}
 }

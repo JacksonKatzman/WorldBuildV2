@@ -35,7 +35,7 @@ namespace Game.Incidents
 
 		public Organization() { }
 
-		private Organization(Faction faction, Race majorityStartingRace, Character creator = null)
+		private Organization(Faction faction, Race majorityStartingRace, ISentient creator = null)
 		{
 			AffiliatedFaction = faction;
 			racesAllowedToHoldOffice = new List<Race> { majorityStartingRace };
@@ -44,13 +44,13 @@ namespace Game.Incidents
 			EventManager.Instance.AddEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
 		}
 
-		public Organization(OrganizationTemplate template, Faction faction, Race majorityStartingRace, Character creator = null) : this(faction, majorityStartingRace, creator)
+		public Organization(OrganizationTemplate template, Faction faction, Race majorityStartingRace, ISentient creator = null) : this(faction, majorityStartingRace, creator)
 		{
 			this.template = template;
 			Setup();
 		}
 
-		public Organization(Faction faction, Race majorityStartingRace, OrganizationType organizationType, Character creator = null) : this(faction, majorityStartingRace, creator)
+		public Organization(Faction faction, Race majorityStartingRace, OrganizationType organizationType, ISentient creator = null) : this(faction, majorityStartingRace, creator)
 		{
 			template = SimRandom.RandomEntryFromList(majorityStartingRace.racePreset.organizationTemplates);
 			Setup();
@@ -127,6 +127,7 @@ namespace Game.Incidents
 
 		public override void Die()
 		{
+			primaryOrganization.Die();
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 		}
 

@@ -20,6 +20,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a615993b81f131d469b6196fc707de43, type: 2}
     - {fileID: 11400000, guid: de1823fe4a6bf5a409531e01183a5a67, type: 2}
     - {fileID: 11400000, guid: 72bab6d98cf05b7448022e76ed1d18ec, type: 2}
+    - {fileID: 11400000, guid: 238a67660249b82429963cdb603e68a0, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -28,7 +29,7 @@ MonoBehaviour:
     - Name: collections
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[System.Type, mscorlib],[Game.Incidents.SerializedObjectCollection,
-        Assembly-CSharp]], mscorlib
+        Auto-asmdef-SecondPass]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[System.Type, mscorlib]],
@@ -38,7 +39,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 5
     - Name: 
       Entry: 7
       Data: 
@@ -47,7 +48,7 @@ MonoBehaviour:
       Data: 2|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Game.Simulation.AdventureEncounterObject, Assembly-CSharp
+      Data: Game.Simulation.AdventureEncounterObject, Auto-asmdef-SecondPass
     - Name: 
       Entry: 8
       Data: 
@@ -65,7 +66,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Game.Incidents.LandmarkPreset, Assembly-CSharp
+      Data: Game.Incidents.LandmarkPreset, Auto-asmdef-SecondPass
     - Name: 
       Entry: 8
       Data: 
@@ -83,7 +84,7 @@ MonoBehaviour:
       Data: 4|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Game.GUI.Wiki.AdventureKeyword, Assembly-CSharp
+      Data: Game.GUI.Wiki.AdventureKeyword, Auto-asmdef-SecondPass
     - Name: 
       Entry: 8
       Data: 
@@ -101,13 +102,31 @@ MonoBehaviour:
       Data: 5|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: Game.Data.MonsterData, Assembly-CSharp
+      Data: Game.Data.MonsterData, Auto-asmdef-SecondPass
     - Name: 
       Entry: 8
       Data: 
     - Name: $v
       Entry: 10
       Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 6|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Game.Incidents.OrganizationTemplate, Auto-asmdef-SecondPass
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 4
     - Name: 
       Entry: 8
       Data: 

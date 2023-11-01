@@ -56,14 +56,7 @@ namespace Game.Incidents
 
 		public void HandleSuccession(IOrganizationPosition top)
 		{
-			foreach(var spouse in Spouses)
-			{
-				((Character)spouse).OrganizationPosition = null;
-			}
-			foreach (var child in Children)
-			{
-				((Character)child).OrganizationPosition = null;
-			}
+			NullSpousesAndChildren();
 
 			primaryPosition.HandleSuccession(top);
 
@@ -90,6 +83,18 @@ namespace Game.Incidents
 			{
 				filledPosition = null;
 				return false;
+			}
+		}
+
+		public void NullSpousesAndChildren()
+		{
+			foreach (var spouse in Spouses)
+			{
+				((Character)spouse).OrganizationPosition = null;
+			}
+			foreach (var child in Children)
+			{
+				((Character)child).OrganizationPosition = null;
 			}
 		}
 
@@ -166,6 +171,12 @@ namespace Game.Incidents
 			{
 				return string.Empty;
 			}
+		}
+
+		public override void Die()
+		{
+			primaryPosition.Die();
+			NullSpousesAndChildren();
 		}
 	}
 }

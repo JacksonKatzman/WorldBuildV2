@@ -79,5 +79,13 @@ namespace Game.Incidents
 				tier.GetSentients(ref sentients);
 			}
 		}
+
+		public override void Die()
+		{
+			foreach (var tier in tiers)
+			{
+				tier.Die();
+			}
+		}
 	}
 }
