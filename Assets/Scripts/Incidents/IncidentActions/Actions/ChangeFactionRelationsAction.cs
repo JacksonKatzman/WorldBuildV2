@@ -4,16 +4,16 @@ namespace Game.Incidents
 {
 	public class ChangeFactionRelationsAction : GenericIncidentAction
 	{
-		public ContextualIncidentActionField<Faction> affectedFaction;
-		public ContextualIncidentActionField<Faction> otherFaction;
+		public InterfacedIncidentActionFieldContainer<IFactionAffiliated> affectedFaction;
+		public InterfacedIncidentActionFieldContainer<IFactionAffiliated> otherFaction;
 		public IntegerRange amount;
 		public bool set;
 		public bool mirrored;
 
 		public override void PerformAction(IIncidentContext context, ref IncidentReport report)
 		{
-			var factionA = affectedFaction.GetTypedFieldValue();
-			var factionB = otherFaction.GetTypedFieldValue();
+			var factionA = affectedFaction.GetTypedFieldValue().AffiliatedFaction;
+			var factionB = otherFaction.GetTypedFieldValue().AffiliatedFaction;
 			if(factionA != factionB)
 			{
 				if(!factionA.FactionRelations.ContainsKey(factionB))

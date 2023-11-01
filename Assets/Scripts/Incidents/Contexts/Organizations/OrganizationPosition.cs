@@ -18,7 +18,8 @@ namespace Game.Incidents
 		public bool hereditary = true;
 		public Gender gender;
 		public int maxPositions;
-		//responsibilities
+
+		public ISentient PrimaryOfficial => official;
 
 		public OrganizationPosition()
 		{
@@ -77,7 +78,7 @@ namespace Game.Incidents
 			if(official == null || official.GetType() != typeof(Character))
 			{
 				var newLeader = new Character(35, gender, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, true);
-				newLeader.GenerateFamily(true, true);
+				newLeader.GenerateFamily(true, 0.8f, SimRandom.RandomRange(0,4));
 				newLeader.OrganizationPosition = this;
 				official = newLeader;
 				EventManager.Instance.Dispatch(new AddContextEvent(newLeader, false));
@@ -108,13 +109,17 @@ namespace Game.Incidents
 			{
 				if (hereditary)
 				{
-					newOfficial = SimRandom.RandomRange(0, 5) < 4 && previousOfficial != null ? previousOfficial.CreateChild(true, gender) : new Character(35, gender, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, true);
-					newOfficial.GenerateFamily(true, true);
+					newOfficial = SimRandom.RandomRange(0, 5) < 4 && previousOfficial != null ?
+						previousOfficial.CreateChild(SimRandom.RandomRange(16, 35), gender, true)
+						: new Character(35, gender, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, true);
+					newOfficial.GenerateFamily(true, 0.2f, SimRandom.RandomRange(0, 1));
 				}
 				else
 				{
-					newOfficial = SimRandom.RandomRange(0, 5) < 1 && previousOfficial != null ? previousOfficial.CreateChild(true, gender) : new Character(35, gender, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, true);
-					newOfficial.GenerateFamily(true, true);
+					newOfficial = SimRandom.RandomRange(0, 5) < 1 && previousOfficial != null ?
+						previousOfficial.CreateChild(SimRandom.RandomRange(16, 35), gender, true)
+						: new Character(35, gender, majorityRace, affiliatedFaction, 5, 5, 5, 5, 0, 0, 10, 10, 10, 10, 10, 10, true);
+					newOfficial.GenerateFamily(true, 0.2f, SimRandom.RandomRange(0, 1));
 				}
 
 				EventManager.Instance.Dispatch(new AddContextEvent(newOfficial, false));

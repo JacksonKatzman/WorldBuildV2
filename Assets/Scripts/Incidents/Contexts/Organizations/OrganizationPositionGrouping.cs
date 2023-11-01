@@ -9,6 +9,7 @@ namespace Game.Incidents
 		public OrganizationPosition primaryPosition;
 		public TitlePair spouseTitles;
 		public TitlePair childTitles;
+		public ISentient PrimaryOfficial => primaryPosition.PrimaryOfficial;
 		public List<ISentient> Spouses => GetSpouses(primaryPosition.official);
 		public List<ISentient> Children => GetChildren(primaryPosition.official);
 		public int maxGroupings;

@@ -31,7 +31,7 @@ namespace Game.Incidents
 			CurrentLocation = location;
 			CurrentInventory = new Inventory();
 			Preset = landmarkType;
-			LandmarkTags = Preset.landmarkTags;
+			LandmarkTags = Preset.landmarkTags != null ? Preset.landmarkTags : new List<LandmarkTag>();
 		}
 
 		public override void LoadContextProperties()

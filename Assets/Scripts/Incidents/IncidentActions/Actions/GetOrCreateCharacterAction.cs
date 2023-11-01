@@ -69,7 +69,7 @@ namespace Game.Incidents
 			if(generateFamily)
 			{
 				var shouldGenerateParents = parents.Count == 0 ? true : false;
-				newPerson.GenerateFamily(shouldGenerateParents, true);
+				newPerson.GenerateFamily(shouldGenerateParents, 0.0f, 0);
 			}
 
 			return newPerson;

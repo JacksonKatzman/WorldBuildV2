@@ -143,6 +143,7 @@ namespace Game.Incidents
 		public IOrganizationPosition OrganizationPosition { get; set; }
 		public bool HasOrganizationPosition => OrganizationPosition != null;
 		public bool HasGovernmentPosition => HasOrganizationPosition && OrganizationPosition.AffiliatedOrganization == AffiliatedFaction.Government;
+		public bool IsPrimaryPositionHolder => HasOrganizationPosition && OrganizationPosition.PrimaryOfficial == this;
 		public int OrganizationTier => HasOrganizationPosition ? OrganizationPosition.OrganizationTier : int.MaxValue;
 		public int PoliticalPriority
 		{
@@ -196,7 +197,7 @@ namespace Game.Incidents
 
 		override public void DeployContext()
 		{
-			if (NumIncidents > 0)
+			if (NumIncidents > 0 && MajorCharacter && Age >= 16)
 			{
 				IncidentService.Instance.PerformIncidents(this);
 			}
@@ -218,21 +219,21 @@ namespace Game.Incidents
 			}
 		}
 
-		public Character CreateChild(bool majorPlayer, Gender gender)
+		public Character CreateChild(int age, Gender gender, bool majorPlayer)
 		{
-			var childAge = SimRandom.RandomRange(14, 35);
 			var parents = new List<Character>() { this };
-			if(Spouses.Count > 0)
+			if(SpouseCount > 0)
 			{
 				parents.Add(SimRandom.RandomEntryFromList(Spouses));
 			}
-			var child = new Character(childAge, gender, AffiliatedRace, AffiliatedFaction, majorPlayer, parents);
+
+			var child = new Character(age, gender, AffiliatedRace, AffiliatedFaction, majorPlayer, parents);
 			Children.Add(child);
 
 			return child;
 		}
 
-		public void GenerateFamily(bool generateParents, bool canGenerateSpouse)
+		public void GenerateFamily(bool generateParents, float spouseChance, int numChildren)
 		{
 			if(generateParents)
 			{
@@ -254,15 +255,23 @@ namespace Game.Incidents
 				Parents[0]?.Spouses.Add(Parents[1]);
 				Parents[1]?.Spouses.Add(Parents[0]);
 			}
-			if(canGenerateSpouse && Spouses.Count == 0)
+			if(spouseChance > 0 && Spouses.Count == 0)
 			{
-				if(SimRandom.RandomRange(1,7) > 6)
+				if(SimRandom.RandomFloat01() <= spouseChance)
 				{
 					var gender = Gender == Gender.MALE ? Gender.FEMALE : Gender.MALE;
 					var spouse = new Character(gender, AffiliatedRace, AffiliatedFaction, false);
 					Spouses.Add(spouse);
 					spouse.Spouses.Add(this);
 					EventManager.Instance.Dispatch(new AddContextEvent(spouse, false));
+				}
+			}
+			if(Spouses.Count > 0 && numChildren > 0 && Age >= 16)
+			{
+				var maxChildAge = Age - 16;
+				for(int i = 0; i < numChildren; i++)
+				{
+					CreateChild(SimRandom.RandomRange(0, maxChildAge), Gender.ANY, true);
 				}
 			}
 			if (Siblings.Count == 0)

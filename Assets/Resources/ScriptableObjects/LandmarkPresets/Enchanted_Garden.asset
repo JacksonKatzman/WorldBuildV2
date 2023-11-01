@@ -20,6 +20,27 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  landmarkTags: 
+    SerializationNodes:
+    - Name: landmarkTags
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Game.Incidents.LandmarkTag, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 1|Game.Incidents.LandmarkTag, Auto-asmdef-SecondPass
+    - Name: tag
+      Entry: 1
+      Data: NATURE
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   models: []
