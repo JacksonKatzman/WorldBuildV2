@@ -7,4 +7,9 @@ namespace Game.Generators.Items
 	{
 		public override Type ContextType => typeof(Resource);
 	}
+
+	public class Disease : InertIncidentContext
+	{
+		public override Type ContextType => typeof(Disease);
+	}
 }
