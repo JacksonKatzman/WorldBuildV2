@@ -41,6 +41,7 @@ namespace Game.Incidents
 		public int Influence { get; set; }
 		public int Wealth { get; set; }
 		public int MilitaryPower { get; set; }
+		public Character Creator { get; set; }
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		virtual public int ControlledTiles => ControlledTileIndices.Count;
 		public int InfluenceForNextTile => (ControlledTiles * 2)/3 + 1;
@@ -123,6 +124,12 @@ namespace Game.Incidents
 
 		public Faction() //: base()
 		{
+			FactionRelations = new Dictionary<IIncidentContext, int>();
+			Cities = new List<City>();
+			FactionsAtWarWith = new List<IIncidentContext>();
+
+			Priorities = new Dictionary<OrganizationType, int>();
+
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.AddEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
 			EventManager.Instance.AddEventHandler<PeaceDeclaredEvent>(OnPeaceDeclaredEvent);
@@ -130,39 +137,39 @@ namespace Game.Incidents
 			EventManager.Instance.AddEventHandler<CityChangedControlEvent>(OnCityChangedControl);
 		}
 
-		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace, Character creator = null) : this()
+		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace, bool initImmediately, Character creator = null) : this()
 		{
-			FactionRelations = new Dictionary<IIncidentContext, int>();
-			Cities = new List<City>();
-			FactionsAtWarWith = new List<IIncidentContext>();
+			var template = SimRandom.RandomEntryFromList(startingMajorityRace.racePreset.organizationTemplates);
 
-			Priorities = new Dictionary<OrganizationType, int>();
-			MajorityRace = startingMajorityRace;
-			
-			AssignRandomPriorities();
+			Priorities[OrganizationType.POLITICAL] = template.startingPoliticalPriority;
+			Priorities[OrganizationType.ECONOMIC] = template.startingEconomicPriority;
+			Priorities[OrganizationType.RELIGIOUS] = template.startingReligiousPriority;
+			Priorities[OrganizationType.MILITARY] = template.startingMilitaryPrioirty;
 
-			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
-			//Name = namingTheme.GenerateFactionName();
-			Name = (ContextDictionaryProvider.AllContexts[typeof(Faction)].Count + 1).ToString();
-
-			ClaimFirstCell(startingPopulation);
-			if(startingTiles > 1)
-			{
-				AttemptExpandBorder(startingTiles - 1);
-			}
-
-			CreateStartingGovernment(startingMajorityRace, creator);
+			Setup(startingTiles, startingPopulation, startingMajorityRace, initImmediately, template);
 		}
 
-		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles = 1, Character creator = null) : this(startingTiles, population, race, creator)
+		public Faction(OrganizationTemplate template, int startingTiles, int startingPopulation, Race startingMajorityRace, bool initImmediately, Character creator = null) : this()
+		{
+			Priorities[OrganizationType.POLITICAL] = template.startingPoliticalPriority;
+			Priorities[OrganizationType.ECONOMIC] = template.startingEconomicPriority;
+			Priorities[OrganizationType.RELIGIOUS] = template.startingReligiousPriority;
+			Priorities[OrganizationType.MILITARY] = template.startingMilitaryPrioirty;
+
+			Setup(startingTiles, startingPopulation, startingMajorityRace, initImmediately, template);
+		}
+
+		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles, bool initImmediately, Character creator = null) : this()
 		{
 			Influence = influence;
 			Wealth = wealth;
-			Priorities = new Dictionary<OrganizationType, int>();
+
 			Priorities[OrganizationType.POLITICAL] = politicalPriority;
 			Priorities[OrganizationType.ECONOMIC] = economicPriority;
 			Priorities[OrganizationType.RELIGIOUS] = religiousPriority;
 			Priorities[OrganizationType.MILITARY] = militaryPriority;
+
+			Setup(startingTiles, population, race, initImmediately);
 		}
 
 		public Faction(Race race)
@@ -170,6 +177,38 @@ namespace Game.Incidents
 			namingTheme = new NamingTheme(race.racePreset.namingTheme);
 			Name = namingTheme.GenerateFactionName();
 			CreateStartingGovernment(race);
+		}
+
+		public void Setup(int startingTiles, int startingPopulation, Race startingMajorityRace, bool initImmediately, OrganizationTemplate template = null, Character creator = null)
+		{
+			MajorityRace = startingMajorityRace;
+			Creator = creator;
+
+			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
+			//Name = namingTheme.GenerateFactionName();
+			Name = (ContextDictionaryProvider.AllContexts[typeof(Faction)].Count + 1).ToString();
+
+			if(initImmediately)
+			{
+				Init(startingTiles, startingPopulation, template);
+			}
+		}
+
+		public void Init(int startingTiles, int startingPopulation, OrganizationTemplate template = null)
+		{
+			ClaimFirstCell(startingPopulation);
+			if (startingTiles > 1)
+			{
+				AttemptExpandBorder(startingTiles - 1);
+			}
+			if (template != null)
+			{
+				CreateStartingGovernment(template, MajorityRace, Creator);
+			}
+			else
+			{
+				CreateStartingGovernment(MajorityRace, Creator);
+			}
 		}
 
 		override public void DeployContext()
@@ -237,6 +276,11 @@ namespace Game.Incidents
 			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL, creator);
 			EventManager.Instance.Dispatch(new AddContextEvent(Government, typeof(Organization), true));
 		}
+		public void CreateStartingGovernment(OrganizationTemplate template, Race majorityStartingRace, Character creator = null)
+		{
+			Government = new Organization(template, this, majorityStartingRace, creator);
+			EventManager.Instance.Dispatch(new AddContextEvent(Government, typeof(Organization), true));
+		}
 
 		public bool ClaimFirstCell(int startingPopulation)
 		{
@@ -246,8 +290,7 @@ namespace Game.Incidents
 			}
 			if (ControlledTileIndices.Count == 0)
 			{
-				//var possibleTiles = SimulationUtilities.GetAllCellsWithDistanceFromCity(10, 15);
-				var possibleTiles = SimulationUtilities.SecondTry(8);
+				var possibleTiles = SimulationUtilities.GetAllCellsWithDistanceFromCity(8);
 				if (possibleTiles.Count > 0)
 				{
 					var tile = SimRandom.RandomEntryFromList(possibleTiles);

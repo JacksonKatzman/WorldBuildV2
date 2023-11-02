@@ -7,6 +7,7 @@ namespace Game.Incidents
 	public class OrganizationPositionGrouping : AbstractOrganizationComponent, IOrganizationPosition
 	{
 		public OrganizationPosition primaryPosition;
+		public string groupingTitleFormat;
 		public TitlePair spouseTitles;
 		public TitlePair childTitles;
 		public ISentient PrimaryOfficial => primaryPosition.PrimaryOfficial;

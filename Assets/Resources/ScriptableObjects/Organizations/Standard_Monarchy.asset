@@ -80,6 +80,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: groupingTitleFormat
+      Entry: 6
+      Data: 
     - Name: spouseTitles
       Entry: 7
       Data: 7|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
@@ -164,6 +167,9 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 8
+      Data: 
+    - Name: groupingTitleFormat
+      Entry: 6
       Data: 
     - Name: spouseTitles
       Entry: 7
@@ -250,6 +256,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: groupingTitleFormat
+      Entry: 6
+      Data: 
     - Name: spouseTitles
       Entry: 7
       Data: 21|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
@@ -301,3 +310,7 @@ MonoBehaviour:
   organizationTemplateName: Standard Monachy
   organizationType: 0
   maxPositionsFilledInSimulation: 5
+  startingPoliticalPriority: 4
+  startingEconomicPriority: 2
+  startingReligiousPriority: 1
+  startingMilitaryPrioirty: 3
