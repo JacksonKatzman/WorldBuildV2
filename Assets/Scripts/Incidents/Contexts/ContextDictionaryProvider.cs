@@ -2,19 +2,20 @@
 using Game.Incidents;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.Simulation
 {
 	public static class ContextDictionaryProvider
 	{
-		public static IncidentContextDictionary CurrentContexts => GetCurrentContexts.Invoke();
-		public static IncidentContextDictionary AllContexts => GetAllContexts.Invoke();
+		public static IncidentContextDictionary CurrentContexts => GetCurrentContextsFunc.Invoke();
+		public static IncidentContextDictionary AllContexts => GetAllContextsFunc.Invoke();
 		public static Dictionary<string, ExpressionValue> CurrentExpressionValues { get; set; }
 		public static int NextID => nextID;
 		public static bool AllowImmediateChanges { get; set; }
 
-		private static Func<IncidentContextDictionary> GetCurrentContexts;
-		private static Func<IncidentContextDictionary> GetAllContexts;
+		private static Func<IncidentContextDictionary> GetCurrentContextsFunc;
+		private static Func<IncidentContextDictionary> GetAllContextsFunc;
 
 		private static IncidentContextDictionary contextsToAdd = new IncidentContextDictionary();
 		private static IncidentContextDictionary contextsToRemove = new IncidentContextDictionary();
@@ -23,12 +24,12 @@ namespace Game.Simulation
 
 		private static void SetCurrentContextsProvider(Func<IncidentContextDictionary> func)
 		{
-			GetCurrentContexts = func;
+			GetCurrentContextsFunc = func;
 		}
 
 		private static void SetAllContextsProvider(Func<IncidentContextDictionary> func)
 		{
-			GetAllContexts = func;
+			GetAllContextsFunc = func;
 		}
 
 		public static void SetContextsProviders(Func<IncidentContextDictionary> funcCurrent, Func<IncidentContextDictionary> funcAll)
@@ -46,6 +47,16 @@ namespace Game.Simulation
 		public static void SetNextID(int id)
 		{
 			nextID = id;
+		}
+
+		public static List<T> GetCurrentContexts<T>() where T : IIncidentContext
+		{
+			return CurrentContexts[typeof(T)].Cast<T>().ToList();
+		}
+
+		public static List<T> GetAllContexts<T>() where T : IIncidentContext
+		{
+			return AllContexts[typeof(T)].Cast<T>().ToList();
 		}
 
 		private static void AddContext<T>(T context, Type type) where T : IIncidentContext

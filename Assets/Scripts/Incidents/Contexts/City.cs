@@ -3,6 +3,7 @@ using Game.Simulation;
 using Game.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.Incidents
 {
@@ -27,7 +28,7 @@ namespace Game.Incidents
 		public int NumItems => CurrentInventory.Items.Count;
 		public bool IsOnBorder => SimulationUtilities.FindBorderWithinFaction(AffiliatedFaction).Contains(CurrentLocation.TileIndex);
 		public List<Resource> Resources { get; set; }
-		public List<Landmark> Landmarks { get; set; }
+		public List<Landmark> Landmarks => ContextDictionaryProvider.GetCurrentContexts<Landmark>().Where(x => x.CurrentLocation.Equals(CurrentLocation)).ToList();
 		public List<Character> Characters { get; set; }
 
 		public Inventory CurrentInventory { get; set; }
@@ -42,7 +43,6 @@ namespace Game.Incidents
 			Population = population;
 			Wealth = wealth;
 			Resources = new List<Resource>();
-			Landmarks = new List<Landmark>();
 			Characters = new List<Character>();
 			CurrentInventory = new Inventory();
 
@@ -76,7 +76,6 @@ namespace Game.Incidents
 			CurrentLocation = SaveUtilities.ConvertIDToContext<Location>(contextIDLoadBuffers["CurrentLocation"][0]);
 			AffiliatedFaction = SaveUtilities.ConvertIDToContext<Faction>(contextIDLoadBuffers["AffiliatedFaction"][0]);
 			Resources = SaveUtilities.ConvertIDsToContexts<Resource>(contextIDLoadBuffers["Resources"]);
-			Landmarks = SaveUtilities.ConvertIDsToContexts<Landmark>(contextIDLoadBuffers["Landmarks"]);
 			Characters = SaveUtilities.ConvertIDsToContexts<Character>(contextIDLoadBuffers["Characters"]);
 			CurrentInventory.LoadContextProperties();
 

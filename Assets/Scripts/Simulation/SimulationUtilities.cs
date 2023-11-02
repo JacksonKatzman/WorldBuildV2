@@ -40,43 +40,7 @@ namespace Game.Simulation
 			}
 		}
 
-		public static List<HexCell> GetAllCellsWithDistanceFromCity(int minDistance, int maxDistance, bool onLand = true)
-		{
-			var grid = SimulationManager.Instance.HexGrid;
-			var allCells = grid.cells.ToList();
-			if(onLand)
-			{
-				allCells = allCells.Where(x => !x.IsUnderwater).ToList();
-			}
-			var cityCellsIndices = GetCellsWithCities();
-			var cityCells = new List<HexCell>();
-			var results = new List<HexCell>();
-			foreach(var index in cityCellsIndices)
-			{
-				cityCells.Add(grid.GetCell(index));
-			}
-			foreach(var cell in allCells)
-			{
-				var valid = true;
-				foreach(var cityCell in cityCells)
-				{
-					var distance = cell.coordinates.DistanceTo(cityCell.coordinates);
-					if(distance < minDistance || distance > maxDistance)
-					{
-						valid = false;
-						break;
-					}
-				}
-				if(valid)
-				{
-					results.Add(cell);
-				}
-			}
-
-			return results;
-		}
-
-		public static List<HexCell> SecondTry(int minDistance, bool onLand = true)
+		public static List<HexCell> GetAllCellsWithDistanceFromCity(int minDistance, bool onLand = true)
 		{
 			var grid = SimulationManager.Instance.HexGrid;
 			var allCells = new HashSet<HexCell>();

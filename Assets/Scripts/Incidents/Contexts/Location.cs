@@ -5,7 +5,7 @@ using System;
 
 namespace Game.Incidents
 {
-	public class Location : InertIncidentContext, ILocationAffiliated, ITerrainTypeAffiliated
+	public class Location : InertIncidentContext, ILocationAffiliated, ITerrainTypeAffiliated, IEquatable<Location>
 	{
 		public override Type ContextType => typeof(Location);
 		public int TileIndex { get; set; }
@@ -18,6 +18,11 @@ namespace Game.Incidents
 		public Location(int tileIndex)
 		{
 			TileIndex = tileIndex;
+		}
+
+		public bool Equals(Location other)
+		{
+			return TileIndex == other.TileIndex;
 		}
 	}
 }

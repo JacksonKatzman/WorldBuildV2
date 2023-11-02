@@ -14,16 +14,22 @@ namespace Game.Incidents
         public IntegerRange influence;
         [ShowIf("@this.allowCreate")]
         public IntegerRange wealth;
-        [ShowIf("@this.allowCreate")]
+        public bool useTemplate;
+        [ShowIf("@this.CreatingWithTemplate")]
+        public ScriptableObjectRetriever<OrganizationTemplate> template;
+
+        [ShowIf("@!this.CreatingWithTemplate")]
         public IntegerRange politicalPriority;
-        [ShowIf("@this.allowCreate")]
+        [ShowIf("@!this.CreatingWithTemplate")]
         public IntegerRange economicPriority;
-        [ShowIf("@this.allowCreate")]
+        [ShowIf("@!this.CreatingWithTemplate")]
         public IntegerRange religiousPriority;
-        [ShowIf("@this.allowCreate")]
+        [ShowIf("@!this.CreatingWithTemplate")]
         public IntegerRange militaryPriority;
         [ShowIf("@this.allowCreate")]
         public InterfacedIncidentActionFieldContainer<ISentient> creator;
+
+        private bool CreatingWithTemplate => allowCreate && useTemplate;
 
         protected override Faction MakeNew()
 		{
@@ -31,9 +37,14 @@ namespace Game.Incidents
 
             Character factionCreator = creator.contextType == typeof(Character) ? creator.actionField.GetFieldValue() as Character : null;
 
-            var newFaction = new Faction(population, influence, wealth, politicalPriority, economicPriority, religiousPriority, militaryPriority, race, 1, factionCreator);
-
-            return newFaction;
+            if(useTemplate)
+			{
+                return new Faction(template.RetrieveObject(), 1, population, race, false, factionCreator);
+			}
+            else
+			{
+                return new Faction(population, influence, wealth, politicalPriority, economicPriority, religiousPriority, militaryPriority, race, 1, false, factionCreator);
+            }
         }
 
 		protected override void Complete()
@@ -42,7 +53,8 @@ namespace Game.Incidents
             {
                 var faction = actionField.GetTypedFieldValue();
                 faction.namingTheme = new NamingTheme(creator.GetTypedFieldValue().AffiliatedFaction.namingTheme);
-                //faction.AttemptExpandBorder(1);
+                OrganizationTemplate t = useTemplate ? template.RetrieveObject() : null;
+                faction.Init(population, 1, t);
                 EventManager.Instance.Dispatch(new AddContextEvent(faction, false));
             }
             

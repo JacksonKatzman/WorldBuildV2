@@ -52,7 +52,6 @@ namespace Game.Incidents
 
 		public Organization(Faction faction, Race majorityStartingRace, OrganizationType organizationType, ISentient creator = null) : this(faction, majorityStartingRace, creator)
 		{
-			template = SimRandom.RandomEntryFromList(majorityStartingRace.racePreset.organizationTemplates);
 			Setup();
 		}
 

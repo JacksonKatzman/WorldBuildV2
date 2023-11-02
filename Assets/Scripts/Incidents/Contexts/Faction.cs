@@ -41,6 +41,7 @@ namespace Game.Incidents
 		public int Influence { get; set; }
 		public int Wealth { get; set; }
 		public int MilitaryPower { get; set; }
+		public Character Creator { get; set; }
 		public Dictionary<IIncidentContext, int> FactionRelations { get; set; }
 		virtual public int ControlledTiles => ControlledTileIndices.Count;
 		public int InfluenceForNextTile => (ControlledTiles * 2)/3 + 1;
@@ -77,6 +78,8 @@ namespace Game.Incidents
 		public List<IIncidentContext> FactionsWithinInteractionRange => GetFactionsWithinInteractionRange();
 		public List<IIncidentContext> FactionsAtWarWith { get; set; }
 		public List<FactionTag> FactionTags { get; set; }
+		public List<Landmark> FactionLandmarks => ContextDictionaryProvider.GetCurrentContexts<Landmark>().Where(x => x.AffiliatedFaction == this).ToList();
+		public List<Organization> FactionOrganizations => ContextDictionaryProvider.GetCurrentContexts<Organization>().Where(x => x.AffiliatedFaction == this && x != Government).ToList();
 
 		public bool AtWar => FactionsAtWarWith.Count > 0;
 		public bool CouldMakePeace => CheckCouldMakePeace();
@@ -121,44 +124,52 @@ namespace Game.Incidents
 
 		public Faction() //: base()
 		{
-			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
-			EventManager.Instance.AddEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
-			EventManager.Instance.AddEventHandler<PeaceDeclaredEvent>(OnPeaceDeclaredEvent);
-		}
-
-		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace, Character creator = null) : this()
-		{
 			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<IIncidentContext>();
 
 			Priorities = new Dictionary<OrganizationType, int>();
-			MajorityRace = startingMajorityRace;
-			
-			AssignRandomPriorities();
 
-			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
-			//Name = namingTheme.GenerateFactionName();
-			Name = (ContextDictionaryProvider.AllContexts[typeof(Faction)].Count + 1).ToString();
-
-			ClaimFirstCell(startingPopulation);
-			if(startingTiles > 1)
-			{
-				AttemptExpandBorder(startingTiles - 1);
-			}
-
-			CreateStartingGovernment(startingMajorityRace, creator);
+			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
+			EventManager.Instance.AddEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
+			EventManager.Instance.AddEventHandler<PeaceDeclaredEvent>(OnPeaceDeclaredEvent);
+			EventManager.Instance.AddEventHandler<TerritoryChangedControlEvent>(OnTerritoryChangedControl);
+			EventManager.Instance.AddEventHandler<CityChangedControlEvent>(OnCityChangedControl);
 		}
 
-		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles = 1, Character creator = null) : this(startingTiles, population, race, creator)
+		public Faction(int startingTiles, int startingPopulation, Race startingMajorityRace, bool initImmediately, Character creator = null) : this()
+		{
+			var template = SimRandom.RandomEntryFromList(startingMajorityRace.racePreset.organizationTemplates);
+
+			Priorities[OrganizationType.POLITICAL] = template.startingPoliticalPriority;
+			Priorities[OrganizationType.ECONOMIC] = template.startingEconomicPriority;
+			Priorities[OrganizationType.RELIGIOUS] = template.startingReligiousPriority;
+			Priorities[OrganizationType.MILITARY] = template.startingMilitaryPrioirty;
+
+			Setup(startingTiles, startingPopulation, startingMajorityRace, initImmediately, template);
+		}
+
+		public Faction(OrganizationTemplate template, int startingTiles, int startingPopulation, Race startingMajorityRace, bool initImmediately, Character creator = null) : this()
+		{
+			Priorities[OrganizationType.POLITICAL] = template.startingPoliticalPriority;
+			Priorities[OrganizationType.ECONOMIC] = template.startingEconomicPriority;
+			Priorities[OrganizationType.RELIGIOUS] = template.startingReligiousPriority;
+			Priorities[OrganizationType.MILITARY] = template.startingMilitaryPrioirty;
+
+			Setup(startingTiles, startingPopulation, startingMajorityRace, initImmediately, template);
+		}
+
+		public Faction(int population, int influence, int wealth, int politicalPriority, int economicPriority, int religiousPriority, int militaryPriority, Race race, int startingTiles, bool initImmediately, Character creator = null) : this()
 		{
 			Influence = influence;
 			Wealth = wealth;
-			Priorities = new Dictionary<OrganizationType, int>();
+
 			Priorities[OrganizationType.POLITICAL] = politicalPriority;
 			Priorities[OrganizationType.ECONOMIC] = economicPriority;
 			Priorities[OrganizationType.RELIGIOUS] = religiousPriority;
 			Priorities[OrganizationType.MILITARY] = militaryPriority;
+
+			Setup(startingTiles, population, race, initImmediately);
 		}
 
 		public Faction(Race race)
@@ -166,6 +177,38 @@ namespace Game.Incidents
 			namingTheme = new NamingTheme(race.racePreset.namingTheme);
 			Name = namingTheme.GenerateFactionName();
 			CreateStartingGovernment(race);
+		}
+
+		public void Setup(int startingTiles, int startingPopulation, Race startingMajorityRace, bool initImmediately, OrganizationTemplate template = null, Character creator = null)
+		{
+			MajorityRace = startingMajorityRace;
+			Creator = creator;
+
+			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
+			//Name = namingTheme.GenerateFactionName();
+			Name = (ContextDictionaryProvider.AllContexts[typeof(Faction)].Count + 1).ToString();
+
+			if(initImmediately)
+			{
+				Init(startingTiles, startingPopulation, template);
+			}
+		}
+
+		public void Init(int startingTiles, int startingPopulation, OrganizationTemplate template = null)
+		{
+			ClaimFirstCell(startingPopulation);
+			if (startingTiles > 1)
+			{
+				AttemptExpandBorder(startingTiles - 1);
+			}
+			if (template != null)
+			{
+				CreateStartingGovernment(template, MajorityRace, Creator);
+			}
+			else
+			{
+				CreateStartingGovernment(MajorityRace, Creator);
+			}
 		}
 
 		override public void DeployContext()
@@ -212,6 +255,8 @@ namespace Game.Incidents
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.RemoveEventHandler<WarDeclaredEvent>(OnWarDeclaredEvent);
 			EventManager.Instance.RemoveEventHandler<PeaceDeclaredEvent>(OnPeaceDeclaredEvent);
+			EventManager.Instance.RemoveEventHandler<TerritoryChangedControlEvent>(OnTerritoryChangedControl);
+			EventManager.Instance.RemoveEventHandler<CityChangedControlEvent>(OnCityChangedControl);
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, GetType()));
 			Government.Die();
 			IncidentService.Instance.ReportStaticIncident(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>{0} is wiped out!", new List<IIncidentContext>() { this }, true);
@@ -231,6 +276,11 @@ namespace Game.Incidents
 			Government = new Organization(this, majorityStartingRace, Enums.OrganizationType.POLITICAL, creator);
 			EventManager.Instance.Dispatch(new AddContextEvent(Government, typeof(Organization), true));
 		}
+		public void CreateStartingGovernment(OrganizationTemplate template, Race majorityStartingRace, Character creator = null)
+		{
+			Government = new Organization(template, this, majorityStartingRace, creator);
+			EventManager.Instance.Dispatch(new AddContextEvent(Government, typeof(Organization), true));
+		}
 
 		public bool ClaimFirstCell(int startingPopulation)
 		{
@@ -240,8 +290,7 @@ namespace Game.Incidents
 			}
 			if (ControlledTileIndices.Count == 0)
 			{
-				//var possibleTiles = SimulationUtilities.GetAllCellsWithDistanceFromCity(10, 15);
-				var possibleTiles = SimulationUtilities.SecondTry(8);
+				var possibleTiles = SimulationUtilities.GetAllCellsWithDistanceFromCity(8);
 				if (possibleTiles.Count > 0)
 				{
 					var tile = SimRandom.RandomEntryFromList(possibleTiles);
@@ -423,6 +472,42 @@ namespace Game.Incidents
 			else if(gameEvent.accepter == this && FactionsAtWarWith.Contains(gameEvent.declarer.AffiliatedFaction))
 			{
 				FactionsAtWarWith.Remove(gameEvent.declarer.AffiliatedFaction);
+			}
+		}
+
+		private void OnTerritoryChangedControl(TerritoryChangedControlEvent gameEvent)
+		{
+			var gainer = gameEvent.territoryGainer.AffiliatedFaction;
+			var loser = gameEvent.territoryLoser.AffiliatedFaction;
+			var tileIndex = gameEvent.location.CurrentLocation.TileIndex;
+
+			if (gainer == this && !ControlledTileIndices.Contains(tileIndex))
+			{
+				if (SimulationUtilities.FindSharedBorderFaction(gainer).Contains(tileIndex))
+				{
+					ControlledTileIndices.Add(tileIndex);
+				}
+			}
+			if (loser == this && ControlledTileIndices.Contains(tileIndex))
+			{
+				ControlledTileIndices.Remove(tileIndex);
+			}
+		}
+
+		private void OnCityChangedControl(CityChangedControlEvent gameEvent)
+		{
+			var gainer = gameEvent.cityGainer.AffiliatedFaction;
+			var loser = gameEvent.cityLoser.AffiliatedFaction;
+			var city = gameEvent.city;
+
+			if(gainer == this && !Cities.Contains(city))
+			{
+				gainer.Cities.Add(city);
+				city.AffiliatedFaction = this;
+			}
+			if(loser == this && Cities.Contains(city))
+			{
+				Cities.Remove(city);
 			}
 		}
 

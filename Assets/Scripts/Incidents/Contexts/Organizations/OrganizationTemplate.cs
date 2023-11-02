@@ -12,6 +12,10 @@ namespace Game.Incidents
 		public string organizationTemplateName;
 		public OrganizationType organizationType;
 		public int maxPositionsFilledInSimulation;
+		public int startingPoliticalPriority;
+		public int startingEconomicPriority;
+		public int startingReligiousPriority;
+		public int startingMilitaryPrioirty;
 		public SubOrganization subOrg = new SubOrganization();
 	}
 }

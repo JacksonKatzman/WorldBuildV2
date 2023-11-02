@@ -2,6 +2,7 @@
 using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
+using System.Linq;
 
 namespace Game.Incidents
 {
@@ -16,12 +17,33 @@ namespace Game.Incidents
 		protected override Landmark MakeNew()
 		{
 			var newLandmark = new Landmark(location.GetTypedFieldValue().CurrentLocation, preset.RetrieveObject());
-			if(location.GetTypedFieldValue().GetType() == typeof(City))
-			{
-				((City)location.GetTypedFieldValue()).Landmarks.Add(newLandmark);
-			}
 
 			return newLandmark;
+		}
+
+		protected override void Complete()
+		{
+			if(madeNew)
+			{
+				var loc = location.GetTypedFieldValue().CurrentLocation;
+				var factions = ContextDictionaryProvider.GetCurrentContexts<Faction>();
+				foreach(var faction in factions)
+				{
+					if(faction.ControlledTileIndices.Contains(loc.TileIndex))
+					{
+						actionField.GetTypedFieldValue().AffiliatedFaction = faction;
+						break;
+					}
+				}
+				/*
+				var matchingFactions = factions.Where(x => x.ControlledTileIndices.Contains(loc.TileIndex));
+				if(matchingFactions.Count() > 0)
+				{
+					actionField.GetTypedFieldValue().AffiliatedFaction = matchingFactions.First();
+				}
+				*/
+			}
+			base.Complete();
 		}
 
 		protected override bool VersionSpecificVerify(IIncidentContext context)

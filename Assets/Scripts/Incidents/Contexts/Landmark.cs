@@ -8,13 +8,14 @@ using System.Collections.Generic;
 
 namespace Game.Incidents
 {
-	public class Landmark : InertIncidentContext, ILocationAffiliated, IInventoryAffiliated, IOrganizationAffiliated
+	public class Landmark : InertIncidentContext, ILocationAffiliated, IInventoryAffiliated, IOrganizationAffiliated, IFactionAffiliated
 	{
 		public Location CurrentLocation { get; set; }
 
 		public override Type ContextType => typeof(Landmark);
 
 		public Inventory CurrentInventory { get; set; }
+		public Faction AffiliatedFaction { get; set; }
 		public Organization AffiliatedOrganization { get; set; }
 
 		public LandmarkPreset Preset { get; private set; }
@@ -23,13 +24,14 @@ namespace Game.Incidents
 		public Landmark() 
 		{
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
+			EventManager.Instance.AddEventHandler<TerritoryChangedControlEvent>(OnTerritoryChangedControl);
 		}
 		public Landmark(Location location, LandmarkPreset landmarkType) : this()
 		{
 			CurrentLocation = location;
 			CurrentInventory = new Inventory();
 			Preset = landmarkType;
-			LandmarkTags = Preset.landmarkTags;
+			LandmarkTags = Preset.landmarkTags != null ? Preset.landmarkTags : new List<LandmarkTag>();
 		}
 
 		public override void LoadContextProperties()
@@ -43,6 +45,7 @@ namespace Game.Incidents
 		public override void Die()
 		{
 			EventManager.Instance.RemoveEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
+			EventManager.Instance.RemoveEventHandler<TerritoryChangedControlEvent>(OnTerritoryChangedControl);
 			base.Die();
 		}
 
@@ -51,6 +54,21 @@ namespace Game.Incidents
 			if(gameEvent.context == AffiliatedOrganization)
 			{
 				AffiliatedOrganization = null;
+			}
+		}
+
+		private void OnTerritoryChangedControl(TerritoryChangedControlEvent gameEvent)
+		{
+			if(CurrentLocation.Equals(gameEvent.location.CurrentLocation))
+			{
+				AffiliatedFaction = gameEvent.territoryGainer.AffiliatedFaction;
+				if(AffiliatedOrganization != null)
+				{
+					var orgTemplate = AffiliatedOrganization.template;
+					var gainer = gameEvent.territoryGainer.AffiliatedFaction;
+					AffiliatedOrganization.Die();
+					AffiliatedOrganization = new Organization(orgTemplate, gainer, gainer.AffiliatedRace);
+				}
 			}
 		}
 	}
