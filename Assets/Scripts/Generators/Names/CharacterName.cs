@@ -7,25 +7,38 @@ namespace Game.Generators.Names
 	public class CharacterName
 	{
 		public string nameFormat;
-		public List<string> firstNames;
-		public List<string> surnames;
-		public string fullName;
+		public string firstName;
+		public List<string> middleNames;
+		public string surname;
 		public string previousTitle;
 
-		public string FirstName => firstNames[0];
-		public string Surname => surnames[surnames.Count - 1];
+		public string FirstName => firstName;
+		public string Surname => surname;
+		public string FullName => GetFullName();
 
 		public CharacterName() { }
-		public CharacterName(string format)
+		public CharacterName(string format, string first, string last, List<string> middle)
 		{
 			nameFormat = format;
-			firstNames = new List<string>();
-			surnames = new List<string>();
+			firstName = first;
+			surname = last;
+			middleNames = middle;
+		}
+
+		public string GetFullName()
+		{
+			var fullName = firstName;
+			foreach(var middle in middleNames)
+			{
+				fullName += $" {middle}";
+			}
+			fullName += $" {surname}";
+			return fullName;
 		}
 
 		public string GetTitledFullName(ICharacter person)
 		{
-			var result = String.Copy(fullName);
+			var result = String.Copy(FullName);
 			if (person.OrganizationPosition != null)
 			{
 				result = string.Format(person.OrganizationPosition.GetTitle(person), result);
@@ -35,7 +48,7 @@ namespace Game.Generators.Names
 
 		public string GetPreviousTitledFullName(ICharacter person)
 		{
-			var result = String.Copy(fullName);
+			var result = String.Copy(FullName);
 			if (!string.IsNullOrEmpty(previousTitle))
 			{
 				result = string.Format(previousTitle, result);

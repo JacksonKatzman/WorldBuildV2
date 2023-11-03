@@ -56,11 +56,11 @@ namespace Game.Incidents
 
 			if(Parents.Count > 0)
 			{
-				CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender, parents);
+				CharacterName = AffiliatedFaction?.namingTheme.GenerateSentientName(Gender, parents);
 			}
 			else
 			{
-				CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender);
+				CharacterName = AffiliatedFaction?.namingTheme.GenerateSentientName(Gender);
 			}
 
 			EventManager.Instance.AddEventHandler<AffiliatedFactionChangedEvent>(OnFactionChangeEvent);
@@ -115,7 +115,7 @@ namespace Game.Incidents
 			AffiliatedRace = affiliatedFaction.MajorityRace;
 			Age = SimRandom.RandomRange(AffiliatedRace.MinAge, AffiliatedRace.MaxAge);
 			Gender = (Gender)(SimRandom.RandomRange(0, 2));
-			CharacterName = affiliatedFaction.namingTheme.GenerateName(Gender);
+			CharacterName = affiliatedFaction.namingTheme.GenerateSentientName(Gender);
 			MajorCharacter = false;
 			Parents = new List<Character>();
 			Spouses = new List<Character>();
@@ -240,7 +240,7 @@ namespace Game.Incidents
 				if(Parents.Count(x => x.Gender == Gender.MALE) < 1)
 				{
 					var father = new Character(Gender.MALE, AffiliatedRace, AffiliatedFaction, false);
-					father.CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender.MALE, this);
+					father.CharacterName = AffiliatedFaction?.namingTheme.GenerateSentientName(Gender.MALE, new List<Character> {this});
 					Parents.Add(father);
 					father.Children.Add(this);
 					EventManager.Instance.Dispatch(new AddContextEvent(father, false));
@@ -281,7 +281,7 @@ namespace Game.Incidents
 				for (int i = 0; i < numSiblings; i++)
 				{
 					var sibling = new Character(Gender.ANY, AffiliatedRace, AffiliatedFaction, false, Parents);
-					sibling.CharacterName = AffiliatedFaction?.namingTheme.GenerateName(Gender.MALE, this);
+					sibling.CharacterName = AffiliatedFaction?.namingTheme.GenerateSentientName(Gender.MALE, Parents);
 					Siblings.Add(sibling);
 					sibling.Siblings.Add(this);
 					EventManager.Instance.Dispatch(new AddContextEvent(sibling, false));

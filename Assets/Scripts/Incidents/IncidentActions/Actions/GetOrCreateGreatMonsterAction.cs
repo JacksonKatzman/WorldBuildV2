@@ -41,11 +41,13 @@ namespace Game.Incidents
 				{
 					if(createdMonster.AffiliatedFaction == null || createdMonster.AffiliatedFaction.namingTheme == null)
 					{
-						createdMonster.CharacterName = FlavorService.Instance.genericMonsterNamingTheme.GenerateName(Enums.Gender.ANY);
+						//createdMonster.CharacterName = FlavorService.Instance.genericMonsterNamingTheme.GenerateSentientName(Enums.Gender.ANY);
+						createdMonster.CharacterName = AssetService.Instance.MonsterTheme.GenerateSentientName(Enums.Gender.MALE);
 					}
 					else
 					{
-						createdMonster.CharacterName = createdMonster.AffiliatedFaction.namingTheme.GenerateName(Enums.Gender.ANY);
+						//createdMonster.CharacterName = createdMonster.AffiliatedFaction.namingTheme.GenerateSentientName(Enums.Gender.ANY);
+						createdMonster.CharacterName = AssetService.Instance.MonsterTheme.GenerateSentientName(Enums.Gender.MALE);
 					}
 				}
 				EventManager.Instance.Dispatch(new AddContextEvent(createdMonster, false));
