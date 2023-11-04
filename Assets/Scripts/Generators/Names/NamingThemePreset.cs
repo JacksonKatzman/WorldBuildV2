@@ -8,15 +8,15 @@ namespace Game.Generators.Names
 	[CreateAssetMenu(fileName = "NamingTheme", menuName = "ScriptableObjects/Names/Theme Preset", order = 1)]
 	public class NamingThemePreset : AbstractNamingThemeObject
 	{
-		public TextAsset maleNames;
-		public TextAsset femaleNames;
-		public TextAsset androgynousNames;
-		public TextAsset standardSurnames;
-		public TextAsset frontPartialNames;
-		public TextAsset backPartialNames;
+		public List<string> maleNames;
+		public List<string> femaleNames;
+		public List<string> androgynousNames;
+		public List<string> standardSurnames;
 		public List<string> qualifiers;
 
-		public TextAsset factionNames;
+		public List<string> factionNames;
+		public List<string> factionPrefixes;
+		public List<string> factionSuffixes;
 
 		public List<string> maleNameFormats;
 		public List<string> femaleNameFormats;

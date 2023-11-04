@@ -186,9 +186,10 @@ namespace Game.Incidents
 
 			namingTheme = new NamingTheme(startingMajorityRace.racePreset.namingTheme);
 			//Name = namingTheme.GenerateFactionName();
-			Name = (ContextDictionaryProvider.AllContexts[typeof(Faction)].Count + 1).ToString();
+			//Name = $"{(ContextDictionaryProvider.AllContexts[typeof(Faction)].Count + 1).ToString()} {namingTheme.GenerateFactionName()}";
+			Name = namingTheme.GenerateFactionName();
 
-			if(initImmediately)
+			if (initImmediately)
 			{
 				Init(startingTiles, startingPopulation, template);
 			}

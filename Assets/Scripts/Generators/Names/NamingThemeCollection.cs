@@ -17,7 +17,7 @@ namespace Game.Generators.Names
 		public List<string> nouns;
 		public List<string> verbs;
 		public List<string> adjectives;
-		public List<string> townNouns;
+		public List<string> placeNouns;
 
 		/*
 		[SerializeField, ValueDropdown("GetListOptions", IsUniqueList = true)]
@@ -37,7 +37,7 @@ namespace Game.Generators.Names
 			nouns = copy.nouns;
 			verbs = copy.verbs;
 			adjectives = copy.adjectives;
-			townNouns = copy.townNouns;
+			placeNouns = copy.placeNouns;
 		}
 	}
 
