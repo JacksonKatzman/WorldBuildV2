@@ -137,8 +137,8 @@ namespace Game.Generators.Names
 
 			var nameString = GenerateName(format);
 			var split = nameString.Split(' ');
-			var first = split[0];
-			var last = split.Length > 1 ? split[split.Length - 1] : string.Empty;
+			var first = split[0].Trim();
+			var last = split.Length > 1 ? split[split.Length - 1].Trim() : string.Empty;
 			var middle = new List<string>();
 			for(int i = 1; i < split.Length - 1; i++)
 			{

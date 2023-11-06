@@ -29,7 +29,7 @@
       "$values": []
     }
   },
-  "IsMajorIncident": true,
+  "IsMajorIncident": false,
   "IsUnique": false,
   "IncidentHeadline": "{0} did some roleplay related incident. {F:0}",
   "ActionContainer": {

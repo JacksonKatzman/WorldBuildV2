@@ -33,7 +33,7 @@ namespace Game.Generators.Names
 				fullName += $" {middle}";
 			}
 			fullName += $" {surname}";
-			return fullName;
+			return fullName.Trim();
 		}
 
 		public string GetTitledFullName(ICharacter person)
