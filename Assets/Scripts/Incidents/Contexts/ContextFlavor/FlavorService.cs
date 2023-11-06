@@ -22,13 +22,6 @@ namespace Game.Incidents
 
 		private Dictionary<Type, FlavorTemplateCollection> flavorTemplateDictionary;
 
-		public NamingTheme GenerateMonsterFactionNamingTheme()
-		{
-			var theme = new NamingTheme(monsterPreset);
-
-			return theme;
-		}
-
 		/*
 		Ideas for flavor tags/types to add for the future:
 		{BodyPart}, {Color}, 
@@ -97,7 +90,6 @@ namespace Game.Incidents
 			else
 			{
 				Instance = this;
-				genericMonsterNamingTheme = GenerateMonsterFactionNamingTheme();
 				LoadFlavorTemplates();
 			}
 		}

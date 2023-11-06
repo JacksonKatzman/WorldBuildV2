@@ -21,9 +21,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  listToAddTo: cityPrefixes
-  input: Draken, Breton, Norvum, Valen, Taren, Kaelen, Horis, Reddis, Barters, Bavins,
-    Galens, Morr, Torr, Haffron, Harid, Gryston
+  listToAddTo: surnames
+  input: 
   maleNames:
   - Gadric
   - Aricen
@@ -152,6 +151,8 @@ MonoBehaviour:
   - Willam
   - Keph
   - Ellis
+  malePrefixes: []
+  maleSuffixes: []
   femaleNames:
   - Elowen
   - Seraphina
@@ -261,8 +262,12 @@ MonoBehaviour:
   - Thessalara
   - Galandra
   - Serenora
+  femalePrefixes: []
+  femaleSuffixes: []
   androgynousNames: []
-  standardSurnames:
+  androgynousPrefixes: []
+  androgynousSuffixes: []
+  surnames:
   - Tamsin
   - Haldren
   - Vordan
@@ -467,6 +472,8 @@ MonoBehaviour:
   - Vinchova
   - Zeramene
   - Balghar
+  surnamePrefixes: []
+  surnameSuffixes: []
   qualifiers: []
   factionNames:
   - Glimmerdell

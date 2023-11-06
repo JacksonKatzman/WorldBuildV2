@@ -17,6 +17,7 @@ namespace Game.Incidents
 		public static string SYNONYM_STRING = "SYNONYM";
 		public static string FULL_TITLE_STRING = "TITLED";
 		public static string PREVIOUS_TITLE_STRING = "PREVTITLED";
+		public static string ORG_GROUP_TITLE_STRING = "GROUPTITLED";
 		public static string FIRST_NAME_STRING = "FIRSTNAME";
 		public static string SURNAME_STRING = "SURNAME";
 
@@ -113,6 +114,44 @@ namespace Game.Incidents
 				else
 				{
 					titleString = linkedContext.Name;
+				}
+
+				var linkString = string.Format("<link=\"{0}\">{1}</link>", linkedContext.ID, titleString);
+				textLine = textLine.Replace(matchString, linkString);
+			}
+
+			return textLine;
+		}
+
+		public static string HandleCharacterOrgGroupTitles(string input, Dictionary<string, IIncidentContext> contexts)
+		{
+			var textLine = string.Copy(input);
+			var matches = Regex.Matches(textLine, @"\{" + ORG_GROUP_TITLE_STRING + @":(\d+)\}");
+
+			foreach (Match match in matches)
+			{
+				var matchString = match.Value;
+				var matchId = match.Groups[1].Value;
+				var keyString = "{" + matchId + "}";
+				var linkedContext = contexts[keyString];
+
+				var titleString = "ORG-GROUP-TITLE";
+				if (linkedContext.GetType() == typeof(Character))
+				{
+					var character = linkedContext as Character;
+					if (character.HasOrganizationPosition && character.OrganizationPosition.GetType() == typeof(OrganizationPositionGrouping))
+					{
+						var org = character.OrganizationPosition as OrganizationPositionGrouping;
+						titleString = $"of {org.GetGroupTitle()}";
+					}
+					else
+					{
+						titleString = "";
+					}
+				}
+				else
+				{
+					titleString = "";
 				}
 
 				var linkString = string.Format("<link=\"{0}\">{1}</link>", linkedContext.ID, titleString);

@@ -120,7 +120,7 @@ namespace Game.Generators.Names
 				}
 			}
 
-			return CapitalizeString(textLine);
+			return CapitalizeString(textLine.Trim());
 		}
 
 		public CharacterName GenerateSentientName(Gender gender, List<Character> parents = null)
