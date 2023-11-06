@@ -21,9 +21,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  listToAddTo: factionPrefixes
-  input: Eldo, Lyran, Thalin, Silv, Kyl, Elan, Vel, Kyr, Syl, Arl, Cael, Thyr, Faran,
-    Del, Melor, Melot, Azel, Myr, Quor, Vak, Vat, Holt, Verse, Vor, Kit, Kat, Gres
+  listToAddTo: cityPrefixes
+  input: Draken, Breton, Norvum, Valen, Taren, Kaelen, Horis, Reddis, Barters, Bavins,
+    Galens, Morr, Torr, Haffron, Harid, Gryston
   maleNames:
   - Gadric
   - Aricen
@@ -516,12 +516,51 @@ MonoBehaviour:
   - drind
   - lyssar
   - thorin
+  cityNames: []
+  cityPrefixes:
+  - Draken
+  - Breton
+  - Norvum
+  - Valen
+  - Taren
+  - Kaelen
+  - Horis
+  - Reddis
+  - Barters
+  - Bavins
+  - Galens
+  - Morr
+  - Torr
+  - Haffron
+  - Harid
+  - Gryston
+  citySuffixes:
+  - haven
+  - gate
+  - borough
+  - ford
+  - stead
+  - port
+  - holm
+  - mere
+  - burgh
+  - crest
+  - shroud
+  - stand
+  - watch
+  townNames: []
+  townPrefixes: []
+  townSuffixes: []
   maleNameFormats:
   - '{MALE} {SURNAME}'
   femaleNameFormats:
   - '{FEMALE} {SURNAME}'
   compositeSurnameFormats: []
-  townNameFormats: []
+  cityNameFormats: []
+  townNameFormats:
+  - '{MALE}''s Crossing'
+  - '{MALE}''s Gate'
+  - '{FEMALE}''s Croft'
   factionNameFormats:
   - '{FACTION}'
   themeCollections:

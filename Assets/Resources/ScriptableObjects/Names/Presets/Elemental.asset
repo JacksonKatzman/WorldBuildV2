@@ -1,0 +1,187 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bd115edc971ee42a10b4b9462e4827, type: 3}
+  m_Name: Elemental
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  listToAddTo: femalePrefixes
+  input: Alba, Aurorat, Ausra, Dian, Dritat, Eos, Fajra, Fiamett, Iskra, Lucast,
+    Lumin, Luz, Mzia, Sahar, Saulet, Seraph, Sol, Sunnat, Zorya, Afon, Agan, Damla,
+    Darya, Lainit, Maraja, Meraud, Meltem, Naia, Sarasvati, Alya, Eteri, Natiri,
+    Heirani, Houa, Samirat, Ki, Tialli
+  maleNames: []
+  malePrefixes:
+  - Agni
+  - Anatol
+  - Aodh
+  - Apol
+  - Avtandi
+  - Azar
+  - Belen
+  - Bryni
+  - Cinaed
+  - Dian
+  - Haulu
+  - Heliot
+  - Ignat
+  - Joash
+  - Or
+  - Ravi
+  - Sorin
+  - Suryat
+  - Zeraht
+  - Aaltot
+  - Afon
+  - Agam
+  - Burim
+  - Jubal
+  - Indra
+  - Rhiot
+  - Yahm
+  - Anan
+  - Caelesti
+  - Esen
+  - Rangi
+  - Sorat
+  - Vayu
+  - Avanit
+  - Rikut
+  maleSuffixes:
+  - -A'Hitte
+  - -A'Hum
+  - -A'Harat
+  - -Balat
+  - -Bessut
+  - -Coruum
+  - -D'Hun
+  - -D'Harat
+  - -Emir
+  - -Emit
+  - -Fyret
+  - -Ho'Hitep
+  - -Ho'Omet
+  - -I'Jarra
+  - -I'Juhunat
+  - -Kaliph
+  - -Moratt
+  - -M'Ophorm
+  - -Rahim
+  - -Restatt
+  - -Shahaar
+  - -Shasiim
+  - -Sha'Anat
+  - -Efrit
+  - -T'kahut
+  - -T'kahim
+  - -Ximxim
+  - -Zephyrr
+  femaleNames: []
+  femalePrefixes:
+  - Alba
+  - Aurorat
+  - Ausra
+  - Dian
+  - Dritat
+  - Eos
+  - Fajra
+  - Fiamett
+  - Iskra
+  - Lucast
+  - Lumin
+  - Luz
+  - Mzia
+  - Sahar
+  - Saulet
+  - Seraph
+  - Sol
+  - Sunnat
+  - Zorya
+  - Afon
+  - Agan
+  - Damla
+  - Darya
+  - Lainit
+  - Maraja
+  - Meraud
+  - Meltem
+  - Naia
+  - Sarasvati
+  - Alya
+  - Eteri
+  - Natiri
+  - Heirani
+  - Houa
+  - Samirat
+  - Ki
+  - Tialli
+  femaleSuffixes:
+  - -A'Hitte
+  - -A'Hum
+  - -A'Harat
+  - -Balet
+  - -Bessute
+  - -Coruumet
+  - -D'Hune
+  - -D'Haratt
+  - -Emirat
+  - -Emitat
+  - -Fyretat
+  - -Ho'Hitem
+  - -Ho'Omit
+  - -I'Jarran
+  - -I'Juhunatt
+  - -Kalipha
+  - -Morattat
+  - -M'Ophormat
+  - -Rahimat
+  - -Restatte
+  - -Shahaara
+  - -Shasiima
+  - -Sha'Anatt
+  - -Efritah
+  - -T'kahutti
+  - -T'kahima
+  - -Ximxima
+  - -Zephyrri
+  androgynousNames: []
+  androgynousPrefixes: []
+  androgynousSuffixes: []
+  surnames: []
+  surnamePrefixes: []
+  surnameSuffixes: []
+  qualifiers: []
+  factionNames: []
+  factionPrefixes: []
+  factionSuffixes: []
+  cityNames: []
+  cityPrefixes: []
+  citySuffixes: []
+  townNames: []
+  townPrefixes: []
+  townSuffixes: []
+  maleNameFormats:
+  - '{MALE}'
+  femaleNameFormats:
+  - '{FEMALE}'
+  compositeSurnameFormats: []
+  cityNameFormats: []
+  townNameFormats: []
+  factionNameFormats: []
+  themeCollections: []

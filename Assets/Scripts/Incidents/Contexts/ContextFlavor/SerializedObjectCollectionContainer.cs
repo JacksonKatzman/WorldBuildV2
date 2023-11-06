@@ -9,6 +9,7 @@ namespace Game.Incidents
 	[CreateAssetMenu(fileName = nameof(SerializedObjectCollectionContainer), menuName = "ScriptableObjects/Data/" + nameof(SerializedObjectCollectionContainer), order = 1)]
 	public class SerializedObjectCollectionContainer : SerializedScriptableObject
 	{
+		[ReadOnly]
 		public Dictionary<Type, SerializedObjectCollection> collections;
 
 		[Button("Compile Object Collection Dictionary")]

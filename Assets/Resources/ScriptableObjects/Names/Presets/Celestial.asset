@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92bd115edc971ee42a10b4b9462e4827, type: 3}
+  m_Name: Celestial
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  listToAddTo: femalePrefixes
+  input: Perwin, Ajda, Asmin, Aster, Ester, Ster, Sterk, Amar, Nthand, Zora, Sitara,
+    Mirris, Aurora, Calluna, Luna, Neoma, Iola, Odessa, Helenia
+  maleNames: []
+  malePrefixes:
+  - Koyol
+  - Rojwan
+  - Baran
+  - Roj
+  - Gerdun
+  - Titan
+  - Gunay
+  - Zorom
+  - Aurorom
+  - Callunom
+  - Neomon
+  - Iolom
+  maleSuffixes:
+  - straeo
+  - istor
+  - esta
+  - eno
+  - medo
+  - myllit
+  femaleNames: []
+  femalePrefixes:
+  - Perwin
+  - Ajda
+  - Asmin
+  - Aster
+  - Ester
+  - Ster
+  - Sterk
+  - Amar
+  - Nthand
+  - Zora
+  - Sitara
+  - Mirris
+  - Aurora
+  - Calluna
+  - Luna
+  - Neoma
+  - Iola
+  - Odessa
+  - Helenia
+  femaleSuffixes:
+  - straea
+  - isto
+  - esta
+  - ene
+  - meda
+  - myllis
+  androgynousNames: []
+  androgynousPrefixes: []
+  androgynousSuffixes: []
+  surnames: []
+  surnamePrefixes: []
+  surnameSuffixes: []
+  qualifiers: []
+  factionNames: []
+  factionPrefixes: []
+  factionSuffixes: []
+  cityNames: []
+  cityPrefixes: []
+  citySuffixes: []
+  townNames: []
+  townPrefixes: []
+  townSuffixes: []
+  maleNameFormats:
+  - '{MALE}'
+  femaleNameFormats:
+  - '{FEMALE}'
+  compositeSurnameFormats: []
+  cityNameFormats: []
+  townNameFormats: []
+  factionNameFormats: []
+  themeCollections: []

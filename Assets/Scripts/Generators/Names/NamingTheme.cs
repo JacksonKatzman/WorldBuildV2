@@ -38,12 +38,13 @@ namespace Game.Generators.Names
 		public static string STANDARD_SURNAME_MARKER = "{SURNAME}";
 		public static string QUALIFIER_MARKER = "{QUAL}";
 		public static string FACTION_NAME_MARKER = "{FACTION}";
-		public static string FACTION_PREFIX_MARKER = "{FACTIONPREFIX}";
-		public static string FACTION_SUFFIX_MARKER = "{FACTIONSUFFIX}";
+		public static string CITY_NAME_MARKER = "{CITY}";
+		public static string TOWN_NAME_MARKER = "{TOWN}";
 
 		public List<string> maleNameFormats;
 		public List<string> femaleNameFormats;
 		public List<string> surnameFormats;
+		public List<string> cityNameFormats;
 		public List<string> townNameFormats;
 		public List<string> factionNameFormats;
 
@@ -69,6 +70,7 @@ namespace Game.Generators.Names
 			maleNameFormats = new List<string>(preset.maleNameFormats);
 			femaleNameFormats = new List<string>(preset.femaleNameFormats);
 			surnameFormats = new List<string>(preset.compositeSurnameFormats);
+			cityNameFormats = new List<string>(preset.cityNameFormats);
 			townNameFormats = new List<string>(preset.townNameFormats);
 			factionNameFormats = new List<string>(preset.factionNameFormats);
 
@@ -77,14 +79,14 @@ namespace Game.Generators.Names
 			nameData.Add(NOUN_MARKER, new List<string>());
 			nameData.Add(VERB_MARKER, new List<string>());
 			nameData.Add(PLACE_NOUN_MARKER, new List<string>());
-			nameData.Add(MALE_NAME_MARKER, new List<string>(preset.maleNames));
-			nameData.Add(FEMALE_NAME_MARKER, new List<string>(preset.femaleNames));
-			nameData.Add(ANDROGYNOUS_NAME_MARKER, new List<string>(preset.androgynousNames));
-			nameData.Add(STANDARD_SURNAME_MARKER, new List<string>(preset.standardSurnames));
+			nameData.Add(MALE_NAME_MARKER, new List<string>(CompileNames(preset.maleNames, preset.malePrefixes, preset.maleSuffixes)));
+			nameData.Add(FEMALE_NAME_MARKER, new List<string>(CompileNames(preset.femaleNames, preset.femalePrefixes, preset.femaleSuffixes)));
+			nameData.Add(ANDROGYNOUS_NAME_MARKER, new List<string>(CompileNames(preset.androgynousNames, preset.androgynousPrefixes, preset.androgynousSuffixes)));
+			nameData.Add(STANDARD_SURNAME_MARKER, new List<string>(CompileNames(preset.surnames, preset.surnamePrefixes, preset.surnameSuffixes)));
 			nameData.Add(QUALIFIER_MARKER, new List<string>(preset.qualifiers));
-			nameData.Add(FACTION_NAME_MARKER, new List<string>(preset.factionNames));
-			nameData.Add(FACTION_PREFIX_MARKER, new List<string>(preset.factionPrefixes));
-			nameData.Add(FACTION_SUFFIX_MARKER, new List<string>(preset.factionSuffixes));
+			nameData.Add(FACTION_NAME_MARKER, new List<string>(CompileNames(preset.factionNames, preset.factionPrefixes, preset.factionSuffixes)));
+			nameData.Add(CITY_NAME_MARKER, new List<string>(CompileNames(preset.cityNames, preset.cityPrefixes, preset.citySuffixes)));
+			nameData.Add(TOWN_NAME_MARKER, new List<string>(CompileNames(preset.townNames, preset.townPrefixes, preset.townSuffixes)));
 
 			for (int i = 0; i < preset.themeCollections.Count; i++)
 			{
@@ -121,7 +123,6 @@ namespace Game.Generators.Names
 			return CapitalizeString(textLine);
 		}
 
-		//will probs put these in CharacterName
 		public CharacterName GenerateSentientName(Gender gender, List<Character> parents = null)
 		{
 			string format = "";
@@ -154,14 +155,8 @@ namespace Game.Generators.Names
 
 		public string GenerateFactionName()
 		{
-			//var currentFactionNames = ContextDictionaryProvider.GetAllContexts<Faction>().Select(x => x.Name);
-			//var choices = nameData[FACTION_MARKER].Where(x => !currentFactionNames.Contains(x)).ToList();
-			//return SimRandom.RandomEntryFromList(choices);
-			var facNamesCount = (factionNameFormats.Count * nameData[FACTION_NAME_MARKER].Count);
-			var combinationsCount = (nameData[FACTION_PREFIX_MARKER].Count * nameData[FACTION_SUFFIX_MARKER].Count);
-			var total = facNamesCount + combinationsCount;
 			var currentFactionNames = ContextDictionaryProvider.GetAllContexts<Faction>().Select(x => x.Name);
-			if (SimRandom.RandomRange(0, total) <= facNamesCount)
+			if (SimRandom.RandomFloat01() <= 0.05f)
 			{
 				var format = SimRandom.RandomEntryFromList(factionNameFormats);
 				for(int i = 0; i < 10; i++)
@@ -176,10 +171,70 @@ namespace Game.Generators.Names
 			}
 			else
 			{
-				var possibleName = SimRandom.RandomEntryFromList(nameData[FACTION_PREFIX_MARKER]) + SimRandom.RandomEntryFromList(nameData[FACTION_SUFFIX_MARKER]);
+				var possibleName = SimRandom.RandomEntryFromList(nameData[FACTION_NAME_MARKER]);
 				if(currentFactionNames.Contains(possibleName))
 				{
 					return GenerateFactionName();
+				}
+				else
+				{
+					return possibleName;
+				}
+			}
+		}
+
+		public string GenerateCityName()
+		{
+			var currentCityNames = ContextDictionaryProvider.GetAllContexts<City>().Select(x => x.Name);
+			if (SimRandom.RandomFloat01() <= 0.05f)
+			{
+				var format = SimRandom.RandomEntryFromList(cityNameFormats);
+				for (int i = 0; i < 10; i++)
+				{
+					var possibleName = GenerateName(format);
+					if (!currentCityNames.Contains(possibleName))
+					{
+						return possibleName;
+					}
+				}
+				return GenerateName(format);
+			}
+			else
+			{
+				var possibleName = SimRandom.RandomEntryFromList(nameData[CITY_NAME_MARKER]);
+				if (currentCityNames.Contains(possibleName))
+				{
+					return GenerateCityName();
+				}
+				else
+				{
+					return possibleName;
+				}
+			}
+		}
+
+		public string GenerateTownName()
+		{
+			var currentTownNames = ContextDictionaryProvider.GetAllContexts<City>().Select(x => x.Name);
+			if (SimRandom.RandomFloat01() <= 0.05f)
+			{
+				var format = SimRandom.RandomEntryFromList(townNameFormats);
+				for (int i = 0; i < 10; i++)
+				{
+					var possibleName = GenerateName(format);
+					if (!currentTownNames.Contains(possibleName))
+					{
+						return possibleName;
+					}
+				}
+				return GenerateName(format);
+			}
+			else
+			{
+				var possibleName = SimRandom.RandomEntryFromList(nameData[TOWN_NAME_MARKER]);
+				if (currentTownNames.Contains(possibleName))
+				{
+					return GenerateTownName();
 				}
 				else
 				{
@@ -204,6 +259,21 @@ namespace Game.Generators.Names
 			nameData[NOUN_MARKER].AddRange(collection.nouns);
 			nameData[VERB_MARKER].AddRange(collection.verbs);
 			nameData[PLACE_NOUN_MARKER].AddRange(collection.placeNouns);
+		}
+
+		private List<string> CompileNames(List<string> names, List<string> prefixes, List<string> suffixes)
+		{
+			var combined = new List<string>();
+			combined.AddRange(names);
+			foreach(var pre in prefixes)
+			{
+				foreach(var suf in suffixes)
+				{
+					combined.Add(pre + suf);
+				}
+			}
+
+			return combined;
 		}
 
 		private string CapitalizeString(string toBeFormatted)

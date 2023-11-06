@@ -12,7 +12,7 @@ namespace Game.Incidents
 		public override Type ContextType => typeof(City);
 		public Location CurrentLocation { get; set; }
 		public Faction AffiliatedFaction { get; set; }
-		public override string Name => "City " + ID;
+		public override string Name { get; set; }
 		virtual public int Population
 		{
 			get
@@ -36,7 +36,7 @@ namespace Game.Incidents
 
 		public City() { }
 
-		public City(Faction faction, Location location, int population, int wealth)
+		public City(Faction faction, Location location, int population, int wealth, string name = null)
 		{
 			AffiliatedFaction = faction;
 			CurrentLocation = location;
@@ -45,6 +45,12 @@ namespace Game.Incidents
 			Resources = new List<Resource>();
 			Characters = new List<Character>();
 			CurrentInventory = new Inventory();
+			Name = name;
+
+			if(string.IsNullOrEmpty(Name))
+			{
+				Name = AffiliatedFaction.namingTheme.GenerateCityName();
+			}
 
 			if (ContextDictionaryProvider.CurrentContexts.GetContextByID(location.ID) == null)
 			{

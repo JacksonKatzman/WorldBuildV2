@@ -39,15 +39,26 @@ namespace Game.Incidents
 				}
 				else
 				{
+					/*
 					if(createdMonster.AffiliatedFaction == null || createdMonster.AffiliatedFaction.namingTheme == null)
 					{
 						//createdMonster.CharacterName = FlavorService.Instance.genericMonsterNamingTheme.GenerateSentientName(Enums.Gender.ANY);
-						createdMonster.CharacterName = AssetService.Instance.MonsterTheme.GenerateSentientName(Enums.Gender.MALE);
+						createdMonster.CharacterName = AssetService.Instance.MonsterThemes[createdMonster.CreatureType].GenerateSentientName(Enums.Gender.MALE);
 					}
 					else
 					{
 						//createdMonster.CharacterName = createdMonster.AffiliatedFaction.namingTheme.GenerateSentientName(Enums.Gender.ANY);
-						createdMonster.CharacterName = AssetService.Instance.MonsterTheme.GenerateSentientName(Enums.Gender.MALE);
+						createdMonster.CharacterName = AssetService.Instance.MonsterThemes[createdMonster.CreatureType].GenerateSentientName(Enums.Gender.MALE);
+					}
+					*/
+					if(AssetService.Instance.MonsterThemes.TryGetValue(createdMonster.CreatureType, out var namingTheme))
+					{
+						createdMonster.CharacterName = namingTheme.GenerateSentientName(createdMonster.Gender);
+					}
+					else
+					{
+						createdMonster.CharacterName = new Generators.Names.CharacterName();
+						createdMonster.CharacterName.firstName = "MISSING-NAMING-THEME";
 					}
 				}
 				EventManager.Instance.Dispatch(new AddContextEvent(createdMonster, false));
