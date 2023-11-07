@@ -81,8 +81,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: groupingTitleFormat
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: House {0}
     - Name: spouseTitles
       Entry: 7
       Data: 7|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
@@ -169,8 +169,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: groupingTitleFormat
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: House {0}
     - Name: spouseTitles
       Entry: 7
       Data: 14|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass
@@ -257,8 +257,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: groupingTitleFormat
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: House {0}
     - Name: spouseTitles
       Entry: 7
       Data: 21|Game.Generators.Names.TitlePair, Auto-asmdef-SecondPass

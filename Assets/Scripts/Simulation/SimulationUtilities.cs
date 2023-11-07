@@ -400,6 +400,25 @@ namespace Game.Simulation
 			return GetCentroid(points);
 		}
 
+		public static City GetCityNearestLocation(Location location)
+		{
+			var cities = ContextDictionaryProvider.GetCurrentContexts<City>();
+			var closest = cities[0];
+			var dist = location.GetDistanceBetweenLocations(closest.CurrentLocation);
+			for(int i = 1; i < cities.Count; i++)
+			{
+				var city = cities[i];
+				var checkDist = location.GetDistanceBetweenLocations(city.CurrentLocation);
+				if (checkDist < dist)
+				{
+					closest = city;
+					dist = checkDist;
+				}
+			}
+
+			return closest;
+		}
+
 		public static HexCell GetCentroid(List<HexCell> points)
 		{
 			var x = 0;

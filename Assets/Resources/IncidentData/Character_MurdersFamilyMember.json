@@ -34,6 +34,7 @@
                 {
                   "$id": "6",
                   "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
+                  "comparedPropertyName": null,
                   "hasNextOperator": false,
                   "ExpressionType": 0,
                   "constValue": 2,
@@ -46,10 +47,11 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 1,
+                    "Value": 15,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
+                  "compareTo": null,
                   "previousCalculatedID": null,
                   "rangeWarning": "Range not implemented for non integers!",
                   "nextOperator": null,
@@ -79,6 +81,7 @@
                 {
                   "$id": "10",
                   "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
+                  "comparedPropertyName": null,
                   "hasNextOperator": false,
                   "ExpressionType": 0,
                   "constValue": 0,
@@ -91,10 +94,11 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 19,
+                    "Value": 1,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
+                  "compareTo": null,
                   "previousCalculatedID": null,
                   "rangeWarning": "Range not implemented for non integers!",
                   "nextOperator": null,
@@ -121,6 +125,8 @@
     }
   },
   "IsMajorIncident": true,
+  "IsUnique": false,
+  "IncidentHeadline": "{0} murders {POSP:0} {RELATE:0/1}, {FIRSTNAME:1}.",
   "ActionContainer": {
     "$id": "13",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
@@ -226,6 +232,7 @@
                         {
                           "$id": "25",
                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
+                          "comparedPropertyName": null,
                           "hasNextOperator": false,
                           "ExpressionType": 0,
                           "constValue": 2,
@@ -238,10 +245,11 @@
                             "min": 0,
                             "max": 20,
                             "constant": 0,
-                            "Value": 5,
+                            "Value": 19,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
+                          "compareTo": null,
                           "previousCalculatedID": null,
                           "rangeWarning": "Range not implemented for non integers!",
                           "nextOperator": null,

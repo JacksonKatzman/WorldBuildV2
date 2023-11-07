@@ -1,4 +1,8 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Generators.Names;
+using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using UnityEngine;
+using Game.Enums;
 
 namespace Game.Incidents
 {
@@ -7,6 +11,9 @@ namespace Game.Incidents
 		public static AssetService Instance { get; private set; }
 		public TextCollection incidents;
 		public SerializedObjectCollectionContainer objectData;
+		public Dictionary<CreatureType, NamingThemePreset> monsterPresets;
+
+		public Dictionary<CreatureType, NamingTheme> MonsterThemes { get; set; }
 		public void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -16,6 +23,11 @@ namespace Game.Incidents
 			else
 			{
 				Instance = this;
+				MonsterThemes = new Dictionary<CreatureType, NamingTheme>();
+				foreach(var pair in monsterPresets)
+				{
+					MonsterThemes.Add(pair.Key, new NamingTheme(pair.Value));
+				}
 			}
 		}
 	}

@@ -175,6 +175,13 @@ namespace Game.Incidents
 			}
 		}
 
+		public string GetGroupTitle()
+		{
+			//temporary
+			var temp = string.Copy(groupingTitleFormat);
+			return temp.Replace("{0}", primaryPosition.official.CharacterName.surname);
+		}
+
 		public override void Die()
 		{
 			primaryPosition.Die();

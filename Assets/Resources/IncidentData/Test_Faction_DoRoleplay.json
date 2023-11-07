@@ -21,23 +21,34 @@
       "$values": []
     }
   },
-  "ActionContainer": {
+  "WorldCriteria": {
     "$id": "4",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Auto-asmdef-SecondPass",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Auto-asmdef-SecondPass]], mscorlib",
+      "$values": []
+    }
+  },
+  "IsMajorIncident": false,
+  "IsUnique": false,
+  "IncidentHeadline": "{0} did some roleplay related incident. {F:0}",
+  "ActionContainer": {
+    "$id": "5",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
     "incidentLog": "{0} did some roleplay related incident. {F:0}",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass]], mscorlib",
       "$values": [
         {
-          "$id": "5",
+          "$id": "6",
           "$type": "Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass",
           "incidentAction": {
-            "$id": "6",
+            "$id": "7",
             "$type": "Game.Incidents.GetFlavorAction, Auto-asmdef-SecondPass",
             "flavorType": "Game.Incidents.FlavorTemplate_CharChar, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
             "manualMode": true,
             "alignmentContext": {
-              "$id": "7",
+              "$id": "8",
               "$type": "Game.Incidents.InterfacedIncidentActionFieldContainer`1[[Game.Incidents.IAlignmentAffiliated, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
               "contextType": null,
               "fieldName": null,
@@ -51,12 +62,12 @@
               "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldContainer, Auto-asmdef-SecondPass]], mscorlib",
               "$values": [
                 {
-                  "$id": "8",
+                  "$id": "9",
                   "$type": "Game.Incidents.IncidentActionFieldContainer, Auto-asmdef-SecondPass",
                   "contextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                   "fieldName": "primaryCharacter",
                   "actionField": {
-                    "$id": "9",
+                    "$id": "10",
                     "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
                     "parentType": null,
                     "AllowSelf": false,
@@ -78,12 +89,12 @@
                   "enabled": true
                 },
                 {
-                  "$id": "10",
+                  "$id": "11",
                   "$type": "Game.Incidents.IncidentActionFieldContainer, Auto-asmdef-SecondPass",
                   "contextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                   "fieldName": "secondaryCharacter",
                   "actionField": {
-                    "$id": "11",
+                    "$id": "12",
                     "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
                     "parentType": null,
                     "AllowSelf": false,
@@ -107,13 +118,13 @@
               ]
             },
             "pairings": {
-              "$id": "12",
+              "$id": "13",
               "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Game.Incidents.IncidentActionFieldContainer, Auto-asmdef-SecondPass]], mscorlib",
               "{0}": {
-                "$ref": "8"
+                "$ref": "9"
               },
               "{1}": {
-                "$ref": "10"
+                "$ref": "11"
               }
             },
             "FlavorActionId": 0,

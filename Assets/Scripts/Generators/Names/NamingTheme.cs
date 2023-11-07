@@ -2,6 +2,7 @@ using Game.Data;
 using Game.Enums;
 using Game.Generators.Items;
 using Game.Incidents;
+using Game.Simulation;
 using Game.Utilities;
 using Sirenix.OdinInspector;
 using System;
@@ -9,187 +10,237 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace Game.Generators.Names
 {
+	/*
+	 * {A}: Adjective
+	 * {N}: Noun
+	 * {V}: Verb
+	 * {T}: Town Noun
+	 * {C}: Color
+	 * {M}: Male First Name
+	 * {F}: Female First Name
+	 * {X}: Androgynous First Name
+	 * {S}: Standard Surname (handle composites elsewhere)
+	 * {Q}: Qualifier
+	 */
 	public class NamingTheme
 	{
-		public ModifiableWeightedCollection nouns;
-		public ModifiableWeightedCollection verbs;
-		public ModifiableWeightedCollection adjectives;
-		public ModifiableWeightedCollection townNouns;
+		public static string ADJECTIVE_MARKER = "{ADJ}";
+		public static string NOUN_MARKER = "{NOUN}";
+		public static string VERB_MARKER = "{VERB}";
+		public static string PLACE_NOUN_MARKER = "{PLACENOUN}";
+		public static string MALE_NAME_MARKER = "{MALE}";
+		public static string FEMALE_NAME_MARKER = "{FEMALE}";
+		public static string ANDROGYNOUS_NAME_MARKER = "{ANDRO}";
+		public static string STANDARD_SURNAME_MARKER = "{SURNAME}";
+		public static string QUALIFIER_MARKER = "{QUAL}";
+		public static string FACTION_NAME_MARKER = "{FACTION}";
+		public static string CITY_NAME_MARKER = "{CITY}";
+		public static string TOWN_NAME_MARKER = "{TOWN}";
 
-		public ModifiableWeightedCollection consonants;
-		public ModifiableWeightedCollection beginningConsonants;
-		public ModifiableWeightedCollection endConsonants;
+		public List<string> maleNameFormats;
+		public List<string> femaleNameFormats;
+		public List<string> surnameFormats;
+		public List<string> cityNameFormats;
+		public List<string> townNameFormats;
+		public List<string> factionNameFormats;
 
-		public ModifiableWeightedCollection vowels;
-		public ModifiableWeightedCollection beginningVowels;
-		public ModifiableWeightedCollection endVowels;
-
-		public List<string> maleNames;
-		public List<string> femaleNames;
-
-		public Dictionary<OrganizationType, TitleDictionary> titles;
-		public List<string> titleQualifiers;
-
-		public int minFirstNameSyllables;
-		public int maxFirstNameSyllables;
-		public int minSurnameSyllables;
-		public int maxSurnameSyllables;
-		public Dictionary<int, List<string>> personNameFormats;
-		public Dictionary<int, List<string>> surnameFormats;
-		public Dictionary<int, List<string>> townNameFormats;
-		public Dictionary<int, List<string>> factionNameFormats;
-
-		private string currentNameFormat;
+		public Dictionary<string, List<string>> nameData;
 
 		public NamingTheme()
 		{
 
 		}
 
+		/*
+		 * for partial names, similar to markov chaining, we make dictionaries such that:
+		 * the key for the fronts is the last letter
+		 * the key for the backs is the first letter,
+		 * and list of letter pairs that can be combined.
+		 * 
+		 * So then we just choose a letter pair, dictionary lookup a front and back based on that letter pair
+		 * and combine them together
+		 */
+
 		public NamingTheme(NamingThemePreset preset)
 		{
-			nouns = new ModifiableWeightedCollection();
-			verbs = new ModifiableWeightedCollection();
-			adjectives = new ModifiableWeightedCollection();
-			townNouns = new ModifiableWeightedCollection();
+			maleNameFormats = new List<string>(preset.maleNameFormats);
+			femaleNameFormats = new List<string>(preset.femaleNameFormats);
+			surnameFormats = new List<string>(preset.compositeSurnameFormats);
+			cityNameFormats = new List<string>(preset.cityNameFormats);
+			townNameFormats = new List<string>(preset.townNameFormats);
+			factionNameFormats = new List<string>(preset.factionNameFormats);
 
-			consonants = new ModifiableWeightedCollection();
-			beginningConsonants = new ModifiableWeightedCollection();
-			endConsonants = new ModifiableWeightedCollection();
+			nameData = new Dictionary<string, List<string>>();
+			nameData.Add(ADJECTIVE_MARKER, new List<string>());
+			nameData.Add(NOUN_MARKER, new List<string>());
+			nameData.Add(VERB_MARKER, new List<string>());
+			nameData.Add(PLACE_NOUN_MARKER, new List<string>());
+			nameData.Add(MALE_NAME_MARKER, new List<string>(CompileNames(preset.maleNames, preset.malePrefixes, preset.maleSuffixes)));
+			nameData.Add(FEMALE_NAME_MARKER, new List<string>(CompileNames(preset.femaleNames, preset.femalePrefixes, preset.femaleSuffixes)));
+			nameData.Add(ANDROGYNOUS_NAME_MARKER, new List<string>(CompileNames(preset.androgynousNames, preset.androgynousPrefixes, preset.androgynousSuffixes)));
+			nameData.Add(STANDARD_SURNAME_MARKER, new List<string>(CompileNames(preset.surnames, preset.surnamePrefixes, preset.surnameSuffixes)));
+			nameData.Add(QUALIFIER_MARKER, new List<string>(preset.qualifiers));
+			nameData.Add(FACTION_NAME_MARKER, new List<string>(CompileNames(preset.factionNames, preset.factionPrefixes, preset.factionSuffixes)));
+			nameData.Add(CITY_NAME_MARKER, new List<string>(CompileNames(preset.cityNames, preset.cityPrefixes, preset.citySuffixes)));
+			nameData.Add(TOWN_NAME_MARKER, new List<string>(CompileNames(preset.townNames, preset.townPrefixes, preset.townSuffixes)));
 
-			vowels = new ModifiableWeightedCollection();
-			beginningVowels = new ModifiableWeightedCollection();
-			endVowels = new ModifiableWeightedCollection();
-
-			maleNames = new List<string>();
-			femaleNames = new List<string>();
-
-			titles = new Dictionary<OrganizationType, TitleDictionary>();
-			titleQualifiers = new List<string>();
-
-			for(int i = 0; i < preset.themeCollections.Count; i++)
+			for (int i = 0; i < preset.themeCollections.Count; i++)
 			{
 				AddThemeCollection(preset.themeCollections[i]);
 			}
-
-			minFirstNameSyllables = preset.minFirstNameSyllables;
-			maxFirstNameSyllables = preset.maxFirstNameSyllables;
-			minSurnameSyllables = preset.minSurnameSyllables;
-			maxSurnameSyllables = preset.maxSurnameSyllables;
-			personNameFormats = preset.personNameFormats;
-			surnameFormats = preset.surnameFormats;
-			townNameFormats = preset.townNameFormats;
-			factionNameFormats = preset.factionNameFormats;
-
-			SetupNameFormat();
 		}
 
 		public NamingTheme(NamingTheme other)
 		{
-			nouns = new ModifiableWeightedCollection(other.nouns);
-			verbs = new ModifiableWeightedCollection(other.verbs);
-			adjectives = new ModifiableWeightedCollection(other.adjectives);
-			townNouns = new ModifiableWeightedCollection(other.townNouns);
+			maleNameFormats = new List<string>(other.maleNameFormats);
+			femaleNameFormats = new List<string>(other.femaleNameFormats);
+			surnameFormats = new List<string>(other.surnameFormats);
+			townNameFormats = new List<string>(other.townNameFormats);
+			factionNameFormats = new List<string>(other.factionNameFormats);
 
-			consonants = new ModifiableWeightedCollection(other.consonants);
-			beginningConsonants = new ModifiableWeightedCollection(other.beginningConsonants);
-			endConsonants = new ModifiableWeightedCollection(other.endConsonants);
-
-			vowels = new ModifiableWeightedCollection(other.vowels);
-			beginningVowels = new ModifiableWeightedCollection(other.beginningVowels);
-			endVowels = new ModifiableWeightedCollection(other.endVowels);
-
-			maleNames = new List<string>(other.maleNames);
-			femaleNames = new List<string>(other.femaleNames);
-
-			titles = new Dictionary<OrganizationType, TitleDictionary>(other.titles);
-			titleQualifiers = new List<string>(other.titleQualifiers);
-
-			minFirstNameSyllables = other.minFirstNameSyllables;
-			maxFirstNameSyllables = other.maxFirstNameSyllables;
-			minSurnameSyllables = other.minSurnameSyllables;
-			maxSurnameSyllables = other.maxSurnameSyllables;
-			personNameFormats = new Dictionary<int, List<string>>(other.personNameFormats);
-			surnameFormats = new Dictionary<int, List<string>>(other.surnameFormats);
-			townNameFormats = new Dictionary<int, List<string>>(other.townNameFormats);
-			factionNameFormats = new Dictionary<int, List<string>>(other.factionNameFormats);
-
-			SetupNameFormat();
+			nameData = new Dictionary<string, List<string>>(other.nameData);
 		}
 
-		public CharacterName GenerateName(CharacterName personName, Gender gender, string format)
+		public string GenerateName(string format)
 		{
-			while (format.Contains("{F}"))
+			var textLine = string.Copy(format);
+			var matches = Regex.Matches(textLine, @"\{(\w+)\}");
+
+			foreach (Match match in matches)
 			{
-				var result = GenerateFirstName(gender);
-				personName.firstNames.Add(result);
-				format = StringUtilities.ReplaceFirstOccurence(format, "{F}", result);
-			}
-			while (format.Contains("{S}"))
-			{
-				var result = GenerateSurname(gender);
-				personName.surnames.Add(result);
-				format = StringUtilities.ReplaceFirstOccurence(format, "{S}", result);
+				var tag = match.Value;
+				if (nameData.TryGetValue(tag, out var list))
+				{
+					var value = SimRandom.RandomEntryFromList(list);
+					textLine = StringUtilities.ReplaceFirstOccurence(textLine, tag, value);
+				}
 			}
 
-			personName.fullName = FillOutFormat(format, gender);
-
-			return personName;
+			return CapitalizeString(textLine.Trim());
 		}
 
-		public CharacterName GenerateName(Gender gender)
+		public CharacterName GenerateSentientName(Gender gender, List<Character> parents = null)
 		{
-			var format = string.Copy(currentNameFormat);
-			var personName = new CharacterName(format);
+			string format = "";
+			if(parents != null && parents[0].Gender == gender)
+			{
+				format = parents[0].CharacterName.nameFormat;
+			}
+			else
+			{
+				format = gender == Gender.MALE ? SimRandom.RandomEntryFromList(maleNameFormats) : SimRandom.RandomEntryFromList(femaleNameFormats);
+			}
 
-			return GenerateName(personName, gender, format);
-		}
+			var nameString = GenerateName(format);
+			var split = nameString.Split(' ');
+			var first = split[0].Trim();
+			var last = split.Length > 1 ? split[split.Length - 1].Trim() : string.Empty;
+			var middle = new List<string>();
+			for(int i = 1; i < split.Length - 1; i++)
+			{
+				middle.Add(split[i]);
+			}
 
-		public CharacterName GenerateName(Gender gender, List<Character> parents)
-		{
-			var parent = SimRandom.RandomEntryFromList(parents);
-			var personName = new CharacterName(parent.CharacterName.nameFormat);
+			if(parents != null)
+			{
+				last = parents[0].CharacterName.surname;
+			}
 
-			var surname = parent.CharacterName.Surname;
-			personName.surnames.Add(surname);
-			var format = string.Copy(personName.nameFormat);
-			format = StringUtilities.ReplaceLastOccurrence(format, "{S}", surname);
-
-			return GenerateName(personName, gender, format);
-		}
-
-		public CharacterName GenerateName(Gender gender, Character withSurname)
-		{
-			var format = string.Copy(currentNameFormat);
-			var personName = new CharacterName(format);
-
-			var surname = withSurname.CharacterName.Surname;
-			personName.surnames.Add(surname);
-			format = StringUtilities.ReplaceLastOccurrence(format, "{S}", surname);
-
-			return GenerateName(personName, gender, format);
-		}
-
-		public string GenerateTownName()
-		{
-			var format = SimRandom.RandomEntryFromWeightedDictionary(townNameFormats);
-
-			return FillOutFormat(format, Gender.ANY);
+			return new CharacterName(format, first, last, middle);
 		}
 
 		public string GenerateFactionName()
 		{
-			var format = SimRandom.RandomEntryFromWeightedDictionary(factionNameFormats);
-
-			return FillOutFormat(format, Gender.ANY);
+			var currentFactionNames = ContextDictionaryProvider.GetAllContexts<Faction>().Select(x => x.Name);
+			if (SimRandom.RandomFloat01() <= 0.05f)
+			{
+				var format = SimRandom.RandomEntryFromList(factionNameFormats);
+				for(int i = 0; i < 10; i++)
+				{
+					var possibleName = GenerateName(format);
+					if(!currentFactionNames.Contains(possibleName))
+					{
+						return possibleName;
+					}
+				}
+				return GenerateName(format);
+			}
+			else
+			{
+				var possibleName = SimRandom.RandomEntryFromList(nameData[FACTION_NAME_MARKER]);
+				if(currentFactionNames.Contains(possibleName))
+				{
+					return GenerateFactionName();
+				}
+				else
+				{
+					return possibleName;
+				}
+			}
 		}
 
-		public string GenerateTerrainName(string format)
+		public string GenerateCityName()
 		{
-			return FillOutFormat(format, Gender.ANY);
+			var currentCityNames = ContextDictionaryProvider.GetAllContexts<City>().Select(x => x.Name);
+			if (SimRandom.RandomFloat01() <= 0.05f)
+			{
+				var format = SimRandom.RandomEntryFromList(cityNameFormats);
+				for (int i = 0; i < 10; i++)
+				{
+					var possibleName = GenerateName(format);
+					if (!currentCityNames.Contains(possibleName))
+					{
+						return possibleName;
+					}
+				}
+				return GenerateName(format);
+			}
+			else
+			{
+				var possibleName = SimRandom.RandomEntryFromList(nameData[CITY_NAME_MARKER]);
+				if (currentCityNames.Contains(possibleName))
+				{
+					return GenerateCityName();
+				}
+				else
+				{
+					return possibleName;
+				}
+			}
+		}
+
+		public string GenerateTownName()
+		{
+			var currentTownNames = ContextDictionaryProvider.GetAllContexts<City>().Select(x => x.Name);
+			if (SimRandom.RandomFloat01() <= 0.05f)
+			{
+				var format = SimRandom.RandomEntryFromList(townNameFormats);
+				for (int i = 0; i < 10; i++)
+				{
+					var possibleName = GenerateName(format);
+					if (!currentTownNames.Contains(possibleName))
+					{
+						return possibleName;
+					}
+				}
+				return GenerateName(format);
+			}
+			else
+			{
+				var possibleName = SimRandom.RandomEntryFromList(nameData[TOWN_NAME_MARKER]);
+				if (currentTownNames.Contains(possibleName))
+				{
+					return GenerateTownName();
+				}
+				else
+				{
+					return possibleName;
+				}
+			}
 		}
 
 		public string GenerateItemName(Item item)
@@ -202,72 +253,27 @@ namespace Game.Generators.Names
 			return string.Format("{0}'s ITEM", creator.Name);
 		}
 
-		public TitlePair GenerateTitle(OrganizationType titleType, int points)
-		{
-			var useQualifier = SimRandom.RandomTrueFalse();
-			if (useQualifier)
-			{
-				var list = titles[titleType][points-1];
-				var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list.titlePairs));
-				var qualifier = SimRandom.RandomEntryFromList(titleQualifiers);
-				//need to make it so that the male and females get the same format fill
-				titlePair.maleTitle = CapitalizeString(string.Format(qualifier, FillOutFormat(titlePair.maleTitle, Gender.MALE)));
-				titlePair.femaleTitle = CapitalizeString(string.Format(qualifier, FillOutFormat(titlePair.femaleTitle, Gender.FEMALE)));
-				return titlePair;
-			}
-			else
-			{
-				var list = titles[titleType][points];
-				var titlePair = new TitlePair(SimRandom.RandomEntryFromList(list.titlePairs));
-				//need to make it so that the male and females get the same format fill
-				titlePair.maleTitle = FillOutFormat(titlePair.maleTitle, Gender.MALE);
-				titlePair.femaleTitle = FillOutFormat(titlePair.femaleTitle, Gender.FEMALE);
-				return titlePair;
-			}
-		}
-
 		private void AddThemeCollection(NamingThemeCollection collection)
 		{
-			nouns.AddWeightedStrings(collection.nouns);
-			verbs.AddWeightedStrings(collection.verbs);
-			adjectives.AddWeightedStrings(collection.adjectives);
-			townNouns.AddWeightedStrings(collection.townNouns);
+			nameData[ADJECTIVE_MARKER].AddRange(collection.adjectives);
+			nameData[NOUN_MARKER].AddRange(collection.nouns);
+			nameData[VERB_MARKER].AddRange(collection.verbs);
+			nameData[PLACE_NOUN_MARKER].AddRange(collection.placeNouns);
+		}
 
-			consonants.AddWeightedStrings(collection.consonants);
-			beginningConsonants.AddWeightedStrings(collection.consonants.Where(x => x.allowedAtBeginning == true).ToList());
-			endConsonants.AddWeightedStrings(collection.consonants.Where(x => x.allowedAtEnd == true).ToList());
-
-			vowels.AddWeightedStrings(collection.vowels);
-			beginningVowels.AddWeightedStrings(collection.vowels.Where(x => x.allowedAtBeginning == true).ToList());
-			endVowels.AddWeightedStrings(collection.vowels.Where(x => x.allowedAtEnd == true).ToList());
-
-			foreach(var asset in collection.maleNames)
+		private List<string> CompileNames(List<string> names, List<string> prefixes, List<string> suffixes)
+		{
+			var combined = new List<string>();
+			combined.AddRange(names);
+			foreach(var pre in prefixes)
 			{
-				char[] delims = new[] { '\n' };
-				var names = asset.text.Split(delims, StringSplitOptions.RemoveEmptyEntries);
-				maleNames.AddRange(names);
-			}
-
-			foreach (var asset in collection.femaleNames)
-			{
-				char[] delims = new[] { '\n' };
-				var names = asset.text.Split(delims, StringSplitOptions.RemoveEmptyEntries);
-				femaleNames.AddRange(names);
-			}
-
-			foreach(var upperPair in collection.titles)
-			{
-				if(!titles.ContainsKey(upperPair.Key))
+				foreach(var suf in suffixes)
 				{
-					titles.Add(upperPair.Key, upperPair.Value);
-				}
-				else
-				{
-					titles[upperPair.Key].Merge(collection.titles[upperPair.Key]);
+					combined.Add(pre + suf);
 				}
 			}
 
-			titleQualifiers = titleQualifiers.Union(collection.titleQualifiers).ToList();
+			return combined;
 		}
 
 		private string CapitalizeString(string toBeFormatted)
@@ -275,157 +281,19 @@ namespace Game.Generators.Names
 			return Regex.Replace(toBeFormatted.ToLower(), @"((^\w)|(\s|\p{P})\w)", match => match.Value.ToUpper());
 		}
 
-		private void SetupNameFormat()
+		private string[] FormatTextAsset(TextAsset textAsset)
 		{
-			currentNameFormat = SimRandom.RandomEntryFromWeightedDictionary(personNameFormats);
-			while(currentNameFormat.Contains("{P}"))
+			if (textAsset != null)
 			{
-				currentNameFormat = StringUtilities.ReplaceFirstOccurence(currentNameFormat, "{P}", GenerateSyllabicName(2, 5));
-			}
-		}
-
-		private string FillOutFormat(string format, Gender gender)
-		{
-			var result = format;
-
-			while(result.Contains("{F}"))
-			{
-				result = StringUtilities.ReplaceFirstOccurence(result,"{F}", GenerateFirstName(gender));
-			}
-			while(result.Contains("{S}"))
-			{
-				result = StringUtilities.ReplaceFirstOccurence(result,"{S}", GenerateSurname(gender));
-			}
-			while(result.Contains("{A}"))
-			{
-				result = StringUtilities.ReplaceFirstOccurence(result,"{A}", SimRandom.RandomEntryFromWeightedDictionary(adjectives.dictionary));
-			}
-			while (result.Contains("{T}"))
-			{
-				result = StringUtilities.ReplaceFirstOccurence(result, "{T}", SimRandom.RandomEntryFromWeightedDictionary(townNouns.dictionary));
-			}
-			while (result.Contains("{V}"))
-			{
-				result = StringUtilities.ReplaceFirstOccurence(result, "{V}", SimRandom.RandomEntryFromWeightedDictionary(verbs.dictionary));
-			}
-			while(result.Contains("{N}"))
-			{
-				result = StringUtilities.ReplaceFirstOccurence(result, "{N}", SimRandom.RandomEntryFromWeightedDictionary(nouns.dictionary));
-			}
-			while (result.Contains("{Q}"))
-			{
-				result = StringUtilities.ReplaceFirstOccurence(result, "{Q}", SimRandom.RandomEntryFromList(titleQualifiers));
-			}
-
-			return Regex.Replace(result, @"((^\w)|(\s|\p{P})\w)", match => match.Value.ToUpper());
-		}
-
-		private string GenerateFirstName(Gender gender)
-		{
-			return SimRandom.RandomFloat01() > 0.5f ? GenerateNameFromExisting(gender) : GenerateSyllabicName(minFirstNameSyllables, maxFirstNameSyllables);
-		}
-
-		private string GenerateSurname(Gender gender)
-		{
-			var surnameFormat = SimRandom.RandomEntryFromWeightedDictionary(surnameFormats);
-			while (surnameFormat.Contains("{F}"))
-			{
-				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{F}", GenerateFirstName(gender));
-			}
-			while (surnameFormat.Contains("{S}"))
-			{
-				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{S}", GenerateSyllabicName(minSurnameSyllables, maxSurnameSyllables));
-			}
-			while (surnameFormat.Contains("{A}"))
-			{
-				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{A}", SimRandom.RandomEntryFromWeightedDictionary(adjectives.dictionary));
-			}
-			while (surnameFormat.Contains("{T}"))
-			{
-				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{T}", SimRandom.RandomEntryFromWeightedDictionary(townNouns.dictionary));
-			}
-			while (surnameFormat.Contains("{V}"))
-			{
-				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{V}", SimRandom.RandomEntryFromWeightedDictionary(verbs.dictionary));
-			}
-			while (surnameFormat.Contains("{N}"))
-			{
-				surnameFormat = StringUtilities.ReplaceFirstOccurence(surnameFormat, "{N}", SimRandom.RandomEntryFromWeightedDictionary(nouns.dictionary));
-			}
-			return surnameFormat;
-		}
-
-		private string GenerateSyllabicName(int min, int max)
-		{
-			var startWithConsonant = SimRandom.RandomBool();
-			var totalSounds = SimRandom.RandomRange(min, max + 1);
-			if(!startWithConsonant && totalSounds < 3)
-			{
-				totalSounds = 3;
-			}
-			var result = string.Empty;
-
-			for(int i = 0; i < totalSounds; i++)
-			{
-				if(startWithConsonant)
-				{
-					if (i == 0)
-					{
-						result += SimRandom.RandomEntryFromWeightedDictionary(beginningConsonants.dictionary);
-					}
-					else if (i == totalSounds - 1)
-					{
-						result += SimRandom.RandomEntryFromWeightedDictionary(endConsonants.dictionary);
-					}
-					else
-					{
-						result += SimRandom.RandomEntryFromWeightedDictionary(consonants.dictionary);
-					}
-				}
-				else
-				{
-					if (i == 0)
-					{
-						result += SimRandom.RandomEntryFromWeightedDictionary(beginningVowels.dictionary);
-					}
-					else if (i == totalSounds - 1)
-					{
-						result += SimRandom.RandomEntryFromWeightedDictionary(endVowels.dictionary);
-					}
-					else
-					{
-						result += SimRandom.RandomEntryFromWeightedDictionary(vowels.dictionary);
-					}
-				}
-
-				startWithConsonant = !startWithConsonant;
-			}
-
-			return result;
-		}
-
-		private string GenerateNameFromExisting(Gender gender)
-		{
-			var result = string.Empty;
-			if(gender == Gender.MALE)
-			{
-				result = SimRandom.RandomEntryFromList(maleNames);
+				var longForm = textAsset.text;
+				char[] separators = new char[] { '\n' };
+				var split = longForm.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+				return split;
 			}
 			else
 			{
-				result = SimRandom.RandomEntryFromList(femaleNames);
+				return new string[0];
 			}
-
-			var candidates = new List<char>() { 'a', 'e', 'i', 'o', 'u' };
-			var containsVowel = result.Count(x => candidates.Contains(x)) > 0;
-			if (containsVowel)
-			{
-				var toReplace = result.First(x => candidates.Contains(x));
-				var regex = new Regex(Regex.Escape(toReplace.ToString()));
-				result = regex.Replace(result, SimRandom.RandomEntryFromWeightedDictionary(vowels.dictionary), 1);
-			}
-
-			return result;
 		}
 	}
 }

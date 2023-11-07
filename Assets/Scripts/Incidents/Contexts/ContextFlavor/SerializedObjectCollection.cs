@@ -12,6 +12,7 @@ namespace Game.Incidents
 		[ValueDropdown("GetFilteredTypeList")]
 		public Type objectType;
 
+		[ReadOnly]
 		public Dictionary<string, SerializedScriptableObject> objects;
 
 		public string resourcePath;

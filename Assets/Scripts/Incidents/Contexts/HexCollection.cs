@@ -6,12 +6,45 @@ namespace Game.Incidents
 {
 	public class HexCollection : InertIncidentContext, ITerrainTypeAffiliated, ILocationAffiliated
 	{
-		public override string Name => "Hex Collection " + ID;
+		private static Dictionary<BiomeTerrainType, string> genericBiomeNames = new Dictionary<BiomeTerrainType, string>()
+		{
+			{BiomeTerrainType.Badlands, "arid wastes" }, {BiomeTerrainType.Deep_Ocean, "ocean"}, {BiomeTerrainType.Desert, "desert"},
+			{BiomeTerrainType.Forest, "forests" }, {BiomeTerrainType.Grassland, "fields"}, {BiomeTerrainType.Ocean, "sea"},
+			{BiomeTerrainType.Polar, "frostlands" }, {BiomeTerrainType.Rainforest, "jungle"}, {BiomeTerrainType.Reef, "sea"},
+			{BiomeTerrainType.Shrubland, "arid fields" }, {BiomeTerrainType.Swamp, "marshes"}, {BiomeTerrainType.Taiga, "forested mountains"},
+			{BiomeTerrainType.Tundra, "tundra" }
+		};
+
+		public override string Name
+		{
+			get
+			{
+				if(string.IsNullOrEmpty(name))
+				{
+					var closestCity = SimulationUtilities.GetCityNearestLocation(CurrentLocation);
+					var biomeString = genericBiomeNames[AffiliatedTerrainType];
+					if(IsMountainous)
+					{
+						biomeString = "mountains";
+					}
+					return $"the {biomeString} near {closestCity.Name}";
+				}
+				else
+				{
+					return name;
+				}
+			}
+			set
+			{
+				name = value;
+			}
+		}
 		public List<int> cellCollection;
 		public BiomeTerrainType AffiliatedTerrainType { get; set; }
 		public bool IsMountainous { get; set; }
 
 		public Location CurrentLocation { get; private set; }
+		private string name;
 
 		public HexCollection()
 		{

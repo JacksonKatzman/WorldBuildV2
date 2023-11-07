@@ -29,7 +29,9 @@
       "$values": []
     }
   },
-  "IsMajorIncident": true,
+  "IsMajorIncident": false,
+  "IsUnique": false,
+  "IncidentHeadline": "{0} falls off {POSP:0} horse. {SUBP:0} injures {POSP:0} foot.",
   "ActionContainer": {
     "$id": "5",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
