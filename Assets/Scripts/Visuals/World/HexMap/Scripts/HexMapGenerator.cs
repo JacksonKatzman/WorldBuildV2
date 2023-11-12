@@ -756,12 +756,13 @@ namespace Game.Terrain
 
 				var biome = Biome.CalculateTerrainType(cell, temperature, moisture, elevationMaximum, waterLevel);
 				cell.TerrainType = biome;
+				cell.IsMountainous = cell.Elevation >= elevationMaximum * 0.75f;
 			}
 		}
 
 		void GenerateHexCollections()
 		{
-			var tempCollections = new List<HexCollection>();
+			var firstStageCollections = new List<HexCollection>();
 			var cellsCopy = new List<HexCell>(grid.cells);
 			foreach(var type in System.Enum.GetValues(typeof(BiomeTerrainType)))
 			{
@@ -780,15 +781,87 @@ namespace Game.Terrain
 					collection.AffiliatedTerrainType = terrainType;
 					CompileCollection(cell, ref matchingCells, ref collection);
 					collection.Initialize(grid);
-					tempCollections.Add(collection);
+					firstStageCollections.Add(collection);
 				}
+			}
+
+			var secondStageCollections = new List<HexCollection>();
+			foreach(var collection in firstStageCollections)
+			{
+				//check for lakes
+				if (collection.IsUnderwater)
+				{
+					var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
+					var landCount = 0;
+					foreach (var borderCellIndex in border)
+					{
+						var borderCell = grid.GetCell(borderCellIndex);
+						if (!borderCell.IsUnderwater)
+						{
+							landCount++;
+						}
+					}
+					if (landCount == border.Count)
+					{
+						//set collection to be lake
+						collection.CollectionType = HexCollection.HexCollectionType.LAKE;
+						secondStageCollections.Add(collection);
+					}
+				}
+				else if (collection.cellCollection.Count <= 10)
+				{
+					//check for islands
+					if(!collection.IsUnderwater)
+					{
+						var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
+						var underwaterCount = 0;
+						foreach (var borderCellIndex in border)
+						{
+							var borderCell = grid.GetCell(borderCellIndex);
+							if(borderCell.IsUnderwater)
+							{
+								underwaterCount++;
+							}
+						}
+						if (underwaterCount == border.Count)
+						{
+							//set collection to be island
+							collection.CollectionType = HexCollection.HexCollectionType.ISLAND;
+							secondStageCollections.Add(collection);
+						}
+					}
+					//fold it into another collection
+					if(collection.CollectionType != HexCollection.HexCollectionType.LAKE && collection.CollectionType != HexCollection.HexCollectionType.ISLAND)
+					{
+						var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
+						foreach(var cellIndex in border)
+						{
+							var borderCell = grid.GetCell(cellIndex);
+							var borderCellHexCollection = firstStageCollections.First(x => x.cellCollection.Contains(cellIndex));
+							if(borderCellHexCollection.IsUnderwater == collection.IsUnderwater)
+							{
+								borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
+								break;
+							}
+						}
+						//might need to handle case where cannot find adjacent collection to be folded into
+					}
+				}
+				else
+				{
+					secondStageCollections.Add(collection);
+				}
+			}
+			foreach(var c in secondStageCollections)
+			{
+				EventManager.Instance.Dispatch(new AddContextEvent(c, true));
 			}
 		}
 
 		HexCollection CreateNewHexCollection()
 		{
 			var hexCollection = new HexCollection();
-			EventManager.Instance.Dispatch(new AddContextEvent(hexCollection, true));
+			//EventManager.Instance.Dispatch(new AddContextEvent(hexCollection, true));
 			return hexCollection;
 		}
 

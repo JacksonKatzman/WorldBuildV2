@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Data;
+using Game.Debug;
 using Game.Factions;
 using Game.Generators.Items;
 using Game.Incidents;
@@ -140,6 +141,31 @@ namespace Game.Simulation
 			simulationOptions = options;
 			ContextDictionaryProvider.AllowImmediateChanges = true;
 			CreateRacesAndFactions();
+
+			var hexCollections = ContextDictionaryProvider.GetAllContexts<HexCollection>();
+			OutputLogger.Log($"Total HexCollections: {hexCollections.Count}");
+			var totalSize = hexCollections[0].cellCollection.Count;
+			var biggest = hexCollections[0];
+			for(int i = 1; i < hexCollections.Count; i++)
+			{
+				var collection = hexCollections[i];
+				totalSize += collection.cellCollection.Count;
+				if(collection.cellCollection.Count > biggest.cellCollection.Count)
+				{
+					biggest = collection;
+				}
+
+				foreach(var cellIndex in collection.cellCollection)
+				{
+					var cell = HexGrid.GetCell(cellIndex);
+					cell.hexCellLabel.SetText(i.ToString());
+					//cell.hexCollectionLabel.SetText(collection.Name);
+				}
+
+				collection.CurrentLocation.GetHexCell().collectionName.text = collection.Name;
+			}
+
+			OutputLogger.Log($"Biggest Collection: {biggest.cellCollection.Count}:{biggest.AffiliatedTerrainType} - Average Size: {totalSize / hexCollections.Count}");
 		}
 
 		public async UniTask AdvanceTime()

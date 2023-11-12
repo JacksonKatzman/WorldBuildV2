@@ -41,7 +41,7 @@ namespace Game.Terrain
 			{BiomeTerrainType.Swamp, new List<BiomeTerrainType>() { BiomeTerrainType.Swamp } },
 			{BiomeTerrainType.Grassland, new List<BiomeTerrainType>() { BiomeTerrainType.Grassland, BiomeTerrainType.Shrubland, BiomeTerrainType.Tundra } },
 			{BiomeTerrainType.Forest, new List<BiomeTerrainType>() { BiomeTerrainType.Forest, BiomeTerrainType.Rainforest, BiomeTerrainType.Taiga } },
-			{BiomeTerrainType.Rainforest, new List<BiomeTerrainType>() { BiomeTerrainType.Rainforest, BiomeTerrainType.Forest, BiomeTerrainType.Swamp } },
+			{BiomeTerrainType.Rainforest, new List<BiomeTerrainType>() { BiomeTerrainType.Rainforest, BiomeTerrainType.Forest } },
 			{BiomeTerrainType.Desert, new List<BiomeTerrainType>() { BiomeTerrainType.Desert, BiomeTerrainType.Shrubland, BiomeTerrainType.Badlands } },
 			{BiomeTerrainType.Taiga, new List<BiomeTerrainType>() { BiomeTerrainType.Taiga, BiomeTerrainType.Polar } },
 			{BiomeTerrainType.Tundra, new List<BiomeTerrainType>() { BiomeTerrainType.Tundra, BiomeTerrainType.Shrubland, BiomeTerrainType.Polar } },

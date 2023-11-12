@@ -258,9 +258,16 @@ namespace Game.Terrain
 			label.rectTransform.anchoredPosition =
 				new Vector2(position.x, position.z);
 			cell.hexCellLabel = label;
+			//label.transform.SetParent(cell.transform);
+
+			/*
+			var collectionLabel = Instantiate(cellLabelPrefab);
+			collectionLabel.rectTransform.anchoredPosition =
+				new Vector2(position.x, position.z);
+			cell.hexCollectionLabel = collectionLabel;
+			*/
 
 			cell.Elevation = 0;
-			//cell.TerrainType = BiomeTerrainType.Rainforest;
 
 			AddCellToChunk(x, z, cell);
 		}

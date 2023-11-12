@@ -11,6 +11,7 @@ namespace Game.Terrain
 		public HexCoordinates coordinates;
 
 		public HexCellLabel hexCellLabel;
+		public TextMesh collectionName;
 
 		public HexGridChunk chunk;
 
@@ -87,6 +88,8 @@ namespace Game.Terrain
 				return waterLevel > elevation;
 			}
 		}
+
+		public bool IsMountainous { get; set; }
 
 		public bool HasIncomingRiver
 		{
