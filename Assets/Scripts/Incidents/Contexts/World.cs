@@ -146,7 +146,13 @@ namespace Game.Simulation
 			OutputLogger.Log($"Total HexCollections: {hexCollections.Count}");
 			var totalSize = hexCollections[0].cellCollection.Count;
 			var biggest = hexCollections[0];
-			for(int i = 1; i < hexCollections.Count; i++)
+			foreach (var cellIndex in hexCollections[0].cellCollection)
+			{
+				var cell = HexGrid.GetCell(cellIndex);
+				cell.hexCellLabel.SetText("0");
+				//cell.hexCollectionLabel.SetText(collection.Name);
+			}
+			for (int i = 1; i < hexCollections.Count; i++)
 			{
 				var collection = hexCollections[i];
 				totalSize += collection.cellCollection.Count;

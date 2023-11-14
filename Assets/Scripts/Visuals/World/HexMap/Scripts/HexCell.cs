@@ -2,12 +2,12 @@
 using UnityEngine.UI;
 using System.IO;
 using Game.Enums;
+using Sirenix.OdinInspector;
 
 namespace Game.Terrain
 {
 	public class HexCell : MonoBehaviour
 	{
-
 		public HexCoordinates coordinates;
 
 		public HexCellLabel hexCellLabel;
@@ -15,6 +15,7 @@ namespace Game.Terrain
 
 		public HexGridChunk chunk;
 
+		[ShowInInspector, ReadOnly]
 		public int Index { get; set; }
 
 		public int Elevation

@@ -230,6 +230,26 @@ namespace Game.Simulation
 			return possibleIndices;
 		}
 
+		public static bool OutsideBorderContainsEdgeOfMap(List<int> cells)
+		{
+			var insideIndices = FindBorderWithinCells(cells);
+
+			foreach (var cell in insideIndices)
+			{
+				HexCell hexCell = SimulationManager.Instance.HexGrid.GetCell(cell);
+				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+				{
+					HexCell neighbor = hexCell.GetNeighbor(d);
+					if (neighbor == null)
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
 		public static List<int> FindBorderOutsideCells(List<int> cells)
 		{
 			var insideIndices = FindBorderWithinCells(cells);

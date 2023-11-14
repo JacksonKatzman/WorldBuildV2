@@ -780,16 +780,28 @@ namespace Game.Terrain
 					var collection = CreateNewHexCollection();
 					collection.AffiliatedTerrainType = terrainType;
 					CompileCollection(cell, ref matchingCells, ref collection);
+					collection.cellCollection.OrderBy(x => x);
+					for(int i = 0; i < collection.cellCollection.Count; i++)
+					{
+						var currentCell = grid.GetCell(collection.cellCollection[i]);
+						currentCell.name = $"CellIndex: {cell.Index} || Chunk: {firstStageCollections.Count}/Cell: {i}";
+						currentCell.hexCellLabel.name = $"Chunk: {firstStageCollections.Count}/Cell Label: {i}";
+					}
 					collection.Initialize(grid);
 					firstStageCollections.Add(collection);
 				}
 			}
 
+			//var secondStageCollections = new List<HexCollection>(firstStageCollections);
+			//its very likely that when converting over, the center points or edges or something used to build the triangles are fucked up somehow
+			//need to look into seeing how many of them end up with the same centers etc
 			var secondStageCollections = new List<HexCollection>();
+
+						
 			foreach(var collection in firstStageCollections)
 			{
 				//check for lakes
-				if (collection.IsUnderwater)
+				if (collection.IsUnderwater && !SimulationUtilities.OutsideBorderContainsEdgeOfMap(collection.cellCollection))
 				{
 					var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
 					var landCount = 0;
@@ -805,8 +817,8 @@ namespace Game.Terrain
 					{
 						//set collection to be lake
 						collection.CollectionType = HexCollection.HexCollectionType.LAKE;
-						secondStageCollections.Add(collection);
 					}
+					secondStageCollections.Add(collection);
 				}
 				else if (collection.cellCollection.Count <= 10)
 				{
@@ -829,29 +841,51 @@ namespace Game.Terrain
 							collection.CollectionType = HexCollection.HexCollectionType.ISLAND;
 							secondStageCollections.Add(collection);
 						}
+						else
+						{
+							///maybe find a way to use combine meshes to fill in the gaps?
+							///would be better if we I could just make the recreate work tho
+							//secondStageCollections.Add(collection);
+
+							foreach (var cellIndex in border)
+							{
+								var borderCell = grid.GetCell(cellIndex);
+								var borderCellHexCollection = firstStageCollections.First(x => x.cellCollection.Contains(cellIndex));
+								if (borderCellHexCollection.IsUnderwater == collection.IsUnderwater)
+								{
+									borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
+
+									if (!secondStageCollections.Contains(borderCellHexCollection))
+									{
+										secondStageCollections.Add(borderCellHexCollection);
+									}
+
+									break;
+								}
+							}
+
+						}
 					}
 					//fold it into another collection
 					if(collection.CollectionType != HexCollection.HexCollectionType.LAKE && collection.CollectionType != HexCollection.HexCollectionType.ISLAND)
 					{
-						var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
-						foreach(var cellIndex in border)
-						{
-							var borderCell = grid.GetCell(cellIndex);
-							var borderCellHexCollection = firstStageCollections.First(x => x.cellCollection.Contains(cellIndex));
-							if(borderCellHexCollection.IsUnderwater == collection.IsUnderwater)
-							{
-								borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
-								break;
-							}
-						}
+						//secondStageCollections.Add(collection)
 						//might need to handle case where cannot find adjacent collection to be folded into
+
 					}
 				}
 				else
 				{
-					secondStageCollections.Add(collection);
+					if (!secondStageCollections.Contains(collection))
+					{
+						secondStageCollections.Add(collection);
+					}
 				}
 			}
+
+			
+			grid.RecreateChunks(secondStageCollections);
+
 			foreach(var c in secondStageCollections)
 			{
 				EventManager.Instance.Dispatch(new AddContextEvent(c, true));
@@ -867,7 +901,10 @@ namespace Game.Terrain
 
 		void CompileCollection(HexCell cell, ref List<HexCell> matchingCells, ref HexCollection hexCollection)
 		{
-			hexCollection.cellCollection.Add(cell.Index);
+			if (!hexCollection.cellCollection.Contains(cell.Index))
+			{
+				hexCollection.cellCollection.Add(cell.Index);
+			}
 			var matchingNeighbors = new List<HexCell>();
 
 			for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
