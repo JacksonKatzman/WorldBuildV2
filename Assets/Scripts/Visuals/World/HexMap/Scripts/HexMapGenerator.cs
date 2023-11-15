@@ -820,7 +820,7 @@ namespace Game.Terrain
 					}
 					secondStageCollections.Add(collection);
 				}
-				else if (collection.cellCollection.Count <= 10)
+				else if (collection.cellCollection.Count <= 5)
 				{
 					//check for islands
 					if(!collection.IsUnderwater)
@@ -843,10 +843,6 @@ namespace Game.Terrain
 						}
 						else
 						{
-							///maybe find a way to use combine meshes to fill in the gaps?
-							///would be better if we I could just make the recreate work tho
-							//secondStageCollections.Add(collection);
-
 							foreach (var cellIndex in border)
 							{
 								var borderCell = grid.GetCell(cellIndex);
@@ -863,15 +859,7 @@ namespace Game.Terrain
 									break;
 								}
 							}
-
 						}
-					}
-					//fold it into another collection
-					if(collection.CollectionType != HexCollection.HexCollectionType.LAKE && collection.CollectionType != HexCollection.HexCollectionType.ISLAND)
-					{
-						//secondStageCollections.Add(collection)
-						//might need to handle case where cannot find adjacent collection to be folded into
-
 					}
 				}
 				else
@@ -881,6 +869,11 @@ namespace Game.Terrain
 						secondStageCollections.Add(collection);
 					}
 				}
+			}
+
+			foreach(var c in secondStageCollections)
+			{
+				c.Normalize(grid);
 			}
 
 			
@@ -929,6 +922,7 @@ namespace Game.Terrain
 
 		bool MatchTerrainTypes(BiomeTerrainType key, BiomeTerrainType value)
 		{
+			/*
 			if(Biome.BiomeMatches.TryGetValue(key, out var list))
 			{
 				return list.Contains(value);
@@ -937,6 +931,8 @@ namespace Game.Terrain
 			{
 				return false;
 			}
+			*/
+			return key == value;
 		}
 
 		float DetermineTemperature(HexCell cell)

@@ -7,17 +7,11 @@ namespace Game.Terrain
 	public enum BiomeTerrainType { Swamp, Grassland, Forest, Rainforest, Desert, Taiga, Tundra, Shrubland, Badlands, Polar, Reef, Ocean, Deep_Ocean };
 	public class Biome
 	{
-		static float[] temperatureBands = { 0.1f, 0.3f, 0.6f };
+		static float[] temperatureBands = { 0.1f, 0.3f, 0.6f, 10.0f };
 
-		static float[] moistureBands = { 0.12f, 0.28f, 0.85f };
+		static float[] moistureBands = { 0.12f, 0.28f, 0.85f, 10.0f };
 
-		static BiomeTerrainType[] terrainTypes =
-		{
-			BiomeTerrainType.Polar, BiomeTerrainType.Tundra, BiomeTerrainType.Tundra, BiomeTerrainType.Taiga,
-			BiomeTerrainType.Shrubland, BiomeTerrainType.Shrubland, BiomeTerrainType.Grassland, BiomeTerrainType.Forest,
-			BiomeTerrainType.Badlands, BiomeTerrainType.Grassland, BiomeTerrainType.Forest, BiomeTerrainType.Rainforest,
-			BiomeTerrainType.Desert, BiomeTerrainType.Grassland, BiomeTerrainType.Rainforest, BiomeTerrainType.Swamp
-		};
+		static float[] elevationBands = { 0.1f, 0.25f, 0.55f, 10.0f };
 
 		public static Dictionary<BiomeTerrainType, Vector2Int> BiomeInfo = new Dictionary<BiomeTerrainType, Vector2Int>
 		{
@@ -53,7 +47,29 @@ namespace Game.Terrain
 			{BiomeTerrainType.Deep_Ocean, new List<BiomeTerrainType>() { BiomeTerrainType.Deep_Ocean, BiomeTerrainType.Reef, BiomeTerrainType.Ocean } }
 		};
 
-		public static List<BiomeTerrainType> t = new List<BiomeTerrainType>() { BiomeTerrainType.Swamp };
+		public static Dictionary<int, List<BiomeTerrainType>> BiomesByElevation = new Dictionary<int, List<BiomeTerrainType>>
+		{
+			{ 0, new List<BiomeTerrainType> {
+			BiomeTerrainType.Tundra, BiomeTerrainType.Tundra, BiomeTerrainType.Polar, BiomeTerrainType.Polar,
+			BiomeTerrainType.Polar, BiomeTerrainType.Tundra, BiomeTerrainType.Tundra, BiomeTerrainType.Polar,
+			BiomeTerrainType.Desert, BiomeTerrainType.Shrubland, BiomeTerrainType.Grassland, BiomeTerrainType.Swamp,
+			BiomeTerrainType.Desert, BiomeTerrainType.Desert, BiomeTerrainType.Grassland, BiomeTerrainType.Swamp } },
+			{ 1, new List<BiomeTerrainType> {
+			BiomeTerrainType.Tundra, BiomeTerrainType.Tundra, BiomeTerrainType.Polar, BiomeTerrainType.Polar,
+			BiomeTerrainType.Polar, BiomeTerrainType.Tundra, BiomeTerrainType.Tundra, BiomeTerrainType.Polar,
+			BiomeTerrainType.Shrubland, BiomeTerrainType.Grassland, BiomeTerrainType.Grassland, BiomeTerrainType.Forest,
+			BiomeTerrainType.Desert, BiomeTerrainType.Shrubland, BiomeTerrainType.Grassland, BiomeTerrainType.Rainforest} },
+			{ 2, new List<BiomeTerrainType> {
+			BiomeTerrainType.Polar, BiomeTerrainType.Polar, BiomeTerrainType.Taiga, BiomeTerrainType.Taiga,
+			BiomeTerrainType.Polar, BiomeTerrainType.Badlands, BiomeTerrainType.Taiga, BiomeTerrainType.Taiga,
+			BiomeTerrainType.Badlands, BiomeTerrainType.Badlands, BiomeTerrainType.Forest, BiomeTerrainType.Forest,
+			BiomeTerrainType.Badlands, BiomeTerrainType.Badlands, BiomeTerrainType.Rainforest, BiomeTerrainType.Rainforest} },
+			{ 3, new List<BiomeTerrainType> { 
+			BiomeTerrainType.Badlands, BiomeTerrainType.Badlands, BiomeTerrainType.Taiga, BiomeTerrainType.Taiga,
+			BiomeTerrainType.Badlands, BiomeTerrainType.Badlands, BiomeTerrainType.Taiga, BiomeTerrainType.Taiga,
+			BiomeTerrainType.Badlands, BiomeTerrainType.Badlands, BiomeTerrainType.Forest, BiomeTerrainType.Forest,
+			BiomeTerrainType.Badlands, BiomeTerrainType.Badlands, BiomeTerrainType.Badlands, BiomeTerrainType.Badlands} }
+		};
 
 		public static BiomeTerrainType CalculateTerrainType(HexCell cell, float temperature, float moistureLevel, int elevationMaximum, int waterLevel)
 		{
@@ -77,14 +93,24 @@ namespace Game.Terrain
 					}
 				}
 
+				int e = 0;
+				for (; e < elevationBands.Length; e++)
+				{
+					if (cell.Elevation/(elevationMaximum - waterLevel) < elevationBands[e])
+					{
+						break;
+					}
+				}
 				//calculate special cases for terrain type changes based on elevation and prox to rivers
 				//then calculate for ocean biomes
 
 				int rockDesertElevation =
 				elevationMaximum - (elevationMaximum - waterLevel) / 2;
 
-				var terrainType = terrainTypes[t * 4 + m];
+				var ele = BiomesByElevation[e];
+				var terrainType = ele[t * 4 + m];
 
+				/*
 				if (terrainType == BiomeTerrainType.Desert || terrainType == BiomeTerrainType.Shrubland)
 				{
 					if (cell.Elevation >= rockDesertElevation)
@@ -96,7 +122,7 @@ namespace Game.Terrain
 				{
 					terrainType = BiomeTerrainType.Polar;
 				}
-
+				*/
 				var plantMod = 0;
 
 				if (BiomeInfo[terrainType].y < 3 && cell.HasRiver)
@@ -110,7 +136,7 @@ namespace Game.Terrain
 			else
 			{
 				var terrainType = BiomeTerrainType.Ocean;
-
+				/*
 				if (cell.Elevation == waterLevel - 1)
 				{
 					int cliffs = 0, slopes = 0;
@@ -168,6 +194,7 @@ namespace Game.Terrain
 				{
 					terrainType = BiomeTerrainType.Deep_Ocean;
 				}
+				*/
 
 				return terrainType;
 			}

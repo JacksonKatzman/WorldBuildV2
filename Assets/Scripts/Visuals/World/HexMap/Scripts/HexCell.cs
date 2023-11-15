@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.IO;
 using Game.Enums;
 using Sirenix.OdinInspector;
+using Game.Incidents;
 
 namespace Game.Terrain
 {
@@ -14,6 +15,8 @@ namespace Game.Terrain
 		public TextMesh collectionName;
 
 		public HexGridChunk chunk;
+
+		public HexCollection HexCollection { get; set; }
 
 		[ShowInInspector, ReadOnly]
 		public int Index { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Game.Simulation;
 using Game.Terrain;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.Incidents
 {
@@ -46,8 +47,10 @@ namespace Game.Incidents
 		public HexCollectionType CollectionType { get; set; }
 		public bool IsMountainous { get; set; }
 		public bool IsUnderwater { get; set; }
+		public float AverageElevation => GetAverageElevation();
 
 		public Location CurrentLocation { get; private set; }
+		public HexGridChunk HexGridChunk { get; set; }
 		private string name;
 
 		public HexCollection()
@@ -84,6 +87,47 @@ namespace Game.Incidents
 			CurrentLocation = GetCenter();
 		}
 
+		public void Normalize(HexGrid grid)
+		{
+			var frequency = new Dictionary<BiomeTerrainType, float>();
+			foreach (var cellIndex in cellCollection)
+			{
+				var cell = grid.GetCell(cellIndex);
+				if(cell.Elevation > AverageElevation)
+				{
+					cell.Elevation = ((int)AverageElevation);
+				}
+				var terrainType = cell.TerrainType;
+				if (!frequency.ContainsKey(terrainType))
+				{
+					frequency.Add(terrainType, 0);
+				}
+				frequency[terrainType]++;
+			}
+		/*	
+			var mostCommonTerrainType = frequency.OrderByDescending(x => x.Value).First().Key;
+			var total = 0f;
+			foreach(var pair in frequency)
+			{
+				total += pair.Value;
+			}
+			var frequencyPercentages = new Dictionary<BiomeTerrainType, float>();
+			foreach (var pair in frequency)
+			{
+				frequencyPercentages.Add(pair.Key, pair.Value / total);
+			}
+
+			foreach (var cellIndex in cellCollection)
+			{
+				var cell = grid.GetCell(cellIndex);
+				if(frequencyPercentages[cell.TerrainType] <= 0.02f)
+				{
+					cell.TerrainType = mostCommonTerrainType;
+				}
+			}
+			*/
+		}
+
 		private Location GetCenter()
 		{
 			//temporary
@@ -106,6 +150,11 @@ namespace Game.Incidents
 			var location = new Location(closest.Index);
 			EventManager.Instance.Dispatch(new AddContextEvent(location, true));
 			return location;
+		}
+
+		private float GetAverageElevation()
+		{
+			return (float)cellCollection.Average();
 		}
 	}
 }

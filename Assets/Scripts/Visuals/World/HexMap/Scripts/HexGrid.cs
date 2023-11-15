@@ -142,8 +142,10 @@ namespace Game.Terrain
 				for(int j = 0; j < collection.cellCollection.Count; j++)
 				{
 					var cell = GetCell(collection.cellCollection[j]);
+					cell.HexCollection = collection;
 					chunk.AddCell(j, cell);
 				}
+				collection.HexGridChunk = chunk;
 			}
 			foreach(var prefab in chunks)
 			{
