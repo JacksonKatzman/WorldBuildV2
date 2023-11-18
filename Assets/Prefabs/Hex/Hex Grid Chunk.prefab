@@ -761,16 +761,16 @@ MonoBehaviour:
   normalsOption: 0
   ignore: 0
   _highlighted: 0
-  fadeInDuration: 0
-  fadeOutDuration: 0
+  fadeInDuration: 0.2
+  fadeOutDuration: 0.5
   flipY: 0
   constantWidth: 1
   subMeshMask: -1
-  overlay: 1
+  overlay: 0.361
   overlayMode: 0
-  overlayColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  overlayColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.78039217}
   overlayAnimationSpeed: 1
-  overlayMinIntensity: 0.5
+  overlayMinIntensity: 0.185
   overlayBlending: 1
   overlayTexture: {fileID: 0}
   overlayTextureUVSpace: 0

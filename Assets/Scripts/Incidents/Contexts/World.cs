@@ -163,9 +163,8 @@ namespace Game.Simulation
 
 				foreach(var cellIndex in collection.cellCollection)
 				{
-					var cell = HexGrid.GetCell(cellIndex);
-					cell.hexCellLabel.SetText(i.ToString());
-					//cell.hexCollectionLabel.SetText(collection.Name);
+					//var cell = HexGrid.GetCell(cellIndex);
+					//cell.hexCellLabel.SetText(i.ToString());
 				}
 
 				//do this on ui instead
