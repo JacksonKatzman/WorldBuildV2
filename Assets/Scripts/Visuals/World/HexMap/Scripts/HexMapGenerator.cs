@@ -866,11 +866,9 @@ namespace Game.Terrain
 			foreach(var c in secondStageCollections)
 			{
 				c.Update(grid);
-				//c.Normalize(grid);
 			}
 
-			//third stage - group mountains together
-			
+			//third stage - group mountains together		
 			var mountainousCollections = secondStageCollections.Where(x => x.IsMountainous).ToList();
 			while(mountainousCollections.Count > 0)
 			{

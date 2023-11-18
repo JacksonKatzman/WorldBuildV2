@@ -50,13 +50,11 @@ namespace Game.Incidents
 		
 		public void ToggleHexCollectionName(bool on, string text)
 		{
-			hexCollectionNameText.enabled = on;
 			hexCollectionNameText.text = text;
 		}
 
 		private bool OnHighlightStart(GameObject obj)
 		{
-			//if(HighlightManager.instance.layerMask.value & (1 << LayerMask.NameToLayer("HexTerrain")) != 0)
 			if((HighlightManager.instance.layerMask.value & 1 << LayerMask.NameToLayer("HexTerrain")) > 0)
 			{
 				obj.GetComponent<HexChunkHighlight>().OnHighlightStart();
