@@ -12,7 +12,6 @@ namespace Game.Terrain
 		public HexCoordinates coordinates;
 
 		public HexCellLabel hexCellLabel;
-		public TextMesh collectionName;
 
 		public HexGridChunk chunk;
 
@@ -374,6 +373,7 @@ namespace Game.Terrain
 				var level = Biome.BiomeInfo[terrainType].y;
 				Fertility = HasRiver && level < 3 ? level + 1 : level;
 				PlantLevel = Fertility;
+				RefreshSelfOnly();
 			}
 		}
 

@@ -787,18 +787,36 @@ namespace Game.Terrain
 						currentCell.name = $"CellIndex: {cell.Index} || Chunk: {firstStageCollections.Count}/Cell: {i}";
 						currentCell.hexCellLabel.name = $"Chunk: {firstStageCollections.Count}/Cell Label: {i}";
 					}
-					collection.Initialize(grid);
+					collection.Update(grid);
 					firstStageCollections.Add(collection);
 				}
 			}
 
-			//var secondStageCollections = new List<HexCollection>(firstStageCollections);
-			//its very likely that when converting over, the center points or edges or something used to build the triangles are fucked up somehow
-			//need to look into seeing how many of them end up with the same centers etc
 			var secondStageCollections = new List<HexCollection>();
+			
+			var smallBoys = firstStageCollections.Where(x => x.cellCollection.Count <= 5
+			&& x.CollectionType != HexCollection.HexCollectionType.LAKE && x.CollectionType != HexCollection.HexCollectionType.ISLAND).ToList();
+			while(smallBoys.Count > 0)
+			{
+				var found = false;
+				var collection = smallBoys.First();
+				var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
+				foreach (var cellIndex in border)
+				{
+					var borderCell = grid.GetCell(cellIndex);
+					var borderCellHexCollection = firstStageCollections.First(x => x.cellCollection.Contains(cellIndex));
+					if (borderCellHexCollection.IsUnderwater == collection.IsUnderwater)
+					{
+						borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
+						firstStageCollections.Remove(collection);
+						found = true;
+						break;
+					}
+				}
+				smallBoys.Remove(collection);
+			}
 
-						
-			foreach(var collection in firstStageCollections)
+			foreach (var collection in firstStageCollections)
 			{
 				//check for lakes
 				if (collection.IsUnderwater && !SimulationUtilities.OutsideBorderContainsEdgeOfMap(collection.cellCollection))
@@ -818,65 +836,72 @@ namespace Game.Terrain
 						//set collection to be lake
 						collection.CollectionType = HexCollection.HexCollectionType.LAKE;
 					}
-					secondStageCollections.Add(collection);
 				}
-				else if (collection.cellCollection.Count <= 5)
+				else if (!collection.IsUnderwater && collection.cellCollection.Count <= 5)
 				{
 					//check for islands
-					if(!collection.IsUnderwater)
+					var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
+					var underwaterCount = 0;
+					foreach (var borderCellIndex in border)
 					{
-						var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
-						var underwaterCount = 0;
-						foreach (var borderCellIndex in border)
+						var borderCell = grid.GetCell(borderCellIndex);
+						if (borderCell.IsUnderwater)
 						{
-							var borderCell = grid.GetCell(borderCellIndex);
-							if(borderCell.IsUnderwater)
-							{
-								underwaterCount++;
-							}
-						}
-						if (underwaterCount == border.Count)
-						{
-							//set collection to be island
-							collection.CollectionType = HexCollection.HexCollectionType.ISLAND;
-							secondStageCollections.Add(collection);
-						}
-						else
-						{
-							foreach (var cellIndex in border)
-							{
-								var borderCell = grid.GetCell(cellIndex);
-								var borderCellHexCollection = firstStageCollections.First(x => x.cellCollection.Contains(cellIndex));
-								if (borderCellHexCollection.IsUnderwater == collection.IsUnderwater)
-								{
-									borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
-
-									if (!secondStageCollections.Contains(borderCellHexCollection))
-									{
-										secondStageCollections.Add(borderCellHexCollection);
-									}
-
-									break;
-								}
-							}
+							underwaterCount++;
 						}
 					}
-				}
-				else
-				{
-					if (!secondStageCollections.Contains(collection))
+					if (underwaterCount == border.Count)
 					{
-						secondStageCollections.Add(collection);
+						//set collection to be island
+						collection.CollectionType = HexCollection.HexCollectionType.ISLAND;
 					}
 				}
 			}
+
+			secondStageCollections.AddRange(firstStageCollections);
+			var underFives = secondStageCollections.Where(x => x.cellCollection.Count <= 5
+			&& x.CollectionType != HexCollection.HexCollectionType.LAKE && x.CollectionType != HexCollection.HexCollectionType.ISLAND).ToList();
+			OutputLogger.Log("Chunks that are still 5 or less: " + underFives.Count);
 
 			foreach(var c in secondStageCollections)
 			{
+				c.Update(grid);
+				//c.Normalize(grid);
+			}
+
+			//third stage - group mountains together
+			
+			var mountainousCollections = secondStageCollections.Where(x => x.IsMountainous).ToList();
+			while(mountainousCollections.Count > 0)
+			{
+				var collection = mountainousCollections.First();
+				var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
+				foreach (var cellIndex in border)
+				{
+					var borderCell = grid.GetCell(cellIndex);
+					var borderCellHexCollections = firstStageCollections.Where(x => x.cellCollection.Contains(cellIndex)).ToList();
+					if(borderCellHexCollections.Count == 0)
+					{
+						continue;
+					}
+
+					var borderCellHexCollection = borderCellHexCollections.First();
+					if (borderCellHexCollection.IsMountainous == collection.IsMountainous)
+					{
+						borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
+						secondStageCollections.Remove(collection);
+						break;
+					}
+				}
+				mountainousCollections.Remove(collection);
+			}
+
+			foreach (var c in secondStageCollections)
+			{
+				c.Update(grid);
 				c.Normalize(grid);
 			}
 
-			
 			grid.RecreateChunks(secondStageCollections);
 
 			foreach(var c in secondStageCollections)
@@ -888,7 +913,6 @@ namespace Game.Terrain
 		HexCollection CreateNewHexCollection()
 		{
 			var hexCollection = new HexCollection();
-			//EventManager.Instance.Dispatch(new AddContextEvent(hexCollection, true));
 			return hexCollection;
 		}
 

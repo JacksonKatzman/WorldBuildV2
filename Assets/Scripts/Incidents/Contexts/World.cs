@@ -168,7 +168,8 @@ namespace Game.Simulation
 					//cell.hexCollectionLabel.SetText(collection.Name);
 				}
 
-				collection.CurrentLocation.GetHexCell().collectionName.text = collection.Name;
+				//do this on ui instead
+				//collection.CurrentLocation.GetHexCell().collectionName.text = collection.Name;
 			}
 
 			OutputLogger.Log($"Biggest Collection: {biggest.cellCollection.Count}:{biggest.AffiliatedTerrainType} - Average Size: {totalSize / hexCollections.Count}");

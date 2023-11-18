@@ -1,5 +1,6 @@
 ﻿using Game.GUI.Wiki;
 using Sirenix.OdinInspector;
+using TMPro;
 
 namespace Game.Incidents
 {
@@ -7,6 +8,7 @@ namespace Game.Incidents
 	{
 		public static UserInterfaceService Instance { get; private set; }
 		public IncidentWiki incidentWiki;
+		public TMP_Text hexCollectionNameText;
 
 		public void Awake()
 		{
@@ -18,6 +20,12 @@ namespace Game.Incidents
 			{
 				Instance = this;
 			}
+		}
+
+		public void ToggleHexCollectionName(bool on, string text)
+		{
+			hexCollectionNameText.enabled = on;
+			hexCollectionNameText.text = text;
 		}
 	}
 }

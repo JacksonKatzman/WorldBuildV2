@@ -1,4 +1,6 @@
 ﻿using Game.Debug;
+using Game.Incidents;
+using HighlightPlus;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,6 +43,12 @@ namespace Game.Terrain
 		public void ShowUI(bool visible)
 		{
 			gridCanvas.gameObject.SetActive(visible);
+		}
+
+		public void InitializeTerrainHighlighting(HexCollection collection)
+		{
+			terrain.gameObject.GetComponent<HighlightTrigger>().raycastCamera = HexMapCamera.instance.mainCamera;
+			terrain.gameObject.GetComponent<HexChunkHighlight>().collection = collection;
 		}
 
 		void LateUpdate()

@@ -64,19 +64,19 @@ namespace Game.Incidents
 			cellCollection.Add(firstId);
 		}
 
-		public void Initialize(HexGrid grid)
+		public void Update(HexGrid grid)
 		{
 			var hasMountains = 0;
 			var hasWater = 0;
-			foreach(var cellIndex in cellCollection)
+			foreach (var cellIndex in cellCollection)
 			{
 				var cell = grid.GetCell(cellIndex);
-				if(cell.IsMountainous)
+				if (cell.IsMountainous)
 				{
 					hasMountains++;
 				}
 
-				if(cell.IsUnderwater)
+				if (cell.IsUnderwater)
 				{
 					hasWater++;
 				}
@@ -84,7 +84,17 @@ namespace Game.Incidents
 
 			IsMountainous = hasMountains >= (cellCollection.Count / 2) + 1 ? true : false;
 			IsUnderwater = hasWater == cellCollection.Count ? true : false;
-			CurrentLocation = GetCenter();
+
+			var updatedCenter = GetCenter();
+			if(CurrentLocation == null)
+			{
+				CurrentLocation = new Location(updatedCenter);
+				EventManager.Instance.Dispatch(new AddContextEvent(CurrentLocation, true));
+			}
+			else
+			{
+				CurrentLocation.TileIndex = updatedCenter;
+			}
 		}
 
 		public void Normalize(HexGrid grid)
@@ -104,31 +114,43 @@ namespace Game.Incidents
 				}
 				frequency[terrainType]++;
 			}
-		/*	
-			var mostCommonTerrainType = frequency.OrderByDescending(x => x.Value).First().Key;
-			var total = 0f;
-			foreach(var pair in frequency)
-			{
-				total += pair.Value;
-			}
-			var frequencyPercentages = new Dictionary<BiomeTerrainType, float>();
-			foreach (var pair in frequency)
-			{
-				frequencyPercentages.Add(pair.Key, pair.Value / total);
-			}
 
-			foreach (var cellIndex in cellCollection)
+			var mostCommonTerrainType = frequency.OrderByDescending(x => x.Value).First().Key;
+			foreach(var cellIndex in cellCollection)
 			{
 				var cell = grid.GetCell(cellIndex);
-				if(frequencyPercentages[cell.TerrainType] <= 0.02f)
+				if(mostCommonTerrainType == BiomeTerrainType.Desert)
 				{
-					cell.TerrainType = mostCommonTerrainType;
+					cell.TerrainType = BiomeTerrainType.Desert;
 				}
 			}
-			*/
+
+			AffiliatedTerrainType = mostCommonTerrainType;
+			/*
+				var mostCommonTerrainType = frequency.OrderByDescending(x => x.Value).First().Key;
+				var total = 0f;
+				foreach(var pair in frequency)
+				{
+					total += pair.Value;
+				}
+				var frequencyPercentages = new Dictionary<BiomeTerrainType, float>();
+				foreach (var pair in frequency)
+				{
+					frequencyPercentages.Add(pair.Key, pair.Value / total);
+				}
+
+				foreach (var cellIndex in cellCollection)
+				{
+					var cell = grid.GetCell(cellIndex);
+					if(frequencyPercentages[cell.TerrainType] <= 0.02f)
+					{
+						cell.TerrainType = mostCommonTerrainType;
+					}
+				}
+				*/
 		}
 
-		private Location GetCenter()
+		private int GetCenter()
 		{
 			//temporary
 			var centroid = SimulationUtilities.GetCentroid(cellCollection);
@@ -147,9 +169,7 @@ namespace Game.Incidents
 				}
 			}
 
-			var location = new Location(closest.Index);
-			EventManager.Instance.Dispatch(new AddContextEvent(location, true));
-			return location;
+			return closest.Index;
 		}
 
 		private float GetAverageElevation()
