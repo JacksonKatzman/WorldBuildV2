@@ -77,7 +77,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 8
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 4
     m_MaxSize: 40
     m_Alignment: 4
@@ -117,11 +117,11 @@ MonoBehaviour:
     - Name: hexCellBorderImages
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[Game.Terrain.HexDirection,
-        Assembly-CSharp],[UnityEngine.UI.Image, UnityEngine.UI]], mscorlib
+        Auto-asmdef-SecondPass],[UnityEngine.UI.Image, UnityEngine.UI]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Game.Terrain.HexDirection,
-        Assembly-CSharp]], mscorlib
+        Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 0

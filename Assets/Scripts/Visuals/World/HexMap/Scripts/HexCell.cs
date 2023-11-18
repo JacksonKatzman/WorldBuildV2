@@ -2,18 +2,22 @@
 using UnityEngine.UI;
 using System.IO;
 using Game.Enums;
+using Sirenix.OdinInspector;
+using Game.Incidents;
 
 namespace Game.Terrain
 {
 	public class HexCell : MonoBehaviour
 	{
-
 		public HexCoordinates coordinates;
 
 		public HexCellLabel hexCellLabel;
 
 		public HexGridChunk chunk;
 
+		public HexCollection HexCollection { get; set; }
+
+		[ShowInInspector, ReadOnly]
 		public int Index { get; set; }
 
 		public int Elevation
@@ -87,6 +91,8 @@ namespace Game.Terrain
 				return waterLevel > elevation;
 			}
 		}
+
+		public bool IsMountainous { get; set; }
 
 		public bool HasIncomingRiver
 		{
@@ -367,6 +373,7 @@ namespace Game.Terrain
 				var level = Biome.BiomeInfo[terrainType].y;
 				Fertility = HasRiver && level < 3 ? level + 1 : level;
 				PlantLevel = Fertility;
+				RefreshSelfOnly();
 			}
 		}
 

@@ -1,15 +1,18 @@
-﻿using UnityEngine;
+﻿using Game.Debug;
+using Game.Incidents;
+using HighlightPlus;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Terrain
 {
 	public class HexGridChunk : MonoBehaviour
 	{
-
 		public HexMesh terrain, rivers, roads, water, waterShore, estuaries;
 
 		public HexFeatureManager features;
 
-		HexCell[] cells;
+		public HexCell[] cells;
 
 		Canvas gridCanvas;
 
@@ -42,6 +45,11 @@ namespace Game.Terrain
 			gridCanvas.gameObject.SetActive(visible);
 		}
 
+		public void InitializeTerrainHighlighting(HexCollection collection)
+		{
+			terrain.gameObject.GetComponent<HexChunkHighlight>().collection = collection;
+		}
+
 		void LateUpdate()
 		{
 			Triangulate();
@@ -57,10 +65,12 @@ namespace Game.Terrain
 			waterShore.Clear();
 			estuaries.Clear();
 			features.Clear();
+			
 			for (int i = 0; i < cells.Length; i++)
 			{
 				Triangulate(cells[i]);
 			}
+			
 			terrain.Apply();
 			rivers.Apply();
 			roads.Apply();

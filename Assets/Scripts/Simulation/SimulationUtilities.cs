@@ -183,18 +183,17 @@ namespace Game.Simulation
 			return claimedList;
 		}
 
-		public static List<int> FindBorderWithinFaction(Faction faction)
+		public static List<int> FindBorderWithinCells(List<int> cells)
 		{
 			List<int> possibleIndices = new List<int>();
-			var controlledCells = faction.ControlledTileIndices;
 
-			foreach (var cell in controlledCells)
+			foreach (var cell in cells)
 			{
 				HexCell hexCell = SimulationManager.Instance.HexGrid.GetCell(cell);
 				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 				{
 					HexCell neighbor = hexCell.GetNeighbor(d);
-					if (neighbor != null && !controlledCells.Contains(neighbor.Index))
+					if (neighbor != null && !cells.Contains(neighbor.Index))
 					{
 						possibleIndices.Add(hexCell.Index);
 						break;
@@ -203,6 +202,11 @@ namespace Game.Simulation
 			}
 
 			return possibleIndices;
+		}
+
+		public static List<int> FindBorderWithinFaction(Faction faction)
+		{
+			return FindBorderWithinCells(faction.ControlledTileIndices);
 		}
 
 		public static List<int> FindCitylessBorderWithinFaction(Faction faction, List<BiomeTerrainType> biomeTypes = null)
@@ -224,6 +228,47 @@ namespace Game.Simulation
 			}
 
 			return possibleIndices;
+		}
+
+		public static bool OutsideBorderContainsEdgeOfMap(List<int> cells)
+		{
+			var insideIndices = FindBorderWithinCells(cells);
+
+			foreach (var cell in insideIndices)
+			{
+				HexCell hexCell = SimulationManager.Instance.HexGrid.GetCell(cell);
+				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+				{
+					HexCell neighbor = hexCell.GetNeighbor(d);
+					if (neighbor == null)
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		public static List<int> FindBorderOutsideCells(List<int> cells)
+		{
+			var insideIndices = FindBorderWithinCells(cells);
+			var possibleIndices = new HashSet<int>();
+
+			foreach (var cell in insideIndices)
+			{
+				HexCell hexCell = SimulationManager.Instance.HexGrid.GetCell(cell);
+				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+				{
+					HexCell neighbor = hexCell.GetNeighbor(d);
+					if (neighbor != null && !cells.Contains(neighbor.Index))
+					{
+						possibleIndices.Add(neighbor.Index);
+					}
+				}
+			}
+
+			return new List<int>(possibleIndices);
 		}
 
 		public static List<int> FindBorderOutsideFaction(Faction faction, List<BiomeTerrainType> biomeTypes = null)

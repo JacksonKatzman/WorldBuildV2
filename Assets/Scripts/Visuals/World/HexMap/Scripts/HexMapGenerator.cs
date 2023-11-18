@@ -756,12 +756,13 @@ namespace Game.Terrain
 
 				var biome = Biome.CalculateTerrainType(cell, temperature, moisture, elevationMaximum, waterLevel);
 				cell.TerrainType = biome;
+				cell.IsMountainous = cell.Elevation >= elevationMaximum * 0.75f;
 			}
 		}
 
 		void GenerateHexCollections()
 		{
-			var tempCollections = new List<HexCollection>();
+			var firstStageCollections = new List<HexCollection>();
 			var cellsCopy = new List<HexCell>(grid.cells);
 			foreach(var type in System.Enum.GetValues(typeof(BiomeTerrainType)))
 			{
@@ -779,22 +780,146 @@ namespace Game.Terrain
 					var collection = CreateNewHexCollection();
 					collection.AffiliatedTerrainType = terrainType;
 					CompileCollection(cell, ref matchingCells, ref collection);
-					collection.Initialize(grid);
-					tempCollections.Add(collection);
+					collection.cellCollection.OrderBy(x => x);
+					for(int i = 0; i < collection.cellCollection.Count; i++)
+					{
+						var currentCell = grid.GetCell(collection.cellCollection[i]);
+						currentCell.name = $"CellIndex: {cell.Index} || Chunk: {firstStageCollections.Count}/Cell: {i}";
+						currentCell.hexCellLabel.name = $"Chunk: {firstStageCollections.Count}/Cell Label: {i}";
+					}
+					collection.Update(grid);
+					firstStageCollections.Add(collection);
 				}
+			}
+
+			var secondStageCollections = new List<HexCollection>();
+			
+			var smallBoys = firstStageCollections.Where(x => x.cellCollection.Count <= 5
+			&& x.CollectionType != HexCollection.HexCollectionType.LAKE && x.CollectionType != HexCollection.HexCollectionType.ISLAND).ToList();
+			while(smallBoys.Count > 0)
+			{
+				var found = false;
+				var collection = smallBoys.First();
+				var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
+				foreach (var cellIndex in border)
+				{
+					var borderCell = grid.GetCell(cellIndex);
+					var borderCellHexCollection = firstStageCollections.First(x => x.cellCollection.Contains(cellIndex));
+					if (borderCellHexCollection.IsUnderwater == collection.IsUnderwater)
+					{
+						borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
+						firstStageCollections.Remove(collection);
+						found = true;
+						break;
+					}
+				}
+				smallBoys.Remove(collection);
+			}
+
+			foreach (var collection in firstStageCollections)
+			{
+				//check for lakes
+				if (collection.IsUnderwater && !SimulationUtilities.OutsideBorderContainsEdgeOfMap(collection.cellCollection))
+				{
+					var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
+					var landCount = 0;
+					foreach (var borderCellIndex in border)
+					{
+						var borderCell = grid.GetCell(borderCellIndex);
+						if (!borderCell.IsUnderwater)
+						{
+							landCount++;
+						}
+					}
+					if (landCount == border.Count)
+					{
+						//set collection to be lake
+						collection.CollectionType = HexCollection.HexCollectionType.LAKE;
+					}
+				}
+				else if (!collection.IsUnderwater && collection.cellCollection.Count <= 5)
+				{
+					//check for islands
+					var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
+					var underwaterCount = 0;
+					foreach (var borderCellIndex in border)
+					{
+						var borderCell = grid.GetCell(borderCellIndex);
+						if (borderCell.IsUnderwater)
+						{
+							underwaterCount++;
+						}
+					}
+					if (underwaterCount == border.Count)
+					{
+						//set collection to be island
+						collection.CollectionType = HexCollection.HexCollectionType.ISLAND;
+					}
+				}
+			}
+
+			secondStageCollections.AddRange(firstStageCollections);
+			var underFives = secondStageCollections.Where(x => x.cellCollection.Count <= 5
+			&& x.CollectionType != HexCollection.HexCollectionType.LAKE && x.CollectionType != HexCollection.HexCollectionType.ISLAND).ToList();
+			OutputLogger.Log("Chunks that are still 5 or less: " + underFives.Count);
+
+			foreach(var c in secondStageCollections)
+			{
+				c.Update(grid);
+			}
+
+			//third stage - group mountains together		
+			var mountainousCollections = secondStageCollections.Where(x => x.IsMountainous).ToList();
+			while(mountainousCollections.Count > 0)
+			{
+				var collection = mountainousCollections.First();
+				var border = SimulationUtilities.FindBorderOutsideCells(collection.cellCollection);
+				foreach (var cellIndex in border)
+				{
+					var borderCell = grid.GetCell(cellIndex);
+					var borderCellHexCollections = firstStageCollections.Where(x => x.cellCollection.Contains(cellIndex)).ToList();
+					if(borderCellHexCollections.Count == 0)
+					{
+						continue;
+					}
+
+					var borderCellHexCollection = borderCellHexCollections.First();
+					if (borderCellHexCollection.IsMountainous == collection.IsMountainous)
+					{
+						borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
+						secondStageCollections.Remove(collection);
+						break;
+					}
+				}
+				mountainousCollections.Remove(collection);
+			}
+
+			foreach (var c in secondStageCollections)
+			{
+				c.Update(grid);
+				c.Normalize(grid);
+			}
+
+			grid.RecreateChunks(secondStageCollections);
+
+			foreach(var c in secondStageCollections)
+			{
+				EventManager.Instance.Dispatch(new AddContextEvent(c, true));
 			}
 		}
 
 		HexCollection CreateNewHexCollection()
 		{
 			var hexCollection = new HexCollection();
-			EventManager.Instance.Dispatch(new AddContextEvent(hexCollection, true));
 			return hexCollection;
 		}
 
 		void CompileCollection(HexCell cell, ref List<HexCell> matchingCells, ref HexCollection hexCollection)
 		{
-			hexCollection.cellCollection.Add(cell.Index);
+			if (!hexCollection.cellCollection.Contains(cell.Index))
+			{
+				hexCollection.cellCollection.Add(cell.Index);
+			}
 			var matchingNeighbors = new List<HexCell>();
 
 			for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
@@ -819,6 +944,7 @@ namespace Game.Terrain
 
 		bool MatchTerrainTypes(BiomeTerrainType key, BiomeTerrainType value)
 		{
+			/*
 			if(Biome.BiomeMatches.TryGetValue(key, out var list))
 			{
 				return list.Contains(value);
@@ -827,6 +953,8 @@ namespace Game.Terrain
 			{
 				return false;
 			}
+			*/
+			return key == value;
 		}
 
 		float DetermineTemperature(HexCell cell)

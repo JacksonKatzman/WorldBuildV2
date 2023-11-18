@@ -13,6 +13,8 @@ namespace Game.Terrain
 
 		public float rotationSpeed;
 
+		public Camera mainCamera;
+
 		Transform swivel, stick;
 
 		public HexGrid grid;
@@ -21,7 +23,7 @@ namespace Game.Terrain
 
 		float rotationAngle;
 
-		static HexMapCamera instance;
+		public static HexMapCamera instance;
 
 		public static bool Locked
 		{

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Game.Collections;
 using System.Linq;
 using Game.Debug;
+using Game.Incidents;
 
 namespace Game.Terrain
 {
@@ -127,6 +128,33 @@ namespace Game.Terrain
 					chunk.transform.SetParent(transform);
 				}
 			}
+		}
+
+		public void RecreateChunks(List<HexCollection> collections)
+		{
+			var replacementChunks = new HexGridChunk[collections.Count];
+			for(int i = 0; i < replacementChunks.Count(); i++)
+			{
+				HexGridChunk chunk = replacementChunks[i] = Instantiate(chunkPrefab);
+				chunk.transform.SetParent(transform);
+				var collection = collections[i];
+				chunk.cells = new HexCell[collection.cellCollection.Count];
+				for(int j = 0; j < collection.cellCollection.Count; j++)
+				{
+					var cell = GetCell(collection.cellCollection[j]);
+					cell.HexCollection = collection;
+					chunk.AddCell(j, cell);
+				}
+				collection.HexGridChunk = chunk;
+				chunk.name = $"Hex Collecton Chunk {i}";
+				chunk.InitializeTerrainHighlighting(collection);
+			}
+			foreach(var prefab in chunks)
+			{
+				Destroy(prefab.gameObject);
+			}
+			chunks = replacementChunks;
+			OutputLogger.Log($"Total Chunks: {chunks.Length}");
 		}
 
 		void CreateCells()
@@ -258,9 +286,16 @@ namespace Game.Terrain
 			label.rectTransform.anchoredPosition =
 				new Vector2(position.x, position.z);
 			cell.hexCellLabel = label;
+			//label.transform.SetParent(cell.transform);
+
+			/*
+			var collectionLabel = Instantiate(cellLabelPrefab);
+			collectionLabel.rectTransform.anchoredPosition =
+				new Vector2(position.x, position.z);
+			cell.hexCollectionLabel = collectionLabel;
+			*/
 
 			cell.Elevation = 0;
-			//cell.TerrainType = BiomeTerrainType.Rainforest;
 
 			AddCellToChunk(x, z, cell);
 		}
