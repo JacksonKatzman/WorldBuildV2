@@ -47,7 +47,7 @@ namespace Game.Terrain
 
 		public void InitializeTerrainHighlighting(HexCollection collection)
 		{
-			terrain.gameObject.GetComponent<HighlightTrigger>().raycastCamera = HexMapCamera.instance.mainCamera;
+			//terrain.gameObject.GetComponent<HighlightTrigger>().raycastCamera = HexMapCamera.instance.mainCamera;
 			terrain.gameObject.GetComponent<HexChunkHighlight>().collection = collection;
 		}
 

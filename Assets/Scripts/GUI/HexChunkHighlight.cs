@@ -13,11 +13,11 @@ public class HexChunkHighlight : MonoBehaviour
     public HighlightEffect highlightEffect;
     void Start()
     {
-        highlightEffect.OnObjectHighlightStart += OnHighlightStart;
-        highlightEffect.OnObjectHighlightEnd += OnHighlightEnd;
+        //highlightEffect.OnObjectHighlightStart += OnHighlightStart;
+        //highlightEffect.OnObjectHighlightEnd += OnHighlightEnd;
     }
 
-    private bool OnHighlightStart(GameObject obj)
+    public bool OnHighlightStart()
 	{
         if (collection != null)
         {

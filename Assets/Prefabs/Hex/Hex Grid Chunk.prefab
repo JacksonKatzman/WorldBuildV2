@@ -634,9 +634,8 @@ GameObject:
   - component: {fileID: 23000011201693670}
   - component: {fileID: 114000011082573560}
   - component: {fileID: 5160821257119024283}
-  - component: {fileID: 8466209961851990093}
   - component: {fileID: 4921990738072962051}
-  - component: {fileID: 4936793437627742666}
+  - component: {fileID: 3596642909727999011}
   m_Layer: 6
   m_Name: Terrain
   m_TagString: Untagged
@@ -900,37 +899,6 @@ MonoBehaviour:
   hitFxFadeOutDuration: 0.25
   hitFxColor: {r: 1, g: 1, b: 1, a: 1}
   hitFxRadius: 0.5
---- !u!114 &8466209961851990093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000013614047726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5009cbb7e54994bb586cde7a70f34e6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  highlightOnHover: 1
-  triggerMode: 1
-  raycastCamera: {fileID: 0}
-  raycastSource: 0
-  raycastLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  minDistance: 0
-  maxDistance: 0
-  respectUI: 0
-  volumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  selectOnClick: 0
-  selectedProfile: {fileID: 0}
-  selectedAndHighlightedProfile: {fileID: 0}
-  singleSelection: 0
-  toggle: 0
-  keepSelection: 1
 --- !u!64 &4921990738072962051
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -945,7 +913,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &4936793437627742666
+--- !u!114 &3596642909727999011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -957,7 +925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ac97d727ff0c54d9459e3542e84659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightEffect: {fileID: 5160821257119024283}
+  highlightEffect: {fileID: 0}
 --- !u!1 &1000013758644280
 GameObject:
   m_ObjectHideFlags: 0
