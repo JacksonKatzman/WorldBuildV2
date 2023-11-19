@@ -1,5 +1,4 @@
 ﻿using Game.Data;
-using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,6 +43,8 @@ namespace Game.Generators.Names
 		public List<string> cityNameFormats;
 		public List<string> townNameFormats;
 		public List<string> factionNameFormats;
+
+		public TerrainNamingThemePreset terrainNamingThemePreset;
 
 		[SerializeField]
 		public List<NamingThemeCollection> themeCollections;

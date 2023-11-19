@@ -146,12 +146,6 @@ namespace Game.Simulation
 			OutputLogger.Log($"Total HexCollections: {hexCollections.Count}");
 			var totalSize = hexCollections[0].cellCollection.Count;
 			var biggest = hexCollections[0];
-			foreach (var cellIndex in hexCollections[0].cellCollection)
-			{
-				var cell = HexGrid.GetCell(cellIndex);
-				cell.hexCellLabel.SetText("0");
-				//cell.hexCollectionLabel.SetText(collection.Name);
-			}
 			for (int i = 1; i < hexCollections.Count; i++)
 			{
 				var collection = hexCollections[i];
@@ -166,9 +160,14 @@ namespace Game.Simulation
 					//var cell = HexGrid.GetCell(cellIndex);
 					//cell.hexCellLabel.SetText(i.ToString());
 				}
+			}
 
-				//do this on ui instead
-				//collection.CurrentLocation.GetHexCell().collectionName.text = collection.Name;
+			//this is temporary to test
+			//ALSO need to fix the ui portion, name isnt swapping as fast as i can mouse over things
+			foreach(var collection in hexCollections)
+			{
+				var closestFaction = SimulationUtilities.GetCityNearestLocation(collection.CurrentLocation).AffiliatedFaction;
+				collection.Name = closestFaction.namingTheme.GenerateTerrainName(collection.CollectionType, collection.AffiliatedTerrainType);
 			}
 
 			OutputLogger.Log($"Biggest Collection: {biggest.cellCollection.Count}:{biggest.AffiliatedTerrainType} - Average Size: {totalSize / hexCollections.Count}");

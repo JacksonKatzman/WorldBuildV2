@@ -16,7 +16,7 @@ namespace Game.Incidents
 			{BiomeTerrainType.Tundra, "tundra" }
 		};
 
-		public enum HexCollectionType { UNKNOWN, LAKE, ISLAND }
+		public enum HexCollectionType { UNKNOWN, LAKE, ISLAND, MOUNTAINS }
 
 		public override string Name
 		{
@@ -26,7 +26,7 @@ namespace Game.Incidents
 				{
 					var closestCity = SimulationUtilities.GetCityNearestLocation(CurrentLocation);
 					var biomeString = genericBiomeNames[AffiliatedTerrainType];
-					if(IsMountainous)
+					if(CollectionType == HexCollectionType.MOUNTAINS)
 					{
 						biomeString = "mountains";
 					}
@@ -45,7 +45,7 @@ namespace Game.Incidents
 		public List<int> cellCollection;
 		public BiomeTerrainType AffiliatedTerrainType { get; set; }
 		public HexCollectionType CollectionType { get; set; }
-		public bool IsMountainous { get; set; }
+		//public bool IsMountainous { get; set; }
 		public bool IsUnderwater { get; set; }
 		public float AverageElevation => GetAverageElevation();
 
@@ -82,7 +82,12 @@ namespace Game.Incidents
 				}
 			}
 
-			IsMountainous = hasMountains >= (cellCollection.Count / 2) + 1 ? true : false;
+			var isMountainous = hasMountains >= (cellCollection.Count / 2) + 1 ? true : false;
+			if(isMountainous)
+			{
+				CollectionType = HexCollectionType.MOUNTAINS;
+			}
+
 			IsUnderwater = hasWater == cellCollection.Count ? true : false;
 
 			var updatedCenter = GetCenter();
