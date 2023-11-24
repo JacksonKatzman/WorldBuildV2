@@ -869,7 +869,7 @@ namespace Game.Terrain
 			}
 
 			//third stage - group mountains together		
-			var mountainousCollections = secondStageCollections.Where(x => x.IsMountainous).ToList();
+			var mountainousCollections = secondStageCollections.Where(x => x.CollectionType == HexCollection.HexCollectionType.MOUNTAINS).ToList();
 			while(mountainousCollections.Count > 0)
 			{
 				var collection = mountainousCollections.First();
@@ -884,7 +884,7 @@ namespace Game.Terrain
 					}
 
 					var borderCellHexCollection = borderCellHexCollections.First();
-					if (borderCellHexCollection.IsMountainous == collection.IsMountainous)
+					if (borderCellHexCollection.CollectionType == collection.CollectionType)
 					{
 						borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
 						secondStageCollections.Remove(collection);

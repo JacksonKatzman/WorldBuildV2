@@ -3,6 +3,7 @@ using Game.Enums;
 using Game.Generators.Items;
 using Game.Incidents;
 using Game.Simulation;
+using Game.Terrain;
 using Game.Utilities;
 using Sirenix.OdinInspector;
 using System;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using static Game.Incidents.HexCollection;
 
 namespace Game.Generators.Names
 {
@@ -47,6 +49,8 @@ namespace Game.Generators.Names
 		public List<string> cityNameFormats;
 		public List<string> townNameFormats;
 		public List<string> factionNameFormats;
+
+		public TerrainNamingThemePreset terrainNamingThemePreset;
 
 		public Dictionary<string, List<string>> nameData;
 
@@ -92,6 +96,8 @@ namespace Game.Generators.Names
 			{
 				AddThemeCollection(preset.themeCollections[i]);
 			}
+
+			terrainNamingThemePreset = preset.terrainNamingThemePreset;
 		}
 
 		public NamingTheme(NamingTheme other)
@@ -251,6 +257,52 @@ namespace Game.Generators.Names
 		public string GenerateItemName(Item item, Character creator)
 		{
 			return string.Format("{0}'s ITEM", creator.Name);
+		}
+
+		public string GenerateTerrainName(HexCollectionType collectionType, BiomeTerrainType terrainType, ISentient namedAfter = null)
+		{
+			List<string> chosenList;
+			if(collectionType == HexCollectionType.LAKE)
+			{
+				chosenList = terrainNamingThemePreset.lakeFormats;
+			}
+			else if(collectionType == HexCollectionType.ISLAND)
+			{
+				chosenList = terrainNamingThemePreset.islandFormats;
+			}
+			else if(collectionType == HexCollectionType.MOUNTAINS)
+			{
+				chosenList = terrainNamingThemePreset.mountainFormats;
+			}
+			else
+			{
+				chosenList = terrainNamingThemePreset.biomeFormats[terrainType];
+			}
+
+			if (namedAfter != null)
+			{
+				var namedPossibilities = chosenList.Where(x => x.Contains("{0}")).ToList();
+				if(namedPossibilities != null && namedPossibilities.Count > 0)
+				{
+					var chosen = SimRandom.RandomEntryFromList(namedPossibilities);
+					chosen.Replace("{0}", namedAfter.CharacterName.firstName);
+					return GenerateName(chosen);
+				}
+			}
+			else
+			{
+				chosenList = chosenList.Where(x => !x.Contains("{0}")).ToList();
+			}
+
+			var possible = GenerateName(SimRandom.RandomEntryFromList(chosenList));
+			var hexCollectionNames = ContextDictionaryProvider.GetAllContexts<HexCollection>().Select(x => x.Name).ToList();
+			var attempts = 0;
+			while(hexCollectionNames.Contains(possible) && attempts < 1000)
+			{
+				possible = GenerateName(SimRandom.RandomEntryFromList(chosenList));
+				attempts++;
+			}
+			return possible;
 		}
 
 		private void AddThemeCollection(NamingThemeCollection collection)

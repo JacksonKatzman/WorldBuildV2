@@ -570,5 +570,6 @@ MonoBehaviour:
   - '{FEMALE}''s Croft'
   factionNameFormats:
   - '{FACTION}'
+  terrainNamingThemePreset: {fileID: 11400000, guid: 7a03f604b0414f24da8e62c60d33e044, type: 2}
   themeCollections:
   - {fileID: 11400000, guid: 3dbd44e7a34ae1142a2fdf9fe7041188, type: 2}

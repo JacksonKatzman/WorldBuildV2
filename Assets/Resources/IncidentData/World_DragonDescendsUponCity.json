@@ -42,6 +42,7 @@
                 {
                   "$id": "7",
                   "$type": "Game.Incidents.Expression`1[[System.Boolean, mscorlib]], Auto-asmdef-SecondPass",
+                  "comparedPropertyName": null,
                   "hasNextOperator": false,
                   "ExpressionType": 0,
                   "constValue": true,
@@ -54,6 +55,7 @@
                     "GetValueType": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
+                  "compareTo": null,
                   "previousCalculatedID": null,
                   "rangeWarning": "Range not implemented for non integers!",
                   "nextOperator": null,
@@ -83,6 +85,7 @@
                 {
                   "$id": "11",
                   "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
+                  "comparedPropertyName": null,
                   "hasNextOperator": false,
                   "ExpressionType": 0,
                   "constValue": 10,
@@ -95,10 +98,11 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 8,
+                    "Value": 15,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
+                  "compareTo": null,
                   "previousCalculatedID": null,
                   "rangeWarning": "Range not implemented for non integers!",
                   "nextOperator": null,
@@ -117,6 +121,8 @@
     }
   },
   "IsMajorIncident": true,
+  "IsUnique": false,
+  "IncidentHeadline": "The dragon, {8}, descends upon {2}, laying waste to the population.",
   "ActionContainer": {
     "$id": "13",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
@@ -186,7 +192,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 16,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -196,7 +202,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 0,
+              "Value": 19,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "findFirst": true,
@@ -264,6 +270,7 @@
               "$values": []
             },
             "isMountainous": true,
+            "hexCollectionType": 3,
             "locationNearLocation": {
               "$id": "25",
               "$type": "Game.Incidents.LocationActionField, Auto-asmdef-SecondPass",
@@ -440,6 +447,7 @@
                         {
                           "$id": "37",
                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
+                          "comparedPropertyName": null,
                           "hasNextOperator": true,
                           "ExpressionType": 2,
                           "constValue": 0,
@@ -456,6 +464,7 @@
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
+                          "compareTo": null,
                           "previousCalculatedID": null,
                           "rangeWarning": "Range not implemented for non integers!",
                           "nextOperator": "/",
@@ -464,6 +473,7 @@
                         {
                           "$id": "39",
                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
+                          "comparedPropertyName": null,
                           "hasNextOperator": false,
                           "ExpressionType": 0,
                           "constValue": 2,
@@ -480,6 +490,7 @@
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
+                          "compareTo": null,
                           "previousCalculatedID": null,
                           "rangeWarning": "Range not implemented for non integers!",
                           "nextOperator": null,
@@ -512,6 +523,7 @@
                         {
                           "$id": "43",
                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
+                          "comparedPropertyName": null,
                           "hasNextOperator": true,
                           "ExpressionType": 2,
                           "constValue": 0,
@@ -524,10 +536,11 @@
                             "min": 0,
                             "max": 20,
                             "constant": 0,
-                            "Value": 7,
+                            "Value": 17,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
+                          "compareTo": null,
                           "previousCalculatedID": null,
                           "rangeWarning": "Range not implemented for non integers!",
                           "nextOperator": "/",
@@ -536,6 +549,7 @@
                         {
                           "$id": "45",
                           "$type": "Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass",
+                          "comparedPropertyName": null,
                           "hasNextOperator": false,
                           "ExpressionType": 0,
                           "constValue": 10,
@@ -548,10 +562,11 @@
                             "min": 0,
                             "max": 20,
                             "constant": 0,
-                            "Value": 5,
+                            "Value": 16,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
+                          "compareTo": null,
                           "previousCalculatedID": null,
                           "rangeWarning": "Range not implemented for non integers!",
                           "nextOperator": null,

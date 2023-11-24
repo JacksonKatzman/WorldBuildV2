@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static Game.Incidents.HexCollection;
 
 namespace Game.Incidents
 {
@@ -22,8 +23,12 @@ namespace Game.Incidents
 		[ValueDropdown("GetBiomeTerrainTypes", IsUniqueList = true, DropdownTitle = "Allowed Sizes")]
 		public List<BiomeTerrainType> allowedBiomes = new List<BiomeTerrainType>();
 
-		[ShowIf("@this.ShowHexCollectionOptions")]
+		//Deprecated
+		[HideInInspector]
 		public bool isMountainous;
+
+		[ShowIf("@this.ShowHexCollectionOptions")]
+		public HexCollectionType hexCollectionType;
 
 		private bool ShowHexCollectionOptions => typeToSearchFor == typeof(HexCollection);
 
@@ -55,7 +60,7 @@ namespace Game.Incidents
 			possibilities = possibilities.Where(x => allowedBiomes.Count > 0 ? allowedBiomes.Contains(((ILocationAffiliated)x).CurrentLocation.AffiliatedTerrainType) : true).ToList();
 			if(typeToSearchFor == typeof(HexCollection))
 			{
-				possibilities = possibilities.Where(x => ((HexCollection)x).IsMountainous == isMountainous).ToList();
+				possibilities = possibilities.Where(x => ((HexCollection)x).CollectionType == hexCollectionType).ToList();
 			}
 			if (possibilities.Count > 0)
 			{

@@ -21,9 +21,50 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  listToAddTo: maleNames
-  input: 
-  nouns: []
+  listToAddTo: adjectives
+  input: Red, Orange, Yellow, Green, Blue, Indigo, Purple, White, Black, Brown, Gray,
+    Tattered, Calm, Restless, Cold, Uncaring, Dead, Living, Turbulent, Crystal
+  nouns:
+  - Life
+  - Death
+  - Fog
+  - Mist
+  - Moon
+  - Sun
+  - Star
+  - Rum
+  - Greed
+  - Doom
+  - Patience
+  - Calm
+  - Faith
+  - Rust
+  - Pain
+  - Rain
+  - Storms
+  - Kings
+  - Queens
+  - Tombs
   verbs: []
-  adjectives: []
-  townNouns: []
+  adjectives:
+  - Red
+  - Orange
+  - Yellow
+  - Green
+  - Blue
+  - Indigo
+  - Purple
+  - White
+  - Black
+  - Brown
+  - Gray
+  - Tattered
+  - Calm
+  - Restless
+  - Cold
+  - Uncaring
+  - Dead
+  - Living
+  - Turbulent
+  - Crystal
+  placeNouns: []
