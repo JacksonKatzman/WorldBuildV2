@@ -55,8 +55,9 @@ namespace Game.Terrain
 				waterShore.GetComponent<MeshRenderer>().enabled = false;
 				estuaries.GetComponent<MeshRenderer>().enabled = false;
 
-				transform.LeanSetPosY(0.01f);
-				name = $"Hex Collecton Chunk {id} TIVER";
+				//raise by a very small amount so that theres no z-fighting when trying to highlight
+				transform.LeanSetPosY(0.001f);
+				name = $"Hex Collecton Chunk {id} RIVER";
 			}
 			else
 			{
@@ -66,10 +67,19 @@ namespace Game.Terrain
 
 			if(collection.CollectionType == HexCollection.HexCollectionType.LAKE)
 			{
-				//current issue is that single cell lakes dont get picked up by mouseover and idk why
-				water.transform.LeanSetPosY(0.01f);
+				//raise by a very small amount so that theres no z-fighting when trying to highlight
+				//has to be higher than rivers
+				transform.LeanSetPosY(0.0011f);
 				name = $"Hex Collecton Chunk {id} LAKE";
 			}
+			if(collection.CollectionType == HexCollection.HexCollectionType.MOUNTAINS)
+            {
+				foreach(var cell in cells)
+                {
+					//cell.MountainLevel = 1;
+					cell.LandmarkType = "Bare_Mountain";
+                }
+            }
 		}
 
 		public void InitializeTerrainHighlighting(HexCollection collection)
