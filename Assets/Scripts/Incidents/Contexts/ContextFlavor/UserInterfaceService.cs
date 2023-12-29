@@ -57,7 +57,8 @@ namespace Game.Incidents
 		{
 			if((HighlightManager.instance.layerMask.value & 1 << LayerMask.NameToLayer("HexTerrain")) > 0)
 			{
-				obj.GetComponent<HexChunkHighlight>().OnHighlightStart();
+				//currently hovering over river throws null ref - obj or the get component is null
+				obj?.GetComponent<HexChunkHighlight>()?.OnHighlightStart();
 			}
 			return true;
 		}

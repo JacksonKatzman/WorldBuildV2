@@ -894,6 +894,29 @@ namespace Game.Terrain
 				mountainousCollections.Remove(collection);
 			}
 
+			//now rivers
+			//instead lets get all cells with only an outgoing river and just follow emb
+			var riverCells = grid.cells.Where(x => x.HasOutgoingRiver && !x.HasIncomingRiver).ToList();
+
+			while (riverCells.Count > 0)
+			{
+				var cell = riverCells.First();
+				riverCells.Remove(cell);
+				var collection = CreateNewHexCollection();
+				collection.CollectionType = HexCollection.HexCollectionType.RIVER;
+				//cant use compile, need a special one for rivers that follows just one river
+				while(cell.HasOutgoingRiver)
+				{
+					collection.cellCollection.Add(cell.Index);
+					cell = cell.GetNeighbor(cell.OutgoingRiver);
+				}
+				collection.cellCollection.Add(cell.Index);
+
+				collection.cellCollection.OrderBy(x => x);
+				collection.Update(grid);
+				secondStageCollections.Add(collection);
+			}
+
 			foreach (var c in secondStageCollections)
 			{
 				c.Update(grid);

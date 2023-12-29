@@ -413,3 +413,5 @@ MonoBehaviour:
   islandFormats:
   - '{NOUN} Island'
   - '{0}''s Sanctuary'
+  riverFormats:
+  - The {ADJ} River

@@ -274,6 +274,10 @@ namespace Game.Generators.Names
 			{
 				chosenList = terrainNamingThemePreset.mountainFormats;
 			}
+			else if(collectionType == HexCollectionType.RIVER)
+			{
+				chosenList = terrainNamingThemePreset.riverFormats;
+			}
 			else
 			{
 				chosenList = terrainNamingThemePreset.biomeFormats[terrainType];

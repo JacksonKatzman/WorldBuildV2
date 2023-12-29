@@ -11,6 +11,7 @@ namespace Game.Generators.Names
 		public List<string> mountainFormats;
 		public List<string> lakeFormats;
 		public List<string> islandFormats;
+		public List<string> riverFormats;
 		public Dictionary<BiomeTerrainType, List<string>> biomeFormats;
 	}
 }

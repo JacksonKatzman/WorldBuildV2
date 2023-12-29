@@ -146,7 +146,9 @@ namespace Game.Terrain
 					chunk.AddCell(j, cell);
 				}
 				collection.HexGridChunk = chunk;
-				chunk.name = $"Hex Collecton Chunk {i}";
+				//chunk.name = $"Hex Collecton Chunk {i}";
+
+				chunk.HandleCollectionType(collection, i);
 				chunk.InitializeTerrainHighlighting(collection);
 			}
 			foreach(var prefab in chunks)

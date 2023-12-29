@@ -45,9 +45,43 @@ namespace Game.Terrain
 			gridCanvas.gameObject.SetActive(visible);
 		}
 
+		public void HandleCollectionType(HexCollection collection, int id)
+		{
+			if (collection.CollectionType == HexCollection.HexCollectionType.RIVER)
+			{
+				terrain.GetComponent<MeshRenderer>().enabled = false;
+				roads.GetComponent<MeshRenderer>().enabled = false;
+				water.GetComponent<MeshRenderer>().enabled = false;
+				waterShore.GetComponent<MeshRenderer>().enabled = false;
+				estuaries.GetComponent<MeshRenderer>().enabled = false;
+
+				transform.LeanSetPosY(0.01f);
+				name = $"Hex Collecton Chunk {id} TIVER";
+			}
+			else
+			{
+				rivers.GetComponent<MeshRenderer>().enabled = false;
+				name = $"Hex Collecton Chunk {id}";
+			}
+
+			if(collection.CollectionType == HexCollection.HexCollectionType.LAKE)
+			{
+				//current issue is that single cell lakes dont get picked up by mouseover and idk why
+				water.transform.LeanSetPosY(0.01f);
+				name = $"Hex Collecton Chunk {id} LAKE";
+			}
+		}
+
 		public void InitializeTerrainHighlighting(HexCollection collection)
 		{
-			terrain.gameObject.GetComponent<HexChunkHighlight>().collection = collection;
+			if (collection.CollectionType == HexCollection.HexCollectionType.RIVER)
+			{
+				rivers.gameObject.GetComponent<HexChunkHighlight>().collection = collection;
+			}
+			else
+			{
+				terrain.gameObject.GetComponent<HexChunkHighlight>().collection = collection;
+			}
 		}
 
 		void LateUpdate()
@@ -110,7 +144,7 @@ namespace Game.Terrain
 			);
 
 			if (cell.HasRiver)
-			{
+			{			
 				if (cell.HasRiverThroughEdge(direction))
 				{
 					e.v3.y = cell.StreamBedY;
@@ -126,7 +160,7 @@ namespace Game.Terrain
 				else
 				{
 					TriangulateAdjacentToRiver(direction, cell, center, e);
-				}
+				}				
 			}
 			else
 			{

@@ -16,7 +16,7 @@ namespace Game.Incidents
 			{BiomeTerrainType.Tundra, "tundra" }
 		};
 
-		public enum HexCollectionType { UNKNOWN, LAKE, ISLAND, MOUNTAINS }
+		public enum HexCollectionType { UNKNOWN, LAKE, ISLAND, MOUNTAINS, RIVER }
 
 		public override string Name
 		{
@@ -29,6 +29,10 @@ namespace Game.Incidents
 					if(CollectionType == HexCollectionType.MOUNTAINS)
 					{
 						biomeString = "mountains";
+					}
+					else if(CollectionType == HexCollectionType.RIVER)
+					{
+						biomeString = "river";
 					}
 					return $"the {biomeString} near {closestCity.Name}";
 				}

@@ -11,6 +11,7 @@ public class HexChunkHighlight : MonoBehaviour
     [ReadOnly]
     public HexCollection collection;
     public HighlightEffect highlightEffect;
+    public MeshRenderer meshRenderer;
     void Start()
     {
         //highlightEffect.OnObjectHighlightStart += OnHighlightStart;
@@ -19,7 +20,7 @@ public class HexChunkHighlight : MonoBehaviour
 
     public bool OnHighlightStart()
 	{
-        if (collection != null)
+        if (collection != null && meshRenderer.enabled == true)
         {
             UserInterfaceService.Instance.ToggleHexCollectionName(true, collection.Name);
         }
