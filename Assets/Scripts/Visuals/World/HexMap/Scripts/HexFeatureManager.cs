@@ -66,12 +66,17 @@ namespace Game.Terrain
 		{
 			Transform prefab;
 			HexHash hash = HexMetrics.SampleHashGrid(position);
+			var pert = true;
 			if (cell.HasLandmark && cell.LandmarkPositionAllocated == false)
 			{
 				SerializedObjectCollection collection = AssetService.Instance.objectData.collections[typeof(LandmarkPreset)];
 				LandmarkPreset preset = collection.objects[cell.LandmarkType] as LandmarkPreset;
 				prefab = SimRandom.RandomEntryFromList(preset.models);
 				cell.LandmarkPositionAllocated = true;
+				if(cell.LandmarkType == "Bare_Mountain")
+                {
+					pert = false;
+                }
 			}
 			else
 			{
@@ -103,12 +108,32 @@ namespace Game.Terrain
 					if (otherPrefab && hash.c < usedHash)
 					{
 						prefab = otherPrefab;
+						usedHash = hash.c;
 					}
 				}
 				else if (otherPrefab)
 				{
 					prefab = otherPrefab;
+					usedHash = hash.c;
 				}
+
+				/*
+				Transform mountainPrefab = PickPrefab(
+					assetCollection.mountainCollections, cell.MountainLevel, hash.f, hash.d);
+				if(prefab)
+                {
+					if(mountainPrefab && hash.f < usedHash)
+                    {
+						prefab = mountainPrefab;
+						usedHash = hash.f;
+                    }
+                }
+				else if(mountainPrefab)
+                {
+					prefab = mountainPrefab;
+					usedHash = hash.f;
+                }
+				*/
 				else
 				{
 					return;
@@ -119,7 +144,15 @@ namespace Game.Terrain
 			{
 				Transform instance = Instantiate(prefab);
 				position.y += instance.localScale.y * 0.5f;
-				instance.localPosition = HexMetrics.Perturb(position);
+				//instance.localPosition = HexMetrics.Perturb(position);
+				if (pert)
+				{
+					instance.localPosition = HexMetrics.Perturb(position);
+				}
+				else
+                {
+					instance.localPosition = cell.Position;
+                }
 				instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
 				instance.SetParent(container, false);
 			}

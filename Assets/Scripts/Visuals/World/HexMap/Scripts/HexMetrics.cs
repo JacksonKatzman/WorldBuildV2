@@ -20,9 +20,9 @@ namespace Game.Terrain
 
 		public const float waterBlendFactor = 1f - waterFactor;
 
-		public const float elevationStep = 3f;
+		public const float elevationStep = 2f;
 
-		public const int terracesPerSlope = 2;
+		public const int terracesPerSlope = 1;
 
 		public const int terraceSteps = terracesPerSlope * 2 + 1;
 

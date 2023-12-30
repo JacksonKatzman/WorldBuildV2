@@ -77,6 +77,7 @@ namespace Game.Terrain
 				foreach(var cell in cells)
                 {
 					//cell.MountainLevel = 1;
+					name = $"Hex Collecton Chunk {id} MOUNTAIN";
 					cell.LandmarkType = "Bare_Mountain";
                 }
             }
