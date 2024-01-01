@@ -183,7 +183,16 @@ namespace Game.Incidents
 
 		private float GetAverageElevation()
 		{
-			return (float)cellCollection.Average();
+			var grid = World.CurrentWorld.HexGrid;
+			var heights = grid.GetHexCells(cellCollection).Select(x => x.Elevation);
+			return (float)heights.Average();
+		}
+
+		public int GetMaxElevation()
+        {
+			var grid = World.CurrentWorld.HexGrid;
+			var heights = grid.GetHexCells(cellCollection).Select(x => x.Elevation);
+			return (int)heights.Max();
 		}
 	}
 }

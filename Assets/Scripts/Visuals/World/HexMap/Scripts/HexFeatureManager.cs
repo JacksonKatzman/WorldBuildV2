@@ -47,6 +47,10 @@ namespace Game.Terrain
 			return null;
 		}
 
+		//i want to make a mountain builder that takes a collection, determines the cells that will have mountains,
+		//the ones that will have foothills, then uses the existing placement of the edge vertices to build one that fits the area
+		//and ideally perturbs it as well.
+
 		public void AddBridge(Vector3 roadCenter1, Vector3 roadCenter2)
 		{
 			roadCenter1 = HexMetrics.Perturb(roadCenter1);
@@ -75,7 +79,7 @@ namespace Game.Terrain
 				cell.LandmarkPositionAllocated = true;
 				if(cell.LandmarkType == "Bare_Mountain")
                 {
-					pert = false;
+					//pert = false;
                 }
 			}
 			else

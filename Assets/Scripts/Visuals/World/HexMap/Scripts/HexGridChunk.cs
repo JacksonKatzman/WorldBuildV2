@@ -1,7 +1,10 @@
 ﻿using Game.Debug;
 using Game.Incidents;
+using Game.Simulation;
+using Game.Utilities;
 using HighlightPlus;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Terrain
@@ -74,12 +77,52 @@ namespace Game.Terrain
 			}
 			if(collection.CollectionType == HexCollection.HexCollectionType.MOUNTAINS)
             {
+				name = $"Hex Collecton Chunk {id} MOUNTAIN";
+				var maxHeight = collection.GetMaxElevation();
+				//get border cells and find a cell in the border that as the max elevation among border cells
+				//then find the cell in the border farthest away from the chosen cell
+				//draw a line between them and thats the mountain range
+				//have a diminishing chance at each of those central tiles to have an adjacent mountain as well
+				//cell will have mountainLevel : 2 = mountain, 1 = foothills, 0 = nothing, set it
+				//all cells in collection that border the mountain range are foothills
+				var borderCellIndices = SimulationUtilities.FindBorderWithinCells(collection.cellCollection);
+				var grid = World.CurrentWorld.HexGrid;
+				var borderCells = grid.GetHexCells(borderCellIndices);
+				var maxHeightInBorder = borderCells.Select(x => x.Elevation).Max();
+				var cellsAtMax = borderCells.Where(x => x.Elevation == maxHeightInBorder).ToList();
+				var startCell = SimRandom.RandomEntryFromList(cellsAtMax);
+				var maxDistance = 0;
+				foreach(var cell in borderCells)
+                {
+					var dist = startCell.coordinates.DistanceTo(cell.coordinates);
+					if(dist > maxDistance)
+                    {
+						maxDistance = dist;
+                    }
+                }
+				var endCells = borderCells.Where(x => startCell.coordinates.DistanceTo(x.coordinates) == maxDistance).ToList();
+				var endCell = SimRandom.RandomEntryFromList(endCells);
+				grid.ResetSearchPhases();
+				grid.FindPath(startCell, endCell, borderCells);
+				var path = grid.GetPath();
+				grid.ClearPath();
+
+				foreach(var cell in path)
+                {
+					cell.LandmarkType = "Bare_Mountain";
+				}
+
+				/*
 				foreach(var cell in cells)
                 {
 					//cell.MountainLevel = 1;
 					name = $"Hex Collecton Chunk {id} MOUNTAIN";
-					cell.LandmarkType = "Bare_Mountain";
+					if (cell.Elevation >= maxHeight)
+					{
+						cell.LandmarkType = "Bare_Mountain";
+					}
                 }
+				*/
             }
 		}
 

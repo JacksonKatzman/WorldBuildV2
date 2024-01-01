@@ -62,6 +62,16 @@ namespace Game.Terrain
 			//CreateMap(cellCountX, cellCountZ);
 		}
 
+		public List<HexCell> GetHexCells(List<int> indices)
+		{
+			var list = new List<HexCell>();
+			foreach (var index in indices)
+			{
+				list.Add(GetCell(index));
+			}
+			return list;
+		}
+
 		public void ResetSearchPhases()
 		{
 			foreach(var cell in cells)
@@ -427,16 +437,97 @@ namespace Game.Terrain
 			currentPathTo.EnableHighlight(Color.red);
 		}
 
-		public void FindPath(HexCell fromCell, HexCell toCell, HexUnit unit)
+		public void FindPath(HexCell fromCell, HexCell toCell, List<HexCell> searchArea)
 		{
 			ClearPath();
 			currentPathFrom = fromCell;
 			currentPathTo = toCell;
-			currentPathExists = Search(fromCell, toCell, unit);
+			currentPathExists = Search(fromCell, toCell, searchArea);
+		}
+
+		bool Search(HexCell fromCell, HexCell toCell, List<HexCell> searchArea)
+        {
+			//int speed = unit.Speed;
+			searchFrontierPhase += 2;
+			if (searchFrontier == null)
+			{
+				searchFrontier = new HexCellPriorityQueue();
+			}
+			else
+			{
+				searchFrontier.Clear();
+			}
+
+			fromCell.SearchPhase = searchFrontierPhase;
+			fromCell.Distance = 0;
+			searchFrontier.Enqueue(fromCell);
+			while (searchFrontier.Count > 0)
+			{
+				HexCell current = searchFrontier.Dequeue();
+				current.SearchPhase += 1;
+
+				if (current == toCell)
+				{
+					return true;
+				}
+
+				//int currentTurn = (current.Distance - 1) / speed;
+
+				for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+				{
+					HexCell neighbor = current.GetNeighbor(d);
+					if (
+						neighbor == null ||
+						neighbor.SearchPhase > searchFrontierPhase
+					)
+					{
+						continue;
+					}
+					if (!searchArea.Contains(neighbor))
+					{
+						continue;
+					}
+
+					int distance = current.Distance;// + moveCost;
+					/*
+					int turn = (distance - 1) / speed;
+					if (turn > currentTurn)
+					{
+						distance = turn * speed + moveCost;
+					}
+					*/
+
+					if (neighbor.SearchPhase < searchFrontierPhase)
+					{
+						neighbor.SearchPhase = searchFrontierPhase;
+						neighbor.Distance = distance;
+						neighbor.PathFrom = current;
+						neighbor.SearchHeuristic =
+							neighbor.coordinates.DistanceTo(toCell.coordinates);
+						searchFrontier.Enqueue(neighbor);
+					}
+					else if (distance < neighbor.Distance)
+					{
+						int oldPriority = neighbor.SearchPriority;
+						neighbor.Distance = distance;
+						neighbor.PathFrom = current;
+						searchFrontier.Change(neighbor, oldPriority);
+					}
+				}
+			}
+			return false;
+		}
+
+		public void FindPathWithUnit(HexCell fromCell, HexCell toCell, HexUnit unit)
+		{
+			ClearPath();
+			currentPathFrom = fromCell;
+			currentPathTo = toCell;
+			currentPathExists = SearchWithUnit(fromCell, toCell, unit);
 			ShowPath(unit.Speed);
 		}
 
-		bool Search(HexCell fromCell, HexCell toCell, HexUnit unit)
+		bool SearchWithUnit(HexCell fromCell, HexCell toCell, HexUnit unit)
 		{
 			int speed = unit.Speed;
 			searchFrontierPhase += 2;
