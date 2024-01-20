@@ -1,5 +1,6 @@
 ﻿using Game.Simulation;
 using Game.Terrain;
+using Game.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -109,12 +110,16 @@ namespace Game.Incidents
 		public void Normalize(HexGrid grid)
 		{
 			var frequency = new Dictionary<BiomeTerrainType, float>();
+			var averageElevation = AverageElevation;
 			foreach (var cellIndex in cellCollection)
 			{
 				var cell = grid.GetCell(cellIndex);
-				if(cell.Elevation > AverageElevation)
+				if(cell.Elevation > averageElevation)
 				{
-					cell.Elevation = ((int)AverageElevation);
+					if (SimRandom.RandomFloat01() > 0.6f)
+					{
+						cell.Elevation = ((int)averageElevation);
+					}
 				}
 				var terrainType = cell.TerrainType;
 				if (!frequency.ContainsKey(terrainType))
@@ -183,6 +188,7 @@ namespace Game.Incidents
 
 		private float GetAverageElevation()
 		{
+			//return (float)cellCollection.Average();
 			var grid = World.CurrentWorld.HexGrid;
 			var heights = grid.GetHexCells(cellCollection).Select(x => x.Elevation);
 			return (float)heights.Average();

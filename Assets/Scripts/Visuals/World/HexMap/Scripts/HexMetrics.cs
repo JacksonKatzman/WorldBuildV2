@@ -20,7 +20,7 @@ namespace Game.Terrain
 
 		public const float waterBlendFactor = 1f - waterFactor;
 
-		public const float elevationStep = 4f;
+		public const float elevationStep = 2f; //4f
 
 		public const int terracesPerSlope = 1;
 
@@ -30,7 +30,7 @@ namespace Game.Terrain
 
 		public const float verticalTerraceStepSize = 1f / (terracesPerSlope + 1);
 
-		public const float cellPerturbStrength = 3f; //4f
+		public const float cellPerturbStrength = 0f;// 3f; //4f
 
 		public const float elevationPerturbStrength = 1.0f; //1.5f
 

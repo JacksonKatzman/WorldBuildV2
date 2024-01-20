@@ -70,7 +70,7 @@ namespace Game.Terrain
 		{
 			Transform prefab;
 			HexHash hash = HexMetrics.SampleHashGrid(position);
-			var pert = true;
+			var perturbPrefabPosition = true;
 			if (cell.HasLandmark && cell.LandmarkPositionAllocated == false)
 			{
 				SerializedObjectCollection collection = AssetService.Instance.objectData.collections[typeof(LandmarkPreset)];
@@ -79,7 +79,7 @@ namespace Game.Terrain
 				cell.LandmarkPositionAllocated = true;
 				if(cell.LandmarkType == "Bare_Mountain")
                 {
-					//pert = false;
+					perturbPrefabPosition = false;
                 }
 			}
 			else
@@ -149,15 +149,17 @@ namespace Game.Terrain
 				Transform instance = Instantiate(prefab);
 				position.y += instance.localScale.y * 0.5f;
 				//instance.localPosition = HexMetrics.Perturb(position);
-				if (pert)
+				if (perturbPrefabPosition)
 				{
 					instance.localPosition = HexMetrics.Perturb(position);
+					instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
 				}
 				else
                 {
 					instance.localPosition = cell.Position;
-                }
-				instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
+					instance.localRotation = Quaternion.Euler(0f, 0f, 0f);
+				}
+				//instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
 				instance.SetParent(container, false);
 			}
 		}
