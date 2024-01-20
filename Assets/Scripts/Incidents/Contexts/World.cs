@@ -164,6 +164,7 @@ namespace Game.Simulation
 
 			//this is temporary to test
 			//ALSO need to fix the ui portion, name isnt swapping as fast as i can mouse over things
+			//also RIVERS?
 			foreach(var collection in hexCollections)
 			{
 				var closestFaction = SimulationUtilities.GetCityNearestLocation(collection.CurrentLocation).AffiliatedFaction;

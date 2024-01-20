@@ -65,7 +65,7 @@ namespace Game.Terrain
 			{
 				if (currentCell && selectedUnit.IsValidDestination(currentCell))
 				{
-					grid.FindPath(selectedUnit.Location, currentCell, selectedUnit);
+					grid.FindPathWithUnit(selectedUnit.Location, currentCell, selectedUnit);
 				}
 				else
 				{

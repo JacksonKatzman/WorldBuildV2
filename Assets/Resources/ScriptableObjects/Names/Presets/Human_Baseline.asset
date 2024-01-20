@@ -563,7 +563,8 @@ MonoBehaviour:
   femaleNameFormats:
   - '{FEMALE} {SURNAME}'
   compositeSurnameFormats: []
-  cityNameFormats: []
+  cityNameFormats:
+  - '{MALE}''s Gate'
   townNameFormats:
   - '{MALE}''s Crossing'
   - '{MALE}''s Gate'

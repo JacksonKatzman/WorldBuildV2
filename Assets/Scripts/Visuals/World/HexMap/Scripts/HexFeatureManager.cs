@@ -47,6 +47,10 @@ namespace Game.Terrain
 			return null;
 		}
 
+		//i want to make a mountain builder that takes a collection, determines the cells that will have mountains,
+		//the ones that will have foothills, then uses the existing placement of the edge vertices to build one that fits the area
+		//and ideally perturbs it as well.
+
 		public void AddBridge(Vector3 roadCenter1, Vector3 roadCenter2)
 		{
 			roadCenter1 = HexMetrics.Perturb(roadCenter1);
@@ -66,12 +70,17 @@ namespace Game.Terrain
 		{
 			Transform prefab;
 			HexHash hash = HexMetrics.SampleHashGrid(position);
+			var perturbPrefabPosition = true;
 			if (cell.HasLandmark && cell.LandmarkPositionAllocated == false)
 			{
 				SerializedObjectCollection collection = AssetService.Instance.objectData.collections[typeof(LandmarkPreset)];
 				LandmarkPreset preset = collection.objects[cell.LandmarkType] as LandmarkPreset;
 				prefab = SimRandom.RandomEntryFromList(preset.models);
 				cell.LandmarkPositionAllocated = true;
+				if(cell.LandmarkType == "Bare_Mountain")
+                {
+					perturbPrefabPosition = false;
+                }
 			}
 			else
 			{
@@ -103,12 +112,32 @@ namespace Game.Terrain
 					if (otherPrefab && hash.c < usedHash)
 					{
 						prefab = otherPrefab;
+						usedHash = hash.c;
 					}
 				}
 				else if (otherPrefab)
 				{
 					prefab = otherPrefab;
+					usedHash = hash.c;
 				}
+
+				/*
+				Transform mountainPrefab = PickPrefab(
+					assetCollection.mountainCollections, cell.MountainLevel, hash.f, hash.d);
+				if(prefab)
+                {
+					if(mountainPrefab && hash.f < usedHash)
+                    {
+						prefab = mountainPrefab;
+						usedHash = hash.f;
+                    }
+                }
+				else if(mountainPrefab)
+                {
+					prefab = mountainPrefab;
+					usedHash = hash.f;
+                }
+				*/
 				else
 				{
 					return;
@@ -119,8 +148,18 @@ namespace Game.Terrain
 			{
 				Transform instance = Instantiate(prefab);
 				position.y += instance.localScale.y * 0.5f;
-				instance.localPosition = HexMetrics.Perturb(position);
-				instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
+				//instance.localPosition = HexMetrics.Perturb(position);
+				if (perturbPrefabPosition)
+				{
+					instance.localPosition = HexMetrics.Perturb(position);
+					instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
+				}
+				else
+                {
+					instance.localPosition = cell.Position;
+					instance.localRotation = Quaternion.Euler(0f, 0f, 0f);
+				}
+				//instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
 				instance.SetParent(container, false);
 			}
 		}
