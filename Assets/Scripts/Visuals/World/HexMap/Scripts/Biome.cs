@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Game.Terrain
 {
-	//Taiga, Tundra, Desert, Tropical Rainforest, Temperate Forest, Polar
-	public enum BiomeTerrainType { Swamp, Grassland, Forest, Rainforest, Desert, Taiga, Tundra, Shrubland, Badlands, Polar, Reef, Ocean, Deep_Ocean };
+    //Taiga, Tundra, Desert, Tropical Rainforest, Temperate Forest, Polar
+    public enum BiomeTerrainType { Swamp, Grassland, Forest, Rainforest, Desert, Taiga, Tundra, Shrubland, Badlands, Polar, Reef, Ocean, Deep_Ocean };
 	public class Biome
 	{
 		static float[] temperatureBands = { 0.1f, 0.3f, 0.6f, 10.0f };

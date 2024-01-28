@@ -78,6 +78,7 @@ namespace Game.Terrain
 			if(collection.CollectionType == HexCollection.HexCollectionType.MOUNTAINS)
             {
 				name = $"Hex Collecton Chunk {id} MOUNTAIN";
+				/*
 				var maxHeight = collection.GetMaxElevation();
 				//get border cells and find a cell in the border that as the max elevation among border cells
 				//then find the cell in the border farthest away from the chosen cell
