@@ -78,6 +78,13 @@ namespace Game.Terrain
 			if(collection.CollectionType == HexCollection.HexCollectionType.MOUNTAINS)
             {
 				name = $"Hex Collecton Chunk {id} MOUNTAIN";
+				var borderCellIndices = SimulationUtilities.FindBorderWithinCells(collection.cellCollection);
+				var grid = World.CurrentWorld.HexGrid;
+				var borderCells = grid.GetHexCells(borderCellIndices);
+				foreach (var cell in borderCells)
+				{
+					features.AddMountain(cell, cell.Position);
+				}
 				/*
 				var maxHeight = collection.GetMaxElevation();
 				//get border cells and find a cell in the border that as the max elevation among border cells
@@ -124,7 +131,7 @@ namespace Game.Terrain
 					}
                 }
 				*/
-            }
+			}
 		}
 
 		public void InitializeTerrainHighlighting(HexCollection collection)

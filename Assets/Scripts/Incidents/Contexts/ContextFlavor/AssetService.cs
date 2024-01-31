@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Game.Enums;
+using Game.Terrain;
 
 namespace Game.Incidents
 {
@@ -12,6 +13,11 @@ namespace Game.Incidents
 		public TextCollection incidents;
 		public SerializedObjectCollectionContainer objectData;
 		public Dictionary<CreatureType, NamingThemePreset> monsterPresets;
+		public Transform testMountain;
+
+		[SerializeField]
+		private BiomeDataContainer biomeDataContainer;
+		public BiomeDataContainer BiomeDataContainer => biomeDataContainer;
 
 		public Dictionary<CreatureType, NamingTheme> MonsterThemes { get; set; }
 		public void Awake()

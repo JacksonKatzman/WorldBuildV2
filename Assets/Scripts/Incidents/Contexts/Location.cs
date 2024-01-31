@@ -12,7 +12,7 @@ namespace Game.Incidents
 
 		public Location CurrentLocation => this;
 		[JsonIgnore]
-		public BiomeTerrainType AffiliatedTerrainType => SimulationManager.Instance.HexGrid.cells[TileIndex].TerrainType;
+		public BiomeTerrainType AffiliatedTerrainType => SimulationManager.Instance.HexGrid.cells[TileIndex].BiomeSubtype;
 
 		public Location() { }
 		public Location(int tileIndex)

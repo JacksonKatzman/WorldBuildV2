@@ -379,7 +379,7 @@ namespace Game.Terrain
 			}
 		}
 
-		public BiomeTerrainType TerrainType
+		public BiomeTerrainType BiomeSubtype
 		{
 			get
 			{
@@ -388,10 +388,7 @@ namespace Game.Terrain
 			set
 			{
 				terrainType = value;
-				TerrainTypeIndex = Biome.BiomeInfo[terrainType].x;
-				var level = Biome.BiomeInfo[terrainType].y;
-				Fertility = HasRiver && level < 3 ? level + 1 : level;
-				PlantLevel = Fertility;
+				TerrainTypeIndex = AssetService.Instance.BiomeDataContainer.GetTextureIndex(terrainType);
 				RefreshSelfOnly();
 			}
 		}
@@ -718,7 +715,7 @@ namespace Game.Terrain
 
 		public void Load(BinaryReader reader, int header)
 		{
-			TerrainType = (BiomeTerrainType)reader.ReadByte();
+			BiomeSubtype = (BiomeTerrainType)reader.ReadByte();
 			//terrainTypeIndex = reader.ReadByte();
 			ShaderData.RefreshTerrain(this);
 			elevation = reader.ReadByte();

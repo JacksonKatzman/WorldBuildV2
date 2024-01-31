@@ -121,7 +121,7 @@ namespace Game.Incidents
 						cell.Elevation = ((int)averageElevation);
 					}
 				}
-				var terrainType = cell.TerrainType;
+				var terrainType = cell.BiomeSubtype;
 				if (!frequency.ContainsKey(terrainType))
 				{
 					frequency.Add(terrainType, 0);
@@ -135,7 +135,7 @@ namespace Game.Incidents
 				var cell = grid.GetCell(cellIndex);
 				if(mostCommonTerrainType == BiomeTerrainType.Desert)
 				{
-					cell.TerrainType = BiomeTerrainType.Desert;
+					cell.BiomeSubtype = BiomeTerrainType.Desert;
 				}
 			}
 

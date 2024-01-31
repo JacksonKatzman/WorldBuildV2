@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Debug;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -41,6 +42,7 @@ namespace Game.Terrain
             textureArray.filterMode = t.filterMode;
             textureArray.wrapMode = t.wrapMode;
 
+            int mismatchCount = 0;
             for(int i = 0; i < biomeData.Count; i++)
             {
                 var bd = biomeData[i];
@@ -49,13 +51,19 @@ namespace Game.Terrain
                     //m < t.mipMapCount seems wrong, fix later
                     for(int m = 0; m < t.mipmapCount; m++)
                     {
-                        Graphics.CopyTexture(bd.textures[j].texture, 0, m, textureArray, i, m);
+                        var tex = bd.textures[j].texture;
+                        if (tex.width != t.width)
+                        {
+                            mismatchCount++;
+                            OutputLogger.LogError($"Texture {tex.name} doesn't match size of other elements.");
+                        }
+                        Graphics.CopyTexture(tex, 0, m, textureArray, i, m);
                     }
                 }
             }
 
             //AssetDatabase.CreateAsset(textureArray, path);
-            return textureArray;
+             return mismatchCount > 0 ? null : textureArray;
         }
     }
 }

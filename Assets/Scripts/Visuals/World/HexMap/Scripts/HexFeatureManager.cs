@@ -164,6 +164,14 @@ namespace Game.Terrain
 			}
 		}
 
+		public void AddMountain(HexCell cell, Vector3 position)
+        {
+			Transform instance = Instantiate(AssetService.Instance.testMountain);
+			instance.localPosition = position;
+			instance.localRotation = Quaternion.Euler(0f, SimRandom.RandomRange(0,5) * 60.0f, 0f);
+			instance.SetParent(container, false);
+		}
+
 		public void AddSpecialFeature(HexCell cell, Vector3 position)
 		{
 			if (!string.IsNullOrEmpty(cell.LandmarkType))

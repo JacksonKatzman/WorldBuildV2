@@ -1,12 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Game.Debug;
+using Game.Incidents;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Terrain
 {
     //Taiga, Tundra, Desert, Tropical Rainforest, Temperate Forest, Polar
+	//public enum TerrainSupertype { Swamp, Grassland, Desert, Tundra, Badlands, Ocean };
     public enum BiomeTerrainType { Swamp, Grassland, Forest, Rainforest, Desert, Taiga, Tundra, Shrubland, Badlands, Polar, Reef, Ocean, Deep_Ocean };
 	public class Biome
 	{
+		/*
 		static float[] temperatureBands = { 0.1f, 0.3f, 0.6f, 10.0f };
 
 		static float[] moistureBands = { 0.12f, 0.28f, 0.85f, 10.0f };
@@ -70,20 +75,56 @@ namespace Game.Terrain
 			BiomeTerrainType.Badlands, BiomeTerrainType.Badlands, BiomeTerrainType.Forest, BiomeTerrainType.Forest,
 			BiomeTerrainType.Badlands, BiomeTerrainType.Badlands, BiomeTerrainType.Badlands, BiomeTerrainType.Badlands} }
 		};
+		*/
 
 		public static BiomeTerrainType CalculateTerrainType(HexCell cell, float temperature, float moistureLevel, int elevationMaximum, int waterLevel)
 		{
 			if (!cell.IsUnderwater)
-			{
-				int t = 0;
-				for (; t < temperatureBands.Length; t++)
-				{
-					if (temperature < temperatureBands[t])
-					{
-						break;
-					}
-				}
+            {
+				//var inRange = AssetService.Instance.BiomeDataContainer.biomeData.Where(x => temperature >= x.minTemperature
+				//&& temperature <= x.maxTemperature && moistureLevel >= x.minMoisture && moistureLevel <= x.maxMoisture && elevationMaximum >= x.minHeight && elevationMaximum <= x.maxHeight);
+				var container = AssetService.Instance.BiomeDataContainer;
+				/*
+				var heightMatches = container.biomeData.Where(x => elevationMaximum >= x.minHeight && elevationMaximum <= x.maxHeight)
+					.Aggregate((i1, i2) => (i1.maxHeight - elevationMaximum) > (i2.maxHeight - elevationMaximum) ? i1 : i2);
+				*/
+				if(cell.HasRiver)
+                {
+					moistureLevel += 0.25f;
+                }
 
+				moistureLevel = Mathf.Clamp01(moistureLevel);
+				var elevation = cell.Elevation - waterLevel;
+
+				//really i just need to simplify - cut out unnecessary biomes down to like 5 and make sure the numbers line up, then worry about veg
+				var heightMatches = container.biomeData.Where(x => elevation >= x.minHeight && elevation <= x.maxHeight);
+				if(heightMatches.Count() == 0)
+                {
+					heightMatches = container.biomeData;
+					OutputLogger.LogWarning("No height matches found when calculating biome.");
+                }
+				var moistureMatches = heightMatches.Where(x => moistureLevel >= x.minMoisture && moistureLevel <= x.maxMoisture);
+				if(moistureMatches.Count() == 0)
+                {
+					moistureMatches = heightMatches;
+					OutputLogger.LogWarning($"No moisture matches found when calculating biome. H: {elevation}, M: {moistureLevel}, T: {temperature}");
+				}
+				//var temperatureMatch = moistureMatches.Aggregate((i1, i2) => Mathf.Abs(i1.maxTemperature - temperature) < Mathf.Abs(i2.maxTemperature - temperature) ? i1 : i2);
+				var currentMatch = moistureMatches.First();
+				var difference = float.MaxValue;
+				foreach(var match in moistureMatches)
+                {
+					var check = Mathf.Abs(temperature - match.maxTemperature);
+					if(check < difference && temperature <= match.maxTemperature)
+                    {
+						difference = check;
+						currentMatch = match;
+                    }
+                }
+
+				return currentMatch.terrainType;
+
+				/*
 				int m = 0;
 				for (; m < moistureBands.Length; m++)
 				{
@@ -93,111 +134,16 @@ namespace Game.Terrain
 					}
 				}
 
-				int e = 0;
-				for (; e < elevationBands.Length; e++)
-				{
-					if (cell.Elevation/(elevationMaximum - waterLevel) < elevationBands[e])
-					{
-						break;
-					}
-				}
-				//calculate special cases for terrain type changes based on elevation and prox to rivers
-				//then calculate for ocean biomes
-
-				int rockDesertElevation =
-				elevationMaximum - (elevationMaximum - waterLevel) / 2;
-
-				var ele = BiomesByElevation[e];
-				var terrainType = ele[t * 4 + m];
-
-				/*
-				if (terrainType == BiomeTerrainType.Desert || terrainType == BiomeTerrainType.Shrubland)
-				{
-					if (cell.Elevation >= rockDesertElevation)
-					{
-						terrainType = BiomeTerrainType.Badlands;
-					}
-				}
-				else if (cell.Elevation == elevationMaximum)
-				{
-					terrainType = BiomeTerrainType.Polar;
-				}
+				cell.PlantLevel = m;
 				*/
-				var plantMod = 0;
 
-				if (BiomeInfo[terrainType].y < 3 && cell.HasRiver)
-				{
-					plantMod = 1;
-				}
-
-				cell.PlantLevel = plantMod;
-				return terrainType;
+				//return temperatureMatch != null ? temperatureMatch.terrainType : BiomeTerrainType.Grassland;
 			}
 			else
-			{
-				var terrainType = BiomeTerrainType.Ocean;
-				/*
-				if (cell.Elevation == waterLevel - 1)
-				{
-					int cliffs = 0, slopes = 0;
-					for (
-						HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++
-					)
-					{
-						HexCell neighbor = cell.GetNeighbor(d);
-						if (!neighbor)
-						{
-							continue;
-						}
-						int delta = neighbor.Elevation - cell.WaterLevel;
-						if (delta == 0)
-						{
-							slopes += 1;
-						}
-						else if (delta > 0)
-						{
-							cliffs += 1;
-						}
-					}
+            {
+				return BiomeTerrainType.Reef;
+            }
+        }
 
-					if (cliffs + slopes > 3)
-					{
-						terrainType = BiomeTerrainType.Reef;
-					}
-					else if (cliffs > 0)
-					{
-						terrainType = BiomeTerrainType.Deep_Ocean;
-					}
-					else if (slopes > 0)
-					{
-						terrainType = BiomeTerrainType.Ocean;
-					}
-					else
-					{
-						terrainType = BiomeTerrainType.Ocean;
-					}
-				}
-				else if (cell.Elevation >= waterLevel)
-				{
-					terrainType = BiomeTerrainType.Reef;
-				}
-				else if (cell.Elevation < 0)
-				{
-					terrainType = BiomeTerrainType.Deep_Ocean;
-				}
-				else
-				{
-					terrainType = BiomeTerrainType.Ocean;
-				}
-
-				if (terrainType == BiomeTerrainType.Ocean && temperature < temperatureBands[0])
-				{
-					terrainType = BiomeTerrainType.Deep_Ocean;
-				}
-				*/
-
-				return terrainType;
-			}
-		}
 	}
 }

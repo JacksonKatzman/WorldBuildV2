@@ -262,7 +262,7 @@ namespace Game.Terrain
 			{
 				if (activeTerrainTypeIndex >= 0)
 				{
-					cell.TerrainType = activeTerrainTypeIndex;
+					cell.BiomeSubtype = activeTerrainTypeIndex;
 				}
 				if (applyElevation)
 				{

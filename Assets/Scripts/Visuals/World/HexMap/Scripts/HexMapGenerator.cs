@@ -737,6 +737,7 @@ namespace Game.Terrain
 					cell.Elevation -= 1;
 				}
 
+				//need to instead set a min length, store the chain of rivers in a list, wait until river complete, then set the ingoing/outgoings if possible
 				cell = cell.GetNeighbor(direction);
 			}
 			return length;
@@ -748,16 +749,21 @@ namespace Game.Terrain
 			int rockDesertElevation =
 				elevationMaximum - (elevationMaximum - waterLevel) / 2;
 
+			var averageTemp = 0.0f;
+
 			for (int i = 0; i < cellCount; i++)
 			{
 				HexCell cell = grid.GetCell(i);
 				float temperature = DetermineTemperature(cell);
+				averageTemp += temperature;
 				float moisture = climate[i].moisture;
 
 				var biome = Biome.CalculateTerrainType(cell, temperature, moisture, elevationMaximum, waterLevel);
-				cell.TerrainType = biome;
+				cell.BiomeSubtype = biome;
 				cell.IsMountainous = cell.Elevation >= elevationMaximum * 0.75f;
 			}
+
+			OutputLogger.LogWarning($"Average Temperature: {averageTemp / cellCount}");
 		}
 
 		void GenerateHexCollections()
@@ -767,7 +773,7 @@ namespace Game.Terrain
 			foreach(var type in System.Enum.GetValues(typeof(BiomeTerrainType)))
 			{
 				var terrainType = (BiomeTerrainType)type;
-				var matchingCells = cellsCopy.Where(x => MatchTerrainTypes(terrainType, x.TerrainType)).ToList();
+				var matchingCells = cellsCopy.Where(x => MatchTerrainTypes(terrainType, x.BiomeSubtype)).ToList();
 				foreach(var c in matchingCells)
 				{
 					cellsCopy.Remove(c);

@@ -7,7 +7,7 @@ public class TextureArrayWizard : ScriptableWizard {
 	//public Texture2D[] textures;
 	public BiomeDataContainer data;
 
-	[MenuItem ("Assets/Create/Texture Array")]
+	[MenuItem("World Builder/Texture Array Wizard")]
 	static void CreateWizard () {
 		ScriptableWizard.DisplayWizard<TextureArrayWizard>(
 			"Create Texture Array", "Create"

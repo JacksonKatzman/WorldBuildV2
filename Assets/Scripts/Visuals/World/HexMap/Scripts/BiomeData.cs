@@ -13,6 +13,11 @@ namespace Game.Terrain
     {
         public BiomeTerrainType terrainType;
         public List<WeightedTexture> textures;
+        public int minHeight, maxHeight;
+        [Range(0.0f, 1.0f)]
+        public float minTemperature, maxTemperature;
+        [Range(0.0f, 1.0f)]
+        public float minMoisture, maxMoisture;
 
         public int GetTextureIndex()
         {
@@ -34,6 +39,6 @@ namespace Game.Terrain
     public class WeightedTexture
     {
         public Texture2D texture;
-        public int weight;
+        public int weight = 1;
     }
 }
