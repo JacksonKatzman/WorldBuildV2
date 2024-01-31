@@ -28,6 +28,6 @@ MonoBehaviour:
   minHeight: 0
   maxHeight: 4
   minTemperature: 0
-  maxTemperature: 0.3
+  maxTemperature: 0.175
   minMoisture: 0.1
   maxMoisture: 1

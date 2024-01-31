@@ -25,8 +25,8 @@ MonoBehaviour:
   textures:
   - texture: {fileID: 2800000, guid: e55eb9a711e0771478f08bfa468fe587, type: 3}
     weight: 1
-  minHeight: 3
-  maxHeight: 8
+  minHeight: 2
+  maxHeight: 3
   minTemperature: 0.6
   maxTemperature: 1
   minMoisture: 0

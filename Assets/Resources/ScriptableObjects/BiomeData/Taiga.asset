@@ -23,11 +23,11 @@ MonoBehaviour:
     SerializationNodes: []
   terrainType: 5
   textures:
-  - texture: {fileID: 2800000, guid: e1c16c0e248d2044097fcad53b697e4e, type: 3}
+  - texture: {fileID: 2800000, guid: 5d0c0963eb3564c279c7c1a85117526c, type: 3}
     weight: 1
   minHeight: 4
   maxHeight: 10
-  minTemperature: 0
-  maxTemperature: 0.4
-  minMoisture: 0.3
-  maxMoisture: 0.85
+  minTemperature: 0.3
+  maxTemperature: 0.6
+  minMoisture: 0.25
+  maxMoisture: 0.75
