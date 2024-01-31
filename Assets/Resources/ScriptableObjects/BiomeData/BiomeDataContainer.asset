@@ -22,4 +22,16 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   biomeData:
+  - {fileID: 11400000, guid: e104bb6ab249fc340befd58080367959, type: 2}
   - {fileID: 11400000, guid: 47142c2253cf84f4e98c6d1828f4fa3a, type: 2}
+  - {fileID: 11400000, guid: 4d39ebf7b77f0ee45b41abd7f09918df, type: 2}
+  - {fileID: 11400000, guid: cb243585f5b062c4e8097ee0138e6dd3, type: 2}
+  - {fileID: 11400000, guid: f304334d99cd2b7498a2a70c8175d24d, type: 2}
+  - {fileID: 11400000, guid: 7bc739eee5aa65249ad34243301c3ffa, type: 2}
+  - {fileID: 11400000, guid: 452be8700e184d248b05b56bdecd6a26, type: 2}
+  - {fileID: 11400000, guid: eb125806ffca08144ad94363e0731bac, type: 2}
+  - {fileID: 11400000, guid: 495512fed13dd2a4b97e7335428bec63, type: 2}
+  - {fileID: 11400000, guid: 38d7aa5ac27b81e4fa184b5c4e05f9a4, type: 2}
+  - {fileID: 11400000, guid: b3cf157fd839958408174495fed8ddcd, type: 2}
+  - {fileID: 11400000, guid: 9080924b77c226d47a42ea2afe6fcbb4, type: 2}
+  - {fileID: 11400000, guid: 158333fff57cb8e47b1bc5be2c8a447c, type: 2}

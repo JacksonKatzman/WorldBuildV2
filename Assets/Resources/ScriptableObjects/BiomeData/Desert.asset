@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727de8aa5f94eaa409cb488a41266ce3, type: 3}
+  m_Name: Desert
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  terrainType: 4
+  textures:
+  - texture: {fileID: 2800000, guid: 447b3aea38d4344c0ac014264e0f3988, type: 3}
+    weight: 1
+  minHeight: 0
+  maxHeight: 2
+  minTemperature: 0.6
+  maxTemperature: 1
+  minMoisture: 0
+  maxMoisture: 0.2
