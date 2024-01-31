@@ -30,6 +30,17 @@ namespace Game.Terrain
 			cells = new HexCell[HexMetrics.chunkSizeX * HexMetrics.chunkSizeZ];
 		}
 
+		public void TestInitMeshes()
+        {
+			terrain.InitMesh();
+			rivers.InitMesh();
+			roads.InitMesh();
+			water.InitMesh();
+			waterShore.InitMesh();
+			estuaries.InitMesh();
+			features.walls.InitMesh();
+        }
+
 		public void AddCell(int index, HexCell cell)
 		{
 			cells[index] = cell;
@@ -152,6 +163,27 @@ namespace Game.Terrain
 			enabled = false;
 		}
 
+		public void DebugTriangulate()
+        {
+			terrain.Clear();
+			rivers.Clear();
+			roads.Clear();
+			water.Clear();
+			waterShore.Clear();
+			estuaries.Clear();
+			features.Clear();
+
+			Triangulate(cells[0]);
+
+			terrain.Apply();
+			rivers.Apply();
+			roads.Apply();
+			water.Apply();
+			waterShore.Apply();
+			estuaries.Apply();
+			features.Apply();
+		}
+
 		public void Triangulate()
 		{
 			terrain.Clear();
@@ -194,6 +226,13 @@ namespace Game.Terrain
 					features.AddSpecialFeature(cell, cell.Position);
 				}
 				*/
+				/*
+				if(cell.Elevation >= cell.BiomeData.mountainThreshold + HexMetrics.globalWaterLevel)
+                {
+					features.AddMountain(cell, cell.Position);
+                }
+				*/
+				//features.AddHexFeature(cell, cell.Position);
 			}
 		}
 

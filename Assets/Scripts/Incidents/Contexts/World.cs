@@ -142,6 +142,7 @@ namespace Game.Simulation
 			ContextDictionaryProvider.AllowImmediateChanges = true;
 			CreateRacesAndFactions();
 
+			/*
 			var hexCollections = ContextDictionaryProvider.GetAllContexts<HexCollection>();
 			OutputLogger.Log($"Total HexCollections: {hexCollections.Count}");
 			var totalSize = hexCollections[0].cellCollection.Count;
@@ -172,6 +173,7 @@ namespace Game.Simulation
 			}
 
 			OutputLogger.Log($"Biggest Collection: {biggest.cellCollection.Count}:{biggest.AffiliatedTerrainType} - Average Size: {totalSize / hexCollections.Count}");
+			*/
 		}
 
 		public async UniTask AdvanceTime()

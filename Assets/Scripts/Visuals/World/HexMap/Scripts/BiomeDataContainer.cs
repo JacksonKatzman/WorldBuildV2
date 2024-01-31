@@ -11,6 +11,11 @@ namespace Game.Terrain
     {
         public List<BiomeData> biomeData;
 
+        public BiomeData GetBiomeData(BiomeTerrainType terrainType)
+        {
+            return biomeData.First(x => x.terrainType == terrainType);
+        }
+
         public int GetTextureIndex(BiomeTerrainType terrainType)
         {
             for(int i = 0; i < biomeData.Count; i++)

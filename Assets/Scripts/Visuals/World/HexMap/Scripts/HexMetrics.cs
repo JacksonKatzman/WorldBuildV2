@@ -58,6 +58,8 @@ namespace Game.Terrain
 
 		public const float hashGridScale = 0.25f;
 
+		public static int globalWaterLevel = 3;
+
 		static HexHash[] hashGrid;
 
 		static Vector3[] corners = {

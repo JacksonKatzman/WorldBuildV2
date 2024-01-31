@@ -4,6 +4,7 @@ using System.IO;
 using Game.Enums;
 using Sirenix.OdinInspector;
 using Game.Incidents;
+using System.Linq;
 
 namespace Game.Terrain
 {
@@ -393,6 +394,8 @@ namespace Game.Terrain
 			}
 		}
 
+		public BiomeData BiomeData => AssetService.Instance.BiomeDataContainer.GetBiomeData(BiomeSubtype);
+
 		public int Fertility { get; set; }
 
 		public int SearchPhase { get; set; }
@@ -473,6 +476,11 @@ namespace Game.Terrain
 			neighbors[(int)direction] = cell;
 			cell.neighbors[(int)direction.Opposite()] = this;
 		}
+
+		public bool IsNeighbor(HexCell cell)
+        {
+			return neighbors.Contains(cell);
+        }
 
 		public HexEdgeType GetEdgeType(HexDirection direction)
 		{
@@ -568,7 +576,7 @@ namespace Game.Terrain
 		{
 			if (
 				!roads[(int)direction] && !HasRiverThroughEdge(direction) &&
-				!HasLandmark && !GetNeighbor(direction).HasLandmark &&
+				!HasLandmark &&
 				GetElevationDifference(direction) <= 1
 			)
 			{
@@ -621,8 +629,11 @@ namespace Game.Terrain
 		void SetRoad(int index, bool state)
 		{
 			roads[index] = state;
-			neighbors[index].roads[(int)((HexDirection)index).Opposite()] = state;
-			neighbors[index].RefreshSelfOnly();
+			if (neighbors[index])
+			{
+				neighbors[index].roads[(int)((HexDirection)index).Opposite()] = state;
+				neighbors[index].RefreshSelfOnly();
+			}
 			RefreshSelfOnly();
 		}
 

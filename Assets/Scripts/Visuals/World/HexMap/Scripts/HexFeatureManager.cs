@@ -1,5 +1,6 @@
 ﻿using Game.Incidents;
 using Game.Utilities;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Terrain
@@ -16,7 +17,14 @@ namespace Game.Terrain
 		{
 			if (container)
 			{
-				Destroy(container.gameObject);
+				if(Application.isEditor)
+                {
+					DestroyImmediate(container.gameObject);
+				}
+				else
+                {
+					Destroy(container.gameObject);
+				}
 			}
 			container = new GameObject("Features Container").transform;
 			container.SetParent(transform, false);
@@ -164,11 +172,67 @@ namespace Game.Terrain
 			}
 		}
 
+		public void AddHexFeature(HexCell cell, Vector3 position)
+		{
+			//if rivers AND roads, use the blank configurable type, pass it info about what lines are taken, and fill in the gaps
+			//else if mountain, grab mountains
+			//same with hills
+			//the tiles will all have to handle landmarks and cities as well.
+			Transform instance = Instantiate(AssetService.Instance.basePrefab);
+			instance.localPosition = position;
+			instance.SetParent(container, false);
+		}
+
 		public void AddMountain(HexCell cell, Vector3 position)
         {
+			if(cell.HasRiver)
+            {
+				return;
+            }
 			Transform instance = Instantiate(AssetService.Instance.testMountain);
 			instance.localPosition = position;
 			instance.localRotation = Quaternion.Euler(0f, SimRandom.RandomRange(0,5) * 60.0f, 0f);
+			//instance.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+			List<HexCell> smallerNeighbors = new List<HexCell>();
+			for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
+			{
+				HexCell neighbor = cell.GetNeighbor(d);
+				if(neighbor.Elevation < cell.Elevation)
+                {
+					smallerNeighbors.Add(neighbor);
+                }
+			}
+
+			var finalNeighbors = new List<HexCell>();
+
+			if(smallerNeighbors.Count == 0)
+            {
+				instance.localScale = new Vector3(1.4f, 1.4f, 1.4f);
+			}
+			else if(smallerNeighbors.Count == 3 && smallerNeighbors[1].IsNeighbor(smallerNeighbors[0]) && smallerNeighbors[1].IsNeighbor(smallerNeighbors[2]))
+            {
+				finalNeighbors.AddRange(smallerNeighbors);
+            }
+			else if(smallerNeighbors.Count == 2 && smallerNeighbors[0].IsNeighbor(smallerNeighbors[1]))
+            {
+				finalNeighbors.AddRange(smallerNeighbors);
+			}
+			else if(smallerNeighbors.Count == 1)
+            {
+				finalNeighbors.AddRange(smallerNeighbors);
+			}
+
+			if(finalNeighbors.Count > 0)
+            {
+				instance.localScale = new Vector3(1.35f, 1.35f, 1.35f);
+			}
+
+			foreach (var final in finalNeighbors)
+			{
+				var moveVector = new Vector3(final.Position.x - cell.Position.x, 0.0f, final.Position.z - cell.Position.z) / 10;
+				instance.localPosition = instance.localPosition - moveVector;
+			}
+
 			instance.SetParent(container, false);
 		}
 

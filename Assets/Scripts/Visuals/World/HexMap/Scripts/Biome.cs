@@ -77,7 +77,7 @@ namespace Game.Terrain
 		};
 		*/
 
-		public static BiomeTerrainType CalculateTerrainType(HexCell cell, float temperature, float moistureLevel, int elevationMaximum, int waterLevel)
+		public static BiomeTerrainType CalculateTerrainType(HexCell cell, float temperature, float moistureLevel, int elevationMaximum)
 		{
 			if (!cell.IsUnderwater)
             {
@@ -93,8 +93,10 @@ namespace Game.Terrain
 					moistureLevel += 0.25f;
                 }
 
+				cell.SetLabel((cell.Elevation - HexMetrics.globalWaterLevel).ToString());
+
 				moistureLevel = Mathf.Clamp01(moistureLevel);
-				var elevation = cell.Elevation - waterLevel;
+				var elevation = cell.Elevation - HexMetrics.globalWaterLevel;
 
 				//really i just need to simplify - cut out unnecessary biomes down to like 5 and make sure the numbers line up, then worry about veg
 				var heightMatches = container.biomeData.Where(x => elevation >= x.minHeight && elevation <= x.maxHeight);

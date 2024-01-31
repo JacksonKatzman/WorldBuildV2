@@ -18,6 +18,8 @@ namespace Game.Terrain
         public float minTemperature, maxTemperature;
         [Range(0.0f, 1.0f)]
         public float minMoisture, maxMoisture;
+        public int mountainThreshold = 6;
+        public int hillThreshold = 5;
 
         public int GetTextureIndex()
         {

@@ -83,7 +83,7 @@ namespace Game.Terrain
 		public int riverPercentage = 10;
 
 		[Range(0f, 1f)]
-		public float extaLakeProbability = 0.25f;
+		public float extraLakeProbability = 0.25f;
 
 		[Range(0f, 1f)]
 		public float lowTemperature = 0f;
@@ -171,13 +171,15 @@ namespace Game.Terrain
 				grid.GetCell(i).WaterLevel = waterLevel;
 			}
 
+			HexMetrics.globalWaterLevel = waterLevel;
+
 			CreateRegions();
 			CreateLand();
 			ErodeLand();
 			CreateClimate();
 			CreateRivers();
 			SetTerrainType();
-			GenerateHexCollections();
+			//GenerateHexCollections();
 
 			for (int i = 0; i < cellCount; i++)
 			{
@@ -730,7 +732,7 @@ namespace Game.Terrain
 
 				if (
 					minNeighborElevation >= cell.Elevation &&
-					Random.value < extaLakeProbability
+					Random.value < extraLakeProbability
 				)
 				{
 					cell.WaterLevel = cell.Elevation;
@@ -758,7 +760,7 @@ namespace Game.Terrain
 				averageTemp += temperature;
 				float moisture = climate[i].moisture;
 
-				var biome = Biome.CalculateTerrainType(cell, temperature, moisture, elevationMaximum, waterLevel);
+				var biome = Biome.CalculateTerrainType(cell, temperature, moisture, elevationMaximum);
 				cell.BiomeSubtype = biome;
 				cell.IsMountainous = cell.Elevation >= elevationMaximum * 0.75f;
 			}

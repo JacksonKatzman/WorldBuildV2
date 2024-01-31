@@ -21,6 +21,11 @@ namespace Game.Terrain
 
 		void Awake()
 		{
+			InitMesh();
+		}
+
+		public void InitMesh()
+        {
 			GetComponent<MeshFilter>().mesh = hexMesh = new Mesh();
 			hexMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
 			if (useCollider)

@@ -14,6 +14,7 @@ namespace Game.Incidents
 		public SerializedObjectCollectionContainer objectData;
 		public Dictionary<CreatureType, NamingThemePreset> monsterPresets;
 		public Transform testMountain;
+		public Transform basePrefab;
 
 		[SerializeField]
 		private BiomeDataContainer biomeDataContainer;
