@@ -1,6 +1,7 @@
 ﻿using Game.Incidents;
 using Game.Utilities;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Terrain
@@ -10,6 +11,7 @@ namespace Game.Terrain
 		public HexMesh walls;
 
 		public AssetCollection assetCollection;
+		public ConfigurableHexTerrain configurableHexTerrainPrefab;
 
 		Transform container;
 
@@ -182,21 +184,64 @@ namespace Game.Terrain
 			//instance.localPosition = position;
 			//instance.SetParent(container, false);
 			var biomeData = AssetService.Instance.BiomeDataContainer.GetBiomeData(cell.BiomeSubtype);
-			if(biomeData.hillThreshold > cell.Elevation - HexMetrics.globalWaterLevel && !cell.HasRiver)
+			if(biomeData.hillThreshold > cell.Elevation - HexMetrics.globalWaterLevel)
             {
-				var assetContainer = biomeData.hexConfigurationAssetContainer;
-				if(assetContainer != null)
-                {
-					var instance = Instantiate(assetContainer.roadsOnly[0]);
-					instance.transform.localPosition = position;
-					instance.transform.SetParent(container, false);
+				var configurableHexTerrain = Instantiate(configurableHexTerrainPrefab);
+				configurableHexTerrain.transform.localPosition = position;
+				configurableHexTerrain.transform.SetParent(container, false);
+				var rotation = 0;
 
-					var configurableHexTerrain = instance.GetComponent<ConfigurableHexTerrain>();
-					foreach(var placeholder in configurableHexTerrain.placeholders)
-                    {
+				/*
+				foreach(var placeholder in configurableHexTerrain.placeholders)
+                {
+					var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
+					var doodad = Instantiate(doodadPrefab);
+					doodad.transform.localPosition = placeholder.transform.position;
+					doodad.transform.SetParent(container, false);
+				}
+				*/
+				var placeholderPositions = new List<Vector3>();
+				if(!cell.HasRiver)
+                {
+					for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
+					{
+						var degrees = (((int)d) * 60) + rotation;
+						var template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyBaseTemplates);
+						template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+						placeholderPositions.AddRange(template.GetComponentsInChildren<Transform>(true).Select(x => x.position));
+
+						if (!cell.HasRoadThroughEdge(d))
+                        {
+							template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyRoadTemplates);
+							template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+							placeholderPositions.AddRange(template.GetComponentsInChildren<Transform>(true).Select(x => x.position));
+
+							if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation && (d < Terrain.HexDirection.SW))
+							{
+								template = SimRandom.RandomEntryFromList(configurableHexTerrain.fullOffTemplates);
+								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+								placeholderPositions.AddRange(template.GetComponentsInChildren<Transform>(true).Select(x => x.position));
+							}
+						}
+						else
+                        {
+							if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation && (d < Terrain.HexDirection.SW))
+							{
+								template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyOffTemplates);
+								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+								placeholderPositions.AddRange(template.GetComponentsInChildren<Transform>(true).Select(x => x.position));
+							}
+						}
+					}
+				}
+
+				if(biomeData.foliageAssets.Count > 0)
+                {
+					foreach (var placeholder in placeholderPositions)
+					{
 						var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
 						var doodad = Instantiate(doodadPrefab);
-						doodad.transform.localPosition = placeholder.transform.position;
+						doodad.transform.localPosition = placeholder;
 						doodad.transform.SetParent(container, false);
 					}
 				}

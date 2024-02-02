@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walls: {fileID: 114000013599494320}
   assetCollection: {fileID: 11400000, guid: 3cfab040ef8600b4bb1298d79481b61e, type: 2}
+  configurableHexTerrainPrefab: {fileID: 6664468219239619615, guid: 7b115ecd59ffeda4885b93e81af11902, type: 3}
 --- !u!1 &1000010636493760
 GameObject:
   m_ObjectHideFlags: 0

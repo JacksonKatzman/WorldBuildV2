@@ -35,15 +35,15 @@ namespace Game.Terrain
         public void StraightRiver()
         {
             RemoveRivers();
-            cell.SetOutgoingRiver(HexDirection.W);
-            cell.GetNeighbor(HexDirection.E).SetOutgoingRiver(HexDirection.W);
+            cell.SetOutgoingRiver(HexDirection.SW);
+            cell.GetNeighbor(HexDirection.NE).SetOutgoingRiver(HexDirection.SW);
         }
 
         [Button("Curved River")]
         public void CurvedRiver()
         {
             RemoveRivers();
-            cell.SetOutgoingRiver(HexDirection.W);
+            cell.SetOutgoingRiver(HexDirection.SE);
             cell.GetNeighbor(HexDirection.NE).SetOutgoingRiver(HexDirection.SW);
         }
 
@@ -51,8 +51,8 @@ namespace Game.Terrain
         public void SharpRiver()
         {
             RemoveRivers();
-            cell.SetOutgoingRiver(HexDirection.W);
-            cell.GetNeighbor(HexDirection.NW).SetOutgoingRiver(HexDirection.SE);
+            cell.SetOutgoingRiver(HexDirection.E);
+            cell.GetNeighbor(HexDirection.NE).SetOutgoingRiver(HexDirection.SW);
         }
 
         public bool[] roads = new bool[6];
