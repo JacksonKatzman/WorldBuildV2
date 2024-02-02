@@ -59,7 +59,7 @@ namespace Game.Terrain
 
 		public void RefreshTerrain(HexCell cell)
 		{
-			cellTextureData[cell.Index].a = (byte)cell.TerrainTypeIndex;
+			cellTextureData[cell.Index].a = (byte)cell.TerrainTextureIndex;
 			enabled = true;
 		}
 

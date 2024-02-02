@@ -316,17 +316,17 @@ namespace Game.Terrain
 			}
 		}
 
-		public int TerrainTypeIndex
+		public int TerrainTextureIndex
 		{
 			get
 			{
-				return terrainTypeIndex;
+				return terrainTextureIndex;
 			}
 			private set
 			{
-				if (terrainTypeIndex != value)
+				if (terrainTextureIndex != value)
 				{
-					terrainTypeIndex = value;
+					terrainTextureIndex = value;
 					ShaderData.RefreshTerrain(this);
 				}
 			}
@@ -389,7 +389,7 @@ namespace Game.Terrain
 			set
 			{
 				terrainType = value;
-				TerrainTypeIndex = AssetService.Instance.BiomeDataContainer.GetTextureIndex(terrainType);
+				TerrainTextureIndex = AssetService.Instance.BiomeDataContainer.GetTextureIndex(terrainType);
 				RefreshSelfOnly();
 			}
 		}
@@ -407,7 +407,7 @@ namespace Game.Terrain
 
 		BiomeTerrainType terrainType;
 
-		int terrainTypeIndex;
+		int terrainTextureIndex;
 
 		int elevation = int.MinValue;
 		int waterLevel;

@@ -25,9 +25,15 @@ MonoBehaviour:
   textures:
   - texture: {fileID: 2800000, guid: e1c16c0e248d2044097fcad53b697e4e, type: 3}
     weight: 1
+  - texture: {fileID: 2800000, guid: 79d47e21bdf794205be5568cda11d59b, type: 3}
+    weight: 1
+  hexConfigurationAssetContainer: {fileID: 0}
+  foliageAssets: []
   minHeight: 0
   maxHeight: 4
   minTemperature: 0
   maxTemperature: 0.175
   minMoisture: 0.1
   maxMoisture: 1
+  mountainThreshold: 6
+  hillThreshold: 5

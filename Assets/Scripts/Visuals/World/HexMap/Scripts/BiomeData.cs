@@ -13,6 +13,9 @@ namespace Game.Terrain
     {
         public BiomeTerrainType terrainType;
         public List<WeightedTexture> textures;
+        public HexConfigurationAssetContainer hexConfigurationAssetContainer;
+        public List<GameObject> foliageAssets;
+
         public int minHeight, maxHeight;
         [Range(0.0f, 1.0f)]
         public float minTemperature, maxTemperature;
@@ -24,16 +27,16 @@ namespace Game.Terrain
         public int GetTextureIndex()
         {
             var total = textures.Sum(x => x.weight);
-            var random = SimRandom.RandomRange(0, total);
+            var random = SimRandom.RandomRange(1, total + 1);
             for(int i = 0; i < textures.Count; i++)
             {
-                total -= textures[i].weight;
-                if(total <= random)
+                if((random -= textures[i].weight) <= 0)
                 {
                     return i;
                 }
             }
             return textures.Count - 1;
+
         }
     }
 

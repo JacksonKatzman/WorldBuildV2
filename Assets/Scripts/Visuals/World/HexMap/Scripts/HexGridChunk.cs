@@ -226,12 +226,16 @@ namespace Game.Terrain
 					features.AddSpecialFeature(cell, cell.Position);
 				}
 				*/
-				/*
-				if(cell.Elevation >= cell.BiomeData.mountainThreshold + HexMetrics.globalWaterLevel)
+				
+				if(cell.Elevation - HexMetrics.globalWaterLevel >= cell.BiomeData.mountainThreshold)
                 {
 					features.AddMountain(cell, cell.Position);
                 }
-				*/
+				else
+                {
+					features.AddHexFeature(cell, cell.Position);
+				}
+				
 				//features.AddHexFeature(cell, cell.Position);
 			}
 		}

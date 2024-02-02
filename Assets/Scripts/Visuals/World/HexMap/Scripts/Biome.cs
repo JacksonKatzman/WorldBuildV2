@@ -93,7 +93,8 @@ namespace Game.Terrain
 					moistureLevel += 0.25f;
                 }
 
-				cell.SetLabel((cell.Elevation - HexMetrics.globalWaterLevel).ToString());
+				//LABEL HEIGHT
+				//cell.SetLabel((cell.Elevation - HexMetrics.globalWaterLevel).ToString());
 
 				moistureLevel = Mathf.Clamp01(moistureLevel);
 				var elevation = cell.Elevation - HexMetrics.globalWaterLevel;
@@ -124,6 +125,8 @@ namespace Game.Terrain
                     }
                 }
 
+				//LABEL BIOME
+				cell.SetLabel(currentMatch.terrainType.ToString());
 				return currentMatch.terrainType;
 
 				/*

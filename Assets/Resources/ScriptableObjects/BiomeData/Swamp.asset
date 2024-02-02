@@ -23,11 +23,15 @@ MonoBehaviour:
     SerializationNodes: []
   terrainType: 0
   textures:
-  - texture: {fileID: 2800000, guid: 929876d3170205d4b9677030a3950a08, type: 3}
+  - texture: {fileID: 2800000, guid: 17b1aa89d6e0ec94688b39fac3b0b121, type: 3}
     weight: 1
+  hexConfigurationAssetContainer: {fileID: 0}
+  foliageAssets: []
   minHeight: 0
   maxHeight: 3
   minTemperature: 0.3
   maxTemperature: 1
   minMoisture: 0.7
   maxMoisture: 1
+  mountainThreshold: 6
+  hillThreshold: 5

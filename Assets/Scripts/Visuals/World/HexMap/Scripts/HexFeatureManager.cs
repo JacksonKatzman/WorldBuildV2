@@ -178,9 +178,29 @@ namespace Game.Terrain
 			//else if mountain, grab mountains
 			//same with hills
 			//the tiles will all have to handle landmarks and cities as well.
-			Transform instance = Instantiate(AssetService.Instance.basePrefab);
-			instance.localPosition = position;
-			instance.SetParent(container, false);
+			//Transform instance = Instantiate(AssetService.Instance.basePrefab);
+			//instance.localPosition = position;
+			//instance.SetParent(container, false);
+			var biomeData = AssetService.Instance.BiomeDataContainer.GetBiomeData(cell.BiomeSubtype);
+			if(biomeData.hillThreshold > cell.Elevation - HexMetrics.globalWaterLevel && !cell.HasRiver)
+            {
+				var assetContainer = biomeData.hexConfigurationAssetContainer;
+				if(assetContainer != null)
+                {
+					var instance = Instantiate(assetContainer.roadsOnly[0]);
+					instance.transform.localPosition = position;
+					instance.transform.SetParent(container, false);
+
+					var configurableHexTerrain = instance.GetComponent<ConfigurableHexTerrain>();
+					foreach(var placeholder in configurableHexTerrain.placeholders)
+                    {
+						var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
+						var doodad = Instantiate(doodadPrefab);
+						doodad.transform.localPosition = placeholder.transform.position;
+						doodad.transform.SetParent(container, false);
+					}
+				}
+			}
 		}
 
 		public void AddMountain(HexCell cell, Vector3 position)

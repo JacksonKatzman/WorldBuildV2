@@ -18,12 +18,16 @@ namespace Game.Terrain
 
         public int GetTextureIndex(BiomeTerrainType terrainType)
         {
+            var previousExtraTextures = 0;
             for(int i = 0; i < biomeData.Count; i++)
             {
                 if(biomeData[i].terrainType == terrainType)
                 {
-                    return i + biomeData[i].GetTextureIndex();
+                    var index = i + previousExtraTextures + biomeData[i].GetTextureIndex();
+                    var p = 0;
+                    return index;
                 }
+                previousExtraTextures += (biomeData[i].textures.Count - 1);
             }
             return 0 + biomeData[0].GetTextureIndex();
         }
@@ -39,7 +43,8 @@ namespace Game.Terrain
             //string path = "Materials/Terrain/Terrain Texture Array";
             string path = "TerrainTextureArray.asset";
             int length = biomeData.Count;
-            length += biomeData.Sum(x => x.textures.Count);
+            length += (biomeData.Sum(x => x.textures.Count) - length);
+            OutputLogger.Log($"Expected length of texture array: {length}.");
 
             Texture2D t = biomeData[0].textures[0].texture;
             Texture2DArray textureArray = new Texture2DArray(t.width, t.height, length, t.format, t.mipmapCount > 1);
@@ -47,22 +52,33 @@ namespace Game.Terrain
             textureArray.filterMode = t.filterMode;
             textureArray.wrapMode = t.wrapMode;
 
+            OutputLogger.Log($"Mipmap Count: {t.mipmapCount}.");
+
             int mismatchCount = 0;
+            int additionalTextures = 0;
+
             for(int i = 0; i < biomeData.Count; i++)
             {
-                var bd = biomeData[i];
-                for(int j = 0; j < bd.textures.Count; j++)
+                var currentBiomeData = biomeData[i];
+
+                for(int j = 0; j < currentBiomeData.textures.Count; j++)
                 {
-                    //m < t.mipMapCount seems wrong, fix later
-                    for(int m = 0; m < t.mipmapCount; m++)
+                    var tex = currentBiomeData.textures[j].texture;
+                    if(j > 0)
                     {
-                        var tex = bd.textures[j].texture;
+                        additionalTextures++;
+                    }
+                    OutputLogger.Log($"Adding Texture {tex.name} to array.");
+                    OutputLogger.Log($"Copying to position: {i + additionalTextures}");
+                    //m < t.mipMapCount seems wrong, fix later
+                    for (int m = 0; m < t.mipmapCount; m++)
+                    {
                         if (tex.width != t.width)
                         {
                             mismatchCount++;
                             OutputLogger.LogError($"Texture {tex.name} doesn't match size of other elements.");
                         }
-                        Graphics.CopyTexture(tex, 0, m, textureArray, i, m);
+                        Graphics.CopyTexture(tex, 0, m, textureArray, i+additionalTextures, m);
                     }
                 }
             }
