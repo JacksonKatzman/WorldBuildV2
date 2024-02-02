@@ -55,6 +55,14 @@ namespace Game.Terrain
             cell.GetNeighbor(HexDirection.NE).SetOutgoingRiver(HexDirection.SW);
         }
 
+        [Button("Outgoing River")]
+        public void OutgoingRiver()
+        {
+            RemoveRivers();
+            cell.SetOutgoingRiver(HexDirection.NE);
+            //cell.GetNeighbor(HexDirection.NE).SetOutgoingRiver(HexDirection.SW);
+        }
+
         public bool[] roads = new bool[6];
 
         [Button("Update Roads")]

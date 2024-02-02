@@ -8,6 +8,16 @@ namespace Game.Terrain
 {
 	public class HexFeatureManager : MonoBehaviour
 	{
+		private static Dictionary<int, int> CurvedRiverRotationByPowers = new Dictionary<int, int>
+		{
+			{5, 0}, {10, 60}, {20, 120}, {40, 180}, {17, 240}, {34, 300}
+		};
+
+		private static Dictionary<int, int> SharpRiverRotationByPowers = new Dictionary<int, int>
+		{
+			{3, 0}, {6, 60}, {12, 120}, {24, 180}, {48, 240}, {33, 300}
+		};
+
 		public HexMesh walls;
 
 		public AssetCollection assetCollection;
@@ -184,43 +194,35 @@ namespace Game.Terrain
 			//instance.localPosition = position;
 			//instance.SetParent(container, false);
 			var biomeData = AssetService.Instance.BiomeDataContainer.GetBiomeData(cell.BiomeSubtype);
-			if(biomeData.hillThreshold > cell.Elevation - HexMetrics.globalWaterLevel)
+			if(biomeData.mountainThreshold > cell.Elevation - HexMetrics.globalWaterLevel)
             {
 				var configurableHexTerrain = Instantiate(configurableHexTerrainPrefab);
 				configurableHexTerrain.transform.localPosition = position;
 				configurableHexTerrain.transform.SetParent(container, false);
 				var rotation = 0;
 
-				/*
-				foreach(var placeholder in configurableHexTerrain.placeholders)
-                {
-					var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
-					var doodad = Instantiate(doodadPrefab);
-					doodad.transform.localPosition = placeholder.transform.position;
-					doodad.transform.SetParent(container, false);
-				}
-				*/
 				var placeholderPositions = new List<Vector3>();
 				if(!cell.HasRiver)
                 {
+					
 					for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
 					{
 						var degrees = (((int)d) * 60) + rotation;
 						var template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyBaseTemplates);
 						template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-						placeholderPositions.AddRange(template.GetComponentsInChildren<Transform>(true).Select(x => x.position));
+						placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
 
 						if (!cell.HasRoadThroughEdge(d))
                         {
 							template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyRoadTemplates);
 							template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-							placeholderPositions.AddRange(template.GetComponentsInChildren<Transform>(true).Select(x => x.position));
+							placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
 
 							if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation && (d < Terrain.HexDirection.SW))
 							{
 								template = SimRandom.RandomEntryFromList(configurableHexTerrain.fullOffTemplates);
 								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-								placeholderPositions.AddRange(template.GetComponentsInChildren<Transform>(true).Select(x => x.position));
+								placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
 							}
 						}
 						else
@@ -229,20 +231,93 @@ namespace Game.Terrain
 							{
 								template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyOffTemplates);
 								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-								placeholderPositions.AddRange(template.GetComponentsInChildren<Transform>(true).Select(x => x.position));
+								placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
 							}
 						}
 					}
+					
 				}
+				else if(cell.HasIncomingRiver && cell.HasOutgoingRiver)
+                {
+					var riverOrientation = Mathf.Abs(((int)cell.IncomingRiver) - ((int)cell.OutgoingRiver));
+					var rot = Mathf.Abs(((int)Terrain.HexDirection.NE) - ((int)cell.IncomingRiver));
+					rotation = rot * 60;
+					if (riverOrientation == 3)
+                    {
+						//straight
+						var template = cell.HasRoads? SimRandom.RandomEntryFromList(configurableHexTerrain.riverAndRoadsStraightTemplates) :
+							SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlyStraightTemplates);
+						template.transform.localRotation = Quaternion.Euler(0f, rotation, 0f);
+						placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
+					}
+					else if(riverOrientation == 2 || riverOrientation == 4)
+                    {
+						//curved
+						var powerKey = (int)(Mathf.Pow(2, (int)cell.IncomingRiver) + Mathf.Pow(2, (int)cell.OutgoingRiver));
+						rotation = CurvedRiverRotationByPowers[powerKey];
+						var template = cell.HasRoads ? SimRandom.RandomEntryFromList(configurableHexTerrain.riverAndRoadsCurvedTemplates) :
+							SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlyCurvedTemplates);
+						template.transform.localRotation = Quaternion.Euler(0f, rotation, 0f);
+						placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
+					}
+					else
+                    {
+						//sharp
+						var powerKey = (int)(Mathf.Pow(2, (int)cell.IncomingRiver) + Mathf.Pow(2, (int)cell.OutgoingRiver));
+						rotation = SharpRiverRotationByPowers[powerKey];
+						var template = cell.HasRoads ? SimRandom.RandomEntryFromList(configurableHexTerrain.riverAndRoadsSharpTemplates) :
+							SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlySharpTemplates);
+						template.transform.localRotation = Quaternion.Euler(0f, rotation, 0f);
+						placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
+					}
 
-				if(biomeData.foliageAssets.Count > 0)
+					//handle the offs here
+					
+					for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.SE; d++)
+					{
+						if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation)
+						{
+							var degrees = Mathf.Abs(0 - (int)d) * 60;
+
+							if (cell.IncomingRiver == d || cell.OutgoingRiver == d)
+							{
+								var template = SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlyOffTemplates);
+								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+								placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
+							}
+							else if(cell.HasRoadThroughEdge(d))
+                            {
+								var template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyOffTemplates);
+								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+								placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
+							}
+							else
+                            {
+								var template = SimRandom.RandomEntryFromList(configurableHexTerrain.fullOffTemplates);
+								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+								placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
+							}
+						}
+					}			
+				}
+				else if (cell.HasIncomingRiver && cell.HasOutgoingRiver && cell.HasRoads)
+                {
+
+                }
+
+					//gonna have to do outgoing rivers at some point but they have to do with mountains
+
+				if (biomeData.foliageAssets.Count > 0)
                 {
 					foreach (var placeholder in placeholderPositions)
 					{
-						var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
-						var doodad = Instantiate(doodadPrefab);
-						doodad.transform.localPosition = placeholder;
-						doodad.transform.SetParent(container, false);
+						if (placeholder != Vector3.zero)
+						{
+							var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
+							var doodad = Instantiate(doodadPrefab);
+							doodad.transform.localPosition = placeholder;
+							doodad.transform.SetParent(container, false);
+						}
 					}
 				}
 			}

@@ -16,7 +16,12 @@ namespace Game.Terrain
         public List<GameObject> riverOnlyStraightTemplates;
         public List<GameObject> riverOnlyCurvedTemplates;
         public List<GameObject> riverOnlySharpTemplates;
+        public List<GameObject> riverOnlyStartTemplates;
         public List<GameObject> riverOnlyOffTemplates;
+        public List<GameObject> riverAndRoadsStraightTemplates;
+        public List<GameObject> riverAndRoadsCurvedTemplates;
+        public List<GameObject> riverAndRoadsSharpTemplates;
+        public List<GameObject> riverAndRoadsRoadTemplates;
 
         /*
         public GameObject fullOffPos1, fullOffPos2, fullOffPos3, fullOffPos4, fullOffPos5, fullOffPos6;

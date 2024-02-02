@@ -32,7 +32,7 @@ namespace Game.Terrain
 
 		public const float cellPerturbStrength = 0f;// 3f; //4f
 
-		public const float elevationPerturbStrength = 0.0f;//1.0f; //1.5f
+		public const float elevationPerturbStrength = 0.2f;//1.0f; //1.5f
 
 		public const float streamBedElevationOffset = -1.75f;
 
