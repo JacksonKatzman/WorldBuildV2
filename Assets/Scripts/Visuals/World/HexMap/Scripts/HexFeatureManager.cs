@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.Terrain
 {
-	public class HexFeatureManager : MonoBehaviour
+    public class HexFeatureManager : MonoBehaviour
 	{
 		private static Dictionary<int, int> CurvedRiverRotationByPowers = new Dictionary<int, int>
 		{
@@ -186,153 +186,66 @@ namespace Game.Terrain
 
 		public void AddHexFeature(HexCell cell, Vector3 position)
 		{
-			//if rivers AND roads, use the blank configurable type, pass it info about what lines are taken, and fill in the gaps
-			//else if mountain, grab mountains
-			//same with hills
-			//the tiles will all have to handle landmarks and cities as well.
-			//Transform instance = Instantiate(AssetService.Instance.basePrefab);
-			//instance.localPosition = position;
-			//instance.SetParent(container, false);
-			var biomeData = AssetService.Instance.BiomeDataContainer.GetBiomeData(cell.BiomeSubtype);
-			if(biomeData.mountainThreshold > cell.Elevation - HexMetrics.globalWaterLevel)
+			var biomeData = cell.BiomeData;
+			var container = new AssetPositionInformationContainer();
+
+			if(cell.Elevation - HexMetrics.globalWaterLevel < biomeData.hillThreshold)
             {
-				var configurableHexTerrain = Instantiate(configurableHexTerrainPrefab);
-				configurableHexTerrain.transform.localPosition = position;
-				configurableHexTerrain.transform.SetParent(container, false);
-				var rotation = 0;
+				AddFlatTerrain(cell, position, biomeData, ref container);
+			}
+			else
+            {
+				AddMountain(cell, position, biomeData, ref container);
+            }
 
-				var placeholderPositions = new List<Vector3>();
-				if(!cell.HasRiver)
-                {
-					
-					for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
-					{
-						var degrees = (((int)d) * 60) + rotation;
-						var template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyBaseTemplates);
-						template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-						placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
-
-						if (!cell.HasRoadThroughEdge(d))
-                        {
-							template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyRoadTemplates);
-							template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-							placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
-
-							if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation && (d < Terrain.HexDirection.SW))
-							{
-								template = SimRandom.RandomEntryFromList(configurableHexTerrain.fullOffTemplates);
-								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-								placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
-							}
-						}
-						else
-                        {
-							if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation && (d < Terrain.HexDirection.SW))
-							{
-								template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyOffTemplates);
-								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-								placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
-							}
-						}
-					}
-					
-				}
-				else if(cell.HasIncomingRiver && cell.HasOutgoingRiver)
-                {
-					var riverOrientation = Mathf.Abs(((int)cell.IncomingRiver) - ((int)cell.OutgoingRiver));
-					var rot = Mathf.Abs(((int)Terrain.HexDirection.NE) - ((int)cell.IncomingRiver));
-					rotation = rot * 60;
-					if (riverOrientation == 3)
-                    {
-						//straight
-						var template = cell.HasRoads? SimRandom.RandomEntryFromList(configurableHexTerrain.riverAndRoadsStraightTemplates) :
-							SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlyStraightTemplates);
-						template.transform.localRotation = Quaternion.Euler(0f, rotation, 0f);
-						placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
-					}
-					else if(riverOrientation == 2 || riverOrientation == 4)
-                    {
-						//curved
-						var powerKey = (int)(Mathf.Pow(2, (int)cell.IncomingRiver) + Mathf.Pow(2, (int)cell.OutgoingRiver));
-						rotation = CurvedRiverRotationByPowers[powerKey];
-						var template = cell.HasRoads ? SimRandom.RandomEntryFromList(configurableHexTerrain.riverAndRoadsCurvedTemplates) :
-							SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlyCurvedTemplates);
-						template.transform.localRotation = Quaternion.Euler(0f, rotation, 0f);
-						placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
-					}
-					else
-                    {
-						//sharp
-						var powerKey = (int)(Mathf.Pow(2, (int)cell.IncomingRiver) + Mathf.Pow(2, (int)cell.OutgoingRiver));
-						rotation = SharpRiverRotationByPowers[powerKey];
-						var template = cell.HasRoads ? SimRandom.RandomEntryFromList(configurableHexTerrain.riverAndRoadsSharpTemplates) :
-							SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlySharpTemplates);
-						template.transform.localRotation = Quaternion.Euler(0f, rotation, 0f);
-						placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
-					}
-
-					//handle the offs here
-					
-					for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.SE; d++)
-					{
-						if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation)
-						{
-							var degrees = Mathf.Abs(0 - (int)d) * 60;
-
-							if (cell.IncomingRiver == d || cell.OutgoingRiver == d)
-							{
-								var template = SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlyOffTemplates);
-								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-								placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
-							}
-							else if(cell.HasRoadThroughEdge(d))
-                            {
-								var template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyOffTemplates);
-								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-								placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
-							}
-							else
-                            {
-								var template = SimRandom.RandomEntryFromList(configurableHexTerrain.fullOffTemplates);
-								template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
-								placeholderPositions.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true).Select(x => x.transform.position));
-							}
-						}
-					}			
-				}
-				else if (cell.HasIncomingRiver && cell.HasOutgoingRiver && cell.HasRoads)
-                {
-
-                }
-
-					//gonna have to do outgoing rivers at some point but they have to do with mountains
-
-				if (biomeData.foliageAssets.Count > 0)
-                {
-					foreach (var placeholder in placeholderPositions)
-					{
-						if (placeholder != Vector3.zero)
-						{
-							var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
-							var doodad = Instantiate(doodadPrefab);
-							doodad.transform.localPosition = placeholder;
-							doodad.transform.SetParent(container, false);
-						}
-					}
+			if (biomeData.foliageAssets.Count > 0)
+			{
+				foreach (var placeholder in container.positionInformation)
+				{
+					var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
+					var doodad = Instantiate(doodadPrefab);
+					doodad.transform.localPosition = placeholder.position;
+					doodad.transform.SetParent(this.container, false);
 				}
 			}
 		}
 
-		public void AddMountain(HexCell cell, Vector3 position)
+		public void AddMountain(HexCell cell, Vector3 position, BiomeData biomeData, ref AssetPositionInformationContainer container)
         {
-			if(cell.HasRiver)
+			if(cell.HasIncomingRiver && cell.HasOutgoingRiver)
             {
 				return;
             }
-			Transform instance = Instantiate(AssetService.Instance.testMountain);
+
+			Transform instance = null;
+			if(cell.Elevation - HexMetrics.globalWaterLevel >= biomeData.mountainThreshold)
+            {
+				//mountain
+				instance = cell.HasOutgoingRiver ? 
+				Instantiate(SimRandom.RandomEntryFromList(biomeData.riverStartMountainAssets)).transform :
+				Instantiate(SimRandom.RandomEntryFromList(biomeData.mountainAssets)).transform;
+			}
+			else
+            {
+				//hills
+				instance = cell.HasOutgoingRiver ?
+				Instantiate(SimRandom.RandomEntryFromList(biomeData.riverStartHillAssets)).transform :
+				Instantiate(SimRandom.RandomEntryFromList(biomeData.hillAssets)).transform;
+			}
+
+			container.AddRange(instance.GetComponentsInChildren<AssetPlaceholder>());
 			instance.localPosition = position;
-			instance.localRotation = Quaternion.Euler(0f, SimRandom.RandomRange(0,5) * 60.0f, 0f);
-			//instance.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+			if (cell.HasOutgoingRiver)
+			{
+				instance.localRotation = Quaternion.Euler(0f, ((int)cell.OutgoingRiver) * 60.0f, 0f);
+			}
+			else
+			{
+				instance.localRotation = Quaternion.Euler(0f, SimRandom.RandomRange(0, 5) * 60.0f, 0f);
+			}
+
+			//instance.GetComponent<TerrainTextureUpdater>().UpdateTerrainTexture(biomeData.terrainMaterial);
+
 			List<HexCell> smallerNeighbors = new List<HexCell>();
 			for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
 			{
@@ -373,7 +286,114 @@ namespace Game.Terrain
 				instance.localPosition = instance.localPosition - moveVector;
 			}
 
-			instance.SetParent(container, false);
+			instance.SetParent(this.container, false);
+		}
+
+		public void AddFlatTerrain(HexCell cell, Vector3 position, BiomeData biomeData, ref AssetPositionInformationContainer container)
+        {
+			var configurableHexTerrain = Instantiate(configurableHexTerrainPrefab);
+			configurableHexTerrain.transform.localPosition = position;
+			configurableHexTerrain.transform.SetParent(this.container, false);
+			var rotation = 0;
+
+			if (!cell.HasRiver)
+			{
+
+				for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
+				{
+					var degrees = (((int)d) * 60) + rotation;
+					var template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyBaseTemplates);
+					template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+					container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+
+					if (!cell.HasRoadThroughEdge(d))
+					{
+						template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyRoadTemplates);
+						template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+						container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+
+						if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation && (d < Terrain.HexDirection.SW))
+						{
+							template = SimRandom.RandomEntryFromList(configurableHexTerrain.fullOffTemplates);
+							template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+							container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+						}
+					}
+					else
+					{
+						if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation && (d < Terrain.HexDirection.SW))
+						{
+							template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyOffTemplates);
+							template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+							container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+						}
+					}
+				}
+
+			}
+			else if (cell.HasIncomingRiver && cell.HasOutgoingRiver)
+			{
+				var riverOrientation = Mathf.Abs(((int)cell.IncomingRiver) - ((int)cell.OutgoingRiver));
+				var rot = Mathf.Abs(((int)Terrain.HexDirection.NE) - ((int)cell.IncomingRiver));
+				rotation = rot * 60;
+				if (riverOrientation == 3)
+				{
+					//straight
+					var template = cell.HasRoads ? SimRandom.RandomEntryFromList(configurableHexTerrain.riverAndRoadsStraightTemplates) :
+						SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlyStraightTemplates);
+					template.transform.localRotation = Quaternion.Euler(0f, rotation, 0f);
+					container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+				}
+				else if (riverOrientation == 2 || riverOrientation == 4)
+				{
+					//curved
+					var powerKey = (int)(Mathf.Pow(2, (int)cell.IncomingRiver) + Mathf.Pow(2, (int)cell.OutgoingRiver));
+					rotation = CurvedRiverRotationByPowers[powerKey];
+					var template = cell.HasRoads ? SimRandom.RandomEntryFromList(configurableHexTerrain.riverAndRoadsCurvedTemplates) :
+						SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlyCurvedTemplates);
+					template.transform.localRotation = Quaternion.Euler(0f, rotation, 0f);
+					container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+				}
+				else
+				{
+					//sharp
+					var powerKey = (int)(Mathf.Pow(2, (int)cell.IncomingRiver) + Mathf.Pow(2, (int)cell.OutgoingRiver));
+					rotation = SharpRiverRotationByPowers[powerKey];
+					var template = cell.HasRoads ? SimRandom.RandomEntryFromList(configurableHexTerrain.riverAndRoadsSharpTemplates) :
+						SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlySharpTemplates);
+					template.transform.localRotation = Quaternion.Euler(0f, rotation, 0f);
+					container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+				}
+
+				//handle the offs here
+
+				for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.SE; d++)
+				{
+					if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation)
+					{
+						var degrees = Mathf.Abs(0 - (int)d) * 60;
+
+						if (cell.IncomingRiver == d || cell.OutgoingRiver == d)
+						{
+							var template = SimRandom.RandomEntryFromList(configurableHexTerrain.riverOnlyOffTemplates);
+							template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+							container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+						}
+						else if (cell.HasRoadThroughEdge(d))
+						{
+							var template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyOffTemplates);
+							template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+							container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+						}
+						else
+						{
+							var template = SimRandom.RandomEntryFromList(configurableHexTerrain.fullOffTemplates);
+							template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+							container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+						}
+					}
+				}
+			}	
 		}
 
 		public void AddSpecialFeature(HexCell cell, Vector3 position)

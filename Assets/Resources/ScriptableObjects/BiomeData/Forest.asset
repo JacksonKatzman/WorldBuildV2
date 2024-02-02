@@ -25,7 +25,15 @@ MonoBehaviour:
   textures:
   - texture: {fileID: 2800000, guid: 929876d3170205d4b9677030a3950a08, type: 3}
     weight: 1
-  hexConfigurationAssetContainer: {fileID: 11400000, guid: 2e4ad7e11a313ac4c8d328f4ad907dab, type: 2}
+  terrainMaterial: {fileID: 2100000, guid: 56c296577bc890b468d8e96ffbaa3ab7, type: 2}
+  mountainAssets:
+  - {fileID: 1000010046023388, guid: 413abf1ff08f25c498f5b98960e92367, type: 3}
+  riverStartMountainAssets:
+  - {fileID: 1000010046023388, guid: 413abf1ff08f25c498f5b98960e92367, type: 3}
+  hillAssets:
+  - {fileID: 1000010046023388, guid: 123de41ee0db8a64d872c93d1b016365, type: 3}
+  riverStartHillAssets:
+  - {fileID: 1000010046023388, guid: 123de41ee0db8a64d872c93d1b016365, type: 3}
   foliageAssets:
   - {fileID: 4596200342042884244, guid: 00c2f70d31e847e4a97db78b0ce39de5, type: 3}
   - {fileID: 2427202774441151951, guid: 723da84127395144396392a0f049001d, type: 3}

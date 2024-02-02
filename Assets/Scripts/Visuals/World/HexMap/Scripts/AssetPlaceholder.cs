@@ -7,9 +7,7 @@ namespace Game.Terrain
     {
         public enum AssetType { Foliage, Doodad }
         public AssetType assetType;
-        public bool canBeDisabled;
-        [ShowIf("@this.canBeDisabled")]
-        public HexDirection directionLocation;
+        public Vector3 baseScale = new Vector3(1.0f, 1.0f, 1.0f);
 
         public void ToggleShow(bool on)
         {

@@ -94,7 +94,7 @@ namespace Game.Terrain
 				var borderCells = grid.GetHexCells(borderCellIndices);
 				foreach (var cell in borderCells)
 				{
-					features.AddMountain(cell, cell.Position);
+					//features.AddMountain(cell, cell.Position);
 				}
 				/*
 				var maxHeight = collection.GetMaxElevation();
@@ -226,17 +226,18 @@ namespace Game.Terrain
 					features.AddSpecialFeature(cell, cell.Position);
 				}
 				*/
-				
+				/*
 				if(cell.Elevation - HexMetrics.globalWaterLevel >= cell.BiomeData.mountainThreshold)
                 {
-					features.AddMountain(cell, cell.Position);
+					//features.AddMountain(cell, cell.Position);
                 }
 				else
                 {
 					features.AddHexFeature(cell, cell.Position);
 				}
+				*/
 				
-				//features.AddHexFeature(cell, cell.Position);
+				features.AddHexFeature(cell, cell.Position);
 			}
 		}
 

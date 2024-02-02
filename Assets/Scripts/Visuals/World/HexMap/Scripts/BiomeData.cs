@@ -13,7 +13,11 @@ namespace Game.Terrain
     {
         public BiomeTerrainType terrainType;
         public List<WeightedTexture> textures;
-        public HexConfigurationAssetContainer hexConfigurationAssetContainer;
+        public Material terrainMaterial;
+        public List<GameObject> mountainAssets;
+        public List<GameObject> riverStartMountainAssets;
+        public List<GameObject> hillAssets;
+        public List<GameObject> riverStartHillAssets;
         public List<GameObject> foliageAssets;
 
         public int minHeight, maxHeight;

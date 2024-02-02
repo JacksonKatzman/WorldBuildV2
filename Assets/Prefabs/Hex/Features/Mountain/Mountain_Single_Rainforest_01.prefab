@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011665626236}
   m_Layer: 0
-  m_Name: Moutain_Single_Gray_01
+  m_Name: Mountain_Single_Rainforest_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -232,6 +232,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a94948240e9bc0543be8bba01838e18b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 56c296577bc890b468d8e96ffbaa3ab7, type: 2}
     - target: {fileID: 919132149155446097, guid: a94948240e9bc0543be8bba01838e18b, type: 3}
       propertyPath: m_Name
       value: Mountain_Single_Grass_01

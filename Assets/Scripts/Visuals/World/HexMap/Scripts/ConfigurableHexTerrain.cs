@@ -8,6 +8,7 @@ namespace Game.Terrain
     {
         public List<AssetPlaceholder> placeholders;
         public List<GameObject> doodads;
+        public Transform center;
 
         public List<GameObject> roadOnlyBaseTemplates;
         public List<GameObject> roadOnlyRoadTemplates;
@@ -22,6 +23,7 @@ namespace Game.Terrain
         public List<GameObject> riverAndRoadsCurvedTemplates;
         public List<GameObject> riverAndRoadsSharpTemplates;
         public List<GameObject> riverAndRoadsRoadTemplates;
+        
 
         /*
         public GameObject fullOffPos1, fullOffPos2, fullOffPos3, fullOffPos4, fullOffPos5, fullOffPos6;

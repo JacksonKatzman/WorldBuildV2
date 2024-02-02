@@ -25,9 +25,17 @@ MonoBehaviour:
   textures:
   - texture: {fileID: 2800000, guid: 5d0c0963eb3564c279c7c1a85117526c, type: 3}
     weight: 1
+  terrainMaterial: {fileID: 2100000, guid: a2d65f89c2a6b72448a91fbccd1f9fc9, type: 2}
+  mountainAssets: []
+  riverStartMountainAssets: []
+  hillAssets: []
+  riverStartHillAssets: []
+  foliageAssets: []
   minHeight: 0
   maxHeight: 4
   minTemperature: 0.2
   maxTemperature: 0.75
   minMoisture: 0.2
   maxMoisture: 0.5
+  mountainThreshold: 6
+  hillThreshold: 5
