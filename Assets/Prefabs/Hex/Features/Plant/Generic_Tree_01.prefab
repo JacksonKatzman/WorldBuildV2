@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6984893771828786958}
   m_Layer: 0
-  m_Name: Birch_01
+  m_Name: Generic_Tree_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,6 +102,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23416940830573446, guid: 1ea71f643417d124d91e53eae7c666a6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 478b4e7b7a2f87c4b80c0f2b5f2558bb, type: 2}
+    - target: {fileID: 23871021364675924, guid: 1ea71f643417d124d91e53eae7c666a6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: be132297f8b493348ac55a521df31389, type: 2}
+    - target: {fileID: 23871021364675924, guid: 1ea71f643417d124d91e53eae7c666a6, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: c88c5624e43a30a4f9440a3fbb2ebc12, type: 2}
     - target: {fileID: 205459126312970790, guid: 1ea71f643417d124d91e53eae7c666a6, type: 3}
       propertyPath: m_LODs.Array.data[1].screenRelativeHeight
       value: 0.001943592

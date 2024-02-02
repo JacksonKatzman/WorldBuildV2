@@ -27,6 +27,12 @@ namespace Game.Terrain
         public float minMoisture, maxMoisture;
         public int mountainThreshold = 6;
         public int hillThreshold = 5;
+        [Range(0.0f, 1.0f)]
+        public float plantLevel;
+        [Range(0.0f, 0.2f)]
+        public float plantLevelVarianceMax;
+        [Range(-0.2f, 0.0f)]
+        public float plantLevelVarianceMin;
 
         public int GetTextureIndex()
         {

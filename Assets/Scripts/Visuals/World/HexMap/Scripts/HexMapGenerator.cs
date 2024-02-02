@@ -762,7 +762,6 @@ namespace Game.Terrain
 
 				var biome = Biome.CalculateTerrainType(cell, temperature, moisture, elevationMaximum);
 				cell.BiomeSubtype = biome;
-				cell.IsMountainous = cell.Elevation >= elevationMaximum * 0.75f;
 			}
 
 			OutputLogger.LogWarning($"Average Temperature: {averageTemp / cellCount}");

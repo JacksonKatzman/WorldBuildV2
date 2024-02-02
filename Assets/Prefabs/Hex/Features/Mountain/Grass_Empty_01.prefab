@@ -81,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeholders: []
   doodads: []
+  center: {fileID: 0}
   roadOnlyBaseTemplates:
   - {fileID: 7996733932027917865}
   roadOnlyRoadTemplates:

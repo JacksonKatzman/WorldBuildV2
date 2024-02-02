@@ -93,7 +93,7 @@ namespace Game.Terrain
 			}
 		}
 
-		public bool IsMountainous { get; set; }
+		public bool IsMountainous => Elevation - HexMetrics.globalWaterLevel >= BiomeData.hillThreshold;
 
 		public bool HasIncomingRiver
 		{

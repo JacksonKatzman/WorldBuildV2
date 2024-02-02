@@ -1,5 +1,6 @@
 ﻿using Game.Debug;
 using Game.Incidents;
+using Game.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -125,7 +126,7 @@ namespace Game.Terrain
                     }
                 }
 
-				cell.PlantLevel = Mathf.Clamp01(moistureLevel + 0.3f);
+				cell.PlantLevel = Mathf.Clamp01(currentMatch.plantLevel + SimRandom.RandomFloat(currentMatch.plantLevelVarianceMin, currentMatch.plantLevelVarianceMax));
 
 				//LABEL BIOME
 				cell.SetLabel(currentMatch.terrainType.ToString());
