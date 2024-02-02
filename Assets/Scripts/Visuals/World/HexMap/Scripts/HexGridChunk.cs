@@ -216,27 +216,6 @@ namespace Game.Terrain
 			}
 			if (!cell.IsUnderwater)
 			{
-				if (!cell.HasRiver && !cell.HasRoads)
-				{
-					features.AddFeature(cell, cell.Position);
-				}
-				/*
-				if (cell.HasLandmark)
-				{
-					features.AddSpecialFeature(cell, cell.Position);
-				}
-				*/
-				/*
-				if(cell.Elevation - HexMetrics.globalWaterLevel >= cell.BiomeData.mountainThreshold)
-                {
-					//features.AddMountain(cell, cell.Position);
-                }
-				else
-                {
-					features.AddHexFeature(cell, cell.Position);
-				}
-				*/
-				
 				features.AddHexFeature(cell, cell.Position);
 			}
 		}
@@ -271,11 +250,6 @@ namespace Game.Terrain
 			else
 			{
 				TriangulateWithoutRiver(direction, cell, center, e);
-
-				if (!cell.IsUnderwater && !cell.HasRoadThroughEdge(direction))
-				{
-					features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
-				}
 			}
 
 			if (direction <= HexDirection.SE)
@@ -562,11 +536,6 @@ namespace Game.Terrain
 				e, weights1, cell.Index
 			);
 			TriangulateEdgeFan(center, m, cell.Index);
-
-			if (!cell.IsUnderwater && !cell.HasRoadThroughEdge(direction))
-			{
-				features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
-			}
 		}
 
 		void TriangulateRoadAdjacentToRiver(

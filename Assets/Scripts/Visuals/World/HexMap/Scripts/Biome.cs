@@ -125,24 +125,11 @@ namespace Game.Terrain
                     }
                 }
 
+				cell.PlantLevel = Mathf.Clamp01(moistureLevel + 0.3f);
+
 				//LABEL BIOME
 				cell.SetLabel(currentMatch.terrainType.ToString());
 				return currentMatch.terrainType;
-
-				/*
-				int m = 0;
-				for (; m < moistureBands.Length; m++)
-				{
-					if (moistureLevel < moistureBands[m])
-					{
-						break;
-					}
-				}
-
-				cell.PlantLevel = m;
-				*/
-
-				//return temperatureMatch != null ? temperatureMatch.terrainType : BiomeTerrainType.Grassland;
 			}
 			else
             {

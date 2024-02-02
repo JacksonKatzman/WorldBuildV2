@@ -237,7 +237,7 @@ namespace Game.Terrain
 			}
 		}
 
-		public int PlantLevel
+		public float PlantLevel
 		{
 			get
 			{
@@ -248,25 +248,6 @@ namespace Game.Terrain
 				if (plantLevel != value)
 				{
 					plantLevel = value;
-					RefreshSelfOnly();
-				}
-			}
-		}
-
-		public int MountainLevel
-		{
-			//2 = mountain
-			//1 = foothill
-			//0 = nothing
-			get
-			{
-				return mountainLevel;
-			}
-			set
-			{
-				if (mountainLevel != value)
-				{
-					mountainLevel = value;
 					RefreshSelfOnly();
 				}
 			}
@@ -412,7 +393,8 @@ namespace Game.Terrain
 		int elevation = int.MinValue;
 		int waterLevel;
 
-		int urbanLevel, farmLevel, plantLevel, mountainLevel;
+		int urbanLevel, farmLevel, mountainLevel;
+		float plantLevel;
 
 		string landmarkType = string.Empty;
 
