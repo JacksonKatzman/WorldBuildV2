@@ -43,3 +43,6 @@ MonoBehaviour:
   maxMoisture: 0.339
   mountainThreshold: 6
   hillThreshold: 5
+  plantLevel: 0.308
+  plantLevelVarianceMax: 0
+  plantLevelVarianceMin: -0.2
