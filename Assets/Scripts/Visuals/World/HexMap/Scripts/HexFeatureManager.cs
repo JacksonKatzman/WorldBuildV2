@@ -25,7 +25,7 @@ namespace Game.Terrain
 
 		Transform container;
 
-		public void Clear()
+        public void Clear()
 		{
 			if (container)
 			{
@@ -79,15 +79,26 @@ namespace Game.Terrain
 
 			if (biomeData.foliageAssets.Count > 0)
 			{
-				foreach (var placeholder in container.positionInformation)
+				for(int i = 0; i < container.positionInformation.Count; i++)
 				{
-					if (SimRandom.RandomFloat01() <= cell.PlantLevel)
+					var placeholder = container.positionInformation[i];
+					if (placeholder.assetType == AssetPlaceholder.AssetType.Foliage && SimRandom.RandomFloat01() <= cell.PlantLevel)
 					{
 						var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
+						/*
 						var doodad = Instantiate(doodadPrefab);
 						doodad.transform.localPosition = placeholder.position;
+						doodad.transform.localRotation = Quaternion.Euler(0.0f, 360.0f * SimRandom.RandomFloat01(), 0.0f);
 						doodad.transform.localScale = placeholder.scale;
 						doodad.transform.SetParent(this.container, false);
+						*/
+						//placeholder.rotation = new Vector3(0.0f, 360.0f * SimRandom.RandomFloat01(), 0.0f);
+						//placeholder.mesh = doodadPrefab.GetComponent<MeshFilter>().sharedMesh;
+						//placeholder.materials = doodadPrefab.GetComponent<MeshRenderer>().sharedMaterials;
+
+						var mesh = doodadPrefab.GetComponent<MeshFilter>().sharedMesh;
+						var materials = doodadPrefab.GetComponent<MeshRenderer>().sharedMaterials;
+						FoliageManager.Instance.AddToBatches(mesh, materials, placeholder);
 					}
 				}
 			}

@@ -25,7 +25,7 @@ namespace Game.Terrain
     public struct AssetPositionInformation
     {
         public Vector3 position;
-        public AssetType assetType;
         public Vector3 scale;
+        public AssetType assetType;
     }
 }

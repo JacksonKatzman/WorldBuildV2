@@ -163,6 +163,19 @@ namespace Game.Terrain
 			enabled = false;
 		}
 
+		public void AddFeatures()
+        {
+			for (int i = 0; i < cells.Length; i++)
+			{
+				var cell = cells[i];
+
+				if (!cell.IsUnderwater)
+				{
+					features.AddHexFeature(cell, cell.Position);
+				}
+			}
+		}
+
 		public void DebugTriangulate()
         {
 			terrain.Clear();
@@ -213,10 +226,6 @@ namespace Game.Terrain
 			for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 			{
 				Triangulate(d, cell);
-			}
-			if (!cell.IsUnderwater)
-			{
-				features.AddHexFeature(cell, cell.Position);
 			}
 		}
 
