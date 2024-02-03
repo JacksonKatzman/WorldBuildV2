@@ -35,8 +35,9 @@ MonoBehaviour:
   riverStartHillAssets:
   - {fileID: 1000010046023388, guid: 82920c567e34be345b659dd9c9aa2cb8, type: 3}
   foliageAssets:
-  - {fileID: 4596200342042884244, guid: e9e3195bc3e3e384b80128b8ed390753, type: 3}
+  - {fileID: 4596200342042884244, guid: f031e1b82790e5047b02e5851effcf1d, type: 3}
   - {fileID: 2427202774441151951, guid: 7b794f9decc19ad49a9e30ee8e736694, type: 3}
+  - {fileID: 4596200342042884244, guid: b688a7fbd6effca4ebb3f13b1ae8cd24, type: 3}
   minHeight: 4
   maxHeight: 10
   minTemperature: 0.3

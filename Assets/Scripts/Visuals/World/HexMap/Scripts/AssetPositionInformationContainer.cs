@@ -17,7 +17,7 @@ namespace Game.Terrain
         {
             foreach(var placeholder in placeholders)
             {
-                positionInformation.Add(new AssetPositionInformation { position = placeholder.transform.position, assetType = placeholder.assetType });
+                positionInformation.Add(new AssetPositionInformation { position = placeholder.transform.position, assetType = placeholder.assetType, scale = placeholder.baseScale });
             }
         }
     }
@@ -26,5 +26,6 @@ namespace Game.Terrain
     {
         public Vector3 position;
         public AssetType assetType;
+        public Vector3 scale;
     }
 }

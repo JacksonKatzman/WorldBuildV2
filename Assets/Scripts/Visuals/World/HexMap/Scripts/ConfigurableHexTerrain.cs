@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -23,6 +24,16 @@ namespace Game.Terrain
         public List<GameObject> riverAndRoadsCurvedTemplates;
         public List<GameObject> riverAndRoadsSharpTemplates;
         public List<GameObject> riverAndRoadsRoadTemplates;
+
+        public float scale = 1.0f;
+        [Button("Set Scale")]
+        public void MassSetScale()
+        {
+            foreach(var placeholder in GetComponentsInChildren<AssetPlaceholder>(true))
+            {
+                placeholder.baseScale = new Vector3(scale, scale, scale);
+            }
+        }
         
 
         /*

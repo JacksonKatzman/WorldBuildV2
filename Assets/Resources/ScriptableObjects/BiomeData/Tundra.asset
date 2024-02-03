@@ -34,7 +34,9 @@ MonoBehaviour:
   riverStartMountainAssets: []
   hillAssets: []
   riverStartHillAssets: []
-  foliageAssets: []
+  foliageAssets:
+  - {fileID: 4596200342042884244, guid: b688a7fbd6effca4ebb3f13b1ae8cd24, type: 3}
+  - {fileID: 4596200342042884244, guid: f031e1b82790e5047b02e5851effcf1d, type: 3}
   minHeight: 0
   maxHeight: 4
   minTemperature: 0
@@ -43,6 +45,6 @@ MonoBehaviour:
   maxMoisture: 1
   mountainThreshold: 6
   hillThreshold: 5
-  plantLevel: 0.4
+  plantLevel: 0.239
   plantLevelVarianceMax: 0
   plantLevelVarianceMin: -0.2

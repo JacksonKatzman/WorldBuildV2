@@ -129,7 +129,7 @@ namespace Game.Terrain
 				cell.PlantLevel = Mathf.Clamp01(currentMatch.plantLevel + SimRandom.RandomFloat(currentMatch.plantLevelVarianceMin, currentMatch.plantLevelVarianceMax));
 
 				//LABEL BIOME
-				cell.SetLabel(currentMatch.terrainType.ToString());
+				//cell.SetLabel(currentMatch.terrainType.ToString());
 				return currentMatch.terrainType;
 			}
 			else

@@ -86,6 +86,7 @@ namespace Game.Terrain
 						var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
 						var doodad = Instantiate(doodadPrefab);
 						doodad.transform.localPosition = placeholder.position;
+						doodad.transform.localScale = placeholder.scale;
 						doodad.transform.SetParent(this.container, false);
 					}
 				}
@@ -96,10 +97,40 @@ namespace Game.Terrain
         {
 			if(cell.HasIncomingRiver && cell.HasOutgoingRiver)
             {
+				AddFlatTerrain(cell, position, biomeData, ref container);
 				return;
             }
 
+			var configurableHexTerrain = Instantiate(configurableHexTerrainPrefab);
+			configurableHexTerrain.transform.localPosition = position;
+			configurableHexTerrain.transform.SetParent(this.container, false);
+
+			for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
+			{
+				var degrees = (((int)d) * 60);
+
+				if (!cell.HasRoadThroughEdge(d))
+				{
+					if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation && (d < Terrain.HexDirection.SW))
+					{
+						var template = SimRandom.RandomEntryFromList(configurableHexTerrain.fullOffTemplates);
+						template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+						container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+					}
+				}
+				else
+				{
+					if (cell.GetNeighbor(d) != null && cell.GetNeighbor(d).Elevation == cell.Elevation && (d < Terrain.HexDirection.SW))
+					{
+						var template = SimRandom.RandomEntryFromList(configurableHexTerrain.roadOnlyOffTemplates);
+						template.transform.localRotation = Quaternion.Euler(0f, degrees, 0f);
+						container.AddRange(template.GetComponentsInChildren<AssetPlaceholder>(true));
+					}
+				}
+			}
+
 			Transform instance = null;
+
 			if(cell.Elevation - HexMetrics.globalWaterLevel >= biomeData.mountainThreshold)
             {
 				//mountain
@@ -115,7 +146,6 @@ namespace Game.Terrain
 				Instantiate(SimRandom.RandomEntryFromList(biomeData.hillAssets)).transform;
 			}
 
-			container.AddRange(instance.GetComponentsInChildren<AssetPlaceholder>());
 			instance.localPosition = position;
 			if (cell.HasOutgoingRiver)
 			{
@@ -169,6 +199,7 @@ namespace Game.Terrain
 			}
 
 			instance.SetParent(this.container, false);
+			container.AddRange(instance.GetComponentsInChildren<AssetPlaceholder>(true));
 		}
 
 		public void AddFlatTerrain(HexCell cell, Vector3 position, BiomeData biomeData, ref AssetPositionInformationContainer container)

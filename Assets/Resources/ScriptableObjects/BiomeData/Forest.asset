@@ -37,9 +37,11 @@ MonoBehaviour:
   foliageAssets:
   - {fileID: 4596200342042884244, guid: 00c2f70d31e847e4a97db78b0ce39de5, type: 3}
   - {fileID: 2427202774441151951, guid: 723da84127395144396392a0f049001d, type: 3}
-  - {fileID: 7456222342354180393, guid: d4c4d9e96674f9d47853f2edaccbab01, type: 3}
+  - {fileID: 4596200342042884244, guid: f031e1b82790e5047b02e5851effcf1d, type: 3}
+  - {fileID: 4596200342042884244, guid: b688a7fbd6effca4ebb3f13b1ae8cd24, type: 3}
+  - {fileID: 4596200342042884244, guid: e9e3195bc3e3e384b80128b8ed390753, type: 3}
+  - {fileID: 2427202774441151951, guid: 7b794f9decc19ad49a9e30ee8e736694, type: 3}
   - {fileID: 2000013284219099867, guid: 7368e8cb0589fb342be059ba27f1ed4c, type: 3}
-  - {fileID: 4873905050432718771, guid: 985e5d73932b6e7489df674e7805d09b, type: 3}
   minHeight: 2
   maxHeight: 8
   minTemperature: 0
@@ -48,6 +50,6 @@ MonoBehaviour:
   maxMoisture: 0.75
   mountainThreshold: 6
   hillThreshold: 5
-  plantLevel: 0.701
+  plantLevel: 1
   plantLevelVarianceMax: 0.2
-  plantLevelVarianceMin: -0.2
+  plantLevelVarianceMin: 0
