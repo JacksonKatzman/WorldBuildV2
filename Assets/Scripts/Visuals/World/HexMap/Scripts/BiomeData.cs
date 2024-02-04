@@ -33,6 +33,8 @@ namespace Game.Terrain
         public float plantLevelVarianceMax;
         [Range(-0.2f, 0.0f)]
         public float plantLevelVarianceMin;
+        [Range(0, 200)]
+        public int grassDensity;
 
         public int GetTextureIndex()
         {

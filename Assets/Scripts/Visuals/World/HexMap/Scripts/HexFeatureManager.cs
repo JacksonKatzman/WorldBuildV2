@@ -104,6 +104,14 @@ namespace Game.Terrain
 			}
 		}
 
+		public void AddGrass(HexCell cell, Vector3 position)
+        {
+			//concave hull of area and each occluder
+			//polygon of each using concave hull
+			//march from bottom left to top right checking if point is inside allowed area
+			//add point if so, send to buffer
+        }
+
 		public void AddMountain(HexCell cell, Vector3 position, BiomeData biomeData, ref AssetPositionInformationContainer container)
         {
 			if(cell.HasIncomingRiver && cell.HasOutgoingRiver)
@@ -317,7 +325,12 @@ namespace Game.Terrain
 						}
 					}
 				}
-			}	
+			}
+			
+			if(biomeData.grassDensity > 0)
+            {
+				//AddGrass(cell, position, configurableHexTerrain);
+            }
 		}
 
 		public void AddWall(

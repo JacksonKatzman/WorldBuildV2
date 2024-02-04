@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 
 using System.Drawing;
+using ConcaveHull;
 
 namespace Game.GameMath
 {
@@ -26,6 +27,37 @@ namespace Game.GameMath
                 Points[i] = new PointF(points[i].x, points[i].y);
 			}
 		}
+
+        public Polygon(List<Node> nodes)
+        {
+            Points = new PointF[nodes.Count];
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                Points[i] = new PointF((float)nodes[i].x, (float)nodes[i].y);
+            }
+        }
+
+        public Polygon(List<Line> lines)
+        {
+            var nodes = new List<Node>();
+            foreach (var line in lines)
+            {
+                if(!nodes.Contains(line.nodes[0]))
+                {
+                    nodes.Add(line.nodes[0]);
+                }
+                if (!nodes.Contains(line.nodes[1]))
+                {
+                    nodes.Add(line.nodes[1]);
+                }
+            }
+
+            Points = new PointF[nodes.Count];
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                Points[i] = new PointF((float)nodes[i].x, (float)nodes[i].y);
+            }
+        }
 
         public PointF[] Points;
 
