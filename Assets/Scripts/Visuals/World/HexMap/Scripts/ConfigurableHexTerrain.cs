@@ -24,7 +24,14 @@ namespace Game.Terrain
         public List<GameObject> riverAndRoadsCurvedTemplates;
         public List<GameObject> riverAndRoadsSharpTemplates;
         public List<GameObject> riverAndRoadsRoadTemplates;
-        public Transform cellBorderRoot;
+
+        public MeshPolygonBounds baseCellBounds;
+        public MeshPolygonBounds edgeStripBounds;
+        public MeshPolygonBounds cornerStripBounds;
+        public MeshPolygonBounds straightRiverBounds;
+        public MeshPolygonBounds curvedRiverBounds;
+        public MeshPolygonBounds sharpRiverBounds;
+        public MeshPolygonBounds roadOnlyBounds;
 
         public float scale = 1.0f;
         [Button("Set Scale")]

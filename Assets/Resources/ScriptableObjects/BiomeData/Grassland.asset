@@ -42,3 +42,5 @@ MonoBehaviour:
   plantLevel: 1
   plantLevelVarianceMax: 0
   plantLevelVarianceMin: -0.2
+  grassDensity: 200
+  grassAsset: {fileID: 1037344459507410, guid: 9c8446fabd2f61c4a823aebd526a359d, type: 3}

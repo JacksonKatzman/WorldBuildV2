@@ -1,6 +1,9 @@
-﻿using Game.Incidents;
+﻿using Game.Debug;
+using Game.GameMath;
+using Game.Incidents;
 using Game.Utilities;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
@@ -85,16 +88,6 @@ namespace Game.Terrain
 					if (placeholder.assetType == AssetPlaceholder.AssetType.Foliage && SimRandom.RandomFloat01() <= cell.PlantLevel)
 					{
 						var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
-						/*
-						var doodad = Instantiate(doodadPrefab);
-						doodad.transform.localPosition = placeholder.position;
-						doodad.transform.localRotation = Quaternion.Euler(0.0f, 360.0f * SimRandom.RandomFloat01(), 0.0f);
-						doodad.transform.localScale = placeholder.scale;
-						doodad.transform.SetParent(this.container, false);
-						*/
-						//placeholder.rotation = new Vector3(0.0f, 360.0f * SimRandom.RandomFloat01(), 0.0f);
-						//placeholder.mesh = doodadPrefab.GetComponent<MeshFilter>().sharedMesh;
-						//placeholder.materials = doodadPrefab.GetComponent<MeshRenderer>().sharedMaterials;
 
 						var mesh = doodadPrefab.GetComponent<MeshFilter>().sharedMesh;
 						var materials = doodadPrefab.GetComponent<MeshRenderer>().sharedMaterials;
@@ -104,13 +97,114 @@ namespace Game.Terrain
 			}
 		}
 
-		public void AddGrass(HexCell cell, Vector3 position)
-        {
-			//concave hull of area and each occluder
-			//polygon of each using concave hull
-			//march from bottom left to top right checking if point is inside allowed area
-			//add point if so, send to buffer
-        }
+		public void AddGrass(HexCell cell, Vector3 position, BiomeData biomeData, ref AssetPositionInformationContainer container, ref ConfigurableHexTerrain hexTerrain)
+		{
+			//this technically all works but its extremely slow
+			//will come back to it later if i decide i still want this
+			//will need to move it to a compute shader
+			//https://www.youtube.com/watch?v=eyaxqo9JV4w for the gpu instancing
+
+			var inBounds = new List<Polygon>();
+			var outOfBounds = new List<Polygon>();
+
+			inBounds.Add(hexTerrain.baseCellBounds.GetPolygon());
+			for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.SE; d++)
+			{
+				if(cell.GetNeighbor(d) && cell.GetNeighbor(d).Elevation == cell.Elevation)
+                {
+					hexTerrain.edgeStripBounds.transform.localRotation = Quaternion.Euler(0.0f, 60 * (int)d, 0.0f);
+					inBounds.Add(hexTerrain.edgeStripBounds.GetPolygon());
+                }
+			}
+
+			/*
+			float lowX  = float.MaxValue;
+			float lowZ = float.MaxValue;
+			float highX = float.MinValue;
+			float highZ = float.MinValue;
+			*/
+			var allPoints = new List<PointF>();
+
+			foreach(var poly in inBounds)
+            {
+				allPoints.AddRange(poly.Points);
+				/*
+				foreach(var point in poly.Points)
+                {
+					lowX = point.X < lowX ? point.X : lowX;
+					lowZ = point.Y < lowZ ? point.Y : lowZ;
+					highX = point.X > highX ? point.X : highX;
+					highZ = point.Y > highZ ? point.Y : highZ;
+                }
+				*/
+            }
+
+			var allX = allPoints.Select(x => x.X).ToList();
+			var allY = allPoints.Select(x => x.Y).ToList();
+
+			float lowX = allX.Min();
+			float lowZ = allY.Min();
+			float highX = allX.Max();
+			float highZ = allY.Max();
+
+			//var lowerLeftBound = new Vector2(lowX, lowZ);
+			//var upperRightBound = new Vector2(highX, highZ);
+			var candidates = new List<Vector2>();
+			for (var currentX = lowX; currentX < highX; currentX += 1.0f)
+            {
+				for (var currentZ = lowZ; currentZ < highZ; currentZ += 1.0f)
+                {
+					for(int i = 0; i < inBounds.Count; i++)
+                    {
+						if (inBounds[i].PointInPolygon(currentX, currentZ))
+						{
+							OutputLogger.Log("Make Grass: Found Candidate");
+							candidates.Add(new Vector2(currentX, currentZ));
+							break;
+						}
+						else
+						{
+							OutputLogger.Log("Make Grass: Point NOT IN Polygon");
+						}
+					}
+                }
+            }
+
+			var rejected = new List<Vector2>();
+			for(int j = 0; j < candidates.Count; j++)
+            {
+				var candidate = candidates[j];
+				for(int k = 0; k < outOfBounds.Count; k++)
+                {
+					if (outOfBounds[k].PointInPolygon(candidate.x, candidate.y))
+					{
+						OutputLogger.Log("Make Grass: Found Candidate");
+						rejected.Add(candidate);
+						break;
+					}
+					else
+					{
+						OutputLogger.Log("Make Grass: Point NOT IN Polygon");
+					}
+				}
+            }
+
+			foreach(var reject in rejected)
+            {
+				candidates.Remove(reject);
+            }
+
+			OutputLogger.Log($"Total accepted candidates = {candidates.Count}");
+
+			var mesh = biomeData.grassAsset.GetComponent<MeshFilter>().sharedMesh;
+			var materials = biomeData.grassAsset.GetComponent<MeshRenderer>().sharedMaterials;
+			//FoliageManager.Instance.AddToBatches(mesh, materials, placeholder);
+			foreach(var c in candidates)
+            {
+				var pos = new AssetPositionInformation() { assetType = AssetPlaceholder.AssetType.Doodad, position = new Vector3(c.x, cell.Position.y, c.y), scale = Vector3.one };
+				FoliageManager.Instance.AddToBatches(mesh, materials, pos);
+            }
+		}
 
 		public void AddMountain(HexCell cell, Vector3 position, BiomeData biomeData, ref AssetPositionInformationContainer container)
         {
@@ -329,7 +423,7 @@ namespace Game.Terrain
 			
 			if(biomeData.grassDensity > 0)
             {
-				//AddGrass(cell, position, configurableHexTerrain);
+				//AddGrass(cell, position, biomeData, ref container, ref configurableHexTerrain);
             }
 		}
 
