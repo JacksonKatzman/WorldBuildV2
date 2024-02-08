@@ -33,17 +33,6 @@ namespace Game.Terrain
         public MeshPolygonBounds sharpRiverBounds;
         public MeshPolygonBounds roadOnlyBounds;
 
-        public float scale = 1.0f;
-        [Button("Set Scale")]
-        public void MassSetScale()
-        {
-            foreach(var placeholder in GetComponentsInChildren<AssetPlaceholder>(true))
-            {
-                placeholder.baseScale = new Vector3(scale, scale, scale);
-            }
-        }
-        
-
         /*
         public GameObject fullOffPos1, fullOffPos2, fullOffPos3, fullOffPos4, fullOffPos5, fullOffPos6;
         //roads only

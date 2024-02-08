@@ -16,5 +16,14 @@ namespace Game.Simulation
 
 		[SerializeField]
 		public NamingThemePreset namingTheme;
+
+		public List<GameObject> flatCityPresets;
+		public List<GameObject> hilledCityPresets;
+		public List<GameObject> mountainCityPresets;
+
+		public List<GameObject> flatWalls;
+		public List<GameObject> gateWalls;
+		public List<GameObject> riverWalls;
+		public List<GameObject> outerTurrets;
 	}
 }

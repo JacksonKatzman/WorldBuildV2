@@ -24,6 +24,8 @@ namespace Game.Simulation
 
 		public World world;
 
+		public SimulationOptions simulationOptions;
+
 		public CancellationTokenSource cancellationTokenSource;
 
 		private StatTracker statTracker;
@@ -54,6 +56,8 @@ namespace Game.Simulation
 
 		public void CreateWorld(SimulationOptions options)
 		{
+			simulationOptions = options;
+
 			IncidentService.Instance.Setup();
 			UserInterfaceService.Instance.incidentWiki.Clear();
 			ContextDictionaryProvider.SetContextsProviders(() => CurrentContexts, () => AllContexts);

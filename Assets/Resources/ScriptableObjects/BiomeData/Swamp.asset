@@ -30,7 +30,10 @@ MonoBehaviour:
   riverStartMountainAssets: []
   hillAssets: []
   riverStartHillAssets: []
-  foliageAssets: []
+  foliageAssets:
+  - {fileID: 1703964813656555766, guid: 350d34fd6eaa2db40aa12e2e7f161797, type: 3}
+  - {fileID: 7485418063828181427, guid: e70a467a0a938364aa889320ab0d10d4, type: 3}
+  - {fileID: 7485418063828181427, guid: e70a467a0a938364aa889320ab0d10d4, type: 3}
   minHeight: 0
   maxHeight: 3
   minTemperature: 0.3
@@ -42,3 +45,5 @@ MonoBehaviour:
   plantLevel: 0.902
   plantLevelVarianceMax: 0
   plantLevelVarianceMin: -0.2
+  grassDensity: 0
+  grassAsset: {fileID: 0}

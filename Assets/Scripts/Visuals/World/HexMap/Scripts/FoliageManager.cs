@@ -51,7 +51,7 @@ namespace Game.Terrain
             }
         }
 
-        public void AddToBatches(Mesh mesh, Material[] materials, AssetPositionInformation info)
+        public void AddToBatches(Mesh mesh, Material[] materials, AssetPositionInformation info, bool jitter = false)
         {
             if (!batches.ContainsKey(mesh))
             {
@@ -63,6 +63,12 @@ namespace Game.Terrain
             if (batch.matrices[batch.matrices.Count - 1].Count >= 1000)
             {
                 batch.matrices.Add(new List<Matrix4x4>());
+            }
+
+            if(jitter)
+            {
+                var variance = HexMetrics.outerRadius / 20;
+                info.position = new Vector3(info.position.x + SimRandom.RandomFloat(-variance, variance), info.position.y, info.position.z + SimRandom.RandomFloat(-variance, variance));
             }
 
             batch.matrices[batch.matrices.Count - 1].Add(Matrix4x4.TRS(info.position, Quaternion.Euler(0.0f, 360.0f * SimRandom.RandomFloat01(), 0.0f), info.scale));

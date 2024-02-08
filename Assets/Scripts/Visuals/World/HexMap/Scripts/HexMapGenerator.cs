@@ -180,10 +180,13 @@ namespace Game.Terrain
 			CreateRivers();
 			SetTerrainType();
 
-			foreach(var chunk in grid.chunks)
+			if(SimulationManager.Instance.simulationOptions.DrawFeaturesBeforeSimulation)
             {
-				chunk.AddFeatures();
-            }
+				foreach (var chunk in grid.chunks)
+				{
+					chunk.AddFeatures();
+				}
+			}
 			//GenerateHexCollections();
 
 			for (int i = 0; i < cellCount; i++)

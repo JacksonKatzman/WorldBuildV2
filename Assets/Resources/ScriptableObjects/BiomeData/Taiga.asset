@@ -34,10 +34,11 @@ MonoBehaviour:
   - {fileID: 1000010046023388, guid: 82920c567e34be345b659dd9c9aa2cb8, type: 3}
   riverStartHillAssets:
   - {fileID: 1000010046023388, guid: 82920c567e34be345b659dd9c9aa2cb8, type: 3}
-  foliageAssets: []
-  minHeight: 4
+  foliageAssets:
+  - {fileID: 4836049172164023165, guid: 06c84bbbec90b7d4ab515065623d357f, type: 3}
+  minHeight: 6
   maxHeight: 10
-  minTemperature: 0.3
+  minTemperature: 0
   maxTemperature: 0.6
   minMoisture: 0.25
   maxMoisture: 0.75
@@ -46,3 +47,5 @@ MonoBehaviour:
   plantLevel: 0.681
   plantLevelVarianceMax: 0.2
   plantLevelVarianceMin: -0.2
+  grassDensity: 0
+  grassAsset: {fileID: 0}

@@ -89,9 +89,22 @@ namespace Game.Terrain
 					{
 						var doodadPrefab = SimRandom.RandomEntryFromList(biomeData.foliageAssets);
 
-						var mesh = doodadPrefab.GetComponent<MeshFilter>().sharedMesh;
-						var materials = doodadPrefab.GetComponent<MeshRenderer>().sharedMaterials;
-						FoliageManager.Instance.AddToBatches(mesh, materials, placeholder);
+						var filter = doodadPrefab.GetComponent<MeshFilter>();
+						if(filter == null)
+                        {
+							filter = doodadPrefab.GetComponentInChildren<MeshFilter>();
+                        }
+
+						var renderer = doodadPrefab.GetComponent<MeshRenderer>();
+						if(renderer == null)
+                        {
+							renderer = doodadPrefab.GetComponentInChildren<MeshRenderer>();
+                        }
+						
+						var mesh = filter.sharedMesh;
+						var materials = renderer.sharedMaterials;
+						placeholder.scale = Vector3.Scale(placeholder.scale, doodadPrefab.transform.GetChild(0).localScale);
+						FoliageManager.Instance.AddToBatches(mesh, materials, placeholder, true);
 					}
 				}
 			}

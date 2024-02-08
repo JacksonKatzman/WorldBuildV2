@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &202735996964788938
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &580280536043636954
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &607511986548056716
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &1807642824596607518
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &2076798591789445733
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &2467665871590203457
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &2533059683052360167
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,7 +887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &2601272613183400470
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,7 +998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &3010238105177765918
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,7 +1109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &4096332530556350638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,7 +1220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &4402839489815466569
 GameObject:
   m_ObjectHideFlags: 0
@@ -1331,7 +1331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &4855984941608040060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1442,7 +1442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &5022384410416041376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,7 +1553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &5290640953402073632
 GameObject:
   m_ObjectHideFlags: 0
@@ -1664,7 +1664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &5361426868165390160
 GameObject:
   m_ObjectHideFlags: 0
@@ -1775,7 +1775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &5377478452546679277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,7 +1886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &5430438258232173789
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,7 +1997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &5678928666573506883
 GameObject:
   m_ObjectHideFlags: 0
@@ -2108,7 +2108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &5975284078495122357
 GameObject:
   m_ObjectHideFlags: 0
@@ -2219,7 +2219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &6781013823841280872
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,7 +2330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &7548625527122610445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2441,7 +2441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &7562652107896628543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,6 +2451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2996481713508944449}
+  - component: {fileID: 3513779338612161819}
   m_Layer: 0
   m_Name: HillFoliage
   m_TagString: Untagged
@@ -2499,6 +2500,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3513779338612161819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7562652107896628543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df1427602bc19e14aa25d9132c179a19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: 0.35
 --- !u!1 &7695761181284826667
 GameObject:
   m_ObjectHideFlags: 0
@@ -2609,7 +2623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &7935173833460724334
 GameObject:
   m_ObjectHideFlags: 0
@@ -2720,7 +2734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &8480835053603102878
 GameObject:
   m_ObjectHideFlags: 0
@@ -2831,7 +2845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &8557756325353622356
 GameObject:
   m_ObjectHideFlags: 0
@@ -2942,7 +2956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
 --- !u!1 &8623697930539470548
 GameObject:
   m_ObjectHideFlags: 0
@@ -3053,4 +3067,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   assetType: 0
-  baseScale: {x: 0.5, y: 0.5, z: 0.5}
+  baseScale: {x: 0.35, y: 0.35, z: 0.35}
