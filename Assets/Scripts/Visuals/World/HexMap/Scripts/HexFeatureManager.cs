@@ -66,7 +66,6 @@ namespace Game.Terrain
 			instance.SetParent(container, false);
 		}
 
-		//current bug: mountains near myrthorin arent drawing when we draw em post sim. unsure why
 		public void AddHexFeature(HexCell cell, Vector3 position)
 		{
 			if(cell.HasLandmark)
