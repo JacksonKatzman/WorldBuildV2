@@ -168,6 +168,7 @@ namespace Game.Terrain
 			for (int i = 0; i < cells.Length; i++)
 			{
 				var cell = cells[i];
+				cell.hexCellLabel.hexCellText.text = cell.Index.ToString();
 
 				if (!cell.IsUnderwater)
 				{

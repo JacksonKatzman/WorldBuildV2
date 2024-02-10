@@ -257,11 +257,15 @@ namespace Game.Simulation
 
 			if (!SimulationManager.Instance.simulationOptions.DrawFeaturesBeforeSimulation)
 			{
+				//connect all major cities
+				//connect SOME of the smaller ones
+				AddRoads();
 				//DrawCities();
 				//draw features here
+				DrawCities();
+				DrawFeatures();
 			}
 
-			DrawCities();
 			//Pick location for players to start, likely in one of the towns/hamlets
 			var startingCity = SimRandom.RandomEntryFromList(Cities);
 			//Generate layout of town/what its contents is
@@ -301,16 +305,61 @@ namespace Game.Simulation
 			}
 		}
 
+		public void AddRoads()
+        {
+			for(int i = 0; i < Cities.Count; i++)
+            {
+				var startingCity = Cities[0];
+				for(int j = 0; j < Cities.Count; j++)
+                {
+					var toCity = Cities[j];
+					if(toCity == startingCity)
+                    {
+						continue;
+                    }
+					HexGrid.FindPathForRoad(startingCity.GetHexCell(), toCity.GetHexCell());
+					if (HexGrid.HasPath)
+					{
+						var path = HexGrid.GetPath();
+						for (int k = 0; k < path.Count - 1; k++)
+						{
+							var cell = path[k];
+							if (cell.IsNeighbor(path[k + 1], out var direction))
+							{
+								
+								var neighbor = path[k + 1];
+								HexEdgeType edgeType = cell.GetEdgeType(neighbor);
+								if(edgeType == HexEdgeType.Cliff)
+                                {
+									if(neighbor.Elevation > cell.Elevation)
+                                    {
+										neighbor.Elevation = cell.Elevation + 1;
+                                    }
+									else
+                                    {
+										neighbor.Elevation = cell.Elevation - 1;
+                                    }
+                                }
+								
+								cell.AddRoad(direction);
+							}
+						}
+					}
+                }
+            }
+        }
+
 		public void DrawCities()
 		{
 			foreach(var city in Cities)
 			{
 				var location = city.CurrentLocation.TileIndex;
 				var cell = HexGrid.GetCell(location);
+				cell.HasLandmark = true;
 				var racePreset = city.AffiliatedFaction.AffiliatedRace.racePreset;
 
 				//Change the model based on the population, will use temp stuff for now
-				if (city.Population >= 2000 || city == city.AffiliatedFaction.Cities[0])
+				if (city.Population >= 0 /*2000*/ || city == city.AffiliatedFaction.Cities[0])
 				{
 					var cityPreset = SimRandom.RandomEntryFromList(racePreset.flatCityPresets);
 					var cityModel = GameObject.Instantiate(cityPreset);
@@ -344,6 +393,14 @@ namespace Game.Simulation
 				{
 					
 				}
+			}
+		}
+
+		public void DrawFeatures()
+        {
+			foreach (var chunk in HexGrid.chunks)
+			{
+				chunk.AddFeatures();
 			}
 		}
 

@@ -66,8 +66,14 @@ namespace Game.Terrain
 			instance.SetParent(container, false);
 		}
 
+		//current bug: mountains near myrthorin arent drawing when we draw em post sim. unsure why
 		public void AddHexFeature(HexCell cell, Vector3 position)
 		{
+			if(cell.HasLandmark)
+            {
+				return;
+            }
+
 			var biomeData = cell.BiomeData;
 			var container = new AssetPositionInformationContainer();
 
@@ -77,7 +83,16 @@ namespace Game.Terrain
 			}
 			else
             {
-				AddMountain(cell, position, biomeData, ref container);
+				//eventually will have mountain roads but simplifying for now
+				if (cell.HasRoads)
+				{
+					AddFlatTerrain(cell, position, biomeData, ref container);
+					//AddMountain(cell, position, biomeData, ref container);
+				}
+				else
+				{
+					AddMountain(cell, position, biomeData, ref container);
+				}
             }
 
 			if (biomeData.foliageAssets.Count > 0)
@@ -324,7 +339,9 @@ namespace Game.Terrain
 				instance.localPosition = instance.localPosition - moveVector;
 			}
 
-			instance.SetParent(this.container, false);
+			//this is turned off for now because when roads are recalcing terrain, they cause a reset which nukes everything in the container
+			//will probably have a new implementation of feature management later
+			//instance.SetParent(this.container, false);
 			container.AddRange(instance.GetComponentsInChildren<AssetPlaceholder>(true));
 		}
 
