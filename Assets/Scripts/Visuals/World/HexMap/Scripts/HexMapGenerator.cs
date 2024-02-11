@@ -83,7 +83,7 @@ namespace Game.Terrain
 		public int riverPercentage = 10;
 
 		[Range(0f, 1f)]
-		public float extaLakeProbability = 0.25f;
+		public float extraLakeProbability = 0.25f;
 
 		[Range(0f, 1f)]
 		public float lowTemperature = 0f;
@@ -171,13 +171,23 @@ namespace Game.Terrain
 				grid.GetCell(i).WaterLevel = waterLevel;
 			}
 
+			HexMetrics.globalWaterLevel = waterLevel;
+
 			CreateRegions();
 			CreateLand();
 			ErodeLand();
 			CreateClimate();
 			CreateRivers();
 			SetTerrainType();
-			GenerateHexCollections();
+
+			if(SimulationManager.Instance.simulationOptions.DrawFeaturesBeforeSimulation)
+            {
+				foreach (var chunk in grid.chunks)
+				{
+					chunk.AddFeatures();
+				}
+			}
+			//GenerateHexCollections();
 
 			for (int i = 0; i < cellCount; i++)
 			{
@@ -730,13 +740,14 @@ namespace Game.Terrain
 
 				if (
 					minNeighborElevation >= cell.Elevation &&
-					Random.value < extaLakeProbability
+					Random.value < extraLakeProbability
 				)
 				{
 					cell.WaterLevel = cell.Elevation;
 					cell.Elevation -= 1;
 				}
 
+				//need to instead set a min length, store the chain of rivers in a list, wait until river complete, then set the ingoing/outgoings if possible
 				cell = cell.GetNeighbor(direction);
 			}
 			return length;
@@ -748,16 +759,20 @@ namespace Game.Terrain
 			int rockDesertElevation =
 				elevationMaximum - (elevationMaximum - waterLevel) / 2;
 
+			var averageTemp = 0.0f;
+
 			for (int i = 0; i < cellCount; i++)
 			{
 				HexCell cell = grid.GetCell(i);
 				float temperature = DetermineTemperature(cell);
+				averageTemp += temperature;
 				float moisture = climate[i].moisture;
 
-				var biome = Biome.CalculateTerrainType(cell, temperature, moisture, elevationMaximum, waterLevel);
-				cell.TerrainType = biome;
-				cell.IsMountainous = cell.Elevation >= elevationMaximum * 0.75f;
+				var biome = Biome.CalculateTerrainType(cell, temperature, moisture, elevationMaximum);
+				cell.BiomeSubtype = biome;
 			}
+
+			OutputLogger.LogWarning($"Average Temperature: {averageTemp / cellCount}");
 		}
 
 		void GenerateHexCollections()
@@ -767,7 +782,7 @@ namespace Game.Terrain
 			foreach(var type in System.Enum.GetValues(typeof(BiomeTerrainType)))
 			{
 				var terrainType = (BiomeTerrainType)type;
-				var matchingCells = cellsCopy.Where(x => MatchTerrainTypes(terrainType, x.TerrainType)).ToList();
+				var matchingCells = cellsCopy.Where(x => MatchTerrainTypes(terrainType, x.BiomeSubtype)).ToList();
 				foreach(var c in matchingCells)
 				{
 					cellsCopy.Remove(c);

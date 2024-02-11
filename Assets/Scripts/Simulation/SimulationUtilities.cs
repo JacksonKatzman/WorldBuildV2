@@ -27,7 +27,7 @@ namespace Game.Simulation
 			{
 				unclaimed = unclaimed.Where(x => !x.IsUnderwater).ToList();
 			}
-			var matches = ((biomeTypes != null && biomeTypes.Count > 0) ? unclaimed.Where(x => biomeTypes.Contains(x.TerrainType)) : unclaimed).ToList();
+			var matches = ((biomeTypes != null && biomeTypes.Count > 0) ? unclaimed.Where(x => biomeTypes.Contains(x.BiomeSubtype)) : unclaimed).ToList();
 			if (matches.Count > 0)
 			{
 				index = matches[SimRandom.RandomRange(0, matches.Count)].Index;
@@ -80,7 +80,7 @@ namespace Game.Simulation
 			var claimedList = GetClaimedCells();
 
 			var unclaimed = grid.cells.Where(x => !claimedList.Contains(x.Index)).ToList();
-			var matches = ((biomeTypes != null && biomeTypes.Count > 0) ? unclaimed.Where(x => biomeTypes.Contains(x.TerrainType)) : unclaimed).ToList();
+			var matches = ((biomeTypes != null && biomeTypes.Count > 0) ? unclaimed.Where(x => biomeTypes.Contains(x.BiomeSubtype)) : unclaimed).ToList();
 			if (matches.Count > 0)
 			{
 				index = matches[SimRandom.RandomRange(0, unclaimed.Count)].Index;
@@ -129,7 +129,7 @@ namespace Game.Simulation
 		{
 			var grid = SimulationManager.Instance.HexGrid;
 			//var numCells = grid.cellCountX * grid.cellCountZ;
-			var matches = ((biomeTypes != null && biomeTypes.Count > 0) ? grid.cells.Where(x => biomeTypes.Contains(x.TerrainType)) : grid.cells).ToList();
+			var matches = ((biomeTypes != null && biomeTypes.Count > 0) ? grid.cells.Where(x => biomeTypes.Contains(x.BiomeSubtype)) : grid.cells).ToList();
 			return matches[SimRandom.RandomRange(0, matches.Count)];
 		}
 
@@ -217,7 +217,7 @@ namespace Game.Simulation
 
 			foreach (var cell in borderTiles)
 			{
-				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(SimulationManager.Instance.HexGrid.cells[cell].TerrainType))
+				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(SimulationManager.Instance.HexGrid.cells[cell].BiomeSubtype))
 				{
 					continue;
 				}
@@ -280,7 +280,7 @@ namespace Game.Simulation
 			foreach (var cell in insideIndices)
 			{
 				HexCell hexCell = SimulationManager.Instance.HexGrid.GetCell(cell);
-				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(hexCell.TerrainType))
+				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(hexCell.BiomeSubtype))
 				{
 					continue;
 				}
@@ -305,7 +305,7 @@ namespace Game.Simulation
 
 			foreach (var cell in outsideIndices)
 			{
-				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(SimulationManager.Instance.HexGrid.cells[cell].TerrainType))
+				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(SimulationManager.Instance.HexGrid.cells[cell].BiomeSubtype))
 				{
 					continue;
 				}
@@ -326,7 +326,7 @@ namespace Game.Simulation
 
 			foreach (var cell in outsideIndices)
 			{
-				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(SimulationManager.Instance.HexGrid.cells[cell].TerrainType))
+				if (biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(SimulationManager.Instance.HexGrid.cells[cell].BiomeSubtype))
 				{
 					continue;
 				}
@@ -347,7 +347,7 @@ namespace Game.Simulation
 			{
 				var cell = SimulationManager.Instance.HexGrid.cells[index];
 				var valid = true;
-				if(biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(cell.TerrainType))
+				if(biomeTypes != null && biomeTypes.Count > 0 && !biomeTypes.Contains(cell.BiomeSubtype))
 				{
 					continue;
 				}

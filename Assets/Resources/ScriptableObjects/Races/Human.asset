@@ -26,3 +26,15 @@ MonoBehaviour:
   organizationTemplates:
   - {fileID: 11400000, guid: 5f938600039c15045bb823509f488ef2, type: 2}
   namingTheme: {fileID: 11400000, guid: 480ac245d69ad9b428c438b597fe762a, type: 2}
+  flatCityPresets:
+  - {fileID: 1000010046023388, guid: 8a40d57196bcce14da2233f560744dd5, type: 3}
+  hilledCityPresets: []
+  mountainCityPresets: []
+  flatWalls:
+  - {fileID: 5734737819372679347, guid: e9dacbc54985ab0478fd158ca5a3343c, type: 3}
+  gateWalls:
+  - {fileID: 5734737819372679347, guid: b2f2503f7d86f6a4780ef9f5655c573d, type: 3}
+  riverWalls:
+  - {fileID: 8887905470970279222, guid: 0a9a2da73c80b6c428c6bd86a1e16666, type: 3}
+  outerTurrets:
+  - {fileID: 4027078820309250404, guid: ec239c5c0ab642a4ca8c9171841b3c91, type: 3}

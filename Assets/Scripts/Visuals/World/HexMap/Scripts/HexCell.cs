@@ -4,6 +4,7 @@ using System.IO;
 using Game.Enums;
 using Sirenix.OdinInspector;
 using Game.Incidents;
+using System.Linq;
 
 namespace Game.Terrain
 {
@@ -92,7 +93,7 @@ namespace Game.Terrain
 			}
 		}
 
-		public bool IsMountainous { get; set; }
+		public bool IsMountainous => Elevation - HexMetrics.globalWaterLevel >= BiomeData.hillThreshold;
 
 		public bool HasIncomingRiver
 		{
@@ -236,7 +237,7 @@ namespace Game.Terrain
 			}
 		}
 
-		public int PlantLevel
+		public float PlantLevel
 		{
 			get
 			{
@@ -252,52 +253,7 @@ namespace Game.Terrain
 			}
 		}
 
-		public int MountainLevel
-		{
-			//2 = mountain
-			//1 = foothill
-			//0 = nothing
-			get
-			{
-				return mountainLevel;
-			}
-			set
-			{
-				if (mountainLevel != value)
-				{
-					mountainLevel = value;
-					RefreshSelfOnly();
-				}
-			}
-		}
-
-		public string LandmarkType
-		{
-			get
-			{
-				return landmarkType;
-			}
-			set
-			{
-				//temprary remove the river check
-				//will need to rewrite the logic that places objects so that
-				//we can have landmarks and other things on river tiles
-				if (landmarkType != value)// && !HasRiver)
-				{
-					landmarkType = value;
-					//RemoveRoads();
-					RefreshSelfOnly();
-				}
-			}
-		}
-
-		public bool HasLandmark
-		{
-			get
-			{
-				return !string.IsNullOrEmpty(landmarkType);
-			}
-		}
+		public bool HasLandmark { get; set; }
 
 		public bool Walled
 		{
@@ -315,17 +271,17 @@ namespace Game.Terrain
 			}
 		}
 
-		public int TerrainTypeIndex
+		public int TerrainTextureIndex
 		{
 			get
 			{
-				return terrainTypeIndex;
+				return terrainTextureIndex;
 			}
 			private set
 			{
-				if (terrainTypeIndex != value)
+				if (terrainTextureIndex != value)
 				{
-					terrainTypeIndex = value;
+					terrainTextureIndex = value;
 					ShaderData.RefreshTerrain(this);
 				}
 			}
@@ -379,7 +335,7 @@ namespace Game.Terrain
 			}
 		}
 
-		public BiomeTerrainType TerrainType
+		public BiomeTerrainType BiomeSubtype
 		{
 			get
 			{
@@ -388,13 +344,12 @@ namespace Game.Terrain
 			set
 			{
 				terrainType = value;
-				TerrainTypeIndex = Biome.BiomeInfo[terrainType].x;
-				var level = Biome.BiomeInfo[terrainType].y;
-				Fertility = HasRiver && level < 3 ? level + 1 : level;
-				PlantLevel = Fertility;
+				TerrainTextureIndex = AssetService.Instance.BiomeDataContainer.GetTextureIndex(terrainType);
 				RefreshSelfOnly();
 			}
 		}
+
+		public BiomeData BiomeData => AssetService.Instance.BiomeDataContainer.GetBiomeData(BiomeSubtype);
 
 		public int Fertility { get; set; }
 
@@ -407,14 +362,13 @@ namespace Game.Terrain
 
 		BiomeTerrainType terrainType;
 
-		int terrainTypeIndex;
+		int terrainTextureIndex;
 
 		int elevation = int.MinValue;
 		int waterLevel;
 
-		int urbanLevel, farmLevel, plantLevel, mountainLevel;
-
-		string landmarkType = string.Empty;
+		int urbanLevel, farmLevel, mountainLevel;
+		float plantLevel;
 
 		int distance;
 
@@ -475,6 +429,26 @@ namespace Game.Terrain
 		{
 			neighbors[(int)direction] = cell;
 			cell.neighbors[(int)direction.Opposite()] = this;
+		}
+
+		public bool IsNeighbor(HexCell cell)
+        {
+			return neighbors.Contains(cell);
+        }
+
+		public bool IsNeighbor(HexCell cell, out HexDirection direction)
+        {
+			for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
+            {
+				if(neighbors[(int)d] == cell)
+                {
+					direction = d;
+					return true;
+                }
+            }
+
+			direction = HexDirection.NE;
+			return false;
 		}
 
 		public HexEdgeType GetEdgeType(HexDirection direction)
@@ -552,12 +526,10 @@ namespace Game.Terrain
 			}
 			hasOutgoingRiver = true;
 			outgoingRiver = direction;
-			landmarkType = string.Empty;
 
 			neighbor.RemoveIncomingRiver();
 			neighbor.hasIncomingRiver = true;
 			neighbor.incomingRiver = direction.Opposite();
-			neighbor.landmarkType = string.Empty;
 
 			SetRoad((int)direction, false);
 		}
@@ -571,7 +543,6 @@ namespace Game.Terrain
 		{
 			if (
 				!roads[(int)direction] && !HasRiverThroughEdge(direction) &&
-				!HasLandmark && !GetNeighbor(direction).HasLandmark &&
 				GetElevationDifference(direction) <= 1
 			)
 			{
@@ -624,8 +595,11 @@ namespace Game.Terrain
 		void SetRoad(int index, bool state)
 		{
 			roads[index] = state;
-			neighbors[index].roads[(int)((HexDirection)index).Opposite()] = state;
-			neighbors[index].RefreshSelfOnly();
+			if (neighbors[index])
+			{
+				neighbors[index].roads[(int)((HexDirection)index).Opposite()] = state;
+				neighbors[index].RefreshSelfOnly();
+			}
 			RefreshSelfOnly();
 		}
 
@@ -683,7 +657,6 @@ namespace Game.Terrain
 			writer.Write((byte)urbanLevel);
 			writer.Write((byte)farmLevel);
 			//writer.Write((byte)plantLevel);
-			writer.Write((landmarkType));
 			writer.Write(walled);
 
 			if (hasIncomingRiver)
@@ -718,7 +691,7 @@ namespace Game.Terrain
 
 		public void Load(BinaryReader reader, int header)
 		{
-			TerrainType = (BiomeTerrainType)reader.ReadByte();
+			BiomeSubtype = (BiomeTerrainType)reader.ReadByte();
 			//terrainTypeIndex = reader.ReadByte();
 			ShaderData.RefreshTerrain(this);
 			elevation = reader.ReadByte();
@@ -731,7 +704,6 @@ namespace Game.Terrain
 			urbanLevel = reader.ReadByte();
 			farmLevel = reader.ReadByte();
 			//plantLevel = reader.ReadByte();
-			landmarkType = (string)reader.ReadString();
 			walled = reader.ReadBoolean();
 
 			byte riverData = reader.ReadByte();

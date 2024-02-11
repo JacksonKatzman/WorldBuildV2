@@ -30,6 +30,17 @@ namespace Game.Terrain
 			cells = new HexCell[HexMetrics.chunkSizeX * HexMetrics.chunkSizeZ];
 		}
 
+		public void TestInitMeshes()
+        {
+			terrain.InitMesh();
+			rivers.InitMesh();
+			roads.InitMesh();
+			water.InitMesh();
+			waterShore.InitMesh();
+			estuaries.InitMesh();
+			features.walls.InitMesh();
+        }
+
 		public void AddCell(int index, HexCell cell)
 		{
 			cells[index] = cell;
@@ -78,6 +89,14 @@ namespace Game.Terrain
 			if(collection.CollectionType == HexCollection.HexCollectionType.MOUNTAINS)
             {
 				name = $"Hex Collecton Chunk {id} MOUNTAIN";
+				var borderCellIndices = SimulationUtilities.FindBorderWithinCells(collection.cellCollection);
+				var grid = World.CurrentWorld.HexGrid;
+				var borderCells = grid.GetHexCells(borderCellIndices);
+				foreach (var cell in borderCells)
+				{
+					//features.AddMountain(cell, cell.Position);
+				}
+				/*
 				var maxHeight = collection.GetMaxElevation();
 				//get border cells and find a cell in the border that as the max elevation among border cells
 				//then find the cell in the border farthest away from the chosen cell
@@ -123,7 +142,7 @@ namespace Game.Terrain
 					}
                 }
 				*/
-            }
+			}
 		}
 
 		public void InitializeTerrainHighlighting(HexCollection collection)
@@ -142,6 +161,41 @@ namespace Game.Terrain
 		{
 			Triangulate();
 			enabled = false;
+		}
+
+		public void AddFeatures()
+        {
+			for (int i = 0; i < cells.Length; i++)
+			{
+				var cell = cells[i];
+				//cell.hexCellLabel.hexCellText.text = cell.Index.ToString();
+
+				if (!cell.IsUnderwater)
+				{
+					features.AddHexFeature(cell, cell.Position);
+				}
+			}
+		}
+
+		public void DebugTriangulate()
+        {
+			terrain.Clear();
+			rivers.Clear();
+			roads.Clear();
+			water.Clear();
+			waterShore.Clear();
+			estuaries.Clear();
+			features.Clear();
+
+			Triangulate(cells[0]);
+
+			terrain.Apply();
+			rivers.Apply();
+			roads.Apply();
+			water.Apply();
+			waterShore.Apply();
+			estuaries.Apply();
+			features.Apply();
 		}
 
 		public void Triangulate()
@@ -173,19 +227,6 @@ namespace Game.Terrain
 			for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 			{
 				Triangulate(d, cell);
-			}
-			if (!cell.IsUnderwater)
-			{
-				if (!cell.HasRiver && !cell.HasRoads)
-				{
-					features.AddFeature(cell, cell.Position);
-				}
-				/*
-				if (cell.HasLandmark)
-				{
-					features.AddSpecialFeature(cell, cell.Position);
-				}
-				*/
 			}
 		}
 
@@ -219,11 +260,6 @@ namespace Game.Terrain
 			else
 			{
 				TriangulateWithoutRiver(direction, cell, center, e);
-
-				if (!cell.IsUnderwater && !cell.HasRoadThroughEdge(direction))
-				{
-					features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
-				}
 			}
 
 			if (direction <= HexDirection.SE)
@@ -510,11 +546,6 @@ namespace Game.Terrain
 				e, weights1, cell.Index
 			);
 			TriangulateEdgeFan(center, m, cell.Index);
-
-			if (!cell.IsUnderwater && !cell.HasRoadThroughEdge(direction))
-			{
-				features.AddFeature(cell, (center + e.v1 + e.v5) * (1f / 3f));
-			}
 		}
 
 		void TriangulateRoadAdjacentToRiver(

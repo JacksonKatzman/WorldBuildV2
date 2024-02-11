@@ -142,6 +142,7 @@ namespace Game.Simulation
 			ContextDictionaryProvider.AllowImmediateChanges = true;
 			CreateRacesAndFactions();
 
+			/*
 			var hexCollections = ContextDictionaryProvider.GetAllContexts<HexCollection>();
 			OutputLogger.Log($"Total HexCollections: {hexCollections.Count}");
 			var totalSize = hexCollections[0].cellCollection.Count;
@@ -172,6 +173,7 @@ namespace Game.Simulation
 			}
 
 			OutputLogger.Log($"Biggest Collection: {biggest.cellCollection.Count}:{biggest.AffiliatedTerrainType} - Average Size: {totalSize / hexCollections.Count}");
+			*/
 		}
 
 		public async UniTask AdvanceTime()
@@ -253,7 +255,16 @@ namespace Game.Simulation
 				DrawFactionBorders(faction);
 			}
 
-			DrawCities();
+			if (!SimulationManager.Instance.simulationOptions.DrawFeaturesBeforeSimulation)
+			{
+				//connect all major cities
+				//connect SOME of the smaller ones
+				AddRoads();
+				//DrawCities();
+				//draw features here
+				DrawCities();
+				DrawFeatures();
+			}
 
 			//Pick location for players to start, likely in one of the towns/hamlets
 			var startingCity = SimRandom.RandomEntryFromList(Cities);
@@ -294,28 +305,102 @@ namespace Game.Simulation
 			}
 		}
 
+		public void AddRoads()
+        {
+			for(int i = 0; i < Cities.Count; i++)
+            {
+				var startingCity = Cities[0];
+				for(int j = 0; j < Cities.Count; j++)
+                {
+					var toCity = Cities[j];
+					if(toCity == startingCity)
+                    {
+						continue;
+                    }
+					HexGrid.FindPathForRoad(startingCity.GetHexCell(), toCity.GetHexCell());
+					if (HexGrid.HasPath)
+					{
+						var path = HexGrid.GetPath();
+						for (int k = 0; k < path.Count - 1; k++)
+						{
+							var cell = path[k];
+							if (cell.IsNeighbor(path[k + 1], out var direction))
+							{
+								
+								var neighbor = path[k + 1];
+								HexEdgeType edgeType = cell.GetEdgeType(neighbor);
+								if(edgeType == HexEdgeType.Cliff)
+                                {
+									if(neighbor.Elevation > cell.Elevation)
+                                    {
+										neighbor.Elevation = cell.Elevation + 1;
+                                    }
+									else
+                                    {
+										neighbor.Elevation = cell.Elevation - 1;
+                                    }
+                                }
+								
+								cell.AddRoad(direction);
+							}
+						}
+					}
+                }
+            }
+        }
+
 		public void DrawCities()
 		{
 			foreach(var city in Cities)
 			{
 				var location = city.CurrentLocation.TileIndex;
-				var tile = HexGrid.GetCell(location);
+				var cell = HexGrid.GetCell(location);
+				cell.HasLandmark = true;
+				var racePreset = city.AffiliatedFaction.AffiliatedRace.racePreset;
 
 				//Change the model based on the population, will use temp stuff for now
-				if (city.Population >= 2000 || city == city.AffiliatedFaction.Cities[0])
+				if (city.Population >= 0 /*2000*/ || city == city.AffiliatedFaction.Cities[0])
 				{
-					tile.LandmarkType = "City";
-					tile.PlantLevel = 0;
-					tile.UrbanLevel = 3;
-					tile.Walled = true;
+					var cityPreset = SimRandom.RandomEntryFromList(racePreset.flatCityPresets);
+					var cityModel = GameObject.Instantiate(cityPreset);
+					cityModel.transform.localPosition = cell.Position;
+
+					for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
+                    {
+						GameObject wallObject = null;
+						if((cell.HasIncomingRiver && cell.IncomingRiver == d) || (cell.HasOutgoingRiver && cell.OutgoingRiver == d))
+                        {
+							wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.riverWalls));
+                        }
+						else if(cell.HasRoadThroughEdge(d))
+                        {
+							wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.gateWalls));
+						}
+						else
+                        {
+							wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.flatWalls));
+						}
+
+						wallObject.transform.localPosition = cell.Position;
+						wallObject.transform.localRotation = Quaternion.Euler(0.0f, (int)d * 60, 0.0f);
+
+						var turretObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.outerTurrets));
+						turretObject.transform.localPosition = cell.Position;
+						turretObject.transform.localRotation = Quaternion.Euler(0.0f, (int)d * 60, 0.0f);
+					}
 				}
 				else
 				{
-					//tile.LandmarkType = "City";
-					tile.FarmLevel = 3;
-					tile.UrbanLevel = 1;
-					tile.PlantLevel = 1;
+					
 				}
+			}
+		}
+
+		public void DrawFeatures()
+        {
+			foreach (var chunk in HexGrid.chunks)
+			{
+				chunk.AddFeatures();
 			}
 		}
 

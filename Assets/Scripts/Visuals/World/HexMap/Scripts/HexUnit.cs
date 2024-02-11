@@ -193,7 +193,7 @@ namespace Game.Terrain
 			{
 				moveCost = edgeType == HexEdgeType.Flat ? 5 : 10;
 				moveCost +=
-					toCell.UrbanLevel + toCell.FarmLevel + toCell.PlantLevel;
+					toCell.UrbanLevel + toCell.FarmLevel + (int)toCell.PlantLevel;
 			}
 			return moveCost;
 		}

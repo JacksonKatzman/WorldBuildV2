@@ -1,11 +1,13 @@
-﻿using UnityEditor;
+﻿using Game.Terrain;
+using UnityEditor;
 using UnityEngine;
 
 public class TextureArrayWizard : ScriptableWizard {
 
-	public Texture2D[] textures;
+	//public Texture2D[] textures;
+	public BiomeDataContainer data;
 
-	[MenuItem ("Assets/Create/Texture Array")]
+	[MenuItem("World Builder/Texture Array Wizard")]
 	static void CreateWizard () {
 		ScriptableWizard.DisplayWizard<TextureArrayWizard>(
 			"Create Texture Array", "Create"
@@ -13,16 +15,18 @@ public class TextureArrayWizard : ScriptableWizard {
 	}
 
 	void OnWizardCreate () {
+		/*
 		if (textures.Length == 0) {
 			return;
 		}
+		*/
 		string path = EditorUtility.SaveFilePanelInProject(
 			"Save Texture Array", "Texture Array", "asset", "Save Texture Array"
 		);
 		if (path.Length == 0) {
 			return;
 		}
-
+		/*
 		Texture2D t = textures[0];
 		Texture2DArray textureArray = new Texture2DArray(
 			t.width, t.height, textures.Length, t.format, t.mipmapCount > 1
@@ -36,7 +40,12 @@ public class TextureArrayWizard : ScriptableWizard {
 				Graphics.CopyTexture(textures[i], 0, m, textureArray, i, m);
 			}
 		}
+		*/
 
-		AssetDatabase.CreateAsset(textureArray, path);
+		var textureArray = data.CreateTextureArray();
+		if (textureArray != null)
+		{
+			AssetDatabase.CreateAsset(textureArray, path);
+		}
 	}
 }

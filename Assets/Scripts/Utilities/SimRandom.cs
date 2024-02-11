@@ -19,6 +19,11 @@ namespace Game.Utilities
 			return RandomFloat01() >= 0.5f;
 		}
 
+		public static float RandomFloat(float min, float max)
+        {
+			return RandomFloat01() * (max - min) + min;
+        }
+
 		public static float RandomFloat01()
 		{
 			float precision = 100000.0f;

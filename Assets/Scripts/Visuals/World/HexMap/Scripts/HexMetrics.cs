@@ -20,7 +20,7 @@ namespace Game.Terrain
 
 		public const float waterBlendFactor = 1f - waterFactor;
 
-		public const float elevationStep = 2f; //4f
+		public const float elevationStep = 2f;//2f; //4f
 
 		public const int terracesPerSlope = 1;
 
@@ -32,7 +32,7 @@ namespace Game.Terrain
 
 		public const float cellPerturbStrength = 0f;// 3f; //4f
 
-		public const float elevationPerturbStrength = 1.0f; //1.5f
+		public const float elevationPerturbStrength = 0.2f;//1.0f; //1.5f
 
 		public const float streamBedElevationOffset = -1.75f;
 
@@ -57,6 +57,8 @@ namespace Game.Terrain
 		public const int hashGridSize = 256;
 
 		public const float hashGridScale = 0.25f;
+
+		public static int globalWaterLevel = 3;
 
 		static HexHash[] hashGrid;
 
