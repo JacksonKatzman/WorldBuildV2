@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 010113000000680065007800430065006c006c0042006f00720064006500720049006d0061006700650073002f00000000018d000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e00440069006300740069006f006e00610072007900600032005b005b00470061006d0065002e005400650072007200610069006e002e0048006500780044006900720065006300740069006f006e002c0020004100750074006f002d00610073006d006400650066002d005300650063006f006e00640050006100730073005d002c005b0055006e0069007400790045006e00670069006e0065002e00550049002e0049006d006100670065002c00200055006e0069007400790045006e00670069006e0065002e00550049005d005d002c0020006d00730063006f0072006c00690062000000000001010800000063006f006d00700061007200650072002f010000000170000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e0045006e0075006d0045007100750061006c0069007400790043006f006d0070006100720065007200600031005b005b00470061006d0065002e005400650072007200610069006e002e0048006500780044006900720065006300740069006f006e002c0020004100750074006f002d00610073006d006400650066002d005300650063006f006e00640050006100730073005d005d002c0020006d00730063006f0072006c0069006200010000000600000000000000000705060600000000000000042e1d010200000024006b0000000000000000000b0102000000240076000000000005042e1d010200000024006b0001000000000000000b0102000000240076000100000005042e1d010200000024006b0002000000000000000b0102000000240076000200000005042e1d010200000024006b0003000000000000000b0102000000240076000300000005042e1d010200000024006b0004000000000000000b0102000000240076000400000005042e1d010200000024006b0005000000000000000b01020000002400760005000000050705
     ReferencedUnityObjects:
     - {fileID: 6385294485522657138}
     - {fileID: 5071891431569656779}
@@ -113,105 +113,7 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: hexCellBorderImages
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Game.Terrain.HexDirection,
-        Auto-asmdef-SecondPass],[UnityEngine.UI.Image, UnityEngine.UI]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Game.Terrain.HexDirection,
-        Auto-asmdef-SecondPass]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 6
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 0
-    - Name: $v
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 2
-    - Name: $v
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 3
-    - Name: $v
-      Entry: 10
-      Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 4
-    - Name: $v
-      Entry: 10
-      Data: 4
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 5
-    - Name: $v
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
   rectTransform: {fileID: 22429454}
   hexCellText: {fileID: 11470134}
   hexCellHighlight: {fileID: 114479855961893736}

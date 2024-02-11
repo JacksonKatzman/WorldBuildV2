@@ -15,6 +15,7 @@ namespace Game.Incidents
 		public Dictionary<CreatureType, NamingThemePreset> monsterPresets;
 		public Transform testMountain;
 		public Transform basePrefab;
+		public HexFeatureBillboard billboardPrefab;
 
 		[SerializeField]
 		private BiomeDataContainer biomeDataContainer;
