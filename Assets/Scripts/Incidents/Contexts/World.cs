@@ -76,6 +76,9 @@ namespace Game.Simulation
 		private IncidentContextDictionary contextsToAdd;
 		private IncidentContextDictionary contextsToRemove;
 
+		public bool PostSimulationCompleted => postSimulationCompleted;
+		private bool postSimulationCompleted;
+
 		override public int ID
 		{
 			get
@@ -226,7 +229,15 @@ namespace Game.Simulation
 			await UniTask.Yield();
 		}
 
-		public void PostSimulationCleanup()
+		public async UniTask HandlePostSimulation()
+        {
+			PostSimulationCleanup();
+			BeginPostGeneration();
+			postSimulationCompleted = true;
+			await UniTask.Yield();
+		}
+
+		private void PostSimulationCleanup()
 		{
 			foreach (var contextList in CurrentContexts.Values)
 			{
@@ -240,7 +251,7 @@ namespace Game.Simulation
 			ContextDictionaryProvider.DelayedAddContexts();
 		}
 
-		public void BeginPostGeneration()
+		private void BeginPostGeneration()
 		{
 			foreach(var faction in Factions)
 			{
@@ -357,6 +368,10 @@ namespace Game.Simulation
 				var cell = HexGrid.GetCell(location);
 				cell.HasLandmark = true;
 				var racePreset = city.AffiliatedFaction.AffiliatedRace.racePreset;
+
+				var billboard = GameObject.Instantiate(AssetService.Instance.billboardPrefab);
+				billboard.transform.position = cell.Position + (Vector3.up * 3);
+				billboard.tmpText.text = city.Name;
 
 				//Change the model based on the population, will use temp stuff for now
 				if (city.Population >= 0 /*2000*/ || city == city.AffiliatedFaction.Cities[0])

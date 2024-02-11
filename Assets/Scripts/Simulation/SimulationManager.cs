@@ -118,6 +118,7 @@ namespace Game.Simulation
 
 			await RunSimulationWithCancellation(cancellationTokenSource.Token);
 			await CompileWikiWithCancellation(cancellationTokenSource.Token);
+			await HandlePostSimulation(cancellationTokenSource.Token);
 			var simTime = Time.realtimeSinceStartup - startTime;
 			OutputLogger.Log("TIME TO SIM: " + simTime);
 			GameProfiler.UpdateProfiler = false;
@@ -126,8 +127,8 @@ namespace Game.Simulation
 			statTracker.ReportDeathAges();
 
 			UniTask.ReturnToMainThread();
-			world.PostSimulationCleanup();
-			world.BeginPostGeneration();
+			//world.PostSimulationCleanup();
+			//world.BeginPostGeneration();
 		}
 
 		public async UniTask RunSimulationWithCancellation(CancellationToken token)
@@ -145,6 +146,14 @@ namespace Game.Simulation
 			while (!token.IsCancellationRequested && !UserInterfaceService.Instance.incidentWiki.initialized)
 			{
 				await UserInterfaceService.Instance.incidentWiki.InitializeWiki();
+			}
+		}
+
+		public async UniTask HandlePostSimulation(CancellationToken token)
+		{
+			while (!token.IsCancellationRequested && !world.PostSimulationCompleted)
+			{
+				await world.HandlePostSimulation();
 			}
 		}
 
