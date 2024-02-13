@@ -366,48 +366,7 @@ namespace Game.Simulation
 			{
 				var location = city.CurrentLocation.TileIndex;
 				var cell = HexGrid.GetCell(location);
-				cell.HasLandmark = true;
-				var racePreset = city.AffiliatedFaction.AffiliatedRace.racePreset;
-
-				var billboard = GameObject.Instantiate(AssetService.Instance.billboardPrefab);
-				billboard.transform.position = cell.Position + (Vector3.up * 3);
-				billboard.tmpText.text = city.Name;
-
-				//Change the model based on the population, will use temp stuff for now
-				if (city.Population >= 0 /*2000*/ || city == city.AffiliatedFaction.Cities[0])
-				{
-					var cityPreset = SimRandom.RandomEntryFromList(racePreset.flatCityPresets);
-					var cityModel = GameObject.Instantiate(cityPreset);
-					cityModel.transform.localPosition = cell.Position;
-
-					for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
-                    {
-						GameObject wallObject = null;
-						if((cell.HasIncomingRiver && cell.IncomingRiver == d) || (cell.HasOutgoingRiver && cell.OutgoingRiver == d))
-                        {
-							wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.riverWalls));
-                        }
-						else if(cell.HasRoadThroughEdge(d))
-                        {
-							wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.gateWalls));
-						}
-						else
-                        {
-							wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.flatWalls));
-						}
-
-						wallObject.transform.localPosition = cell.Position;
-						wallObject.transform.localRotation = Quaternion.Euler(0.0f, (int)d * 60, 0.0f);
-
-						var turretObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.outerTurrets));
-						turretObject.transform.localPosition = cell.Position;
-						turretObject.transform.localRotation = Quaternion.Euler(0.0f, (int)d * 60, 0.0f);
-					}
-				}
-				else
-				{
-					
-				}
+				cell.chunk.features.AddCity(city, cell, cell.Position);		
 			}
 		}
 

@@ -25,6 +25,7 @@ namespace Game.Terrain
 
 		public AssetCollection assetCollection;
 		public ConfigurableHexTerrain configurableHexTerrainPrefab;
+		public Transform permanentContainer;
 
 		Transform container;
 
@@ -243,7 +244,7 @@ namespace Game.Terrain
 
 			var configurableHexTerrain = Instantiate(configurableHexTerrainPrefab);
 			configurableHexTerrain.transform.localPosition = position;
-			configurableHexTerrain.transform.SetParent(this.container, false);
+			configurableHexTerrain.transform.SetParent(this.permanentContainer, false);
 
 			for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
 			{
@@ -338,9 +339,9 @@ namespace Game.Terrain
 				instance.localPosition = instance.localPosition - moveVector;
 			}
 
-			//this is turned off for now because when roads are recalcing terrain, they cause a reset which nukes everything in the container
+			//switched to permanent for now because when roads are recalcing terrain, they cause a reset which nukes everything in the container
 			//will probably have a new implementation of feature management later
-			//instance.SetParent(this.container, false);
+			instance.SetParent(this.permanentContainer, true);
 			container.AddRange(instance.GetComponentsInChildren<AssetPlaceholder>(true));
 		}
 
@@ -348,7 +349,7 @@ namespace Game.Terrain
         {
 			var configurableHexTerrain = Instantiate(configurableHexTerrainPrefab);
 			configurableHexTerrain.transform.localPosition = position;
-			configurableHexTerrain.transform.SetParent(this.container, false);
+			configurableHexTerrain.transform.SetParent(this.permanentContainer, true);
 			var rotation = 0;
 
 			if (!cell.HasRiver)
@@ -454,6 +455,56 @@ namespace Game.Terrain
             {
 				//AddGrass(cell, position, biomeData, ref container, ref configurableHexTerrain);
             }
+		}
+
+		public void AddCity(City city, HexCell cell, Vector3 position)
+        {
+			cell.HasLandmark = true;
+			var racePreset = city.AffiliatedFaction.AffiliatedRace.racePreset;
+
+			var billboard = GameObject.Instantiate(AssetService.Instance.billboardPrefab);
+			billboard.transform.position = cell.Position + (Vector3.up * 3);
+			billboard.tmpText.text = city.Name;
+
+			//Change the model based on the population, will use temp stuff for now
+			if (city.Population >= 0 /*2000*/ || city == city.AffiliatedFaction.Cities[0])
+			{
+				var cityPreset = SimRandom.RandomEntryFromList(racePreset.flatCityPresets);
+				var cityModel = GameObject.Instantiate(cityPreset);
+				cityModel.transform.localPosition = cell.Position;
+
+				for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
+				{
+					GameObject wallObject = null;
+					if ((cell.HasIncomingRiver && cell.IncomingRiver == d) || (cell.HasOutgoingRiver && cell.OutgoingRiver == d))
+					{
+						wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.riverWalls));
+					}
+					else if (cell.HasRoadThroughEdge(d))
+					{
+						wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.gateWalls));
+					}
+					else
+					{
+						wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.flatWalls));
+					}
+
+					wallObject.transform.localPosition = cell.Position;
+					wallObject.transform.localRotation = Quaternion.Euler(0.0f, (int)d * 60, 0.0f);
+					wallObject.transform.SetParent(cityModel.transform, true);
+
+					var turretObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.outerTurrets));
+					turretObject.transform.localPosition = cell.Position;
+					turretObject.transform.localRotation = Quaternion.Euler(0.0f, (int)d * 60, 0.0f);
+					turretObject.transform.SetParent(cityModel.transform, true);
+				}
+
+				cityModel.transform.SetParent(permanentContainer, true);
+			}
+			else
+			{
+
+			}
 		}
 
 		public void AddWall(
