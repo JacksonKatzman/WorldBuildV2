@@ -35,13 +35,6 @@ namespace Game.Incidents
 						break;
 					}
 				}
-				/*
-				var matchingFactions = factions.Where(x => x.ControlledTileIndices.Contains(loc.TileIndex));
-				if(matchingFactions.Count() > 0)
-				{
-					actionField.GetTypedFieldValue().AffiliatedFaction = matchingFactions.First();
-				}
-				*/
 			}
 			base.Complete();
 		}

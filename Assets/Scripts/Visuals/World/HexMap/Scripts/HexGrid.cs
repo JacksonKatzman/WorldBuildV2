@@ -603,9 +603,7 @@ namespace Game.Terrain
 			HexEdgeType edgeType = current.GetEdgeType(neighbor);
 			if (edgeType == HexEdgeType.Cliff)
 			{
-				//trying this to ensure we can make all cities on the same continent reachable by road
 				return neighbor.HasRiver ? -1 : 1000;
-				//return -1;
 			}
 			var opposite = HexDirectionExtensions.Opposite(d);
 			if(neighbor.HasRiverThroughEdge(opposite))

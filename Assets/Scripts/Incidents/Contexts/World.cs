@@ -76,6 +76,9 @@ namespace Game.Simulation
 		private IncidentContextDictionary contextsToAdd;
 		private IncidentContextDictionary contextsToRemove;
 
+		public bool PostSimulationCompleted => postSimulationCompleted;
+		private bool postSimulationCompleted;
+
 		override public int ID
 		{
 			get
@@ -94,6 +97,8 @@ namespace Game.Simulation
 		public List<Faction> Factions => CurrentContexts[typeof(Faction)].Cast<Faction>().ToList();
 		[JsonIgnore]
 		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
+		[JsonIgnore]
+		public List<Landmark> Landmarks => CurrentContexts[typeof(Landmark)].Cast<Landmark>().ToList();
 		[JsonIgnore]
 		public List<GreatMonster> GreatMonsters => CurrentContexts[typeof(GreatMonster)].Cast<GreatMonster>().ToList();
 		[JsonIgnore]
@@ -226,7 +231,15 @@ namespace Game.Simulation
 			await UniTask.Yield();
 		}
 
-		public void PostSimulationCleanup()
+		public async UniTask HandlePostSimulation()
+        {
+			PostSimulationCleanup();
+			BeginPostGeneration();
+			postSimulationCompleted = true;
+			await UniTask.Yield();
+		}
+
+		private void PostSimulationCleanup()
 		{
 			foreach (var contextList in CurrentContexts.Values)
 			{
@@ -240,7 +253,7 @@ namespace Game.Simulation
 			ContextDictionaryProvider.DelayedAddContexts();
 		}
 
-		public void BeginPostGeneration()
+		private void BeginPostGeneration()
 		{
 			foreach(var faction in Factions)
 			{
@@ -263,6 +276,7 @@ namespace Game.Simulation
 				//DrawCities();
 				//draw features here
 				DrawCities();
+				DrawLandmarks();
 				DrawFeatures();
 			}
 
@@ -349,50 +363,23 @@ namespace Game.Simulation
             }
         }
 
+		public void DrawLandmarks()
+        {
+			foreach(var landmark in Landmarks)
+            {
+				var location = landmark.CurrentLocation.TileIndex;
+				var cell = HexGrid.GetCell(location);
+				cell.chunk.features.AddLandmark(landmark, cell, cell.Position);
+            }
+        }
+
 		public void DrawCities()
 		{
 			foreach(var city in Cities)
 			{
 				var location = city.CurrentLocation.TileIndex;
 				var cell = HexGrid.GetCell(location);
-				cell.HasLandmark = true;
-				var racePreset = city.AffiliatedFaction.AffiliatedRace.racePreset;
-
-				//Change the model based on the population, will use temp stuff for now
-				if (city.Population >= 0 /*2000*/ || city == city.AffiliatedFaction.Cities[0])
-				{
-					var cityPreset = SimRandom.RandomEntryFromList(racePreset.flatCityPresets);
-					var cityModel = GameObject.Instantiate(cityPreset);
-					cityModel.transform.localPosition = cell.Position;
-
-					for (Terrain.HexDirection d = Terrain.HexDirection.NE; d <= Terrain.HexDirection.NW; d++)
-                    {
-						GameObject wallObject = null;
-						if((cell.HasIncomingRiver && cell.IncomingRiver == d) || (cell.HasOutgoingRiver && cell.OutgoingRiver == d))
-                        {
-							wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.riverWalls));
-                        }
-						else if(cell.HasRoadThroughEdge(d))
-                        {
-							wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.gateWalls));
-						}
-						else
-                        {
-							wallObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.flatWalls));
-						}
-
-						wallObject.transform.localPosition = cell.Position;
-						wallObject.transform.localRotation = Quaternion.Euler(0.0f, (int)d * 60, 0.0f);
-
-						var turretObject = GameObject.Instantiate(SimRandom.RandomEntryFromList(racePreset.outerTurrets));
-						turretObject.transform.localPosition = cell.Position;
-						turretObject.transform.localRotation = Quaternion.Euler(0.0f, (int)d * 60, 0.0f);
-					}
-				}
-				else
-				{
-					
-				}
+				cell.chunk.features.AddCity(city, cell, cell.Position);		
 			}
 		}
 
