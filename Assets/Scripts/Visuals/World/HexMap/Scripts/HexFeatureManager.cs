@@ -457,13 +457,26 @@ namespace Game.Terrain
             }
 		}
 
+		public void AddLandmark(Landmark landmark, HexCell cell, Vector3 position)
+        {
+			cell.HasLandmark = true;
+			var prefab = landmark.Preset.models.Count > 0 ? SimRandom.RandomEntryFromList(landmark.Preset.models) : AssetService.Instance.debugPrefab;
+			var landmarkObject = GameObject.Instantiate(prefab);
+			landmarkObject.localPosition = cell.Position;
+			landmarkObject.SetParent(permanentContainer, true);
+
+			var billboard = GameObject.Instantiate(AssetService.Instance.billboardPrefab);
+			billboard.transform.position = cell.Position + (Vector3.up * 5);
+			billboard.tmpText.text = landmark.Name;
+		}
+
 		public void AddCity(City city, HexCell cell, Vector3 position)
         {
 			cell.HasLandmark = true;
 			var racePreset = city.AffiliatedFaction.AffiliatedRace.racePreset;
 
 			var billboard = GameObject.Instantiate(AssetService.Instance.billboardPrefab);
-			billboard.transform.position = cell.Position + (Vector3.up * 3);
+			billboard.transform.position = cell.Position + (Vector3.up * 5);
 			billboard.tmpText.text = city.Name;
 
 			//Change the model based on the population, will use temp stuff for now

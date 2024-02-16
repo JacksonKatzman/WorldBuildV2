@@ -98,6 +98,8 @@ namespace Game.Simulation
 		[JsonIgnore]
 		public List<City> Cities => CurrentContexts[typeof(City)].Cast<City>().ToList();
 		[JsonIgnore]
+		public List<Landmark> Landmarks => CurrentContexts[typeof(Landmark)].Cast<Landmark>().ToList();
+		[JsonIgnore]
 		public List<GreatMonster> GreatMonsters => CurrentContexts[typeof(GreatMonster)].Cast<GreatMonster>().ToList();
 		[JsonIgnore]
 		public int NumPeople => People.Count;
@@ -274,6 +276,7 @@ namespace Game.Simulation
 				//DrawCities();
 				//draw features here
 				DrawCities();
+				DrawLandmarks();
 				DrawFeatures();
 			}
 
@@ -357,6 +360,16 @@ namespace Game.Simulation
 						}
 					}
                 }
+            }
+        }
+
+		public void DrawLandmarks()
+        {
+			foreach(var landmark in Landmarks)
+            {
+				var location = landmark.CurrentLocation.TileIndex;
+				var cell = HexGrid.GetCell(location);
+				cell.chunk.features.AddLandmark(landmark, cell, cell.Position);
             }
         }
 

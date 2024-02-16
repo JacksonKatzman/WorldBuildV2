@@ -17,7 +17,6 @@ namespace Game.Incidents
 		public Inventory CurrentInventory { get; set; }
 		public Faction AffiliatedFaction { get; set; }
 		public Organization AffiliatedOrganization { get; set; }
-
 		public LandmarkPreset Preset { get; private set; }
 		public List<LandmarkTag> LandmarkTags { get; set; }
 
@@ -32,6 +31,7 @@ namespace Game.Incidents
 			CurrentInventory = new Inventory();
 			Preset = landmarkType;
 			LandmarkTags = Preset.landmarkTags != null ? Preset.landmarkTags : new List<LandmarkTag>();
+			Name = Preset.name;
 		}
 
 		public override void LoadContextProperties()
