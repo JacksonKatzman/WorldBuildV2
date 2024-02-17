@@ -55,7 +55,7 @@ namespace Game.Incidents
 		public float AverageElevation => GetAverageElevation();
 
 		public Location CurrentLocation { get; private set; }
-		public HexGridChunk HexGridChunk { get; set; }
+		public HexGridOverlayChunk OverlayChunk { get; set; }
 		private string name;
 
 		public HexCollection()

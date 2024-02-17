@@ -14,7 +14,7 @@ namespace Game.Terrain
 
 		public HexCellLabel hexCellLabel;
 
-		public HexGridChunk chunk;
+		public HexGridTerrainChunk chunk;
 
 		public HexCollection HexCollection { get; set; }
 

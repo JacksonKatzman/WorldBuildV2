@@ -12,27 +12,42 @@ public class HexChunkHighlight : MonoBehaviour
     public HexCollection collection;
     public HighlightEffect highlightEffect;
     public MeshRenderer meshRenderer;
+    public Material opaqueMat;
+
+    private bool highlighted;
+    private Material originalMat;
     void Start()
     {
-        //highlightEffect.OnObjectHighlightStart += OnHighlightStart;
-        //highlightEffect.OnObjectHighlightEnd += OnHighlightEnd;
+        originalMat = meshRenderer.sharedMaterial;
     }
 
     public bool OnHighlightStart()
 	{
-        if (collection != null && meshRenderer.enabled == true)
+        if (!highlighted)
         {
-            UserInterfaceService.Instance.ToggleHexCollectionName(true, collection.Name);
+            highlighted = true;
+            if (collection != null && meshRenderer.enabled == true)
+            {
+                meshRenderer.sharedMaterial = opaqueMat;
+                UserInterfaceService.Instance.ToggleHexCollectionName(true, collection.Name);
+            }
+            return true;
         }
-        return true;
+        return false;
 	}
 
-    private bool OnHighlightEnd(GameObject obj)
+    public bool OnHighlightEnd()
 	{
-        if (collection != null)
+        if (highlighted)
         {
-            //UserInterfaceService.Instance.ToggleHexCollectionName(false, collection.Name);
+            highlighted = false;
+            meshRenderer.sharedMaterial = originalMat;
+            if (collection != null)
+            {
+                //UserInterfaceService.Instance.ToggleHexCollectionName(false, collection.Name);
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 }

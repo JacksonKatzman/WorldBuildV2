@@ -177,17 +177,12 @@ namespace Game.Terrain
 			CreateLand();
 			ErodeLand();
 			CreateClimate();
-			CreateRivers();
+			//CreateRivers();
 			SetTerrainType();
 
-			if(SimulationManager.Instance.simulationOptions.DrawFeaturesBeforeSimulation)
-            {
-				foreach (var chunk in grid.chunks)
-				{
-					chunk.AddFeatures();
-				}
-			}
-			//GenerateHexCollections();
+			//Some places in here we are changing heights which is fuckin shit up. we need to not do that. that or do it before rivers are created.
+			GenerateHexCollections();
+			CreateRivers();
 
 			for (int i = 0; i < cellCount; i++)
 			{
@@ -938,7 +933,7 @@ namespace Game.Terrain
 				c.Normalize(grid);
 			}
 
-			grid.RecreateChunks(secondStageCollections);
+			grid.CreateOverlay(secondStageCollections);
 
 			foreach(var c in secondStageCollections)
 			{

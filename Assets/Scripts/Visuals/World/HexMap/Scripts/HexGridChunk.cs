@@ -1,5 +1,4 @@
 ﻿using Game.Debug;
-using Game.Incidents;
 using Game.Simulation;
 using Game.Utilities;
 using HighlightPlus;
@@ -9,15 +8,13 @@ using UnityEngine;
 
 namespace Game.Terrain
 {
-	public class HexGridChunk : MonoBehaviour
+    abstract public class HexGridChunk : MonoBehaviour
 	{
 		public HexMesh terrain, rivers, roads, water, waterShore, estuaries;
 
-		public HexFeatureManager features;
-
 		public HexCell[] cells;
 
-		Canvas gridCanvas;
+		protected Canvas gridCanvas;
 
 		static Color weights1 = new Color(1f, 0f, 0f);
 		static Color weights2 = new Color(0f, 1f, 0f);
@@ -30,24 +27,7 @@ namespace Game.Terrain
 			cells = new HexCell[HexMetrics.chunkSizeX * HexMetrics.chunkSizeZ];
 		}
 
-		public void TestInitMeshes()
-        {
-			terrain.InitMesh();
-			rivers.InitMesh();
-			roads.InitMesh();
-			water.InitMesh();
-			waterShore.InitMesh();
-			estuaries.InitMesh();
-			features.walls.InitMesh();
-        }
-
-		public void AddCell(int index, HexCell cell)
-		{
-			cells[index] = cell;
-			cell.chunk = this;
-			cell.transform.SetParent(transform, false);
-			cell.hexCellLabel.rectTransform.SetParent(gridCanvas.transform, false);
-		}
+		public abstract void AddCell(int index, HexCell cell);
 
 		public void Refresh()
 		{
@@ -59,170 +39,16 @@ namespace Game.Terrain
 			gridCanvas.gameObject.SetActive(visible);
 		}
 
-		public void HandleCollectionType(HexCollection collection, int id)
-		{
-			if (collection.CollectionType == HexCollection.HexCollectionType.RIVER)
-			{
-				terrain.GetComponent<MeshRenderer>().enabled = false;
-				roads.GetComponent<MeshRenderer>().enabled = false;
-				water.GetComponent<MeshRenderer>().enabled = false;
-				waterShore.GetComponent<MeshRenderer>().enabled = false;
-				estuaries.GetComponent<MeshRenderer>().enabled = false;
-
-				//raise by a very small amount so that theres no z-fighting when trying to highlight
-				transform.LeanSetPosY(0.001f);
-				name = $"Hex Collecton Chunk {id} RIVER";
-			}
-			else
-			{
-				rivers.GetComponent<MeshRenderer>().enabled = false;
-				name = $"Hex Collecton Chunk {id}";
-			}
-
-			if(collection.CollectionType == HexCollection.HexCollectionType.LAKE)
-			{
-				//raise by a very small amount so that theres no z-fighting when trying to highlight
-				//has to be higher than rivers
-				transform.LeanSetPosY(0.0011f);
-				name = $"Hex Collecton Chunk {id} LAKE";
-			}
-			if(collection.CollectionType == HexCollection.HexCollectionType.MOUNTAINS)
-            {
-				name = $"Hex Collecton Chunk {id} MOUNTAIN";
-				var borderCellIndices = SimulationUtilities.FindBorderWithinCells(collection.cellCollection);
-				var grid = World.CurrentWorld.HexGrid;
-				var borderCells = grid.GetHexCells(borderCellIndices);
-				foreach (var cell in borderCells)
-				{
-					//features.AddMountain(cell, cell.Position);
-				}
-				/*
-				var maxHeight = collection.GetMaxElevation();
-				//get border cells and find a cell in the border that as the max elevation among border cells
-				//then find the cell in the border farthest away from the chosen cell
-				//draw a line between them and thats the mountain range
-				//have a diminishing chance at each of those central tiles to have an adjacent mountain as well
-				//cell will have mountainLevel : 2 = mountain, 1 = foothills, 0 = nothing, set it
-				//all cells in collection that border the mountain range are foothills
-				var borderCellIndices = SimulationUtilities.FindBorderWithinCells(collection.cellCollection);
-				var grid = World.CurrentWorld.HexGrid;
-				var borderCells = grid.GetHexCells(borderCellIndices);
-				var maxHeightInBorder = borderCells.Select(x => x.Elevation).Max();
-				var cellsAtMax = borderCells.Where(x => x.Elevation == maxHeightInBorder).ToList();
-				var startCell = SimRandom.RandomEntryFromList(cellsAtMax);
-				var maxDistance = 0;
-				foreach(var cell in borderCells)
-                {
-					var dist = startCell.coordinates.DistanceTo(cell.coordinates);
-					if(dist > maxDistance)
-                    {
-						maxDistance = dist;
-                    }
-                }
-				var endCells = borderCells.Where(x => startCell.coordinates.DistanceTo(x.coordinates) == maxDistance).ToList();
-				var endCell = SimRandom.RandomEntryFromList(endCells);
-				grid.ResetSearchPhases();
-				grid.FindPath(startCell, endCell, borderCells);
-				var path = grid.GetPath();
-				grid.ClearPath();
-
-				foreach(var cell in path)
-                {
-					cell.LandmarkType = "Bare_Mountain";
-				}
-
-				/*
-				foreach(var cell in cells)
-                {
-					//cell.MountainLevel = 1;
-					name = $"Hex Collecton Chunk {id} MOUNTAIN";
-					if (cell.Elevation >= maxHeight)
-					{
-						cell.LandmarkType = "Bare_Mountain";
-					}
-                }
-				*/
-			}
-		}
-
-		public void InitializeTerrainHighlighting(HexCollection collection)
-		{
-			if (collection.CollectionType == HexCollection.HexCollectionType.RIVER)
-			{
-				rivers.gameObject.GetComponent<HexChunkHighlight>().collection = collection;
-			}
-			else
-			{
-				terrain.gameObject.GetComponent<HexChunkHighlight>().collection = collection;
-			}
-		}
-
 		void LateUpdate()
 		{
 			Triangulate();
 			enabled = false;
 		}
 
-		public void AddFeatures()
-        {
-			for (int i = 0; i < cells.Length; i++)
-			{
-				var cell = cells[i];
-				//cell.hexCellLabel.hexCellText.text = cell.Index.ToString();
+		public abstract void Triangulate();
+		protected abstract void AddBridge(Vector3 roadCenter1, Vector3 roadCenter2);
 
-				if (!cell.IsUnderwater)
-				{
-					features.AddHexFeature(cell, cell.Position);
-				}
-			}
-		}
-
-		public void DebugTriangulate()
-        {
-			terrain.Clear();
-			rivers.Clear();
-			roads.Clear();
-			water.Clear();
-			waterShore.Clear();
-			estuaries.Clear();
-			features.Clear();
-
-			Triangulate(cells[0]);
-
-			terrain.Apply();
-			rivers.Apply();
-			roads.Apply();
-			water.Apply();
-			waterShore.Apply();
-			estuaries.Apply();
-			features.Apply();
-		}
-
-		public void Triangulate()
-		{
-			terrain.Clear();
-			rivers.Clear();
-			roads.Clear();
-			water.Clear();
-			waterShore.Clear();
-			estuaries.Clear();
-			features.Clear();
-			
-			for (int i = 0; i < cells.Length; i++)
-			{
-				Triangulate(cells[i]);
-			}
-			
-			terrain.Apply();
-			rivers.Apply();
-			roads.Apply();
-			water.Apply();
-			waterShore.Apply();
-			estuaries.Apply();
-			features.Apply();
-		}
-
-		void Triangulate(HexCell cell)
+		protected void Triangulate(HexCell cell)
 		{
 			for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 			{
@@ -595,7 +421,7 @@ namespace Game.Terrain
 					cell.HasRoadThroughEdge(direction.Opposite())
 				))
 				{
-					features.AddBridge(roadCenter, center - corner * 0.5f);
+					AddBridge(roadCenter, center - corner * 0.5f);
 				}
 				center += corner * 0.25f;
 			}
@@ -648,7 +474,7 @@ namespace Game.Terrain
 					cell.HasRoadThroughEdge(direction.Opposite())
 				)
 				{
-					features.AddBridge(
+					AddBridge(
 						roadCenter,
 						center - offset * (HexMetrics.innerToOuter * 0.7f)
 					);
@@ -861,8 +687,6 @@ namespace Game.Terrain
 				);
 			}
 
-			features.AddWall(e1, cell, e2, neighbor, hasRiver, hasRoad);
-
 			HexCell nextNeighbor = cell.GetNeighbor(direction.Next());
 			if (direction <= HexDirection.E && nextNeighbor != null)
 			{
@@ -987,8 +811,6 @@ namespace Game.Terrain
 				indices.z = rightCell.Index;
 				terrain.AddTriangleCellData(indices, weights1, weights2, weights3);
 			}
-
-			features.AddWall(bottom, bottomCell, left, leftCell, right, rightCell);
 		}
 
 		void TriangulateEdgeTerraces(

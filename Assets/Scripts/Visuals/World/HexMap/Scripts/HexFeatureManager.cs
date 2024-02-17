@@ -281,6 +281,11 @@ namespace Game.Terrain
 			}
 			else
             {
+				if(biomeData.hillAssets.Count == 0)
+                {
+					OutputLogger.LogWarning($"{biomeData.terrainType} doesn't have hill assets. {cell.Elevation}");
+					return;
+                }
 				//hills
 				instance = cell.HasOutgoingRiver ?
 				Instantiate(SimRandom.RandomEntryFromList(biomeData.riverStartHillAssets)).transform :
