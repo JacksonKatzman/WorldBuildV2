@@ -163,7 +163,7 @@ namespace Game.Terrain
 					cell.HexCollection = collection;
 					chunk.AddCell(j, cell);
 					//LABEL BIOME
-					cell.SetLabel(cell.BiomeSubtype.ToString());
+					//cell.SetLabel(cell.BiomeSubtype.ToString());
 				}
 				collection.OverlayChunk = chunk;
 				chunk.name = $"{collection.cellCollection.Count} Hex Collecton Overlay Chunk {i}";
