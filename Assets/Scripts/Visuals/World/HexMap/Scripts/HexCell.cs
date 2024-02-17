@@ -352,6 +352,7 @@ namespace Game.Terrain
 		public BiomeData BiomeData => AssetService.Instance.BiomeDataContainer.GetBiomeData(BiomeSubtype);
 
 		public int Fertility { get; set; }
+		public float Temperature { get; set; }
 
 		public int SearchPhase { get; set; }
 
@@ -619,7 +620,6 @@ namespace Game.Terrain
 
 		void Refresh()
 		{
-			LandmarkPositionAllocated = false;
 			if (chunk)
 			{
 				chunk.Refresh();
@@ -640,7 +640,6 @@ namespace Game.Terrain
 
 		void RefreshSelfOnly()
 		{
-			LandmarkPositionAllocated = false;
 			chunk.Refresh();
 			if (Unit)
 			{

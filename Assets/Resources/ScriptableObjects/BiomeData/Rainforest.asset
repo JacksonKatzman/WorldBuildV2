@@ -36,7 +36,7 @@ MonoBehaviour:
   - {fileID: 1000010046023388, guid: 123de41ee0db8a64d872c93d1b016365, type: 3}
   foliageAssets:
   - {fileID: 7485418063828181427, guid: e70a467a0a938364aa889320ab0d10d4, type: 3}
-  minHeight: 3
+  minHeight: 1
   maxHeight: 6
   minTemperature: 0.6
   maxTemperature: 1

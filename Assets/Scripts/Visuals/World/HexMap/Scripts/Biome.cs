@@ -82,17 +82,17 @@ namespace Game.Terrain
 		{
 			if (!cell.IsUnderwater)
             {
-				//var inRange = AssetService.Instance.BiomeDataContainer.biomeData.Where(x => temperature >= x.minTemperature
-				//&& temperature <= x.maxTemperature && moistureLevel >= x.minMoisture && moistureLevel <= x.maxMoisture && elevationMaximum >= x.minHeight && elevationMaximum <= x.maxHeight);
 				var container = AssetService.Instance.BiomeDataContainer;
-				/*
-				var heightMatches = container.biomeData.Where(x => elevationMaximum >= x.minHeight && elevationMaximum <= x.maxHeight)
-					.Aggregate((i1, i2) => (i1.maxHeight - elevationMaximum) > (i2.maxHeight - elevationMaximum) ? i1 : i2);
-				*/
 				if(cell.HasRiver)
                 {
 					moistureLevel += 0.25f;
                 }
+
+				cell.Temperature = temperature;
+
+				//LABEL TEMP
+				var formattedTemp = temperature.ToString("N2");
+				//cell.SetLabel(formattedTemp);
 
 				//LABEL HEIGHT
 				//cell.SetLabel((cell.Elevation - HexMetrics.globalWaterLevel).ToString());
@@ -100,29 +100,49 @@ namespace Game.Terrain
 				moistureLevel = Mathf.Clamp01(moistureLevel);
 				var elevation = cell.Elevation - HexMetrics.globalWaterLevel;
 
-				//really i just need to simplify - cut out unnecessary biomes down to like 5 and make sure the numbers line up, then worry about veg
 				var heightMatches = container.biomeData.Where(x => elevation >= x.minHeight && elevation <= x.maxHeight);
 				if(heightMatches.Count() == 0)
                 {
 					heightMatches = container.biomeData;
 					OutputLogger.LogWarning("No height matches found when calculating biome.");
                 }
-				var moistureMatches = heightMatches.Where(x => moistureLevel >= x.minMoisture && moistureLevel <= x.maxMoisture);
-				if(moistureMatches.Count() == 0)
+				var tempMatches = heightMatches.Where(x => temperature >= x.minTemperature && temperature <= x.maxTemperature);
+				if(tempMatches.Count() == 0)
                 {
-					moistureMatches = heightMatches;
-					//OutputLogger.LogWarning($"No moisture matches found when calculating biome. H: {elevation}, M: {moistureLevel}, T: {temperature}");
-				}
-				//var temperatureMatch = moistureMatches.Aggregate((i1, i2) => Mathf.Abs(i1.maxTemperature - temperature) < Mathf.Abs(i2.maxTemperature - temperature) ? i1 : i2);
-				var currentMatch = moistureMatches.First();
+					tempMatches = heightMatches;
+                }
+
+				var matches = tempMatches.ToList();
+				BiomeData currentMatch = null;
+				var possibilities = new Dictionary<BiomeData, float>();
 				var difference = float.MaxValue;
-				foreach(var match in moistureMatches)
+				foreach (var match in matches)
+				{
+					var check = Mathf.Abs(moistureLevel - match.maxMoisture);
+					if (check < difference)
+					{
+						if(moistureLevel <= match.maxMoisture)
+                        {
+							difference = check;
+							currentMatch = match;
+						}
+						else
+                        {
+							possibilities.Add(match, check);
+                        }
+					}
+				}
+
+				if(currentMatch == null)
                 {
-					var check = Mathf.Abs(temperature - match.maxTemperature);
-					if(check < difference && temperature <= match.maxTemperature)
+					var lowest = float.MaxValue;
+					foreach(var pair in possibilities)
                     {
-						difference = check;
-						currentMatch = match;
+						if(pair.Value < lowest)
+                        {
+							currentMatch = pair.Key;
+							lowest = pair.Value;
+                        }
                     }
                 }
 

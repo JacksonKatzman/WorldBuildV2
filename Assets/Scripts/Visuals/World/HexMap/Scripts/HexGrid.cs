@@ -162,6 +162,8 @@ namespace Game.Terrain
 					var cell = GetCell(collection.cellCollection[j]);
 					cell.HexCollection = collection;
 					chunk.AddCell(j, cell);
+					//LABEL BIOME
+					cell.SetLabel(cell.BiomeSubtype.ToString());
 				}
 				collection.OverlayChunk = chunk;
 				chunk.name = $"{collection.cellCollection.Count} Hex Collecton Overlay Chunk {i}";

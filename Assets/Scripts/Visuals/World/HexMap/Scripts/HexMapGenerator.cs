@@ -818,6 +818,10 @@ namespace Game.Terrain
 					var borderCellHexCollection = firstStageCollections.First(x => x.cellCollection.Contains(cellIndex));
 					if (borderCellHexCollection.IsUnderwater == collection.IsUnderwater)
 					{
+						if (!SimulationManager.Instance.simulationOptions.allowSplatterBiomes)
+						{
+							collection.ChangeBiomeSubtype(grid, borderCellHexCollection.AffiliatedTerrainType);
+						}
 						borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
 						firstStageCollections.Remove(collection);
 						found = true;
