@@ -40,7 +40,7 @@ MonoBehaviour:
   maxHeight: 4
   minTemperature: 0
   maxTemperature: 0.175
-  minMoisture: 0.1
+  minMoisture: 0
   maxMoisture: 1
   mountainThreshold: 6
   hillThreshold: 5

@@ -27,7 +27,7 @@ namespace Game.Terrain
 			else
 			{
 				rivers.GetComponent<MeshRenderer>().enabled = false;
-				name = $"Hex Collecton Chunk {id}";
+				name = $"{collection.cellCollection.Count} Hex Collecton Chunk {id}";
 			}
 
 			if (collection.CollectionType == HexCollection.HexCollectionType.LAKE)
@@ -37,6 +37,11 @@ namespace Game.Terrain
 				transform.LeanSetPosY(0.0011f);
 				name = $"Hex Collecton Chunk {id} LAKE";
 			}
+
+			if(collection.CollectionType == HexCollection.HexCollectionType.MOUNTAINS)
+            {
+				name = $"{collection.cellCollection.Count} Hex Collecton Chunk {id} MOUNTAIN";
+			}				
 		}
 
 		public void InitializeTerrainHighlighting(HexCollection collection)

@@ -177,12 +177,11 @@ namespace Game.Terrain
 			CreateLand();
 			ErodeLand();
 			CreateClimate();
-			//CreateRivers();
+			CreateRivers();
 			SetTerrainType();
 
-			//Some places in here we are changing heights which is fuckin shit up. we need to not do that. that or do it before rivers are created.
 			GenerateHexCollections();
-			CreateRivers();
+			//CreateRivers();
 
 			for (int i = 0; i < cellCount; i++)
 			{
@@ -802,6 +801,8 @@ namespace Game.Terrain
 				}
 			}
 
+			//OutputLogger.Log($"Cells remaining to match: {cellsCopy.Count}");
+
 			var secondStageCollections = new List<HexCollection>();
 			
 			var smallBoys = firstStageCollections.Where(x => x.cellCollection.Count <= 5
@@ -878,7 +879,7 @@ namespace Game.Terrain
 				c.Update(grid);
 			}
 
-			//third stage - group mountains together		
+			//third stage - group mountains together				
 			var mountainousCollections = secondStageCollections.Where(x => x.CollectionType == HexCollection.HexCollectionType.MOUNTAINS).ToList();
 			while(mountainousCollections.Count > 0)
 			{
@@ -887,13 +888,14 @@ namespace Game.Terrain
 				foreach (var cellIndex in border)
 				{
 					var borderCell = grid.GetCell(cellIndex);
-					var borderCellHexCollections = firstStageCollections.Where(x => x.cellCollection.Contains(cellIndex)).ToList();
+					var borderCellHexCollections = secondStageCollections.Where(x => x.cellCollection.Contains(cellIndex)).ToList();
 					if(borderCellHexCollections.Count == 0)
 					{
 						continue;
 					}
 
 					var borderCellHexCollection = borderCellHexCollections.First();
+					
 					if (borderCellHexCollection.CollectionType == collection.CollectionType)
 					{
 						borderCellHexCollection.cellCollection.AddRange(collection.cellCollection);
@@ -905,7 +907,7 @@ namespace Game.Terrain
 			}
 
 			//now rivers
-			//instead lets get all cells with only an outgoing river and just follow emb
+			//instead lets get all cells with only an outgoing river and just follow em
 			var riverCells = grid.cells.Where(x => x.HasOutgoingRiver && !x.HasIncomingRiver).ToList();
 
 			while (riverCells.Count > 0)
@@ -913,7 +915,6 @@ namespace Game.Terrain
 				var cell = riverCells.First();
 				riverCells.Remove(cell);
 				var collection = CreateNewHexCollection();
-				collection.CollectionType = HexCollection.HexCollectionType.RIVER;
 				//cant use compile, need a special one for rivers that follows just one river
 				while(cell.HasOutgoingRiver)
 				{
@@ -924,13 +925,14 @@ namespace Game.Terrain
 
 				collection.cellCollection.OrderBy(x => x);
 				collection.Update(grid);
+				collection.CollectionType = HexCollection.HexCollectionType.RIVER;
 				secondStageCollections.Add(collection);
 			}
 
 			foreach (var c in secondStageCollections)
 			{
 				c.Update(grid);
-				c.Normalize(grid);
+				//c.Normalize(grid);
 			}
 
 			grid.CreateOverlay(secondStageCollections);
@@ -949,6 +951,14 @@ namespace Game.Terrain
 
 		void CompileCollection(HexCell cell, ref List<HexCell> matchingCells, ref HexCollection hexCollection)
 		{
+			/*
+			if(hexCollection.cellCollection.Count >= 40)
+            {
+				matchingCells.Add(cell);
+				return;
+            }
+			*/
+
 			if (!hexCollection.cellCollection.Contains(cell.Index))
 			{
 				hexCollection.cellCollection.Add(cell.Index);

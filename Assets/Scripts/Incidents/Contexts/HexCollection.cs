@@ -88,7 +88,7 @@ namespace Game.Incidents
 			}
 
 			var isMountainous = hasMountains >= (cellCollection.Count / 2) + 1 ? true : false;
-			if(isMountainous)
+			if(isMountainous && CollectionType != HexCollectionType.RIVER)
 			{
 				CollectionType = HexCollectionType.MOUNTAINS;
 			}

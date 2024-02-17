@@ -146,12 +146,17 @@ namespace Game.Terrain
 		public void CreateOverlay(List<HexCollection> collections)
 		{
 			var replacementChunks = new HexGridOverlayChunk[collections.Count];
+			var totalCellsSeen = 0;
 			for(int i = 0; i < replacementChunks.Count(); i++)
 			{
 				HexGridOverlayChunk chunk = replacementChunks[i] = Instantiate(overlayChunkPrefab);
 				chunk.transform.SetParent(overlayParent);
 				var collection = collections[i];
 				chunk.cells = new HexCell[collection.cellCollection.Count];
+				if (collection.CollectionType != HexCollection.HexCollectionType.RIVER)
+				{
+					totalCellsSeen += collection.cellCollection.Count;
+				}
 				for(int j = 0; j < collection.cellCollection.Count; j++)
 				{
 					var cell = GetCell(collection.cellCollection[j]);
@@ -159,16 +164,15 @@ namespace Game.Terrain
 					chunk.AddCell(j, cell);
 				}
 				collection.OverlayChunk = chunk;
-				chunk.name = $"Hex Collecton Overlay Chunk {i}";
+				chunk.name = $"{collection.cellCollection.Count} Hex Collecton Overlay Chunk {i}";
 
 				chunk.HandleCollectionType(collection, i);
 				chunk.InitializeTerrainHighlighting(collection);
 			}
 
-			//this might be necessary but the main issue is that the glow is based on the alpha of the mat on the object.
-			//so if its transparent, so too will the glow be. need to find a solution
 			overlayParent.SetPositionAndRotation(overlayParent.position + (Vector3.up * 0.1f), Quaternion.identity);
 			OutputLogger.Log($"Total Chunks: {chunks.Length}");
+			OutputLogger.Log($"Collection Cells: {totalCellsSeen}, Actual Cells: {cells.Length}, Missing Cells: {cells.Length - totalCellsSeen}");
 		}
 
 		void CreateCells()

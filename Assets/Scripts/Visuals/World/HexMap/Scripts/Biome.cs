@@ -111,7 +111,7 @@ namespace Game.Terrain
 				if(moistureMatches.Count() == 0)
                 {
 					moistureMatches = heightMatches;
-					OutputLogger.LogWarning($"No moisture matches found when calculating biome. H: {elevation}, M: {moistureLevel}, T: {temperature}");
+					//OutputLogger.LogWarning($"No moisture matches found when calculating biome. H: {elevation}, M: {moistureLevel}, T: {temperature}");
 				}
 				//var temperatureMatch = moistureMatches.Aggregate((i1, i2) => Mathf.Abs(i1.maxTemperature - temperature) < Mathf.Abs(i2.maxTemperature - temperature) ? i1 : i2);
 				var currentMatch = moistureMatches.First();
