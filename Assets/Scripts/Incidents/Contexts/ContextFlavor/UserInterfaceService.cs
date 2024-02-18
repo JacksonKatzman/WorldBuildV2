@@ -22,6 +22,7 @@ namespace Game.Incidents
 			{
 				Instance = this;
 				HighlightManager.instance.OnObjectHighlightStart += OnHighlightStart;
+				HighlightManager.instance.OnObjectHighlightEnd += OnHighlightEnd;
 			}
 		}
 
@@ -60,6 +61,12 @@ namespace Game.Incidents
 				//currently hovering over river throws null ref - obj or the get component is null
 				obj?.GetComponent<HexChunkHighlight>()?.OnHighlightStart();
 			}
+			return true;
+		}
+
+		private bool OnHighlightEnd(GameObject obj)
+        {
+			obj?.GetComponent<HexChunkHighlight>()?.OnHighlightEnd();
 			return true;
 		}
 	}

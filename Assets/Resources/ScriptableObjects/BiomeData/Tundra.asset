@@ -39,9 +39,9 @@ MonoBehaviour:
   minHeight: 0
   maxHeight: 4
   minTemperature: 0
-  maxTemperature: 0.175
-  minMoisture: 0.1
-  maxMoisture: 1
+  maxTemperature: 0.3
+  minMoisture: 0
+  maxMoisture: 0.298
   mountainThreshold: 6
   hillThreshold: 5
   plantLevel: 0.239

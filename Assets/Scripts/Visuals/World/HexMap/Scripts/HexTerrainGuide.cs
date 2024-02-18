@@ -7,7 +7,7 @@ namespace Game.Terrain
     public class HexTerrainGuide : MonoBehaviour
     {
         public HexCell cell;
-        public HexGridChunk chunk;
+        public HexGridDebugChunk chunk;
         public Texture2D noiseSource;
         public Transform cellPrefab;
         public Transform guidelineParent;
@@ -22,7 +22,7 @@ namespace Game.Terrain
         [Button("Triangulate")]
         public void Triangulate()
         {
-            chunk.DebugTriangulate();
+            chunk.Triangulate();
         }
 
         [Button("Remove Rivers")]

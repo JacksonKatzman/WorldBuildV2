@@ -7,6 +7,7 @@ namespace Game.Incidents
 	public class SimulationOptions : SerializedMonoBehaviour
 	{
 		public bool DrawFeaturesBeforeSimulation = true;
+		public bool allowSplatterBiomes = false;
 		public int simulatedYears = 100;
 		public int targetFactions = 10;
 		public int targetSpecialFactions = 15;

@@ -16,8 +16,11 @@ namespace Game.Terrain
 
 		public HexCell cellPrefab;
 		public HexCellLabel cellLabelPrefab;
-		public HexGridChunk chunkPrefab;
+		public HexGridTerrainChunk chunkPrefab;
+		public HexGridOverlayChunk overlayChunkPrefab;
 		public HexUnit unitPrefab;
+
+		public Transform overlayParent;
 
 		public Texture2D noiseSource;
 
@@ -31,7 +34,7 @@ namespace Game.Terrain
 			}
 		}
 
-		public HexGridChunk[] chunks;
+		public HexGridTerrainChunk[] chunks;
 		public HexCell[] cells;
 
 		int chunkCountX, chunkCountZ;
@@ -128,45 +131,50 @@ namespace Game.Terrain
 
 		void CreateChunks()
 		{
-			chunks = new HexGridChunk[chunkCountX * chunkCountZ];
+			chunks = new HexGridTerrainChunk[chunkCountX * chunkCountZ];
 
 			for (int z = 0, i = 0; z < chunkCountZ; z++)
 			{
 				for (int x = 0; x < chunkCountX; x++)
 				{
-					HexGridChunk chunk = chunks[i++] = Instantiate(chunkPrefab);
+					HexGridTerrainChunk chunk = chunks[i++] = Instantiate(chunkPrefab);
 					chunk.transform.SetParent(transform);
 				}
 			}
 		}
 
-		public void RecreateChunks(List<HexCollection> collections)
+		public void CreateOverlay(List<HexCollection> collections)
 		{
-			var replacementChunks = new HexGridChunk[collections.Count];
+			var replacementChunks = new HexGridOverlayChunk[collections.Count];
+			var totalCellsSeen = 0;
 			for(int i = 0; i < replacementChunks.Count(); i++)
 			{
-				HexGridChunk chunk = replacementChunks[i] = Instantiate(chunkPrefab);
-				chunk.transform.SetParent(transform);
+				HexGridOverlayChunk chunk = replacementChunks[i] = Instantiate(overlayChunkPrefab);
+				chunk.transform.SetParent(overlayParent);
 				var collection = collections[i];
 				chunk.cells = new HexCell[collection.cellCollection.Count];
+				if (collection.CollectionType != HexCollection.HexCollectionType.RIVER)
+				{
+					totalCellsSeen += collection.cellCollection.Count;
+				}
 				for(int j = 0; j < collection.cellCollection.Count; j++)
 				{
 					var cell = GetCell(collection.cellCollection[j]);
 					cell.HexCollection = collection;
 					chunk.AddCell(j, cell);
+					//LABEL BIOME
+					//cell.SetLabel(cell.BiomeSubtype.ToString());
 				}
-				collection.HexGridChunk = chunk;
-				//chunk.name = $"Hex Collecton Chunk {i}";
+				collection.OverlayChunk = chunk;
+				chunk.name = $"{collection.cellCollection.Count} Hex Collecton Overlay Chunk {i}";
 
 				chunk.HandleCollectionType(collection, i);
 				chunk.InitializeTerrainHighlighting(collection);
 			}
-			foreach(var prefab in chunks)
-			{
-				Destroy(prefab.gameObject);
-			}
-			chunks = replacementChunks;
+
+			overlayParent.SetPositionAndRotation(overlayParent.position + (Vector3.up * 0.1f), Quaternion.identity);
 			OutputLogger.Log($"Total Chunks: {chunks.Length}");
+			OutputLogger.Log($"Collection Cells: {totalCellsSeen}, Actual Cells: {cells.Length}, Missing Cells: {cells.Length - totalCellsSeen}");
 		}
 
 		void CreateCells()
@@ -316,7 +324,7 @@ namespace Game.Terrain
 		{
 			int chunkX = x / HexMetrics.chunkSizeX;
 			int chunkZ = z / HexMetrics.chunkSizeZ;
-			HexGridChunk chunk = chunks[chunkX + chunkZ * chunkCountX];
+			HexGridTerrainChunk chunk = chunks[chunkX + chunkZ * chunkCountX];
 
 			int localX = x - chunkX * HexMetrics.chunkSizeX;
 			int localZ = z - chunkZ * HexMetrics.chunkSizeZ;

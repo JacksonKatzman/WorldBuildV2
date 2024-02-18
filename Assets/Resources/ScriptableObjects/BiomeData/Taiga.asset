@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes: []
   terrainType: 5
   textures:
-  - texture: {fileID: 2800000, guid: 5d0c0963eb3564c279c7c1a85117526c, type: 3}
+  - texture: {fileID: 2800000, guid: 0884b99495c2b3f4392431a5c0160ad3, type: 3}
     weight: 1
   terrainMaterial: {fileID: 2100000, guid: a2d65f89c2a6b72448a91fbccd1f9fc9, type: 2}
   mountainAssets:
@@ -38,7 +38,7 @@ MonoBehaviour:
   - {fileID: 4836049172164023165, guid: 06c84bbbec90b7d4ab515065623d357f, type: 3}
   minHeight: 6
   maxHeight: 10
-  minTemperature: 0
+  minTemperature: 0.112
   maxTemperature: 0.6
   minMoisture: 0.25
   maxMoisture: 0.75

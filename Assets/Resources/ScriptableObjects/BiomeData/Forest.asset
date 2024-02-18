@@ -38,7 +38,7 @@ MonoBehaviour:
   - {fileID: 6277570639919663903, guid: 7b230bebe12cc41428d03426c6350ab0, type: 3}
   minHeight: 2
   maxHeight: 6
-  minTemperature: 0
+  minTemperature: 0.202
   maxTemperature: 0.6
   minMoisture: 0.25
   maxMoisture: 0.75

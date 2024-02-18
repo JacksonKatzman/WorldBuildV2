@@ -33,7 +33,7 @@ MonoBehaviour:
   foliageAssets: []
   minHeight: 0
   maxHeight: 4
-  minTemperature: 0.2
+  minTemperature: 0.6
   maxTemperature: 0.75
   minMoisture: 0.2
   maxMoisture: 0.5
@@ -42,3 +42,5 @@ MonoBehaviour:
   plantLevel: 0.269
   plantLevelVarianceMax: 0
   plantLevelVarianceMin: -0.2
+  grassDensity: 0
+  grassAsset: {fileID: 0}

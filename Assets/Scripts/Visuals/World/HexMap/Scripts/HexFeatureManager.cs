@@ -275,12 +275,24 @@ namespace Game.Terrain
 			if(cell.Elevation - HexMetrics.globalWaterLevel >= biomeData.mountainThreshold)
             {
 				//mountain
+				if(biomeData.mountainAssets.Count == 0)
+                {
+					OutputLogger.LogWarning($"{biomeData.terrainType} doesn't have mountain assets. {cell.Elevation}");
+					AddFlatTerrain(cell, position, biomeData, ref container);
+					return;
+				}
 				instance = cell.HasOutgoingRiver ? 
 				Instantiate(SimRandom.RandomEntryFromList(biomeData.riverStartMountainAssets)).transform :
 				Instantiate(SimRandom.RandomEntryFromList(biomeData.mountainAssets)).transform;
 			}
 			else
             {
+				if(biomeData.hillAssets.Count == 0)
+                {
+					OutputLogger.LogWarning($"{biomeData.terrainType} doesn't have hill assets. {cell.Elevation}");
+					AddFlatTerrain(cell, position, biomeData, ref container);
+					return;
+                }
 				//hills
 				instance = cell.HasOutgoingRiver ?
 				Instantiate(SimRandom.RandomEntryFromList(biomeData.riverStartHillAssets)).transform :
