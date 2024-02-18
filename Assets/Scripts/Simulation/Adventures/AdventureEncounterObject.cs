@@ -44,10 +44,12 @@ namespace Game.Simulation
 	[CreateAssetMenu(fileName = nameof(AdventureEncounterObject), menuName = "ScriptableObjects/Adventures/" + nameof(AdventureEncounterObject), order = 1)]
 	public class AdventureEncounterObject : SerializedScriptableObject, ILocationAffiliated
 	{
-		[PropertyOrder(-10)]
+		[PropertyOrder(-11)]
 		public string encounterTitle;
-		[PropertyOrder(-9)]
+		[PropertyOrder(-10)]
 		public int encounterDifficulty;
+		[PropertyOrder(-19)]
+		public bool majorEncounter;
 		[PropertyOrder(-8)]
 		public EncounterLocationType encounterLocationType;
 
