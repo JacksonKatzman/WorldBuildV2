@@ -1,0 +1,399 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 084bf99f985f0d341a9f6e9f9a93e27c, type: 3}
+  m_Name: DEBUG_ENCOUNTER_MINOR_1
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 3c6f5cc7d9c894a488ec7dc31164ec44, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: contextCriterium
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[Game.Simulation.IAdventureContextCriteria,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 1|Game.Simulation.MonsterCriteria, Auto-asmdef-SecondPass
+    - Name: CriteriaID
+      Entry: 3
+      Data: 0
+    - Name: contextTypeName
+      Entry: 1
+      Data: Monster
+    - Name: historical
+      Entry: 5
+      Data: false
+    - Name: findBySearch
+      Entry: 5
+      Data: false
+    - Name: monsterData
+      Entry: 7
+      Data: 2|Game.Incidents.ScriptableObjectRetriever`1[[Game.Data.MonsterData,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 1
+      Data: Worg
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isLegendary
+      Entry: 5
+      Data: false
+    - Name: isLandDwelling
+      Entry: 5
+      Data: true
+    - Name: allowedSizes
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 6
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 3
+      Data: 5
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: allowedTypes
+      Entry: 7
+      Data: 4|System.Collections.Generic.List`1[[Game.Enums.CreatureType, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 14
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 3
+      Data: 5
+    - Name: 
+      Entry: 3
+      Data: 6
+    - Name: 
+      Entry: 3
+      Data: 7
+    - Name: 
+      Entry: 3
+      Data: 8
+    - Name: 
+      Entry: 3
+      Data: 9
+    - Name: 
+      Entry: 3
+      Data: 10
+    - Name: 
+      Entry: 3
+      Data: 11
+    - Name: 
+      Entry: 3
+      Data: 12
+    - Name: 
+      Entry: 3
+      Data: 13
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: allowedAlignments
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 10
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 3
+      Data: 5
+    - Name: 
+      Entry: 3
+      Data: 6
+    - Name: 
+      Entry: 3
+      Data: 7
+    - Name: 
+      Entry: 3
+      Data: 8
+    - Name: 
+      Entry: 3
+      Data: 9
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Game.Simulation.TreasureCriteria, Auto-asmdef-SecondPass
+    - Name: CriteriaID
+      Entry: 3
+      Data: 1
+    - Name: contextTypeName
+      Entry: 1
+      Data: Item
+    - Name: historical
+      Entry: 5
+      Data: false
+    - Name: premade
+      Entry: 5
+      Data: false
+    - Name: data
+      Entry: 10
+      Data: 0
+    - Name: type
+      Entry: 6
+      Data: 
+    - Name: pointRange
+      Entry: 7
+      Data: 7|Game.Incidents.IntegerRange, Auto-asmdef-SecondPass
+    - Name: randomRange
+      Entry: 5
+      Data: true
+    - Name: min
+      Entry: 3
+      Data: 0
+    - Name: max
+      Entry: 3
+      Data: 20
+    - Name: constant
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: components
+      Entry: 7
+      Data: 8|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 5
+    - Name: 
+      Entry: 7
+      Data: 9|Game.Simulation.AdventureTitleComponent, Auto-asmdef-SecondPass
+    - Name: ComponentID
+      Entry: 3
+      Data: 0
+    - Name: title
+      Entry: 1
+      Data: Debug Encounter Title 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: ComponentID
+      Entry: 3
+      Data: 1
+    - Name: text
+      Entry: 1
+      Data: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        {0}
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 11|Game.Simulation.AdventureNarrationComponent, Auto-asmdef-SecondPass
+    - Name: ComponentID
+      Entry: 3
+      Data: 2
+    - Name: text
+      Entry: 1
+      Data: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+        sunt in culpa qui officia deserunt mollit anim id est laborum.
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 12|Game.Simulation.AdventureCombatComponent, Auto-asmdef-SecondPass
+    - Name: ComponentID
+      Entry: 3
+      Data: 3
+    - Name: combatParticipants
+      Entry: 7
+      Data: 13|System.Collections.Generic.List`1[[Game.Simulation.CombatParticipant,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 14|Game.Simulation.CombatParticipant, Auto-asmdef-SecondPass
+    - Name: combatantID
+      Entry: 3
+      Data: 0
+    - Name: amount
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: description
+      Entry: 1
+      Data: t vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+        praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias
+        excepturi sint occaecati cupiditate non provident, similique sunt in culpa
+        qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum
+        quidem rerum facilis est et expedita distinctio.
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 15|Game.Simulation.AdventureStructureComponent, Auto-asmdef-SecondPass
+    - Name: ComponentID
+      Entry: 3
+      Data: 4
+    - Name: structureName
+      Entry: 1
+      Data: Debug Structure
+    - Name: structureDescription
+      Entry: 1
+      Data: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+        sunt in culpa qui officia deserunt mollit anim id est laborum
+    - Name: ceilingDescription
+      Entry: 1
+      Data: t vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+        praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias
+        excepturi sint occaecati cupiditate non provident, similique sunt in culpa
+        qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum
+        quidem rerum facilis est et expedita distinctio.
+    - Name: floorsAndWallsDescription
+      Entry: 1
+      Data: t vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+        praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias
+        excepturi sint occaecati cupiditate non provident, similique sunt in culpa
+        qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum
+        quidem rerum facilis est et expedita distinctio.
+    - Name: doorsDescription
+      Entry: 1
+      Data: t vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+        praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias
+        excepturi sint occaecati cupiditate non provident, similique sunt in culpa
+        qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum
+        quidem rerum facilis est et expedita distinctio.
+    - Name: lightingDescription
+      Entry: 1
+      Data: t vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
+        praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias
+        excepturi sint occaecati cupiditate non provident, similique sunt in culpa
+        qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum
+        quidem rerum facilis est et expedita distinctio.
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  encounterTitle: DEBUG_ENCOUNTER_MINOR_1
+  encounterDifficulty: 0
+  majorEncounter: 0
+  encounterLocationType: 0
+  encounterTypes: 00000000010000000200000003000000
+  allowedBiomes: 0c0000000b0000000a00000009000000080000000700000006000000050000000400000003000000020000000100000000000000
+  encounterBlurb: This is a debug encounter blurb.
+  encounterSummary: This is a debug encounter summary.

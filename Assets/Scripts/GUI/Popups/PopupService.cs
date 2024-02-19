@@ -39,14 +39,14 @@ namespace Game.GUI.Popups
 			recycledPopups = new List<Popup>();
 		}
 
-		public void ShowPopup(IPopupConfig config)
+		public Popup ShowPopup(IPopupConfig config)
 		{
 			foreach (var activePopup in activePopups)
 			{
 				if (activePopup.CompareTo(config))
 				{
 					activePopup.GetComponent<RectTransform>().SetAsLastSibling();
-					return;
+					return activePopup;
 				}
 			}
 
@@ -55,6 +55,7 @@ namespace Game.GUI.Popups
 			popup.Setup(config);
 			popup.gameObject.SetActive(true);
 			activePopups.Add(popup);
+			return popup;
 		}
 
 		public void ClosePopup(Popup popup)

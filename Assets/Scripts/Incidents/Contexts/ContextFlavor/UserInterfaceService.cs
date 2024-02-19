@@ -43,6 +43,11 @@ namespace Game.Incidents
 			beginAdventureButton.SetActive(false);
         }
 
+		public void OnEndAdventureButton()
+        {
+			beginAdventureButton.SetActive(true);
+		}
+
 		private void HandleToggles()
 		{
 			if(Input.GetKeyDown(KeyCode.H))

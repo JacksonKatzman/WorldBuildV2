@@ -11,6 +11,8 @@ namespace Game.GUI.Popups
         public override Type PopupConfigType => typeof(MultiButtonPopupConfig);
 
         [SerializeField]
+        private TMP_Text title;
+        [SerializeField]
         private Transform buttonAnchor;
         [SerializeField]
         private Button buttonPrefab;
@@ -28,13 +30,24 @@ namespace Game.GUI.Popups
             var actions = typedConfig.ButtonActions;
             Clear();
 
+            title.text = typedConfig.Description;
+
             foreach(var pair in actions)
             {
                 var button = Instantiate(buttonPrefab, buttonAnchor);
                 var actionName = pair.Key;
                 var action = pair.Value;
                 button.GetComponentInChildren<TMP_Text>().text = actionName;
-                button.onClick.AddListener(() => action.Invoke());
+                button.onClick.AddListener(() => 
+                {
+                    if(typedConfig.CloseOnButtonPress)
+                    {
+                        ClosePopup();
+                    }
+                    action.Invoke(); 
+                });
+
+                currentButtons.Add(button);
             }
         }
 
@@ -48,7 +61,7 @@ namespace Game.GUI.Popups
             {
                 for (int i = 0; i < currentButtons.Count; i++)
                 {
-                    Destroy(currentButtons[i]);
+                    Destroy(currentButtons[i].gameObject);
                 }
                 currentButtons.Clear();
             }
