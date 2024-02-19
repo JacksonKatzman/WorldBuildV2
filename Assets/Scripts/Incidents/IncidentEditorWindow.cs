@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class IncidentEditorWindow : OdinEditorWindow
+    public class IncidentEditorWindow : OdinEditorWindow
 	{
         [MenuItem("World Builder/Incident Editor")]
 		private static void OpenWindow()
