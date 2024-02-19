@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 084bf99f985f0d341a9f6e9f9a93e27c, type: 3}
-  m_Name: DEBUG_ENCOUNTER
+  m_Name: DEBUG_ENCOUNTER_MINOR_1
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -389,9 +389,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  encounterTitle: DEBUG_ENCOUNTER
+  encounterTitle: DEBUG_ENCOUNTER_MINOR_1
   encounterDifficulty: 0
-  majorEncounter: 1
+  majorEncounter: 0
   encounterLocationType: 0
   encounterTypes: 00000000010000000200000003000000
   allowedBiomes: 0c0000000b0000000a00000009000000080000000700000006000000050000000400000003000000020000000100000000000000

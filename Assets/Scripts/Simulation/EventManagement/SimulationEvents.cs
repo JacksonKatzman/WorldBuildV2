@@ -111,4 +111,9 @@ namespace Game.Simulation
 			this.city = city;
 		}
 	}
+
+    public class WorldBuildSimulationCompleteEvent : ISimulationEvent
+    {
+
+    }
 }

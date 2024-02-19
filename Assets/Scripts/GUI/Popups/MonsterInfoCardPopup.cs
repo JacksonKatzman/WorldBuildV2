@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Game.GUI.Popups
 {
-	public class MonsterInfoCardPopup : TypedPopup<MonsterInfoCardPopupConfig>
+    public class MonsterInfoCardPopup : TypedPopup<MonsterInfoCardPopupConfig>
 	{
 		public TMP_Text monsterNameText;
 		public TMP_Text monsterSizeAlignmentText;

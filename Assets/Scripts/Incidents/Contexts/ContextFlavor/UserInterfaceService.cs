@@ -1,4 +1,5 @@
 ﻿using Game.GUI.Wiki;
+using Game.Simulation;
 using HighlightPlus;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -12,6 +13,10 @@ namespace Game.Incidents
 		public IncidentWiki incidentWiki;
 		public TMP_Text hexCollectionNameText;
 
+		public GameObject generateWorldButton;
+		public GameObject wikiButton;
+		public GameObject beginAdventureButton;
+
 		public void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -21,6 +26,7 @@ namespace Game.Incidents
 			else
 			{
 				Instance = this;
+				EventManager.Instance.AddEventHandler<WorldBuildSimulationCompleteEvent>(OnWorldBuildComplete);
 				HighlightManager.instance.OnObjectHighlightStart += OnHighlightStart;
 				HighlightManager.instance.OnObjectHighlightEnd += OnHighlightEnd;
 			}
@@ -31,6 +37,16 @@ namespace Game.Incidents
 			HandleToggles();
 		}
 
+		public void OnBeginAdventureButton()
+        {
+			AdventureService.Instance.BeginAdventure();
+			beginAdventureButton.SetActive(false);
+        }
+
+		public void OnEndAdventureButton()
+        {
+			beginAdventureButton.SetActive(true);
+		}
 
 		private void HandleToggles()
 		{
@@ -68,6 +84,13 @@ namespace Game.Incidents
         {
 			obj?.GetComponent<HexChunkHighlight>()?.OnHighlightEnd();
 			return true;
+		}
+
+		private void OnWorldBuildComplete(WorldBuildSimulationCompleteEvent gameEvent)
+		{
+			generateWorldButton.SetActive(false);
+			beginAdventureButton.SetActive(true);
+			wikiButton.SetActive(true);
 		}
 	}
 }

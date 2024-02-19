@@ -24,13 +24,13 @@ MonoBehaviour:
     - Name: contextCriterium
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Game.Simulation.IAdventureContextCriteria,
-        Assembly-CSharp]], mscorlib
+        Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 1|Game.Simulation.MonsterCriteria, Assembly-CSharp
+      Data: 1|Game.Simulation.MonsterCriteria, Auto-asmdef-SecondPass
     - Name: CriteriaID
       Entry: 3
       Data: 0
@@ -45,8 +45,8 @@ MonoBehaviour:
       Data: false
     - Name: monsterData
       Entry: 7
-      Data: 2|Game.Incidents.ScriptableObjectRetriever`1[[Game.Creatures.MonsterData,
-        Assembly-CSharp]], Assembly-CSharp
+      Data: 2|Game.Incidents.ScriptableObjectRetriever`1[[Game.Data.MonsterData,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
     - Name: prefabKey
       Entry: 1
       Data: Worg
@@ -64,7 +64,7 @@ MonoBehaviour:
       Data: true
     - Name: allowedSizes
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Assembly-CSharp]],
+      Data: 3|System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Auto-asmdef-SecondPass]],
         mscorlib
     - Name: 
       Entry: 12
@@ -83,7 +83,7 @@ MonoBehaviour:
       Data: 
     - Name: allowedTypes
       Entry: 7
-      Data: 4|System.Collections.Generic.List`1[[Game.Enums.CreatureType, Assembly-CSharp]],
+      Data: 4|System.Collections.Generic.List`1[[Game.Enums.CreatureType, Auto-asmdef-SecondPass]],
         mscorlib
     - Name: 
       Entry: 12
@@ -102,7 +102,7 @@ MonoBehaviour:
       Data: 
     - Name: allowedAlignments
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Assembly-CSharp]],
+      Data: 5|System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Auto-asmdef-SecondPass]],
         mscorlib
     - Name: 
       Entry: 12
@@ -133,7 +133,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 6|Game.Simulation.AdventureCharacterContextCriteria, Assembly-CSharp
+      Data: 6|Game.Simulation.AdventureCharacterContextCriteria, Auto-asmdef-SecondPass
     - Name: CriteriaID
       Entry: 3
       Data: 0
@@ -155,13 +155,13 @@ MonoBehaviour:
     - Name: components
       Entry: 7
       Data: 7|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
-        Assembly-CSharp]], mscorlib
+        Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 4
     - Name: 
       Entry: 7
-      Data: 8|Game.Simulation.AdventureNarrationComponent, Assembly-CSharp
+      Data: 8|Game.Simulation.AdventureNarrationComponent, Auto-asmdef-SecondPass
     - Name: ComponentID
       Entry: 3
       Data: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 9|Game.Simulation.AdventureTextComponent, Assembly-CSharp
+      Data: 9|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
     - Name: ComponentID
       Entry: 3
       Data: 0
@@ -185,7 +185,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 10|Game.Simulation.AdventureTextComponent, Assembly-CSharp
+      Data: 10|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
     - Name: ComponentID
       Entry: 3
       Data: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 11|Game.Simulation.AdventureNarrationComponent, Assembly-CSharp
+      Data: 11|Game.Simulation.AdventureNarrationComponent, Auto-asmdef-SecondPass
     - Name: ComponentID
       Entry: 3
       Data: 0
@@ -214,7 +214,8 @@ MonoBehaviour:
       Entry: 8
       Data: 
   encounterTitle: A Lair of Monsters
-  encounterDifficulty: 0
+  encounterDifficulty: 9
+  majorEncounter: 0
   encounterLocationType: 0
   encounterTypes: 00000000
   allowedBiomes: 0000000001000000020000000300000005000000

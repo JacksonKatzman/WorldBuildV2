@@ -1,6 +1,8 @@
 ﻿using Game.Data;
 using Game.Debug;
+using Game.GUI.Popups;
 using Game.Incidents;
+using Game.Terrain;
 using Game.Utilities;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,19 @@ namespace Game.Simulation
 			}
 		}
 
+		//pick city
+		//move camera to city
+		//spawn unit
+		//exp X time matrix
+		//load possible adventures for the area
+		//suggest 3
+		//choose 1
+		//walk to next tile
+		//get possible subadventure for new tile
+		//run it(popup with the 4 options for resolution)
+		//repeat
+		//reward step
+
 		public List<AdventureEncounterObject> EvergreenEncounters { get; set; }
 		public List<AdventureEncounterObject> AvailableEncounters { get; set; }
 		public List<AdventureEncounterObject> UsedEncounters { get; set; }
@@ -31,19 +46,27 @@ namespace Game.Simulation
 
 		public Location CurrentLocation { get; set; }
 
+		private World world = World.CurrentWorld;
+		private Popup currentPopup;
+
 		public AdventureService()
 		{
 			Setup();
 		}
 
-		public void SetAdventureStartingPoint(Location location)
-		{
-			CurrentLocation = location;
-		}
-
 		public void BeginAdventure()
 		{
-			if(CurrentLocation == null)
+			//Pick location for players to start, likely in one of the towns/hamlets
+			var startingCity = SimRandom.RandomEntryFromList(world.Cities);
+			CurrentLocation = startingCity.CurrentLocation;
+			//Generate layout of town/what its contents is
+			//Generate all the points of interest/people of interest in the town
+			//Generate NPCs for the tavern the players start in
+			startingCity.GenerateMinorCharacters(5);
+			//Generate adventure based in location/people of interest etc
+			//Extra credit: generate world points of interest in case players want to explore for their adventures instead?
+			//That or just include exploration contracts among the possible adventures
+			if (CurrentLocation == null)
 			{
 				OutputLogger.LogError("Current Location in AdventureService is null!");
 				return;
@@ -53,30 +76,105 @@ namespace Game.Simulation
 			var cellsInRange = CurrentLocation.GetAllCellsInRange(range);
 			var encountersInRange = AvailableEncounters.Where(encounter => cellsInRange.Contains(encounter.CurrentLocation.GetHexCell()));
 
-			var adventureOfferingCount = 5; 
+			var adventureOfferingCount = 3;
 			var lowerDifficultyThreshold = 0;
 			var upperDifficultyThreshold = 3;
 			var selectedEncounters = new List<AdventureEncounterObject>();
 
-			var levelAppropriateEncounters = GetLevelAppropriateEncounters(encountersInRange.ToList(), lowerDifficultyThreshold, upperDifficultyThreshold);
-			
-			while((selectedEncounters.Count < adventureOfferingCount) && (levelAppropriateEncounters.Count > 0))
+			var levelAppropriateEncounters = GetLevelAppropriateEncounters(encountersInRange.ToList(), lowerDifficultyThreshold, upperDifficultyThreshold, true);
+
+			while ((selectedEncounters.Count < adventureOfferingCount) && (levelAppropriateEncounters.Count > 0))
 			{
 				var chosen = SimRandom.RandomEntryFromList(levelAppropriateEncounters);
 				selectedEncounters.Add(chosen);
 				levelAppropriateEncounters.Remove(chosen);
 			}
 
-			var levelAppropriateEvergreenEncounters = GetLevelAppropriateEncounters(EvergreenEncounters, lowerDifficultyThreshold, upperDifficultyThreshold);
-			while(selectedEncounters.Count < adventureOfferingCount)
+			var levelAppropriateEvergreenEncounters = GetLevelAppropriateEncounters(EvergreenEncounters, lowerDifficultyThreshold, upperDifficultyThreshold, true);
+			while (selectedEncounters.Count < adventureOfferingCount && (levelAppropriateEvergreenEncounters.Count > 0))
 			{
-				selectedEncounters.Add(SimRandom.RandomEntryFromList(levelAppropriateEvergreenEncounters));
+				var selected = SimRandom.RandomEntryFromList(levelAppropriateEvergreenEncounters);
+				selectedEncounters.Add(selected);
+				levelAppropriateEvergreenEncounters.Remove(selected);
 			}
+
+			//temp use of popup, change to dedicated type later
+			var popupConfig = new MultiButtonPopupConfig
+			{
+				Description = "Choose your adventure!",
+				ButtonActions = new Dictionary<string, System.Action>(),
+				CloseOnButtonPress = true
+			};
+			foreach(var encounter in selectedEncounters)
+            {
+				popupConfig.ButtonActions.Add(encounter.encounterTitle, () =>
+				{
+					//PopupService.Instance.ClosePopup(currentPopup);
+					RunAdventure(encounter, 2);
+				});
+            }
+			currentPopup = PopupService.Instance.ShowPopup(popupConfig);
 		}
 
-		public List<AdventureEncounterObject> GetLevelAppropriateEncounters(List<AdventureEncounterObject> possibleAdventures, int lowerDifficultyThreshold, int upperDifficultyThreshold)
+		public void RunAdventure(AdventureEncounterObject encounter, int minorEncounters)
+        {
+			OutputLogger.Log($"Running encounter {encounter.encounterTitle}");
+			RunEncounter(encounter, 2);
+		}
+
+		public void RunEncounter(AdventureEncounterObject finalEncounter, int remainingMinorEncounters)
+        {
+			//choose first sub adventure and show options popup
+			var encounter = finalEncounter;
+			if (remainingMinorEncounters > 0)
+			{
+				var encounters = GetNearbyLevelAppropriateEncounters(0, 3, false, CurrentLocation.GetHexCell(), 2);
+				encounters.AddRange(GetLevelAppropriateEncounters(EvergreenEncounters, 0, 3, false));
+				encounter = SimRandom.RandomEntryFromList(encounters);
+			}
+
+			var popupConfig = new MultiButtonPopupConfig
+			{
+				Description = $"{encounter.encounterTitle} Encounter Outcome?",
+				ButtonActions = new Dictionary<string, System.Action>(),
+				CloseOnButtonPress = true
+			};
+
+			if (remainingMinorEncounters > 0)
+			{
+				popupConfig.ButtonActions.Add("Complete!", () => { RunEncounter(finalEncounter, remainingMinorEncounters - 1); });
+				popupConfig.ButtonActions.Add("Failure", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
+				popupConfig.ButtonActions.Add("Return Home", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
+				popupConfig.ButtonActions.Add("Skip", () => { RunEncounter(finalEncounter, remainingMinorEncounters); });
+			}
+			else
+			{
+				popupConfig.ButtonActions.Add("Complete!", () => 
+				{ 
+					HandleRewards(encounter);
+					UserInterfaceService.Instance.OnEndAdventureButton(); 
+				});
+				popupConfig.ButtonActions.Add("Failure", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
+			}
+
+			currentPopup = PopupService.Instance.ShowPopup(popupConfig);
+			//repeat until final encounter is reached
+			//show same options popup
+			//reward if success
+			//reset
+		}
+
+		public List<AdventureEncounterObject> GetLevelAppropriateEncounters(List<AdventureEncounterObject> possibleAdventures, int lowerDifficultyThreshold, int upperDifficultyThreshold, bool major)
 		{
-			return possibleAdventures.Where(encounter => encounter.encounterDifficulty >= lowerDifficultyThreshold && encounter.encounterDifficulty <= upperDifficultyThreshold).ToList();
+			return possibleAdventures.Where(encounter => encounter.majorEncounter == major && encounter.encounterDifficulty >= lowerDifficultyThreshold && encounter.encounterDifficulty <= upperDifficultyThreshold).ToList();
+		}
+
+		public List<AdventureEncounterObject> GetNearbyLevelAppropriateEncounters(int lowerDifficultyThreshold, int upperDifficultyThreshold, bool major, HexCell cell, int range)
+		{
+			var loc = new Location(cell.Index);
+			var cellsInRange = loc.GetAllCellsInRange(range);
+			var encountersInRange = AvailableEncounters.Where(encounter => cellsInRange.Contains(encounter.CurrentLocation.GetHexCell()));
+			return GetLevelAppropriateEncounters(encountersInRange.ToList(), lowerDifficultyThreshold, upperDifficultyThreshold, major);
 		}
 
 		public void AddAvailableEncounter(AdventureEncounterObject encounter)
@@ -96,6 +194,11 @@ namespace Game.Simulation
 			UsedEncounters = ES3.Load<List<AdventureEncounterObject>>("UsedEncounters", SaveUtilities.GetAdventureSavePath(mapName));
 		}
 
+		private void HandleRewards(AdventureEncounterObject encounterObject)
+        {
+			OutputLogger.Log($"Rewarding players for completing {encounterObject.encounterTitle}!");
+        }
+
 		private void Setup()
 		{
 			EvergreenEncounters = new List<AdventureEncounterObject>();
@@ -103,9 +206,6 @@ namespace Game.Simulation
 			UsedEncounters = new List<AdventureEncounterObject>();
 			monsterData = new List<MonsterData>();
 
-			//var encountersPath = "ScriptableObjects/Encounters";
-
-			//EvergreenEncounters.AddRange(Resources.LoadAll(encountersPath, typeof(AdventureEncounterObject)).Cast<AdventureEncounterObject>().ToList());
 			if (AssetService.Instance.objectData.collections.ContainsKey(typeof(AdventureEncounterObject)))
 			{
 				var values = AssetService.Instance.objectData.collections[typeof(AdventureEncounterObject)].objects.Values.ToList();
@@ -116,8 +216,6 @@ namespace Game.Simulation
 			}
 			OutputLogger.Log(string.Format("{0} encounters loaded.", EvergreenEncounters.Count));
 
-			//var monstersPath = "ScriptableObjects/Monsters";
-			//monsterData.AddRange(Resources.LoadAll(monstersPath, typeof(MonsterData)).Cast<MonsterData>().ToList());
 			if (AssetService.Instance.objectData.collections.ContainsKey(typeof(MonsterData)))
 			{
 				var values = AssetService.Instance.objectData.collections[typeof(MonsterData)].objects.Values.ToList();

@@ -280,16 +280,7 @@ namespace Game.Simulation
 				DrawFeatures();
 			}
 
-			//Pick location for players to start, likely in one of the towns/hamlets
-			var startingCity = SimRandom.RandomEntryFromList(Cities);
-			//Generate layout of town/what its contents is
-			//Generate all the points of interest/people of interest in the town
-			//Generate NPCs for the tavern the players start in
-			startingCity.GenerateMinorCharacters(5);
-			//Generate adventure based in location/people of interest etc
-			//Extra credit: generate world points of interest in case players want to explore for their adventures instead?
-			//That or just include exploration contracts among the possible adventures
-			AdventureService.Instance.SetAdventureStartingPoint(startingCity.CurrentLocation);
+			EventManager.Instance.Dispatch(new WorldBuildSimulationCompleteEvent());
 		}
 
 		public void GenerateAdditionalCities(Faction faction)
