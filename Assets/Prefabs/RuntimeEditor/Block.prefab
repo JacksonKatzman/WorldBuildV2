@@ -205,7 +205,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300004, guid: 0fd21678280ad9c47aa2d32baf438c5d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -285,12 +285,12 @@ MonoBehaviour:
     - Name: componentType
       Entry: 6
       Data: 
-    - Name: parent
-      Entry: 6
-      Data: 
     - Name: instance
       Entry: 6
       Data: 
     - Name: fieldComponents
       Entry: 6
       Data: 
+  title: {fileID: 3963455028375495168}
+  background: {fileID: 3963455028855606179}
+  color: {r: 1, g: 1, b: 1, a: 1}

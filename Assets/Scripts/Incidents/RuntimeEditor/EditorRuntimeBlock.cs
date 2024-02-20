@@ -4,20 +4,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.Incidents
 {
     public class EditorRuntimeBlock : SerializedMonoBehaviour, IRuntimeEditorComponent
     {
+        public TMP_Text title;
+        public Image background;
         public Transform Root => transform;
         public Type componentType;
         public IRuntimeEditorCompatible instance;
         public Dictionary<FieldInfo, IRuntimeEditorComponent> fieldComponents;
+        public Color color = Color.white;
 
-        public void Initialize(FieldInfo fieldInfo, IRuntimeEditorCompatible parent)
+        public void Initialize(Type componentType, FieldInfo fieldInfo, IRuntimeEditorCompatible parent, Color parentColor)
         {
-            this.componentType = fieldInfo.FieldType;
+            title.text = fieldInfo.Name;
+            color = parentColor == Color.white ? Color.gray : Color.white;
+            background.color = color;
+
+            this.componentType = componentType;
             instance = (IRuntimeEditorCompatible)Activator.CreateInstance(this.componentType);
 
             fieldInfo.SetValue(parent, instance);
@@ -29,30 +38,51 @@ namespace Game.Incidents
                 {
                     if(typeof(IRuntimeEditorCompatible).IsAssignableFrom(field.FieldType))
                     {
-                        CreateNewBlock(field, instance, Root);
+                        //make a custom attribute to allow us to create using special types? for interfaces. TypeConstrcutorAttribute?
+                        CreateNewBlock(field.FieldType, field, instance, Root);
                         continue;
                     }
 
-                    var customAttributes = field.CustomAttributes;
-                    var matchingAttributes = field.CustomAttributes.Where(x => x.AttributeType == typeof(Sirenix.OdinInspector.ValueDropdownAttribute));
-                    if(matchingAttributes.Count() == 1)
+                    if(FieldHasAttribute(field, typeof(Sirenix.OdinInspector.ValueDropdownAttribute), out var attribute))
                     {
-                        var attribute = matchingAttributes.First();
                         var valueDropdown = Instantiate(RuntimeEditorPrefabs.Instance.valueDropdownPrefab, Root);
                         valueDropdown.Initialize(this.componentType, field, attribute, instance);
-                        continue;
+
+                        if(FieldHasAttribute(field, typeof(Sirenix.OdinInspector.OnValueChangedAttribute), out var valueChangedAttribute))
+                        {
+                            MethodInfo valueGetterMethod = componentType.GetMethod(valueChangedAttribute.ConstructorArguments.First().Value.ToString(), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                            valueDropdown.onValueChanged += () => valueGetterMethod.Invoke(instance, null);
+                        }
                     }
 
-
+                    if(field.FieldType == typeof(string) || field.FieldType == typeof(int) || field.FieldType == typeof(float) || field.FieldType == typeof(bool))
+                    {
+                        var inputField = Instantiate(RuntimeEditorPrefabs.Instance.inputPrefab, Root);
+                        inputField.Initialize(field, instance);
+                    }
                 }
             }
         }
 
-        private EditorRuntimeBlock CreateNewBlock(FieldInfo fieldInfo, IRuntimeEditorCompatible parent, Transform parentTransform)
+        private EditorRuntimeBlock CreateNewBlock(Type componentType, FieldInfo fieldInfo, IRuntimeEditorCompatible parent, Transform parentTransform)
         {
             var block = Instantiate(RuntimeEditorPrefabs.Instance.blockPrefab, parentTransform);
-            block.Initialize(fieldInfo, parent);
+            block.Initialize(componentType, fieldInfo, parent, color);
             return block;
+        }
+
+        private bool FieldHasAttribute(FieldInfo field, Type attributeType, out CustomAttributeData attributeData)
+        {
+            var customAttributes = field.CustomAttributes;
+            var matchingAttributes = field.CustomAttributes.Where(x => x.AttributeType == attributeType);
+            if (matchingAttributes.Count() == 1)
+            {
+                attributeData = matchingAttributes.First();
+                return true;
+            }
+
+            attributeData = null;
+            return false;
         }
     }
 }

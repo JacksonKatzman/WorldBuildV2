@@ -9,7 +9,7 @@ namespace Game.Incidents
 
 		public EditorRuntimeBlock blockPrefab;
 		public EditorRuntimeValueDropdown valueDropdownPrefab;
-
+		public EditorRuntimeInput inputPrefab;
 
 		public void Awake()
 		{

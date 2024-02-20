@@ -12,13 +12,17 @@ namespace Game.Incidents
 {
     public class EditorRuntimeValueDropdown : SerializedMonoBehaviour, IRuntimeEditorComponent
     {
+        public TMP_Text title;
         public TMP_Dropdown dropdown;
+        public Action onValueChanged;
+
         private Dictionary<string, object> pairs;
         private IRuntimeEditorCompatible parentInstance;
         private FieldInfo fieldInfo;
         private Type parentType;
-        public void Initialize(Type type, FieldInfo fieldInfo, CustomAttributeData attributeData, IRuntimeEditorCompatible parentInstance, Action onValueChanged = null)
+        public void Initialize(Type type, FieldInfo fieldInfo, CustomAttributeData attributeData, IRuntimeEditorCompatible parentInstance)
         {
+            title.text = fieldInfo.Name;
             this.parentInstance = parentInstance;
             this.fieldInfo = fieldInfo;
             this.parentType = type;
@@ -41,8 +45,8 @@ namespace Game.Incidents
         private void OnValueChanged(TMP_Dropdown dropdown)
         {
             var text = dropdown.options[dropdown.value].text;
-            //OutputLogger.Log($"Dropdown changed to: {pairs[text].ToString()} : {pairs[text].GetType()}");
             fieldInfo.SetValue(parentInstance, pairs[text]);
+            onValueChanged?.Invoke();
         }
     }
 }

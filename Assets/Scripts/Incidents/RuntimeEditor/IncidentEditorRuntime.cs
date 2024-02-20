@@ -27,7 +27,7 @@ namespace Game.Incidents
 
             var fieldInfo = GetType().GetField("incidentEditorBase");
             var block = Instantiate(RuntimeEditorPrefabs.Instance.blockPrefab, editorRoot);
-            block.Initialize(fieldInfo, this);
+            block.Initialize(typeof(IncidentEditorBase), fieldInfo, this, Color.white);
         }
     }
 }
