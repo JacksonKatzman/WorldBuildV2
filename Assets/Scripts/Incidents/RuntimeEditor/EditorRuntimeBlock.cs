@@ -27,9 +27,11 @@ namespace Game.Incidents
             background.color = color;
 
             this.componentType = componentType;
+            //construct an instance of the type that we will mock with this ui
             instance = (IRuntimeEditorCompatible)Activator.CreateInstance(this.componentType);
-
+            //set the field in the parent to be equal to this instance
             fieldInfo.SetValue(parent, instance);
+
             fieldComponents = new Dictionary<FieldInfo, IRuntimeEditorComponent>();
 
             if (RuntimeEditorUtilities.GetAllFieldsForType(componentType, out var fields))
