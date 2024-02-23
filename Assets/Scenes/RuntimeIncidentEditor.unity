@@ -1243,6 +1243,7 @@ MonoBehaviour:
     SerializationNodes: []
   blockPrefab: {fileID: 6808377332427834899, guid: 8cfc2b775bf13fa4aa5f2d7434485471, type: 3}
   valueDropdownPrefab: {fileID: 977529794876987123, guid: 6f9ef3db62c09b8428b74811b9cf0b1a, type: 3}
+  inputPrefab: {fileID: 4186515977956378687, guid: a9b9009ad1f129e43adf1067482e1b0f, type: 3}
 --- !u!1 &1692370188
 GameObject:
   m_ObjectHideFlags: 0
