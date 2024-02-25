@@ -48,8 +48,10 @@ namespace Game.Simulation
 		public string encounterTitle;
 		[PropertyOrder(-10)]
 		public int encounterDifficulty;
-		[PropertyOrder(-19)]
+		[PropertyOrder(-9)]
 		public bool majorEncounter;
+		[PropertyOrder(-9)]
+		public bool skippable;
 		[PropertyOrder(-8)]
 		public EncounterLocationType encounterLocationType;
 

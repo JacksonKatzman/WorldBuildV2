@@ -23,6 +23,9 @@ namespace Game.Terrain
 
 		float rotationAngle;
 
+		private bool inForcedMove;
+		private Vector3 forcedMovePos;
+
 		public static HexMapCamera instance;
 
 		public static bool Locked
@@ -43,6 +46,12 @@ namespace Game.Terrain
 			instance.CenterCamera();
 		}
 
+		public static void PanToCell(HexCell cell)
+        {
+			instance.inForcedMove = true;
+			instance.forcedMovePos = cell.Position;
+        }
+
 		void Awake()
 		{
 			swivel = transform.GetChild(0);
@@ -56,23 +65,40 @@ namespace Game.Terrain
 
 		void Update()
 		{
-			float zoomDelta = Input.GetAxis("Mouse ScrollWheel");
-			if (zoomDelta != 0f)
+			if (!inForcedMove)
 			{
-				AdjustZoom(zoomDelta);
-			}
+				float zoomDelta = Input.GetAxis("Mouse ScrollWheel");
+				if (zoomDelta != 0f)
+				{
+					AdjustZoom(zoomDelta);
+				}
 
-			float rotationDelta = Input.GetAxis("Rotation");
-			if (rotationDelta != 0f)
-			{
-				AdjustRotation(rotationDelta);
-			}
+				float rotationDelta = Input.GetAxis("Rotation");
+				if (rotationDelta != 0f)
+				{
+					AdjustRotation(rotationDelta);
+				}
 
-			float xDelta = Input.GetAxis("Horizontal");
-			float zDelta = Input.GetAxis("Vertical");
-			if (xDelta != 0f || zDelta != 0f)
-			{
-				AdjustPosition(xDelta, zDelta);
+				float xDelta = Input.GetAxis("Horizontal");
+				float zDelta = Input.GetAxis("Vertical");
+				if (xDelta != 0f || zDelta != 0f)
+				{
+					AdjustPosition(xDelta, zDelta);
+				}
+			}
+			else
+            {
+				var currentPosition = transform.localPosition;
+				float xDelta = forcedMovePos.x - currentPosition.x;
+				float zDelta = forcedMovePos.z - currentPosition.z;
+				if(Mathf.Approximately(xDelta, 0.0f) && Mathf.Approximately(zDelta, 0.0f))
+                {
+					inForcedMove = false;
+                }
+				else
+                {
+					AdjustPosition(xDelta, zDelta);
+                }
 			}
 		}
 

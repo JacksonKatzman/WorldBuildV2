@@ -17,6 +17,8 @@ namespace Game.Incidents
 		public GameObject wikiButton;
 		public GameObject beginAdventureButton;
 
+		private bool hideVisibility;
+
 		public void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -61,6 +63,20 @@ namespace Game.Incidents
 				{
 					HighlightManager.instance.layerMask.value |= (1 << LayerMask.NameToLayer("HexTerrain"));
 					hexCollectionNameText.enabled = true;
+				}
+			}
+
+			if (Input.GetKeyDown(KeyCode.V))
+			{
+				if (hideVisibility)
+				{
+					Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+					hideVisibility = false;
+				}
+				else
+				{
+					Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
+					hideVisibility = true;
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 ﻿using Game.Data;
 using Game.Debug;
+using Game.GUI.Adventures;
 using Game.GUI.Popups;
 using Game.Incidents;
 using Game.Terrain;
@@ -54,8 +55,9 @@ namespace Game.Simulation
 			Setup();
 		}
 
-		public void BeginAdventure()
-		{
+		public void FirstTimeSetup()
+        {
+			Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
 			//Pick location for players to start, likely in one of the towns/hamlets
 			var startingCity = SimRandom.RandomEntryFromList(world.Cities);
 			CurrentLocation = startingCity.CurrentLocation;
@@ -66,6 +68,21 @@ namespace Game.Simulation
 			//Generate adventure based in location/people of interest etc
 			//Extra credit: generate world points of interest in case players want to explore for their adventures instead?
 			//That or just include exploration contracts among the possible adventures
+
+
+			world.HexGrid.AddUnit(
+					GameObject.Instantiate(HexUnit.unitPrefab), CurrentLocation.GetHexCell(), Random.Range(0f, 360f)
+				);
+
+			HexMapCamera.PanToCell(CurrentLocation.GetHexCell());
+		}
+
+		public void BeginAdventure()
+		{
+			if(CurrentLocation == null)
+            {
+				FirstTimeSetup();
+            }
 			if (CurrentLocation == null)
 			{
 				OutputLogger.LogError("Current Location in AdventureService is null!");
@@ -135,33 +152,65 @@ namespace Game.Simulation
 
 			var popupConfig = new MultiButtonPopupConfig
 			{
-				Description = $"{encounter.encounterTitle} Encounter Outcome?",
+				Title = $"{encounter.encounterTitle}",
+				Description = encounter.encounterBlurb,
 				ButtonActions = new Dictionary<string, System.Action>(),
 				CloseOnButtonPress = true
 			};
 
 			if (remainingMinorEncounters > 0)
 			{
+				/*
 				popupConfig.ButtonActions.Add("Complete!", () => { RunEncounter(finalEncounter, remainingMinorEncounters - 1); });
 				popupConfig.ButtonActions.Add("Failure", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
 				popupConfig.ButtonActions.Add("Return Home", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
 				popupConfig.ButtonActions.Add("Skip", () => { RunEncounter(finalEncounter, remainingMinorEncounters); });
+				*/
+				popupConfig.ButtonActions.Add("Begin Encounter", () => 
+				{ 
+					AdventureGuide.Instance.RunEncounter(new Encounter(encounter, null), 
+						() => RunEncounter(finalEncounter, remainingMinorEncounters - 1),
+						() => RunEncounter(finalEncounter, remainingMinorEncounters)); 
+				});
+				if(encounter.skippable)
+                {
+					popupConfig.ButtonActions.Add("Skip", () => { RunEncounter(finalEncounter, remainingMinorEncounters); });
+				}
+				popupConfig.ButtonActions.Add("Return Home", () => { OnEndAdventure(encounter, false); });
 			}
 			else
 			{
+				/*
 				popupConfig.ButtonActions.Add("Complete!", () => 
 				{ 
 					HandleRewards(encounter);
 					UserInterfaceService.Instance.OnEndAdventureButton(); 
 				});
 				popupConfig.ButtonActions.Add("Failure", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
+				*/
+				popupConfig.ButtonActions.Add("Begin Encounter", () =>
+				{
+					AdventureGuide.Instance.RunEncounter(new Encounter(encounter, null),
+						() => OnEndAdventure(encounter, true),
+						() => OnEndAdventure(encounter, false));
+				});
+				if (encounter.skippable)
+				{
+					popupConfig.ButtonActions.Add("Skip", () => { RunEncounter(finalEncounter, remainingMinorEncounters); });
+				}
+				popupConfig.ButtonActions.Add("Return Home", () => { OnEndAdventure(encounter, false); });
 			}
 
 			currentPopup = PopupService.Instance.ShowPopup(popupConfig);
-			//repeat until final encounter is reached
-			//show same options popup
-			//reward if success
-			//reset
+		}
+
+		public void OnEndAdventure(AdventureEncounterObject encounter, bool success)
+        {
+			if(success)
+            {
+				HandleRewards(encounter);
+            }
+			UserInterfaceService.Instance.OnEndAdventureButton();
 		}
 
 		public List<AdventureEncounterObject> GetLevelAppropriateEncounters(List<AdventureEncounterObject> possibleAdventures, int lowerDifficultyThreshold, int upperDifficultyThreshold, bool major)

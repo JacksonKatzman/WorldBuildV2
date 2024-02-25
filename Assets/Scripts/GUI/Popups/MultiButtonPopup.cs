@@ -13,6 +13,8 @@ namespace Game.GUI.Popups
         [SerializeField]
         private TMP_Text title;
         [SerializeField]
+        private TMP_Text description;
+        [SerializeField]
         private Transform buttonAnchor;
         [SerializeField]
         private Button buttonPrefab;
@@ -30,7 +32,8 @@ namespace Game.GUI.Popups
             var actions = typedConfig.ButtonActions;
             Clear();
 
-            title.text = typedConfig.Description;
+            title.text = typedConfig.Title;
+            description.text = typedConfig.Description;
 
             foreach(var pair in actions)
             {
