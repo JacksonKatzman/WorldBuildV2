@@ -242,8 +242,9 @@ namespace Game.Terrain
 		public HexCell GetCell(Ray ray)
 		{
 			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit))
+			if (Physics.Raycast(ray, out hit))//, ~LayerMask.NameToLayer("HexOverlay")))
 			{
+				OutputLogger.Log("SOMETHING HIT!");
 				return GetCell(hit.point);
 			}
 			return null;
