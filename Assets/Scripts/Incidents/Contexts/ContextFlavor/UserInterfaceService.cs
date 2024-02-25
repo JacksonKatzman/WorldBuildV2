@@ -68,16 +68,7 @@ namespace Game.Incidents
 
 			if (Input.GetKeyDown(KeyCode.V))
 			{
-				if (hideVisibility)
-				{
-					Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
-					hideVisibility = false;
-				}
-				else
-				{
-					Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
-					hideVisibility = true;
-				}
+				World.CurrentWorld.HexGrid.ToggleMapVisibility();
 			}
 		}
 		

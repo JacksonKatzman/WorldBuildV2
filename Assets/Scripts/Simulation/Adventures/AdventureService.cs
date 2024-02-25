@@ -57,7 +57,6 @@ namespace Game.Simulation
 
 		public void FirstTimeSetup()
         {
-			Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
 			//Pick location for players to start, likely in one of the towns/hamlets
 			var startingCity = SimRandom.RandomEntryFromList(world.Cities);
 			CurrentLocation = startingCity.CurrentLocation;
@@ -75,6 +74,9 @@ namespace Game.Simulation
 				);
 
 			HexMapCamera.PanToCell(CurrentLocation.GetHexCell());
+			//need to make it so that features in fog are hidden!
+			//and borders!
+			World.CurrentWorld.HexGrid.SetMapVisibility(false);
 		}
 
 		public void BeginAdventure()

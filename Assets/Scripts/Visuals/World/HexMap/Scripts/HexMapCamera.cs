@@ -91,7 +91,7 @@ namespace Game.Terrain
 				var currentPosition = transform.localPosition;
 				float xDelta = forcedMovePos.x - currentPosition.x;
 				float zDelta = forcedMovePos.z - currentPosition.z;
-				if(Mathf.Approximately(xDelta, 0.0f) && Mathf.Approximately(zDelta, 0.0f))
+				if(Mathf.Abs(xDelta) <= 0.01f && Mathf.Abs(zDelta) <= 0.01f)
                 {
 					inForcedMove = false;
                 }

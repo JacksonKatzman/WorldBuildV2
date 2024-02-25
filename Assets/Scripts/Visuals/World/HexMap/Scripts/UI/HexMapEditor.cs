@@ -141,7 +141,8 @@ namespace Game.Terrain
 		void Awake()
 		{
 			terrainMaterial.DisableKeyword("GRID_ON");
-			Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+			//Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+			//hexGrid.UpdateFeatureVisibility(true);
 			SetEditMode(false);
 		}
 

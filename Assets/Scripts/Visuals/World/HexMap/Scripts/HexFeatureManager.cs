@@ -26,6 +26,7 @@ namespace Game.Terrain
 		public AssetCollection assetCollection;
 		public ConfigurableHexTerrain configurableHexTerrainPrefab;
 		public Transform permanentContainer;
+		public Dictionary<HexCell, List<GameObject>> features;
 
 		Transform container;
 
@@ -51,6 +52,21 @@ namespace Game.Terrain
 		{
 			walls.Apply();
 		}
+
+		public void UpdateFeatureVisibility(bool seeAll)
+        {
+			if (features != null)
+			{
+				foreach (var pair in features)
+				{
+					var show = seeAll ? true : pair.Key.IsExplored;
+					foreach (var feature in pair.Value)
+					{
+						feature.SetActive(show);
+					}
+				}
+			}
+        }
 
 		public void AddBridge(Vector3 roadCenter1, Vector3 roadCenter2)
 		{
@@ -79,19 +95,19 @@ namespace Game.Terrain
 
 			if(cell.Elevation - HexMetrics.globalWaterLevel < biomeData.hillThreshold)
             {
-				AddFlatTerrain(cell, position, biomeData, ref container);
+				AddFeatureToDictionary(cell, AddFlatTerrain(cell, position, biomeData, ref container));
 			}
 			else
             {
 				//eventually will have mountain roads but simplifying for now
 				if (cell.HasRoads)
 				{
-					AddFlatTerrain(cell, position, biomeData, ref container);
+					AddFeatureToDictionary(cell, AddFlatTerrain(cell, position, biomeData, ref container));
 					//AddMountain(cell, position, biomeData, ref container);
 				}
 				else
 				{
-					AddMountain(cell, position, biomeData, ref container);
+					AddFeatureToDictionary(cell, AddMountain(cell, position, biomeData, ref container));
 				}
             }
 
@@ -234,12 +250,11 @@ namespace Game.Terrain
             }
 		}
 
-		public void AddMountain(HexCell cell, Vector3 position, BiomeData biomeData, ref AssetPositionInformationContainer container)
+		public GameObject AddMountain(HexCell cell, Vector3 position, BiomeData biomeData, ref AssetPositionInformationContainer container)
         {
 			if(cell.HasIncomingRiver && cell.HasOutgoingRiver)
             {
-				AddFlatTerrain(cell, position, biomeData, ref container);
-				return;
+				return AddFlatTerrain(cell, position, biomeData, ref container);
             }
 
 			var configurableHexTerrain = Instantiate(configurableHexTerrainPrefab);
@@ -278,8 +293,7 @@ namespace Game.Terrain
 				if(biomeData.mountainAssets.Count == 0)
                 {
 					OutputLogger.LogWarning($"{biomeData.terrainType} doesn't have mountain assets. {cell.Elevation}");
-					AddFlatTerrain(cell, position, biomeData, ref container);
-					return;
+					return AddFlatTerrain(cell, position, biomeData, ref container);
 				}
 				instance = cell.HasOutgoingRiver ? 
 				Instantiate(SimRandom.RandomEntryFromList(biomeData.riverStartMountainAssets)).transform :
@@ -290,8 +304,7 @@ namespace Game.Terrain
 				if(biomeData.hillAssets.Count == 0)
                 {
 					OutputLogger.LogWarning($"{biomeData.terrainType} doesn't have hill assets. {cell.Elevation}");
-					AddFlatTerrain(cell, position, biomeData, ref container);
-					return;
+					return AddFlatTerrain (cell, position, biomeData, ref container);
                 }
 				//hills
 				instance = cell.HasOutgoingRiver ?
@@ -353,11 +366,13 @@ namespace Game.Terrain
 
 			//switched to permanent for now because when roads are recalcing terrain, they cause a reset which nukes everything in the container
 			//will probably have a new implementation of feature management later
-			instance.SetParent(this.permanentContainer, true);
+			//instance.SetParent(this.permanentContainer, true);
+			instance.SetParent(configurableHexTerrain.transform, true);
 			container.AddRange(instance.GetComponentsInChildren<AssetPlaceholder>(true));
+			return configurableHexTerrain.gameObject; 
 		}
 
-		public void AddFlatTerrain(HexCell cell, Vector3 position, BiomeData biomeData, ref AssetPositionInformationContainer container)
+		public GameObject AddFlatTerrain(HexCell cell, Vector3 position, BiomeData biomeData, ref AssetPositionInformationContainer container)
         {
 			var configurableHexTerrain = Instantiate(configurableHexTerrainPrefab);
 			configurableHexTerrain.transform.localPosition = position;
@@ -467,6 +482,8 @@ namespace Game.Terrain
             {
 				//AddGrass(cell, position, biomeData, ref container, ref configurableHexTerrain);
             }
+
+			return configurableHexTerrain.gameObject;
 		}
 
 		public void AddLandmark(Landmark landmark, HexCell cell, Vector3 position)
@@ -480,6 +497,9 @@ namespace Game.Terrain
 			var billboard = GameObject.Instantiate(AssetService.Instance.billboardPrefab);
 			billboard.transform.position = cell.Position + (Vector3.up * 5);
 			billboard.tmpText.text = landmark.Name;
+			billboard.transform.SetParent(landmarkObject.transform, true);
+
+			AddFeatureToDictionary(cell, landmarkObject.gameObject);
 		}
 
 		public void AddCity(City city, HexCell cell, Vector3 position)
@@ -490,6 +510,7 @@ namespace Game.Terrain
 			var billboard = GameObject.Instantiate(AssetService.Instance.billboardPrefab);
 			billboard.transform.position = cell.Position + (Vector3.up * 5);
 			billboard.tmpText.text = city.Name;
+			AddFeatureToDictionary(cell, billboard.gameObject);
 
 			//Change the model based on the population, will use temp stuff for now
 			if (city.Population >= 0 /*2000*/ || city == city.AffiliatedFaction.Cities[0])
@@ -525,12 +546,28 @@ namespace Game.Terrain
 				}
 
 				cityModel.transform.SetParent(permanentContainer, true);
+				AddFeatureToDictionary(cell, cityModel);
 			}
 			else
 			{
 
 			}
 		}
+
+		private void AddFeatureToDictionary(HexCell cell, GameObject feature)
+        {
+			if(features == null)
+            {
+				features = new Dictionary<HexCell, List<GameObject>>();
+            }
+
+			if(!features.ContainsKey(cell))
+            {
+				features.Add(cell, new List<GameObject>());
+            }
+
+			features[cell].Add(feature);
+        }
 
 		public void AddWall(
 			EdgeVertices near, HexCell nearCell,

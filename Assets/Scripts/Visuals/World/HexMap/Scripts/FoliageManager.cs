@@ -1,4 +1,5 @@
 ﻿using Game.Utilities;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace Game.Terrain
         {
             public Material[] materials;
             public List<List<Matrix4x4>> matrices;
+            //public List<List<Tuple<Matrix4x4, HexCell>>> matrices2;
+            //probably just want to edit the shaders of each thing to use the Feature shader cuz it cares about visibility already!
         }
 
         private void Awake()
