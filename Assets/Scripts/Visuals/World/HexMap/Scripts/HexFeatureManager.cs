@@ -135,7 +135,7 @@ namespace Game.Terrain
 						var mesh = filter.sharedMesh;
 						var materials = renderer.sharedMaterials;
 						placeholder.scale = Vector3.Scale(placeholder.scale, doodadPrefab.transform.GetChild(0).localScale);
-						FoliageManager.Instance.AddToBatches(mesh, materials, placeholder, true);
+						FoliageManager.Instance.AddToBatches(mesh, materials, placeholder, cell, true);
 					}
 				}
 			}
@@ -242,11 +242,11 @@ namespace Game.Terrain
 
 			var mesh = biomeData.grassAsset.GetComponent<MeshFilter>().sharedMesh;
 			var materials = biomeData.grassAsset.GetComponent<MeshRenderer>().sharedMaterials;
-			//FoliageManager.Instance.AddToBatches(mesh, materials, placeholder);
+
 			foreach(var c in candidates)
             {
 				var pos = new AssetPositionInformation() { assetType = AssetPlaceholder.AssetType.Doodad, position = new Vector3(c.x, cell.Position.y, c.y), scale = Vector3.one };
-				FoliageManager.Instance.AddToBatches(mesh, materials, pos);
+				FoliageManager.Instance.AddToBatches(mesh, materials, pos, cell);
             }
 		}
 

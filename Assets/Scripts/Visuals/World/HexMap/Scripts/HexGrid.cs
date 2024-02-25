@@ -49,7 +49,6 @@ namespace Game.Terrain
 		List<HexUnit> units = new List<HexUnit>();
 
 		HexCellShaderData cellShaderData;
-		private bool mapVisible;
 
 		void Awake()
 		{
@@ -86,7 +85,7 @@ namespace Game.Terrain
 
 		public void ToggleMapVisibility()
         {
-			SetMapVisibility(!mapVisible);
+			SetMapVisibility(!HexMetrics.mapFullyVisible);
         }
 
 		public void SetMapVisibility(bool seeAll)
@@ -94,15 +93,15 @@ namespace Game.Terrain
 			if(seeAll)
             {
 				Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
-				mapVisible = true;
+				HexMetrics.mapFullyVisible = true;
 			}
             else
             {
 				Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
-				mapVisible = false;
+				HexMetrics.mapFullyVisible = false;
 			}
 
-			UpdateFeatureVisibility(mapVisible);
+			UpdateFeatureVisibility(HexMetrics.mapFullyVisible);
         }
 
 		public void UpdateFeatureVisibility(bool seeAll)

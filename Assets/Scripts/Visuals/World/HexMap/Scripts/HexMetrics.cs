@@ -60,6 +60,8 @@ namespace Game.Terrain
 
 		public static int globalWaterLevel = 3;
 
+		public static bool mapFullyVisible = true;
+
 		static HexHash[] hashGrid;
 
 		static Vector3[] corners = {
