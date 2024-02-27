@@ -31,6 +31,8 @@ namespace Game.Terrain
 
 		void Update()
 		{
+			//manual click movement, commented out for now
+			/*
 			if (!EventSystem.current.IsPointerOverGameObject())
 			{
 				if (Input.GetMouseButtonDown(0))
@@ -49,6 +51,7 @@ namespace Game.Terrain
 					}
 				}
 			}
+			*/
 		}
 
 		void DoSelection()

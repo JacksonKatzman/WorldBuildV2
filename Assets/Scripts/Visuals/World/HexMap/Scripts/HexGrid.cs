@@ -244,7 +244,6 @@ namespace Game.Terrain
 			RaycastHit hit;
 			if (Physics.Raycast(ray, out hit))//, ~LayerMask.NameToLayer("HexOverlay")))
 			{
-				OutputLogger.Log("SOMETHING HIT!");
 				return GetCell(hit.point);
 			}
 			return null;
@@ -682,13 +681,16 @@ namespace Game.Terrain
 			return moveCost;
         }
 
-        public void FindPathWithUnit(HexCell fromCell, HexCell toCell, HexUnit unit)
+        public void FindPathWithUnit(HexCell fromCell, HexCell toCell, HexUnit unit, bool showPath = false)
 		{
 			ClearPath(true);
 			currentPathFrom = fromCell;
 			currentPathTo = toCell;
 			currentPathExists = SearchWithUnit(fromCell, toCell, unit);
-			ShowPath(unit.Speed);
+			if (showPath)
+			{
+				ShowPath(unit.Speed);
+			}
 		}
 
 		bool SearchWithUnit(HexCell fromCell, HexCell toCell, HexUnit unit)

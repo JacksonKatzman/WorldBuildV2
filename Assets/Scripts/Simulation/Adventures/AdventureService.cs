@@ -46,6 +46,30 @@ namespace Game.Simulation
 		public List<MonsterData> monsterData;
 
 		public Location CurrentLocation { get; set; }
+		public Location AdventureStartLocation { get; set; }
+
+		private HexUnit partyUnit;
+		public HexUnit PartyUnit
+        {
+            get
+            {
+				return partyUnit;
+            }
+			set
+            {
+				if(value != partyUnit)
+                {
+					if (partyUnit != null)
+					{
+						GameObject.Destroy(partyUnit.gameObject);
+					}
+					partyUnit = value;
+                }
+            }
+        }
+
+		//private List<HexCell> AdventurePath { get; set; }
+		private Queue<HexCell> AdventureDestinations { get; set; }
 
 		private World world = World.CurrentWorld;
 		private Popup currentPopup;
@@ -68,9 +92,9 @@ namespace Game.Simulation
 			//Extra credit: generate world points of interest in case players want to explore for their adventures instead?
 			//That or just include exploration contracts among the possible adventures
 
-
+			PartyUnit = GameObject.Instantiate(HexUnit.unitPrefab);
 			world.HexGrid.AddUnit(
-					GameObject.Instantiate(HexUnit.unitPrefab), CurrentLocation.GetHexCell(), Random.Range(0f, 360f)
+					PartyUnit, CurrentLocation.GetHexCell(), Random.Range(0f, 360f)
 				);
 
 			HexMapCamera.PanToCell(CurrentLocation.GetHexCell());
@@ -91,7 +115,9 @@ namespace Game.Simulation
 				return;
 			}
 
+			AdventureStartLocation = CurrentLocation;
 			var range = 4; //more complex calc later based on party level etc
+			var numSubEncounters = 2; //more complex calc later based on party level etc
 			var cellsInRange = CurrentLocation.GetAllCellsInRange(range);
 			var encountersInRange = AvailableEncounters.Where(encounter => cellsInRange.Contains(encounter.CurrentLocation.GetHexCell()));
 
@@ -124,12 +150,14 @@ namespace Game.Simulation
 				ButtonActions = new Dictionary<string, System.Action>(),
 				CloseOnButtonPress = true
 			};
+
 			foreach(var encounter in selectedEncounters)
             {
+				DetermineEncounterLocation(encounter, cellsInRange, numSubEncounters);
 				popupConfig.ButtonActions.Add(encounter.encounterTitle, () =>
 				{
 					//PopupService.Instance.ClosePopup(currentPopup);
-					RunAdventure(encounter, 2);
+					RunAdventure(encounter, numSubEncounters);
 				});
             }
 			currentPopup = PopupService.Instance.ShowPopup(popupConfig);
@@ -137,8 +165,40 @@ namespace Game.Simulation
 
 		public void RunAdventure(AdventureEncounterObject encounter, int minorEncounters)
         {
+			var grid = world.HexGrid;
+			grid.ClearPath();
+			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), encounter.CurrentLocation.GetHexCell(), PartyUnit);
+			var path = grid.GetPath();
+
+			AdventureDestinations.Clear();
+			for(int i = 0; i < minorEncounters; i++)
+            {
+				AdventureDestinations.Enqueue(path[(i * (path.Count / minorEncounters)) + 1]);
+            }
+			AdventureDestinations.Enqueue(path[path.Count - 1]);
+
 			OutputLogger.Log($"Running encounter {encounter.encounterTitle}");
-			RunEncounter(encounter, 2);
+			MoveToNextEncounter(encounter, minorEncounters);
+		}
+
+		public void MoveToNextEncounter(AdventureEncounterObject finalEncounter, int remainingMinorEncounters)
+        {
+			//move to encounter location
+			var destination = AdventureDestinations.Dequeue();
+			var grid = world.HexGrid;
+			grid.ClearPath();
+			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), destination, PartyUnit);
+			var path = grid.GetPath();
+
+			if (path.Count > 1)
+			{
+				CurrentLocation = new Location(destination.Index);
+				PartyUnit.Travel(path, () => { RunEncounter(finalEncounter, remainingMinorEncounters); });
+			}
+			else
+            {
+				RunEncounter(finalEncounter, remainingMinorEncounters);
+			}
 		}
 
 		public void RunEncounter(AdventureEncounterObject finalEncounter, int remainingMinorEncounters)
@@ -171,7 +231,7 @@ namespace Game.Simulation
 				popupConfig.ButtonActions.Add("Begin Encounter", () => 
 				{ 
 					AdventureGuide.Instance.RunEncounter(new Encounter(encounter, null), 
-						() => RunEncounter(finalEncounter, remainingMinorEncounters - 1),
+						() => MoveToNextEncounter(finalEncounter, remainingMinorEncounters - 1),
 						() => RunEncounter(finalEncounter, remainingMinorEncounters)); 
 				});
 				if(encounter.skippable)
@@ -208,11 +268,19 @@ namespace Game.Simulation
 
 		public void OnEndAdventure(AdventureEncounterObject encounter, bool success)
         {
+			//add pathfinding home
 			if(success)
             {
 				HandleRewards(encounter);
             }
-			UserInterfaceService.Instance.OnEndAdventureButton();
+			var grid = world.HexGrid;
+			grid.ClearPath();
+			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), AdventureStartLocation.GetHexCell(), PartyUnit);
+			var path = grid.GetPath();
+
+			CurrentLocation = AdventureStartLocation;
+			PartyUnit.Travel(path, () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
+			//UserInterfaceService.Instance.OnEndAdventureButton();
 		}
 
 		public List<AdventureEncounterObject> GetLevelAppropriateEncounters(List<AdventureEncounterObject> possibleAdventures, int lowerDifficultyThreshold, int upperDifficultyThreshold, bool major)
@@ -245,6 +313,19 @@ namespace Game.Simulation
 			UsedEncounters = ES3.Load<List<AdventureEncounterObject>>("UsedEncounters", SaveUtilities.GetAdventureSavePath(mapName));
 		}
 
+		private void DetermineEncounterLocation(AdventureEncounterObject encounterObject, List<HexCell> cellsInRange, int numSubEncounters)
+        {
+			if(encounterObject.CurrentLocation != null)
+            {
+				return;
+            }
+
+			var cell = CurrentLocation.GetHexCell();
+			//temporary - will eventually factor in that certain encounters can only happen in certain places
+			var outerRange = cellsInRange.Where(x => x.coordinates.DistanceTo(cell.coordinates) > numSubEncounters && !x.IsUnderwater).ToList();
+			encounterObject.CurrentLocation = new Location(SimRandom.RandomEntryFromList(outerRange).Index);
+        }
+
 		private void HandleRewards(AdventureEncounterObject encounterObject)
         {
 			OutputLogger.Log($"Rewarding players for completing {encounterObject.encounterTitle}!");
@@ -256,6 +337,7 @@ namespace Game.Simulation
 			AvailableEncounters = new List<AdventureEncounterObject>();
 			UsedEncounters = new List<AdventureEncounterObject>();
 			monsterData = new List<MonsterData>();
+			AdventureDestinations = new Queue<HexCell>();
 
 			if (AssetService.Instance.objectData.collections.ContainsKey(typeof(AdventureEncounterObject)))
 			{
