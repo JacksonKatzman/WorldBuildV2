@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Game.Simulation
 {
-	public class Adventure
+	public class Encounter
 	{
 		public List<AdventureEncounterObject> Encounters => GetEncounterList();
 		public List<IIncidentContext> Contexts => GetContexts();
@@ -12,8 +12,8 @@ namespace Game.Simulation
 
 		public AdventureEncounterObject mainEncounter;
 		private List<AdventureEncounterObject> sideEncounters;
-		public Adventure() { }
-		public Adventure(AdventureEncounterObject mainEncounter, List<AdventureEncounterObject> sideEncounters)
+		public Encounter() { }
+		public Encounter(AdventureEncounterObject mainEncounter, List<AdventureEncounterObject> sideEncounters)
 		{
 			this.mainEncounter = mainEncounter;
 			this.sideEncounters = sideEncounters;
@@ -34,7 +34,11 @@ namespace Game.Simulation
 
 		private List<AdventureEncounterObject> GetEncounterList()
 		{
-			var list = new List<AdventureEncounterObject>(sideEncounters);
+			var list = new List<AdventureEncounterObject>();
+			if (sideEncounters != null)
+			{
+				list.AddRange(sideEncounters);
+			}
 			list.Add(mainEncounter);
 			return list;
 		}

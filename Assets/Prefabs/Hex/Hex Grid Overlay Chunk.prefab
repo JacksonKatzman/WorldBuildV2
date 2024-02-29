@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 114000012954278246}
   - component: {fileID: 7633551028073540648}
   - component: {fileID: 564404976835078362}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Rivers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -862,7 +862,7 @@ GameObject:
   - component: {fileID: 5160821257119024283}
   - component: {fileID: 4921990738072962051}
   - component: {fileID: 3596642909727999011}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -19,10 +19,11 @@ namespace Game.GUI.Adventures
 		public AdventureEncounterObject mainEncounter;
 		public List<AdventureEncounterObject> sideEncounters;
 		[HideInInspector]
-		public Adventure currentAdventure;
+		public Encounter currentAdventure;
 		public Transform rootTransform;
 		public ScrollRect scrollRect;
 		public RectTransform contentPanel;
+		public CanvasGroup canvasGroup;
 		public CanvasGroup tableOfContentsCanvasGroup;
 		public Transform tableOfContentsLinkRoot;
 
@@ -32,6 +33,9 @@ namespace Game.GUI.Adventures
 		private List<AdventureComponentUILink> tableOfContents;
 		private int numBranches = 0;
 		private int numPaths = 0;
+
+		private Action OnEncounterCompleteAction;
+		private Action OnEncounterSkippedAction;
 
 		public static AdventureGuide Instance { get; private set; }
 		private void Awake()
@@ -50,37 +54,48 @@ namespace Game.GUI.Adventures
 		[Button("Test Display Adventure")]
 		private void TestDisplayAdventure()
 		{
-			currentAdventure = new Adventure(mainEncounter, sideEncounters);
-			SetUpAdventure(currentAdventure);
+			currentAdventure = new Encounter(mainEncounter, sideEncounters);
+			RunEncounter(currentAdventure, null, null);
 		}
 
 
-		public void SetUpAdventure(Adventure adventure)
+		public void RunEncounter(Encounter encounter, Action OnEncounterCompleted, Action OnEncounterSkipped)
 		{
+			OnEncounterCompleteAction = OnEncounterCompleted;
+			OnEncounterSkippedAction = OnEncounterSkipped;
+
 			if (uiComponents == null)
 			{
 				uiComponents = new List<IAdventureUIComponent>();
 			}
+			foreach(var component in uiComponents)
+            {
+				Destroy(component.RectTransform.gameObject);
+            }
 			uiComponents.Clear();
 
 			if (tableOfContents == null)
 			{
 				tableOfContents = new List<AdventureComponentUILink>();
 			}
+			foreach(var link in tableOfContents)
+            {
+				Destroy(link.gameObject);
+            }
 			tableOfContents.Clear();
 
-			adventureTitleText.text = adventure.mainEncounter.encounterTitle;
-			adventureSummaryUI.text.text = adventure.mainEncounter.encounterBlurb;
-			adventureSummaryUI.text.text += " " + adventure.mainEncounter.encounterSummary;
+			adventureTitleText.text = encounter.mainEncounter.encounterTitle;
+			adventureSummaryUI.text.text = encounter.mainEncounter.encounterBlurb;
+			adventureSummaryUI.text.text += " " + encounter.mainEncounter.encounterSummary;
 			CreateTableOfContentsEntry(-1, "Summary");
 
 			adventureSummaryUI.ReplaceTextPlaceholders(mainEncounter.contextCriterium);
 
-			var encounters = adventure.Encounters;
+			var encounters = encounter.Encounters;
 
-			foreach (var encounter in encounters)
+			foreach (var subEncounter in encounters)
 			{
-				foreach (var component in encounter.components)
+				foreach (var component in subEncounter.components)
 				{
 					if (component.GetType() == typeof(AdventureBranchingComponent))
 					{
@@ -94,20 +109,22 @@ namespace Game.GUI.Adventures
 
 							foreach (var c in path.components)
 							{
-								var uic = BuildUIComponent(c, numBranches, numPaths);
-								uic.ReplaceTextPlaceholders(encounter.contextCriterium);
-								uiComponents.Add(uic);
+								var uiComponent = BuildUIComponent(c, numBranches, numPaths);
+								uiComponent.ReplaceTextPlaceholders(subEncounter.contextCriterium);
+								uiComponents.Add(uiComponent);
 							}
 						}
 					}
 					else
 					{
 						var uic = BuildUIComponent(component, numBranches, numPaths);
-						uic.ReplaceTextPlaceholders(encounter.contextCriterium);
+						uic.ReplaceTextPlaceholders(subEncounter.contextCriterium);
 						uiComponents.Add(uic);
 					}
 				}
 			}
+
+			ToggleCanvasGroup(true);
 		}
 
 		public void SetCurrentComponent(int index)
@@ -131,6 +148,13 @@ namespace Game.GUI.Adventures
 			tableOfContents.Add(link);
 		}
 
+		public void ToggleCanvasGroup(bool on)
+        {
+			canvasGroup.alpha = on ? 1 : 0;
+			canvasGroup.interactable = on;
+			canvasGroup.blocksRaycasts = on;
+        }
+
 		public void ToggleTableOfContents()
 		{
 			var toggleOn = !tableOfContentsCanvasGroup.interactable;
@@ -138,6 +162,30 @@ namespace Game.GUI.Adventures
 			tableOfContentsCanvasGroup.alpha = toggleOn ? 1 : 0;
 			tableOfContentsCanvasGroup.interactable = toggleOn;
 			tableOfContentsCanvasGroup.blocksRaycasts = toggleOn;
+		}
+
+		public void OnCurrentEncounterCompleted()
+        {
+			ToggleCanvasGroup(false);
+			OnEncounterCompleteAction?.Invoke();
+        }
+
+		public void OnCurrentEncounterFailed()
+        {
+			ToggleCanvasGroup(false);
+			UserInterfaceService.Instance.OnEndAdventureButton();
+		}
+
+		public void OnCurrentEncounterSkipped()
+        {
+			ToggleCanvasGroup(false);
+			OnEncounterSkippedAction?.Invoke();
+		}
+
+		public void OnReturnHome()
+        {
+			ToggleCanvasGroup(false);
+			UserInterfaceService.Instance.OnEndAdventureButton();
 		}
 
 		public static bool TryGetContext(int id, out IIncidentContext result)
@@ -174,15 +222,15 @@ namespace Game.GUI.Adventures
 		{
 			var prefab = prefabDictionary[adventureComponent.GetType()];
 			var instantiatedPrefab = Instantiate(prefab, rootTransform);
-			IAdventureUIComponent uic = (IAdventureUIComponent)instantiatedPrefab.GetComponent(typeof(IAdventureUIComponent));
+			IAdventureUIComponent uiComponent = (IAdventureUIComponent)instantiatedPrefab.GetComponent(typeof(IAdventureUIComponent));
 
-			uic.ComponentID = adventureComponent.ComponentID;
-			uic.BranchGroup = branchGroupID;
-			uic.PathGroup = pathGroupID;
+			uiComponent.ComponentID = adventureComponent.ComponentID;
+			uiComponent.BranchGroup = branchGroupID;
+			uiComponent.PathGroup = pathGroupID;
 
-			uic.BuildUIComponents(adventureComponent);
+			uiComponent.BuildUIComponents(adventureComponent);
 
-			return uic;
+			return uiComponent;
 		}
 	}
 }

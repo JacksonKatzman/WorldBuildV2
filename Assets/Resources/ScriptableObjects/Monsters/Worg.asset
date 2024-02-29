@@ -62,7 +62,8 @@ MonoBehaviour:
   - Perception +4
   senses: []
   groupingName: 
-  sounds: []
+  sounds:
+  - bark
   languages:
   - Goblin
   - Worg

@@ -303,6 +303,11 @@ namespace Game.Terrain
 			}
 			private set
 			{
+				if(value && value != explored)
+                {
+					FoliageManager.Instance.UpdateFoliageVisibility(this);
+					chunk.features.UpdateFeatureVisibility(HexMetrics.mapFullyVisible);
+                }
 				explored = value;
 			}
 		}

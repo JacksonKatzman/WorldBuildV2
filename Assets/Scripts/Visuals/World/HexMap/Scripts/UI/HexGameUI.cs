@@ -19,16 +19,20 @@ namespace Game.Terrain
 			grid.ClearPath();
 			if (toggle)
 			{
-				Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+				//Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+				grid.UpdateFeatureVisibility(true);
 			}
 			else
 			{
-				Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
+				//Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
+				grid.UpdateFeatureVisibility(false);
 			}
 		}
 
 		void Update()
 		{
+			//manual click movement, commented out for now
+			/*
 			if (!EventSystem.current.IsPointerOverGameObject())
 			{
 				if (Input.GetMouseButtonDown(0))
@@ -47,6 +51,7 @@ namespace Game.Terrain
 					}
 				}
 			}
+			*/
 		}
 
 		void DoSelection()

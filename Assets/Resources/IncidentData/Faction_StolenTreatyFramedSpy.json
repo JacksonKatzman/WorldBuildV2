@@ -47,7 +47,7 @@
                     "min": 0,
                     "max": 20,
                     "constant": 0,
-                    "Value": 18,
+                    "Value": 13,
                     "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                   },
                   "subexpressions": null,
@@ -83,7 +83,7 @@
   "ActionContainer": {
     "$id": "9",
     "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
-    "incidentLog": "With a long discussed treaty nearing finalization, a crucial document detailing the terms mysteriously vanishes from the negotiation chamber. Simultaneously, confidential letters are discovered, apparently revealing a {0} spy's intent to steal important {1} military secrets. The situation threatens to unravel the alliance.\n{7}, alarmed by the missing treaty, suspects foul play. {7} leads a discreet investigation within Glimmerdell's court, uncovering evidence of a scheme to discredit Evermist and undermine the alliance. {9} is similarly concerned and initiates an internal inquiry.\nAfter weeks of investigation and diplomatic negotiations, the truth emerges. {7} discovers that a rogue member of {0}'s own court, motivated by personal grudges, had stolen the treaty and fabricated the spy plot to disrupt the alliance. This revelation shocks both courts and nearly fractures the relationship between {0} and {1}.",
+    "incidentLog": "With a long discussed treaty nearing finalization, a crucial document detailing the terms mysteriously vanishes from the negotiation chamber. Simultaneously, confidential letters are discovered, apparently revealing a {0} spy's intent to steal important {1} military secrets. The situation threatens to unravel the alliance.\n{7}, alarmed by the missing treaty, suspects foul play. {7} leads a discreet investigation within {1}'s court, uncovering evidence of a scheme to discredit Evermist and undermine the alliance. {9} is similarly concerned and initiates an internal inquiry.\nAfter weeks of investigation and diplomatic negotiations, the truth emerges. {7} discovers that a rogue member of {0}'s own court, motivated by personal grudges, had stolen the treaty and fabricated the spy plot to disrupt the alliance. This revelation shocks both courts and nearly fractures the relationship between {0} and {1}.",
     "Actions": {
       "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass]], mscorlib",
       "$values": [
@@ -100,7 +100,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 3,
+              "Value": 17,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "influence": {
@@ -110,7 +110,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 16,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -120,9 +120,11 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 15,
+              "Value": 7,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
+            "useTemplate": false,
+            "template": null,
             "politicalPriority": {
               "$id": "15",
               "$type": "Game.Incidents.IntegerRange, Auto-asmdef-SecondPass",
@@ -130,7 +132,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 0,
+              "Value": 9,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "economicPriority": {
@@ -140,7 +142,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 1,
+              "Value": 18,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "religiousPriority": {
@@ -150,7 +152,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 3,
+              "Value": 12,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "militaryPriority": {
@@ -160,7 +162,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 6,
+              "Value": 9,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "creator": {
@@ -315,7 +317,7 @@
                             "min": 0,
                             "max": 20,
                             "constant": 0,
-                            "Value": 0,
+                            "Value": 9,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
@@ -341,7 +343,7 @@
                             "min": 0,
                             "max": 20,
                             "constant": 0,
-                            "Value": 19,
+                            "Value": 9,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
@@ -424,7 +426,7 @@
                             "min": 0,
                             "max": 20,
                             "constant": 0,
-                            "Value": 11,
+                            "Value": 5,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
@@ -450,7 +452,7 @@
                             "min": 0,
                             "max": 20,
                             "constant": 0,
-                            "Value": 10,
+                            "Value": 17,
                             "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
                           },
                           "subexpressions": null,
@@ -524,7 +526,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 4,
+              "Value": 6,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "politicalPriority": {
@@ -544,7 +546,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 7,
+              "Value": 8,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "religiousPriority": {
@@ -554,7 +556,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 12,
+              "Value": 17,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "militaryPriority": {
@@ -564,7 +566,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 11,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "influence": {
@@ -574,7 +576,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 12,
+              "Value": 2,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -584,7 +586,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 18,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "strength": {
@@ -594,7 +596,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 14,
+              "Value": 10,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "dexterity": {
@@ -604,7 +606,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 4,
+              "Value": 5,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "constitution": {
@@ -614,7 +616,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 0,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "intelligence": {
@@ -624,7 +626,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 3,
+              "Value": 5,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wisdom": {
@@ -634,7 +636,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 19,
+              "Value": 16,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "charisma": {
@@ -644,7 +646,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 0,
+              "Value": 14,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "majorCharacter": true,
@@ -810,7 +812,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 9,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "politicalPriority": {
@@ -820,7 +822,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 10,
+              "Value": 11,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "economicPriority": {
@@ -830,7 +832,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 17,
+              "Value": 12,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "religiousPriority": {
@@ -840,7 +842,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 14,
+              "Value": 18,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "militaryPriority": {
@@ -850,7 +852,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 5,
+              "Value": 14,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "influence": {
@@ -860,7 +862,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 6,
+              "Value": 16,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wealth": {
@@ -870,7 +872,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 16,
+              "Value": 11,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "strength": {
@@ -880,7 +882,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 0,
+              "Value": 9,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "dexterity": {
@@ -890,7 +892,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 11,
+              "Value": 10,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "constitution": {
@@ -900,7 +902,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 0,
+              "Value": 1,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "intelligence": {
@@ -910,7 +912,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 2,
+              "Value": 0,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "wisdom": {
@@ -920,7 +922,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 18,
+              "Value": 16,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "charisma": {
@@ -930,7 +932,7 @@
               "min": 0,
               "max": 20,
               "constant": 0,
-              "Value": 5,
+              "Value": 10,
               "GetValueType": "System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
             },
             "majorCharacter": true,

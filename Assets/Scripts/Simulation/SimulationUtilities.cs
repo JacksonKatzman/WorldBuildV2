@@ -371,6 +371,7 @@ namespace Game.Simulation
 
 		public static List<HexCell> GetAllCellsInRange(HexCell fromCell, int range)
 		{
+			SimulationManager.Instance.HexGrid.ResetSearchPhases();
 			HexCellPriorityQueue searchFrontier = new HexCellPriorityQueue();
 			List<HexCell> cellsInRange = ListPool<HexCell>.Get();
 

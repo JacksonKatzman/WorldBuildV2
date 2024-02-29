@@ -52,7 +52,7 @@ namespace Game.Terrain
 
 		void Awake()
 		{
-
+			SetMapVisibility(true);
 		}
 
 		public void Initalize()
@@ -82,6 +82,35 @@ namespace Game.Terrain
 				cell.SearchPhase = 0;
 			}
 		}
+
+		public void ToggleMapVisibility()
+        {
+			SetMapVisibility(!HexMetrics.mapFullyVisible);
+        }
+
+		public void SetMapVisibility(bool seeAll)
+        {
+			if(seeAll)
+            {
+				Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+				HexMetrics.mapFullyVisible = true;
+			}
+            else
+            {
+				Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
+				HexMetrics.mapFullyVisible = false;
+			}
+
+			UpdateFeatureVisibility(HexMetrics.mapFullyVisible);
+        }
+
+		public void UpdateFeatureVisibility(bool seeAll)
+        {
+			foreach(var chunk in chunks)
+            {
+				chunk.features.UpdateFeatureVisibility(seeAll);
+            }
+        }
 
 		public void AddUnit(HexUnit unit, HexCell location, float orientation)
 		{
@@ -213,7 +242,7 @@ namespace Game.Terrain
 		public HexCell GetCell(Ray ray)
 		{
 			RaycastHit hit;
-			if (Physics.Raycast(ray, out hit))
+			if (Physics.Raycast(ray, out hit))//, ~LayerMask.NameToLayer("HexOverlay")))
 			{
 				return GetCell(hit.point);
 			}
@@ -652,13 +681,16 @@ namespace Game.Terrain
 			return moveCost;
         }
 
-        public void FindPathWithUnit(HexCell fromCell, HexCell toCell, HexUnit unit)
+        public void FindPathWithUnit(HexCell fromCell, HexCell toCell, HexUnit unit, bool showPath = false)
 		{
 			ClearPath(true);
 			currentPathFrom = fromCell;
 			currentPathTo = toCell;
 			currentPathExists = SearchWithUnit(fromCell, toCell, unit);
-			ShowPath(unit.Speed);
+			if (showPath)
+			{
+				ShowPath(unit.Speed);
+			}
 		}
 
 		bool SearchWithUnit(HexCell fromCell, HexCell toCell, HexUnit unit)

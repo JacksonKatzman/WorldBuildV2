@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Game.Collections;
 using Game.GameMath;
+using System;
 
 namespace Game.Terrain
 {
@@ -82,17 +83,17 @@ namespace Game.Terrain
 			return cell.IsExplored && !cell.IsUnderwater && !cell.Unit;
 		}
 
-		public void Travel(List<HexCell> path)
+		public void Travel(List<HexCell> path, Action onMoveComplete = null)
 		{
 			location.Unit = null;
 			location = path[path.Count - 1];
 			location.Unit = this;
 			pathToTravel = path;
 			StopAllCoroutines();
-			StartCoroutine(TravelPath());
+			StartCoroutine(TravelPath(onMoveComplete));
 		}
 
-		IEnumerator TravelPath()
+		IEnumerator TravelPath(Action onMoveComplete = null)
 		{
 			Vector3 a, b, c = pathToTravel[0].Position;
 			yield return LookAt(pathToTravel[1].Position);
@@ -139,6 +140,7 @@ namespace Game.Terrain
 			orientation = transform.localRotation.eulerAngles.y;
 			ListPool<HexCell>.Add(pathToTravel);
 			pathToTravel = null;
+			onMoveComplete?.Invoke();
 		}
 
 		IEnumerator LookAt(Vector3 point)

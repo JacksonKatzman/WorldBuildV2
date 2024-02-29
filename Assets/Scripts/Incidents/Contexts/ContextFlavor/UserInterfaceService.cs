@@ -17,6 +17,8 @@ namespace Game.Incidents
 		public GameObject wikiButton;
 		public GameObject beginAdventureButton;
 
+		private bool hideVisibility;
+
 		public void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -52,16 +54,21 @@ namespace Game.Incidents
 		{
 			if(Input.GetKeyDown(KeyCode.H))
 			{
-				if ((HighlightManager.instance.layerMask.value & 1 << LayerMask.NameToLayer("HexTerrain")) > 0)
+				if ((HighlightManager.instance.layerMask.value & 1 << LayerMask.NameToLayer("HexOverlay")) > 0)
 				{
-					HighlightManager.instance.layerMask.value &= ~(1 << LayerMask.NameToLayer("HexTerrain"));
+					HighlightManager.instance.layerMask.value &= ~(1 << LayerMask.NameToLayer("HexOverlay"));
 					hexCollectionNameText.enabled = false;
 				}
 				else
 				{
-					HighlightManager.instance.layerMask.value |= (1 << LayerMask.NameToLayer("HexTerrain"));
+					HighlightManager.instance.layerMask.value |= (1 << LayerMask.NameToLayer("HexOverlay"));
 					hexCollectionNameText.enabled = true;
 				}
+			}
+
+			if (Input.GetKeyDown(KeyCode.V))
+			{
+				World.CurrentWorld.HexGrid.ToggleMapVisibility();
 			}
 		}
 		
@@ -72,7 +79,7 @@ namespace Game.Incidents
 
 		private bool OnHighlightStart(GameObject obj)
 		{
-			if((HighlightManager.instance.layerMask.value & 1 << LayerMask.NameToLayer("HexTerrain")) > 0)
+			if((HighlightManager.instance.layerMask.value & 1 << LayerMask.NameToLayer("HexOverlay")) > 0)
 			{
 				//currently hovering over river throws null ref - obj or the get component is null
 				obj?.GetComponent<HexChunkHighlight>()?.OnHighlightStart();
