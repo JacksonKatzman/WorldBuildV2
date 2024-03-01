@@ -280,7 +280,6 @@ namespace Game.Simulation
 
 			CurrentLocation = AdventureStartLocation;
 			PartyUnit.Travel(path, () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
-			//UserInterfaceService.Instance.OnEndAdventureButton();
 		}
 
 		public List<AdventureEncounterObject> GetLevelAppropriateEncounters(List<AdventureEncounterObject> possibleAdventures, int lowerDifficultyThreshold, int upperDifficultyThreshold, bool major)

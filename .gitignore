@@ -12,6 +12,7 @@
 
 # /[Aa]ssets/Resources/ScriptableObjects
 /[Aa]ssets/Notes
+/[Aa]ssets/MegaBook
 /[Aa]ssets/Resources/*.txt
 /[Aa]ssets/Resources/*.csv
 /[Aa]ssets/Resources/*.txt.meta
