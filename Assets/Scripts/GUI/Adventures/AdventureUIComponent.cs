@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace Game.GUI.Adventures
 {
-	public abstract class AdventureUIComponent<T> : SerializedMonoBehaviour, IAdventureUIComponent, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler where T : IAdventureComponent
+    public abstract class AdventureUIComponent<T> : SerializedMonoBehaviour, IAdventureUIComponent, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler where T : IAdventureComponent
 	{
 		protected static byte FULL_ALPHA = 255;
 		protected static byte FADED_ALPHA = 100;

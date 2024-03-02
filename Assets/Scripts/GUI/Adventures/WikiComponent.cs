@@ -1,0 +1,74 @@
+﻿using Game.GUI.Wiki;
+using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+namespace Game.GUI.Adventures
+{
+    public abstract class WikiComponent<T> : SerializedMonoBehaviour, IWikiComponent, IPointerClickHandler
+    {
+        [SerializeField]
+        private CanvasGroup mainCanvasGroup;
+        protected List<TMP_Text> textFields;
+
+        public CanvasGroup MainCanvasGroup => mainCanvasGroup;
+
+        public void Fill(object value)
+        {
+            Fill((T)value);
+        }
+        protected abstract void Fill(T value);
+        private void Awake()
+        {
+            LoadTextList();
+        }
+
+        private void LoadTextList()
+        {
+            textFields = new List<TMP_Text>();
+
+            var fields = GetType().GetFields().Where(x => x.FieldType == typeof(TMP_Text));
+            foreach(var field in fields)
+            {
+                textFields.Add((TMP_Text)field.GetValue(this));
+            }
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            foreach (var textField in textFields)
+            {
+                var linkIndex = TMP_TextUtilities.FindIntersectingLink(textField, Input.mousePosition, null);
+                if (linkIndex >= 0)
+                {
+                    var linkID = textField.textInfo.linkInfo[linkIndex].GetLinkID();
+                    OnLinkClick(linkID);
+                    return;
+                }
+            }
+        }
+
+        public void Show()
+        {
+            mainCanvasGroup.alpha = 1;
+            mainCanvasGroup.interactable = true;
+            mainCanvasGroup.blocksRaycasts = true;
+        }
+
+        public void Hide()
+        {
+            mainCanvasGroup.alpha = 0;
+            mainCanvasGroup.interactable = false;
+            mainCanvasGroup.blocksRaycasts = false;
+        }
+
+        private void OnLinkClick(string linkID)
+        {
+            WikiService.Instance.OpenPage(linkID);
+        }
+    }
+}

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class UserInterfaceService : SerializedMonoBehaviour
+    public class UserInterfaceService : SerializedMonoBehaviour
 	{
 		public static UserInterfaceService Instance { get; private set; }
 		public IncidentWiki incidentWiki;
