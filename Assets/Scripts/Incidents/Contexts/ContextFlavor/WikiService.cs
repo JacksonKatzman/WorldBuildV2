@@ -68,27 +68,21 @@ namespace Game.GUI.Wiki
 				var contextType = context.GetType();
 				if(wikiDictionary.TryGetValue(contextType, out var wiki))
                 {
-					HideWikis();
+					//HideWikis();
 					wiki.Fill(context);
-					wiki.Show();
-					FillTableOfContents(contextType);
+					//wiki.Show();
+					//FillTableOfContents(contextType);
+					SwitchToTab(wiki);
                 }
 			}
-        }
-
-		public void SwitchToTab(Type type)
-        {
-			if(wikiDictionary.TryGetValue(type, out var value))
-            {
-				HideWikis();
-				value.Show();
-            }
         }
 
 		public void SwitchToTab(IWikiComponent component)
         {
 			HideWikis();
+			FillTableOfContents(component.GetComponentType());
 			component.Show();
+
 			foreach(var pair in tabSelectors)
             {
 				pair.Value.button.interactable = true;
@@ -109,10 +103,17 @@ namespace Game.GUI.Wiki
 
 		private void FillTableOfContents(Type type)
         {
-			if(ContextDictionaryProvider.AllContexts.TryGetValue(type, out var list))
+			if (typeof(IIncidentContext).IsAssignableFrom(type))
+			{
+				if (ContextDictionaryProvider.AllContexts.TryGetValue(type, out var list))
+				{
+					tableOfContents.Show();
+					tableOfContents.Fill(list);
+				}
+			}
+			else
             {
-				tableOfContents.Show();
-				tableOfContents.Fill(list);
+				tableOfContents.Clear();
             }
         }
 
@@ -130,7 +131,16 @@ namespace Game.GUI.Wiki
                 {
 					wikiDictionary.Add(subType, wiki);
 					var selector = Instantiate(wikiTabSelectorPrefab, wikiTabSelectorRoot);
-					selector.Setup(wiki, $"{subType.Name}s", () => { SwitchToTab(wiki); });
+					var tabName = string.Empty;
+					if(typeof(IIncidentContext).IsAssignableFrom(subType))
+                    {
+						tabName = $"{subType.Name}s";
+					}
+					else if(subType == typeof(List<IncidentReport>))
+                    {
+						tabName = "World History";
+					}
+					selector.Setup(wiki, tabName, () => { SwitchToTab(wiki); });
 					tabSelectors.Add(wiki, selector);
                 }
 				else

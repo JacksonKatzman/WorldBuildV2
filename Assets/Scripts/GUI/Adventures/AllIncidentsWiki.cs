@@ -8,9 +8,10 @@ namespace Game.GUI.Adventures
     public class AllIncidentsWiki : WikiComponent<List<IncidentReport>>
     {
         [SerializeField]
-        private TMP_Text content;
+        public TMP_Text content;
         protected override void Fill(List<IncidentReport> value)
         {
+            content.text = "";
             foreach (var item in value)
             {
                 if (item.IsMajorIncident)

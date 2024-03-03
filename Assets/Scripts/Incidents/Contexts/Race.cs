@@ -18,6 +18,7 @@ namespace Game.Incidents
 			this.racePreset = racePreset;
 			MinAge = racePreset.minAge;
 			MaxAge = racePreset.maxAge;
+			Name = racePreset.name;
 		}
 
 		//make preset for races

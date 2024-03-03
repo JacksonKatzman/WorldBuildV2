@@ -1,5 +1,7 @@
 ﻿using Game.GUI.Wiki;
+using Game.Incidents;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -19,6 +21,10 @@ namespace Game.GUI.Adventures
         public void Fill(object value)
         {
             Fill((T)value);
+        }
+        virtual public Type GetComponentType()
+        {
+            return typeof(T);
         }
         protected abstract void Fill(T value);
         private void Awake()
@@ -69,6 +75,11 @@ namespace Game.GUI.Adventures
         virtual protected void Preshow()
         {
 
+        }
+
+        protected string Link(IIncidentContext context)
+        {
+            return string.Format("<u><link=\"{0}\">{1}</link></u>", context.ID, context.Name);
         }
 
         private void OnLinkClick(string linkID)

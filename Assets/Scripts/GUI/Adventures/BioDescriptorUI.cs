@@ -4,19 +4,20 @@ using UnityEngine;
 
 namespace Game.GUI.Adventures
 {
-    public class BioDescriptorUI : SerializedMonoBehaviour
+    public class BioDescriptorUI : WikiComponent<string>
     {
         [SerializeField]
         private TMP_Text descriptorText;
 
-        public void Fill(string value)
+        override protected void Fill(string value)
         {
             descriptorText.text = value.ToString();
         }
 
         public void SetColor(Color color)
         {
-            descriptorText.color = color;
+            var hex = ColorUtility.ToHtmlStringRGB(color);
+            descriptorText.text = $"<color=#{hex}>{descriptorText.text}</color>";
         }
     }
 }

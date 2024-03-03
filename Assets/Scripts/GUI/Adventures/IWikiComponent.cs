@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Game.GUI.Adventures
 {
@@ -8,5 +9,6 @@ namespace Game.GUI.Adventures
         public void Fill(object obj);
         public void Show();
         public void Hide();
+        public Type GetComponentType();
     }
 }

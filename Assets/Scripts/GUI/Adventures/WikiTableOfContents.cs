@@ -15,9 +15,13 @@ namespace Game.GUI.Adventures
             tableOfContentsText.text = "";
             foreach (var item in list)
             {
-                var linkString = string.Format("<link=\"{0}\">{1}</link>", item.ID, item.Name);
-                tableOfContentsText.text += $"-{linkString}\n";
+                tableOfContentsText.text += $"-{Link(item)}\n";
             }
+        }
+
+        public void Clear()
+        {
+            tableOfContentsText.text = "";
         }
     }
 }

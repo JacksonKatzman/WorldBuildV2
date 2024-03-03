@@ -52,8 +52,8 @@ namespace Game.GUI.Adventures
             characterNameText.text = character.CharacterName.GetFullName();
             ageDescriptor.Fill(character.Age.ToString());
             genderDescriptor.Fill(character.Gender.ToString());
-            raceDescriptor.Fill(character.AffiliatedRace.racePreset.name);
-            factionDescriptor.Fill(character.AffiliatedFaction.Name);
+            raceDescriptor.Fill(Link(character.AffiliatedRace));
+            factionDescriptor.Fill(Link(character.AffiliatedFaction));
             //will do the rest once I have a way to generate them
 
             var alive = ContextDictionaryProvider.CurrentContexts[typeof(Character)].Contains(character);
