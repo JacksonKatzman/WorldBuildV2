@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 namespace Game.GUI.Wiki
@@ -13,10 +14,18 @@ namespace Game.GUI.Wiki
     public class WikiService : SerializedMonoBehaviour
     {
 		[SerializeField]
+		private WikiTableOfContents tableOfContents;
+		[SerializeField]
+		private Transform wikiTabSelectorRoot;
+		[SerializeField]
+		private AllIncidentsWiki allIncidentsWiki;
+		[SerializeField]
 		private List<IWikiComponent> wikis;
+		public WikiTabSelector wikiTabSelectorPrefab;
 		public static WikiService Instance { get; private set; }
 
 		private Dictionary<Type, IWikiComponent> wikiDictionary;
+		private Dictionary<IWikiComponent, WikiTabSelector> tabSelectors;
 
 		[Button("Test Load Character Wiki")]
 		public void TestLoadCharacterWiki()
@@ -35,8 +44,10 @@ namespace Game.GUI.Wiki
 			else
 			{
 				Instance = this;
+				EventManager.Instance.AddEventHandler<WorldBuildSimulationCompleteEvent>(OnSimulationComplete);
 				LoadWikiDictionary();
 				HideWikis();
+				tableOfContents.Hide();
 			}
 		}
 
@@ -60,8 +71,32 @@ namespace Game.GUI.Wiki
 					HideWikis();
 					wiki.Fill(context);
 					wiki.Show();
+					FillTableOfContents(contextType);
                 }
 			}
+        }
+
+		public void SwitchToTab(Type type)
+        {
+			if(wikiDictionary.TryGetValue(type, out var value))
+            {
+				HideWikis();
+				value.Show();
+            }
+        }
+
+		public void SwitchToTab(IWikiComponent component)
+        {
+			HideWikis();
+			component.Show();
+			foreach(var pair in tabSelectors)
+            {
+				pair.Value.button.interactable = true;
+            }
+			if(tabSelectors.TryGetValue(component, out var tab))
+            {
+				tab.button.interactable = false;
+            }
         }
 
 		public void HideWikis()
@@ -72,9 +107,19 @@ namespace Game.GUI.Wiki
             }
         }
 
+		private void FillTableOfContents(Type type)
+        {
+			if(ContextDictionaryProvider.AllContexts.TryGetValue(type, out var list))
+            {
+				tableOfContents.Show();
+				tableOfContents.Fill(list);
+            }
+        }
+
 		private void LoadWikiDictionary()
         {
 			wikiDictionary = new Dictionary<Type, IWikiComponent>();
+			tabSelectors = new Dictionary<IWikiComponent, WikiTabSelector>();
 
 			foreach(var wiki in wikis)
             {
@@ -84,12 +129,21 @@ namespace Game.GUI.Wiki
 				if(!wikiDictionary.ContainsKey(subType))
                 {
 					wikiDictionary.Add(subType, wiki);
+					var selector = Instantiate(wikiTabSelectorPrefab, wikiTabSelectorRoot);
+					selector.Setup(wiki, $"{subType.Name}s", () => { SwitchToTab(wiki); });
+					tabSelectors.Add(wiki, selector);
                 }
 				else
                 {
 					OutputLogger.LogError($"Duplicate wiki of type {subType} detected. Multiple wikis of same type are not allowed.");
                 }
             }
+        }
+
+		private void OnSimulationComplete(WorldBuildSimulationCompleteEvent gameEvent)
+        {
+			allIncidentsWiki?.Fill(IncidentService.Instance.reports);
+			EventManager.Instance.RemoveEventHandler<WorldBuildSimulationCompleteEvent>(OnSimulationComplete);
         }
 	}
 }

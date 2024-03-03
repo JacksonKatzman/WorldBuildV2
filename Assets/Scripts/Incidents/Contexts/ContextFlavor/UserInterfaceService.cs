@@ -10,7 +10,7 @@ namespace Game.Incidents
     public class UserInterfaceService : SerializedMonoBehaviour
 	{
 		public static UserInterfaceService Instance { get; private set; }
-		public IncidentWiki incidentWiki;
+		public OldIncidentWiki incidentWiki;
 		public TMP_Text hexCollectionNameText;
 
 		public GameObject generateWorldButton;

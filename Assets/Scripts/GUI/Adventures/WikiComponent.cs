@@ -1,6 +1,5 @@
 ﻿using Game.GUI.Wiki;
 using Sirenix.OdinInspector;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -27,11 +26,11 @@ namespace Game.GUI.Adventures
             LoadTextList();
         }
 
-        private void LoadTextList()
+        protected virtual void LoadTextList()
         {
             textFields = new List<TMP_Text>();
 
-            var fields = GetType().GetFields().Where(x => x.FieldType == typeof(TMP_Text));
+            var fields = GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Where(x => x.FieldType == typeof(TMP_Text));
             foreach(var field in fields)
             {
                 textFields.Add((TMP_Text)field.GetValue(this));
@@ -54,6 +53,7 @@ namespace Game.GUI.Adventures
 
         public void Show()
         {
+            Preshow();
             mainCanvasGroup.alpha = 1;
             mainCanvasGroup.interactable = true;
             mainCanvasGroup.blocksRaycasts = true;
@@ -64,6 +64,11 @@ namespace Game.GUI.Adventures
             mainCanvasGroup.alpha = 0;
             mainCanvasGroup.interactable = false;
             mainCanvasGroup.blocksRaycasts = false;
+        }
+
+        virtual protected void Preshow()
+        {
+
         }
 
         private void OnLinkClick(string linkID)

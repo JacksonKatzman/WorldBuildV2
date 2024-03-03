@@ -1,5 +1,7 @@
-﻿using Game.Incidents;
+﻿using Game.GUI.Wiki;
+using Game.Incidents;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,15 +19,9 @@ namespace Game.GUI.Adventures
         private WikiComponent<Character> characterNotes;
 
         [SerializeField]
-        private Button characterBioButton;
-        [SerializeField]
-        private Button characterStatsButton;
-        [SerializeField]
-        private Button characterInventoryButton;
-        [SerializeField]
-        private Button characterNotesButton;
+        private Transform tabRoot;
 
-        private List<IWikiComponent> components;
+        private Dictionary<IWikiComponent, WikiTabSelector> components;
 
         override protected void Fill(Character character)
         {
@@ -35,47 +31,62 @@ namespace Game.GUI.Adventures
             characterNotes?.Fill(character);
         }
 
-        public void SwapToBio()
+        public void SwapToTab(IWikiComponent component)
         {
-            ShowComponent(characterBio);
+            ShowComponent(component);
         }
 
-        public void SwapToStats()
+        protected override void Preshow()
         {
-            ShowComponent(characterStats);
-        }
-
-        public void SwapToInventory()
-        {
-            ShowComponent(characterInventory);
-        }
-
-        public void SwapToNotes()
-        {
-            ShowComponent(characterNotes);
+            base.Preshow();
+            SwapToTab(characterBio);
         }
 
         private void Awake()
         {
-            components = new List<IWikiComponent>();
-            components.Add(characterBio);
-            components.Add(characterStats);
-            components.Add(characterInventory);
-            components.Add(characterNotes);
+            components = new Dictionary<IWikiComponent, WikiTabSelector>();
+            var fieldInfos = GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var matchingFieldInfos = fieldInfos.Where(x => x.FieldType == typeof(WikiComponent<Character>)).ToList();
+            foreach(var fieldInfo in matchingFieldInfos)
+            {
+                var value = (WikiComponent<Character>)fieldInfo.GetValue(this);
+                if(value != null)
+                {
+                    var tabSelector = Instantiate(WikiService.Instance.wikiTabSelectorPrefab, tabRoot);
+                    tabSelector.Setup(value, fieldInfo.Name.Replace("character", ""), () => { SwapToTab(value); });
+                    components.Add(value, tabSelector);
+                }
+            }
         }
 
         private void HideComponents()
         {
             foreach(var component in components)
             {
-                component.Hide();
+                component.Key.Hide();
             }
         }
 
         private void ShowComponent(IWikiComponent component)
         {
-            HideComponents();
-            component.Show();
+            if (component != null)
+            {
+                UpdateButtons(component);
+                HideComponents();
+                component.Show();
+            }
+        }
+
+        private void UpdateButtons(IWikiComponent component)
+        {
+            foreach(var pair in components)
+            {
+                pair.Value.button.interactable = true;
+            }
+            if (components.TryGetValue(component, out var tab))
+            {
+                tab.button.interactable = false;
+            }
         }
     }
 }
