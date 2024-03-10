@@ -11,7 +11,7 @@ namespace Game.GUI.Adventures
         public TMP_Text content;
         protected override void Fill(List<IncidentReport> value)
         {
-            content.text = "";
+            content.text = string.Empty;
             foreach (var item in value)
             {
                 if (item.IsMajorIncident)
@@ -19,6 +19,11 @@ namespace Game.GUI.Adventures
                     AddReportToPage(item);
                 }
             }
+        }
+
+        public override void Clear()
+        {
+            //content.text = string.Empty;
         }
 
         private void AddReportToPage(IncidentReport report)

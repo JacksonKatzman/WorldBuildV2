@@ -1,10 +1,12 @@
 ﻿using Game.Data;
 using Game.Debug;
+using Game.Enums;
 using Game.GUI.Adventures;
 using Game.GUI.Popups;
 using Game.Incidents;
 using Game.Terrain;
 using Game.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -26,19 +28,6 @@ namespace Game.Simulation
 			}
 		}
 
-		//pick city
-		//move camera to city
-		//spawn unit
-		//exp X time matrix
-		//load possible adventures for the area
-		//suggest 3
-		//choose 1
-		//walk to next tile
-		//get possible subadventure for new tile
-		//run it(popup with the 4 options for resolution)
-		//repeat
-		//reward step
-
 		public List<AdventureEncounterObject> EvergreenEncounters { get; set; }
 		public List<AdventureEncounterObject> AvailableEncounters { get; set; }
 		public List<AdventureEncounterObject> UsedEncounters { get; set; }
@@ -47,6 +36,23 @@ namespace Game.Simulation
 
 		public Location CurrentLocation { get; set; }
 		public Location AdventureStartLocation { get; set; }
+
+		private bool isDungeonMasterView;
+		public bool IsDungeonMasterView
+        {
+			get
+            {
+				return isDungeonMasterView;
+            }
+			set
+            {
+				isDungeonMasterView = value;
+				World.CurrentWorld.HexGrid.SetMapVisibility(isDungeonMasterView);
+				EventManager.Instance.Dispatch(new IsDungeonMasterViewChangedEvent { isDungeonMasterView = isDungeonMasterView });
+            }
+        }
+
+		public Dictionary<Type, Dictionary<IIncidentContext, ContextFamiliarity>> KnownContexts { get; set; }
 
 		private HexUnit partyUnit;
 		public HexUnit PartyUnit
@@ -71,7 +77,6 @@ namespace Game.Simulation
 		//private List<HexCell> AdventurePath { get; set; }
 		private Queue<HexCell> AdventureDestinations { get; set; }
 
-		private World world = World.CurrentWorld;
 		private Popup currentPopup;
 
 		public AdventureService()
@@ -82,7 +87,7 @@ namespace Game.Simulation
 		public void FirstTimeSetup()
         {
 			//Pick location for players to start, likely in one of the towns/hamlets
-			var startingCity = SimRandom.RandomEntryFromList(world.Cities);
+			var startingCity = SimRandom.RandomEntryFromList(World.CurrentWorld.Cities);
 			CurrentLocation = startingCity.CurrentLocation;
 			//Generate layout of town/what its contents is
 			//Generate all the points of interest/people of interest in the town
@@ -93,14 +98,11 @@ namespace Game.Simulation
 			//That or just include exploration contracts among the possible adventures
 
 			PartyUnit = GameObject.Instantiate(HexUnit.unitPrefab);
-			world.HexGrid.AddUnit(
-					PartyUnit, CurrentLocation.GetHexCell(), Random.Range(0f, 360f)
+			World.CurrentWorld.HexGrid.AddUnit(
+					PartyUnit, CurrentLocation.GetHexCell(), 0.0f
 				);
 
 			HexMapCamera.PanToCell(CurrentLocation.GetHexCell());
-			//need to make it so that features in fog are hidden!
-			//and borders!
-			World.CurrentWorld.HexGrid.SetMapVisibility(false);
 		}
 
 		public void BeginAdventure()
@@ -165,7 +167,7 @@ namespace Game.Simulation
 
 		public void RunAdventure(AdventureEncounterObject encounter, int minorEncounters)
         {
-			var grid = world.HexGrid;
+			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
 			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), encounter.CurrentLocation.GetHexCell(), PartyUnit);
 			var path = grid.GetPath();
@@ -185,7 +187,7 @@ namespace Game.Simulation
         {
 			//move to encounter location
 			var destination = AdventureDestinations.Dequeue();
-			var grid = world.HexGrid;
+			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
 			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), destination, PartyUnit);
 			var path = grid.GetPath();
@@ -273,7 +275,7 @@ namespace Game.Simulation
             {
 				HandleRewards(encounter);
             }
-			var grid = world.HexGrid;
+			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
 			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), AdventureStartLocation.GetHexCell(), PartyUnit);
 			var path = grid.GetPath();
@@ -337,6 +339,7 @@ namespace Game.Simulation
 			UsedEncounters = new List<AdventureEncounterObject>();
 			monsterData = new List<MonsterData>();
 			AdventureDestinations = new Queue<HexCell>();
+			KnownContexts = new Dictionary<Type, Dictionary<IIncidentContext, ContextFamiliarity>>();
 
 			if (AssetService.Instance.objectData.collections.ContainsKey(typeof(AdventureEncounterObject)))
 			{

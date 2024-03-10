@@ -66,9 +66,10 @@ namespace Game.Incidents
 				}
 			}
 
-			if (Input.GetKeyDown(KeyCode.V))
+			if (Input.GetKeyDown(KeyCode.J))
 			{
-				World.CurrentWorld.HexGrid.ToggleMapVisibility();
+				//World.CurrentWorld.HexGrid.ToggleMapVisibility();
+				AdventureService.Instance.IsDungeonMasterView = !AdventureService.Instance.IsDungeonMasterView;
 			}
 		}
 		

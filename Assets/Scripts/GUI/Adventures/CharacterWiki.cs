@@ -31,6 +31,14 @@ namespace Game.GUI.Adventures
             characterNotes?.Fill(character);
         }
 
+        public override void Clear()
+        {
+            foreach(var pair in components)
+            {
+                pair.Key.Clear();
+            }
+        }
+
         public void SwapToTab(IWikiComponent component)
         {
             ShowComponent(component);
@@ -42,8 +50,9 @@ namespace Game.GUI.Adventures
             SwapToTab(characterBio);
         }
 
-        private void Awake()
+        private void Start()
         {
+            var wikiService = WikiService.Instance;
             components = new Dictionary<IWikiComponent, WikiTabSelector>();
             var fieldInfos = GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var matchingFieldInfos = fieldInfos.Where(x => x.FieldType == typeof(WikiComponent<Character>)).ToList();
@@ -52,7 +61,7 @@ namespace Game.GUI.Adventures
                 var value = (WikiComponent<Character>)fieldInfo.GetValue(this);
                 if(value != null)
                 {
-                    var tabSelector = Instantiate(WikiService.Instance.wikiTabSelectorPrefab, tabRoot);
+                    var tabSelector = Instantiate(wikiService.wikiTabSelectorPrefab, tabRoot);
                     tabSelector.Setup(value, fieldInfo.Name.Replace("character", ""), () => { SwapToTab(value); });
                     components.Add(value, tabSelector);
                 }

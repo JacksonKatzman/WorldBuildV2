@@ -1,4 +1,5 @@
-﻿using Game.GUI.Wiki;
+﻿using Game.Enums;
+using Game.GUI.Wiki;
 using Game.Incidents;
 using Sirenix.OdinInspector;
 using System;
@@ -14,14 +15,18 @@ namespace Game.GUI.Adventures
     {
         [SerializeField]
         private CanvasGroup mainCanvasGroup;
+        [SerializeField]
+        private ContextFamiliarity familiarityRequirement;
         protected List<TMP_Text> textFields;
 
         public CanvasGroup MainCanvasGroup => mainCanvasGroup;
+        public ContextFamiliarity FamiliarityRequirement => familiarityRequirement;
 
         public void Fill(object value)
         {
             Fill((T)value);
         }
+        abstract public void Clear();
         virtual public Type GetComponentType()
         {
             return typeof(T);
@@ -70,6 +75,16 @@ namespace Game.GUI.Adventures
             mainCanvasGroup.alpha = 0;
             mainCanvasGroup.interactable = false;
             mainCanvasGroup.blocksRaycasts = false;
+        }
+
+        virtual public void UpdateByFamiliarity(ContextFamiliarity familiarity)
+        {
+            
+        }
+
+        public void ToggleByFamiliarity(ContextFamiliarity familiarity)
+        {
+            gameObject.SetActive(familiarity >= FamiliarityRequirement);
         }
 
         virtual protected void Preshow()

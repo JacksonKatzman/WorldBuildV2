@@ -26,6 +26,8 @@ namespace Game.GUI.Wiki
 
 		private Dictionary<Type, IWikiComponent> wikiDictionary;
 		private Dictionary<IWikiComponent, WikiTabSelector> tabSelectors;
+		private IWikiComponent currentComponent;
+		private bool wikiOpen;
 
 		[Button("Test Load Character Wiki")]
 		public void TestLoadCharacterWiki()
@@ -45,6 +47,7 @@ namespace Game.GUI.Wiki
 			{
 				Instance = this;
 				EventManager.Instance.AddEventHandler<WorldBuildSimulationCompleteEvent>(OnSimulationComplete);
+				EventManager.Instance.AddEventHandler<IsDungeonMasterViewChangedEvent>(OnDungeonMasterViewChanges);
 				LoadWikiDictionary();
 				HideWikis();
 				tableOfContents.Hide();
@@ -60,6 +63,34 @@ namespace Game.GUI.Wiki
             }
         }
 
+		public void OpenWiki()
+        {
+			if (wikiOpen)
+			{
+				HideWikis();
+				tableOfContents.Hide();
+			}
+			else
+			{
+				if (currentComponent != null)
+				{
+					SwitchToTab(currentComponent);
+				}
+				else
+				{
+					if (AdventureService.Instance.IsDungeonMasterView)
+					{
+						tabSelectors.Values.First().OnClick();
+					}
+					else
+					{
+						var selector = tabSelectors.Values.First(x => x.component.FamiliarityRequirement < Enums.ContextFamiliarity.TOTAL);
+						selector.OnClick();
+					}
+				}
+			}
+        }
+
 		public void OpenPage(string id)
         {
 			if(Int32.TryParse(id, out var result))
@@ -68,10 +99,7 @@ namespace Game.GUI.Wiki
 				var contextType = context.GetType();
 				if(wikiDictionary.TryGetValue(contextType, out var wiki))
                 {
-					//HideWikis();
 					wiki.Fill(context);
-					//wiki.Show();
-					//FillTableOfContents(contextType);
 					SwitchToTab(wiki);
                 }
 			}
@@ -80,6 +108,7 @@ namespace Game.GUI.Wiki
 		public void SwitchToTab(IWikiComponent component)
         {
 			HideWikis();
+			currentComponent = component;
 			FillTableOfContents(component.GetComponentType());
 			component.Show();
 
@@ -105,17 +134,36 @@ namespace Game.GUI.Wiki
         {
 			if (typeof(IIncidentContext).IsAssignableFrom(type))
 			{
-				if (ContextDictionaryProvider.AllContexts.TryGetValue(type, out var list))
-				{
-					tableOfContents.Show();
-					tableOfContents.Fill(list);
+				if(AdventureService.Instance.IsDungeonMasterView)
+                {
+					if (ContextDictionaryProvider.AllContexts.TryGetValue(type, out var allContextsList))
+                    {
+						tableOfContents.Fill(allContextsList);
+					}
+					else
+                    {
+						tableOfContents.Clear();
+                    }
+				}
+				else
+                {
+					if(AdventureService.Instance.KnownContexts.TryGetValue(type, out var contexts))
+                    {
+						tableOfContents.Fill(contexts.Keys.ToList());
+                    }
+					else
+					{
+						tableOfContents.Clear();
+					}
 				}
 			}
 			else
             {
 				tableOfContents.Clear();
             }
-        }
+
+			tableOfContents.Show();
+		}
 
 		private void LoadWikiDictionary()
         {
@@ -155,5 +203,28 @@ namespace Game.GUI.Wiki
 			allIncidentsWiki?.Fill(IncidentService.Instance.reports);
 			EventManager.Instance.RemoveEventHandler<WorldBuildSimulationCompleteEvent>(OnSimulationComplete);
         }
+
+		private void OnDungeonMasterViewChanges(IsDungeonMasterViewChangedEvent gameEvent)
+        {
+			if (currentComponent != null)
+			{
+				if(!gameEvent.isDungeonMasterView)
+                {
+					currentComponent = wikiDictionary.Values.First(x => x.FamiliarityRequirement < Enums.ContextFamiliarity.TOTAL);
+                }
+				currentComponent.Clear();
+				tabSelectors[currentComponent].OnClick();
+				foreach(var selector in tabSelectors.Values)
+                {
+					selector.gameObject.SetActive(gameEvent.isDungeonMasterView || selector.component.FamiliarityRequirement < Enums.ContextFamiliarity.TOTAL);
+                }
+			}
+        }
+
+		/*Next:
+		Make dummy sheets for the rest of the character stuff
+		also for factions, races, cities, landmarks, great monsters, items
+		handle cases for displaying non context stuff like monsters
+		handle swapping between DM view and player view*/
 	}
 }

@@ -19,9 +19,9 @@ namespace Game.GUI.Adventures
             }
         }
 
-        public void Clear()
+        override public void Clear()
         {
-            tableOfContentsText.text = "";
+            tableOfContentsText.text = string.Empty;
         }
     }
 }

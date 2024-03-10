@@ -66,7 +66,7 @@ namespace Game.Simulation
 			world = new World();
 			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
 			world.Initialize(options);
-			var test = AdventureService.Instance;
+			AdventureService.Instance.IsDungeonMasterView = true;
 		}
 
 		public void CreateDebugWorld()
