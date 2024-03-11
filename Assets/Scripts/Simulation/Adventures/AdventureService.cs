@@ -226,12 +226,6 @@ namespace Game.Simulation
 
 			if (remainingMinorEncounters > 0)
 			{
-				/*
-				popupConfig.ButtonActions.Add("Complete!", () => { RunEncounter(finalEncounter, remainingMinorEncounters - 1); });
-				popupConfig.ButtonActions.Add("Failure", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
-				popupConfig.ButtonActions.Add("Return Home", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
-				popupConfig.ButtonActions.Add("Skip", () => { RunEncounter(finalEncounter, remainingMinorEncounters); });
-				*/
 				popupConfig.ButtonActions.Add("Begin Encounter", () => 
 				{ 
 					AdventureGuide.Instance.RunEncounter(new Encounter(encounter, null), 
@@ -246,14 +240,6 @@ namespace Game.Simulation
 			}
 			else
 			{
-				/*
-				popupConfig.ButtonActions.Add("Complete!", () => 
-				{ 
-					HandleRewards(encounter);
-					UserInterfaceService.Instance.OnEndAdventureButton(); 
-				});
-				popupConfig.ButtonActions.Add("Failure", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
-				*/
 				popupConfig.ButtonActions.Add("Begin Encounter", () =>
 				{
 					AdventureGuide.Instance.RunEncounter(new Encounter(encounter, null),
@@ -277,6 +263,7 @@ namespace Game.Simulation
             {
 				HandleRewards(encounter);
             }
+			//next step: have encounters generate missing contexts, and upon finishing add them to the wiki
 			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
 			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), AdventureStartLocation.GetHexCell(), PartyUnit);
@@ -354,6 +341,11 @@ namespace Game.Simulation
 		private void HandleRewards(AdventureEncounterObject encounterObject)
         {
 			OutputLogger.Log($"Rewarding players for completing {encounterObject.encounterTitle}!");
+        }
+
+		private void UpdateWiki(AdventureEncounterObject encounterObject)
+        {
+
         }
 
 		private void Setup()

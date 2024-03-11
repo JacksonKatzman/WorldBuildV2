@@ -19,7 +19,7 @@ namespace Game.GUI.Adventures
 		public AdventureEncounterObject mainEncounter;
 		public List<AdventureEncounterObject> sideEncounters;
 		[HideInInspector]
-		public Encounter currentAdventure;
+		public Encounter currentEncounter;
 		public Transform rootTransform;
 		public ScrollRect scrollRect;
 		public RectTransform contentPanel;
@@ -54,14 +54,14 @@ namespace Game.GUI.Adventures
 		[Button("Test Display Adventure")]
 		private void TestDisplayAdventure()
 		{
-			currentAdventure = new Encounter(mainEncounter, sideEncounters);
-			RunEncounter(currentAdventure, null, null);
+			currentEncounter = new Encounter(mainEncounter, sideEncounters);
+			RunEncounter(currentEncounter, null, null);
 		}
 
 
 		public void RunEncounter(Encounter encounter, Action OnEncounterCompleted, Action OnEncounterSkipped)
 		{
-			currentAdventure = encounter;
+			currentEncounter = encounter;
 			OnEncounterCompleteAction = OnEncounterCompleted;
 			OnEncounterSkippedAction = OnEncounterSkipped;
 
@@ -174,7 +174,7 @@ namespace Game.GUI.Adventures
 		public void OnCurrentEncounterFailed()
         {
 			ToggleCanvasGroup(false);
-			AdventureService.Instance.OnEndAdventure(currentAdventure.mainEncounter, false);
+			AdventureService.Instance.OnEndAdventure(currentEncounter.mainEncounter, false);
 		}
 
 		public void OnCurrentEncounterSkipped()
@@ -186,17 +186,17 @@ namespace Game.GUI.Adventures
 		public void OnReturnHome()
         {
 			ToggleCanvasGroup(false);
-			AdventureService.Instance.OnEndAdventure(currentAdventure.mainEncounter, false);
+			AdventureService.Instance.OnEndAdventure(currentEncounter.mainEncounter, false);
 		}
 
 		public static bool TryGetContext(int id, out IIncidentContext result)
 		{
-			return Instance.currentAdventure.TryGetContext(id, out result);
+			return Instance.currentEncounter.TryGetContext(id, out result);
 		}
 
 		public static bool TryGetContextCriteria(int id, out IAdventureContextCriteria result)
 		{
-			return Instance.currentAdventure.TryGetContextCriteria(id, out result);
+			return Instance.currentEncounter.TryGetContextCriteria(id, out result);
 		}
 
 		private void SnapTo(RectTransform target)
