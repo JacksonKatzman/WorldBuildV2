@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 namespace Game.Simulation
 {
-	public class AdventureCharacterContextCriteria : AdventureContextCriteria<Character>
+	public class CharacterCriteria : AdventureContextCriteria<Character>
 	{
+		public ContextualIncidentActionField<Character> character;
 		public override Dictionary<string, Func<Character, int, string>> Replacements => replacements;
 		private static readonly Dictionary<string, Func<Character, int, string>> replacements = new Dictionary<string, Func<Character, int, string>>
 		{

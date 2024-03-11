@@ -155,12 +155,14 @@ namespace Game.Simulation
 
 			foreach(var encounter in selectedEncounters)
             {
-				DetermineEncounterLocation(encounter, cellsInRange, numSubEncounters);
-				popupConfig.ButtonActions.Add(encounter.encounterTitle, () =>
+				if (DetermineEncounterLocation(encounter, cellsInRange, numSubEncounters))
 				{
+					popupConfig.ButtonActions.Add(encounter.encounterTitle, () =>
+					{
 					//PopupService.Instance.ClosePopup(currentPopup);
 					RunAdventure(encounter, numSubEncounters);
-				});
+					});
+				}
             }
 			currentPopup = PopupService.Instance.ShowPopup(popupConfig);
 		}
@@ -224,12 +226,6 @@ namespace Game.Simulation
 
 			if (remainingMinorEncounters > 0)
 			{
-				/*
-				popupConfig.ButtonActions.Add("Complete!", () => { RunEncounter(finalEncounter, remainingMinorEncounters - 1); });
-				popupConfig.ButtonActions.Add("Failure", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
-				popupConfig.ButtonActions.Add("Return Home", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
-				popupConfig.ButtonActions.Add("Skip", () => { RunEncounter(finalEncounter, remainingMinorEncounters); });
-				*/
 				popupConfig.ButtonActions.Add("Begin Encounter", () => 
 				{ 
 					AdventureGuide.Instance.RunEncounter(new Encounter(encounter, null), 
@@ -244,14 +240,6 @@ namespace Game.Simulation
 			}
 			else
 			{
-				/*
-				popupConfig.ButtonActions.Add("Complete!", () => 
-				{ 
-					HandleRewards(encounter);
-					UserInterfaceService.Instance.OnEndAdventureButton(); 
-				});
-				popupConfig.ButtonActions.Add("Failure", () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
-				*/
 				popupConfig.ButtonActions.Add("Begin Encounter", () =>
 				{
 					AdventureGuide.Instance.RunEncounter(new Encounter(encounter, null),
@@ -275,6 +263,7 @@ namespace Game.Simulation
             {
 				HandleRewards(encounter);
             }
+			//next step: have encounters generate missing contexts, and upon finishing add them to the wiki
 			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
 			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), AdventureStartLocation.GetHexCell(), PartyUnit);
@@ -314,22 +303,49 @@ namespace Game.Simulation
 			UsedEncounters = ES3.Load<List<AdventureEncounterObject>>("UsedEncounters", SaveUtilities.GetAdventureSavePath(mapName));
 		}
 
-		private void DetermineEncounterLocation(AdventureEncounterObject encounterObject, List<HexCell> cellsInRange, int numSubEncounters)
+		private bool DetermineEncounterLocation(AdventureEncounterObject encounterObject, List<HexCell> cellsInRange, int numSubEncounters)
         {
 			if(encounterObject.CurrentLocation != null)
             {
-				return;
+				return true;
             }
 
 			var cell = CurrentLocation.GetHexCell();
 			//temporary - will eventually factor in that certain encounters can only happen in certain places
 			var outerRange = cellsInRange.Where(x => x.coordinates.DistanceTo(cell.coordinates) > numSubEncounters && !x.IsUnderwater).ToList();
-			encounterObject.CurrentLocation = new Location(SimRandom.RandomEntryFromList(outerRange).Index);
+
+			List<HexCell> path = null;
+			var grid = World.CurrentWorld.HexGrid;
+			int tries = 0;
+			HexCell possibleCell = null;
+			while(path == null && tries < 50)
+            {
+				possibleCell = SimRandom.RandomEntryFromList(outerRange);
+				grid.ClearPath();
+				grid.FindPathWithUnit(CurrentLocation.GetHexCell(), possibleCell, PartyUnit);
+				path = grid.GetPath();
+				tries++;
+			}
+
+			if (possibleCell != null)
+			{
+				encounterObject.CurrentLocation = new Location(possibleCell.Index);
+				return true;
+			}
+			else
+            {
+				return false;
+            }
         }
 
 		private void HandleRewards(AdventureEncounterObject encounterObject)
         {
 			OutputLogger.Log($"Rewarding players for completing {encounterObject.encounterTitle}!");
+        }
+
+		private void UpdateWiki(AdventureEncounterObject encounterObject)
+        {
+
         }
 
 		private void Setup()

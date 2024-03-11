@@ -121,12 +121,7 @@ namespace Game.Simulation
 			OutputLogger.Log("TIME TO SIM: " + simTime);
 			GameProfiler.UpdateProfiler = false;
 
-			EventManager.Instance.Dispatch(new HideLoadingScreenEvent());
 			statTracker.ReportDeathAges();
-
-			UniTask.ReturnToMainThread();
-			//world.PostSimulationCleanup();
-			//world.BeginPostGeneration();
 		}
 
 		public async UniTask RunSimulationWithCancellation(CancellationToken token)
