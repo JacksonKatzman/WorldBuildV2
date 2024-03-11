@@ -280,7 +280,7 @@ namespace Game.Simulation
 				DrawFeatures();
 			}
 
-			EventManager.Instance.Dispatch(new WorldBuildSimulationCompleteEvent());
+			//EventManager.Instance.Dispatch(new WorldBuildSimulationCompleteEvent());
 		}
 
 		public void GenerateAdditionalCities(Faction faction)
@@ -374,12 +374,16 @@ namespace Game.Simulation
 			}
 		}
 
-		public void DrawFeatures()
+		private async UniTask DrawFeatures()
         {
 			foreach (var chunk in HexGrid.chunks)
 			{
 				chunk.AddFeatures();
+				await UniTask.Yield();
 			}
+
+			EventManager.Instance.Dispatch(new HideLoadingScreenEvent());
+			EventManager.Instance.Dispatch(new WorldBuildSimulationCompleteEvent());
 		}
 
 		public void DrawFactionBorders(Faction faction)
