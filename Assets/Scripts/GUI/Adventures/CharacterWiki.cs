@@ -52,7 +52,7 @@ namespace Game.GUI.Adventures
 
         private void Start()
         {
-            var wikiService = WikiService.Instance;
+            //in start and not awake for race condition reasons
             components = new Dictionary<IWikiComponent, WikiTabSelector>();
             var fieldInfos = GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var matchingFieldInfos = fieldInfos.Where(x => x.FieldType == typeof(WikiComponent<Character>)).ToList();
@@ -61,7 +61,7 @@ namespace Game.GUI.Adventures
                 var value = (WikiComponent<Character>)fieldInfo.GetValue(this);
                 if(value != null)
                 {
-                    var tabSelector = Instantiate(wikiService.wikiTabSelectorPrefab, tabRoot);
+                    var tabSelector = Instantiate(WikiService.Instance.wikiTabSelectorPrefab, tabRoot);
                     tabSelector.Setup(value, fieldInfo.Name.Replace("character", ""), () => { SwapToTab(value); });
                     components.Add(value, tabSelector);
                 }
