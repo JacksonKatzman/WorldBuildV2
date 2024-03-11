@@ -83,25 +83,26 @@ namespace Game.Terrain
 			}
 		}
 
+		/*
 		public void ToggleMapVisibility()
         {
 			SetMapVisibility(!HexMetrics.mapFullyVisible);
         }
+		*/
 
 		public void SetMapVisibility(bool seeAll)
         {
 			if(seeAll)
             {
 				Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
-				HexMetrics.mapFullyVisible = true;
 			}
             else
             {
 				Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
-				HexMetrics.mapFullyVisible = false;
 			}
 
-			UpdateFeatureVisibility(HexMetrics.mapFullyVisible);
+			HexMetrics.mapFullyVisible = seeAll;
+			UpdateFeatureVisibility(seeAll);
         }
 
 		public void UpdateFeatureVisibility(bool seeAll)

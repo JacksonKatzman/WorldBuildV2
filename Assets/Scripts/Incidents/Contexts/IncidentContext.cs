@@ -1,4 +1,5 @@
 ﻿using Game.Data;
+using Game.Enums;
 using Game.Simulation;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Game.Incidents
 		virtual public int NumIncidents { get; set; }
 		virtual public string Name { get; set; }
 		virtual public int Age { get; set; }
-
+		virtual public ContextFamiliarity Familiarity { get; set; }
 		virtual public int ID { get; set; }
 
 		virtual public int ParentID => -1;

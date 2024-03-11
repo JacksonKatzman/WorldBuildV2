@@ -17431,7 +17431,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5137877150577010650}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -17443,7 +17443,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 41.662064, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 383.3243, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5137877150565749378
@@ -17535,12 +17535,12 @@ MonoBehaviour:
     SerializationNodes:
     - Name: damageVulnerabilityIcons
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Game.Enums.DamageType, Assembly-CSharp],[UnityEngine.GameObject,
+      Data: 0|System.Collections.Generic.Dictionary`2[[Game.Enums.DamageType, Auto-asmdef-SecondPass],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Game.Enums.DamageType,
-        Assembly-CSharp]], mscorlib
+        Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -17717,12 +17717,12 @@ MonoBehaviour:
       Data: 
     - Name: damageResistanceIcons
       Entry: 7
-      Data: 2|System.Collections.Generic.Dictionary`2[[Game.Enums.DamageType, Assembly-CSharp],[UnityEngine.GameObject,
+      Data: 2|System.Collections.Generic.Dictionary`2[[Game.Enums.DamageType, Auto-asmdef-SecondPass],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[Game.Enums.DamageType,
-        Assembly-CSharp]], mscorlib
+        Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -17899,7 +17899,7 @@ MonoBehaviour:
       Data: 
     - Name: damageImmunityIcons
       Entry: 7
-      Data: 4|System.Collections.Generic.Dictionary`2[[Game.Enums.DamageType, Assembly-CSharp],[UnityEngine.GameObject,
+      Data: 4|System.Collections.Generic.Dictionary`2[[Game.Enums.DamageType, Auto-asmdef-SecondPass],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 9
@@ -18072,11 +18072,12 @@ MonoBehaviour:
     - Name: conditionImmunityIcons
       Entry: 7
       Data: 5|System.Collections.Generic.Dictionary`2[[Game.Enums.ConditionType,
-        Assembly-CSharp],[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib
+        Auto-asmdef-SecondPass],[UnityEngine.GameObject, UnityEngine.CoreModule]],
+        mscorlib
     - Name: comparer
       Entry: 7
       Data: 6|System.Collections.Generic.EnumEqualityComparer`1[[Game.Enums.ConditionType,
-        Assembly-CSharp]], mscorlib
+        Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -18275,6 +18276,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  closeButton: {fileID: 0}
   contentTransform: {fileID: 5137877148997233891}
   monsterNameText: {fileID: 5137877149464369604}
   monsterSizeAlignmentText: {fileID: 5137877150562415287}
@@ -19440,6 +19442,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 745601501147876715, guid: 8753017f5bb33264f82b268683ba2ec2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 745601501147876715, guid: 8753017f5bb33264f82b268683ba2ec2, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -19596,6 +19602,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 745601501147876715, guid: 8753017f5bb33264f82b268683ba2ec2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 745601501147876715, guid: 8753017f5bb33264f82b268683ba2ec2, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -19749,6 +19759,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 745601501147876715, guid: 8753017f5bb33264f82b268683ba2ec2, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 745601501147876715, guid: 8753017f5bb33264f82b268683ba2ec2, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 745601501147876715, guid: 8753017f5bb33264f82b268683ba2ec2, type: 3}

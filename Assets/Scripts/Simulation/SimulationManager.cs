@@ -59,14 +59,13 @@ namespace Game.Simulation
 			simulationOptions = options;
 
 			IncidentService.Instance.Setup();
-			UserInterfaceService.Instance.incidentWiki.Clear();
 			ContextDictionaryProvider.SetContextsProviders(() => CurrentContexts, () => AllContexts);
 			ContextDictionaryProvider.AllowImmediateChanges = true;
 
 			world = new World();
 			MapGenerator.GenerateMap(WorldChunksX * HexMetrics.chunkSizeX, WorldChunksZ * HexMetrics.chunkSizeZ);
 			world.Initialize(options);
-			var test = AdventureService.Instance;
+			AdventureService.Instance.IsDungeonMasterView = true;
 		}
 
 		public void CreateDebugWorld()
@@ -117,7 +116,6 @@ namespace Game.Simulation
 			GameProfiler.UpdateProfiler = true;
 
 			await RunSimulationWithCancellation(cancellationTokenSource.Token);
-			await CompileWikiWithCancellation(cancellationTokenSource.Token);
 			await HandlePostSimulation(cancellationTokenSource.Token);
 			var simTime = Time.realtimeSinceStartup - startTime;
 			OutputLogger.Log("TIME TO SIM: " + simTime);
@@ -138,14 +136,6 @@ namespace Game.Simulation
 			{
 				await world.AdvanceTime();
 				yearsPassed++;
-			}
-		}
-
-		public async UniTask CompileWikiWithCancellation(CancellationToken token)
-		{
-			while (!token.IsCancellationRequested && !UserInterfaceService.Instance.incidentWiki.initialized)
-			{
-				await UserInterfaceService.Instance.incidentWiki.InitializeWiki();
 			}
 		}
 

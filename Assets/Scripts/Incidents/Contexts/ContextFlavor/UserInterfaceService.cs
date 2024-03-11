@@ -7,10 +7,9 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class UserInterfaceService : SerializedMonoBehaviour
+    public class UserInterfaceService : SerializedMonoBehaviour
 	{
 		public static UserInterfaceService Instance { get; private set; }
-		public IncidentWiki incidentWiki;
 		public TMP_Text hexCollectionNameText;
 
 		public GameObject generateWorldButton;
@@ -66,9 +65,10 @@ namespace Game.Incidents
 				}
 			}
 
-			if (Input.GetKeyDown(KeyCode.V))
+			if (Input.GetKeyDown(KeyCode.J))
 			{
-				World.CurrentWorld.HexGrid.ToggleMapVisibility();
+				//World.CurrentWorld.HexGrid.ToggleMapVisibility();
+				AdventureService.Instance.IsDungeonMasterView = !AdventureService.Instance.IsDungeonMasterView;
 			}
 		}
 		

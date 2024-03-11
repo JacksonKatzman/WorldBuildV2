@@ -116,4 +116,9 @@ namespace Game.Simulation
     {
 
     }
+
+    public class IsDungeonMasterViewChangedEvent : ISimulationEvent
+    {
+        public bool isDungeonMasterView;
+    }
 }

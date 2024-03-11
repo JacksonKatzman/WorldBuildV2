@@ -33,6 +33,7 @@ namespace Game.Enums
 	public enum HexEdgeType { Flat, Slope, Cliff };
 	public enum LandmarkType { NONE, TOWER, STATUE };
 	public enum FlavorType { SYNONYM, REASON };
+	public enum ContextFamiliarity { UNKNOWN, AWARE, ACQUAINTED, KNOWLEDGEABLE, INTIMATE, TOTAL };
 
 	public static class EnumHelpers
 	{
