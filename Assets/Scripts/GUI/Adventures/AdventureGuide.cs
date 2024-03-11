@@ -61,6 +61,7 @@ namespace Game.GUI.Adventures
 
 		public void RunEncounter(Encounter encounter, Action OnEncounterCompleted, Action OnEncounterSkipped)
 		{
+			currentAdventure = encounter;
 			OnEncounterCompleteAction = OnEncounterCompleted;
 			OnEncounterSkippedAction = OnEncounterSkipped;
 

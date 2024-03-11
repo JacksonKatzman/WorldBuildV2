@@ -155,12 +155,14 @@ namespace Game.Simulation
 
 			foreach(var encounter in selectedEncounters)
             {
-				DetermineEncounterLocation(encounter, cellsInRange, numSubEncounters);
-				popupConfig.ButtonActions.Add(encounter.encounterTitle, () =>
+				if (DetermineEncounterLocation(encounter, cellsInRange, numSubEncounters))
 				{
+					popupConfig.ButtonActions.Add(encounter.encounterTitle, () =>
+					{
 					//PopupService.Instance.ClosePopup(currentPopup);
 					RunAdventure(encounter, numSubEncounters);
-				});
+					});
+				}
             }
 			currentPopup = PopupService.Instance.ShowPopup(popupConfig);
 		}
@@ -314,17 +316,39 @@ namespace Game.Simulation
 			UsedEncounters = ES3.Load<List<AdventureEncounterObject>>("UsedEncounters", SaveUtilities.GetAdventureSavePath(mapName));
 		}
 
-		private void DetermineEncounterLocation(AdventureEncounterObject encounterObject, List<HexCell> cellsInRange, int numSubEncounters)
+		private bool DetermineEncounterLocation(AdventureEncounterObject encounterObject, List<HexCell> cellsInRange, int numSubEncounters)
         {
 			if(encounterObject.CurrentLocation != null)
             {
-				return;
+				return true;
             }
 
 			var cell = CurrentLocation.GetHexCell();
 			//temporary - will eventually factor in that certain encounters can only happen in certain places
 			var outerRange = cellsInRange.Where(x => x.coordinates.DistanceTo(cell.coordinates) > numSubEncounters && !x.IsUnderwater).ToList();
-			encounterObject.CurrentLocation = new Location(SimRandom.RandomEntryFromList(outerRange).Index);
+
+			List<HexCell> path = null;
+			var grid = World.CurrentWorld.HexGrid;
+			int tries = 0;
+			HexCell possibleCell = null;
+			while(path == null && tries < 50)
+            {
+				possibleCell = SimRandom.RandomEntryFromList(outerRange);
+				grid.ClearPath();
+				grid.FindPathWithUnit(CurrentLocation.GetHexCell(), possibleCell, PartyUnit);
+				path = grid.GetPath();
+				tries++;
+			}
+
+			if (possibleCell != null)
+			{
+				encounterObject.CurrentLocation = new Location(possibleCell.Index);
+				return true;
+			}
+			else
+            {
+				return false;
+            }
         }
 
 		private void HandleRewards(AdventureEncounterObject encounterObject)
