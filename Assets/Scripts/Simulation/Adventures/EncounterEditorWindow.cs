@@ -46,7 +46,7 @@ namespace Game.Simulation
         [Button("New Encounter"), HorizontalGroup("B1"), PropertyOrder(-100)]
         public void OnNewButtonPressed()
         {
-            contextCriterium = new ObservableCollection<IAdventureContextCriteria>();
+            contextCriterium = new ObservableCollection<IAdventureContextRetriever>();
             components = new ObservableCollection<IAdventureComponent>();
 
             components.CollectionChanged += UpdateComponentIDs;
@@ -62,7 +62,7 @@ namespace Game.Simulation
             encounterLocationType = obj.encounterLocationType;
             encounterTypes = obj.encounterTypes;
             allowedBiomes = obj.allowedBiomes;
-            contextCriterium = new ObservableCollection<IAdventureContextCriteria>(obj.contextCriterium);
+            contextCriterium = new ObservableCollection<IAdventureContextRetriever>(obj.contextCriterium);
             encounterBlurb = obj.encounterBlurb;
             encounterSummary = obj.encounterSummary;
             components = new ObservableCollection<IAdventureComponent>(obj.components);
@@ -89,7 +89,7 @@ namespace Game.Simulation
         public List<BiomeTerrainType> allowedBiomes;
 
         [PropertyOrder(0), ShowInInspector, ShowIfGroup("ModeChosen")]
-        public static ObservableCollection<IAdventureContextCriteria> contextCriterium;
+        public static ObservableCollection<IAdventureContextRetriever> contextCriterium;
 
         [TextArea(2, 4), PropertyOrder(0), ShowIfGroup("ModeChosen")]
         public string encounterBlurb;
@@ -156,11 +156,11 @@ namespace Game.Simulation
             {
                 OutputLogger.Log("ITEM REMOVED");
 
-                var removedItems = e.OldItems.Cast<IAdventureContextCriteria>();
+                var removedItems = e.OldItems.Cast<IAdventureContextRetriever>();
                 var removedIds = new List<int>();
                 foreach (var item in removedItems)
                 {
-                    removedIds.Add(item.CriteriaID);
+                    removedIds.Add(item.RetrieverID);
                 }
 
                 UpdateCriteriaIDs(removedIds);
@@ -198,7 +198,7 @@ namespace Game.Simulation
             var index = 0;
             foreach(var context in contextCriterium)
 			{
-                context.CriteriaID = index;
+                context.RetrieverID = index;
                 index++;
 			}
             foreach (var component in components)

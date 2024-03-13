@@ -8,7 +8,7 @@ namespace Game.Simulation
 	{
 		public List<AdventureEncounterObject> Encounters => GetEncounterList();
 		public List<IIncidentContext> Contexts => GetContexts();
-		public List<IAdventureContextCriteria> ContextCriteria => GetContextCriteria();
+		public List<IAdventureContextRetriever> ContextCriteria => GetContextCriteria();
 
 		public AdventureEncounterObject mainEncounter;
 		private List<AdventureEncounterObject> sideEncounters;
@@ -26,7 +26,7 @@ namespace Game.Simulation
 			//return !result.Equals(default(IIncidentContext));
 		}
 
-		public bool TryGetContextCriteria(int id, out IAdventureContextCriteria result)
+		public bool TryGetContextCriteria(int id, out IAdventureContextRetriever result)
 		{
 			result = ContextCriteria.Find(x => x.Context.ID == id);
 			return result != null;
@@ -54,9 +54,9 @@ namespace Game.Simulation
 			return contexts;
 		}
 
-		private List<IAdventureContextCriteria> GetContextCriteria()
+		private List<IAdventureContextRetriever> GetContextCriteria()
 		{
-			var criteria = new List<IAdventureContextCriteria>();
+			var criteria = new List<IAdventureContextRetriever>();
 			foreach(var encounter in Encounters)
 			{
 				criteria.AddRange(encounter.contextCriterium);

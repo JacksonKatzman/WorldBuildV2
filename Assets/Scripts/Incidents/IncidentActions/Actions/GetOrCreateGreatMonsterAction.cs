@@ -7,7 +7,7 @@ namespace Game.Incidents
 	public class GetOrCreateGreatMonsterAction : GetOrCreateAction<GreatMonster>
 	{
 		[ShowIf("@this.allowCreate")]
-		public MonsterCriteria criteria;
+		public MonsterRetriever criteria;
 		[ShowIf("@this.allowCreate")]
 		public ContextualIncidentActionField<Faction> faction;
 

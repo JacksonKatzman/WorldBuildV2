@@ -34,7 +34,7 @@ namespace Game.GUI.Adventures
 
 		}
 
-		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
+		public override void ReplaceTextPlaceholders(List<IAdventureContextRetriever> contexts)
 		{
 			foreach (var button in pathButtons)
 			{

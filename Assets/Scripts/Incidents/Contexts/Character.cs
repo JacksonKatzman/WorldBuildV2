@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated, IOrganizationAffiliated
+	public class Character : IncidentContext, ICharacter, IFactionAffiliated, IInventoryAffiliated, IAlignmentAffiliated, IRaceAffiliated, IOrganizationAffiliated, ILocationAffiliated
 	{
 		public Character() 
 		{
@@ -20,13 +20,11 @@ namespace Game.Incidents
 			Spouses = new List<Character>();
 			Siblings = new List<Character>();
 			Children = new List<Character>();
-			//Race = new Race(new RacePreset());
-			//CharacterName = new CharacterName("FORMAT");
 			CurrentInventory = new Inventory();
 		}
 		public Character(int age, Gender gender, Race race, Faction faction, int politicalPriority, int economicPriority,
 			int religiousPriority, int militaryPriority, int influence, int wealth, int strength, int dexterity,
-			int constitution, int intelligence, int wisdom, int charisma, bool majorCharacter, List<Character> parents = null, Inventory inventory = null)// : base()
+			int constitution, int intelligence, int wisdom, int charisma, bool majorCharacter, List<Character> parents = null, Inventory inventory = null)
 		{
 			Age = age;
 			AffiliatedRace = race;
@@ -195,7 +193,9 @@ namespace Game.Incidents
 		public bool MajorCharacter { get; set; }
 		public bool Possessed { get; set; }
 
-		override public void DeployContext()
+        public Location CurrentLocation { get; set; }
+
+        override public void DeployContext()
 		{
 			if (NumIncidents > 0 && MajorCharacter && Age >= 16)
 			{

@@ -144,7 +144,7 @@
             "$type": "Game.Incidents.GetOrCreateGreatMonsterAction, Auto-asmdef-SecondPass",
             "criteria": {
               "$id": "17",
-              "$type": "Game.Simulation.MonsterCriteria, Auto-asmdef-SecondPass",
+              "$type": "Game.Simulation.MonsterRetriever, Auto-asmdef-SecondPass",
               "findBySearch": false,
               "monsterData": null,
               "isLegendary": false,

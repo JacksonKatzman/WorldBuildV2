@@ -90,7 +90,7 @@ namespace Game.GUI.Adventures
 			adventureSummaryUI.text.text += " " + encounter.mainEncounter.encounterSummary;
 			CreateTableOfContentsEntry(-1, "Summary");
 
-			adventureSummaryUI.ReplaceTextPlaceholders(mainEncounter.contextCriterium);
+			adventureSummaryUI.ReplaceTextPlaceholders(encounter.mainEncounter.contextCriterium);
 
 			var encounters = encounter.Encounters;
 
@@ -194,7 +194,7 @@ namespace Game.GUI.Adventures
 			return Instance.currentEncounter.TryGetContext(id, out result);
 		}
 
-		public static bool TryGetContextCriteria(int id, out IAdventureContextCriteria result)
+		public static bool TryGetContextCriteria(int id, out IAdventureContextRetriever result)
 		{
 			return Instance.currentEncounter.TryGetContextCriteria(id, out result);
 		}

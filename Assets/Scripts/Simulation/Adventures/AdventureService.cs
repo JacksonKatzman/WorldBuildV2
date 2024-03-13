@@ -271,6 +271,11 @@ namespace Game.Simulation
 
 			CurrentLocation = AdventureStartLocation;
 			PartyUnit.Travel(path, () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
+
+			foreach(var context in encounter.contextCriterium)
+            {
+				AddKnownContext(context.Context);
+            }
 		}
 
 		public List<AdventureEncounterObject> GetLevelAppropriateEncounters(List<AdventureEncounterObject> possibleAdventures, int lowerDifficultyThreshold, int upperDifficultyThreshold, bool major)
@@ -290,6 +295,21 @@ namespace Game.Simulation
 		{
 			AvailableEncounters.Add(encounter);
 		}
+
+		public void AddKnownContext(IIncidentContext context, ContextFamiliarity familiarity = ContextFamiliarity.AWARE)
+        {
+			if(KnownContexts == null)
+            {
+				KnownContexts = new Dictionary<Type, Dictionary<IIncidentContext, ContextFamiliarity>>();
+            }
+
+			if(!KnownContexts.ContainsKey(context.ContextType))
+            {
+				KnownContexts.Add(context.ContextType, new Dictionary<IIncidentContext, ContextFamiliarity>());
+            }
+
+			KnownContexts[context.ContextType].Add(context, familiarity);
+        }
 
 		public void Save(string mapName)
 		{

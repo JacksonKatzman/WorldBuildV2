@@ -15,8 +15,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 3c6f5cc7d9c894a488ec7dc31164ec44, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -24,15 +23,15 @@ MonoBehaviour:
     SerializationNodes:
     - Name: contextCriterium
       Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[Game.Simulation.IAdventureContextCriteria,
+      Data: 0|System.Collections.Generic.List`1[[Game.Simulation.IAdventureContextRetriever,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 7
-      Data: 1|Game.Simulation.MonsterCriteria, Auto-asmdef-SecondPass
-    - Name: CriteriaID
+      Data: 1|Game.Simulation.MonsterRetriever, Auto-asmdef-SecondPass
+    - Name: RetrieverID
       Entry: 3
       Data: 0
     - Name: contextTypeName
@@ -69,25 +68,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 6
-    - Name: 
-      Entry: 3
       Data: 0
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 3
-      Data: 3
-    - Name: 
-      Entry: 3
-      Data: 4
-    - Name: 
-      Entry: 3
-      Data: 5
     - Name: 
       Entry: 13
       Data: 
@@ -100,49 +81,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 14
-    - Name: 
-      Entry: 3
       Data: 0
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 3
-      Data: 3
-    - Name: 
-      Entry: 3
-      Data: 4
-    - Name: 
-      Entry: 3
-      Data: 5
-    - Name: 
-      Entry: 3
-      Data: 6
-    - Name: 
-      Entry: 3
-      Data: 7
-    - Name: 
-      Entry: 3
-      Data: 8
-    - Name: 
-      Entry: 3
-      Data: 9
-    - Name: 
-      Entry: 3
-      Data: 10
-    - Name: 
-      Entry: 3
-      Data: 11
-    - Name: 
-      Entry: 3
-      Data: 12
-    - Name: 
-      Entry: 3
-      Data: 13
     - Name: 
       Entry: 13
       Data: 
@@ -155,82 +94,10 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 10
-    - Name: 
-      Entry: 3
       Data: 0
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 3
-      Data: 3
-    - Name: 
-      Entry: 3
-      Data: 4
-    - Name: 
-      Entry: 3
-      Data: 5
-    - Name: 
-      Entry: 3
-      Data: 6
-    - Name: 
-      Entry: 3
-      Data: 7
-    - Name: 
-      Entry: 3
-      Data: 8
-    - Name: 
-      Entry: 3
-      Data: 9
     - Name: 
       Entry: 13
       Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 6|Game.Simulation.TreasureCriteria, Auto-asmdef-SecondPass
-    - Name: CriteriaID
-      Entry: 3
-      Data: 1
-    - Name: contextTypeName
-      Entry: 1
-      Data: Item
-    - Name: historical
-      Entry: 5
-      Data: false
-    - Name: premade
-      Entry: 5
-      Data: false
-    - Name: data
-      Entry: 10
-      Data: 0
-    - Name: type
-      Entry: 6
-      Data: 
-    - Name: pointRange
-      Entry: 7
-      Data: 7|Game.Incidents.IntegerRange, Auto-asmdef-SecondPass
-    - Name: randomRange
-      Entry: 5
-      Data: true
-    - Name: min
-      Entry: 3
-      Data: 0
-    - Name: max
-      Entry: 3
-      Data: 20
-    - Name: constant
-      Entry: 3
-      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -245,14 +112,14 @@ MonoBehaviour:
       Data: 
     - Name: components
       Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+      Data: 6|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 5
     - Name: 
       Entry: 7
-      Data: 9|Game.Simulation.AdventureTitleComponent, Auto-asmdef-SecondPass
+      Data: 7|Game.Simulation.AdventureTitleComponent, Auto-asmdef-SecondPass
     - Name: ComponentID
       Entry: 3
       Data: 0
@@ -264,7 +131,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 10|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+      Data: 8|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
     - Name: ComponentID
       Entry: 3
       Data: 1
@@ -273,13 +140,13 @@ MonoBehaviour:
       Data: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        {0}
+        {-1}
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 11|Game.Simulation.AdventureNarrationComponent, Auto-asmdef-SecondPass
+      Data: 9|Game.Simulation.AdventureNarrationComponent, Auto-asmdef-SecondPass
     - Name: ComponentID
       Entry: 3
       Data: 2
@@ -296,20 +163,20 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 12|Game.Simulation.AdventureCombatComponent, Auto-asmdef-SecondPass
+      Data: 10|Game.Simulation.AdventureCombatComponent, Auto-asmdef-SecondPass
     - Name: ComponentID
       Entry: 3
       Data: 3
     - Name: combatParticipants
       Entry: 7
-      Data: 13|System.Collections.Generic.List`1[[Game.Simulation.CombatParticipant,
+      Data: 11|System.Collections.Generic.List`1[[Game.Simulation.CombatParticipant,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 14|Game.Simulation.CombatParticipant, Auto-asmdef-SecondPass
+      Data: 12|Game.Simulation.CombatParticipant, Auto-asmdef-SecondPass
     - Name: combatantID
       Entry: 3
       Data: 0
@@ -337,7 +204,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 15|Game.Simulation.AdventureStructureComponent, Auto-asmdef-SecondPass
+      Data: 13|Game.Simulation.AdventureStructureComponent, Auto-asmdef-SecondPass
     - Name: ComponentID
       Entry: 3
       Data: 4
@@ -390,8 +257,9 @@ MonoBehaviour:
       Entry: 8
       Data: 
   encounterTitle: DEBUG_ENCOUNTER_MINOR_1
-  encounterDifficulty: 0
+  encounterDifficulty: 90
   majorEncounter: 0
+  skippable: 0
   encounterLocationType: 0
   encounterTypes: 00000000010000000200000003000000
   allowedBiomes: 0c0000000b0000000a00000009000000080000000700000006000000050000000400000003000000020000000100000000000000

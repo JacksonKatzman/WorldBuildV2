@@ -26,7 +26,7 @@ namespace Game.GUI.Wiki
 			AdventureGuide.Instance.SetCurrentComponent(linkID);
 		}
 
-		public void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
+		public void ReplaceTextPlaceholders(List<IAdventureContextRetriever> contexts)
 		{
 			foreach(var context in contexts)
 			{

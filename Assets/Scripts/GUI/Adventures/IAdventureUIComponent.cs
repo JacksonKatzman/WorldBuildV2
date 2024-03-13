@@ -12,6 +12,6 @@ namespace Game.GUI.Adventures
 		public int PathGroup { get; set; }
 		public RectTransform RectTransform { get; }
 		public void BuildUIComponents(IAdventureComponent component);
-		public void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts);
+		public void ReplaceTextPlaceholders(List<IAdventureContextRetriever> contexts);
 	}
 }

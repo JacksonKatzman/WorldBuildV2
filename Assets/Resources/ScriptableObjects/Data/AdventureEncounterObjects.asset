@@ -16,10 +16,10 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: fd155de5f92967540b78f3c1bdcc0cce, type: 2}
     - {fileID: 11400000, guid: ae12a51e6023bc04c8f44328be166102, type: 2}
-    - {fileID: 11400000, guid: 736debf8d08082441a796747a0242fd8, type: 2}
-    - {fileID: 11400000, guid: 73c729e9280607549b5dbf4d7ece67ae, type: 2}
-    - {fileID: 11400000, guid: b9e4678861dfcb2428c7c734621cc750, type: 2}
+    - {fileID: 11400000, guid: 33aea21ab377f8b489dfeec300522025, type: 2}
+    - {fileID: 11400000, guid: 6792d1cd678421141b72940ca899b385, type: 2}
     - {fileID: 11400000, guid: c2079be16d9efa44eba2f9bd7cee2050, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -54,7 +54,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: DEBUG_ENCOUNTER
+      Data: A Lair of Monsters
     - Name: $v
       Entry: 10
       Data: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: DEBUG_ENCOUNTER 1
+      Data: DEBUG_ENCOUNTER
     - Name: $v
       Entry: 10
       Data: 1
@@ -78,7 +78,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: DEBUG_ENCOUNTER 2
+      Data: DEBUG_ENCOUNTER_2
     - Name: $v
       Entry: 10
       Data: 2
@@ -90,7 +90,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: Monster_Lair_00
+      Data: DEBUG_ENCOUNTER_3
     - Name: $v
       Entry: 10
       Data: 3

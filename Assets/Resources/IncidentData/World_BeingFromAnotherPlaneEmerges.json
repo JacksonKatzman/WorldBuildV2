@@ -87,7 +87,7 @@
             "$type": "Game.Incidents.GetOrCreateGreatMonsterAction, Auto-asmdef-SecondPass",
             "criteria": {
               "$id": "12",
-              "$type": "Game.Simulation.MonsterCriteria, Auto-asmdef-SecondPass",
+              "$type": "Game.Simulation.MonsterRetriever, Auto-asmdef-SecondPass",
               "findBySearch": true,
               "monsterData": {
                 "$id": "13",
