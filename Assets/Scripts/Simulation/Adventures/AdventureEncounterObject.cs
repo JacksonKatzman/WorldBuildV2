@@ -82,6 +82,24 @@ namespace Game.Simulation
 			contextCriterium = new List<IAdventureContextRetriever>();
 		}
 
+		public bool TryGetContext(int id, out IIncidentContext result)
+		{
+			result = GetContexts().Find(x => x.ID == id);
+			return result != null;
+			//return !result.Equals(default(IIncidentContext));
+		}
+
+		public bool TryGetContextCriteria(int id, out IAdventureContextRetriever result)
+		{
+			result = contextCriterium.Find(x => x.Context.ID == id);
+			return result != null;
+		}
+
+		private List<IIncidentContext> GetContexts()
+        {
+			return contextCriterium.Select(x => x.Context).ToList();
+        }
+
 		private IEnumerable<EncounterType> GetEncounterTypes()
 		{
 			return Enum.GetValues(typeof(EncounterType)).Cast<EncounterType>();

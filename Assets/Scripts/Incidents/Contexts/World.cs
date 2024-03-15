@@ -222,6 +222,7 @@ namespace Game.Simulation
 
 		private void BeginPostGeneration()
 		{
+			ContextDictionaryProvider.AllowImmediateChanges = true;
 			foreach(var faction in Factions)
 			{
 				if (!faction.IsSpecialFaction)

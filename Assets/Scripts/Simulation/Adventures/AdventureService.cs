@@ -77,6 +77,7 @@ namespace Game.Simulation
 		//private List<HexCell> AdventurePath { get; set; }
 		private Queue<HexCell> AdventureDestinations { get; set; }
 
+		private Adventure currentAdventure;
 		private Popup currentPopup;
 
 		public AdventureService()
@@ -169,6 +170,8 @@ namespace Game.Simulation
 
 		public void RunAdventure(AdventureEncounterObject encounter, int minorEncounters)
         {
+			currentAdventure = new Adventure(encounter, new List<AdventureEncounterObject>());
+
 			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
 			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), encounter.CurrentLocation.GetHexCell(), PartyUnit);
@@ -228,8 +231,8 @@ namespace Game.Simulation
 			{
 				popupConfig.ButtonActions.Add("Begin Encounter", () => 
 				{ 
-					AdventureGuide.Instance.RunEncounter(new Encounter(encounter, null), 
-						() => MoveToNextEncounter(finalEncounter, remainingMinorEncounters - 1),
+					AdventureGuide.Instance.RunEncounter(encounter, 
+						() => { MoveToNextEncounter(finalEncounter, remainingMinorEncounters - 1); currentAdventure.AddEncounter(encounter); },
 						() => RunEncounter(finalEncounter, remainingMinorEncounters)); 
 				});
 				if(encounter.skippable)
@@ -242,7 +245,7 @@ namespace Game.Simulation
 			{
 				popupConfig.ButtonActions.Add("Begin Encounter", () =>
 				{
-					AdventureGuide.Instance.RunEncounter(new Encounter(encounter, null),
+					AdventureGuide.Instance.RunEncounter(encounter,
 						() => OnEndAdventure(encounter, true),
 						() => OnEndAdventure(encounter, false));
 				});
@@ -258,12 +261,14 @@ namespace Game.Simulation
 
 		public void OnEndAdventure(AdventureEncounterObject encounter, bool success)
         {
+			//KINDA REALLY just wanna rework this entire flow to stick everything into the adventure as it goes and run it that way
+
 			//add pathfinding home
 			if(success)
             {
 				HandleRewards(encounter);
             }
-			//next step: have encounters generate missing contexts, and upon finishing add them to the wiki
+
 			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
 			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), AdventureStartLocation.GetHexCell(), PartyUnit);
@@ -272,8 +277,12 @@ namespace Game.Simulation
 			CurrentLocation = AdventureStartLocation;
 			PartyUnit.Travel(path, () => { UserInterfaceService.Instance.OnEndAdventureButton(); });
 
-			foreach(var context in encounter.contextCriterium)
+			foreach(var context in currentAdventure.ContextCriteria)
             {
+				if(!ContextDictionaryProvider.AllContexts[context.ContextType].Contains(context.Context))
+                {
+					EventManager.Instance.Dispatch(new AddContextEvent(context.Context, context.Context.ContextType, true));
+                }
 				AddKnownContext(context.Context);
             }
 		}
@@ -308,7 +317,10 @@ namespace Game.Simulation
 				KnownContexts.Add(context.ContextType, new Dictionary<IIncidentContext, ContextFamiliarity>());
             }
 
-			KnownContexts[context.ContextType].Add(context, familiarity);
+			if (!KnownContexts[context.ContextType].ContainsKey(context))
+			{
+				KnownContexts[context.ContextType].Add(context, familiarity);
+			}
         }
 
 		public void Save(string mapName)
