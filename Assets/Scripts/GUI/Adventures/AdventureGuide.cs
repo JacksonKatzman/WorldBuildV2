@@ -167,7 +167,7 @@ namespace Game.GUI.Adventures
 		public void OnCurrentEncounterFailed()
         {
 			ToggleCanvasGroup(false);
-			AdventureService.Instance.OnEndAdventure(currentEncounter, false);
+			AdventureService.Instance.OnEndAdventure(false);
 		}
 
 		public void OnCurrentEncounterSkipped()
@@ -179,7 +179,7 @@ namespace Game.GUI.Adventures
 		public void OnReturnHome()
         {
 			ToggleCanvasGroup(false);
-			AdventureService.Instance.OnEndAdventure(currentEncounter, false);
+			AdventureService.Instance.OnEndAdventure(false);
 		}
 
 		public static bool TryGetContext(int id, out IIncidentContext result)

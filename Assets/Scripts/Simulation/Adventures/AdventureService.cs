@@ -170,7 +170,7 @@ namespace Game.Simulation
 
 		public void RunAdventure(AdventureEncounterObject encounter, int minorEncounters)
         {
-			currentAdventure = new Adventure(encounter, new List<AdventureEncounterObject>());
+			currentAdventure = new Adventure(encounter, new List<AdventureEncounterObject>(), minorEncounters);
 
 			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
@@ -185,10 +185,10 @@ namespace Game.Simulation
 			AdventureDestinations.Enqueue(path[path.Count - 1]);
 
 			OutputLogger.Log($"Running encounter {encounter.encounterTitle}");
-			MoveToNextEncounter(encounter, minorEncounters);
+			MoveToNextEncounter();
 		}
 
-		public void MoveToNextEncounter(AdventureEncounterObject finalEncounter, int remainingMinorEncounters)
+		public void MoveToNextEncounter()
         {
 			//move to encounter location
 			var destination = AdventureDestinations.Dequeue();
@@ -200,19 +200,19 @@ namespace Game.Simulation
 			if (path.Count > 1)
 			{
 				CurrentLocation = new Location(destination.Index);
-				PartyUnit.Travel(path, () => { RunEncounter(finalEncounter, remainingMinorEncounters); });
+				PartyUnit.Travel(path, () => { RunEncounter(); });
 			}
 			else
             {
-				RunEncounter(finalEncounter, remainingMinorEncounters);
+				RunEncounter();
 			}
 		}
 
-		public void RunEncounter(AdventureEncounterObject finalEncounter, int remainingMinorEncounters)
+		public void RunEncounter()
         {
 			//choose first sub adventure and show options popup
-			var encounter = finalEncounter;
-			if (remainingMinorEncounters > 0)
+			var encounter = currentAdventure.mainEncounter;
+			if (currentAdventure.RemainingSideEncounters > 0)
 			{
 				var encounters = GetNearbyLevelAppropriateEncounters(0, 3, false, CurrentLocation.GetHexCell(), 2);
 				encounters.AddRange(GetLevelAppropriateEncounters(EvergreenEncounters, 0, 3, false));
@@ -227,46 +227,46 @@ namespace Game.Simulation
 				CloseOnButtonPress = true
 			};
 
-			if (remainingMinorEncounters > 0)
+			if (currentAdventure.RemainingSideEncounters > 0)
 			{
 				popupConfig.ButtonActions.Add("Begin Encounter", () => 
 				{ 
 					AdventureGuide.Instance.RunEncounter(encounter, 
-						() => { MoveToNextEncounter(finalEncounter, remainingMinorEncounters - 1); currentAdventure.AddEncounter(encounter); },
-						() => RunEncounter(finalEncounter, remainingMinorEncounters)); 
+						() => { currentAdventure.AddEncounter(encounter); MoveToNextEncounter(); },
+						() => RunEncounter()); 
 				});
 				if(encounter.skippable)
                 {
-					popupConfig.ButtonActions.Add("Skip", () => { RunEncounter(finalEncounter, remainingMinorEncounters); });
+					popupConfig.ButtonActions.Add("Skip", () => { RunEncounter(); });
 				}
-				popupConfig.ButtonActions.Add("Return Home", () => { OnEndAdventure(encounter, false); });
+				popupConfig.ButtonActions.Add("Return Home", () => { OnEndAdventure(false); });
 			}
 			else
 			{
 				popupConfig.ButtonActions.Add("Begin Encounter", () =>
 				{
 					AdventureGuide.Instance.RunEncounter(encounter,
-						() => OnEndAdventure(encounter, true),
-						() => OnEndAdventure(encounter, false));
+						() => OnEndAdventure(true),
+						() => OnEndAdventure(false));
 				});
 				if (encounter.skippable)
 				{
-					popupConfig.ButtonActions.Add("Skip", () => { RunEncounter(finalEncounter, remainingMinorEncounters); });
+					popupConfig.ButtonActions.Add("Skip", () => { RunEncounter(); });
 				}
-				popupConfig.ButtonActions.Add("Return Home", () => { OnEndAdventure(encounter, false); });
+				popupConfig.ButtonActions.Add("Return Home", () => { OnEndAdventure(false); });
 			}
 
 			currentPopup = PopupService.Instance.ShowPopup(popupConfig);
 		}
 
-		public void OnEndAdventure(AdventureEncounterObject encounter, bool success)
+		public void OnEndAdventure(bool success)
         {
 			//KINDA REALLY just wanna rework this entire flow to stick everything into the adventure as it goes and run it that way
 
 			//add pathfinding home
 			if(success)
             {
-				HandleRewards(encounter);
+				HandleRewards(currentAdventure.mainEncounter);
             }
 
 			var grid = World.CurrentWorld.HexGrid;
@@ -344,7 +344,7 @@ namespace Game.Simulation
 
 			var cell = CurrentLocation.GetHexCell();
 			//temporary - will eventually factor in that certain encounters can only happen in certain places
-			var outerRange = cellsInRange.Where(x => x.coordinates.DistanceTo(cell.coordinates) > numSubEncounters && !x.IsUnderwater).ToList();
+			var outerRange = cellsInRange.Where(x => x.coordinates.DistanceTo(cell.coordinates) > numSubEncounters + 1 && !x.IsUnderwater).ToList();
 
 			List<HexCell> path = null;
 			var grid = World.CurrentWorld.HexGrid;
@@ -373,11 +373,6 @@ namespace Game.Simulation
 		private void HandleRewards(AdventureEncounterObject encounterObject)
         {
 			OutputLogger.Log($"Rewarding players for completing {encounterObject.encounterTitle}!");
-        }
-
-		private void UpdateWiki(AdventureEncounterObject encounterObject)
-        {
-
         }
 
 		private void Setup()

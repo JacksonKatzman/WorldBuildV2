@@ -9,19 +9,25 @@ namespace Game.Simulation
 		public List<AdventureEncounterObject> Encounters => GetEncounterList();
 		public List<IIncidentContext> Contexts => GetContexts();
 		public List<IAdventureContextRetriever> ContextCriteria => GetContextCriteria();
+		public int RemainingSideEncounters => numSideEncounters - sideEncounters.Count;
 
 		public AdventureEncounterObject mainEncounter;
+		public int numSideEncounters;
 		private List<AdventureEncounterObject> sideEncounters;
 		public Adventure() { }
-		public Adventure(AdventureEncounterObject mainEncounter, List<AdventureEncounterObject> sideEncounters)
+		public Adventure(AdventureEncounterObject mainEncounter, List<AdventureEncounterObject> sideEncounters, int numSideEncounters)
 		{
 			this.mainEncounter = mainEncounter;
 			this.sideEncounters = sideEncounters;
+			this.numSideEncounters = numSideEncounters;
 		}
 
 		public void AddEncounter(AdventureEncounterObject encounter)
         {
-			sideEncounters.Add(encounter);
+			if (sideEncounters.Count < this.numSideEncounters)
+			{
+				sideEncounters.Add(encounter);
+			}
         }
 
 		public bool TryGetContext(int id, out IIncidentContext result)
