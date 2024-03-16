@@ -58,7 +58,7 @@ namespace Game.GUI.Adventures
 			BuildUIComponents((T)component);
 		}
 		abstract public void BuildUIComponents(T component);
-		virtual public void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
+		virtual public void ReplaceTextPlaceholders(List<IAdventureContextRetriever> contexts)
 		{
 			foreach (var text in AssociatedTexts)
 			{
@@ -92,7 +92,7 @@ namespace Game.GUI.Adventures
 			TooltipService.HideTooltip();
 		}
 
-		protected void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts, TMP_Text text)
+		protected void ReplaceTextPlaceholders(List<IAdventureContextRetriever> contexts, TMP_Text text)
 		{
 			if (string.IsNullOrEmpty(text.text))
 			{

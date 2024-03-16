@@ -16,10 +16,8 @@ namespace Game.GUI.Adventures
 	{
 		public Dictionary<Type, GameObject> prefabDictionary;
 		public GameObject tableOfContentsLinkPrefab;
-		public AdventureEncounterObject mainEncounter;
-		public List<AdventureEncounterObject> sideEncounters;
 		[HideInInspector]
-		public Encounter currentEncounter;
+		public AdventureEncounterObject currentEncounter;
 		public Transform rootTransform;
 		public ScrollRect scrollRect;
 		public RectTransform contentPanel;
@@ -54,12 +52,12 @@ namespace Game.GUI.Adventures
 		[Button("Test Display Adventure")]
 		private void TestDisplayAdventure()
 		{
-			currentEncounter = new Encounter(mainEncounter, sideEncounters);
-			RunEncounter(currentEncounter, null, null);
+			//currentEncounter = new Adventure(mainEncounter, sideEncounters);
+			//RunEncounter(currentEncounter, null, null);
 		}
 
 
-		public void RunEncounter(Encounter encounter, Action OnEncounterCompleted, Action OnEncounterSkipped)
+		public void RunEncounter(AdventureEncounterObject encounter, Action OnEncounterCompleted, Action OnEncounterSkipped)
 		{
 			currentEncounter = encounter;
 			OnEncounterCompleteAction = OnEncounterCompleted;
@@ -85,43 +83,38 @@ namespace Game.GUI.Adventures
             }
 			tableOfContents.Clear();
 
-			adventureTitleText.text = encounter.mainEncounter.encounterTitle;
-			adventureSummaryUI.text.text = encounter.mainEncounter.encounterBlurb;
-			adventureSummaryUI.text.text += " " + encounter.mainEncounter.encounterSummary;
+			adventureTitleText.text = encounter.encounterTitle;
+			adventureSummaryUI.text.text = encounter.encounterBlurb;
+			adventureSummaryUI.text.text += " " + encounter.encounterSummary;
 			CreateTableOfContentsEntry(-1, "Summary");
 
-			adventureSummaryUI.ReplaceTextPlaceholders(mainEncounter.contextCriterium);
+			adventureSummaryUI.ReplaceTextPlaceholders(encounter.contextCriterium);
 
-			var encounters = encounter.Encounters;
-
-			foreach (var subEncounter in encounters)
+			foreach (var component in encounter.components)
 			{
-				foreach (var component in subEncounter.components)
+				if (component.GetType() == typeof(AdventureBranchingComponent))
 				{
-					if (component.GetType() == typeof(AdventureBranchingComponent))
+					var branchingComponent = component as AdventureBranchingComponent;
+					numBranches++;
+					uiComponents.Add(BuildUIComponent(component));
+
+					foreach (var path in branchingComponent.paths)
 					{
-						var branchingComponent = component as AdventureBranchingComponent;
-						numBranches++;
-						uiComponents.Add(BuildUIComponent(component));
+						numPaths++;
 
-						foreach (var path in branchingComponent.paths)
+						foreach (var c in path.components)
 						{
-							numPaths++;
-
-							foreach (var c in path.components)
-							{
-								var uiComponent = BuildUIComponent(c, numBranches, numPaths);
-								uiComponent.ReplaceTextPlaceholders(subEncounter.contextCriterium);
-								uiComponents.Add(uiComponent);
-							}
+							var uiComponent = BuildUIComponent(c, numBranches, numPaths);
+							uiComponent.ReplaceTextPlaceholders(encounter.contextCriterium);
+							uiComponents.Add(uiComponent);
 						}
 					}
-					else
-					{
-						var uic = BuildUIComponent(component, numBranches, numPaths);
-						uic.ReplaceTextPlaceholders(subEncounter.contextCriterium);
-						uiComponents.Add(uic);
-					}
+				}
+				else
+				{
+					var uic = BuildUIComponent(component, numBranches, numPaths);
+					uic.ReplaceTextPlaceholders(encounter.contextCriterium);
+					uiComponents.Add(uic);
 				}
 			}
 
@@ -174,7 +167,7 @@ namespace Game.GUI.Adventures
 		public void OnCurrentEncounterFailed()
         {
 			ToggleCanvasGroup(false);
-			AdventureService.Instance.OnEndAdventure(currentEncounter.mainEncounter, false);
+			AdventureService.Instance.OnEndAdventure(false);
 		}
 
 		public void OnCurrentEncounterSkipped()
@@ -186,15 +179,16 @@ namespace Game.GUI.Adventures
 		public void OnReturnHome()
         {
 			ToggleCanvasGroup(false);
-			AdventureService.Instance.OnEndAdventure(currentEncounter.mainEncounter, false);
+			AdventureService.Instance.OnEndAdventure(false);
 		}
 
 		public static bool TryGetContext(int id, out IIncidentContext result)
 		{
+			//return Instance.currentEncounter.TryGetContext(id, out result);
 			return Instance.currentEncounter.TryGetContext(id, out result);
 		}
 
-		public static bool TryGetContextCriteria(int id, out IAdventureContextCriteria result)
+		public static bool TryGetContextCriteria(int id, out IAdventureContextRetriever result)
 		{
 			return Instance.currentEncounter.TryGetContextCriteria(id, out result);
 		}

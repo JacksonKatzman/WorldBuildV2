@@ -7,7 +7,7 @@ namespace Game.GUI.Adventures
 {
 	public class AdventureTitleUIComponent : AdventureSingleTextUIComponent<AdventureTitleComponent>
 	{
-		public override void ReplaceTextPlaceholders(List<IAdventureContextCriteria> contexts)
+		public override void ReplaceTextPlaceholders(List<IAdventureContextRetriever> contexts)
 		{
 			base.ReplaceTextPlaceholders(contexts);
 			AdventureGuide.Instance.CreateTableOfContentsEntry(ComponentID, text.text);

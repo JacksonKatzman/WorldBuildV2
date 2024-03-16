@@ -64,7 +64,7 @@ namespace Game.Simulation
 		public List<BiomeTerrainType> allowedBiomes;
 
 		[ListDrawerSettings(HideAddButton = true), PropertyOrder(0)]
-		public List<IAdventureContextCriteria> contextCriterium;
+		public List<IAdventureContextRetriever> contextCriterium;
 
 		[TextArea(2, 4), PropertyOrder(0)]
 		public string encounterBlurb;
@@ -79,8 +79,26 @@ namespace Game.Simulation
 		{
 			encounterTypes = new List<EncounterType>();
 			allowedBiomes = new List<BiomeTerrainType>();
-			contextCriterium = new List<IAdventureContextCriteria>();
+			contextCriterium = new List<IAdventureContextRetriever>();
 		}
+
+		public bool TryGetContext(int id, out IIncidentContext result)
+		{
+			result = GetContexts().Find(x => x.ID == id);
+			return result != null;
+			//return !result.Equals(default(IIncidentContext));
+		}
+
+		public bool TryGetContextCriteria(int id, out IAdventureContextRetriever result)
+		{
+			result = contextCriterium.Find(x => x.Context.ID == id);
+			return result != null;
+		}
+
+		private List<IIncidentContext> GetContexts()
+        {
+			return contextCriterium.Select(x => x.Context).ToList();
+        }
 
 		private IEnumerable<EncounterType> GetEncounterTypes()
 		{

@@ -29,7 +29,7 @@ namespace Game.Simulation
 #if UNITY_EDITOR
 		private IEnumerable<int> GetTreasureIDs()
 		{
-			var ids = EncounterEditorWindow.contextCriterium.Where(x => x.GetType() == typeof(TreasureCriteria)).Select(x => x.CriteriaID);
+			var ids = EncounterEditorWindow.contextCriterium.Where(x => x.GetType() == typeof(TreasureRetriever)).Select(x => x.RetrieverID);
 			return ids;
 		}
 #endif

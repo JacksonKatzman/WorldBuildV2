@@ -146,39 +146,6 @@ namespace Game.Simulation
 			simulationOptions = options;
 			ContextDictionaryProvider.AllowImmediateChanges = true;
 			CreateRacesAndFactions();
-
-			/*
-			var hexCollections = ContextDictionaryProvider.GetAllContexts<HexCollection>();
-			OutputLogger.Log($"Total HexCollections: {hexCollections.Count}");
-			var totalSize = hexCollections[0].cellCollection.Count;
-			var biggest = hexCollections[0];
-			for (int i = 1; i < hexCollections.Count; i++)
-			{
-				var collection = hexCollections[i];
-				totalSize += collection.cellCollection.Count;
-				if(collection.cellCollection.Count > biggest.cellCollection.Count)
-				{
-					biggest = collection;
-				}
-
-				foreach(var cellIndex in collection.cellCollection)
-				{
-					//var cell = HexGrid.GetCell(cellIndex);
-					//cell.hexCellLabel.SetText(i.ToString());
-				}
-			}
-
-			//this is temporary to test
-			//ALSO need to fix the ui portion, name isnt swapping as fast as i can mouse over things
-			//also RIVERS?
-			foreach(var collection in hexCollections)
-			{
-				var closestFaction = SimulationUtilities.GetCityNearestLocation(collection.CurrentLocation).AffiliatedFaction;
-				collection.Name = closestFaction.namingTheme.GenerateTerrainName(collection.CollectionType, collection.AffiliatedTerrainType);
-			}
-
-			OutputLogger.Log($"Biggest Collection: {biggest.cellCollection.Count}:{biggest.AffiliatedTerrainType} - Average Size: {totalSize / hexCollections.Count}");
-			*/
 		}
 
 		public async UniTask AdvanceTime()
@@ -255,6 +222,7 @@ namespace Game.Simulation
 
 		private void BeginPostGeneration()
 		{
+			ContextDictionaryProvider.AllowImmediateChanges = true;
 			foreach(var faction in Factions)
 			{
 				if (!faction.IsSpecialFaction)
@@ -350,6 +318,18 @@ namespace Game.Simulation
 							}
 						}
 					}
+                }
+            }
+        }
+
+		//Need to find a much more intelligent way to place characters in the future.
+		public void PlaceCharacters()
+        {
+			foreach(var character in People)
+            {
+				if(character.CurrentLocation == null)
+                {
+					character.CurrentLocation = SimRandom.RandomEntryFromList(character.AffiliatedFaction.Cities).CurrentLocation;
                 }
             }
         }
