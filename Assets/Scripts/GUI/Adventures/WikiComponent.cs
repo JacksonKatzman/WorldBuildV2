@@ -18,6 +18,7 @@ namespace Game.GUI.Adventures
         [SerializeField]
         private ContextFamiliarity familiarityRequirement;
         protected List<TMP_Text> textFields;
+        protected List<IWikiComponent> componentList;
 
         public CanvasGroup MainCanvasGroup => mainCanvasGroup;
         public ContextFamiliarity FamiliarityRequirement => familiarityRequirement;
@@ -90,6 +91,21 @@ namespace Game.GUI.Adventures
         virtual protected void Preshow()
         {
 
+        }
+
+        protected void LoadComponentList()
+        {
+            componentList = new List<IWikiComponent>();
+            var fieldInfos = GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var matchingFieldInfos = fieldInfos.Where(x => typeof(IWikiComponent).IsAssignableFrom(x.FieldType)).ToList();
+            foreach (var fieldInfo in matchingFieldInfos)
+            {
+                var value = (IWikiComponent)fieldInfo.GetValue(this);
+                if (value != null)
+                {
+                    componentList.Add(value);
+                }
+            }
         }
 
         protected string Link(IIncidentContext context)

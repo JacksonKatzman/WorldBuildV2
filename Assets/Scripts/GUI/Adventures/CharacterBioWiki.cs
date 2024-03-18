@@ -50,8 +50,6 @@ namespace Game.GUI.Adventures
         [SerializeField]
         private BioDescriptorUI flawsDescriptor;
 
-        private List<IWikiComponent> componentList;
-
         override public void UpdateByFamiliarity(ContextFamiliarity familiarity)
         {
             foreach(var component in componentList)
@@ -84,17 +82,7 @@ namespace Game.GUI.Adventures
 
         private void Awake()
         {
-            componentList = new List<IWikiComponent>();
-            var fieldInfos = GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var matchingFieldInfos = fieldInfos.Where(x => typeof(IWikiComponent).IsAssignableFrom(x.FieldType)).ToList();
-            foreach (var fieldInfo in matchingFieldInfos)
-            {
-                var value = (IWikiComponent)fieldInfo.GetValue(this);
-                if (value != null)
-                {
-                    componentList.Add(value);
-                }
-            }
+            LoadComponentList();
         }
     }
 }
