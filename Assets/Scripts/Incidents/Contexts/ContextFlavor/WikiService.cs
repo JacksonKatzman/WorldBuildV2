@@ -69,6 +69,7 @@ namespace Game.GUI.Wiki
 			{
 				HideWikis();
 				tableOfContents.Hide();
+				wikiOpen = false;
 			}
 			else
 			{
@@ -88,6 +89,8 @@ namespace Game.GUI.Wiki
 						selector.OnClick();
 					}
 				}
+
+				wikiOpen = true;
 			}
         }
 
