@@ -82,14 +82,14 @@ namespace Game.Incidents
                 || type == typeof(Dictionary<IIncidentContext, float>)
                 || type == typeof(Dictionary<IIncidentContext, bool>)
                 || (type == typeof(List<IIncidentContext>))
-                || IsListContextTag(type)
-                || type == typeof(List<CharacterTag>);
+                || IsListContextTrait(type)
+                || type == typeof(List<CharacterTrait>);
 
         }
 
-        private bool IsListContextTag(Type type)
+        private bool IsListContextTrait(Type type)
 		{
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && typeof(IContextTag).IsAssignableFrom(type.GetGenericArguments()[0]);
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && typeof(ContextTrait).IsAssignableFrom(type.GetGenericArguments()[0]);
         }
 
         private IEnumerable<string> GetPropertyNames()
@@ -137,11 +137,11 @@ namespace Game.Incidents
                 OutputLogger.Log("Found Complex Type");
                 evaluator = new ListEvaluator(propertyName, ContextType);
             }
-            else if(IsListContextTag(PrimitiveType))
+            else if(IsListContextTrait(PrimitiveType))
 			{
                 //evaluator = new ListContainsContextTagEvaluator(propertyName, ContextType);
                 var dataType = new Type[] { PrimitiveType.GetGenericArguments()[0] };
-                var genericBase = typeof(ListContainsContextTagEvaluator<>);
+                var genericBase = typeof(ListContainsContextTraitEvaluator<>);
                 var combinedType = genericBase.MakeGenericType(dataType);
                 evaluator = (ICriteriaEvaluator)Activator.CreateInstance(combinedType, propertyName, ContextType);
             }

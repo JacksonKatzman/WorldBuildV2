@@ -11,7 +11,7 @@ namespace Game.Incidents
 		CharacterName CharacterName { get; set; }
 		public Organization AffiliatedOrganization { get; }
 		public IOrganizationPosition OrganizationPosition { get; }
-		public List<CharacterTag> CharacterTags { get; set; }
+		public List<CharacterTrait> CharacterTraits { get; set; }
 		public void Die();
 	}
 }

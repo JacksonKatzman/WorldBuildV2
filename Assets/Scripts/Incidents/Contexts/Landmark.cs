@@ -18,7 +18,7 @@ namespace Game.Incidents
 		public Faction AffiliatedFaction { get; set; }
 		public Organization AffiliatedOrganization { get; set; }
 		public LandmarkPreset Preset { get; private set; }
-		public List<LandmarkTag> LandmarkTags { get; set; }
+		public List<LandmarkTrait> LandmarkTraits { get; set; }
 
 		public Landmark() 
 		{
@@ -30,7 +30,7 @@ namespace Game.Incidents
 			CurrentLocation = location;
 			CurrentInventory = new Inventory();
 			Preset = landmarkType;
-			LandmarkTags = Preset.landmarkTags != null ? Preset.landmarkTags : new List<LandmarkTag>();
+			LandmarkTraits = Preset.landmarkTraits != null ? Preset.landmarkTraits : new List<LandmarkTrait>();
 			Name = Preset.name;
 		}
 

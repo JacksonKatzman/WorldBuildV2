@@ -19,7 +19,7 @@ namespace Game.Incidents
 		public OrganizationType PriorityAlignment => OrganizationType.MILITARY;
 		public int LawfulChaoticAlignmentAxis { get; set; }
 		public int GoodEvilAlignmentAxis { get; set; }
-		public List<CharacterTag> CharacterTags { get; set; }
+		public List<CharacterTrait> CharacterTraits { get; set; }
 		public Faction AffiliatedFaction { get; set; }
 		public IOrganizationPosition OrganizationPosition { get; set; }
 		public Organization AffiliatedOrganization => OrganizationPosition.AffiliatedOrganization;
@@ -53,7 +53,7 @@ namespace Game.Incidents
 
 		public GreatMonster()// : base()
 		{
-			CharacterTags = new List<CharacterTag>();
+			CharacterTraits = new List<CharacterTrait>();
 			Priorities = new Dictionary<OrganizationType, int>();
 			Priorities[OrganizationType.POLITICAL] = 0;
 			Priorities[OrganizationType.ECONOMIC] = 0;

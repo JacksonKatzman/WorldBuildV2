@@ -77,7 +77,7 @@ namespace Game.Incidents
 		public int GoodEvilAlignmentAxis { get; set; }
 		public List<IIncidentContext> FactionsWithinInteractionRange => GetFactionsWithinInteractionRange();
 		public List<IIncidentContext> FactionsAtWarWith { get; set; }
-		public List<FactionTag> FactionTags { get; set; }
+		public List<FactionTrait> FactionTraits { get; set; }
 		public List<Landmark> FactionLandmarks => ContextDictionaryProvider.GetCurrentContexts<Landmark>().Where(x => x.AffiliatedFaction == this).ToList();
 		public List<Organization> FactionOrganizations => ContextDictionaryProvider.GetCurrentContexts<Organization>().Where(x => x.AffiliatedFaction == this && x != Government).ToList();
 

@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
+	//im going to be replacing contexttags with traits and swapping everything over. will require fixing the incident related stuff including the incidents that alreayd make use of tags
+	//functionality will be basically mirrored but we will use SOs with the SORetriever class
+	/*
 	[Serializable, HideReferenceObjectPicker]
 	public abstract class ContextTag : IContextTag
 	{
@@ -62,9 +65,10 @@ namespace Game.Incidents
 
 			return false;
 		}
-		*/
+		
 	}
-
+	*/
+	/*
 	public static class StaticContextTags
 	{
 		public readonly static List<string> CharacterTags = new List<string> { "ASSASSIN", "THEIF", "SOULLESS" };
@@ -115,12 +119,15 @@ namespace Game.Incidents
 			return false;
 		}
 	}
+	*/
 
+	/*
 	public interface IContextTag
 	{
 		public string Tag { get; }
 	}
-
+	*/
+	/*
 	public static class ContextTagExtensions
 	{
 		public static bool Equals(this IContextTag us, IContextTag other)
@@ -133,4 +140,5 @@ namespace Game.Incidents
 			return false;
 		}
 	}
+	*/
 }
