@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Game.GUI.Wiki
 {
-	public class GenericTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class GenericTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		private static LTDescr delay;
 		[Range(0.0f, 1.0f)]

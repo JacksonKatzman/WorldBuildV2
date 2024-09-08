@@ -18,7 +18,7 @@ namespace Game.GUI.Adventures
             modifierText.text = modifier >= 0 ? $"+{modifier}" : modifier.ToString();
         }
 
-        public void FillUnknown()
+        public virtual void FillUnknown()
         {
             statText.text = "?";
             modifierText.text = string.Empty;

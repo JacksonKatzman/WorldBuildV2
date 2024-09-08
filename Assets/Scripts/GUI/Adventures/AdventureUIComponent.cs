@@ -22,10 +22,10 @@ namespace Game.GUI.Adventures
 
 		private static LTDescr delay;
 		protected bool hovered;
-
 		public int ComponentID { get; set; }
 		public int BranchGroup { get; set; }
 		public int PathGroup { get; set; }
+
 		public RectTransform RectTransform => GetComponent<RectTransform>();
 
 		abstract protected List<TMP_Text> AssociatedTexts { get; }

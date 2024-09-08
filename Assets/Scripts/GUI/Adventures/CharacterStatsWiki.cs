@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.GUI.Adventures
 {
-    public class CharacterStatsWiki : WikiComponent<Character>
+    public class CharacterStatsWiki : ContextWikiComponent<Character>
     {
         [SerializeField]
         private TMP_Text characterName;

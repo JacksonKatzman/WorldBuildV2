@@ -1,6 +1,7 @@
 ﻿using Game.Enums;
 using Game.GUI.Wiki;
 using Game.Incidents;
+using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,17 @@ namespace Game.GUI.Adventures
         private ContextFamiliarity familiarityRequirement;
         protected List<TMP_Text> textFields;
         protected List<IWikiComponent> componentList;
+        protected List<FamiliarityRequirementUIToggle> toggles;
+
+        protected T Value { get; set; }
 
         public CanvasGroup MainCanvasGroup => mainCanvasGroup;
         public ContextFamiliarity FamiliarityRequirement => familiarityRequirement;
 
         public void Fill(object value)
         {
-            Fill((T)value);
+            Value = (T)value;
+            Fill(Value);
         }
         abstract public void Clear();
         virtual public Type GetComponentType()
@@ -33,9 +38,10 @@ namespace Game.GUI.Adventures
             return typeof(T);
         }
         protected abstract void Fill(T value);
-        private void Awake()
+        protected virtual void Awake()
         {
             LoadTextList();
+            LoadToggles();
         }
 
         protected virtual void LoadTextList()
@@ -106,6 +112,11 @@ namespace Game.GUI.Adventures
                     componentList.Add(value);
                 }
             }
+        }
+
+        protected void LoadToggles()
+        {
+            toggles = gameObject.GetComponentsInChildren<FamiliarityRequirementUIToggle>().ToList();
         }
 
         protected string Link(IIncidentContext context)

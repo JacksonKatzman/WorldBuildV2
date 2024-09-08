@@ -174,7 +174,7 @@ namespace Game.Simulation
 
 			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
-			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), encounter.CurrentLocation.GetHexCell(), PartyUnit);
+			grid.FindPath(CurrentLocation.GetHexCell(), encounter.CurrentLocation.GetHexCell());
 			var path = grid.GetPath();
 
 			AdventureDestinations.Clear();
@@ -194,7 +194,7 @@ namespace Game.Simulation
 			var destination = AdventureDestinations.Dequeue();
 			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
-			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), destination, PartyUnit);
+			grid.FindPath(CurrentLocation.GetHexCell(), destination);
 			var path = grid.GetPath();
 
 			if (path.Count > 1)
@@ -271,7 +271,7 @@ namespace Game.Simulation
 
 			var grid = World.CurrentWorld.HexGrid;
 			grid.ClearPath();
-			grid.FindPathWithUnit(CurrentLocation.GetHexCell(), AdventureStartLocation.GetHexCell(), PartyUnit);
+			grid.FindPath(CurrentLocation.GetHexCell(), AdventureStartLocation.GetHexCell());
 			var path = grid.GetPath();
 
 			CurrentLocation = AdventureStartLocation;
@@ -354,12 +354,13 @@ namespace Game.Simulation
             {
 				possibleCell = SimRandom.RandomEntryFromList(outerRange);
 				grid.ClearPath();
-				grid.FindPathWithUnit(CurrentLocation.GetHexCell(), possibleCell, PartyUnit);
+				//grid.FindPathWithUnit(CurrentLocation.GetHexCell(), possibleCell, PartyUnit);
+				grid.FindPath(CurrentLocation.GetHexCell(), possibleCell);
 				path = grid.GetPath();
 				tries++;
 			}
 
-			if (possibleCell != null)
+			if (path != null && possibleCell != null)
 			{
 				encounterObject.CurrentLocation = new Location(possibleCell.Index);
 				return true;

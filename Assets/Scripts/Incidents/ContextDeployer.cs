@@ -1,4 +1,5 @@
 ﻿using Game.Debug;
+using Game.Enums;
 using Game.Factions;
 using Sirenix.OdinInspector;
 using System;

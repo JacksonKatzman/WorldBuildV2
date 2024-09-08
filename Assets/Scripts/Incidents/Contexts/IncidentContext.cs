@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Game.Incidents
 {
-	public abstract class IncidentContext : IIncidentContext
+	public abstract class IncidentContext : IIncidentContext, IFamiliarityAffiliated
 	{
 		protected Dictionary<string, List<YearData<int>>> historicalData;
 		protected List<PropertyInfo> propertyList;
