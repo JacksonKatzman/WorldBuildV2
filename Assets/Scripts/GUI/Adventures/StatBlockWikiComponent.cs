@@ -126,6 +126,13 @@ namespace Game.GUI.Adventures
             swimText.text = canSwim;
             flyText.text = canFly;
 
+            strengthStatContainer.Fill(stats.strength);
+            dexterityStatContainer.Fill(stats.dexterity);
+            constitutionStatContainer.Fill(stats.constitution);
+            intelligenceStatContainer.Fill(stats.intelligence);
+            wisdomStatContainer.Fill(stats.wisdom);
+            charismaStatContainer.Fill(stats.charisma);
+
             //traits here
             traits = GetTraits();
 

@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Game.Debug;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,7 +23,14 @@ namespace Game.GUI.Adventures
                 container.SetActive(true);
                 foreach (var t in types)
                 {
-                    icons[t].SetActive(true);
+                    if (icons.ContainsKey(t))
+                    {
+                        icons[t].SetActive(true);
+                    }
+                    else
+                    {
+                        OutputLogger.LogError($"Icon with key {t} doesn't exist in {container.name}!");
+                    }
                 }
             }
             else

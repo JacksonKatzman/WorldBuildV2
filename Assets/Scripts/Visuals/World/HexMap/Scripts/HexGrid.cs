@@ -696,7 +696,8 @@ namespace Game.Terrain
 
 		bool SearchWithUnit(HexCell fromCell, HexCell toCell, HexUnit unit)
 		{
-			int speed = unit.Speed;
+			//int speed = unit.Speed;
+			int speed = 100000;
 			searchFrontierPhase += 2;
 			if (searchFrontier == null)
 			{
