@@ -32,6 +32,8 @@ namespace Game.Incidents
 		public List<Character> Characters { get; set; }
 
 		public Inventory CurrentInventory { get; set; }
+		public string SizeDenominationString => GetSizeDenomination();
+		public string WealthDenominationString => GetWealthDenomination();
 		private float populationFloat;
 
 		public City() { }
@@ -86,6 +88,40 @@ namespace Game.Incidents
 			CurrentInventory.LoadContextProperties();
 
 			contextIDLoadBuffers.Clear();
+		}
+
+		protected virtual string GetSizeDenomination()
+        {
+			//Todo: Change this code to be less temporary
+			if(Population > 5000)
+            {
+				return "City";
+            }
+			else if(Population > 1000)
+            {
+				return "Town";
+            }
+			else
+            {
+				return "Hamlet";
+            }
+        }
+
+		protected virtual string GetWealthDenomination()
+        {
+			//Todo: Change this code to be less temporary
+			if (Wealth > 5000)
+			{
+				return "Prosperous";
+			}
+			else if (Wealth > 1000)
+			{
+				return "Bustling";
+			}
+			else
+			{
+				return "Poor";
+			}
 		}
 	}
 }

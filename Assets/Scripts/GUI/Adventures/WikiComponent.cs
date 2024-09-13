@@ -32,7 +32,13 @@ namespace Game.GUI.Adventures
             Value = (T)value;
             Fill(Value);
         }
-        abstract public void Clear();
+        virtual public void Clear()
+        {
+            foreach (var component in componentList)
+            {
+                component.Clear();
+            }
+        }
         virtual public Type GetComponentType()
         {
             return typeof(T);
@@ -42,6 +48,7 @@ namespace Game.GUI.Adventures
         {
             LoadTextList();
             LoadToggles();
+            LoadComponentList();
         }
 
         protected virtual void LoadTextList()

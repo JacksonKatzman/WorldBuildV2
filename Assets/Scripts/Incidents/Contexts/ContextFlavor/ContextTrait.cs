@@ -1,7 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Game.Enums;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,6 +15,9 @@ namespace Game.Incidents
     { 
         public string traitName;
         public string traitDescription;
+
+        [ValueDropdown("GetAlignments", IsUniqueList = true)]
+        public List<CreatureAlignment> compatibleAlignments;
 
         [JsonIgnore, SerializeField]
         public ObservableCollection<ContextTrait> incompatibleTraits = new ObservableCollection<ContextTrait>();
@@ -60,6 +67,11 @@ namespace Game.Incidents
                     }
                 }
             }
+        }
+
+        private IEnumerable<CreatureAlignment> GetAlignments()
+        {
+            return Enum.GetValues(typeof(CreatureAlignment)).Cast<CreatureAlignment>();
         }
     }
 }

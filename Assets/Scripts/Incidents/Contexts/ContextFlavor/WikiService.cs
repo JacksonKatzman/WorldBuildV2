@@ -14,6 +14,8 @@ namespace Game.GUI.Wiki
 {
     public class WikiService : SerializedMonoBehaviour
     {
+		static Dictionary<Type, string> contextTypePluralizations = new Dictionary<Type, string>() { { typeof(GreatMonster), "Great Monsters" }, { typeof(City), "Cities" } };
+
 		[SerializeField]
 		private WikiTableOfContents tableOfContents;
 		[SerializeField]
@@ -229,7 +231,14 @@ namespace Game.GUI.Wiki
 					var tabName = string.Empty;
 					if(typeof(IIncidentContext).IsAssignableFrom(subType))
                     {
-						tabName = $"{subType.Name}s";
+						if (contextTypePluralizations.TryGetValue(subType, out var typeName))
+						{
+							tabName = typeName;
+						}
+						else
+						{
+							tabName = $"{subType.Name}s";
+						}
 					}
 					else if(subType == typeof(List<IncidentReport>))
                     {

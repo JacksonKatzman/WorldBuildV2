@@ -12,6 +12,7 @@ namespace Game.Incidents
 	{
 		public MonsterData dataBlock;
 		public override string Name => CharacterName.FullName;
+
 		public Inventory CurrentInventory { get; set; }
 		public CharacterName CharacterName { get; set; }
 		public Gender Gender { get; set; }

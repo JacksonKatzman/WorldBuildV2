@@ -222,7 +222,6 @@ namespace Game.GUI.Adventures
         {
             base.Awake();
             EventManager.Instance.AddEventHandler<IsDungeonMasterViewChangedEvent>(OnDungeonMasterViewChanges);
-            LoadComponentList();
         }
 
         private void OnDungeonMasterViewChanges(IsDungeonMasterViewChangedEvent gameEvent)
