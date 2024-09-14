@@ -14,7 +14,8 @@ namespace Game.GUI.Wiki
 {
     public class WikiService : SerializedMonoBehaviour
     {
-		static Dictionary<Type, string> contextTypePluralizations = new Dictionary<Type, string>() { { typeof(GreatMonster), "Great Monsters" }, { typeof(City), "Cities" } };
+		static Dictionary<Type, string> contextTypePluralizations = new Dictionary<Type, string>() { { typeof(GreatMonster), "Great Monsters" },
+			{ typeof(City), "Cities" }, { typeof(HexCollection), "Zones" } };
 
 		[SerializeField]
 		private WikiTableOfContents tableOfContents;
