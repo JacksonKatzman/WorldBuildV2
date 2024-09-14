@@ -132,7 +132,8 @@ namespace Game.GUI.Adventures
 
         protected List<TooltipBox> GetTraits()
         {
-            var alive = ContextDictionaryProvider.CurrentContexts[typeof(Faction)].Contains(Value);
+            var alive = ContextDictionaryProvider.CurrentContexts[typeof(Faction)].Contains(Value) 
+                || ContextDictionaryProvider.CurrentContexts[typeof(SpecialFaction)].Contains(Value);
             var statusTrait = Instantiate(tooltipBoxPrefab, traitAnchor);
             var tempTraits = new List<TooltipBox>();
             statusTrait.SetTooltip(alive ? "Stable" : "Destroyed", alive ? "Exists to this day." : "Has fallen to ruin.");
@@ -155,24 +156,6 @@ namespace Game.GUI.Adventures
         }
     }
     /*
-
-    public class ItemWiki : WikiComponent<Item>
-    {
-        //special items
-        //all of the templates for weapons and armor (and eventually scrolls etc)
-    }
-
-    public class LandmarkBioWiki : WikiComponent<Landmark>
-    {
-        //name
-        //description: {type} in {general location in named zone}
-        //a button that centers the camera on the location
-        //traits?
-        //faction?
-        //organization?
-        //inventory
-    }
-
     public class RaceWiki : WikiComponent<Race>
     {
 

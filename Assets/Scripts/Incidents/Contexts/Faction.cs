@@ -656,7 +656,7 @@ namespace Game.Incidents
 			}
 		}
 
-		private bool CheckDestroyed()
+		protected virtual bool CheckDestroyed()
 		{
 			return NumCities <= 0;
 		}

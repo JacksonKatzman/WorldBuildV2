@@ -104,7 +104,7 @@ namespace Game.Incidents
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, typeof(Faction)));
 		}
 
-		private bool CheckDestroyed()
+		protected override bool CheckDestroyed()
 		{
 			return false;
 		}
