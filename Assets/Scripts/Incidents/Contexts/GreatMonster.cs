@@ -52,7 +52,11 @@ namespace Game.Incidents
 		//IMPORTANT! : Need to update the read/write saving for this class to account for new properties
 		public Dictionary<OrganizationType, int> Priorities { get; set; }
 
-		public GreatMonster()// : base()
+        public override string Description => $"{Age.ToString()}, {Gender.ToString()}, Legendary {dataBlock.size.ToString()} {dataBlock.type.ToString()}, {dataBlock.alignment.ToString()}";
+
+        public IIncidentContext Context => this;
+
+        public GreatMonster()// : base()
 		{
 			CharacterTraits = new List<CharacterTrait>();
 			Priorities = new Dictionary<OrganizationType, int>();

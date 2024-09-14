@@ -6,6 +6,7 @@ namespace Game.Incidents
 {
 	public interface ISentient : IPermsAffiliated
 	{
+		IIncidentContext Context { get; }
 		Gender Gender { get; set; }
 		Faction AffiliatedFaction { get; set; }
 		CharacterName CharacterName { get; set; }

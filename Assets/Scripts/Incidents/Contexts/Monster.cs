@@ -6,6 +6,9 @@ namespace Game.Incidents
 	public class Monster : InertIncidentContext
 	{
 		public override Type ContextType => typeof(Monster);
-		public MonsterData monsterData;
-	}
+
+        public override string Description => monsterData.GetDescription();
+
+        public MonsterData monsterData;
+    }
 }

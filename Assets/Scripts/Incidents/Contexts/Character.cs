@@ -194,6 +194,9 @@ namespace Game.Incidents
 		public bool Possessed { get; set; }
 
         public Location CurrentLocation { get; set; }
+		public override string Description => $"{Age.ToString()}, {Gender.ToString()}, {AffiliatedRace.Link()} of {AffiliatedFaction.Link()}";
+
+        public IIncidentContext Context => this;
 
         override public void DeployContext()
 		{

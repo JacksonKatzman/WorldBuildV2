@@ -20,7 +20,9 @@ namespace Game.Incidents
 		public LandmarkPreset Preset { get; private set; }
 		public List<LandmarkTrait> LandmarkTraits { get; set; }
 
-		public Landmark() 
+        public override string Description => $"LANDMARK DESCRIPTION";
+
+        public Landmark() 
 		{
 			EventManager.Instance.AddEventHandler<RemoveContextEvent>(OnRemoveContextEvent);
 			EventManager.Instance.AddEventHandler<TerritoryChangedControlEvent>(OnTerritoryChangedControl);

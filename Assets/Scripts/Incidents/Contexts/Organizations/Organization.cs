@@ -31,7 +31,9 @@ namespace Game.Incidents
 			}
 		}
 
-		public OrganizationTemplate template;
+        public override string Description => $"ORGANIZATION DESCRIPTION";
+
+        public OrganizationTemplate template;
 
 		public Organization() { }
 

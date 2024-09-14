@@ -3,6 +3,7 @@
 	public class Trinket : Item, IEquipable
 	{
 		public float ValueMultiplier { get; set; }
+		public override string Description => $"TRINKET DESCRIPTION";
 		public Trinket()
 		{
 

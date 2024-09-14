@@ -42,7 +42,7 @@ namespace Game.GUI.Adventures
 
         protected override string GetDescription()
         {
-            return $"{value.Age.ToString()}, {value.Gender.ToString()}, {Link(value.AffiliatedRace)} of {Link(value.AffiliatedFaction)}";
+            return value.Description;
         }
 
         protected override Data.SerializableStatBlock GetStats()

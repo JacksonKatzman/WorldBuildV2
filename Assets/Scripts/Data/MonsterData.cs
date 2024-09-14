@@ -91,4 +91,13 @@ namespace Game.Data
 		[TextArea(2, 8)]
 		public string actionDescription;
 	}
+
+	public static class MonsterDataExtensions
+    {
+		public static string GetDescription(this MonsterData monsterData)
+        {
+			var isLegendary = monsterData.legendary == true ? "Legendary" : string.Empty;
+			return $"{isLegendary} {monsterData.size.ToString()} {monsterData.type.ToString()}, {monsterData.alignment.ToString()}";
+		}
+    }
 }

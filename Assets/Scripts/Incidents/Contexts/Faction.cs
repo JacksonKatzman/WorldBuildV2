@@ -86,7 +86,8 @@ namespace Game.Incidents
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		public Organization Government { get; set; }
-		public Inventory CurrentInventory
+        public override string Description => $"[Size] [Wealth] {MajorityRace.Name} country";
+        public Inventory CurrentInventory
 		{
 			get
 			{
@@ -127,6 +128,7 @@ namespace Game.Incidents
 			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<IIncidentContext>();
+			FactionTraits = new List<FactionTrait>();
 
 			Priorities = new Dictionary<OrganizationType, int>();
 

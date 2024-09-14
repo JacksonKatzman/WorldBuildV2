@@ -56,7 +56,10 @@ namespace Game.Incidents
 
 		public Location CurrentLocation { get; private set; }
 		public HexGridOverlayChunk OverlayChunk { get; set; }
-		private string name;
+
+        public override string Description => $"HEX COLLECTION DESCRIPTION";
+
+        private string name;
 
 		public HexCollection()
 		{

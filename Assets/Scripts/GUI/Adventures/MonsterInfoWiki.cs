@@ -14,8 +14,7 @@ namespace Game.GUI.Adventures
 
         protected override string GetDescription()
         {
-            var isLegendary = value.legendary == true ? "Legendary" : string.Empty;
-            return $"{isLegendary} {value.size.ToString()} {value.type.ToString()}, {value.alignment.ToString()}";
+            return value.GetDescription();
         }
 
         protected override List<string> GetDetails()

@@ -20,6 +20,7 @@ namespace Game.Incidents
 		virtual public string Name { get; set; }
 		virtual public int Age { get; set; }
 		virtual public ContextFamiliarity Familiarity { get; set; }
+		abstract public string Description { get; }
 		virtual public int ID { get; set; }
 
 		virtual public int ParentID => -1;

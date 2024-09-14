@@ -72,6 +72,9 @@ namespace Game.Incidents
 		virtual public List<Item> Items { get; private set; }
 		virtual public Inventory CurrentInventory => this;
 
+        public override string Description => $"INVENTORY DESCRIPTION";
+
+
 		public Inventory() 
 		{
 			Items = new List<Item>();

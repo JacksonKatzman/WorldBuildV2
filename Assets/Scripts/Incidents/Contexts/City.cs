@@ -30,6 +30,7 @@ namespace Game.Incidents
 		public List<Resource> Resources { get; set; }
 		public List<Landmark> Landmarks => ContextDictionaryProvider.GetCurrentContexts<Landmark>().Where(x => x.CurrentLocation.Equals(CurrentLocation)).ToList();
 		public List<Character> Characters { get; set; }
+		public override string Description => $"{WealthDenominationString} {SizeDenominationString} in {AffiliatedFaction.Link()}";
 
 		public Inventory CurrentInventory { get; set; }
 		public string SizeDenominationString => GetSizeDenomination();

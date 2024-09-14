@@ -2,6 +2,7 @@
 using Game.Incidents;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ namespace Game.GUI.Adventures
     {
         [SerializeField]
         private TMP_Text descriptorText;
+
+        public bool IsEmpty => string.IsNullOrEmpty(descriptorText.text);
 
         override protected void Fill(string value)
         {
@@ -26,12 +29,17 @@ namespace Game.GUI.Adventures
         {
             for (int i = 0; i < values.Count; i++)
             {
-                Append(Link(values[i]));
+                Append(values[i].Link());
                 if (i < values.Count - 1)
                 {
                     Append("\n");
                 }
             }
+        }
+
+        public void Trim()
+        {
+            descriptorText.text.TrimEnd('\r', '\n');
         }
 
         public override void Clear()

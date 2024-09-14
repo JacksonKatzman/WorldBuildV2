@@ -9,10 +9,8 @@ namespace Game.GUI.Adventures
     {
         [SerializeField]
         private BioDescriptorUI nameText;
-        //description: {wealth denomination?} {denomination} in {relative direction?} {faction}
         [SerializeField]
         private BioDescriptorUI descriptionText;
-        //a button that centers the camera on the location
         [SerializeField]
         private BioDescriptorUI populationText;
         [SerializeField]
@@ -24,17 +22,28 @@ namespace Game.GUI.Adventures
         [SerializeField]
         private BioDescriptorUI flavorText;
 
+        [SerializeField]
+        private FamiliarityRequirementUIToggle charactersToggle;
+        [SerializeField]
+        private FamiliarityRequirementUIToggle landmarkToggle;
+        [SerializeField]
+        private FamiliarityRequirementUIToggle flavorToggle;
+
         protected override void Fill(City value)
         {
             Clear();
             nameText.Fill(value.Name);
             //add relative location within faction to description
-            descriptionText.Fill($"{value.WealthDenominationString} {value.SizeDenominationString} in {Link(value.AffiliatedFaction)}");
+            descriptionText.Fill(value.Description);
             populationText.Fill($"Population: {value.Population}");
             //rulersText.Fill()
             knownCharactersText.FillWithContextList(new List<IIncidentContext>(value.Characters));
+            charactersToggle.SetEmpty(rulersText.IsEmpty && knownCharactersText.IsEmpty);
+
             landmarksText.FillWithContextList(new List<IIncidentContext>(value.Landmarks));
+            landmarkToggle.SetEmpty(landmarksText.IsEmpty);
             //flavor stuff
+            flavorToggle.SetEmpty(flavorText.IsEmpty);
         }
 
         public void CenterOnObject()

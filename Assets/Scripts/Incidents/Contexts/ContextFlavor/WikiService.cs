@@ -102,7 +102,7 @@ namespace Game.GUI.Wiki
 			if(Int32.TryParse(id, out var result))
             {
 				var context = ContextDictionaryProvider.AllContexts.GetContextByID(result);
-				var contextType = context.GetType();
+				var contextType = context.ContextType;
 				if(wikiDictionary.TryGetValue(contextType, out var wiki))
                 {
 					wiki.Fill(context);
@@ -261,6 +261,25 @@ namespace Game.GUI.Wiki
 		private void OnSimulationComplete(WorldBuildSimulationCompleteEvent gameEvent)
         {
 			allIncidentsWiki?.Fill(IncidentService.Instance.reports);
+
+			foreach(var wiki in wikis)
+            {
+				var wikiType = wiki.GetComponentType();
+				if (typeof(IIncidentContext).IsAssignableFrom(wikiType))
+				{
+					var first = ContextDictionaryProvider.CurrentContexts[wikiType].First();
+					wiki.Fill(first);
+				}
+				else if (wikiType == typeof(MonsterData))
+				{
+					if (SerializedObjectCollectionService.Instance.Container.collections.TryGetValue(typeof(MonsterData), out var collection))
+                    {
+						var first = collection.objects.First().Value as MonsterData;
+						wiki.Fill(first);
+                    }
+				}
+			}
+
 			EventManager.Instance.RemoveEventHandler<WorldBuildSimulationCompleteEvent>(OnSimulationComplete);
         }
 

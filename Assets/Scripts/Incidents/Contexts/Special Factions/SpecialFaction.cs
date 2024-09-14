@@ -26,9 +26,11 @@ namespace Game.Incidents
 		}
 
 		public ILocationAffiliated Location { get; set; }
-		public ISentient Creator { get; set; }
+		public new ISentient Creator { get; set; }
 
-		public override int ControlledTiles => 1;
+		public override Type ContextType => typeof(Faction);
+
+        public override int ControlledTiles => 1;
 		public override int NumCities => 0;
 		public override bool IsSpecialFaction => true;
 

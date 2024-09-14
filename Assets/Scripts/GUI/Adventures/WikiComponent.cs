@@ -126,11 +126,6 @@ namespace Game.GUI.Adventures
             toggles = gameObject.GetComponentsInChildren<FamiliarityRequirementUIToggle>().ToList();
         }
 
-        protected string Link(IIncidentContext context)
-        {
-            return string.Format("<u><link=\"{0}\">{1}</link></u>", context.ID, context.Name);
-        }
-
         private void OnLinkClick(string linkID)
         {
             WikiService.Instance.OpenPage(linkID);
