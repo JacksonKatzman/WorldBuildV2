@@ -122,4 +122,17 @@ namespace Game.Incidents
 			}
 		}
 	}
+
+	public static class CollectionExtensions
+    {
+		public static string Print<T>(this List<T> list)
+        {
+			var text = string.Empty;
+			foreach(var item in list)
+            {
+				text += $"{item.ToString()}, ";
+            }
+			return text.Trim().TrimEnd(',');
+        }
+    }
 }

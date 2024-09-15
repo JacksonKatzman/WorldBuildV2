@@ -1,0 +1,114 @@
+{
+  "$id": "1",
+  "$type": "Game.Incidents.Incident, Auto-asmdef-SecondPass",
+  "IncidentName": "XX_AddTrait",
+  "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Weights": {
+    "$id": "2",
+    "$type": "Game.Incidents.IncidentWeight`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+    "baseWeight": 4,
+    "Operation": null,
+    "expressions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.Expression`1[[System.Int32, mscorlib]], Auto-asmdef-SecondPass]], mscorlib",
+      "$values": []
+    }
+  },
+  "Criteria": {
+    "$id": "3",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Auto-asmdef-SecondPass",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Auto-asmdef-SecondPass]], mscorlib",
+      "$values": []
+    }
+  },
+  "WorldCriteria": {
+    "$id": "4",
+    "$type": "Game.Incidents.IncidentCriteriaContainer, Auto-asmdef-SecondPass",
+    "criteria": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IIncidentCriteria, Auto-asmdef-SecondPass]], mscorlib",
+      "$values": []
+    }
+  },
+  "IsMajorIncident": false,
+  "IsUnique": false,
+  "IncidentHeadline": "dsa",
+  "ActionContainer": {
+    "$id": "5",
+    "$type": "Game.Incidents.IncidentActionHandlerContainer, Auto-asmdef-SecondPass",
+    "incidentLog": "sdsa",
+    "Actions": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass]], mscorlib",
+      "$values": [
+        {
+          "$id": "6",
+          "$type": "Game.Incidents.IncidentActionHandler, Auto-asmdef-SecondPass",
+          "incidentAction": {
+            "$id": "7",
+            "$type": "Game.Incidents.ModifyCharacterAction, Auto-asmdef-SecondPass",
+            "contextToModify": {
+              "$id": "8",
+              "$type": "Game.Incidents.ContextualIncidentActionField`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+              "parentType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+              "AllowSelf": false,
+              "AllowNull": false,
+              "criteria": {
+                "$type": "System.Collections.Generic.List`1[[Game.Incidents.IncidentActionFieldCriteria, Auto-asmdef-SecondPass]], mscorlib",
+                "$values": []
+              },
+              "value": null,
+              "delayedValue": null,
+              "Method": 1,
+              "PreviousField": "{0} - Original Context",
+              "PreviousFieldID": 0,
+              "ActionFieldID": 1,
+              "NameID": "{1}:ModifyCharacterAction:contextToModify",
+              "ActionFieldIDString": "{1}",
+              "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            },
+            "modifiers": {
+              "$type": "System.Collections.Generic.List`1[[Game.Incidents.ContextModifier`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass]], mscorlib",
+              "$values": [
+                {
+                  "$id": "9",
+                  "$type": "Game.Incidents.ContextModifier`1[[Game.Incidents.Character, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                  "propertyName": "CharacterTraits",
+                  "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                  "PrimitiveType": "System.Collections.Generic.List`1[[Game.Incidents.CharacterTrait, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                  "Calculator": {
+                    "$id": "10",
+                    "$type": "Game.Incidents.ContextTraitCalculator`1[[Game.Incidents.CharacterTrait, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                    "propertyName": "CharacterTraits",
+                    "addTrait": true,
+                    "trait": {
+                      "$id": "11",
+                      "$type": "Game.Incidents.ScriptableObjectRetriever`1[[Game.Incidents.CharacterTrait, Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass",
+                      "prefabKey": "TestTrait1",
+                      "onChanged": null,
+                      "RetrievedType": "Game.Incidents.CharacterTrait, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+                    },
+                    "PrimitiveType": "System.Collections.Generic.List`1[[Game.Incidents.CharacterTrait, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+                    "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+                    "ID": 2,
+                    "NameID": "{EX 2}",
+                    "Trait": {
+                      "$type": "Game.Incidents.CharacterTrait, Auto-asmdef-SecondPass",
+                      "traitName": "Trait 1",
+                      "traitDescription": "t1",
+                      "name": "TestTrait1",
+                      "hideFlags": 0
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "Deployers": {
+      "$type": "System.Collections.Generic.List`1[[Game.Incidents.IContextDeployer, Auto-asmdef-SecondPass]], mscorlib",
+      "$values": []
+    },
+    "ContextType": "Game.Incidents.Character, Auto-asmdef-SecondPass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+  }
+}

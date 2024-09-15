@@ -56,7 +56,10 @@ namespace Game.Incidents
 
 		public Location CurrentLocation { get; private set; }
 		public HexGridOverlayChunk OverlayChunk { get; set; }
-		private string name;
+
+        public override string Description => $"{GetTerrainTypeString()} near {SimulationUtilities.GetCityNearestLocation(CurrentLocation).Link()}";
+
+        private string name;
 
 		public HexCollection()
 		{
@@ -176,6 +179,11 @@ namespace Game.Incidents
 				}
 			}
 			AffiliatedTerrainType = mostCommonTerrainType;
+		}
+
+		private string GetTerrainTypeString()
+        {
+			return string.Join(" ", genericBiomeNames[AffiliatedTerrainType].Split(' ').Select(word => char.ToUpper(word[0]) + word.Substring(1)));
 		}
 
 		private int GetCenter()

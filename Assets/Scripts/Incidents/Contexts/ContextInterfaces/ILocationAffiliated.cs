@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Game.Incidents
 {
-	public interface ILocationAffiliated
+    public interface ILocationAffiliated
 	{
 		Location CurrentLocation { get; }
 	}

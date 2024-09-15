@@ -77,7 +77,7 @@ namespace Game.Incidents
 		public int GoodEvilAlignmentAxis { get; set; }
 		public List<IIncidentContext> FactionsWithinInteractionRange => GetFactionsWithinInteractionRange();
 		public List<IIncidentContext> FactionsAtWarWith { get; set; }
-		public List<FactionTag> FactionTags { get; set; }
+		public List<FactionTrait> FactionTraits { get; set; }
 		public List<Landmark> FactionLandmarks => ContextDictionaryProvider.GetCurrentContexts<Landmark>().Where(x => x.AffiliatedFaction == this).ToList();
 		public List<Organization> FactionOrganizations => ContextDictionaryProvider.GetCurrentContexts<Organization>().Where(x => x.AffiliatedFaction == this && x != Government).ToList();
 
@@ -86,7 +86,8 @@ namespace Game.Incidents
 		virtual public bool CanExpandTerritory => true;
 		virtual public bool CanTakeMilitaryAction => true;
 		public Organization Government { get; set; }
-		public Inventory CurrentInventory
+        public override string Description => $"[Size] [Wealth] {MajorityRace.Name} country";
+        public Inventory CurrentInventory
 		{
 			get
 			{
@@ -127,6 +128,7 @@ namespace Game.Incidents
 			FactionRelations = new Dictionary<IIncidentContext, int>();
 			Cities = new List<City>();
 			FactionsAtWarWith = new List<IIncidentContext>();
+			FactionTraits = new List<FactionTrait>();
 
 			Priorities = new Dictionary<OrganizationType, int>();
 
@@ -654,7 +656,7 @@ namespace Game.Incidents
 			}
 		}
 
-		private bool CheckDestroyed()
+		protected virtual bool CheckDestroyed()
 		{
 			return NumCities <= 0;
 		}

@@ -14,7 +14,9 @@ namespace Game.Incidents
 		[JsonIgnore]
 		public BiomeTerrainType AffiliatedTerrainType => SimulationManager.Instance.HexGrid.cells[TileIndex].BiomeSubtype;
 
-		public Location() { }
+        public override string Description => $"LOCATION DESCRIPTION";
+
+        public Location() { }
 		public Location(int tileIndex)
 		{
 			TileIndex = tileIndex;

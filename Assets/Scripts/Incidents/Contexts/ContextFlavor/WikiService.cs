@@ -1,4 +1,5 @@
-﻿using Game.Debug;
+﻿using Game.Data;
+using Game.Debug;
 using Game.GUI.Adventures;
 using Game.Incidents;
 using Game.Simulation;
@@ -13,6 +14,9 @@ namespace Game.GUI.Wiki
 {
     public class WikiService : SerializedMonoBehaviour
     {
+		static Dictionary<Type, string> contextTypePluralizations = new Dictionary<Type, string>() { { typeof(GreatMonster), "Great Monsters" },
+			{ typeof(City), "Cities" }, { typeof(HexCollection), "Zones" } };
+
 		[SerializeField]
 		private WikiTableOfContents tableOfContents;
 		[SerializeField]
@@ -69,6 +73,7 @@ namespace Game.GUI.Wiki
 			{
 				HideWikis();
 				tableOfContents.Hide();
+				wikiOpen = false;
 			}
 			else
 			{
@@ -88,6 +93,8 @@ namespace Game.GUI.Wiki
 						selector.OnClick();
 					}
 				}
+
+				wikiOpen = true;
 			}
         }
 
@@ -96,13 +103,30 @@ namespace Game.GUI.Wiki
 			if(Int32.TryParse(id, out var result))
             {
 				var context = ContextDictionaryProvider.AllContexts.GetContextByID(result);
-				var contextType = context.GetType();
+				var contextType = context.ContextType;
 				if(wikiDictionary.TryGetValue(contextType, out var wiki))
                 {
 					wiki.Fill(context);
 					SwitchToTab(wiki);
                 }
 			}
+			else
+            {
+				if(id.StartsWith("MD:") && wikiDictionary.TryGetValue(typeof(MonsterData), out var wiki))
+                {
+					//a monsterData
+					var split = id.Split(':');
+					if(SerializedObjectCollectionService.Instance.Container.collections.TryGetValue(typeof(MonsterData), out var collection))
+                    {
+						if(collection.objects.TryGetValue(split[1], out var data))
+                        {
+							var monsterData = data as MonsterData;
+							wiki.Fill(monsterData);
+							SwitchToTab(wiki);
+                        }
+                    }
+				}
+            }
         }
 
 		public void SwitchToTab(IWikiComponent component)
@@ -132,13 +156,14 @@ namespace Game.GUI.Wiki
 
 		private void FillTableOfContents(Type type)
         {
+			tableOfContents.currentType = type;
 			if (typeof(IIncidentContext).IsAssignableFrom(type))
 			{
 				if(AdventureService.Instance.IsDungeonMasterView)
                 {
 					if (ContextDictionaryProvider.AllContexts.TryGetValue(type, out var allContextsList))
                     {
-						tableOfContents.Fill(allContextsList);
+						tableOfContents.Fill(CreateLinksFromContexts(allContextsList));
 					}
 					else
                     {
@@ -149,7 +174,7 @@ namespace Game.GUI.Wiki
                 {
 					if(AdventureService.Instance.KnownContexts.TryGetValue(type, out var contexts))
                     {
-						tableOfContents.Fill(contexts.Keys.ToList());
+						tableOfContents.Fill(CreateLinksFromContexts(contexts.Keys.ToList()));
                     }
 					else
 					{
@@ -157,6 +182,21 @@ namespace Game.GUI.Wiki
 					}
 				}
 			}
+			else if(type == typeof(MonsterData))
+            {
+				if(AdventureService.Instance.IsDungeonMasterView)
+                {
+					if (SerializedObjectCollectionService.Instance.Container.collections.TryGetValue(typeof(MonsterData), out var collection))
+					{
+						var monsterLinks = new List<string>();
+						foreach(var item in collection.objects)
+                        {
+							monsterLinks.Add(string.Format("<u><link=\"MD:{0}\">{1}</link></u>", item.Key, item.Key));
+                        }
+						tableOfContents.Fill(monsterLinks);
+					}
+				}
+            }
 			else
             {
 				tableOfContents.Clear();
@@ -164,6 +204,16 @@ namespace Game.GUI.Wiki
 
 			tableOfContents.Show();
 		}
+
+		private List<string> CreateLinksFromContexts(List<IIncidentContext> contexts)
+        {
+			var list = new List<string>();
+			foreach(var context in contexts)
+            {
+				list.Add(string.Format("<u><link=\"{0}\">{1}</link></u>", context.ID, context.Name));
+            }
+			return list;
+        }
 
 		private void LoadWikiDictionary()
         {
@@ -182,12 +232,23 @@ namespace Game.GUI.Wiki
 					var tabName = string.Empty;
 					if(typeof(IIncidentContext).IsAssignableFrom(subType))
                     {
-						tabName = $"{subType.Name}s";
+						if (contextTypePluralizations.TryGetValue(subType, out var typeName))
+						{
+							tabName = typeName;
+						}
+						else
+						{
+							tabName = $"{subType.Name}s";
+						}
 					}
 					else if(subType == typeof(List<IncidentReport>))
                     {
 						tabName = "World History";
 					}
+					else if(subType == typeof(MonsterData))
+                    {
+						tabName = "Monsters";
+                    }
 					selector.Setup(wiki, tabName, () => { SwitchToTab(wiki); });
 					tabSelectors.Add(wiki, selector);
                 }
@@ -201,6 +262,25 @@ namespace Game.GUI.Wiki
 		private void OnSimulationComplete(WorldBuildSimulationCompleteEvent gameEvent)
         {
 			allIncidentsWiki?.Fill(IncidentService.Instance.reports);
+
+			foreach(var wiki in wikis)
+            {
+				var wikiType = wiki.GetComponentType();
+				if (typeof(IIncidentContext).IsAssignableFrom(wikiType))
+				{
+					var first = ContextDictionaryProvider.CurrentContexts[wikiType].First();
+					wiki.Fill(first);
+				}
+				else if (wikiType == typeof(MonsterData))
+				{
+					if (SerializedObjectCollectionService.Instance.Container.collections.TryGetValue(typeof(MonsterData), out var collection))
+                    {
+						var first = collection.objects.First().Value as MonsterData;
+						wiki.Fill(first);
+                    }
+				}
+			}
+
 			EventManager.Instance.RemoveEventHandler<WorldBuildSimulationCompleteEvent>(OnSimulationComplete);
         }
 

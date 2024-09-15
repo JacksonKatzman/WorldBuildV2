@@ -75,6 +75,7 @@ namespace Game.Simulation
 		public IncidentContextDictionary AllContexts { get; private set; }
 		private IncidentContextDictionary contextsToAdd;
 		private IncidentContextDictionary contextsToRemove;
+		public override string Description => $"WORLD DESCRIPTION";
 
 		public bool PostSimulationCompleted => postSimulationCompleted;
 		private bool postSimulationCompleted;

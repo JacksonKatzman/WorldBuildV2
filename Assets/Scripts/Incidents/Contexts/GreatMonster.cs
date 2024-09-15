@@ -12,6 +12,7 @@ namespace Game.Incidents
 	{
 		public MonsterData dataBlock;
 		public override string Name => CharacterName.FullName;
+
 		public Inventory CurrentInventory { get; set; }
 		public CharacterName CharacterName { get; set; }
 		public Gender Gender { get; set; }
@@ -19,7 +20,7 @@ namespace Game.Incidents
 		public OrganizationType PriorityAlignment => OrganizationType.MILITARY;
 		public int LawfulChaoticAlignmentAxis { get; set; }
 		public int GoodEvilAlignmentAxis { get; set; }
-		public List<CharacterTag> CharacterTags { get; set; }
+		public List<CharacterTrait> CharacterTraits { get; set; }
 		public Faction AffiliatedFaction { get; set; }
 		public IOrganizationPosition OrganizationPosition { get; set; }
 		public Organization AffiliatedOrganization => OrganizationPosition.AffiliatedOrganization;
@@ -51,9 +52,13 @@ namespace Game.Incidents
 		//IMPORTANT! : Need to update the read/write saving for this class to account for new properties
 		public Dictionary<OrganizationType, int> Priorities { get; set; }
 
-		public GreatMonster()// : base()
+        public override string Description => $"{Age.ToString()}, {Gender.ToString()}, Legendary {dataBlock.size.ToString()} {dataBlock.type.ToString()}, {dataBlock.alignment.ToString()}";
+
+        public IIncidentContext Context => this;
+
+        public GreatMonster()// : base()
 		{
-			CharacterTags = new List<CharacterTag>();
+			CharacterTraits = new List<CharacterTrait>();
 			Priorities = new Dictionary<OrganizationType, int>();
 			Priorities[OrganizationType.POLITICAL] = 0;
 			Priorities[OrganizationType.ECONOMIC] = 0;

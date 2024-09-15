@@ -41,5 +41,21 @@ namespace Game.Data
 
 			return dictionary;
 		}
+
+		public string Print(bool nonZero = false)
+        {
+			var text = "";
+			var count = 0;
+			foreach (var pair in BuildDictionary())
+			{
+				var symbol = pair.Value > 0 ? "+" : string.Empty;
+				if (!nonZero || pair.Value != 0)
+				{
+					text += $"{pair.Key}: {symbol}{pair.Value}, ";
+				}
+			}
+
+			return text.Trim().TrimEnd(',');
+		}
 	}
 }

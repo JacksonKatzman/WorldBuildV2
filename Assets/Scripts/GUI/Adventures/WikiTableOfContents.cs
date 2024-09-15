@@ -6,16 +6,17 @@ using UnityEngine;
 
 namespace Game.GUI.Adventures
 {
-    public class WikiTableOfContents : WikiComponent<List<IIncidentContext>>
+    public class WikiTableOfContents : WikiComponent<List<string>>
     {
         [SerializeField]
         private TMP_Text tableOfContentsText;
-        protected override void Fill(List<IIncidentContext> list)
+        public Type currentType;
+        protected override void Fill(List<string> list)
         {
             tableOfContentsText.text = "";
             foreach (var item in list)
             {
-                tableOfContentsText.text += $"-{Link(item)}\n";
+                tableOfContentsText.text += $"-{item}\n";
             }
         }
 

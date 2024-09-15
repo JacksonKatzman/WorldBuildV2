@@ -26,9 +26,11 @@ namespace Game.Incidents
 		}
 
 		public ILocationAffiliated Location { get; set; }
-		public ISentient Creator { get; set; }
+		public new ISentient Creator { get; set; }
 
-		public override int ControlledTiles => 1;
+		public override Type ContextType => typeof(Faction);
+
+        public override int ControlledTiles => 1;
 		public override int NumCities => 0;
 		public override bool IsSpecialFaction => true;
 
@@ -102,7 +104,7 @@ namespace Game.Incidents
 			EventManager.Instance.Dispatch(new RemoveContextEvent(this, typeof(Faction)));
 		}
 
-		private bool CheckDestroyed()
+		protected override bool CheckDestroyed()
 		{
 			return false;
 		}

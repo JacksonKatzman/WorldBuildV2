@@ -213,6 +213,7 @@ namespace Game.Incidents
 			{
 				if (asset.text.Length > 0)
 				{
+					OutputLogger.Log($"Deserializing {asset.name}");
 					var item = JsonConvert.DeserializeObject<Incident>(asset.text, SaveUtilities.SERIALIZER_SETTINGS);
 					incidents.Add(item);
 				}

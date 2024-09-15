@@ -41,6 +41,21 @@ namespace Game.Enums
 		{
 			return Enum.GetValues(theEnum.GetType()).Cast<T>();
 		}
+
+		/*
+		public static string Symbol(this Gender gender)
+        {
+			switch(gender)
+            {
+				case Gender.MALE:
+					return "?";
+				case Gender.FEMALE:
+					return "?";
+				default:
+					return "??";
+			}
+        }
+		*/
 	}
 
 	public enum HexDirection { NE, E, SE, SW, W, NW };

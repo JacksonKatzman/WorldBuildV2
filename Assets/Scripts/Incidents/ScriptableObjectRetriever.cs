@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Game.Incidents
 {
 	[HideReferenceObjectPicker]
-	public class ScriptableObjectRetriever<T> where T: SerializedScriptableObject
+	public class ScriptableObjectRetriever<T> where T : SerializedScriptableObject
 	{
 		//need a way to find the container object for the dictionary of scriptable objects of whatever type T is
 		//then we have a string field that has a dropdown built of all the dictionary keys or w/e
@@ -19,6 +19,14 @@ namespace Game.Incidents
 
 		[HideInInspector]
 		public Action onChanged;
+
+		/*
+        public ScriptableObjectRetriever()
+        {
+        }
+		*/
+
+        public Type RetrievedType => typeof(T);
 
 		public T RetrieveObject()
 		{

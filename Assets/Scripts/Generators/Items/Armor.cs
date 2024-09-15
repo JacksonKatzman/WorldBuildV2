@@ -9,7 +9,9 @@ namespace Game.Generators.Items
 		public int FlatBonus { get; set; }
 		public ItemGrade ItemGrade { get; set; }
 
-		public Armor()
+		public override string Description => $"ARMOR_DESCRIPTION";
+
+        public Armor()
 		{
 		}
 

@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Game.Incidents
 {
-	public abstract class IncidentContext : IIncidentContext
+	public abstract class IncidentContext : IIncidentContext, IFamiliarityAffiliated
 	{
 		protected Dictionary<string, List<YearData<int>>> historicalData;
 		protected List<PropertyInfo> propertyList;
@@ -20,6 +20,7 @@ namespace Game.Incidents
 		virtual public string Name { get; set; }
 		virtual public int Age { get; set; }
 		virtual public ContextFamiliarity Familiarity { get; set; }
+		abstract public string Description { get; }
 		virtual public int ID { get; set; }
 
 		virtual public int ParentID => -1;

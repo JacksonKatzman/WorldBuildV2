@@ -57,11 +57,11 @@ namespace Game.Incidents
 
         virtual protected bool IsValidPropertyType(Type type)
         {
-            return type == typeof(int) || type == typeof(float) || type == typeof(bool) || type == typeof(List<CharacterTag>) || IsListContextTag(type);
+            return type == typeof(int) || type == typeof(float) || type == typeof(bool) || type == typeof(List<CharacterTrait>) || IsListContextTrait(type);
         }
-        private bool IsListContextTag(Type type)
+        private bool IsListContextTrait(Type type)
         {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && typeof(IContextTag).IsAssignableFrom(type.GetGenericArguments()[0]);
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>) && typeof(ContextTrait).IsAssignableFrom(type.GetGenericArguments()[0]);
         }
 
 #if UNITY_EDITOR
@@ -90,10 +90,10 @@ namespace Game.Incidents
             {
                 Calculator = new BooleanContextModifierCalculator(propertyName, ContextType);
             }
-            else if(IsListContextTag(PrimitiveType))
+            else if(IsListContextTrait(PrimitiveType))
 			{
                 var dataType = new Type[] { PrimitiveType.GetGenericArguments()[0] };
-                var genericBase = typeof(ContextTagCalculator<>);
+                var genericBase = typeof(ContextTraitCalculator<>);
                 var combinedType = genericBase.MakeGenericType(dataType);
                 Calculator = (IContextModifierCalculator)Activator.CreateInstance(combinedType, propertyName, ContextType);
             }

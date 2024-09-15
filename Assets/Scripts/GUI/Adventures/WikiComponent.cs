@@ -1,6 +1,7 @@
 ﻿using Game.Enums;
 using Game.GUI.Wiki;
 using Game.Incidents;
+using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
@@ -18,23 +19,36 @@ namespace Game.GUI.Adventures
         [SerializeField]
         private ContextFamiliarity familiarityRequirement;
         protected List<TMP_Text> textFields;
+        protected List<IWikiComponent> componentList;
+        protected List<FamiliarityRequirementUIToggle> toggles;
+
+        protected T Value { get; set; }
 
         public CanvasGroup MainCanvasGroup => mainCanvasGroup;
         public ContextFamiliarity FamiliarityRequirement => familiarityRequirement;
 
         public void Fill(object value)
         {
-            Fill((T)value);
+            Value = (T)value;
+            Fill(Value);
         }
-        abstract public void Clear();
+        virtual public void Clear()
+        {
+            foreach (var component in componentList)
+            {
+                component.Clear();
+            }
+        }
         virtual public Type GetComponentType()
         {
             return typeof(T);
         }
         protected abstract void Fill(T value);
-        private void Awake()
+        protected virtual void Awake()
         {
             LoadTextList();
+            LoadToggles();
+            LoadComponentList();
         }
 
         protected virtual void LoadTextList()
@@ -92,9 +106,24 @@ namespace Game.GUI.Adventures
 
         }
 
-        protected string Link(IIncidentContext context)
+        protected void LoadComponentList()
         {
-            return string.Format("<u><link=\"{0}\">{1}</link></u>", context.ID, context.Name);
+            componentList = new List<IWikiComponent>();
+            var fieldInfos = GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var matchingFieldInfos = fieldInfos.Where(x => typeof(IWikiComponent).IsAssignableFrom(x.FieldType)).ToList();
+            foreach (var fieldInfo in matchingFieldInfos)
+            {
+                var value = (IWikiComponent)fieldInfo.GetValue(this);
+                if (value != null)
+                {
+                    componentList.Add(value);
+                }
+            }
+        }
+
+        protected void LoadToggles()
+        {
+            toggles = gameObject.GetComponentsInChildren<FamiliarityRequirementUIToggle>().ToList();
         }
 
         private void OnLinkClick(string linkID)

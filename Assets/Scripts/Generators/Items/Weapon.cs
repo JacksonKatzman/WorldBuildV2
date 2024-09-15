@@ -9,6 +9,7 @@ namespace Game.Generators.Items
 		public WeaponType WeaponType { get; set; }
 		public int FlatBonus { get; set; }
 		public ItemGrade ItemGrade { get; set; }
+		public override string Description => $"WEAPON DESCRIPTION";
 
 		public Weapon()
 		{

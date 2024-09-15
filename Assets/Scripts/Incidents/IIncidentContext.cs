@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Game.Incidents
 {
-	public interface IIncidentContext
+    public interface IIncidentContext
 	{
 		Type ContextType { get; }
 		int NumIncidents { get; }

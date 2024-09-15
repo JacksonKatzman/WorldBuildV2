@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Game.Incidents
 {
-	public class ListContainsContextTagEvaluator<T> : ICriteriaEvaluator where T: IContextTag
+	public class ListContainsContextTraitEvaluator<T> : ICriteriaEvaluator where T: ContextTrait
     {
         public static Dictionary<string, Func<List<T>, T, bool>> ListContextTagComparators = new Dictionary<string, Func<List<T>, T, bool>>
         {
@@ -20,7 +20,7 @@ namespace Game.Incidents
         public string Comparator;
 
         [HorizontalGroup("Group 1", 400), HideLabel]
-        public T tag;
+        public T trait;
 
         private string comparator;
 
@@ -28,11 +28,11 @@ namespace Game.Incidents
         public Type Type => typeof(List<T>);
 
 
-        public ListContainsContextTagEvaluator(string propertyName, Type contextType)
+        public ListContainsContextTraitEvaluator(string propertyName, Type contextType)
         {
             ContextType = contextType;
             this.propertyName = propertyName;
-            tag = (T)Activator.CreateInstance(typeof(T));
+            trait = (T)Activator.CreateInstance(typeof(T));
             Setup();
         }
 
@@ -44,7 +44,7 @@ namespace Game.Incidents
 		public bool Evaluate(IIncidentContext context, string propertyName, IIncidentContext parentContext = null)
 		{
             var propertyValue = (List<T>)context.GetType().GetProperty(propertyName).GetValue(context);
-            var result = ListContextTagComparators[Comparator].Invoke(propertyValue, tag);
+            var result = ListContextTagComparators[Comparator].Invoke(propertyValue, trait);
             return result;
         }
         private List<string> GetComparatorNames()

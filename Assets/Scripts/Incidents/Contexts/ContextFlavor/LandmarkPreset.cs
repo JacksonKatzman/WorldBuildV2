@@ -5,15 +5,16 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	[CreateAssetMenu(fileName = nameof(LandmarkPreset), menuName = "ScriptableObjects/Data/" + nameof(LandmarkPreset), order = 1)]
+
+    [CreateAssetMenu(fileName = nameof(LandmarkPreset), menuName = "ScriptableObjects/Data/" + nameof(LandmarkPreset), order = 1)]
 	public class LandmarkPreset : SerializedScriptableObject
 	{
-		public List<LandmarkTag> landmarkTags;
+		public List<LandmarkTrait> landmarkTraits;
 		public List<Transform> models;
 
 		public LandmarkPreset()
 		{
-			landmarkTags = new List<LandmarkTag>();
+			landmarkTraits = new List<LandmarkTrait>();
 			models = new List<Transform>();
 		}
 	}

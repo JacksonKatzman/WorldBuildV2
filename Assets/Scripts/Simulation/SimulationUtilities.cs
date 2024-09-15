@@ -9,6 +9,10 @@ namespace Game.Simulation
 {
 	public static class SimulationUtilities
 	{
+		public static int ConvertStatToModifier(int stat)
+        {
+			return (stat - 10) / 2;
+        }
 		public static int GetRandomCellIndex(List<BiomeTerrainType> biomeTypes = null)
 		{
 			return GetRandomCell(biomeTypes).Index;

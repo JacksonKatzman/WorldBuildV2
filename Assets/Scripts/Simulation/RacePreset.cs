@@ -1,4 +1,5 @@
-﻿using Game.Generators.Names;
+﻿using Game.Data;
+using Game.Generators.Names;
 using Game.Incidents;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
@@ -13,6 +14,9 @@ namespace Game.Simulation
 		public int maxAge;
 
 		public List<OrganizationTemplate> organizationTemplates;
+
+		[SerializeField]
+		public MonsterData baseStatBlock;
 
 		[SerializeField]
 		public NamingThemePreset namingTheme;

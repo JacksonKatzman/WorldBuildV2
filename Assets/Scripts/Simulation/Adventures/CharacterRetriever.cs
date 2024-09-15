@@ -11,7 +11,7 @@ namespace Game.Simulation
 	{
 		public bool preferKnownCharacter;
 
-		public CharacterTag preferedTag = new CharacterTag();
+		public CharacterTrait preferedTrait;
 		public override Dictionary<string, Func<Character, int, string>> Replacements => replacements;
 		private static readonly Dictionary<string, Func<Character, int, string>> replacements = new Dictionary<string, Func<Character, int, string>>
 		{
@@ -27,11 +27,11 @@ namespace Game.Simulation
 			List<Character> possibilities = new List<Character>();
 			if(preferKnownCharacter)
             {
-				possibilities = KnownContexts == null ? null : KnownContexts.Where(x => x.CharacterTags.Contains(preferedTag)).ToList();
+				possibilities = KnownContexts == null ? null : KnownContexts.Where(x => x.CharacterTraits.Contains(preferedTrait)).ToList();
             }
 			if(possibilities == null || possibilities.Count == 0)
             {
-				possibilities = World.CurrentWorld.People.Where(x => x.CharacterTags.Contains(preferedTag) && x.CurrentLocation.GetDistanceBetweenLocations(AdventureService.Instance.CurrentLocation) < 10).ToList();
+				possibilities = World.CurrentWorld.People.Where(x => x.CharacterTraits.Contains(preferedTrait) && x.CurrentLocation.GetDistanceBetweenLocations(AdventureService.Instance.CurrentLocation) < 10).ToList();
 			}
 
 			if (possibilities.Count > 0)

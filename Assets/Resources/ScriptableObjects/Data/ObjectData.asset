@@ -21,6 +21,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: de1823fe4a6bf5a409531e01183a5a67, type: 2}
     - {fileID: 11400000, guid: 72bab6d98cf05b7448022e76ed1d18ec, type: 2}
     - {fileID: 11400000, guid: 238a67660249b82429963cdb603e68a0, type: 2}
+    - {fileID: 11400000, guid: 90678ab528d2da947b447509433fbce5, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -39,7 +40,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 5
+      Data: 6
     - Name: 
       Entry: 7
       Data: 
@@ -127,6 +128,24 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 7|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Game.Incidents.CharacterTrait, Auto-asmdef-SecondPass
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 10
+      Data: 5
     - Name: 
       Entry: 8
       Data: 

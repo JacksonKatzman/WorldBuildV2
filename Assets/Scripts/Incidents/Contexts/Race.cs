@@ -9,7 +9,10 @@ namespace Game.Incidents
 		public Race AffiliatedRace => this;
 		public int MinAge { get; set; }
 		public int MaxAge { get; set; }
-		public RacePreset racePreset;
+
+        public override string Description => $"RACE DESCRIPTION";
+
+        public RacePreset racePreset;
 
 		public Race() { }
 

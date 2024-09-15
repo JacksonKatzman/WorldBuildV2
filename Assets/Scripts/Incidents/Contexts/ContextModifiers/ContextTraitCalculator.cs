@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Game.Incidents
 {
-	public class ContextTagCalculator<T> : IContextModifierCalculator where T : IContextTag
+	public class ContextTraitCalculator<T> : IContextModifierCalculator where T : ContextTrait
 	{
         public Type PrimitiveType => typeof(List<T>);
 
@@ -17,32 +17,37 @@ namespace Game.Incidents
         public string propertyName;
 
         [LabelText("Add tag: True to add, false to remove.")]
-        public bool addTag = true;
+        public bool addTrait = true;
 
-        public T tag;
+        public ScriptableObjectRetriever<T> trait;
+        public T Trait => (T)trait.RetrieveObject();
 
-        public ContextTagCalculator() { }
+        public ContextTraitCalculator() { }
 
-        public ContextTagCalculator(string propertyName, Type contextType)
+        public ContextTraitCalculator(string propertyName, Type contextType)
         {
             this.propertyName = propertyName;
             ContextType = contextType;
-            tag = (T)Activator.CreateInstance(typeof(T));
+            
+            var dataType = new Type[] { typeof(T) };
+            var genericBase = typeof(ScriptableObjectRetriever<>);
+            var combinedType = genericBase.MakeGenericType(dataType);
+            trait = (ScriptableObjectRetriever<T>)Activator.CreateInstance(combinedType);
+            
         }
 
         public void Calculate(IIncidentContext context)
         {
             var property = context.GetType().GetProperty(propertyName);
             var propertyValue = (List<T>)property.GetValue(context);
-            if (addTag && !propertyValue.Contains(tag))
+            if (addTrait && !propertyValue.Contains(Trait))
             {
-                //propertyValue.Add(tag);
-                var p = new object[1] { tag };
+                var p = new object[1] { Trait };
                 propertyValue.GetType().GetMethod("Add").Invoke(property.GetValue(context), p);
             }
-            else if (!addTag && propertyValue.Contains(tag))
+            else if (!addTrait && propertyValue.Contains(Trait))
             {
-                var p = new object[1] { tag };
+                var p = new object[1] { Trait };
                 propertyValue.GetType().GetMethod("Remove").Invoke(property.GetValue(context), p);
             }
         }
