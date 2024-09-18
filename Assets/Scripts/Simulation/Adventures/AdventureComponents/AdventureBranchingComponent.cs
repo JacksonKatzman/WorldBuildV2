@@ -7,24 +7,7 @@ namespace Game.Simulation
 	public class AdventureBranchingComponent : AdventureComponent
 	{
 		[Title("Branching Action Paths"), ListDrawerSettings(CustomAddFunction = "AddPath")]
-		public ObservableCollection<AdventurePathComponent> paths;
-
-		public AdventureBranchingComponent()
-		{
-			paths = new ObservableCollection<AdventurePathComponent>();
-#if UNITY_EDITOR
-			paths.CollectionChanged += EncounterEditorWindow.UpdateComponentIDs;
-#endif
-		}
-
-        public override void UpdateComponentID(ref int nextID, List<int> removedIds = null)
-		{
-			base.UpdateComponentID(ref nextID, removedIds);
-			foreach (var path in paths)
-			{
-				path.UpdateComponentID(ref nextID, removedIds);
-			}
-		}
+		public ObservableCollection<AdventurePathComponent> paths = new ObservableCollection<AdventurePathComponent>();
 
 		private void AddPath()
 		{

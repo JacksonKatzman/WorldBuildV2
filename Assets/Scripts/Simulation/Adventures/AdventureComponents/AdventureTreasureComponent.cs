@@ -11,8 +11,8 @@ namespace Game.Simulation
 		public List<AdventureTreasure> treasures;
 		public List<ItemValue> currency;
 
-		[TextArea(3, 5), PropertyOrder(0)]
-		public string description;
+		[PropertyOrder(0)]
+		public AdventureComponentTextField description = new AdventureComponentTextField();
 
 		public AdventureTreasureComponent()
 		{
@@ -29,8 +29,8 @@ namespace Game.Simulation
 #if UNITY_EDITOR
 		private IEnumerable<int> GetTreasureIDs()
 		{
-			var ids = EncounterEditorWindow.contextCriterium.Where(x => x.GetType() == typeof(TreasureRetriever)).Select(x => x.RetrieverID);
-			return ids;
+			var treasureRetrievers = AdventureEncounterObject.Current.contextCriterium.Where(x => x.GetType() == typeof(TreasureRetriever)).Select(x => x.RetrieverID).ToList();
+			return treasureRetrievers;
 		}
 #endif
 	}

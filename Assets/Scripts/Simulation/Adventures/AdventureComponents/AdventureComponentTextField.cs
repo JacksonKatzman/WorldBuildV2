@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Simulation
 {
-	[Serializable]
+	[Serializable, HideReferenceObjectPicker]
     public class AdventureComponentTextField
     {
 		[TextArea(1, 20), PropertyOrder(0)]

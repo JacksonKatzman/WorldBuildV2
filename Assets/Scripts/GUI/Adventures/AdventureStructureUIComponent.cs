@@ -18,12 +18,12 @@ namespace Game.GUI.Adventures
 
 		public override void BuildUIComponents(AdventureStructureComponent component)
 		{
-			structureNameText.text = component.structureName;
-			structureDescription.text = component.structureDescription;
-			ceilingDescription.text = $"<b>Ceiling:</b> {component.ceilingDescription}";
-			floorsAndWallsDescription.text = $"<b>Floors and Walls:</b> {component.floorsAndWallsDescription}";
-			doorsDescription.text = $"<b>Doors:</b> {component.doorsDescription}";
-			lightingDescription.text = $"<b>Lighting:</b> {component.lightingDescription}";
+			structureNameText.text = component.structureName.text;
+			structureDescription.text = component.structureDescription.text;
+			ceilingDescription.text = $"<b>Ceiling:</b> {component.ceilingDescription.text}";
+			floorsAndWallsDescription.text = $"<b>Floors and Walls:</b> {component.floorsAndWallsDescription.text}";
+			doorsDescription.text = $"<b>Doors:</b> {component.doorsDescription.text}";
+			lightingDescription.text = $"<b>Lighting:</b> {component.lightingDescription.text}";
 		}
 	}
 }

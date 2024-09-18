@@ -6,9 +6,6 @@ namespace Game.Simulation
 	{
 		public bool Completed { get; set; }
 		public int ComponentID { get; set; }
-		public void UpdateStuff(int oldID, int newID);
-		public void UpdateComponentID(ref int nextID, List<int> removedIds = null);
-		public void UpdateContextIDs(List<int> removedIds = null);
-		public List<int> GetRemovedIds();
+		public void UpdateRetrieverIds(int oldID, int newID);
 	}
 }

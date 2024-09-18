@@ -14,7 +14,7 @@ namespace Game.GUI.Adventures
 
 		public override void BuildUIComponents(AdventureCombatComponent component)
 		{
-			descriptionText.text = component.description;
+			descriptionText.text = component.description.text;
 
 			foreach (var participant in component.combatParticipants)
 			{

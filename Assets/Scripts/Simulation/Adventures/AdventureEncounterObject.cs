@@ -47,6 +47,8 @@ namespace Game.Simulation
 	[CreateAssetMenu(fileName = nameof(AdventureEncounterObject), menuName = "ScriptableObjects/Adventures/" + nameof(AdventureEncounterObject), order = 1)]
 	public class AdventureEncounterObject : SerializedScriptableObject, ILocationAffiliated
 	{
+		public static AdventureEncounterObject Current { get; set; }
+
 		[PropertyOrder(-11)]
 		public string encounterTitle;
 		[PropertyOrder(-10)]
@@ -138,7 +140,7 @@ namespace Game.Simulation
                 {
 					foreach(var component in components)
                     {
-						component.UpdateStuff(pair.Value.Item1, pair.Value.Item2);
+						component.UpdateRetrieverIds(pair.Value.Item1, pair.Value.Item2);
                     }
                 }
             }

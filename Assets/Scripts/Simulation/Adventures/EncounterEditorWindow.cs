@@ -21,6 +21,7 @@ namespace Game.Simulation
 {
 	public class EncounterEditorWindow : OdinEditorWindow
 	{
+        /*
         [MenuItem("World Builder/Encounter Editor")]
 		private static void OpenWindow()
 		{
@@ -251,6 +252,7 @@ namespace Game.Simulation
             var finalString = string.Concat(splits);
             return finalString;
         }
+        */
     }
 }
 #endif
