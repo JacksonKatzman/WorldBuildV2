@@ -4,6 +4,7 @@ using Game.Simulation;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -62,7 +63,7 @@ namespace Game.GUI.Adventures
 		{
 			foreach (var text in AssociatedTexts)
 			{
-				ReplaceTextPlaceholders(contexts, text);
+				//ReplaceTextPlaceholders(contexts, text);
 			}
 		}
 
@@ -120,6 +121,7 @@ namespace Game.GUI.Adventures
 			text.color = Completed ? SwapColorAlpha(text.color, FADED_ALPHA) : SwapColorAlpha(text.color, FULL_ALPHA);
 		}
 
+		//scrap
 		protected void HandleClicks(TMP_Text text)
 		{
 			var linkIndex = TMP_TextUtilities.FindIntersectingLink(text, Input.mousePosition, null);

@@ -13,7 +13,7 @@ namespace Game.Simulation
 	abstract public class AdventureContextRetriever<T> : IAdventureContextRetriever where T : IIncidentContext
 	{
 		public Type ContextType => typeof(T);
-		//now its not turning {1} into linked context
+
 		public List<T> KnownContexts
 		{
 			get
@@ -60,7 +60,10 @@ namespace Game.Simulation
 		[SerializeField, HorizontalGroup, PropertyOrder(-1)]
 		public bool historical;
 
-		abstract public Dictionary<string, Func<T, int, string>> Replacements { get; }
+		private static readonly Dictionary<string, Func<T, int, string>> replacements = new Dictionary<string, Func<T, int, string>>
+		{
+			{"LINK", (person, criteriaID) => person.Link() }
+		};
 		abstract public void SpawnPopup();
 
 		public AdventureContextRetriever()
@@ -74,24 +77,38 @@ namespace Game.Simulation
 		}
 
 		abstract public T RetrieveContext();
-		public void ReplaceTextPlaceholders(ref string text)
+
+		//lets find a way to not do this roundabout retrieverID shit
+		//just have it find the context or whatever, generate the link using .Link() and make a universal linkclickhandler that deals with it like the wiki does
+		virtual public void ReplaceTextPlaceholders(ref string text)
 		{
 			if(string.IsNullOrEmpty(text))
 			{
 				return;
 			}
 
-			foreach(var pair in Replacements)
-			{
-				var idReplacementPattern = $"{RetrieverID}";
-				var toReplace = Regex.Replace(pair.Key, "##", idReplacementPattern);
-				var replaceWith = pair.Value(GetTypedContext(), RetrieverID);
-				text = text.Replace(@toReplace, replaceWith);
-			}
+			HandleTextReplacements(ref text, replacements);
 
 			//For capitalizing after periods
 			var postPeriod = new Regex(@"(\. )([a-z])");
 			text = postPeriod.Replace(text, m => m.Groups[1].Value + m.Groups[2].Value.ToUpper());
+		}
+
+		protected void HandleTextReplacements(ref string text, Dictionary<string, Func<T, int, string>> replacements)
+        {
+			var matches = Regex.Matches(text, @"{(\w+):(\d+)}");
+			foreach (Match match in matches)
+			{
+				//we have an int and it matches our retriever id
+				if (Int32.TryParse(match.Groups[2].Value, out var id) && id == RetrieverID)
+				{
+					//check dictionary for key
+					if (replacements.TryGetValue(match.Groups[1].Value, out var value))
+					{
+						text = Regex.Replace(text, match.Value, value.Invoke((T)Context, RetrieverID));
+					}
+				}
+			}
 		}
 	}
 }

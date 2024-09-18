@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Simulation
 {
-	public class AdventureCombatComponent : AdventureComponent
+    public class AdventureCombatComponent : AdventureComponent
 	{
 		public List<CombatParticipant> combatParticipants;
 

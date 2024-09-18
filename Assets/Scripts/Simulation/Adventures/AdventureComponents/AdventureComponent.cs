@@ -42,5 +42,19 @@ namespace Game.Simulation
 				link -= count;
 			}
 		}
-	}
+
+        public void UpdateStuff(int oldID, int newID)
+        {      
+			foreach(var field in GetTextFields())
+            {
+				field.UpdateIDs(oldID, newID);
+            }
+        }
+
+		private List<AdventureComponentTextField> GetTextFields()
+        {
+			var fields = GetType().GetFields().Where(x => x.FieldType == typeof(AdventureComponentTextField)).Select(x => x.GetValue(this) as AdventureComponentTextField).ToList();
+			return fields;
+        }
+    }
 }

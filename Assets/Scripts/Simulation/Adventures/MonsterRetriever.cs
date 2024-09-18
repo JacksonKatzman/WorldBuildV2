@@ -31,15 +31,12 @@ namespace Game.Simulation
 		[ValueDropdown("GetCreatureAlignments", IsUniqueList = true, DropdownTitle = "Allowed Alignments"), ShowIf("@this.findBySearch == true")]
 		public List<CreatureAlignment> allowedAlignments;
 
-		[JsonIgnore]
-		override public Dictionary<string, Func<Monster, int, string>> Replacements => replacements;
 
 		[NonSerialized, JsonIgnore]
 		private static readonly Dictionary<string, Func<Monster, int, string>> replacements = new Dictionary<string, Func<Monster, int, string>>
 		{
-			{"{##}", (monster, criteriaID) => string.Format("<i><link=\"{0}\">{1}</link></i>", criteriaID, monster.monsterData.name.ToLower()) },
-			{"-##-", (monster, criteriaID) => monster.monsterData.groupingName },
-			{"<##>", (monster, criteriaID) => SimRandom.RandomEntryFromList(monster.monsterData.sounds) }
+			{"GROUPING", (monster, criteriaID) => monster.monsterData.groupingName },
+			{"SOUND", (monster, criteriaID) => SimRandom.RandomEntryFromList(monster.monsterData.sounds) }
 		};
 
 		public MonsterRetriever() : base()
@@ -71,6 +68,17 @@ namespace Game.Simulation
 			PopupService.Instance.ShowPopup(config);
 		}
 
+		override public void ReplaceTextPlaceholders(ref string text)
+		{
+			if (string.IsNullOrEmpty(text))
+			{
+				return;
+			}
+
+			HandleTextReplacements(ref text, replacements);
+			base.ReplaceTextPlaceholders(ref text);
+		}
+
 		private MonsterData GetMonsterData()
 		{
 			/*
@@ -94,7 +102,7 @@ namespace Game.Simulation
 
 		private string GetName()
 		{
-			return GetTypedContext().monsterData.name;
+			return TypedContext.monsterData.name;
 		}
 
 		private IEnumerable<CreatureSize> GetCreatureSizes()

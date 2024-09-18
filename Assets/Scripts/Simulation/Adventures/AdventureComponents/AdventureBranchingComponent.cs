@@ -17,7 +17,7 @@ namespace Game.Simulation
 #endif
 		}
 
-		public override void UpdateComponentID(ref int nextID, List<int> removedIds = null)
+        public override void UpdateComponentID(ref int nextID, List<int> removedIds = null)
 		{
 			base.UpdateComponentID(ref nextID, removedIds);
 			foreach (var path in paths)

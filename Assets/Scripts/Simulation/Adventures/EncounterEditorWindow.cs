@@ -113,10 +113,10 @@ namespace Game.Simulation
             obj.encounterLocationType = encounterLocationType;
             obj.encounterTypes = encounterTypes;
             obj.allowedBiomes = allowedBiomes;
-            obj.contextCriterium = contextCriterium.ToList();
+            //obj.contextCriterium = contextCriterium.ToList();
             obj.encounterBlurb = encounterBlurb;
             obj.encounterSummary = encounterSummary;
-            obj.components = components.ToList();
+            //obj.components = components.ToList();
 
             AssetDatabase.SaveAssets();
         }

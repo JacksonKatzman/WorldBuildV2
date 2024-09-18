@@ -35,27 +35,64 @@ namespace Game.Enums
 	public enum FlavorType { SYNONYM, REASON };
 	public enum ContextFamiliarity { UNKNOWN, AWARE, ACQUAINTED, KNOWLEDGEABLE, INTIMATE, TOTAL };
 
-	public static class EnumHelpers
+	public static class EnumExtensions
 	{
 		internal static IEnumerable<T> ToEnumerableOf<T>(this Enum theEnum)
 		{
 			return Enum.GetValues(theEnum.GetType()).Cast<T>();
 		}
 
-		/*
-		public static string Symbol(this Gender gender)
+		public static string DependantPossessive(this Gender gender)
         {
 			switch(gender)
             {
 				case Gender.MALE:
-					return "?";
+					return "his";
 				case Gender.FEMALE:
-					return "?";
+					return "her";
 				default:
-					return "??";
-			}
+					return "their";
+            }
         }
-		*/
+
+		public static string IndependantPossessive(this Gender gender)
+		{
+			switch (gender)
+			{
+				case Gender.MALE:
+					return "his";
+				case Gender.FEMALE:
+					return "hers";
+				default:
+					return "theirs";
+			}
+		}
+
+		public static string Object(this Gender gender)
+		{
+			switch (gender)
+			{
+				case Gender.MALE:
+					return "him";
+				case Gender.FEMALE:
+					return "her";
+				default:
+					return "them";
+			}
+		}
+
+		public static string Subject(this Gender gender)
+		{
+			switch (gender)
+			{
+				case Gender.MALE:
+					return "he";
+				case Gender.FEMALE:
+					return "she";
+				default:
+					return "they";
+			}
+		}
 	}
 
 	public enum HexDirection { NE, E, SE, SW, W, NW };

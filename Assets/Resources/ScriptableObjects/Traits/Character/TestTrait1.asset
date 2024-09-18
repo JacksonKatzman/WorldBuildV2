@@ -36,3 +36,4 @@ MonoBehaviour:
       Data: 
   traitName: Trait 1
   traitDescription: t1
+  compatibleAlignments: 

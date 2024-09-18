@@ -12,9 +12,11 @@ using UnityEngine.UI;
 
 namespace Game.GUI.Adventures
 {
-	public class AdventureGuide : SerializedMonoBehaviour
+    public class AdventureGuide : SerializedMonoBehaviour
 	{
 		public Dictionary<Type, GameObject> prefabDictionary;
+		[SerializeField]
+		private AdventureEncounterObject testEncounter;
 		public GameObject tableOfContentsLinkPrefab;
 		[HideInInspector]
 		public AdventureEncounterObject currentEncounter;
@@ -52,9 +54,13 @@ namespace Game.GUI.Adventures
 		[Button("Test Display Adventure")]
 		private void TestDisplayAdventure()
 		{
-			//currentEncounter = new Adventure(mainEncounter, sideEncounters);
-			//RunEncounter(currentEncounter, null, null);
+			RunEncounter(testEncounter, null, null);
 		}
+
+		public void RunEncounter(AdventureEncounterObject encounter)
+        {
+
+        }
 
 
 		public void RunEncounter(AdventureEncounterObject encounter, Action OnEncounterCompleted, Action OnEncounterSkipped)
@@ -88,7 +94,7 @@ namespace Game.GUI.Adventures
 			adventureSummaryUI.text.text += " " + encounter.encounterSummary;
 			CreateTableOfContentsEntry(-1, "Summary");
 
-			adventureSummaryUI.ReplaceTextPlaceholders(encounter.contextCriterium);
+			adventureSummaryUI.ReplaceTextPlaceholders(encounter.contextCriterium.ToList());
 
 			foreach (var component in encounter.components)
 			{
@@ -105,7 +111,7 @@ namespace Game.GUI.Adventures
 						foreach (var c in path.components)
 						{
 							var uiComponent = BuildUIComponent(c, numBranches, numPaths);
-							uiComponent.ReplaceTextPlaceholders(encounter.contextCriterium);
+							uiComponent.ReplaceTextPlaceholders(encounter.contextCriterium.ToList());
 							uiComponents.Add(uiComponent);
 						}
 					}
@@ -113,7 +119,7 @@ namespace Game.GUI.Adventures
 				else
 				{
 					var uic = BuildUIComponent(component, numBranches, numPaths);
-					uic.ReplaceTextPlaceholders(encounter.contextCriterium);
+					uic.ReplaceTextPlaceholders(encounter.contextCriterium.ToList());
 					uiComponents.Add(uic);
 				}
 			}
