@@ -8,5 +8,11 @@ namespace Game.Simulation
 		[Title("Section Title")]
 		public AdventureComponentTextField title = new AdventureComponentTextField();
 		public string Text => title.text;
+
+		public AdventureTitleComponent() { }
+		public AdventureTitleComponent(string title)
+        {
+			this.title.text = title;
+        }
 	}
 }

@@ -7,12 +7,10 @@ using System;
 
 namespace Game.Simulation
 {
-	[HideReferenceObjectPicker]
+	[HideReferenceObjectPicker, Serializable]
 	public abstract class AdventureComponent : IAdventureComponent
 	{
 		virtual public bool Completed { get; set; }
-		[SerializeField, ReadOnly]
-		public int ComponentID { get; set; }
 
         public void UpdateRetrieverIds(int oldID, int newID)
         {      

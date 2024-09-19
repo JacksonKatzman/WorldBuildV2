@@ -1,4 +1,5 @@
-﻿using Game.GUI.Wiki;
+﻿using Game.Debug;
+using Game.GUI.Wiki;
 using Game.Incidents;
 using Game.Simulation;
 using Sirenix.OdinInspector;
@@ -14,7 +15,9 @@ namespace Game.GUI.Adventures
 {
     public class AdventureGuide : SerializedMonoBehaviour
 	{
-		public Dictionary<Type, GameObject> prefabDictionary;
+		
+		[SerializeField]
+		private AdventureSectionUIComponent AdventureSectionUIPrefab;
 		[SerializeField]
 		private AdventureEncounterObject testEncounter;
 		public GameObject tableOfContentsLinkPrefab;
@@ -27,12 +30,11 @@ namespace Game.GUI.Adventures
 		public CanvasGroup tableOfContentsCanvasGroup;
 		public Transform tableOfContentsLinkRoot;
 
-		public TMP_Text adventureTitleText;
-		public AdventureTextUIComponent adventureSummaryUI;
-		private List<IAdventureUIComponent> uiComponents;
-		private List<AdventureComponentUILink> tableOfContents;
-		private int numBranches = 0;
-		private int numPaths = 0;
+		public TMP_Text sectionTitleText;
+		private Dictionary<AdventureSection, AdventureSectionUIComponent> uiComponents;
+		private List<AdventureSectionUILink> tableOfContents;
+		private List<AdventureSection> adventureSections;
+		private AdventureSection currentSection;
 
 		private Action OnEncounterCompleteAction;
 		private Action OnEncounterSkippedAction;
@@ -57,11 +59,6 @@ namespace Game.GUI.Adventures
 			RunEncounter(testEncounter, null, null);
 		}
 
-		public void RunEncounter(AdventureEncounterObject encounter)
-        {
-
-        }
-
 
 		public void RunEncounter(AdventureEncounterObject encounter, Action OnEncounterCompleted, Action OnEncounterSkipped)
 		{
@@ -71,17 +68,18 @@ namespace Game.GUI.Adventures
 
 			if (uiComponents == null)
 			{
-				uiComponents = new List<IAdventureUIComponent>();
+				uiComponents = new Dictionary<AdventureSection, AdventureSectionUIComponent>();
 			}
-			foreach(var component in uiComponents)
+
+			foreach(var pair in uiComponents)
             {
-				Destroy(component.RectTransform.gameObject);
+				Destroy(pair.Value.gameObject);
             }
 			uiComponents.Clear();
 
 			if (tableOfContents == null)
 			{
-				tableOfContents = new List<AdventureComponentUILink>();
+				tableOfContents = new List<AdventureSectionUILink>();
 			}
 			foreach(var link in tableOfContents)
             {
@@ -89,62 +87,60 @@ namespace Game.GUI.Adventures
             }
 			tableOfContents.Clear();
 
-			adventureTitleText.text = encounter.encounterTitle;
-			adventureSummaryUI.text.text = encounter.encounterBlurb;
-			adventureSummaryUI.text.text += " " + encounter.encounterSummary;
-			CreateTableOfContentsEntry(-1, "Summary");
+			adventureSections = new List<AdventureSection>();
+			var summarySection = CreateSummarySection(encounter.encounterTitle, encounter.encounterSummary, encounter.sections.First());
+			adventureSections.Add(summarySection);
+			adventureSections.AddRange(encounter.sections);
 
-			adventureSummaryUI.ReplaceTextPlaceholders(encounter.contextCriterium.ToList());
-
-			foreach (var component in encounter.components)
-			{
-				if (component.GetType() == typeof(AdventureBranchingComponent))
-				{
-					var branchingComponent = component as AdventureBranchingComponent;
-					numBranches++;
-					uiComponents.Add(BuildUIComponent(component));
-
-					foreach (var path in branchingComponent.paths)
-					{
-						numPaths++;
-
-						foreach (var c in path.components)
-						{
-							var uiComponent = BuildUIComponent(c, numBranches, numPaths);
-							uiComponent.ReplaceTextPlaceholders(encounter.contextCriterium.ToList());
-							uiComponents.Add(uiComponent);
-						}
-					}
-				}
-				else
-				{
-					var uic = BuildUIComponent(component, numBranches, numPaths);
-					uic.ReplaceTextPlaceholders(encounter.contextCriterium.ToList());
-					uiComponents.Add(uic);
-				}
-			}
-
+			BeginSection(adventureSections.First());
 			ToggleCanvasGroup(true);
 		}
 
-		public void SetCurrentComponent(int index)
-		{
-			if (index >= 0)
-			{
-				var component = uiComponents.First(x => x.ComponentID == index);
-				SnapTo(component.RectTransform);
-			}
+		public void BeginSection(AdventureSection section)
+        {
+			currentSection = section;
+
+			if(uiComponents.TryGetValue(section, out var uiComponent))
+            {
+				HideAllSections();
+				uiComponent.ToggleCanvasGroup(true);
+            }
 			else
-			{
-				SnapTo(adventureSummaryUI.RectTransform);
-			}
+            {
+				HideAllSections();
+				var sectionUI = BuildSectionUI(section);
+				uiComponents.Add(section, sectionUI);
+            }
+        }
+
+		private AdventureSectionUIComponent BuildSectionUI(AdventureSection section)
+        {
+			var instantiatedPrefab = Instantiate(AdventureSectionUIPrefab, rootTransform);
+			var uiComponent = instantiatedPrefab.GetComponent<AdventureSectionUIComponent>();
+			uiComponent.CreateSectionUI(section);
+			return uiComponent;
 		}
 
-		public void CreateTableOfContentsEntry(int id, string entryText)
+		private void HideAllSections()
+        {
+			foreach(var section in uiComponents.Values)
+            {
+				section.ToggleCanvasGroup(false);
+            }
+        }
+
+		private AdventureSection CreateSummarySection(string title, string summary, AdventureSection firstSection)
+        {
+			var summarySection = new AdventureSection("Summary", firstSection);
+			summarySection.components.Add(new AdventureTitleComponent(title));
+			summarySection.components.Add(new AdventureTextComponent(summary));
+			return summarySection;
+		}
+
+		public void CreateTableOfContentsEntry(AdventureSection section)
 		{
-			var link = Instantiate(tableOfContentsLinkPrefab, tableOfContentsLinkRoot).GetComponent<AdventureComponentUILink>();
-			link.ComponentLinkID = id;
-			link.text.text = entryText;
+			var link = Instantiate(tableOfContentsLinkPrefab, tableOfContentsLinkRoot).GetComponent<AdventureSectionUILink>();
+			link.Setup(section);
 			tableOfContents.Add(link);
 		}
 
@@ -190,7 +186,6 @@ namespace Game.GUI.Adventures
 
 		public static bool TryGetContext(int id, out IIncidentContext result)
 		{
-			//return Instance.currentEncounter.TryGetContext(id, out result);
 			return Instance.currentEncounter.TryGetContext(id, out result);
 		}
 
@@ -217,21 +212,6 @@ namespace Game.GUI.Adventures
 				endPos.y = scrollRect.content.anchoredPosition.y;
 			}
 			scrollRect.content.anchoredPosition = endPos;
-		}
-
-		private IAdventureUIComponent BuildUIComponent(IAdventureComponent adventureComponent, int branchGroupID = -1, int pathGroupID = -1)
-		{
-			var prefab = prefabDictionary[adventureComponent.GetType()];
-			var instantiatedPrefab = Instantiate(prefab, rootTransform);
-			IAdventureUIComponent uiComponent = (IAdventureUIComponent)instantiatedPrefab.GetComponent(typeof(IAdventureUIComponent));
-
-			uiComponent.ComponentID = adventureComponent.ComponentID;
-			uiComponent.BranchGroup = branchGroupID;
-			uiComponent.PathGroup = pathGroupID;
-
-			uiComponent.BuildUIComponents(adventureComponent);
-
-			return uiComponent;
 		}
 	}
 }

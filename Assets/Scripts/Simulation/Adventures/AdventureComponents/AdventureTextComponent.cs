@@ -9,5 +9,10 @@ namespace Game.Simulation
 		public AdventureComponentTextField textField = new AdventureComponentTextField();
 
 		public string Text => textField.text;
+		public AdventureTextComponent() { }
+		public AdventureTextComponent(string text)
+        {
+			textField.text = text;
+        }
 	}
 }

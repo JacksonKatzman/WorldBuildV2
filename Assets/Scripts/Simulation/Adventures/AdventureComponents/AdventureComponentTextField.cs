@@ -14,5 +14,11 @@ namespace Game.Simulation
         {
 			text = text.Replace($":{oldID}}}", $":{newID}}}");
 		}
+
+		public AdventureComponentTextField() { }
+		public AdventureComponentTextField(string defaultText)
+        {
+			text = defaultText;
+        }
 	}
 }

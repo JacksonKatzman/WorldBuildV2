@@ -1,4 +1,5 @@
-﻿using Game.Enums;
+﻿using Game.Debug;
+using Game.Enums;
 using Game.Incidents;
 using Game.Terrain;
 using Sirenix.OdinInspector;
@@ -78,8 +79,8 @@ namespace Game.Simulation
 		[TextArea(10, 15), PropertyOrder(0)]
 		public string encounterSummary;
 
-		//[ListDrawerSettings(HideRemoveButton = true, HideAddButton = true)]
-		public ObservableCollection<IAdventureComponent> components = new ObservableCollection<IAdventureComponent>();
+		[ListDrawerSettings(Expanded = true, CustomAddFunction = "AddSection")]
+		public List<AdventureSection> sections = new List<AdventureSection>();
 
 		public AdventureEncounterObject()
 		{
@@ -89,19 +90,21 @@ namespace Game.Simulation
 
         public void OnValidate()
         {
-			Debug.OutputLogger.Log("VALIDATING");
-			/*
-			for(int i = 0; i < contextCriterium.Count; i++)
-            {
-				contextCriterium[i].RetrieverID = i;
-            }
-			*/
-			//maybe here we can hook up the observable list listener if there isnt one already hooked up
 			if (contextCriterium != null)
 			{
 				contextCriterium.CollectionChanged -= OnCollectionChanged;
 				contextCriterium.CollectionChanged += OnCollectionChanged;
 			}
+			foreach(var section in sections)
+            {
+				foreach(var advancer in section.sectionAdvancers)
+                {
+					if(!advancer.isFinalSection && advancer.nextSection == null)
+                    {
+						OutputLogger.LogWarning($"Missing next section on advancer.");
+                    }
+                }
+            }
         }
 
 		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -138,9 +141,9 @@ namespace Game.Simulation
 				//if the values of x and y differ, replace all instances of :x} with :y}
 				if (pair.Value.Item1 != pair.Value.Item2)
                 {
-					foreach(var component in components)
+					foreach(var section in sections)
                     {
-						component.UpdateRetrieverIds(pair.Value.Item1, pair.Value.Item2);
+						section.UpdateRetrieverIds(pair.Value.Item1, pair.Value.Item2);
                     }
                 }
             }
@@ -173,5 +176,10 @@ namespace Game.Simulation
 		{
 			return Enum.GetValues(typeof(BiomeTerrainType)).Cast<BiomeTerrainType>();
 		}
+
+		private void AddSection()
+        {
+			sections.Add(new AdventureSection());
+        }
 	}
 }

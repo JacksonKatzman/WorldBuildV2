@@ -1,11 +1,13 @@
 ﻿using Game.Generators.Items;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Game.Simulation
 {
+	[Serializable]
 	public class AdventureTreasureComponent : AdventureComponent
 	{
 		public List<AdventureTreasure> treasures;

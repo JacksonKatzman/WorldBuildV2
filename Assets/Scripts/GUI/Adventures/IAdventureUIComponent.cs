@@ -7,9 +7,6 @@ namespace Game.GUI.Adventures
 {
 	public interface IAdventureUIComponent
 	{
-		public int ComponentID { get; set; }
-		public int BranchGroup { get; set; }
-		public int PathGroup { get; set; }
 		public RectTransform RectTransform { get; }
 		public void BuildUIComponents(IAdventureComponent component);
 		public void ReplaceTextPlaceholders(List<IAdventureContextRetriever> contexts);
