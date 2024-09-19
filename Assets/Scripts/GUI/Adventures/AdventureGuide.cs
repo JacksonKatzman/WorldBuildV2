@@ -25,12 +25,10 @@ namespace Game.GUI.Adventures
 		public AdventureEncounterObject currentEncounter;
 		public Transform rootTransform;
 		public ScrollRect scrollRect;
-		public RectTransform contentPanel;
 		public CanvasGroup canvasGroup;
 		public CanvasGroup tableOfContentsCanvasGroup;
 		public Transform tableOfContentsLinkRoot;
 
-		public TMP_Text sectionTitleText;
 		private Dictionary<AdventureSection, AdventureSectionUIComponent> uiComponents;
 		private List<AdventureSectionUILink> tableOfContents;
 		private List<AdventureSection> adventureSections;
@@ -110,6 +108,7 @@ namespace Game.GUI.Adventures
 				HideAllSections();
 				var sectionUI = BuildSectionUI(section);
 				uiComponents.Add(section, sectionUI);
+				CreateTableOfContentsEntry(section);
             }
         }
 

@@ -13,10 +13,25 @@ namespace Game.GUI.Adventures
         [SerializeField]
         private Button button;
 
-        public void Setup(SectionAdvancer advancer)
+        private AdventureSectionUIComponent parentUiComponent;
+
+        public void Setup(SectionAdvancer advancer, AdventureSectionUIComponent uIComponent)
         {
+            parentUiComponent = uIComponent;
             buttonText.text = advancer.buttonText.text;
-            button.onClick.AddListener(() => AdventureGuide.Instance.BeginSection(advancer.nextSection));
+            button.onClick.AddListener(() => OnButtonPressed(advancer.nextSection));
         }
+
+        public void SetEnabled(bool enabled)
+        {
+            button.enabled = enabled;
+        }
+
+        private void OnButtonPressed(AdventureSection nextSection)
+        {
+            AdventureGuide.Instance.BeginSection(nextSection);
+            parentUiComponent.DisableOtherAdvancerButtons(this);
+        }
+                 
     }
 }
