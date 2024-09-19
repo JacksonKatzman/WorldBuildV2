@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 084bf99f985f0d341a9f6e9f9a93e27c, type: 3}
+  m_Name: Skyhorn Lighthouse
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: contextCriterium
+      Entry: 7
+      Data: 0|System.Collections.ObjectModel.ObservableCollection`1[[Game.Simulation.IAdventureContextRetriever,
+        Auto-asmdef-SecondPass]], System
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: sections
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[Game.Simulation.AdventureSection,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 2|Game.Simulation.AdventureSection, Auto-asmdef-SecondPass
+    - Name: sectionTitle
+      Entry: 1
+      Data: Preparation
+    - Name: components
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 4|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: textField
+      Entry: 7
+      Data: 5|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: "It's time to direct the party towards the docks! If you feel comfortable
+        with a little shopkeeper roleplay, you can ask the party whether they want
+        to make any preparations before they get underway.\nIf the players decide
+        to interrogate any townsfolk or passersby about the situation in the harbor,
+        for each person questioned you can tell them one of the following:\n\u2022
+        \"I heard a low keening coming from the harbor last night. It was eerie,
+        like the cries of a ghostly whale.\"\n\u2022 \"There might not be any food
+        shipments for a while. Nobody will even get out in their damn fishing boats.
+        Fools, if you ask me.\"\n\u2022 \"Ain't had any word from the lighthouse
+        keepers in days. I hope they're alright.\""
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: sectionAdvancers
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 7|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
+    - Name: isFinalSection
+      Entry: 5
+      Data: true
+    - Name: buttonText
+      Entry: 7
+      Data: 8|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: Next
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: buttonColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: nextSection
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  encounterTitle: The Secrets of Skyhorne Lighthouse
+  encounterDifficulty: 3
+  majorEncounter: 1
+  skippable: 0
+  encounterLocationType: 0
+  encounterTypes: 0400000005000000
+  allowedBiomes: 0c0000000b0000000a00000009000000080000000700000006000000050000000400000003000000020000000100000000000000
+  encounterBlurb: "A story has been spreading about town that\r there\u2019s a sea
+    monster attacking ships near\r Skyhorn Lighthouse. Traffic in the harbor has\r
+    come to a standstill amid the rumor."
+  encounterSummary: "A very concerned merchant named {LINK:0} approaches our heroes,
+    citing their reputation. {SUBJ:0} offers a reward of 200 gp each if they\u2019ll
+    investigate a merchant ship of {IPOS:0}, the Jade Lion, that was last seen in
+    the waters near Skyhorn Lighthouse. {SUBCONT:0} worried about the sea monster
+    rumors and offers an additional 200 gp each if the party safely returns the crew
+    and cargo."

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace Game.Simulation
 {
@@ -19,6 +20,8 @@ namespace Game.Simulation
 
 		[ShowIf("@this.findBySearch == false")]
 		public ScriptableObjectRetriever<MonsterData> monsterData;
+		[ShowIf("@this.findBySearch == false")]
+		public string customMonsterName = string.Empty;
 		[ShowIf("@this.findBySearch == true")]
 		public bool isLegendary;
 		[ShowIf("@this.findBySearch == true")]
@@ -36,7 +39,7 @@ namespace Game.Simulation
 		private static readonly Dictionary<string, Func<Monster, int, string>> replacements = new Dictionary<string, Func<Monster, int, string>>
 		{
 			{"GROUPING", (monster, criteriaID) => monster.monsterData.groupingName },
-			{"SOUND", (monster, criteriaID) => SimRandom.RandomEntryFromList(monster.monsterData.sounds) }
+			{"SOUND", (monster, criteriaID) => SimRandom.RandomEntryFromList(monster.monsterData.sounds) },
 		};
 
 		public MonsterRetriever() : base()
@@ -49,7 +52,11 @@ namespace Game.Simulation
 		public override Monster RetrieveContext()
 		{
 			var monster = new Monster();
-			monster.monsterData = findBySearch? GetMonsterData() : monsterData?.RetrieveObject();
+			monster.monsterData = findBySearch? ScriptableObject.Instantiate(GetMonsterData()) : ScriptableObject.Instantiate(monsterData?.RetrieveObject());
+			if(!string.IsNullOrEmpty(customMonsterName))
+            {
+				monster.monsterData.monsterName = customMonsterName;
+            }
 			return monster;
 		}
 

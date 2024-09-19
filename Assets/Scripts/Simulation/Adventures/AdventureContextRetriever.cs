@@ -62,7 +62,7 @@ namespace Game.Simulation
 
 		private static readonly Dictionary<string, Func<T, int, string>> replacements = new Dictionary<string, Func<T, int, string>>
 		{
-			{"LINK", (person, criteriaID) => person.Link() }
+			{"LINK", (thing, criteriaID) => thing.Link() }
 		};
 		abstract public void SpawnPopup();
 

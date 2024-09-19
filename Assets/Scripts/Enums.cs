@@ -29,7 +29,7 @@ namespace Game.Enums
 	public enum LogAllowance { ALL, SOME, NONE };
 	public enum Disposition { PASSIVE, AGGRESSIVE };
 	public enum EncounterLocationType { OVERWORLD, DUNGEON };
-	public enum EncounterType { COMBAT, PUZZLE, ROLEPLAY, CURIOSITY };
+	public enum EncounterType { COMBAT, PUZZLE, ROLEPLAY, CURIOSITY, EXPLORATION, LONG };
 	public enum HexEdgeType { Flat, Slope, Cliff };
 	public enum LandmarkType { NONE, TOWER, STATUE };
 	public enum FlavorType { SYNONYM, REASON };
@@ -91,6 +91,19 @@ namespace Game.Enums
 					return "she";
 				default:
 					return "they";
+			}
+		}
+
+		public static string SubjectContraction(this Gender gender)
+		{
+			switch (gender)
+			{
+				case Gender.MALE:
+					return "he's";
+				case Gender.FEMALE:
+					return "she's";
+				default:
+					return "they're";
 			}
 		}
 	}

@@ -7,7 +7,7 @@ namespace Game.Simulation
 	[Serializable, HideReferenceObjectPicker]
     public class AdventureComponentTextField
     {
-		[TextArea(1, 20), PropertyOrder(0)]
+		[TextArea(1, 60), PropertyOrder(0)]
 		public string text;
 
 		public void UpdateIDs(int oldID, int newID)

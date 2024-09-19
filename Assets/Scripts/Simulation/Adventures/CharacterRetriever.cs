@@ -19,7 +19,8 @@ namespace Game.Simulation
 			{"SUBJ", (person, criteriaID) => person.Link(person.Gender.Subject()) },
 			{"OBJ", (person, criteriaID) => person.Link(person.Gender.Object()) },
 			{"DPOS", (person, criteriaID) => person.Link(person.Gender.DependantPossessive()) },
-			{"IPOS", (person, criteriaID) => person.Link(person.Gender.IndependantPossessive()) }
+			{"IPOS", (person, criteriaID) => person.Link(person.Gender.IndependantPossessive()) },
+			{"SUBCONT", (person, criteriaID) => person.Link(person.Gender.SubjectContraction()) }
 		};
 
 		public override Character RetrieveContext()

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Game.Incidents
 {
-	public class IncidentJSONToolWindow : OdinEditorWindow
+    public class IncidentJSONToolWindow : OdinEditorWindow
 	{
         [MenuItem("World Builder/Incident JSON Tools")]
         private static void OpenWindow()
