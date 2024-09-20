@@ -7,7 +7,7 @@ namespace Game.Simulation
 	public class AdventureNarrationComponent : AdventureComponent, IAdventureTextComponent
 	{
 		[Title("Narration Text")]
-		AdventureComponentTextField textField = new AdventureComponentTextField();
+		public AdventureComponentTextField textField = new AdventureComponentTextField();
 		public string Text => textField.Text;
 	}
 }

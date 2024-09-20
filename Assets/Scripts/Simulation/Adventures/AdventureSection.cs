@@ -50,7 +50,21 @@ namespace Game.Simulation
         public AdventureComponentTextField buttonText = new AdventureComponentTextField("Next");
         [ColorPalette, HideIf("@this.isFinalSection")]
         public Color buttonColor;
-        [HideIf("@this.isFinalSection")]
+        [HideIf("@this.isFinalSection"), ValueDropdown("GetSectionTitles"), OnValueChanged("SetSectionByTitle")]
+        public string nextSectionKey;
+        [HideIf("@this.isFinalSection"), ShowInInspector]
+        public bool SectionSelected => nextSection != null;
+        [HideInInspector]
         public AdventureSection nextSection;
+
+        private IEnumerable<string> GetSectionTitles()
+        {
+            return AdventureEncounterObject.Current?.sections?.Select(x => x.sectionTitle);
+        }
+
+        private void SetSectionByTitle()
+        {
+            nextSection = AdventureEncounterObject.Current.sections.First(x => x.sectionTitle == nextSectionKey);
+        }
     }
 }
