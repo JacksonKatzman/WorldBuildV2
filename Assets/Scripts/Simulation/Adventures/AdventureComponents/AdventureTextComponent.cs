@@ -8,11 +8,11 @@ namespace Game.Simulation
 	{
 		public AdventureComponentTextField textField = new AdventureComponentTextField();
 
-		public string Text => textField.text;
+		public string Text => textField.Text;
 		public AdventureTextComponent() { }
 		public AdventureTextComponent(string text)
         {
-			textField.text = text;
+			textField.SetSingleText(text);
         }
 	}
 }

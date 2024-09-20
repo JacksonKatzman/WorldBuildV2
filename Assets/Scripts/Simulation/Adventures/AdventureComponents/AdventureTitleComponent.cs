@@ -7,12 +7,12 @@ namespace Game.Simulation
 	{ 
 		[Title("Section Title")]
 		public AdventureComponentTextField title = new AdventureComponentTextField();
-		public string Text => title.text;
+		public string Text => title.Text;
 
 		public AdventureTitleComponent() { }
 		public AdventureTitleComponent(string title)
         {
-			this.title.text = title;
-        }
+			this.title.SetSingleText(title);
+		}
 	}
 }

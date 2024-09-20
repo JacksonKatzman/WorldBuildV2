@@ -18,7 +18,7 @@ namespace Game.GUI.Adventures
         public void Setup(SectionAdvancer advancer, AdventureSectionUIComponent uIComponent)
         {
             parentUiComponent = uIComponent;
-            buttonText.text = advancer.buttonText.text;
+            buttonText.text = advancer.buttonText.Text;
             button.onClick.AddListener(() => OnButtonPressed(advancer.nextSection));
         }
 

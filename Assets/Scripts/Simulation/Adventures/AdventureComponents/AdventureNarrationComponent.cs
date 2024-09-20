@@ -8,6 +8,6 @@ namespace Game.Simulation
 	{
 		[Title("Narration Text")]
 		AdventureComponentTextField textField = new AdventureComponentTextField();
-		public string Text => textField.text;
+		public string Text => textField.Text;
 	}
 }

@@ -14,7 +14,7 @@ namespace Game.GUI.Adventures
 		public override void BuildUIComponents(AdventureTreasureComponent component)
 		{
 			treasureListText.text = string.Empty;
-			descriptionText.text = component.description.text;
+			descriptionText.text = component.description.Text;
 
 			foreach (var treasure in component.treasures)
 			{
