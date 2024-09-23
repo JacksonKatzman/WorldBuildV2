@@ -14,13 +14,13 @@ using UnityEngine;
 namespace Game.Simulation
 {
 	/*
- * Types of Encounters:
- * - Combat
- * - Puzzle
- * - RP
- * - Curiosity?
- * - ??
- */
+* Types of Encounters:
+* - Combat
+* - Puzzle
+* - RP
+* - Curiosity?
+* - ??
+*/
 
 	//Account for multiple possible solutions
 

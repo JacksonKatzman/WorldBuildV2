@@ -10,6 +10,7 @@ namespace Game.Simulation
 	[HideReferenceObjectPicker, Serializable]
 	public abstract class AdventureComponent : IAdventureComponent
 	{
+		
 		virtual public bool Completed { get; set; }
 
         public void UpdateRetrieverIds(int oldID, int newID)
