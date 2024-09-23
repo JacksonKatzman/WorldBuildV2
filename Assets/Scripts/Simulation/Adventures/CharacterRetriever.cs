@@ -16,6 +16,7 @@ namespace Game.Simulation
 
 		private static readonly Dictionary<string, Func<Character, int, string>> replacements = new Dictionary<string, Func<Character, int, string>>
 		{
+			{"FIRST", (person, criteriaID) => person.Link(person.CharacterName.firstName) },
 			{"SUBJ", (person, criteriaID) => person.Link(person.Gender.Subject()) },
 			{"OBJ", (person, criteriaID) => person.Link(person.Gender.Object()) },
 			{"DPOS", (person, criteriaID) => person.Link(person.Gender.DependantPossessive()) },

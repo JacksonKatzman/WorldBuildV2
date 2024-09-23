@@ -82,7 +82,7 @@ MonoBehaviour:
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 6
     - Name: 
       Entry: 7
       Data: 4|Game.Simulation.AdventureSection, Auto-asmdef-SecondPass
@@ -99,9 +99,22 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 6|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 7|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: textField
       Entry: 7
-      Data: 7|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+      Data: 8|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
     - Name: fieldType
       Entry: 3
       Data: 0
@@ -125,10 +138,23 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 8|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+      Data: 9|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 10|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: textField
       Entry: 7
-      Data: 9|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+      Data: 11|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
     - Name: fieldType
       Entry: 3
       Data: 1
@@ -137,14 +163,14 @@ MonoBehaviour:
       Data: 
     - Name: bulletList
       Entry: 7
-      Data: 10|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+      Data: 12|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 11|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
+      Data: 13|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
     - Name: text
       Entry: 1
       Data: '"I heard a low keening coming from the harbor last night. It was eerie,
@@ -154,7 +180,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 12|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
+      Data: 14|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
     - Name: text
       Entry: 1
       Data: '"There might not be any food shipments for a while. Nobody will even
@@ -164,7 +190,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 13|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
+      Data: 15|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
     - Name: text
       Entry: 1
       Data: '"Ain''t had any word from the lighthouse keepers in days. I hope they''re
@@ -192,20 +218,20 @@ MonoBehaviour:
       Data: 
     - Name: sectionAdvancers
       Entry: 7
-      Data: 14|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
+      Data: 16|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 15|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
+      Data: 17|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
     - Name: isFinalSection
       Entry: 5
       Data: false
     - Name: buttonText
       Entry: 7
-      Data: 16|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+      Data: 18|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
     - Name: fieldType
       Entry: 3
       Data: 0
@@ -241,23 +267,36 @@ MonoBehaviour:
       Data: The Docks
     - Name: nextSection
       Entry: 7
-      Data: 17|Game.Simulation.AdventureSection, Auto-asmdef-SecondPass
+      Data: 19|Game.Simulation.AdventureSection, Auto-asmdef-SecondPass
     - Name: sectionTitle
       Entry: 1
       Data: The Docks
     - Name: components
       Entry: 7
-      Data: 18|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+      Data: 20|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 19|Game.Simulation.AdventureNarrationComponent, Auto-asmdef-SecondPass
+      Data: 21|Game.Simulation.AdventureNarrationComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 22|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: textField
       Entry: 7
-      Data: 20|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+      Data: 23|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
     - Name: fieldType
       Entry: 3
       Data: 0
@@ -272,7 +311,7 @@ MonoBehaviour:
         you more about these supposed 'sea monsters'.
     - Name: bulletList
       Entry: 7
-      Data: 21|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+      Data: 24|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
@@ -297,20 +336,20 @@ MonoBehaviour:
       Data: 
     - Name: sectionAdvancers
       Entry: 7
-      Data: 22|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
+      Data: 25|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 23|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
+      Data: 26|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
     - Name: isFinalSection
       Entry: 5
       Data: false
     - Name: buttonText
       Entry: 7
-      Data: 24|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+      Data: 27|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
     - Name: fieldType
       Entry: 3
       Data: 0
@@ -319,7 +358,633 @@ MonoBehaviour:
       Data: Next
     - Name: bulletList
       Entry: 7
-      Data: 25|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+      Data: 28|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: buttonColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: nextSectionKey
+      Entry: 1
+      Data: Questioning Sailors
+    - Name: nextSection
+      Entry: 7
+      Data: 29|Game.Simulation.AdventureSection, Auto-asmdef-SecondPass
+    - Name: sectionTitle
+      Entry: 1
+      Data: Questioning Sailors
+    - Name: components
+      Entry: 7
+      Data: 30|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 31|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 32|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: textField
+      Entry: 7
+      Data: 33|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: fieldType
+      Entry: 3
+      Data: 1
+    - Name: text
+      Entry: 1
+      Data: 
+    - Name: bulletList
+      Entry: 7
+      Data: 34|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 35|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: When questioned, the sailors will reiterate the rumor about the sea monster,
+        some claiming falsely to have seen it. One or two of them might even fabricate
+        a description. They refuse to take the party out to sea.
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 36|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: "If asked about who might take them to the lighthouse, sailors point
+        the party in the direction of {1}\u2019s sailing ship, the Annabel Lee."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 37|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: "As the characters approach {1}\u2019s ship, she swings down to the docks
+        to greet them."
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: sectionAdvancers
+      Entry: 7
+      Data: 38|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 39|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
+    - Name: isFinalSection
+      Entry: 5
+      Data: false
+    - Name: buttonText
+      Entry: 7
+      Data: 40|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: fieldType
+      Entry: 3
+      Data: 0
+    - Name: text
+      Entry: 1
+      Data: Next
+    - Name: bulletList
+      Entry: 7
+      Data: 41|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: buttonColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: nextSectionKey
+      Entry: 1
+      Data: '{1}'
+    - Name: nextSection
+      Entry: 7
+      Data: 42|Game.Simulation.AdventureSection, Auto-asmdef-SecondPass
+    - Name: sectionTitle
+      Entry: 1
+      Data: '{1}'
+    - Name: components
+      Entry: 7
+      Data: 43|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 44|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 45|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: textField
+      Entry: 7
+      Data: 46|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: fieldType
+      Entry: 3
+      Data: 0
+    - Name: text
+      Entry: 1
+      Data: '{FIRST:1} holds out {DPOS:1} hand in greeting to the first party member
+        to approach {OBJ:1}. Give a brief description of {OBJ:1}.'
+    - Name: bulletList
+      Entry: 7
+      Data: 47|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 48|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 49|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: textField
+      Entry: 7
+      Data: 50|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: fieldType
+      Entry: 3
+      Data: 0
+    - Name: text
+      Entry: 1
+      Data: 'If asked about the rumors, about sea monsters, or about the lighthouse,
+        {SUBJ:1} will tell the party this:'
+    - Name: bulletList
+      Entry: 7
+      Data: 51|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 52|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 53|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: textField
+      Entry: 7
+      Data: 54|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: fieldType
+      Entry: 3
+      Data: 0
+    - Name: text
+      Entry: 1
+      Data: '"Why? Are you headed out to the old lighthouse? Not eight hours ago,
+        just out there in the bay, I saw a massive wave appear out of the fog and
+        drag the Jade Lion, against the tide, towards the lighthouse! My friend {FIRST:2}
+        was onboard. I''ve spend the better part since trying to get together a crew
+        to go rescue {OBJ:2}, but none of these cowards will help."'
+    - Name: bulletList
+      Entry: 7
+      Data: 55|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 56|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 57|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: textField
+      Entry: 7
+      Data: 58|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: fieldType
+      Entry: 3
+      Data: 0
+    - Name: text
+      Entry: 1
+      Data: After a few moments of talking to {FIRST:1}, two {LINK:3}s, who lost
+        a fair game of dice to {OBJ:1}, interrupt the conversation with demands that
+        {SUBJ:1} pay up by turning over {DPOS:1} ship. They've planned a surprise
+        attack, but are wary with the party being there.
+    - Name: bulletList
+      Entry: 7
+      Data: 59|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: sectionAdvancers
+      Entry: 7
+      Data: 60|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 61|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
+    - Name: isFinalSection
+      Entry: 5
+      Data: false
+    - Name: buttonText
+      Entry: 7
+      Data: 62|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: fieldType
+      Entry: 3
+      Data: 0
+    - Name: text
+      Entry: 1
+      Data: Next
+    - Name: bulletList
+      Entry: 7
+      Data: 63|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: buttonColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: nextSectionKey
+      Entry: 1
+      Data: Talk It Out
+    - Name: nextSection
+      Entry: 7
+      Data: 64|Game.Simulation.AdventureSection, Auto-asmdef-SecondPass
+    - Name: sectionTitle
+      Entry: 1
+      Data: Talk It Out
+    - Name: components
+      Entry: 7
+      Data: 65|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 66|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 67|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: textField
+      Entry: 7
+      Data: 68|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: fieldType
+      Entry: 3
+      Data: 0
+    - Name: text
+      Entry: 1
+      Data: The party now has the opportunity to attempt to negotiate with the {LINK:3}'s
+        and try to resolve the conflict without resorting to violence. The {LINK:3}'s
+        begin with a collective conflict score of 3. Taking any of the following
+        actions can increase or decrease the conflict score. If the conflict score
+        reaches 0, the party has successfully diffused the situation. If the score
+        reaches 5, or if any violence is attempted, a fight will commence.
+    - Name: bulletList
+      Entry: 7
+      Data: 69|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 70|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 71|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: textField
+      Entry: 7
+      Data: 72|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: fieldType
+      Entry: 3
+      Data: 1
+    - Name: text
+      Entry: 6
+      Data: 
+    - Name: bulletList
+      Entry: 7
+      Data: 73|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 74|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: A large bribe reduces the score by 1.
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 75|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: A DC 15 Persuasion or Deception check reduces the score by 1. A failed
+        check increases the score by 1.
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 76|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: Using Intimidation increases the score by 1.
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 77|Game.Simulation.AdventureComponentTextArea, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: A DC 15 Insight check reveals one of the above details, or can reveal
+        the current conflict score. You can do this by describing how angry they
+        seem.
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: sectionAdvancers
+      Entry: 7
+      Data: 78|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 79|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
+    - Name: isFinalSection
+      Entry: 5
+      Data: true
+    - Name: buttonText
+      Entry: 7
+      Data: 80|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: fieldType
+      Entry: 3
+      Data: 0
+    - Name: text
+      Entry: 1
+      Data: Next
+    - Name: bulletList
+      Entry: 7
+      Data: 81|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
@@ -356,6 +1021,42 @@ MonoBehaviour:
       Data: 
     - Name: nextSection
       Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
     - Name: 
       Entry: 8
@@ -383,35 +1084,57 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 9
-      Data: 17
+      Data: 19
+    - Name: 
+      Entry: 9
+      Data: 29
+    - Name: 
+      Entry: 9
+      Data: 42
+    - Name: 
+      Entry: 9
+      Data: 64
     - Name: 
       Entry: 7
-      Data: 26|Game.Simulation.AdventureSection, Auto-asmdef-SecondPass
+      Data: 82|Game.Simulation.AdventureSection, Auto-asmdef-SecondPass
     - Name: sectionTitle
       Entry: 1
-      Data: Questioning Sailors
+      Data: In The Clear
     - Name: components
       Entry: 7
-      Data: 27|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+      Data: 83|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 28|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+      Data: 84|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: hint
+      Entry: 7
+      Data: 85|Game.Incidents.ScriptableObjectRetriever`1[[Game.Simulation.AdventureHelperHint,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 6
+      Data: 
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: textField
       Entry: 7
-      Data: 29|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+      Data: 86|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
     - Name: fieldType
       Entry: 3
       Data: 0
     - Name: text
       Entry: 1
-      Data: 
+      Data: Party diffused situation, time to go to lighthouse.
     - Name: bulletList
       Entry: 7
-      Data: 30|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+      Data: 87|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
@@ -436,20 +1159,20 @@ MonoBehaviour:
       Data: 
     - Name: sectionAdvancers
       Entry: 7
-      Data: 31|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
+      Data: 88|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 32|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
+      Data: 89|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
     - Name: isFinalSection
       Entry: 5
       Data: false
     - Name: buttonText
       Entry: 7
-      Data: 33|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+      Data: 90|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
     - Name: fieldType
       Entry: 3
       Data: 0
@@ -458,7 +1181,7 @@ MonoBehaviour:
       Data: Next
     - Name: bulletList
       Entry: 7
-      Data: 34|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
+      Data: 91|System.Collections.Generic.List`1[[Game.Simulation.AdventureComponentTextArea,
         Auto-asmdef-SecondPass]], mscorlib
     - Name: 
       Entry: 12

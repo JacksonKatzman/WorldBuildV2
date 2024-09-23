@@ -10,9 +10,9 @@ namespace Game.Simulation
     public class AdventureSection : IAdventureComponent
     {
         public string sectionTitle;
-        [ListDrawerSettings(Expanded = true)]
+        [ListDrawerSettings(Expanded = true), FoldoutGroup("Components")]
         public List<IAdventureComponent> components = new List<IAdventureComponent>();
-        [ListDrawerSettings(CustomAddFunction = "AddSectionAdvancer", Expanded = true)]
+        [ListDrawerSettings(CustomAddFunction = "AddSectionAdvancer", Expanded = true), FoldoutGroup("Components")]
         public List<SectionAdvancer> sectionAdvancers = new List<SectionAdvancer>() { new SectionAdvancer() };
         public bool Completed { get; set; }
 

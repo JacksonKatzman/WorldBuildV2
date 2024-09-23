@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using System;
+using Game.Incidents;
 
 namespace Game.Simulation
 {
 	[HideReferenceObjectPicker, Serializable]
 	public abstract class AdventureComponent : IAdventureComponent
 	{
-		
+		public ScriptableObjectRetriever<AdventureHelperHint> hint = new ScriptableObjectRetriever<AdventureHelperHint>();
 		virtual public bool Completed { get; set; }
 
         public void UpdateRetrieverIds(int oldID, int newID)
