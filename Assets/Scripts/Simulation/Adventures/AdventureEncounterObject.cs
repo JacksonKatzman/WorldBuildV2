@@ -1,22 +1,26 @@
-﻿using Game.Enums;
+﻿using Game.Debug;
+using Game.Enums;
 using Game.Incidents;
 using Game.Terrain;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Game.Simulation
 {
 	/*
- * Types of Encounters:
- * - Combat
- * - Puzzle
- * - RP
- * - Curiosity?
- * - ??
- */
+* Types of Encounters:
+* - Combat
+* - Puzzle
+* - RP
+* - Curiosity?
+* - ??
+*/
 
 	//Account for multiple possible solutions
 
@@ -44,6 +48,8 @@ namespace Game.Simulation
 	[CreateAssetMenu(fileName = nameof(AdventureEncounterObject), menuName = "ScriptableObjects/Adventures/" + nameof(AdventureEncounterObject), order = 1)]
 	public class AdventureEncounterObject : SerializedScriptableObject, ILocationAffiliated
 	{
+		public static AdventureEncounterObject Current { get; set; }
+
 		[PropertyOrder(-11)]
 		public string encounterTitle;
 		[PropertyOrder(-10)]
@@ -63,8 +69,9 @@ namespace Game.Simulation
 		[ValueDropdown("GetBiomeTerrainTypes", IsUniqueList = true, DropdownTitle = "Allowed Biomes"), PropertyOrder(-7)]
 		public List<BiomeTerrainType> allowedBiomes;
 
-		[ListDrawerSettings(HideAddButton = true), PropertyOrder(0)]
-		public List<IAdventureContextRetriever> contextCriterium;
+		//[ListDrawerSettings(HideAddButton = true), PropertyOrder(0)]
+		[PropertyOrder(0)]
+		public ObservableCollection<IAdventureContextRetriever> contextCriterium = new ObservableCollection<IAdventureContextRetriever>();
 
 		[TextArea(2, 4), PropertyOrder(0)]
 		public string encounterBlurb;
@@ -72,14 +79,74 @@ namespace Game.Simulation
 		[TextArea(10, 15), PropertyOrder(0)]
 		public string encounterSummary;
 
-		[ListDrawerSettings(HideRemoveButton = true, HideAddButton = true)]
-		public List<IAdventureComponent> components;
+		[ListDrawerSettings(Expanded = true, CustomAddFunction = "AddSection")]
+		public List<AdventureSection> sections = new List<AdventureSection>();
 
 		public AdventureEncounterObject()
 		{
 			encounterTypes = new List<EncounterType>();
 			allowedBiomes = new List<BiomeTerrainType>();
-			contextCriterium = new List<IAdventureContextRetriever>();
+		}
+
+        public void OnValidate()
+        {
+			if (contextCriterium != null)
+			{
+				contextCriterium.CollectionChanged -= OnCollectionChanged;
+				contextCriterium.CollectionChanged += OnCollectionChanged;
+			}
+			foreach(var section in sections)
+            {
+				foreach(var advancer in section.sectionAdvancers)
+                {
+					if(!advancer.isFinalSection && advancer.nextSection == null)
+                    {
+						OutputLogger.LogWarning($"Missing next section on advancer.");
+                    }
+                }
+            }
+        }
+
+		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+			var thing = new Dictionary<IAdventureContextRetriever, Tuple<int, int>>();
+			if (e.OldItems != null)
+			{
+				foreach (var item in e.OldItems)
+				{
+					var removedItem = (IAdventureContextRetriever)item;
+					thing.Add(removedItem, new Tuple<int, int>(removedItem.RetrieverID, -1));
+				}
+			}
+
+			foreach (var c in contextCriterium)
+            {
+				thing.Add(c, new Tuple<int, int>(c.RetrieverID, c.RetrieverID));
+            }
+
+			for(int i = 0; i < contextCriterium.Count; i++)
+            {
+				var comp = contextCriterium[i];
+				thing[comp] = new Tuple<int, int>(thing[comp].Item1, i);
+				comp.RetrieverID = i;
+            }
+
+			if (e.NewItems != null && e.NewItems.Count > 0)
+			{
+				return;
+			}
+
+			foreach (var pair in thing)
+            {
+				//if the values of x and y differ, replace all instances of :x} with :y}
+				if (pair.Value.Item1 != pair.Value.Item2)
+                {
+					foreach(var section in sections)
+                    {
+						section.UpdateRetrieverIds(pair.Value.Item1, pair.Value.Item2);
+                    }
+                }
+            }
 		}
 
 		public bool TryGetContext(int id, out IIncidentContext result)
@@ -91,7 +158,7 @@ namespace Game.Simulation
 
 		public bool TryGetContextCriteria(int id, out IAdventureContextRetriever result)
 		{
-			result = contextCriterium.Find(x => x.Context.ID == id);
+			result = contextCriterium.ToList().Find(x => x.Context.ID == id);
 			return result != null;
 		}
 
@@ -109,5 +176,10 @@ namespace Game.Simulation
 		{
 			return Enum.GetValues(typeof(BiomeTerrainType)).Cast<BiomeTerrainType>();
 		}
+
+		private void AddSection()
+        {
+			sections.Add(new AdventureSection());
+        }
 	}
 }

@@ -20,10 +20,9 @@ namespace Game.Simulation
 		public Type type;
 		[ShowIf("@this.premade == false")]
 		public IntegerRange pointRange = new IntegerRange();
-		public override Dictionary<string, Func<Item, int, string>> Replacements => replacements;
 		private static readonly Dictionary<string, Func<Item, int, string>> replacements = new Dictionary<string, Func<Item, int, string>>
 		{
-			{"{##}", (item, criteriaID) => string.Format("<i><link=\"{0}\">{1}</link></i>", criteriaID, item.Name) }
+			//{"{##}", (item, criteriaID) => string.Format("<i><link=\"{0}\">{1}</link></i>", criteriaID, item.Name) }
 		};
 
 		public override Item RetrieveContext()
@@ -51,6 +50,17 @@ namespace Game.Simulation
 		public override void SpawnPopup()
 		{
 			throw new NotImplementedException();
+		}
+
+		override public void ReplaceTextPlaceholders(ref string text)
+		{
+			if (string.IsNullOrEmpty(text))
+			{
+				return;
+			}
+
+			HandleTextReplacements(ref text, replacements);
+			base.ReplaceTextPlaceholders(ref text);
 		}
 
 		private Item MakeNew()

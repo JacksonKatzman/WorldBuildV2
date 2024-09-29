@@ -6,15 +6,8 @@ namespace Game.Simulation
 {
 	public class AdventureNarrationComponent : AdventureComponent, IAdventureTextComponent
 	{
-		[TextArea(15, 20), PropertyOrder(0), Title("Narration Text")]
-		public string text;
-		public string Text => text;
-
-		override public void UpdateContextIDs(List<int> removedIds = null)
-		{
-#if UNITY_EDITOR
-			text = EncounterEditorWindow.UpdateInTextIDs(text, removedIds);
-#endif
-		}
+		[Title("Narration Text")]
+		public AdventureComponentTextField textField = new AdventureComponentTextField();
+		public string Text => textField.Text;
 	}
 }

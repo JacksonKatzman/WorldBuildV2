@@ -1,0 +1,22 @@
+get better terrain textures
+also probably cut down on the number of biomes
+figure out mountains and mountain blending
+ray marching with smooth union for mountains and hills?
+also maybe make it so mountains just dont generate on river tiles for now unless its the start tile of the river
+have some sort of terrainConfig SO so that each terrain can be treated differently, have different stats, generate accordingly
+	- for example, ensuring plains and deserts are flat
+fix river generation - they need to start in mountains and be much longer, heading to sea
+also figure out beaches
+also need to check catlikes project to see how much it struggles iwth big maps
+might wanna revert the hexcollections and do it a different way - store the cells in collections still but use a different geometry as an overlay
+so that we dont have to do that whole expensive restitching step
+
+before mountains or any of this i think first step is fixing the biomes and the way they are textured <<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+character history tab
+monster info wiki
+nation info wiki
+city info wiki
+
+new dm walkthrough system and its ui

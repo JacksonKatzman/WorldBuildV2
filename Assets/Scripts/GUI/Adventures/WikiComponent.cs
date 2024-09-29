@@ -17,6 +17,8 @@ namespace Game.GUI.Adventures
         [SerializeField]
         private CanvasGroup mainCanvasGroup;
         [SerializeField]
+        private RectTransform positionDriver;
+        [SerializeField]
         private ContextFamiliarity familiarityRequirement;
         protected List<TMP_Text> textFields;
         protected List<IWikiComponent> componentList;
@@ -43,6 +45,12 @@ namespace Game.GUI.Adventures
         {
             return typeof(T);
         }
+
+        virtual public void ResetPosition()
+        {
+            positionDriver.position = Vector3.zero;
+        }
+
         protected abstract void Fill(T value);
         protected virtual void Awake()
         {

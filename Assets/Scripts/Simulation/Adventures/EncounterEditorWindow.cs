@@ -21,6 +21,7 @@ namespace Game.Simulation
 {
 	public class EncounterEditorWindow : OdinEditorWindow
 	{
+        /*
         [MenuItem("World Builder/Encounter Editor")]
 		private static void OpenWindow()
 		{
@@ -113,10 +114,10 @@ namespace Game.Simulation
             obj.encounterLocationType = encounterLocationType;
             obj.encounterTypes = encounterTypes;
             obj.allowedBiomes = allowedBiomes;
-            obj.contextCriterium = contextCriterium.ToList();
+            //obj.contextCriterium = contextCriterium.ToList();
             obj.encounterBlurb = encounterBlurb;
             obj.encounterSummary = encounterSummary;
-            obj.components = components.ToList();
+            //obj.components = components.ToList();
 
             AssetDatabase.SaveAssets();
         }
@@ -251,6 +252,7 @@ namespace Game.Simulation
             var finalString = string.Concat(splits);
             return finalString;
         }
+        */
     }
 }
 #endif

@@ -1,0 +1,412 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 084bf99f985f0d341a9f6e9f9a93e27c, type: 3}
+  m_Name: TEST_ENC
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: contextCriterium
+      Entry: 7
+      Data: 0|System.Collections.ObjectModel.ObservableCollection`1[[Game.Simulation.IAdventureContextRetriever,
+        Auto-asmdef-SecondPass]], System
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 1|Game.Simulation.MonsterRetriever, Auto-asmdef-SecondPass
+    - Name: RetrieverID
+      Entry: 3
+      Data: 0
+    - Name: contextTypeName
+      Entry: 1
+      Data: Monster
+    - Name: historical
+      Entry: 5
+      Data: false
+    - Name: findBySearch
+      Entry: 5
+      Data: false
+    - Name: monsterData
+      Entry: 7
+      Data: 2|Game.Incidents.ScriptableObjectRetriever`1[[Game.Data.MonsterData,
+        Auto-asmdef-SecondPass]], Auto-asmdef-SecondPass
+    - Name: prefabKey
+      Entry: 1
+      Data: Adult Silver Dragon
+    - Name: onChanged
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: isLegendary
+      Entry: 5
+      Data: false
+    - Name: isLandDwelling
+      Entry: 5
+      Data: true
+    - Name: allowedSizes
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: allowedTypes
+      Entry: 7
+      Data: 4|System.Collections.Generic.List`1[[Game.Enums.CreatureType, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: allowedAlignments
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Game.Simulation.TreasureRetriever, Auto-asmdef-SecondPass
+    - Name: RetrieverID
+      Entry: 3
+      Data: 1
+    - Name: contextTypeName
+      Entry: 1
+      Data: Item
+    - Name: historical
+      Entry: 5
+      Data: false
+    - Name: premade
+      Entry: 5
+      Data: false
+    - Name: data
+      Entry: 6
+      Data: 
+    - Name: type
+      Entry: 6
+      Data: 
+    - Name: pointRange
+      Entry: 7
+      Data: 7|Game.Incidents.IntegerRange, Auto-asmdef-SecondPass
+    - Name: randomRange
+      Entry: 5
+      Data: true
+    - Name: min
+      Entry: 3
+      Data: 0
+    - Name: max
+      Entry: 3
+      Data: 20
+    - Name: constant
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 8|Game.Simulation.MonsterRetriever, Auto-asmdef-SecondPass
+    - Name: RetrieverID
+      Entry: 3
+      Data: 2
+    - Name: contextTypeName
+      Entry: 1
+      Data: Monster
+    - Name: historical
+      Entry: 5
+      Data: false
+    - Name: findBySearch
+      Entry: 5
+      Data: false
+    - Name: monsterData
+      Entry: 6
+      Data: 
+    - Name: isLegendary
+      Entry: 5
+      Data: false
+    - Name: isLandDwelling
+      Entry: 5
+      Data: true
+    - Name: allowedSizes
+      Entry: 7
+      Data: 9|System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: allowedTypes
+      Entry: 7
+      Data: 10|System.Collections.Generic.List`1[[Game.Enums.CreatureType, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: allowedAlignments
+      Entry: 7
+      Data: 11|System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 12|Game.Simulation.MonsterRetriever, Auto-asmdef-SecondPass
+    - Name: RetrieverID
+      Entry: 3
+      Data: 3
+    - Name: contextTypeName
+      Entry: 1
+      Data: Monster
+    - Name: historical
+      Entry: 5
+      Data: false
+    - Name: findBySearch
+      Entry: 5
+      Data: false
+    - Name: monsterData
+      Entry: 6
+      Data: 
+    - Name: isLegendary
+      Entry: 5
+      Data: false
+    - Name: isLandDwelling
+      Entry: 5
+      Data: true
+    - Name: allowedSizes
+      Entry: 7
+      Data: 13|System.Collections.Generic.List`1[[Game.Enums.CreatureSize, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: allowedTypes
+      Entry: 7
+      Data: 14|System.Collections.Generic.List`1[[Game.Enums.CreatureType, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: allowedAlignments
+      Entry: 7
+      Data: 15|System.Collections.Generic.List`1[[Game.Enums.CreatureAlignment, Auto-asmdef-SecondPass]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: sections
+      Entry: 7
+      Data: 16|System.Collections.Generic.List`1[[Game.Simulation.AdventureSection,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 17|Game.Simulation.AdventureSection, Auto-asmdef-SecondPass
+    - Name: sectionTitle
+      Entry: 1
+      Data: Seggshun
+    - Name: components
+      Entry: 7
+      Data: 18|System.Collections.Generic.List`1[[Game.Simulation.IAdventureComponent,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 19|Game.Simulation.AdventureTitleComponent, Auto-asmdef-SecondPass
+    - Name: title
+      Entry: 7
+      Data: 20|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: Another Section Title
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 21|Game.Simulation.AdventureTextComponent, Auto-asmdef-SecondPass
+    - Name: textField
+      Entry: 7
+      Data: 22|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: Lorem ipsum
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: sectionAdvancers
+      Entry: 7
+      Data: 23|System.Collections.Generic.List`1[[Game.Simulation.SectionAdvancer,
+        Auto-asmdef-SecondPass]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 24|Game.Simulation.SectionAdvancer, Auto-asmdef-SecondPass
+    - Name: isFinalSection
+      Entry: 5
+      Data: true
+    - Name: buttonText
+      Entry: 7
+      Data: 25|Game.Simulation.AdventureComponentTextField, Auto-asmdef-SecondPass
+    - Name: text
+      Entry: 1
+      Data: Next
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: buttonColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: nextSection
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  encounterTitle: TEST_ENCOUNTER
+  encounterDifficulty: 0
+  majorEncounter: 1
+  skippable: 0
+  encounterLocationType: 0
+  encounterTypes: 00000000010000000200000003000000
+  allowedBiomes: 0c0000000b0000000a00000009000000080000000700000006000000050000000400000003000000020000000100000000000000
+  encounterBlurb: This is a debug encounter blurb.
+  encounterSummary: This is a debug encounter summary.

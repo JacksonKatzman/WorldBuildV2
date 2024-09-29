@@ -1,4 +1,5 @@
-﻿using Game.Incidents;
+﻿using Game.Enums;
+using Game.Incidents;
 using Game.Utilities;
 using Sirenix.OdinInspector;
 using System;
@@ -12,11 +13,15 @@ namespace Game.Simulation
 		public bool preferKnownCharacter;
 
 		public CharacterTrait preferedTrait;
-		public override Dictionary<string, Func<Character, int, string>> Replacements => replacements;
+
 		private static readonly Dictionary<string, Func<Character, int, string>> replacements = new Dictionary<string, Func<Character, int, string>>
 		{
-			{"{##}", (person, criteriaID) => string.Format("<i><link=\"{0}\">{1}</link></i>", criteriaID, person.CharacterName.FirstName) },
-			{"[##]", (person, criteriaID) => person.Gender == Enums.Gender.MALE ? "he" : "she" }
+			{"FIRST", (person, criteriaID) => person.Link(person.CharacterName.firstName) },
+			{"SUBJ", (person, criteriaID) => person.Link(person.Gender.Subject()) },
+			{"OBJ", (person, criteriaID) => person.Link(person.Gender.Object()) },
+			{"DPOS", (person, criteriaID) => person.Link(person.Gender.DependantPossessive()) },
+			{"IPOS", (person, criteriaID) => person.Link(person.Gender.IndependantPossessive()) },
+			{"SUBCONT", (person, criteriaID) => person.Link(person.Gender.SubjectContraction()) }
 		};
 
 		public override Character RetrieveContext()
@@ -43,6 +48,17 @@ namespace Game.Simulation
 				var character = new Character(SimRandom.RandomEntryFromList(World.CurrentWorld.Factions));
 				return character;
 			}
+		}
+
+		override public void ReplaceTextPlaceholders(ref string text)
+		{
+			if (string.IsNullOrEmpty(text))
+			{
+				return;
+			}
+
+			HandleTextReplacements(ref text, replacements);
+			base.ReplaceTextPlaceholders(ref text);
 		}
 
 		public override void SpawnPopup()

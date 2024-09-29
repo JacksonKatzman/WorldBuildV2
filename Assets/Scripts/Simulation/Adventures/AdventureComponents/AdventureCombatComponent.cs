@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace Game.Simulation
 {
-	public class AdventureCombatComponent : AdventureComponent
+    public class AdventureCombatComponent : AdventureComponent
 	{
 		public List<CombatParticipant> combatParticipants;
 
-		[TextArea(15, 20), PropertyOrder(0)]
-		public string description;
+		[PropertyOrder(0)]
+		public AdventureComponentTextField description = new AdventureComponentTextField();
 
 		public AdventureCombatComponent()
 		{
@@ -28,8 +28,8 @@ namespace Game.Simulation
 #if UNITY_EDITOR
 		private IEnumerable<int> GetCombatantIDs()
 		{
-			var ids = EncounterEditorWindow.contextCriterium.Where(x => x.GetType() == typeof(MonsterRetriever)).Select(x => x.RetrieverID);
-			return ids;
+			var monsterRetrievers = AdventureEncounterObject.Current.contextCriterium.Where(x => x.GetType() == typeof(MonsterRetriever)).Select(x => x.RetrieverID).ToList();
+			return monsterRetrievers;
 		}
 #endif
 	}

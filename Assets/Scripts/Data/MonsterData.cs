@@ -99,5 +99,10 @@ namespace Game.Data
 			var isLegendary = monsterData.legendary == true ? "Legendary" : string.Empty;
 			return $"{isLegendary} {monsterData.size.ToString()} {monsterData.type.ToString()}, {monsterData.alignment.ToString()}";
 		}
+
+		public static string Link(this MonsterData monsterData)
+        {
+			return string.Format("<u><link=\"MD:{0}\">{1}</link></u>", monsterData.monsterName, monsterData.monsterName.ToLower());
+		}
     }
 }
