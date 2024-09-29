@@ -998,7 +998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 163.5, y: 0}
+  m_AnchoredPosition: {x: 162.5, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3235613346370768944
@@ -3019,7 +3019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 163.5, y: 0}
+  m_AnchoredPosition: {x: 162.5, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3235613347054044446
@@ -4596,7 +4596,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 163.5, y: 0}
+  m_AnchoredPosition: {x: 162.5, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3235613347630404880
@@ -7804,10 +7804,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 8
+    m_Left: 10
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 10
+    m_Bottom: 10
   m_ChildAlignment: 0
   m_Spacing: 8
   m_ChildForceExpandWidth: 0
@@ -8521,6 +8521,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   mainCanvasGroup: {fileID: 0}
+  positionDriver: {fileID: 0}
   familiarityRequirement: 5
   statText: {fileID: 4716286434156525021}
 --- !u!1 &4716286433974121580
@@ -10843,6 +10844,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   mainCanvasGroup: {fileID: 4716286434514995049}
+  positionDriver: {fileID: 0}
   familiarityRequirement: 0
   tooltipBoxPrefab: {fileID: 3971939524683859175, guid: e48275b32fbf863458bc7c65ea15283a, type: 3}
   characterNameText: {fileID: 4716286434539655041}
@@ -11018,15 +11020,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Character Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ad04aac82f76afa4dbc739069b0eedac, type: 2}
+  m_sharedMaterial: {fileID: -3647790325714516349, guid: ad04aac82f76afa4dbc739069b0eedac, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279248530
-  m_fontColor: {r: 0.57254905, g: 0.14901961, b: 0.0627451, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -11049,7 +11051,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -11988,6 +11990,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   mainCanvasGroup: {fileID: 0}
+  positionDriver: {fileID: 0}
   familiarityRequirement: 1
   descriptorText: {fileID: 4716286434727530261}
 --- !u!1 &4716286434738687408
@@ -12557,6 +12560,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   mainCanvasGroup: {fileID: 0}
+  positionDriver: {fileID: 0}
   familiarityRequirement: 5
   statText: {fileID: 4716286433780448342}
 --- !u!1 &4716286434929499668
@@ -12909,6 +12913,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   mainCanvasGroup: {fileID: 0}
+  positionDriver: {fileID: 0}
   familiarityRequirement: 5
   statText: {fileID: 4716286435357942058}
 --- !u!1 &4716286435085196074
@@ -13464,6 +13469,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   mainCanvasGroup: {fileID: 0}
+  positionDriver: {fileID: 0}
   familiarityRequirement: 0
   statText: {fileID: 4716286433703015675}
 --- !u!1 &4716286435170130861
@@ -14868,6 +14874,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   mainCanvasGroup: {fileID: 0}
+  positionDriver: {fileID: 0}
   familiarityRequirement: 5
   statText: {fileID: 4716286434666764596}
 --- !u!1 &4716286435613996155
@@ -15888,6 +15895,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   mainCanvasGroup: {fileID: 0}
+  positionDriver: {fileID: 0}
   familiarityRequirement: 5
   statText: {fileID: 4716286434559364598}
 --- !u!1 &5416551736437523293
@@ -18645,7 +18653,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 163.5, y: 0}
+  m_AnchoredPosition: {x: 162.5, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9208415317365971038
